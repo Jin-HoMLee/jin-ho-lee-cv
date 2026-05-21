@@ -92,7 +92,7 @@ def main(argv: list[str] | None = None) -> int:
     result = subprocess.run(
         [
             "typst", "compile",
-            "--root", str(REPO_ROOT / "pdf"),
+            "--root", str(REPO_ROOT),
             "--input", photo_input,
             str(template),
             str(out_path),
