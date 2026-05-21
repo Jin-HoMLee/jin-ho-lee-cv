@@ -1,12 +1,8 @@
 #import "../styles.typ": *
 
 #let _maybe-photo() = {
-  // Photo lives at repo_root/assets/photo.jpg. From this file (pdf/templates/sidebar.typ),
-  // the relative path is ../../assets/photo.jpg. typst gracefully errors if missing;
-  // we wrap in a context that warns instead via build-time presence check below.
-  // For now, conditionally include based on a sidecar marker.
-  // (Implementation note: presence is checked in build.py; if missing, it removes
-  //  pdf/.cache/has-photo. We check existence of that marker here.)
+  // Photo is included when build.py passes --input has-photo=1 (set iff
+  // assets/photo.jpg exists). Path is resolved against typst --root (repo root).
   if sys.inputs.at("has-photo", default: "0") == "1" {
     align(center)[
       #box(clip: true, radius: 50%, width: 80pt, height: 80pt)[
@@ -23,7 +19,8 @@
     text(weight: 600, size: size-small)[#category.name]
     v(2pt)
     for group in category.groups {
-      text(size: size-small, fill: muted)[#group.label: ]
+      text(size: size-small, fill: muted)[#group.label:]
+      h(3pt)
       text(size: size-small)[#group.items.join(", ")]
       linebreak()
     }
