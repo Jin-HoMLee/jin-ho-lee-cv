@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import dataclasses
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -73,8 +74,26 @@ def main(argv: list[str] | None = None) -> int:
     cache_dir.mkdir(parents=True, exist_ok=True)
     (cache_dir / "data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2))
 
-    # Typst invocation added in Task 4.
-    print(f"Wrote {cache_dir / 'data.json'}", file=sys.stderr)
+    out_dir = REPO_ROOT / ("dist-private" if args.private else "dist")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / f"cv-{args.lang}.pdf"
+
+    template = REPO_ROOT / "pdf" / "templates" / "cv.typ"
+
+    result = subprocess.run(
+        [
+            "typst", "compile",
+            "--root", str(REPO_ROOT / "pdf"),
+            str(template),
+            str(out_path),
+        ],
+        check=False,
+    )
+    if result.returncode != 0:
+        print(f"typst compile failed (exit {result.returncode})", file=sys.stderr)
+        return result.returncode
+
+    print(f"Wrote {out_path}", file=sys.stderr)
     return 0
 
 
