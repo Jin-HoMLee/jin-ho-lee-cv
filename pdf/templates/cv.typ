@@ -1,4 +1,5 @@
 #import "../styles.typ": *
+#import "header.typ": header
 
 #let data = json("../.cache/data.json")
 
@@ -12,4 +13,4 @@
   fill: body-color,
 )
 
-= #data.personal.name.given #data.personal.name.family
+#header(data.personal)
