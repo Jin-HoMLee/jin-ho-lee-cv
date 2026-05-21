@@ -13,13 +13,13 @@
   ) {
     if s.starts-with(prefix) {
       s = s.slice(prefix.len())
+      break
     }
   }
   s
 }
 
 #let header(personal) = {
-  // Name
   text(size: size-name, weight: 700, fill: accent)[
     #personal.name.given #personal.name.family
   ]
@@ -29,7 +29,7 @@
   text(size: size-headline, fill: muted)[#personal.headline]
   v(6pt)
 
-  // Contact line — pipe-separated
+  // Contact line — middot-separated
   let parts = ()
   parts.push(personal.email)
   if "phone" in personal { parts.push(personal.phone) }
