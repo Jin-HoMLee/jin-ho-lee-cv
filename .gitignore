@@ -18,3 +18,7 @@ node_modules/
 
 # OS
 .DS_Store
+
+# Claude Code session state + brainstorming mockups
+.claude/
+.superpowers/
