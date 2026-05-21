@@ -23,8 +23,8 @@
   // Photo is included when build.py passes --input has-photo=1 (set iff
   // assets/photo.jpg exists). Path is resolved against typst --root (repo root).
   if sys.inputs.at("has-photo", default: "0") == "1" {
-    box(clip: true, radius: 50%, width: 68pt, height: 68pt)[
-      #image("/assets/photo.jpg", width: 68pt, height: 68pt, fit: "cover")
+    box(clip: true, radius: 50%, width: 78pt, height: 78pt)[
+      #image("/assets/photo.jpg", width: 78pt, height: 78pt, fit: "cover")
     ]
   }
 }
