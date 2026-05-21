@@ -34,17 +34,23 @@ Phase 1 produces a one-page English PDF locally. Requirements:
 - Python 3.12 + `uv` (already needed for Phase 0)
 - Typst CLI: `brew install typst` (macOS) or `cargo install --locked typst-cli`
 - IBM Plex Sans font (recommended): `brew install --cask font-ibm-plex` on macOS. If absent, Typst falls back to a default sans font.
-- Optional: `assets/photo.jpg` for the sidebar photo. If missing, the sidebar reflows without it.
 
 ### Commands
 
 ```bash
-just build          # → dist/cv-en.pdf (no PII)
-just build-private  # → dist-private/cv-en.pdf (with phone + address)
+just build          # → dist/cv-en.pdf (no PII, no photo)
+just build-private  # → dist-private/cv-en.pdf (phone + address, no photo)
 just clean          # remove dist/, dist-private/, and pdf/.cache/
 ```
 
 The private build requires `content.private/private.yaml` to exist. Copy `content.private.example/private.example.yaml` and fill in your details.
+
+By default the header has no photo (industry-friendly for tech / international roles). To include `assets/photo.jpg` for a traditional German application:
+
+```bash
+uv run python -m pdf.build --lang en --photo            # photo + no PII
+uv run python -m pdf.build --lang en --private --photo  # photo + PII
+```
 
 ### How it works
 

@@ -81,6 +81,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Merge content.private/private.yaml; PDF lands in dist-private/",
     )
+    p.add_argument(
+        "--photo",
+        action="store_true",
+        help="Include assets/photo.jpg in the header. Default: no photo.",
+    )
     return p.parse_args(argv)
 
 
@@ -112,14 +117,17 @@ def main(argv: list[str] | None = None) -> int:
 
     template = REPO_ROOT / "pdf" / "templates" / "cv.typ"
 
-    has_photo = (REPO_ROOT / "assets" / "photo.jpg").exists()
-    photo_input = f"has-photo={'1' if has_photo else '0'}"
-
-    if not has_photo:
-        print(
-            "warning: assets/photo.jpg not found; sidebar will render without photo",
-            file=sys.stderr,
-        )
+    if args.photo:
+        photo_path = REPO_ROOT / "assets" / "photo.jpg"
+        if not photo_path.exists():
+            print(
+                f"--photo was given but {photo_path} does not exist.",
+                file=sys.stderr,
+            )
+            return 2
+        photo_input = "has-photo=1"
+    else:
+        photo_input = "has-photo=0"
 
     result = subprocess.run(
         [
