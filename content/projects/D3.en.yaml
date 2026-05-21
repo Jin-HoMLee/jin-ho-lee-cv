@@ -1,0 +1,24 @@
+id: D3
+category: data-science
+title: "Data Science Bootcamp Program"
+summary: "Professional training program for transitioning participants into data science careers."
+role: "Data Science Coach (neuefische GmbH)"
+period:
+  start: "2023-09"
+  end: "2024-04"
+technologies:
+  - "Python"
+  - "Pandas"
+  - "NumPy"
+  - "Scikit-Learn"
+  - "TensorFlow"
+  - "SQL"
+  - "Docker"
+  - "dbt"
+  - "Google Cloud"
+contributions:
+  - "Delivered lectures on Python, machine learning, SQL, and data visualization."
+  - "Mentored students throughout the data science lifecycle."
+  - "Supervised capstone projects and technical presentations."
+  - "Developed and improved training materials."
+outcome: "Successfully supported multiple cohorts in developing industry-ready data science skills."

@@ -1,0 +1,21 @@
+id: L2
+category: life-science
+title: "Personalized Immunotherapy – High-Throughput HLA Typing Pipeline"
+summary: "Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data."
+role: "Bioinformatics Bachelor Thesis Student (NCT Heidelberg)"
+period:
+  start: "2013-10"
+  end: "2014-06"
+technologies:
+  - "Python"
+  - "R"
+  - "HLAMiner"
+  - "Seq2HLA"
+  - "NetMHCPan (Neural Networks)"
+  - "Shell Scripting"
+contributions:
+  - "Developed an in silico genotyping pipeline to extract HLA alleles directly from Whole-Exome Sequencing (WXS) data."
+  - "Implemented predictive modeling using ANNs (NetMHCPan) to screen missense mutations for MHC-I binding affinity."
+  - "Engineered a consensus methodology integrating multiple HLA typing algorithms to resolve sequence ambiguities and improve diagnostic reliability."
+  - "Validated the pipeline by analyzing binding specificities across HLA alleles to mitigate genotyping errors in vaccine design."
+outcome: "Demonstrated the feasibility of a fully computational approach to neoantigen discovery, significantly reducing costs and lead times compared to traditional PCR-based clinical assays."
