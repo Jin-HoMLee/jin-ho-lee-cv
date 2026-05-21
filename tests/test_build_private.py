@@ -105,7 +105,9 @@ def test_private_build_fails_when_private_yaml_missing(repo_root):
             cwd=repo_root, capture_output=True, text=True,
         )
         assert result.returncode != 0, "expected non-zero exit when private.yaml missing"
-        assert "does not exist" in result.stderr.lower() or "private" in result.stderr.lower()
+        assert "does not exist" in result.stderr, (
+            f"expected 'does not exist' in stderr; got: {result.stderr!r}"
+        )
     finally:
         if backup is not None:
             private_file.write_text(backup)
