@@ -19,3 +19,10 @@ just test        # run unit tests
 - `schema/cv.schema.json` — JSON Schema for content
 - `scripts/` — loader, validator, future renderers
 - `tests/` — pytest suite
+
+## Local-only assets
+
+Some files referenced from content YAML are not committed to the repo:
+
+- `assets/photo.jpg` — your headshot, referenced from `content/personal.yaml`. Add it locally before running Phase 1 PDF builds.
+- `content.private/private.yaml` — your phone, address, and other PII. See `content.private.example/private.example.yaml` for the template.

@@ -1,4 +1,6 @@
 """Tests for scripts.content_loader."""
+import pytest
+
 from scripts.content_loader import (
     deep_merge,
     load_content,
@@ -61,3 +63,61 @@ def test_load_content_nonexistent_private_is_ignored(content_dir, tmp_path):
     content = load_content(content_dir, private_path=ghost)
     assert "phone" not in content["personal"]
     assert "address" not in content["personal"]
+
+
+def test_load_content_rejects_id_filename_mismatch(tmp_path):
+    """A project file whose id field doesn't match its filename should raise."""
+    fake = tmp_path / "content"
+    fake.mkdir()
+    (fake / "personal.yaml").write_text(
+        "name:\n  given: T\n  family: U\n"
+        "headline:\n  en: H\n"
+        "email: a@b.com\n"
+        "location: {city: X, country: Y}\n"
+        "links: {}\n"
+    )
+    (fake / "profile.en.yaml").write_text("paragraphs:\n  - p\n")
+    (fake / "skills.yaml").write_text(
+        "categories:\n"
+        "  - name: {en: A}\n"
+        "    groups:\n"
+        "      - label: {en: B}\n"
+        "        items: [x]\n"
+    )
+    (fake / "education.yaml").write_text(
+        "- degree: {en: D}\n  institution: I\n  year: 2020\n"
+    )
+    (fake / "experience.yaml").write_text(
+        "- id: x\n"
+        "  org: {name: O}\n"
+        "  role: {en: R}\n"
+        "  period: {start: '2020-01', end: '2021-01'}\n"
+        "  bullets:\n    - en: b\n"
+    )
+    (fake / "languages.yaml").write_text(
+        "- name: {en: English}\n  proficiency: fluent\n"
+    )
+    (fake / "volunteer.yaml").write_text(
+        "categories:\n"
+        "  - name: {en: A}\n"
+        "    entries: [x]\n"
+    )
+    (fake / "publications.bib").write_text(
+        "@article{x, author={X}, title={T}, year={2020},"
+        " journal={J}, type={article}, authorship={first}}\n"
+    )
+    projects_dir = fake / "projects"
+    projects_dir.mkdir()
+    (projects_dir / "L1.en.yaml").write_text(
+        "id: L99\n"  # mismatch: filename says L1 but id field says L99
+        "category: life-science\n"
+        "title: t\n"
+        "summary: s\n"
+        "role: r\n"
+        "period: {start: '2020-01'}\n"
+        "technologies: [a]\n"
+        "contributions: [c]\n"
+        "outcome: o\n"
+    )
+    with pytest.raises(ValueError, match="does not match filename"):
+        load_content(fake, private_path=None)

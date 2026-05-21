@@ -79,6 +79,11 @@ def validate_file(
 
 
 def _enumerate_project_ids(content_dir: Path) -> set[str]:
+    """Enumerate project IDs from filenames in content/projects/*.en.yaml.
+
+    Note: only the filename portion is checked here. Content-level filename-vs-id
+    consistency is enforced by scripts.content_loader._load_projects.
+    """
     ids: set[str] = set()
     for p in (content_dir / "projects").glob("*.en.yaml"):
         ids.add(p.name.split(".")[0])

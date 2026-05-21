@@ -20,7 +20,7 @@ class Publication:
     year: int
     type: str
     authorship: str
-    authors: list[str]
+    authors: tuple[str, ...]
     venue: str | None
     raw: dict
 
@@ -44,7 +44,7 @@ def _parse_entry(key: str, entry) -> Publication:
     if fields["authorship"] not in AUTHORSHIP_VALUES:
         raise ValueError(f"{key}: unknown authorship {fields['authorship']!r}")
 
-    authors = [str(p) for p in entry.persons.get("author", [])]
+    authors = tuple(str(p) for p in entry.persons.get("author", []))
     return Publication(
         key=key,
         title=fields["title"],
