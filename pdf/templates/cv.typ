@@ -2,6 +2,8 @@
 #import "header.typ": header
 #import "profile.typ": profile
 #import "experience.typ": experience
+#import "education.typ": education
+#import "sidebar.typ": sidebar
 
 #let data = json("../.cache/data.json")
 
@@ -25,7 +27,7 @@
   {
     profile(data.profile)
     experience(data.experience)
+    education(data.education)
   },
-  // Sidebar (placeholder until Task 7)
-  rect(fill: sidebar-bg, width: 100%, height: 100%)[],
+  sidebar(data),
 )

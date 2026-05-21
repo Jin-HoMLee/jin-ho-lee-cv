@@ -80,10 +80,20 @@ def main(argv: list[str] | None = None) -> int:
 
     template = REPO_ROOT / "pdf" / "templates" / "cv.typ"
 
+    has_photo = (REPO_ROOT / "assets" / "photo.jpg").exists()
+    photo_input = f"has-photo={'1' if has_photo else '0'}"
+
+    if not has_photo:
+        print(
+            "warning: assets/photo.jpg not found; sidebar will render without photo",
+            file=sys.stderr,
+        )
+
     result = subprocess.run(
         [
             "typst", "compile",
             "--root", str(REPO_ROOT / "pdf"),
+            "--input", photo_input,
             str(template),
             str(out_path),
         ],
