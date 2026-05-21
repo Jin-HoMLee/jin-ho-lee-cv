@@ -97,6 +97,18 @@ _FILE_RULES: list[tuple[str, str]] = [
 ]
 
 
+def _validate_publications(content_dir: Path) -> list[FileError]:
+    bib_path = content_dir / "publications.bib"
+    if not bib_path.exists():
+        return [FileError(bib_path, "publications.bib missing")]
+    try:
+        from scripts.bib_loader import load_publications  # local import avoids cycles
+        load_publications(bib_path)
+    except Exception as e:
+        return [FileError(bib_path, str(e))]
+    return []
+
+
 def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     """Validate every recognized file under content/. Returns list of errors (empty = clean)."""
     errors: list[FileError] = []
@@ -118,6 +130,7 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
         except ValidationError as e:
             errors.append(FileError(path, str(e)))
 
+    errors.extend(_validate_publications(content_dir))
     return errors
 
 
