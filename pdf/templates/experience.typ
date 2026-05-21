@@ -7,8 +7,8 @@
 }
 
 #let _bullet(b) = {
-  let txt = if type(b) == str { b } else { b.en }
-  let refs = if type(b) == dictionary and "refs" in b { b.refs } else { () }
+  let txt = b.en
+  let refs = b.at("refs", default: ())
 
   // Bullet line: dash + text + optional refs at end
   grid(
