@@ -22,7 +22,7 @@
 
 #let page-margin = 14mm
 
-// Section heading: small-caps, letterspaced, accent color.
+// Section heading: uppercase (upper()), letterspaced, accent color.
 #let section-heading(title) = {
   v(space-section)
   text(
