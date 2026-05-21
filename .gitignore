@@ -22,3 +22,6 @@ node_modules/
 # Claude Code session state + brainstorming mockups
 .claude/
 .superpowers/
+
+# PDF build cache (JSON intermediate written by pdf/build.py)
+pdf/.cache/
