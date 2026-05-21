@@ -5,7 +5,6 @@ import json
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
 
 from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
@@ -67,7 +66,7 @@ def validate_file(
             f"{'.'.join(str(p) for p in e.path) or '<root>'}: {e.message}"
             for e in errors
         )
-        raise ValidationError(f"Schema violation in {path.name}: {joined}")
+        raise ValidationError(joined)
 
     if schema_def == "experience" and known_project_ids is not None:
         for entry in data:
@@ -75,7 +74,7 @@ def validate_file(
                 for ref in bullet.get("refs", []):
                     if ref not in known_project_ids:
                         raise ValidationError(
-                            f"unknown project ref {ref!r} in {path.name}"
+                            f"unknown project ref {ref!r}"
                         )
 
 
@@ -122,7 +121,7 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     return errors
 
 
-def main(argv: Iterable[str] = sys.argv[1:]) -> int:
+def main() -> int:
     repo_root = Path(__file__).parent.parent
     content_dir = repo_root / "content"
     schema_path = repo_root / "schema" / "cv.schema.json"
