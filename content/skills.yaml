@@ -1,0 +1,30 @@
+categories:
+  - name:
+      en: "Bioinformatics & ML"
+    groups:
+      - label: { en: "Genomics" }
+        items: ["NGS", "RNA-Seq", "SNV Calling", "Splice Analysis"]
+      - label: { en: "Immunology" }
+        items: ["MHC-I Prediction", "HLA Typing", "Neoepitopes"]
+      - label: { en: "Nanoscopy" }
+        items: ["Spatial Point-Pattern", "Cluster Analysis (DBSCAN)"]
+
+  - name:
+      en: "Biotech Wet-Lab"
+    groups:
+      - label: { en: "Models" }
+        items: ["Cancer/Tumor", "3D Cell Culture", "Neural Progenitors"]
+      - label: { en: "Imaging" }
+        items: ["Super-Resolution", "Confocal", "Fluorescence"]
+      - label: { en: "Assays" }
+        items: ["FISH", "IF", "qPCR", "FACS"]
+
+  - name:
+      en: "Data & Engineering"
+    groups:
+      - label: { en: "AI & Vision" }
+        items: ["TensorFlow", "Keras", "LSTMs", "OpenCV"]
+      - label: { en: "Eng & Tools" }
+        items: ["Python (Exp)", "R", "SQL", "Docker", "Git", "dbt"]
+      - label: { en: "Cloud" }
+        items: ["GCP", "BigQuery", "Vertex AI", "Looker"]
