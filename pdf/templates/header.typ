@@ -19,34 +19,52 @@
   s
 }
 
+#let _photo() = {
+  // Photo is included when build.py passes --input has-photo=1 (set iff
+  // assets/photo.jpg exists). Path is resolved against typst --root (repo root).
+  if sys.inputs.at("has-photo", default: "0") == "1" {
+    box(clip: true, radius: 50%, width: 80pt, height: 80pt)[
+      #image("/assets/photo.jpg", width: 80pt, height: 80pt, fit: "cover")
+    ]
+  }
+}
+
 #let header(personal) = {
-  text(size: size-name, weight: 700, fill: accent)[
-    #personal.name.given #personal.name.family
-  ]
-  linebreak()
+  grid(
+    columns: (1fr, auto),
+    column-gutter: 12pt,
+    align: (left + top, right + top),
+    {
+      text(size: size-name, weight: 700, fill: accent)[
+        #personal.name.given #personal.name.family
+      ]
+      linebreak()
 
-  // Headline (already resolved to a string)
-  text(size: size-headline, fill: muted)[#personal.headline]
-  v(6pt)
+      // Headline (already resolved to a string)
+      text(size: size-headline, fill: muted)[#personal.headline]
+      v(6pt)
 
-  // Contact line — middot-separated
-  let parts = ()
-  parts.push(personal.email)
-  if "phone" in personal { parts.push(personal.phone) }
+      // Contact line — middot-separated
+      let parts = ()
+      parts.push(personal.email)
+      if "phone" in personal { parts.push(personal.phone) }
 
-  let loc = ()
-  if "city" in personal.location { loc.push(personal.location.city) }
-  if "country" in personal.location { loc.push(personal.location.country) }
-  if loc.len() > 0 { parts.push(loc.join(", ")) }
+      let loc = ()
+      if "city" in personal.location { loc.push(personal.location.city) }
+      if "country" in personal.location { loc.push(personal.location.country) }
+      if loc.len() > 0 { parts.push(loc.join(", ")) }
 
-  if "linkedin" in personal.links and personal.links.linkedin != none {
-    parts.push("in/" + _link-handle(personal.links.linkedin))
-  }
-  if "github" in personal.links and personal.links.github != none {
-    parts.push("gh/" + _link-handle(personal.links.github))
-  }
+      if "linkedin" in personal.links and personal.links.linkedin != none {
+        parts.push("in/" + _link-handle(personal.links.linkedin))
+      }
+      if "github" in personal.links and personal.links.github != none {
+        parts.push("gh/" + _link-handle(personal.links.github))
+      }
 
-  text(size: size-small, fill: muted)[#parts.join("  ·  ")]
+      text(size: size-small, fill: muted)[#parts.join("  ·  ")]
+    },
+    _photo(),
+  )
 
   v(4pt)
   line(length: 100%, stroke: 0.5pt + accent.lighten(60%))

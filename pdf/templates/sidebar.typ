@@ -1,18 +1,5 @@
 #import "../styles.typ": *
 
-#let _maybe-photo() = {
-  // Photo is included when build.py passes --input has-photo=1 (set iff
-  // assets/photo.jpg exists). Path is resolved against typst --root (repo root).
-  if sys.inputs.at("has-photo", default: "0") == "1" {
-    align(center)[
-      #box(clip: true, radius: 50%, width: 80pt, height: 80pt)[
-        #image("/assets/photo.jpg", width: 80pt, height: 80pt, fit: "cover")
-      ]
-    ]
-    v(8pt)
-  }
-}
-
 #let _skills(skills) = {
   section-heading("Skills")
   for category in skills.categories {
@@ -57,7 +44,6 @@
     stroke: (left: 3pt + accent),
     width: 100%,
   )[
-    #_maybe-photo()
     #_skills(data.skills)
     #_languages(data.languages)
     #_volunteer(data.volunteer)
