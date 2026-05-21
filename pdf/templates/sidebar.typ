@@ -10,7 +10,7 @@
   if sys.inputs.at("has-photo", default: "0") == "1" {
     align(center)[
       #box(clip: true, radius: 50%, width: 80pt, height: 80pt)[
-        #image("/../assets/photo.jpg", width: 80pt, height: 80pt, fit: "cover")
+        #image("/assets/photo.jpg", width: 80pt, height: 80pt, fit: "cover")
       ]
     ]
     v(8pt)
