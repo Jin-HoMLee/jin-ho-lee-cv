@@ -1,8 +1,15 @@
 #import "../styles.typ": *
 
+#let _months = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+#let _format-ym(ym) = {
+  let parts = ym.split("-")
+  _months.at(int(parts.at(1)) - 1) + " " + parts.at(0)
+}
+
 #let _period(p) = {
-  let s = if "start" in p { p.start } else { "" }
-  let e = if "end" in p and p.end != none { p.end } else { "present" }
+  let s = _format-ym(p.start)
+  let e = if "end" in p and p.end != none { _format-ym(p.end) } else { "present" }
   s + " – " + e
 }
 
