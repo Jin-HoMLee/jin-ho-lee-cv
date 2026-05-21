@@ -8,14 +8,14 @@
 
 #let font-family = "IBM Plex Sans"
 
-#let size-body = 9.5pt
-#let size-small = 8pt
+#let size-body = 9pt
+#let size-small = 7.5pt
 #let size-section = 10pt
 #let size-name = 18pt
 #let size-headline = 10pt
 
-#let space-section = 6pt
-#let space-paragraph = 3pt
+#let space-section = 5pt
+#let space-paragraph = 2pt
 
 #let sidebar-ratio = (1fr, 0.5fr)  // main : sidebar  ≈ 66 : 34
 #let column-gutter = 12pt
