@@ -14,8 +14,8 @@
 #let size-name = 18pt
 #let size-headline = 10pt
 
-#let space-section = 8pt
-#let space-paragraph = 4pt
+#let space-section = 6pt
+#let space-paragraph = 3pt
 
 #let sidebar-ratio = (1fr, 0.5fr)  // main : sidebar  ≈ 66 : 34
 #let column-gutter = 12pt
