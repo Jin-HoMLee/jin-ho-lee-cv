@@ -1,0 +1,10 @@
+name:
+  given: "Test"
+  family: "User"
+headline:
+  en: "Test headline"
+email: 12345
+location:
+  city: "Anywhere"
+  country: "ZZ"
+links: {}
