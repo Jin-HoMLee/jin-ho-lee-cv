@@ -192,7 +192,7 @@
         },
         "outcome": { "type": "string", "minLength": 1 }
       },
-      "required": ["id", "category", "title", "summary", "role", "technologies", "contributions", "outcome"],
+      "required": ["id", "category", "title", "summary", "role", "period", "technologies", "contributions", "outcome"],
       "additionalProperties": false
     },
     "languages": {

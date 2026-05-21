@@ -35,6 +35,13 @@ def _load_projects(projects_dir: Path, lang: str = "en") -> dict[str, dict]:
         proj = _load_yaml(path)
         if "id" not in proj:
             raise ValueError(f"{path}: missing required 'id' field")
+        expected_id = path.name.split(".")[0]
+        if proj["id"] != expected_id:
+            raise ValueError(
+                f"{path}: id field {proj['id']!r} does not match filename {expected_id!r}"
+            )
+        if proj["id"] in out:
+            raise ValueError(f"{path}: duplicate project id {proj['id']!r}")
         out[proj["id"]] = proj
     return out
 
