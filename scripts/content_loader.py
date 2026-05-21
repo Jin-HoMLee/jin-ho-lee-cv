@@ -33,6 +33,8 @@ def _load_projects(projects_dir: Path, lang: str = "en") -> dict[str, dict]:
     out: dict[str, dict] = {}
     for path in sorted(projects_dir.glob(f"*.{lang}.yaml")):
         proj = _load_yaml(path)
+        if "id" not in proj:
+            raise ValueError(f"{path}: missing required 'id' field")
         out[proj["id"]] = proj
     return out
 
@@ -42,7 +44,7 @@ def load_content(
     *,
     private_path: Path | None = None,
     lang: str = "en",
-) -> dict:
+) -> dict[str, Any]:
     """Load full content tree.
 
     Returns a dict with keys: personal, profile, skills, education, experience,
