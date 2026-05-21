@@ -1,0 +1,21 @@
+id: L1
+category: life-science
+title: "Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis"
+summary: "Bioinformatics pipeline for identifying novel immunotherapy targets derived from aberrant alternative splicing in RNA-Seq data."
+role: "Bioinformatics Research Intern (Seoul National University)"
+period:
+  start: "2018-09"
+  end: "2019-03"
+technologies:
+  - "Python"
+  - "R"
+  - "MapSplice"
+  - "RNA-Seq"
+  - "TCGA Datasets"
+  - "MHC-I Prediction Tools"
+contributions:
+  - "Developed a discovery pipeline to identify tumor-specific splice junctions across large-scale cancer datasets."
+  - "Mapped the epitope landscape by predicting high-affinity MHC-I binding peptides from non-canonical transcripts."
+  - "Validated the predictive model by cross-referencing findings with high-impact transcriptomic studies."
+  - "Evaluated synergistic strategies for co-targeting mutation-derived and splice-derived neoantigens."
+outcome: "Demonstrated that alternative splicing is a viable source for high-affinity epitopes, expanding target discovery beyond traditional somatic mutations."

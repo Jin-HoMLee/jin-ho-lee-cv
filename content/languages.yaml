@@ -1,0 +1,10 @@
+- name: { en: "German" }
+  proficiency: native
+- name: { en: "English" }
+  proficiency: fluent
+- name: { en: "Korean" }
+  proficiency: native
+- name: { en: "French" }
+  proficiency: basic
+- name: { en: "Latin" }
+  proficiency: passive

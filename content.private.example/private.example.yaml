@@ -1,0 +1,8 @@
+# Copy this file to `content.private/private.yaml` and fill in values.
+# That directory is gitignored — your real data never enters the repo.
+phone: "+49 ... ..."
+address:
+  street: "Example Street 1"
+  postal_code: "00000"
+  city: "Example City"
+  country: "DE"

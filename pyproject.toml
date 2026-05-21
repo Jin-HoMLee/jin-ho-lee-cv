@@ -1,0 +1,25 @@
+[project]
+name = "jin-ho-lee-cv"
+version = "0.1.0"
+description = "Machine-readable, codified CV"
+requires-python = ">=3.12"
+dependencies = [
+    "ruamel.yaml>=0.18",
+    "jsonschema>=4.23",
+    "pybtex>=0.24",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-cov>=5.0",
+    "ruff>=0.7",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

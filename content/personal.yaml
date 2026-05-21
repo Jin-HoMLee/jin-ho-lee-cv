@@ -1,0 +1,15 @@
+name:
+  given: "Jin-Ho"
+  family: "Lee"
+headline:
+  en: "Bioinformatics | Data Science | Consulting"
+email: "jinho.michael.lee@gmail.com"
+location:
+  city: "Mannheim"
+  country: "DE"
+links:
+  linkedin: "https://linkedin.com/in/jin-holee"
+  github:   "https://github.com/Jin-HoMLee"
+  researchgate: "https://researchgate.net/profile/Jin-Ho-Lee-8"
+  orcid: null
+photo: "assets/photo.jpg"
