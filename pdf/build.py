@@ -15,6 +15,36 @@ from scripts.langstring import resolve_langstrings
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
+def _check_typst_version() -> None:
+    """Warn if installed Typst doesn't match the version pinned in .typstversion."""
+    pinned_file = REPO_ROOT / ".typstversion"
+    if not pinned_file.exists():
+        return
+    pinned = pinned_file.read_text().strip()
+
+    try:
+        result = subprocess.run(
+            ["typst", "--version"], capture_output=True, text=True, check=False
+        )
+    except FileNotFoundError:
+        return  # typst not installed; the compile call will surface that error
+    if result.returncode != 0:
+        return
+
+    # Output looks like "typst 0.14.2 (abc123)" — take the second token
+    tokens = result.stdout.split()
+    if len(tokens) < 2:
+        return
+    installed = tokens[1]
+
+    if installed != pinned:
+        print(
+            f"warning: typst version mismatch (pinned: {pinned}, installed: {installed}). "
+            "Build may differ from canonical.",
+            file=sys.stderr,
+        )
+
+
 def _to_serializable(obj: Any) -> Any:
     """Recursively convert dataclasses and tuples to JSON-safe structures."""
     if dataclasses.is_dataclass(obj) and not isinstance(obj, type):
@@ -56,6 +86,8 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> int:
     args = _parse_args(argv)
+
+    _check_typst_version()
 
     content_dir = REPO_ROOT / "content"
     private_path = REPO_ROOT / "content.private" / "private.yaml" if args.private else None
