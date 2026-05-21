@@ -1,8 +1,4 @@
 """Tests for scripts.content_loader."""
-from pathlib import Path
-
-import pytest
-
 from scripts.content_loader import (
     deep_merge,
     load_content,
@@ -57,3 +53,11 @@ def test_load_content_projects_keyed_by_id(content_dir):
     content = load_content(content_dir, private_path=None)
     assert "L1" in content["projects"]
     assert content["projects"]["L1"]["category"] == "life-science"
+
+
+def test_load_content_nonexistent_private_is_ignored(content_dir, tmp_path):
+    """A private_path that doesn't exist should be silently ignored, not error."""
+    ghost = tmp_path / "does_not_exist.yaml"
+    content = load_content(content_dir, private_path=ghost)
+    assert "phone" not in content["personal"]
+    assert "address" not in content["personal"]

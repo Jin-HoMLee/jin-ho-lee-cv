@@ -6,7 +6,6 @@ import pytest
 from scripts.bib_loader import (
     AUTHORSHIP_VALUES,
     BIB_TYPES,
-    Publication,
     authorship_counts,
     load_publications,
 )
