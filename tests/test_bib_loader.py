@@ -44,10 +44,9 @@ def test_authorship_counts_sums_to_total():
     assert sum(counts.values()) == len(pubs)
 
 
-def test_missing_authorship_field_raises():
+def test_missing_authorship_field_raises(tmp_path):
     """A bib entry without the custom 'authorship' field should fail loading."""
-    bad = Path(__file__).parent / "fixtures" / "invalid_yaml" / "missing_authorship.bib"
-    bad.parent.mkdir(parents=True, exist_ok=True)
+    bad = tmp_path / "missing_authorship.bib"
     bad.write_text(
         "@article{x, author={X}, title={T}, year={2020}, journal={J}, type={article}}\n"
     )
