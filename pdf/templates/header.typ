@@ -46,19 +46,34 @@
 
       // Contact line — middot-separated
       let parts = ()
-      parts.push(personal.email)
+      parts.push(link("mailto:" + personal.email)[#personal.email])
       if "phone" in personal { parts.push(personal.phone) }
 
-      let loc = ()
-      if "city" in personal.location { loc.push(personal.location.city) }
-      if "country" in personal.location { loc.push(personal.location.country) }
-      if loc.len() > 0 { parts.push(loc.join(", ")) }
+      // Address: full street/postal/city/country if private overlay supplied an address,
+      // otherwise just city/country from the public location block.
+      if "address" in personal {
+        let addr = personal.address
+        let addr-parts = ()
+        if "street" in addr { addr-parts.push(addr.street) }
+        // German convention: "postal_code city" as one chunk
+        let pc-city = ()
+        if "postal_code" in addr { pc-city.push(addr.postal_code) }
+        if "city" in addr { pc-city.push(addr.city) }
+        if pc-city.len() > 0 { addr-parts.push(pc-city.join(" ")) }
+        if "country" in addr { addr-parts.push(addr.country) }
+        if addr-parts.len() > 0 { parts.push(addr-parts.join(", ")) }
+      } else {
+        let loc = ()
+        if "city" in personal.location { loc.push(personal.location.city) }
+        if "country" in personal.location { loc.push(personal.location.country) }
+        if loc.len() > 0 { parts.push(loc.join(", ")) }
+      }
 
       if "linkedin" in personal.links and personal.links.linkedin != none {
-        parts.push("in/" + _link-handle(personal.links.linkedin))
+        parts.push(link(personal.links.linkedin)[in/#_link-handle(personal.links.linkedin)])
       }
       if "github" in personal.links and personal.links.github != none {
-        parts.push("gh/" + _link-handle(personal.links.github))
+        parts.push(link(personal.links.github)[gh/#_link-handle(personal.links.github)])
       }
 
       text(size: size-small, fill: muted)[#parts.join("  ·  ")]
