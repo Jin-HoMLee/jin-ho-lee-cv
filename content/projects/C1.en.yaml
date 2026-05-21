@@ -1,0 +1,21 @@
+id: C1
+category: consulting
+title: "Anti-Financial Crime – Know Your Customer (KYC) Platform"
+summary: "Cloud migration and analytics environment development for financial crime detection at a large international bank."
+role: "Lead Business Functional Analyst (Cintellic GmbH)"
+period:
+  start: "2024-08"
+  end: "2025-07"
+technologies:
+  - "Google Cloud Platform"
+  - "BigQuery"
+  - "Python"
+  - "SAS"
+  - "Looker"
+contributions:
+  - "Expanded the Python-based analytics environment in Google Cloud."
+  - "Migrated legacy SAS reporting workflows to Python-based pipelines."
+  - "Explored BI capabilities using Looker and prepared the data model."
+  - "Conducted stakeholder management and requirements analysis."
+  - "Supported AML risk analysis through ad-hoc investigations of customer relationships."
+outcome: "Enabled transition of legacy reporting processes into a scalable cloud-based analytics environment."
