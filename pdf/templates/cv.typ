@@ -1,0 +1,44 @@
+#import "../styles.typ": *
+#import "header.typ": header
+#import "profile.typ": profile
+#import "experience.typ": experience
+#import "education.typ": education
+#import "sidebar.typ": sidebar
+
+#let data = json("../.cache/data.json")
+
+#set page(
+  paper: "a4",
+  margin: page-margin,
+)
+#set text(
+  font: font-family,
+  size: size-body,
+  fill: body-color,
+)
+
+// Use layout() so the columns grid fills the remaining page height after the
+// header. This bottom-aligns the main column and the sidebar — without this
+// the grid auto-sizes each cell to its content and the shorter column leaves
+// whitespace below it.
+#layout(size => {
+  grid(
+    columns: 1,
+    rows: (auto, 1fr),
+    {
+      header(data.personal)
+      v(6pt)
+    },
+    grid(
+      columns: sidebar-ratio,
+      gutter: column-gutter,
+      // Main column — block fills the grid cell so its height matches the sidebar.
+      block(width: 100%, height: 100%, {
+        profile(data.profile)
+        experience(data.experience)
+        education(data.education)
+      }),
+      sidebar(data),
+    ),
+  )
+})

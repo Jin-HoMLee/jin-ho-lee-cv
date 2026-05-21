@@ -18,3 +18,10 @@ node_modules/
 
 # OS
 .DS_Store
+
+# Claude Code session state + brainstorming mockups
+.claude/
+.superpowers/
+
+# PDF build cache (JSON intermediate written by pdf/build.py)
+pdf/.cache/

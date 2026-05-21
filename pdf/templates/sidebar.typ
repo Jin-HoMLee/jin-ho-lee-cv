@@ -1,0 +1,52 @@
+#import "../styles.typ": *
+
+#let _skills(skills) = {
+  section-heading("Skills")
+  for category in skills.categories {
+    text(weight: 600, size: size-small)[#category.name]
+    v(2pt)
+    for group in category.groups {
+      text(size: size-small, fill: muted)[#group.label:]
+      h(3pt)
+      text(size: size-small)[#group.items.join(", ")]
+      linebreak()
+    }
+    v(space-paragraph)
+  }
+}
+
+#let _languages(langs) = {
+  section-heading("Languages")
+  for l in langs {
+    grid(
+      columns: (1fr, auto),
+      text(size: size-small)[#l.name],
+      text(size: size-small, fill: muted)[#l.proficiency],
+    )
+    v(2pt)
+  }
+}
+
+#let _volunteer(v_data) = {
+  section-heading("Volunteer")
+  for category in v_data.categories {
+    text(weight: 600, size: size-small)[#category.name]
+    v(2pt)
+    text(size: size-small, fill: muted)[#category.entries.join(", ")]
+    v(space-paragraph)
+  }
+}
+
+#let sidebar(data) = {
+  block(
+    fill: sidebar-bg,
+    inset: (x: 10pt, y: 10pt),
+    stroke: (left: 3pt + accent),
+    width: 100%,
+    height: 100%,  // fill the grid cell vertically so the sidebar bottom-aligns with the main column
+  )[
+    #_skills(data.skills)
+    #_languages(data.languages)
+    #_volunteer(data.volunteer)
+  ]
+}
