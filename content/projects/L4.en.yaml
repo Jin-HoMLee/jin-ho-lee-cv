@@ -1,0 +1,21 @@
+id: L4
+category: life-science
+title: "Neural Stem Cell Research – Radiation Effects on 3D Differentiation"
+summary: "Scientific research project investigating the impact of ionizing radiation and extracellular vesicles on human neural progenitor cell differentiation."
+role: "Doctoral Researcher (RWTH Aachen, Forschungszentrum Jülich)"
+period:
+  start: "2018-09"
+  end: "2022-07"
+technologies:
+  - "3D Cell Culture Modeling"
+  - "qPCR"
+  - "Fluorescence Microscopy"
+  - "FACS"
+  - "Biochemistry"
+  - "ImageJ"
+  - "MS Office"
+contributions:
+  - "Experimental Design: Developed and executed a multi-year research project at the intersection of radiation biology and neuroscience."
+  - "Leadership & Mentoring: Supervised and guided students, junior researchers, and technical staff through complex laboratory workflows."
+  - "Scientific Communication: Secured third-party funding, established research collaborations, and published findings in peer-reviewed journals."
+outcome: "Successfully identified new insights into neural radiation responses and presented results at international scientific conferences."

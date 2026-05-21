@@ -1,0 +1,50 @@
+- id: cintellic
+  org:
+    name: "Cintellic / International Bank"
+    url: null
+  role:
+    en: "Consultant, Lead Business Functional Analyst"
+  period:
+    start: "2024-05"
+    end: "2025-07"
+  bullets:
+    - en: "Scale: Architecting the migration of 1,000+ analytical processes to Google Cloud."
+      refs: [C2]
+    - en: "AI in Production: Developing BigQueryML models for anti-financial crime & KYC."
+      refs: [C1]
+    - en: "Stakeholder Lead: Bridging technical data engineering with business requirements for high-stakes banking."
+      refs: [C1, C2]
+
+- id: neuefische
+  org:
+    name: "neuefische GmbH"
+    url: null
+  role:
+    en: "Data Science Trainee, Associate & Coach"
+  period:
+    start: "2023-02"
+    end: "2024-04"
+  bullets:
+    - en: "Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles."
+      refs: [D3]
+    - en: "ML Development: Independently engineered a Real-Time ASL Recognition system using LSTMs, MediaPipe, and TensorFlow."
+      refs: [D1]
+
+- id: research
+  org:
+    name: "FZ Jülich / KIP / NCT / SNU / DKFZ"
+    url: null
+  role:
+    en: "Doctoral & Post-Graduate Researcher"
+  period:
+    start: "2014-06"
+    end: "2022-07"
+  bullets:
+    - en: "Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer patient NGS and RNA-Seq splice junction data."
+      refs: [L1, L2]
+    - en: "Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects; from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin."
+      refs: [L3]
+    - en: "Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles."
+      refs: [L4]
+    - en: "Scientific Impact: Authored 10+ peer-reviewed papers, secured third-party funding, and mentored 10+ students."
+      refs: []

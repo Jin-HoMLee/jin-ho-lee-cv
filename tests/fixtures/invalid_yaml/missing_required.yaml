@@ -1,0 +1,10 @@
+name:
+  given: "Test"
+  family: "User"
+headline:
+  en: "Test headline"
+# email deliberately missing
+location:
+  city: "Anywhere"
+  country: "ZZ"
+links: {}

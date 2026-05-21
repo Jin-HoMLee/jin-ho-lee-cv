@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Jin-Ho Lee CV content schema",
+  "$defs": {
+    "LangString": {
+      "type": "object",
+      "properties": {
+        "en": { "type": "string", "minLength": 1 },
+        "de": { "type": "string", "minLength": 1 }
+      },
+      "required": ["en"],
+      "additionalProperties": false
+    },
+    "DateYM": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+      "description": "Year-month, e.g. '2024-05'"
+    },
+    "Period": {
+      "type": "object",
+      "properties": {
+        "start": { "$ref": "#/$defs/DateYM" },
+        "end": {
+          "oneOf": [
+            { "$ref": "#/$defs/DateYM" },
+            { "type": "null" }
+          ]
+        }
+      },
+      "required": ["start"],
+      "additionalProperties": false
+    },
+    "ProjectId": {
+      "type": "string",
+      "pattern": "^[LDC][0-9]+$"
+    },
+    "personal": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "object",
+          "properties": {
+            "given": { "type": "string", "minLength": 1 },
+            "family": { "type": "string", "minLength": 1 }
+          },
+          "required": ["given", "family"],
+          "additionalProperties": false
+        },
+        "headline": { "$ref": "#/$defs/LangString" },
+        "email": { "type": "string", "format": "email" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "city": { "type": "string" },
+            "country": { "type": "string" }
+          },
+          "required": ["city", "country"],
+          "additionalProperties": false
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [{ "type": "string", "format": "uri" }, { "type": "null" }]
+          }
+        },
+        "photo": { "type": "string" }
+      },
+      "required": ["name", "headline", "email", "location", "links"],
+      "additionalProperties": false
+    },
+    "profile": {
+      "type": "object",
+      "properties": {
+        "tagline": { "type": "string" },
+        "paragraphs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        }
+      },
+      "required": ["paragraphs"],
+      "additionalProperties": false
+    },
+    "skills": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "$ref": "#/$defs/LangString" },
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": { "$ref": "#/$defs/LangString" },
+                    "items": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "minItems": 1
+                    }
+                  },
+                  "required": ["label", "items"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["name", "groups"],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        }
+      },
+      "required": ["categories"],
+      "additionalProperties": false
+    },
+    "education": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "degree": { "$ref": "#/$defs/LangString" },
+          "institution": { "type": "string" },
+          "location": { "type": "string" },
+          "year": { "type": "integer", "minimum": 1900, "maximum": 2100 }
+        },
+        "required": ["degree", "institution", "year"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "experience": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*$" },
+          "org": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "url": { "oneOf": [{ "type": "string", "format": "uri" }, { "type": "null" }] }
+            },
+            "required": ["name"],
+            "additionalProperties": false
+          },
+          "role": { "$ref": "#/$defs/LangString" },
+          "period": { "$ref": "#/$defs/Period" },
+          "bullets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "en": { "type": "string", "minLength": 1 },
+                "de": { "type": "string", "minLength": 1 },
+                "refs": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/ProjectId" }
+                }
+              },
+              "required": ["en"],
+              "additionalProperties": false
+            },
+            "minItems": 1
+          }
+        },
+        "required": ["id", "org", "role", "period", "bullets"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "project": {
+      "type": "object",
+      "properties": {
+        "id": { "$ref": "#/$defs/ProjectId" },
+        "category": { "enum": ["life-science", "data-science", "consulting"] },
+        "title": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "minLength": 1 },
+        "period": { "$ref": "#/$defs/Period" },
+        "technologies": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "contributions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        },
+        "outcome": { "type": "string", "minLength": 1 }
+      },
+      "required": ["id", "category", "title", "summary", "role", "period", "technologies", "contributions", "outcome"],
+      "additionalProperties": false
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "$ref": "#/$defs/LangString" },
+          "proficiency": { "enum": ["native", "fluent", "basic", "passive"] }
+        },
+        "required": ["name", "proficiency"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "volunteer": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "$ref": "#/$defs/LangString" },
+              "entries": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1
+              }
+            },
+            "required": ["name", "entries"],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        }
+      },
+      "required": ["categories"],
+      "additionalProperties": false
+    }
+  }
+}

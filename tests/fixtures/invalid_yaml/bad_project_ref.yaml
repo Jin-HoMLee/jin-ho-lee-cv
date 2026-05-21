@@ -1,0 +1,12 @@
+- id: test_role
+  org:
+    name: "Test Co"
+    url: null
+  role:
+    en: "Tester"
+  period:
+    start: "2020-01"
+    end: "2021-01"
+  bullets:
+    - en: "Did things."
+      refs: [L99]

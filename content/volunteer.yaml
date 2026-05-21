@@ -1,0 +1,30 @@
+categories:
+  - name: { en: "Community" }
+    entries:
+      - "Jülicher Tafel e.V."
+      - "In via - Café Gemeinsam"
+      - "Amnesty International"
+      - "Florence-Nightingale-Krankenhaus"
+
+  - name: { en: "Environment" }
+    entries:
+      - "Foodsharing e.V. (Operations Manager)"
+      - "Österreichisches Waldgarten-Institut"
+      - "Hofwaerts"
+
+  - name: { en: "Sports" }
+    entries:
+      - "UBC Mannheim"
+      - "Sobell Badminton Club"
+      - "ASD Gymnase"
+      - "BSG Jülich 1963 e.V."
+      - "WAT Simmering"
+      - "TSG 1889 Dossenheim e.V."
+      - "HTV 1846 e.V."
+
+  - name: { en: "Other" }
+    entries:
+      - "Choir"
+      - "KingShot"
+      - "Chrome Extensions"
+      - "Vanlife"

@@ -1,0 +1,18 @@
+id: C2
+category: consulting
+title: "Hyper-Personalized Digital Customer Platform"
+summary: "Data model development supporting hyper-personalized customer communication during migration of customer data infrastructure to Google Cloud."
+role: "Lead Business Functional Analyst (Cintellic GmbH)"
+period:
+  start: "2024-05"
+  end: "2024-10"
+technologies:
+  - "Google Cloud Platform"
+  - "BigQuery"
+  - "SQL"
+  - "Python"
+contributions:
+  - "Conducted requirements analysis with business and analytics stakeholders."
+  - "Mapped data tables from legacy systems to the new cloud architecture."
+  - "Supported integration of over 1000 analytical processes into the cloud platform."
+outcome: "Enabled scalable data infrastructure for personalized marketing initiatives."
