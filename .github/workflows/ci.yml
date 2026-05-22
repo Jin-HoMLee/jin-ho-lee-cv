@@ -38,6 +38,8 @@ jobs:
   build-pdf:
     needs: validate
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -72,3 +74,25 @@ jobs:
           path: dist/cv-en.pdf
           retention-days: 30
           if-no-files-found: error
+
+      - name: Compute release metadata
+        id: meta
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "date=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+          echo "short_sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: cv-${{ steps.meta.outputs.date }}-${{ steps.meta.outputs.short_sha }}
+          name: CV ${{ steps.meta.outputs.date }}
+          files: dist/cv-en.pdf
+          make_latest: true
+          body: |
+            Auto-generated CV release from commit ${{ github.sha }}.
+
+            Commit: ${{ github.event.head_commit.message }}
+
+            View commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
