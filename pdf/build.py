@@ -134,6 +134,7 @@ def main(argv: list[str] | None = None) -> int:
             "typst", "compile",
             "--root", str(REPO_ROOT),
             "--input", photo_input,
+            "--input", f"lang={args.lang}",
             str(template),
             str(out_path),
         ],
