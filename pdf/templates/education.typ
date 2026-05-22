@@ -1,7 +1,7 @@
 #import "../styles.typ": *
 
-#let education(entries) = {
-  section-heading("Education")
+#let education(entries, labels) = {
+  section-heading(labels.sections.education)
 
   for entry in entries {
     grid(

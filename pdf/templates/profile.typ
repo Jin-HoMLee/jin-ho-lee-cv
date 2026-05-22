@@ -1,7 +1,7 @@
 #import "../styles.typ": *
 
-#let profile(p) = {
-  section-heading("Profile")
+#let profile(p, labels) = {
+  section-heading(labels.sections.profile)
 
   if "tagline" in p {
     text(weight: 600)[#p.tagline]
