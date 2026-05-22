@@ -13,10 +13,10 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v8
         with:
           version: "latest"
 
@@ -41,10 +41,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v8
         with:
           version: "latest"
 
@@ -59,7 +59,7 @@ jobs:
         run: echo "version=$(cat .typstversion)" >> "$GITHUB_OUTPUT"
 
       - name: Install Typst
-        uses: typst-community/setup-typst@v3
+        uses: typst-community/setup-typst@v5
         with:
           typst-version: ${{ steps.typst-version.outputs.version }}
 
@@ -74,7 +74,7 @@ jobs:
 
       - name: Upload PR preview artifact
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cv-en-pdf
           path: dist/cv-en.pdf
@@ -90,7 +90,7 @@ jobs:
 
       - name: Create GitHub Release
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: cv-${{ steps.meta.outputs.date }}-${{ steps.meta.outputs.short_sha }}
           name: CV ${{ steps.meta.outputs.date }}
