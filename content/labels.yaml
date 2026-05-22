@@ -1,0 +1,27 @@
+sections:
+  profile:    { en: "Profile",    de: "Profil" }
+  experience: { en: "Experience", de: "Berufserfahrung" }
+  education:  { en: "Education",  de: "Ausbildung" }
+  skills:     { en: "Skills",     de: "Kenntnisse" }
+  languages:  { en: "Languages",  de: "Sprachen" }
+  volunteer:  { en: "Volunteer",  de: "Ehrenamtlich" }
+
+months_abbr:
+  - { en: "Jan", de: "Jan" }
+  - { en: "Feb", de: "Feb" }
+  - { en: "Mar", de: "Mär" }
+  - { en: "Apr", de: "Apr" }
+  - { en: "May", de: "Mai" }
+  - { en: "Jun", de: "Jun" }
+  - { en: "Jul", de: "Jul" }
+  - { en: "Aug", de: "Aug" }
+  - { en: "Sep", de: "Sep" }
+  - { en: "Oct", de: "Okt" }
+  - { en: "Nov", de: "Nov" }
+  - { en: "Dec", de: "Dez" }
+
+proficiency:
+  native:  { en: "native",  de: "Muttersprache" }
+  fluent:  { en: "fluent",  de: "fließend" }
+  basic:   { en: "basic",   de: "Grundkenntnisse" }
+  passive: { en: "passive", de: "passive Kenntnisse" }
