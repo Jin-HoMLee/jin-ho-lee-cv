@@ -1,0 +1,21 @@
+id: C1
+category: consulting
+title: "Geldwäscheprävention – Know-Your-Customer-Plattform (KYC)"
+summary: "Cloud-Migration und Entwicklung einer Analyse-Umgebung zur Erkennung von Finanzkriminalität bei einer großen internationalen Bank."
+role: "Lead Business Functional Analyst (Cintellic GmbH)"
+period:
+  start: "2024-08"
+  end: "2025-07"
+technologies:
+  - "Google Cloud Platform"
+  - "BigQuery"
+  - "Python"
+  - "SAS"
+  - "Looker"
+contributions:
+  - "Ausbau der Python-basierten Analyse-Umgebung in Google Cloud."
+  - "Migration bestehender SAS-Reporting-Workflows in Python-basierte Pipelines."
+  - "Evaluierung von BI-Funktionalitäten mit Looker und Vorbereitung des Datenmodells."
+  - "Stakeholder-Management und Anforderungsanalyse."
+  - "Unterstützung der AML-Risikoanalyse durch Ad-hoc-Untersuchungen von Kundenbeziehungen."
+outcome: "Ermöglichung der Überführung bestehender Reporting-Prozesse in eine skalierbare cloudbasierte Analyse-Umgebung."

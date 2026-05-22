@@ -1,0 +1,21 @@
+id: L3
+category: life-science
+title: "Experimentelle Biophysik — Chromatin-Nano-Architektur & DNA-Reparatur"
+summary: "Fortgeschrittene Forschung mit Super-Resolution-Mikroskopie und computergestützter Analyse zur Untersuchung von DNA-Reparaturmechanismen und Chromatin-Nano-Architektur."
+role: "Wissenschaftlicher Mitarbeiter / Masterand"
+period:
+  start: "2017-05"
+  end: "2018-08"
+technologies:
+  - "MATLAB"
+  - "Linux"
+  - "R"
+  - "Python"
+  - "COMBO-FISH"
+  - "SPDM"
+  - "DBSCAN"
+contributions:
+  - "Experimentelles Design: Entwicklung und Durchführung von Forschungsprojekten zu DNA-Reparaturwegen und Super-Resolution-Bildgebung von Chromatinstrukturen."
+  - "Datenanalyse & Modellierung: Einsatz von MATLAB, R und Python zur Verarbeitung komplexer Bilddaten und zur quantitativen Analyse nanoskaliger Strukturen."
+  - "Wissenschaftliche Leitung: Steuerung internationaler Forschungskooperationen und Betreuung mehrerer Bachelor- und Masterstudierender über den gesamten Projektverlauf."
+outcome: "Veröffentlichung der Forschungsergebnisse in mehreren peer-reviewten Fachzeitschriften und Einwerbung von Drittmitteln für weiterführende wissenschaftliche Untersuchungen."

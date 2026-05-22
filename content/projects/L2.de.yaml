@@ -1,0 +1,21 @@
+id: L2
+category: life-science
+title: "Personalisierte Immuntherapie – Hochdurchsatz-HLA-Typisierungs-Pipeline"
+summary: "Bioinformatischer Workflow zur Identifizierung patientenspezifischer Krebs-Targets und Automatisierung der HLA-Genotypisierung aus Next-Generation-Sequencing-Daten (NGS)."
+role: "Bioinformatik-Bachelorand (NCT Heidelberg)"
+period:
+  start: "2013-10"
+  end: "2014-06"
+technologies:
+  - "Python"
+  - "R"
+  - "HLAMiner"
+  - "Seq2HLA"
+  - "NetMHCPan (Neural Networks)"
+  - "Shell Scripting"
+contributions:
+  - "Entwicklung einer in silico Genotypisierungs-Pipeline zur direkten Extraktion von HLA-Allelen aus Whole-Exome-Sequencing-Daten (WXS)."
+  - "Implementierung prädiktiver Modellierung mittels ANNs (NetMHCPan) zum Screening von Missense-Mutationen auf MHC-I-Bindungsaffinität."
+  - "Konzeption einer Konsens-Methodik zur Integration mehrerer HLA-Typisierungs-Algorithmen zur Auflösung von Sequenz-Ambiguitäten und Steigerung der diagnostischen Zuverlässigkeit."
+  - "Validierung der Pipeline durch Analyse der Bindungsspezifitäten über HLA-Allele hinweg zur Reduzierung von Typisierungsfehlern im Impfstoffdesign."
+outcome: "Nachgewiesen, dass ein vollständig computergestützter Ansatz zur Neoantigen-Entdeckung praktikabel ist und Kosten sowie Vorlaufzeiten gegenüber klassischen PCR-basierten klinischen Assays deutlich reduziert."
