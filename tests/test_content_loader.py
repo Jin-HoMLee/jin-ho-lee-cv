@@ -47,7 +47,7 @@ def test_load_content_with_private_merges_overlay(content_dir, tmp_path):
 def test_load_content_includes_all_sections(content_dir):
     content = load_content(content_dir, private_path=None)
     for key in ("personal", "profile", "skills", "education",
-                "experience", "projects", "languages", "volunteer", "publications"):
+                "experience", "projects", "languages", "volunteer", "publications", "labels"):
         assert key in content, f"missing {key} in loaded content"
 
 

@@ -75,5 +75,6 @@ def load_content(
         "languages": _load_yaml(content_dir / "languages.yaml"),
         "volunteer": _load_yaml(content_dir / "volunteer.yaml"),
         "publications": load_publications(content_dir / "publications.bib"),
+        "labels": _load_yaml(content_dir / "labels.yaml"),
     }
     return content
