@@ -17,7 +17,7 @@ Six phases, sequential. Each produces a usable artifact and gets its own brainst
 | Phase | Scope | Status |
 |---|---|---|
 | 0 | Content migration & validation | ✅ Done (merged 2026-05-21, commit `d464f58`) |
-| 1 | PDF rendering via Typst | Not started |
+| 1 | PDF rendering via Typst | ✅ Done (merged 2026-05-21, commit `996d07e`) |
 | 2 | German translations + CI release automation | Not started |
 | 3 | Astro website + GitHub Pages | Not started |
 | 4 | JSON Resume + JSON-LD + plain text + publication chart | Not started |
