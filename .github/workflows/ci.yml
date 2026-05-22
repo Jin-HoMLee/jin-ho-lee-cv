@@ -63,3 +63,12 @@ jobs:
 
       - name: Build EN PDF
         run: uv run python -m pdf.build --lang en
+
+      - name: Upload PR preview artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-en-pdf
+          path: dist/cv-en.pdf
+          retention-days: 30
+          if-no-files-found: error
