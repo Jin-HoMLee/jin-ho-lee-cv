@@ -1,30 +1,33 @@
 categories:
   - name:
       en: "Bioinformatics & ML"
+      de: "Bioinformatik & ML"
     groups:
-      - label: { en: "Genomics" }
+      - label: { en: "Genomics", de: "Genomik" }
         items: ["NGS", "RNA-Seq", "SNV Calling", "Splice Analysis"]
-      - label: { en: "Immunology" }
+      - label: { en: "Immunology", de: "Immunologie" }
         items: ["MHC-I Prediction", "HLA Typing", "Neoepitopes"]
-      - label: { en: "Nanoscopy" }
+      - label: { en: "Nanoscopy", de: "Nanoskopie" }
         items: ["Spatial Point-Pattern", "Cluster Analysis (DBSCAN)"]
 
   - name:
       en: "Biotech Wet-Lab"
+      de: "Biotech Nasslabor"
     groups:
-      - label: { en: "Models" }
+      - label: { en: "Models", de: "Modelle" }
         items: ["Cancer/Tumor", "3D Cell Culture", "Neural Progenitors"]
-      - label: { en: "Imaging" }
+      - label: { en: "Imaging", de: "Bildgebung" }
         items: ["Super-Resolution", "Confocal", "Fluorescence"]
-      - label: { en: "Assays" }
+      - label: { en: "Assays", de: "Assays" }
         items: ["FISH", "IF", "qPCR", "FACS"]
 
   - name:
       en: "Data & Engineering"
+      de: "Daten & Engineering"
     groups:
-      - label: { en: "AI & Vision" }
+      - label: { en: "AI & Vision", de: "KI & Vision" }
         items: ["TensorFlow", "Keras", "LSTMs", "OpenCV"]
-      - label: { en: "Eng & Tools" }
+      - label: { en: "Eng & Tools", de: "Eng & Tools" }
         items: ["Python (Exp)", "R", "SQL", "Docker", "Git", "dbt"]
-      - label: { en: "Cloud" }
+      - label: { en: "Cloud", de: "Cloud" }
         items: ["GCP", "BigQuery", "Vertex AI", "Looker"]

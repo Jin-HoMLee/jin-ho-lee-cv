@@ -4,15 +4,19 @@
     url: null
   role:
     en: "Consultant, Lead Business Functional Analyst"
+    de: "Berater, Lead Business Functional Analyst"
   period:
     start: "2024-05"
     end: "2025-07"
   bullets:
     - en: "Scale: Architecting the migration of 1,000+ analytical processes to Google Cloud."
+      de: "Skalierung: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud."
       refs: [C2]
     - en: "AI in Production: Developing BigQueryML models for anti-financial crime & KYC."
+      de: "KI in Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC."
       refs: [C1]
     - en: "Stakeholder Lead: Bridging technical data engineering with business requirements for high-stakes banking."
+      de: "Stakeholder Lead: Brückenfunktion zwischen technischem Data Engineering und Fachanforderungen im hochregulierten Bankensektor."
       refs: [C1, C2]
 
 - id: neuefische
@@ -21,13 +25,16 @@
     url: null
   role:
     en: "Data Science Trainee, Associate & Coach"
+    de: "Data Science Trainee, Associate & Coach"
   period:
     start: "2023-02"
     end: "2024-04"
   bullets:
     - en: "Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles."
+      de: "Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen."
       refs: [D3]
     - en: "ML Development: Independently engineered a Real-Time ASL Recognition system using LSTMs, MediaPipe, and TensorFlow."
+      de: "ML-Entwicklung: Eigenständige Entwicklung eines Echtzeit-ASL-Erkennungssystems mit LSTMs, MediaPipe und TensorFlow."
       refs: [D1]
 
 - id: research
@@ -36,15 +43,20 @@
     url: null
   role:
     en: "Doctoral & Post-Graduate Researcher"
+    de: "Doktorand & Postgraduierter Forscher"
   period:
     start: "2014-06"
     end: "2022-07"
   bullets:
     - en: "Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer patient NGS and RNA-Seq splice junction data."
+      de: "Genomik & Immuntherapie: Entwicklung von in-silico-Pipelines zur HLA-Typisierung und Neoantigen-Discovery aus NGS- und RNA-Seq-Splice-Junction-Daten von Krebspatienten."
       refs: [L1, L2]
     - en: "Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects; from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin."
+      de: "Biophysik & Bildgebung: End-to-End-Leitung von Super-Resolution-Mikroskopie-Projekten; von Nasslabor-Forschung bis zur räumlichen Punktmuster-Analyse (MATLAB/Python) zur Untersuchung von Chromatin."
       refs: [L3]
     - en: "Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles."
+      de: "Neurobiologie: Untersuchung von Strahlungseffekten auf die neuronale Vorläuferdifferenzierung mit 3D-Zellmodellen sowie der Rolle extrazellulärer Vesikel."
       refs: [L4]
     - en: "Scientific Impact: Authored 10+ peer-reviewed papers, secured third-party funding, and mentored 10+ students."
+      de: "Wissenschaftlicher Impact: 10+ peer-reviewte Publikationen, Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden."
       refs: []

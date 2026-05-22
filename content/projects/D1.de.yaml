@@ -1,0 +1,22 @@
+id: D1
+category: data-science
+title: "SignMeUp – Echtzeit-Erkennung der American Sign Language (ASL)"
+summary: "Machine-Learning-Pipeline und Anwendungsprototyp zur Echtzeit-Erkennung von ASL-Gesten, konzipiert für die Integration in eine digitale Lern-App für Gebärdensprache."
+role: "Projektmanager / Data Scientist (neuefische GmbH)"
+period:
+  start: "2023-09"
+  end: "2023-12"
+technologies:
+  - "Python"
+  - "TensorFlow (Keras)"
+  - "LSTM"
+  - "MediaPipe"
+  - "OpenCV"
+  - "Google Cloud"
+  - "Scikit-Learn"
+  - "MLflow"
+contributions:
+  - "Projektleitung: Definition des Projektumfangs, Steuerung der Team-Kommunikation und Durchführung von Stakeholder-Präsentationen."
+  - "Modellentwicklung: Konzeption und Optimierung eines LSTM-Neuronennetzes zur Klassifikation zeitlicher Sequenzen von ASL-Gesten."
+  - "Data Engineering: Entwicklung einer Pipeline zur Echtzeit-Landmark-Extraktion, Feature-Engineering und Datenbereinigung aus Video-Streams."
+outcome: "Lieferung eines funktionsfähigen Prototyps für Echtzeit-Inferenz, der unmittelbares Feedback für Lernende der Gebärdensprache ermöglicht."

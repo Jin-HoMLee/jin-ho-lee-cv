@@ -37,3 +37,68 @@ def test_validate_tree_returns_empty_on_clean_content(content_dir, schema_path):
     """validate_tree on the real content/ should produce no errors (once migrated)."""
     errors = validate_tree(content_dir, schema_path)
     assert errors == [], f"Unexpected validation errors: {errors}"
+
+
+def _write_minimal_content_tree(content: Path) -> None:
+    """Write the minimal set of valid top-level content files for parity tests."""
+    (content / "personal.yaml").write_text(
+        "name:\n  given: Test\n  family: User\n"
+        "email: t@example.com\n"
+        "location: { city: X, country: DE }\n"
+        "links: { linkedin: null, github: null, researchgate: null, orcid: null }\n"
+        "photo: assets/photo.jpg\n"
+        "headline: { en: T }\n"
+    )
+    (content / "profile.en.yaml").write_text("tagline: T\nparagraphs: [P]\n")
+    (content / "skills.yaml").write_text("categories: []\n")
+    (content / "education.yaml").write_text("[]\n")
+    (content / "experience.yaml").write_text("[]\n")
+    (content / "languages.yaml").write_text("[]\n")
+    (content / "volunteer.yaml").write_text("categories: []\n")
+    (content / "publications.bib").write_text("")
+    (content / "labels.yaml").write_text(
+        "sections: { profile: { en: P }, experience: { en: E }, "
+        "education: { en: E }, skills: { en: S }, languages: { en: L }, volunteer: { en: V } }\n"
+        "months_abbr: []\n"
+        "proficiency: { native: { en: n }, fluent: { en: f }, basic: { en: b }, passive: { en: p } }\n"
+    )
+
+
+_SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schema" / "cv.schema.json"
+
+
+def test_de_en_project_file_parity_fails_on_missing_de(tmp_path):
+    """validate_tree should report an error when an .en.yaml exists without matching .de.yaml."""
+    content = tmp_path / "content"
+    (content / "projects").mkdir(parents=True)
+    _write_minimal_content_tree(content)
+
+    # The asymmetry: L1 exists in EN but not DE
+    (content / "projects" / "L1.en.yaml").write_text(
+        "id: L1\ncategory: life-science\ntitle: T\nsummary: S\n"
+        "role: R\nperiod: { start: '2020-01', end: '2020-02' }\n"
+        "technologies: [X]\ncontributions: [C]\noutcome: O\n"
+    )
+
+    errors = validate_tree(content, _SCHEMA_PATH)
+    assert any("L1.de.yaml" in str(e) for e in errors), (
+        f"expected missing-DE-file error, got: {errors}"
+    )
+
+
+def test_de_en_project_file_parity_fails_on_missing_en(tmp_path):
+    """validate_tree should also catch DE-only project files (something's wrong if EN is missing)."""
+    content = tmp_path / "content"
+    (content / "projects").mkdir(parents=True)
+    _write_minimal_content_tree(content)
+
+    (content / "projects" / "L1.de.yaml").write_text(
+        "id: L1\ncategory: life-science\ntitle: T\nsummary: S\n"
+        "role: R\nperiod: { start: '2020-01', end: '2020-02' }\n"
+        "technologies: [X]\ncontributions: [C]\noutcome: O\n"
+    )
+
+    errors = validate_tree(content, _SCHEMA_PATH)
+    assert any("L1.en.yaml" in str(e) for e in errors), (
+        f"expected missing-EN-file error, got: {errors}"
+    )

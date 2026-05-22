@@ -38,8 +38,9 @@ jobs:
   build-pdf:
     needs: validate
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    strategy:
+      matrix:
+        lang: [en, de]
     steps:
       - uses: actions/checkout@v6
 
@@ -69,32 +70,44 @@ jobs:
           sudo apt-get install -y fonts-ibm-plex
           fc-cache -f
 
-      - name: Build EN PDF
-        run: uv run python -m pdf.build --lang en
+      - name: Build ${{ matrix.lang }} PDF
+        run: uv run python -m pdf.build --lang ${{ matrix.lang }}
 
-      - name: Upload PR preview artifact
-        if: github.event_name == 'pull_request'
+      - name: Upload PDF artifact
         uses: actions/upload-artifact@v7
         with:
-          name: cv-en-pdf
-          path: dist/cv-en.pdf
-          retention-days: 30
+          name: cv-${{ matrix.lang }}-pdf
+          path: dist/cv-${{ matrix.lang }}.pdf
+          retention-days: ${{ github.event_name == 'pull_request' && 30 || 1 }}
           if-no-files-found: error
+
+  release:
+    needs: build-pdf
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all PDF artifacts
+        uses: actions/download-artifact@v7
+        with:
+          path: dist
+          merge-multiple: true
 
       - name: Compute release metadata
         id: meta
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           echo "date=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
           echo "short_sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v3
         with:
           tag_name: cv-${{ steps.meta.outputs.date }}-${{ steps.meta.outputs.short_sha }}
           name: CV ${{ steps.meta.outputs.date }}
-          files: dist/cv-en.pdf
+          files: |
+            dist/cv-en.pdf
+            dist/cv-de.pdf
           make_latest: true
           body: |
             Auto-generated CV release from commit ${{ github.sha }}.
