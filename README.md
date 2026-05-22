@@ -1,5 +1,7 @@
 # Jin-Ho Lee — Codified CV
 
+**Latest CV:** [Download `cv-en.pdf`](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-en.pdf) — auto-published on every change to `main`.
+
 Machine-readable, version-controlled CV. Single source of truth in YAML + BibTeX; renderers produce PDF, website, JSON Resume, JSON-LD, and plain text.
 
 See `docs/superpowers/specs/` for the architectural spec and `docs/superpowers/plans/` for active implementation plans.
