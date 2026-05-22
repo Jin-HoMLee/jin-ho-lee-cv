@@ -5,9 +5,9 @@
   months.at(int(parts.at(1)) - 1) + " " + parts.at(0)
 }
 
-#let _period(p, months) = {
+#let _period(p, months, present_label) = {
   let s = _format-ym(p.start, months)
-  let e = if "end" in p and p.end != none { _format-ym(p.end, months) } else { "present" }
+  let e = if "end" in p and p.end != none { _format-ym(p.end, months) } else { present_label }
   s + " – " + e
 }
 
@@ -44,7 +44,7 @@
       columns: (1fr, auto),
       align: (left, right),
       text(weight: 600)[#entry.org.name],
-      text(size: size-small, fill: muted)[#_period(entry.period, months)],
+      text(size: size-small, fill: muted)[#_period(entry.period, months, labels.misc.present)],
     )
     text(style: "italic", fill: muted)[#entry.role]
     v(space-paragraph)
