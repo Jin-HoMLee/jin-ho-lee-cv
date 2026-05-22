@@ -25,3 +25,6 @@ proficiency:
   fluent:  { en: "fluent",  de: "fließend" }
   basic:   { en: "basic",   de: "Grundkenntnisse" }
   passive: { en: "passive", de: "passive Kenntnisse" }
+
+misc:
+  present: { en: "present", de: "heute" }
