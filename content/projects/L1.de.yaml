@@ -1,0 +1,21 @@
+id: L1
+category: life-science
+title: "Krebs-Neoantigen-Entdeckung – Transkriptomweite Splice-Analyse"
+summary: "Bioinformatik-Pipeline zur Identifizierung neuartiger Immuntherapie-Targets aus aberrantem alternativem Splicing in RNA-Seq-Daten."
+role: "Bioinformatik-Forschungspraktikant (Seoul National University)"
+period:
+  start: "2018-09"
+  end: "2019-03"
+technologies:
+  - "Python"
+  - "R"
+  - "MapSplice"
+  - "RNA-Seq"
+  - "TCGA Datasets"
+  - "MHC-I Prediction Tools"
+contributions:
+  - "Entwicklung einer Discovery-Pipeline zur Identifizierung tumorspezifischer Splice-Junctions in großen Krebs-Datensätzen."
+  - "Kartierung der Epitop-Landschaft durch Vorhersage hochaffiner MHC-I-bindender Peptide aus nicht-kanonischen Transkripten."
+  - "Validierung des Vorhersagemodells durch Abgleich der Ergebnisse mit hochrangigen transkriptomischen Studien."
+  - "Bewertung synergistischer Strategien zur kombinierten Adressierung mutations- und splice-abgeleiteter Neoantigene."
+outcome: "Nachgewiesen, dass alternatives Splicing eine geeignete Quelle für hochaffine Epitope darstellt und die Target-Identifizierung über klassische somatische Mutationen hinaus erweitert."

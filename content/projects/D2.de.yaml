@@ -1,0 +1,18 @@
+id: D2
+category: data-science
+title: "Shuttle Insights – KI-gestützte Badminton-Spielanalyse"
+summary: "Computer-Vision-System zur Analyse von Badminton-Gameplay aus Videoaufzeichnungen."
+role: "Data Scientist / Entwickler"
+period:
+  start: "2024-01"
+  end: "2024-04"
+technologies:
+  - "Python"
+  - "OpenCV"
+  - "TensorFlow"
+  - "MediaPipe"
+contributions:
+  - "Entwicklung einer Computer-Vision-Pipeline zur Erkennung von Spielern und zum Tracking der Shuttle-Flugbahnen."
+  - "Implementierung von Pose-Estimation-Modellen zur Analyse von Bewegungsmustern der Spieler."
+  - "Extraktion von Spielmetriken wie Ballwechseldauer und Spielerpositionierung."
+outcome: "Funktionsfähiger Prototyp, der Match-Statistiken und Bewegungsanalysen generieren kann."

@@ -1,0 +1,24 @@
+id: D3
+category: data-science
+title: "Data-Science-Bootcamp-Programm"
+summary: "Professionelles Weiterbildungsprogramm zur Qualifizierung von Teilnehmenden für Data-Science-Karrieren."
+role: "Data Science Coach (neuefische GmbH)"
+period:
+  start: "2023-09"
+  end: "2024-04"
+technologies:
+  - "Python"
+  - "Pandas"
+  - "NumPy"
+  - "Scikit-Learn"
+  - "TensorFlow"
+  - "SQL"
+  - "Docker"
+  - "dbt"
+  - "Google Cloud"
+contributions:
+  - "Durchführung von Vorlesungen zu Python, Machine Learning, SQL und Datenvisualisierung."
+  - "Mentoring der Teilnehmenden über den gesamten Data-Science-Lebenszyklus hinweg."
+  - "Betreuung von Capstone-Projekten und technischen Präsentationen."
+  - "Entwicklung und Weiterentwicklung von Schulungsmaterialien."
+outcome: "Erfolgreiche Begleitung mehrerer Kohorten beim Aufbau industrietauglicher Data-Science-Kompetenzen."
