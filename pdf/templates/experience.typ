@@ -1,20 +1,18 @@
 #import "../styles.typ": *
 
-#let _months = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-
-#let _format-ym(ym) = {
+#let _format-ym(ym, months) = {
   let parts = ym.split("-")
-  _months.at(int(parts.at(1)) - 1) + " " + parts.at(0)
+  months.at(int(parts.at(1)) - 1) + " " + parts.at(0)
 }
 
-#let _period(p) = {
-  let s = _format-ym(p.start)
-  let e = if "end" in p and p.end != none { _format-ym(p.end) } else { "present" }
+#let _period(p, months, present_label) = {
+  let s = _format-ym(p.start, months)
+  let e = if "end" in p and p.end != none { _format-ym(p.end, months) } else { present_label }
   s + " – " + e
 }
 
-#let _bullet(b) = {
-  let txt = b.en
+#let _bullet(b, lang) = {
+  let txt = b.at(lang)
   let refs = b.at("refs", default: ())
 
   // Bullet line: dash + text + optional refs at end
@@ -36,8 +34,9 @@
   v(2pt)
 }
 
-#let experience(entries) = {
-  section-heading("Experience")
+#let experience(entries, labels, lang) = {
+  section-heading(labels.sections.experience)
+  let months = labels.months_abbr
 
   for entry in entries {
     // Org + period on one line; role on next
@@ -45,13 +44,13 @@
       columns: (1fr, auto),
       align: (left, right),
       text(weight: 600)[#entry.org.name],
-      text(size: size-small, fill: muted)[#_period(entry.period)],
+      text(size: size-small, fill: muted)[#_period(entry.period, months, labels.misc.present)],
     )
     text(style: "italic", fill: muted)[#entry.role]
     v(space-paragraph)
 
     for bullet in entry.bullets {
-      _bullet(bullet)
+      _bullet(bullet, lang)
     }
     v(space-section / 2)
   }

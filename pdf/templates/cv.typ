@@ -6,6 +6,7 @@
 #import "sidebar.typ": sidebar
 
 #let data = json("../.cache/data.json")
+#let lang = sys.inputs.at("lang", default: "en")
 
 #set page(
   paper: "a4",
@@ -34,11 +35,11 @@
       gutter: column-gutter,
       // Main column — block fills the grid cell so its height matches the sidebar.
       block(width: 100%, height: 100%, {
-        profile(data.profile)
-        experience(data.experience)
-        education(data.education)
+        profile(data.profile, data.labels)
+        experience(data.experience, data.labels, lang)
+        education(data.education, data.labels)
       }),
-      sidebar(data),
+      sidebar(data, data.labels),
     ),
   )
 })

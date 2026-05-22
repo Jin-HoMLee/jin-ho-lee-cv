@@ -135,6 +135,21 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
         except ValidationError as e:
             errors.append(FileError(path, str(e)))
 
+    # Project DE-EN file parity
+    project_dir = content_dir / "projects"
+    en_ids = {p.name.split(".")[0] for p in project_dir.glob("*.en.yaml")}
+    de_ids = {p.name.split(".")[0] for p in project_dir.glob("*.de.yaml")}
+    for missing_id in en_ids - de_ids:
+        errors.append(FileError(
+            project_dir / f"{missing_id}.de.yaml",
+            "missing DE counterpart for EN project file",
+        ))
+    for missing_id in de_ids - en_ids:
+        errors.append(FileError(
+            project_dir / f"{missing_id}.en.yaml",
+            "missing EN counterpart for DE project file",
+        ))
+
     errors.extend(_validate_publications(content_dir))
     return errors
 

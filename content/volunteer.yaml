@@ -1,18 +1,18 @@
 categories:
-  - name: { en: "Community" }
+  - name: { en: "Community", de: "Soziales" }
     entries:
       - "Jülicher Tafel e.V."
       - "In via - Café Gemeinsam"
       - "Amnesty International"
       - "Florence-Nightingale-Krankenhaus"
 
-  - name: { en: "Environment" }
+  - name: { en: "Environment", de: "Umwelt" }
     entries:
       - "Foodsharing e.V. (Operations Manager)"
       - "Österreichisches Waldgarten-Institut"
       - "Hofwaerts"
 
-  - name: { en: "Sports" }
+  - name: { en: "Sports", de: "Sport" }
     entries:
       - "UBC Mannheim"
       - "Sobell Badminton Club"
@@ -22,7 +22,7 @@ categories:
       - "TSG 1889 Dossenheim e.V."
       - "HTV 1846 e.V."
 
-  - name: { en: "Other" }
+  - name: { en: "Other", de: "Sonstiges" }
     entries:
       - "Choir"
       - "KingShot"
