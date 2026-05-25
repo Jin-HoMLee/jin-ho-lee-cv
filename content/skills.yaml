@@ -12,7 +12,7 @@ categories:
 
   - name:
       en: "Biotech Wet-Lab"
-      de: "Biotech Nasslabor"
+      de: "Biotech Wet-Lab"
     groups:
       - label: { en: "Models", de: "Modelle" }
         items: ["Cancer/Tumor", "3D Cell Culture", "Neural Progenitors"]

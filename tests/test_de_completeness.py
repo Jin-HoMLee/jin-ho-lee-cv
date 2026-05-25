@@ -112,7 +112,8 @@ _INVARIANT_PATH_SUBSTRINGS = (
 #       that DO have a German translation (e.g. experience[0].role "Consultant" → "Berater").
 _INVARIANT_EXACT = frozenset(
     {
-        # Skill group labels — English tech terms used verbatim in German
+        # Skill category / group labels — English tech terms used verbatim in German
+        ".skills.categories[1].name",              # "Biotech Wet-Lab"
         ".skills.categories[1].groups[2].label",   # "Assays"
         ".skills.categories[2].groups[1].label",   # "Eng & Tools"
         ".skills.categories[2].groups[2].label",   # "Cloud"
