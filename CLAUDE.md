@@ -20,7 +20,7 @@ Six phases, sequential. Each produces a usable artifact and gets its own brainst
 | 1 | PDF rendering via Typst | ✅ Done (merged 2026-05-21, commit `996d07e`) |
 | 2a | CI release automation (EN PDF) | ✅ Done (merged 2026-05-22, commit `45c0b15`) |
 | 2b | German translations + DE PDF in CI | ✅ Done (merged 2026-05-22, commit `ee1290a`) |
-| 3 | Astro website + GitHub Pages | Not started |
+| 3 | Astro website + GitHub Pages | In progress |
 | 4 | JSON Resume + JSON-LD + plain text + publication chart | Not started |
 | 5 | Polish: custom domain, project deep-dive pages, OG images | Not started |
 
@@ -31,10 +31,12 @@ content/                  source of truth (YAML + BibTeX)
 content.private/          gitignored PII overlay (phone, address)
 content.private.example/  template showing required private keys
 schema/cv.schema.json     JSON Schema for content
-scripts/                  validate.py, bib_loader.py, content_loader.py (renderers added in later phases)
-tests/                    pytest suite (18 tests as of Phase 0)
+scripts/                  validate.py, bib_loader.py, content_loader.py, render_web_data.py
+tests/                    pytest suite
+pdf/                      Typst PDF renderer (Phase 1)
+web/                      Astro website (Phase 3)
 docs/superpowers/         specs and implementation plans for each phase
-.github/workflows/        CI (validate + test + lint on every push)
+.github/workflows/        ci.yml (validate + PDF + release), pages.yml (web deploy)
 ```
 
 ## Commands
@@ -44,6 +46,8 @@ just validate    # JSON Schema + cross-ref + bib parsing
 just test        # pytest, all suites
 just lint        # ruff check
 just fmt         # ruff format
+just web-dev     # Astro dev server (auto-regenerates content JSON)
+just web-build   # Production build of web/dist
 ```
 
 All three checks must be green before merging anything.
@@ -74,7 +78,7 @@ All three checks must be green before merging anything.
 
 ## Local-only files (not in git)
 
-- `assets/photo.jpg` — headshot, referenced from `content/personal.yaml`. Required for Phase 1 PDF builds.
+- `assets/photo.jpg` — headshot for the private PDF build, only included when `--photo` is passed. Optional; omit and the PDF renders without a photo. Kept gitignored by convention (PDFs are intentionally photo-less to avoid discrimination per German hiring norms).
 - `content.private/private.yaml` — phone + address. Copy from `content.private.example/private.example.yaml` template.
 
 ## Don't

@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@import "@fontsource/ibm-plex-sans/400.css";
+@import "@fontsource/ibm-plex-sans/500.css";
+@import "@fontsource/ibm-plex-sans/600.css";
+@import "@fontsource/ibm-plex-sans/700.css";
+
+:root {
+  --color-accent: #1f3a68; /* lifted from pdf/styles.typ */
+  --color-sidebar-bg: #f4f7fb;
+}
+
+html {
+  font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  @apply text-neutral-900 bg-white;
+}
+
+/* Smooth-scroll for project-ref badge anchors */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Allow sticky header offset for anchor jumps */
+[id] {
+  scroll-margin-top: 80px;
+}
+
+/* Section headings inherit the accent color from --color-accent. */
+section > h2 {
+  color: var(--color-accent);
+}
+
+/* Experience entries: left border in accent for the timeline feel. */
+section#experience article {
+  border-left-color: var(--color-accent);
+}

@@ -2,6 +2,8 @@
 
 **Latest CV:** [EN](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-en.pdf) · [DE](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-de.pdf) — auto-published on every change to `main`.
 
+**Website:** [jin-homlee.github.io/jin-ho-lee-cv](https://jin-homlee.github.io/jin-ho-lee-cv/) · [`/de/`](https://jin-homlee.github.io/jin-ho-lee-cv/de/) · auto-deployed on every change to `main`.
+
 Machine-readable, version-controlled CV. Single source of truth in YAML + BibTeX; renderers produce PDF, website, JSON Resume, JSON-LD, and plain text.
 
 See `docs/superpowers/specs/` for the architectural spec and `docs/superpowers/plans/` for active implementation plans.

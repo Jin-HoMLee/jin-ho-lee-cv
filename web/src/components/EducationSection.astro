@@ -1,0 +1,24 @@
+---
+import type { Education, Labels } from "../types/content";
+
+interface Props {
+  education: Education[];
+  labels: Labels;
+}
+
+const { education, labels } = Astro.props;
+---
+<section id="education" class="py-6">
+  <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+    {labels.sections.education}
+  </h2>
+  <div class="space-y-3">
+    {education.map((ed) => (
+      <div>
+        <p class="text-sm font-semibold text-neutral-900">{ed.degree}</p>
+        <p class="text-sm text-neutral-700">{ed.institution} · {ed.location}</p>
+        <p class="text-xs text-neutral-500">{ed.year}</p>
+      </div>
+    ))}
+  </div>
+</section>
