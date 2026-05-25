@@ -20,7 +20,7 @@ Six phases, sequential. Each produces a usable artifact and gets its own brainst
 | 1 | PDF rendering via Typst | ✅ Done (merged 2026-05-21, commit `996d07e`) |
 | 2a | CI release automation (EN PDF) | ✅ Done (merged 2026-05-22, commit `45c0b15`) |
 | 2b | German translations + DE PDF in CI | ✅ Done (merged 2026-05-22, commit `ee1290a`) |
-| 3 | Astro website + GitHub Pages | In progress |
+| 3 | Astro website + GitHub Pages | ✅ Done (merged 2026-05-25, commit `6018d60`) |
 | 4 | JSON Resume + JSON-LD + plain text + publication chart | Not started |
 | 5 | Polish: custom domain, project deep-dive pages, OG images | Not started |
 
