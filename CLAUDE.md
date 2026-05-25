@@ -22,7 +22,7 @@ Six phases, sequential. Each produces a usable artifact and gets its own brainst
 | 2b | German translations + DE PDF in CI | ✅ Done (merged 2026-05-22, commit `ee1290a`) |
 | 3 | Astro website + GitHub Pages | ✅ Done (merged 2026-05-25, commit `6018d60`) |
 | 4 | JSON Resume + JSON-LD + plain text + publication chart | ✅ Done (merged 2026-05-25, commit `5f3ce71`) |
-| 5 | Polish: custom domain, project deep-dive pages, OG images | Not started |
+| 5 | Polish: custom domain, project deep-dive pages, OG images, chart interactivity | Not started |
 
 ## Layout
 
@@ -42,15 +42,21 @@ docs/superpowers/         specs and implementation plans for each phase
 ## Commands
 
 ```bash
-just validate    # JSON Schema + cross-ref + bib parsing
-just test        # pytest, all suites
-just lint        # ruff check
-just fmt         # ruff format
-just web-dev     # Astro dev server (auto-regenerates content JSON)
-just web-build   # Production build of web/dist
+just validate          # JSON Schema + cross-ref + bib parsing
+just test              # pytest, all suites
+just lint              # ruff check
+just fmt               # ruff format
+just build             # → dist/cv-en.pdf
+just build-de          # → dist/cv-de.pdf
+just build-resume      # → dist/resume.json (JSON Resume)
+just build-jsonld      # → dist/person.jsonld (schema.org)
+just build-text        # → dist/cv-{en,de}.txt
+just build-formats     # all three Phase 4 machine formats
+just web-dev           # Astro dev server (regenerates content JSON + JSON-LD)
+just web-build         # Production build of web/dist
 ```
 
-All three checks must be green before merging anything.
+validate + test + lint must all be green before merging anything.
 
 ## Conventions
 
@@ -69,12 +75,12 @@ All three checks must be green before merging anything.
 4. Execute: `superpowers:subagent-driven-development` — fresh subagent per task with spec + code-quality review checkpoints.
 5. Finish: `superpowers:finishing-a-development-branch` — `--no-ff` merge to `main`.
 
-## Files to read before starting Phase 1
+## Files to read before any phase
 
-- `docs/superpowers/specs/2026-05-21-codified-cv-design.md` — full architectural spec
-- `docs/superpowers/plans/2026-05-21-phase-0-content-migration.md` — what was done
-- `scripts/content_loader.py` — the loader Phase 1's Typst builder will consume
-- `scripts/bib_loader.py` — the publication structure
+- `docs/superpowers/specs/2026-05-21-codified-cv-design.md` — full architectural spec for the whole codified-CV project
+- `docs/superpowers/specs/2026-05-25-phase-N-*-design.md` — the spec for the most recent completed phase, for the "what's the current shape" picture
+- `scripts/content_loader.py` + `scripts/bib_loader.py` + `scripts/langstring.py` — the data layer every renderer consumes
+- `scripts/render_web_data.py` — the closest pattern for a "Python script that emits JSON for a downstream renderer to consume"; mirror this style
 
 ## Local-only files (not in git)
 
