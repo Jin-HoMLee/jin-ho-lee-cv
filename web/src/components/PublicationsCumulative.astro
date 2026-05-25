@@ -25,7 +25,10 @@ const minYear = sortedYears[0] ?? 0;
 const dataMaxYear = sortedYears[sortedYears.length - 1] ?? 0;
 const currentYear = new Date().getUTCFullYear();
 const maxYear = Math.max(dataMaxYear, currentYear);
-const yearSpan = Math.max(1, maxYear - minYear);
+// Pad the X domain on the left so the "0" Y label and the first-year X label
+// don't collide. Right edge stays flush at maxYear.
+const xDomainMin = minYear - 0.7;
+const xDomainSpan = Math.max(1, maxYear - xDomainMin);
 
 const W = 480;
 const H = 130;
@@ -39,15 +42,14 @@ const chartTop = padT;
 const chartBottom = H - padB;
 
 const xScale = (year: number) =>
-  chartLeft + ((year - minYear) / yearSpan) * (chartRight - chartLeft);
+  chartLeft + ((year - xDomainMin) / xDomainSpan) * (chartRight - chartLeft);
 const yScale = (cum: number) =>
   total === 0 ? chartBottom : chartBottom - (cum / total) * (chartBottom - chartTop);
 
 function buildArea(): string {
   if (points.length === 0) return "";
   const segs: string[] = [];
-  segs.push(`M ${chartLeft} ${chartBottom}`);
-  segs.push(`L ${xScale(points[0].year)} ${chartBottom}`);
+  segs.push(`M ${xScale(points[0].year)} ${chartBottom}`);
   segs.push(`L ${xScale(points[0].year)} ${yScale(points[0].cum)}`);
   for (let i = 1; i < points.length; i++) {
     segs.push(`L ${xScale(points[i].year)} ${yScale(points[i - 1].cum)}`);
