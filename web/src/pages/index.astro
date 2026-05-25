@@ -5,6 +5,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import ProfileSection from "../components/ProfileSection.astro";
 import ExperienceSection from "../components/ExperienceSection.astro";
+import ProjectsSection from "../components/ProjectsSection.astro";
 
 const data = contentEn as unknown as ContentData;
 ---
@@ -12,4 +13,5 @@ const data = contentEn as unknown as ContentData;
   <Header slot="header" personal={data.personal} lang="en" />
   <ProfileSection personal={data.personal} profile={data.profile} labels={data.labels} />
   <ExperienceSection experience={data.experience} projects={data.projects} labels={data.labels} lang="en" />
+  <ProjectsSection projects={data.projects} labels={data.labels} lang="en" />
 </BaseLayout>
