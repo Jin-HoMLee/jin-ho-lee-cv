@@ -34,6 +34,22 @@ build-private-de:
 web-data:
     uv run python -m scripts.render_web_data
 
+# Render JSON Resume → dist/resume.json
+build-resume:
+    uv run python -m scripts.render_jsonresume
+
+# Render schema.org JSON-LD → dist/person.jsonld
+build-jsonld:
+    uv run python -m scripts.render_jsonld
+
+# Render plain text in both languages → dist/cv-{en,de}.txt
+build-text:
+    uv run python -m scripts.render_text --lang en
+    uv run python -m scripts.render_text --lang de
+
+# Build every Phase 4 machine format (resume.json + person.jsonld + plain text)
+build-formats: build-resume build-jsonld build-text
+
 # Run the Astro dev server (regenerates data first)
 web-dev: web-data
     pnpm --dir web dev
