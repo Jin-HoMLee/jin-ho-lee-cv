@@ -6,7 +6,8 @@
 @import "@fontsource/ibm-plex-sans/700.css";
 
 :root {
-  --color-accent: #1e3a8a; /* placeholder; final hex lifted from pdf/styles.typ in Task 12 */
+  --color-accent: #1f3a68; /* lifted from pdf/styles.typ */
+  --color-sidebar-bg: #f4f7fb;
 }
 
 html {
@@ -17,4 +18,24 @@ html {
 
 body {
   @apply text-neutral-900 bg-white;
+}
+
+/* Smooth-scroll for project-ref badge anchors */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Allow sticky header offset for anchor jumps */
+[id] {
+  scroll-margin-top: 80px;
+}
+
+/* Section headings inherit the accent color from --color-accent. */
+section > h2 {
+  color: var(--color-accent);
+}
+
+/* Experience entries: left border in accent for the timeline feel. */
+section#experience article {
+  border-left-color: var(--color-accent);
 }
