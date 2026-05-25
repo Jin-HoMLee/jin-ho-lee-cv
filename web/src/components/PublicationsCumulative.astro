@@ -49,7 +49,10 @@ const yScale = (cum: number) =>
 function buildArea(): string {
   if (points.length === 0) return "";
   const segs: string[] = [];
-  segs.push(`M ${xScale(points[0].year)} ${chartBottom}`);
+  // Start at the y-axis at baseline, run flat along baseline until the first
+  // data year, then jump up. Visually conveys "0 publications before 2017".
+  segs.push(`M ${chartLeft} ${chartBottom}`);
+  segs.push(`L ${xScale(points[0].year)} ${chartBottom}`);
   segs.push(`L ${xScale(points[0].year)} ${yScale(points[0].cum)}`);
   for (let i = 1; i < points.length; i++) {
     segs.push(`L ${xScale(points[i].year)} ${yScale(points[i - 1].cum)}`);
