@@ -44,8 +44,12 @@ function renderAuthors(authors: string[]): string {
     {sectionLabel[lang]}
   </h2>
   <div class="flex flex-col gap-2 md:flex-row md:items-center md:gap-8">
-    <PublicationsChart publications={publications} lang={lang} />
-    <PublicationsCumulative publications={publications} lang={lang} />
+    <div class="shrink-0">
+      <PublicationsChart publications={publications} lang={lang} />
+    </div>
+    <div class="flex-1 min-w-0">
+      <PublicationsCumulative publications={publications} lang={lang} />
+    </div>
   </div>
   {typeOrder.map((t) => grouped[t].length > 0 && (
     <div class="mb-5">

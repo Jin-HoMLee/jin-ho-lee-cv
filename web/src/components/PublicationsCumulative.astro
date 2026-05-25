@@ -25,10 +25,10 @@ const minYear = sortedYears[0] ?? 0;
 const maxYear = sortedYears[sortedYears.length - 1] ?? 0;
 const yearSpan = Math.max(1, maxYear - minYear);
 
-const W = 220;
+const W = 480;
 const H = 110;
-const padL = 22;
-const padR = 8;
+const padL = 28;
+const padR = 10;
 const padT = 8;
 const padB = 22;
 const chartLeft = padL;
@@ -73,11 +73,8 @@ const areaPath = buildArea();
 const linePath = buildLine();
 
 const xTicks: number[] = [];
-for (let y = minYear; y <= maxYear; y += 2) {
+for (let y = minYear; y <= maxYear; y++) {
   xTicks.push(y);
-}
-if (xTicks.length > 0 && xTicks[xTicks.length - 1] !== maxYear) {
-  xTicks.push(maxYear);
 }
 
 const yTicks = [0, total];
@@ -91,7 +88,7 @@ const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[
 <figure class="my-6">
   <svg
     viewBox={`0 0 ${W} ${H}`}
-    class="h-32 w-full max-w-[14rem]"
+    class="w-full max-h-40"
     role="img"
     aria-label={ariaLabel}
   >
