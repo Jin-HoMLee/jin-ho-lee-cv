@@ -1,0 +1,60 @@
+---
+import type { Publication, PublicationType, Lang } from "../types/content";
+
+interface Props {
+  publications: Publication[];
+  lang: Lang;
+}
+
+const { publications, lang } = Astro.props;
+
+const sectionLabel = { en: "Publications", de: "Publikationen" };
+const typeLabel: Record<PublicationType, { en: string; de: string }> = {
+  "article":      { en: "Peer-reviewed articles", de: "Peer-Review-Artikel" },
+  "book-chapter": { en: "Book chapters",          de: "Buchkapitel" },
+  "conference":   { en: "Conference contributions", de: "Konferenzbeiträge" },
+  "book":         { en: "Books",                  de: "Bücher" },
+};
+const typeOrder: PublicationType[] = ["article", "book-chapter", "conference", "book"];
+
+const grouped: Record<PublicationType, Publication[]> = {
+  "article": [],
+  "book-chapter": [],
+  "conference": [],
+  "book": [],
+};
+for (const p of publications) {
+  grouped[p.type].push(p);
+}
+for (const t of typeOrder) {
+  grouped[t].sort((a, b) => b.year - a.year);
+}
+
+/** Render an author list, bolding Lee, J. (input is trusted — from publications.bib). */
+function renderAuthors(authors: string[]): string {
+  return authors
+    .map((a) => /\bLee, ?J/.test(a) ? `<strong>${a}</strong>` : a)
+    .join(", ");
+}
+---
+<section id="publications" class="py-6">
+  <h2 class="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+    {sectionLabel[lang]}
+  </h2>
+  {typeOrder.map((t) => grouped[t].length > 0 && (
+    <div class="mb-5">
+      <h3 class="mb-2 text-sm font-semibold text-neutral-800">{typeLabel[t][lang]}</h3>
+      <ol class="space-y-2 text-sm text-neutral-700">
+        {grouped[t].map((p) => (
+          <li>
+            <p class="font-medium text-neutral-900">{p.title}</p>
+            <p set:html={renderAuthors(p.authors)} class="text-xs text-neutral-600" />
+            <p class="text-xs text-neutral-500">
+              {p.venue ? `${p.venue} · ` : ""}{p.year} · {p.authorship}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  ))}
+</section>
