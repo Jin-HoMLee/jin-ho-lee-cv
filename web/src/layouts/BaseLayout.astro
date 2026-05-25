@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import jsonld from "../../public/person.jsonld?raw";
 import type { ContentData, Lang } from "../types/content";
 
 interface Props {
@@ -21,6 +22,7 @@ const description = data.profile.tagline;
     <meta name="description" content={description} />
     <link rel="canonical" href={Astro.url.href} />
     <title>{title}</title>
+    <script type="application/ld+json" set:html={jsonld}></script>
   </head>
   <body class="min-h-screen bg-white text-neutral-900">
     <slot name="header" />
