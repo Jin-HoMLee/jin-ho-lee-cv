@@ -78,9 +78,8 @@ All three checks must be green before merging anything.
 
 ## Local-only files (not in git)
 
-- `assets/photo.jpg` — headshot used by the private PDF build. Optional; omit and the PDF renders without a photo.
+- `assets/photo.jpg` — headshot for the private PDF build, only included when `--photo` is passed. Optional; omit and the PDF renders without a photo. Kept gitignored by convention (PDFs are intentionally photo-less to avoid discrimination per German hiring norms).
 - `content.private/private.yaml` — phone + address. Copy from `content.private.example/private.example.yaml` template.
-- `web/public/photo.jpg` — public-facing photo for the website. Optional; site degrades gracefully without it.
 
 ## Don't
 
