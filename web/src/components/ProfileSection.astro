@@ -1,0 +1,41 @@
+---
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
+import type { Personal, Profile, Labels } from "../types/content";
+
+interface Props {
+  personal: Personal;
+  profile: Profile;
+  labels: Labels;
+}
+
+const { personal, profile, labels } = Astro.props;
+
+// Check at build time whether a public photo exists in web/public/photo.jpg.
+// The `astro build` cwd is the `web/` directory.
+const hasPhoto = existsSync(resolve("./public/photo.jpg"));
+const photoUrl = `${import.meta.env.BASE_URL}photo.jpg`;
+---
+<section id="profile" class="py-6">
+  <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+    {labels.sections.profile}
+  </h2>
+  <div class="flex flex-col gap-6 md:flex-row md:items-start">
+    {hasPhoto && (
+      <img
+        src={photoUrl}
+        alt={`${personal.name.given} ${personal.name.family}`}
+        class="h-32 w-32 flex-shrink-0 rounded-full object-cover md:h-40 md:w-40"
+        width="160"
+        height="160"
+        loading="eager"
+      />
+    )}
+    <div>
+      <p class="text-lg font-medium text-neutral-900">{profile.tagline}</p>
+      {profile.paragraphs.map((p) => (
+        <p class="mt-3 text-neutral-700 leading-relaxed">{p}</p>
+      ))}
+    </div>
+  </div>
+</section>
