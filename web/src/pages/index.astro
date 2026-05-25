@@ -17,11 +17,17 @@ const data = contentEn as unknown as ContentData;
 <BaseLayout lang="en" data={data}>
   <Header slot="header" personal={data.personal} lang="en" />
   <ProfileSection personal={data.personal} profile={data.profile} labels={data.labels} />
-  <ExperienceSection experience={data.experience} projects={data.projects} labels={data.labels} lang="en" />
-  <ProjectsSection projects={data.projects} labels={data.labels} lang="en" />
-  <SkillsSidebar skills={data.skills} labels={data.labels} />
-  <EducationSection education={data.education} labels={data.labels} />
-  <LanguagesList languages={data.languages} labels={data.labels} />
-  <VolunteerSection volunteer={data.volunteer} labels={data.labels} />
-  <PublicationsList publications={data.publications} lang="en" />
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr]">
+    <div>
+      <ExperienceSection experience={data.experience} projects={data.projects} labels={data.labels} lang="en" />
+      <ProjectsSection projects={data.projects} labels={data.labels} lang="en" />
+      <EducationSection education={data.education} labels={data.labels} />
+      <PublicationsList publications={data.publications} lang="en" />
+    </div>
+    <aside>
+      <SkillsSidebar skills={data.skills} labels={data.labels} />
+      <LanguagesList languages={data.languages} labels={data.labels} />
+      <VolunteerSection volunteer={data.volunteer} labels={data.labels} />
+    </aside>
+  </div>
 </BaseLayout>
