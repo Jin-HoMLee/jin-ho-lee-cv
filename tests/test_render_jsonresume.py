@@ -64,3 +64,37 @@ def test_skills_flattened_from_categories(doc):
     content = resolve_langstrings(load_content(CONTENT_DIR, lang="en"), lang="en")
     expected_count = sum(len(cat["groups"]) for cat in content["skills"]["categories"])
     assert len(doc["skills"]) == expected_count
+
+
+def test_pii_never_reaches_dump(tmp_path, monkeypatch):
+    """Even if a private overlay exists in the repo, the renderer must never include it.
+
+    `to_jsonresume` only takes resolved content + pubs as arguments, so the contract
+    is enforced inside `main()` — verify the actual CLI path doesn't leak PII.
+    """
+    private_dir = REPO_ROOT / "content.private"
+    private_yaml = private_dir / "private.yaml"
+    marker_phone = "+49-555-PYTEST-MARKER"
+    marker_street = "Pytest-Marker-Strasse 99"
+    cleanup_dir = not private_dir.exists()
+    cleanup_file = not private_yaml.exists()
+    try:
+        private_dir.mkdir(exist_ok=True)
+        private_yaml.write_text(
+            f"personal:\n"
+            f"  phone: '{marker_phone}'\n"
+            f"  location:\n"
+            f"    street: '{marker_street}'\n",
+            encoding="utf-8",
+        )
+        output = tmp_path / "resume.json"
+        from scripts.render_jsonresume import main
+        main(["--output", str(output)])
+        text = output.read_text()
+        assert marker_phone not in text, "PII leaked: private phone in resume.json"
+        assert marker_street not in text, "PII leaked: private street in resume.json"
+    finally:
+        if cleanup_file and private_yaml.exists():
+            private_yaml.unlink()
+        if cleanup_dir and private_dir.exists():
+            private_dir.rmdir()
