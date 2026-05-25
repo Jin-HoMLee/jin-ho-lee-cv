@@ -34,18 +34,39 @@ build-private-de:
 web-data:
     uv run python -m scripts.render_web_data
 
-# Run the Astro dev server (regenerates data first)
-web-dev: web-data
+# Render JSON Resume → dist/resume.json
+build-resume:
+    uv run python -m scripts.render_jsonresume
+
+# Render schema.org JSON-LD → dist/person.jsonld
+build-jsonld:
+    uv run python -m scripts.render_jsonld
+
+# Render plain text in both languages → dist/cv-{en,de}.txt
+build-text:
+    uv run python -m scripts.render_text --lang en
+    uv run python -m scripts.render_text --lang de
+
+# Build every Phase 4 machine format (resume.json + person.jsonld + plain text)
+build-formats: build-resume build-jsonld build-text
+
+# Render JSON-LD and copy into web/public/ so BaseLayout's raw import resolves.
+web-jsonld:
+    uv run python -m scripts.render_jsonld
+    cp dist/person.jsonld web/public/person.jsonld
+
+# Run the Astro dev server (regenerates data + JSON-LD first)
+web-dev: web-data web-jsonld
     pnpm --dir web dev
 
 # Build the static site → web/dist/
-web-build: web-data
+web-build: web-data web-jsonld
     pnpm --dir web install --frozen-lockfile
     pnpm --dir web build
 
 # Remove web build artifacts
 web-clean:
-    rm -rf web/dist web/node_modules web/src/data/*.json
+    rm -rf web/dist web/node_modules web/src/data/*.json web/public/person.jsonld
 
 # Remove build outputs (PDF + web)
 clean: web-clean

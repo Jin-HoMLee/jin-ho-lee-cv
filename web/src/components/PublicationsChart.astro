@@ -1,0 +1,81 @@
+---
+import type { Publication, AuthorshipType, Lang } from "../types/content";
+
+interface Props {
+  publications: Publication[];
+  lang: Lang;
+}
+
+const { publications, lang } = Astro.props;
+
+const labels: Record<AuthorshipType, { en: string; de: string }> = {
+  first:         { en: "First author",         de: "Erstautor" },
+  shared:        { en: "Shared first",         de: "Geteilte Erstautorenschaft" },
+  corresponding: { en: "Corresponding author", de: "Korrespondenzautor" },
+  last:          { en: "Last author",          de: "Letztautor" },
+  middle:        { en: "Co-author",            de: "Co-Autor" },
+};
+
+const colors: Record<AuthorshipType, string> = {
+  first:         "#1f3a68",
+  shared:        "#3d5a8a",
+  corresponding: "#5b7aac",
+  last:          "#7a99cd",
+  middle:        "#b8c7df",
+};
+
+const order: AuthorshipType[] = ["first", "shared", "corresponding", "last", "middle"];
+
+const counts: Record<string, number> = {};
+for (const p of publications) {
+  counts[p.authorship] = (counts[p.authorship] ?? 0) + 1;
+}
+
+const slices = order
+  .filter((k) => (counts[k] ?? 0) > 0)
+  .map((k) => ({ key: k, count: counts[k] }));
+
+const total = slices.reduce((s, x) => s + x.count, 0);
+
+function computeArcs(slices: { key: AuthorshipType; count: number }[], total: number) {
+  let cumulative = 0;
+  return slices.map((s) => {
+    const startAngle = (cumulative / total) * Math.PI * 2;
+    cumulative += s.count;
+    const endAngle = (cumulative / total) * Math.PI * 2;
+    const x1 = Math.sin(startAngle);
+    const y1 = -Math.cos(startAngle);
+    const x2 = Math.sin(endAngle);
+    const y2 = -Math.cos(endAngle);
+    const large = endAngle - startAngle > Math.PI ? 1 : 0;
+    const d = slices.length === 1
+      ? "M 0 -1 A 1 1 0 1 1 0 1 A 1 1 0 1 1 0 -1 Z"
+      : `M 0 0 L ${x1} ${y1} A 1 1 0 ${large} 1 ${x2} ${y2} Z`;
+    return { d, color: colors[s.key], label: labels[s.key][lang], count: s.count };
+  });
+}
+
+const arcs = computeArcs(slices, total);
+const totalLabel = { en: "publications", de: "Publikationen" }[lang];
+---
+<figure class="my-6 flex items-center gap-6">
+  <svg
+    viewBox="-1.1 -1.1 2.2 2.2"
+    class="h-32 w-32 shrink-0"
+    role="img"
+    aria-label={`Authorship breakdown across ${total} ${totalLabel}`}
+  >
+    {arcs.map((arc) => <path d={arc.d} fill={arc.color} />)}
+  </svg>
+  <ul class="space-y-1 text-sm text-neutral-700">
+    {arcs.map((arc) => (
+      <li class="flex items-center gap-2">
+        <span class="inline-block h-3 w-3 shrink-0" style={`background:${arc.color}`} />
+        <span>{arc.label}: <span class="font-medium">{arc.count}</span></span>
+      </li>
+    ))}
+    <li class="pt-1 text-xs text-neutral-500">
+      Σ {total} {totalLabel}
+    </li>
+  </ul>
+</figure>
