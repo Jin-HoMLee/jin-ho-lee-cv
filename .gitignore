@@ -16,6 +16,12 @@ __pycache__/
 # Node (Phase 3+)
 node_modules/
 
+# Phase 3 — Astro website
+web/dist/
+web/src/data/*.json
+web/public/photo.jpg
+web/.astro/
+
 # OS
 .DS_Store
 
