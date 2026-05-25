@@ -3,11 +3,11 @@ import type { ContentData } from "../../types/content";
 import contentDe from "../../data/content.de.json";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
+import ProfileSection from "../../components/ProfileSection.astro";
 
 const data = contentDe as unknown as ContentData;
 ---
 <BaseLayout lang="de" data={data}>
   <Header slot="header" personal={data.personal} lang="de" />
-  <h1 class="text-3xl font-semibold">{data.personal.name.given} {data.personal.name.family}</h1>
-  <p class="mt-2 text-lg text-neutral-700">{data.personal.headline}</p>
+  <ProfileSection personal={data.personal} profile={data.profile} labels={data.labels} />
 </BaseLayout>
