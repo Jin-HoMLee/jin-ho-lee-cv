@@ -30,6 +30,23 @@ build-de:
 build-private-de:
     uv run python -m pdf.build --lang de --private
 
-# Remove build outputs
-clean:
+# Render JSON for the Astro site → web/src/data/content.{en,de}.json
+web-data:
+    uv run python -m scripts.render_web_data
+
+# Run the Astro dev server (regenerates data first)
+web-dev: web-data
+    pnpm --dir web dev
+
+# Build the static site → web/dist/
+web-build: web-data
+    pnpm --dir web install --frozen-lockfile
+    pnpm --dir web build
+
+# Remove web build artifacts
+web-clean:
+    rm -rf web/dist web/node_modules web/src/data/*.json
+
+# Remove build outputs (PDF + web)
+clean: web-clean
     rm -rf dist/ dist-private/ pdf/.cache/

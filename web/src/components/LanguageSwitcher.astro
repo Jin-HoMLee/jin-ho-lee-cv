@@ -1,0 +1,22 @@
+---
+import type { Lang } from "../types/content";
+
+interface Props {
+  currentLang: Lang;
+}
+
+const { currentLang } = Astro.props;
+const base = import.meta.env.BASE_URL; // "/jin-ho-lee-cv/"
+
+const otherLang: Lang = currentLang === "en" ? "de" : "en";
+const otherHref = otherLang === "de" ? `${base}de/` : base;
+const otherLabel = otherLang === "de" ? "Deutsch" : "English";
+---
+<a
+  href={otherHref}
+  class="rounded-md border border-neutral-300 px-3 py-1.5 text-sm hover:border-neutral-900 hover:text-neutral-900"
+  hreflang={otherLang}
+  aria-label={`Switch to ${otherLabel}`}
+>
+  {otherLang.toUpperCase()}
+</a>
