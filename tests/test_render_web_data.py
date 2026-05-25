@@ -44,7 +44,7 @@ def test_langmaps_resolved_to_strings(rendered):
     assert en["labels"]["sections"]["profile"] == "Profile"
 
 
-def test_pii_never_reaches_dump(tmp_path, monkeypatch):
+def test_pii_never_reaches_dump(tmp_path):
     """Even with content.private/private.yaml present, no phone or street leaks."""
     # Create a fake private overlay with distinctive values
     private_dir = tmp_path / "content.private"
