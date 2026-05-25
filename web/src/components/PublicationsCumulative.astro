@@ -1,0 +1,112 @@
+---
+import type { Publication, Lang } from "../types/content";
+
+interface Props {
+  publications: Publication[];
+  lang: Lang;
+}
+
+const { publications, lang } = Astro.props;
+
+const yearCounts: Record<number, number> = {};
+for (const p of publications) {
+  yearCounts[p.year] = (yearCounts[p.year] ?? 0) + 1;
+}
+const sortedYears = Object.keys(yearCounts).map(Number).sort((a, b) => a - b);
+
+const points: { year: number; cum: number }[] = [];
+let running = 0;
+for (const y of sortedYears) {
+  running += yearCounts[y];
+  points.push({ year: y, cum: running });
+}
+const total = running;
+const minYear = sortedYears[0] ?? 0;
+const maxYear = sortedYears[sortedYears.length - 1] ?? 0;
+const yearSpan = Math.max(1, maxYear - minYear);
+
+const W = 220;
+const H = 110;
+const padL = 22;
+const padR = 8;
+const padT = 8;
+const padB = 22;
+const chartLeft = padL;
+const chartRight = W - padR;
+const chartTop = padT;
+const chartBottom = H - padB;
+
+const xScale = (year: number) =>
+  chartLeft + ((year - minYear) / yearSpan) * (chartRight - chartLeft);
+const yScale = (cum: number) =>
+  total === 0 ? chartBottom : chartBottom - (cum / total) * (chartBottom - chartTop);
+
+function buildArea(): string {
+  if (points.length === 0) return "";
+  const segs: string[] = [];
+  segs.push(`M ${chartLeft} ${chartBottom}`);
+  segs.push(`L ${xScale(points[0].year)} ${chartBottom}`);
+  segs.push(`L ${xScale(points[0].year)} ${yScale(points[0].cum)}`);
+  for (let i = 1; i < points.length; i++) {
+    segs.push(`L ${xScale(points[i].year)} ${yScale(points[i - 1].cum)}`);
+    segs.push(`L ${xScale(points[i].year)} ${yScale(points[i].cum)}`);
+  }
+  segs.push(`L ${chartRight} ${yScale(points[points.length - 1].cum)}`);
+  segs.push(`L ${chartRight} ${chartBottom}`);
+  segs.push(`Z`);
+  return segs.join(" ");
+}
+
+function buildLine(): string {
+  if (points.length === 0) return "";
+  const segs: string[] = [];
+  segs.push(`M ${xScale(points[0].year)} ${yScale(points[0].cum)}`);
+  for (let i = 1; i < points.length; i++) {
+    segs.push(`L ${xScale(points[i].year)} ${yScale(points[i - 1].cum)}`);
+    segs.push(`L ${xScale(points[i].year)} ${yScale(points[i].cum)}`);
+  }
+  segs.push(`L ${chartRight} ${yScale(points[points.length - 1].cum)}`);
+  return segs.join(" ");
+}
+
+const areaPath = buildArea();
+const linePath = buildLine();
+
+const xTicks: number[] = [];
+for (let y = minYear; y <= maxYear; y += 2) {
+  xTicks.push(y);
+}
+if (xTicks.length > 0 && xTicks[xTicks.length - 1] !== maxYear) {
+  xTicks.push(maxYear);
+}
+
+const yTicks = [0, total];
+
+const totalLabel = { en: "publications", de: "Publikationen" }[lang];
+const ariaLabel = lang === "en"
+  ? `Cumulative count of ${total} publications from ${minYear} to ${maxYear}`
+  : `Kumulative Anzahl von ${total} Publikationen von ${minYear} bis ${maxYear}`;
+const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[lang];
+---
+<figure class="my-6">
+  <svg
+    viewBox={`0 0 ${W} ${H}`}
+    class="h-32 w-full max-w-[14rem]"
+    role="img"
+    aria-label={ariaLabel}
+  >
+    <line x1={chartLeft} y1={chartTop} x2={chartLeft} y2={chartBottom} stroke="#e5e5e5" stroke-width="0.5" />
+    <line x1={chartLeft} y1={chartBottom} x2={chartRight} y2={chartBottom} stroke="#e5e5e5" stroke-width="0.5" />
+    <path d={areaPath} fill="#1f3a68" fill-opacity="0.18" />
+    <path d={linePath} fill="none" stroke="#1f3a68" stroke-width="1.5" stroke-linejoin="miter" />
+    {yTicks.map((v) => (
+      <text x={chartLeft - 3} y={yScale(v) + 2} text-anchor="end" font-size="6" fill="#737373">{v}</text>
+    ))}
+    {xTicks.map((y) => (
+      <text x={xScale(y)} y={chartBottom + 8} text-anchor="middle" font-size="6" fill="#737373">{y}</text>
+    ))}
+  </svg>
+  <figcaption class="mt-1 text-xs text-neutral-500">
+    {captionLabel} · {total} {totalLabel}
+  </figcaption>
+</figure>
