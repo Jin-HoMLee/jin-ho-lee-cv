@@ -1,5 +1,6 @@
 ---
 import type { Publication, PublicationType, Lang } from "../types/content";
+import PublicationsChart from "./PublicationsChart.astro";
 
 interface Props {
   publications: Publication[];
@@ -41,6 +42,7 @@ function renderAuthors(authors: string[]): string {
   <h2 class="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-500">
     {sectionLabel[lang]}
   </h2>
+  <PublicationsChart publications={publications} lang={lang} />
   {typeOrder.map((t) => grouped[t].length > 0 && (
     <div class="mb-5">
       <h3 class="mb-2 text-sm font-semibold text-neutral-800">{typeLabel[t][lang]}</h3>
