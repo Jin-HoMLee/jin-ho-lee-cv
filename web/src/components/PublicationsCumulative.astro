@@ -22,15 +22,17 @@ for (const y of sortedYears) {
 }
 const total = running;
 const minYear = sortedYears[0] ?? 0;
-const maxYear = sortedYears[sortedYears.length - 1] ?? 0;
+const dataMaxYear = sortedYears[sortedYears.length - 1] ?? 0;
+const currentYear = new Date().getUTCFullYear();
+const maxYear = Math.max(dataMaxYear, currentYear);
 const yearSpan = Math.max(1, maxYear - minYear);
 
 const W = 480;
-const H = 110;
-const padL = 28;
-const padR = 10;
-const padT = 8;
-const padB = 22;
+const H = 130;
+const padL = 36;
+const padR = 12;
+const padT = 10;
+const padB = 32;
 const chartLeft = padL;
 const chartRight = W - padR;
 const chartTop = padT;
@@ -97,10 +99,10 @@ const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[
     <path d={areaPath} fill="#1f3a68" fill-opacity="0.18" />
     <path d={linePath} fill="none" stroke="#1f3a68" stroke-width="1.5" stroke-linejoin="miter" />
     {yTicks.map((v) => (
-      <text x={chartLeft - 3} y={yScale(v) + 2} text-anchor="end" font-size="6" fill="#737373">{v}</text>
+      <text x={chartLeft - 5} y={yScale(v) + 4} text-anchor="end" font-size="11" fill="#525252">{v}</text>
     ))}
     {xTicks.map((y) => (
-      <text x={xScale(y)} y={chartBottom + 8} text-anchor="middle" font-size="6" fill="#737373">{y}</text>
+      <text x={xScale(y)} y={chartBottom + 14} text-anchor="middle" font-size="11" fill="#525252">{y}</text>
     ))}
   </svg>
   <figcaption class="mt-1 text-xs text-neutral-500">
