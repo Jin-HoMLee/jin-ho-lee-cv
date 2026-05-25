@@ -34,6 +34,12 @@ jobs:
       - name: Render web JSON
         run: uv run python -m scripts.render_web_data
 
+      - name: Render JSON-LD into web/public/
+        run: |
+          uv run python -m scripts.render_jsonld
+          mkdir -p web/public
+          cp dist/person.jsonld web/public/person.jsonld
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
