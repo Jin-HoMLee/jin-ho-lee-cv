@@ -1,0 +1,37 @@
+---
+import "../styles/global.css";
+import type { ContentData, Lang } from "../types/content";
+
+interface Props {
+  lang: Lang;
+  data: ContentData;
+}
+
+const { lang, data } = Astro.props;
+const title = `${data.personal.name.given} ${data.personal.name.family} — ${
+  lang === "en" ? "CV" : "Lebenslauf"
+}`;
+const description = data.profile.tagline;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={Astro.url.href} />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-white text-neutral-900">
+    <slot name="header" />
+    <main class="mx-auto max-w-6xl px-4 py-8 md:px-8">
+      <slot />
+    </main>
+    <footer class="mx-auto max-w-6xl px-4 py-8 text-xs text-neutral-500 md:px-8">
+      <p>
+        © {new Date().getUTCFullYear()} {data.personal.name.given} {data.personal.name.family} ·
+        <a class="underline hover:text-neutral-900" href="https://github.com/Jin-HoMLee/jin-ho-lee-cv">Source on GitHub</a>
+      </p>
+    </footer>
+  </body>
+</html>

@@ -1,20 +1,11 @@
 ---
 import type { ContentData } from "../types/content";
 import contentEn from "../data/content.en.json";
-import "../styles/global.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const data = contentEn as unknown as ContentData;
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{data.personal.name.given} {data.personal.name.family} — CV</title>
-  </head>
-  <body class="p-8">
-    <h1 class="text-3xl font-semibold">{data.personal.name.given} {data.personal.name.family}</h1>
-    <p class="mt-2 text-lg text-neutral-700">{data.personal.headline}</p>
-    <p class="mt-1 text-sm text-neutral-500">smoke-build OK</p>
-  </body>
-</html>
+<BaseLayout lang="en" data={data}>
+  <h1 class="text-3xl font-semibold">{data.personal.name.given} {data.personal.name.family}</h1>
+  <p class="mt-2 text-lg text-neutral-700">{data.personal.headline}</p>
+</BaseLayout>
