@@ -10,6 +10,7 @@ import SkillsSidebar from "../../components/SkillsSidebar.astro";
 import EducationSection from "../../components/EducationSection.astro";
 import LanguagesList from "../../components/LanguagesList.astro";
 import VolunteerSection from "../../components/VolunteerSection.astro";
+import PublicationsList from "../../components/PublicationsList.astro";
 
 const data = contentDe as unknown as ContentData;
 ---
@@ -22,4 +23,5 @@ const data = contentDe as unknown as ContentData;
   <EducationSection education={data.education} labels={data.labels} />
   <LanguagesList languages={data.languages} labels={data.labels} />
   <VolunteerSection volunteer={data.volunteer} labels={data.labels} />
+  <PublicationsList publications={data.publications} lang="de" />
 </BaseLayout>
