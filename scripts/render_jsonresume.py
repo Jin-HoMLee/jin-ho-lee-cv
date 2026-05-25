@@ -65,7 +65,6 @@ def _work(content: dict) -> list[dict]:
             "position": exp["role"],
             "startDate": _pad_start(exp["period"]["start"]),
             **({"endDate": _pad_end(exp["period"]["end"])} if exp["period"].get("end") else {}),
-            "summary": " ".join(b["en"] for b in exp["bullets"]) if exp.get("bullets") else "",
             "highlights": [b["en"] for b in exp.get("bullets", [])],
         })
     return out
@@ -173,7 +172,11 @@ def main(argv: list[str] | None = None) -> None:
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"wrote {args.output.relative_to(REPO_ROOT)}")
+    try:
+        display = args.output.relative_to(REPO_ROOT)
+    except ValueError:
+        display = args.output
+    print(f"wrote {display}")
 
 
 if __name__ == "__main__":
