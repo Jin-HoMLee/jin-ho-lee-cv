@@ -6,6 +6,6 @@ config + adds CNAME — no other source changes.
 """
 from __future__ import annotations
 
-SITE_DOMAIN: str = "jin-homlee.github.io"  # bare host
-SITE_PATH: str = "/jin-ho-lee-cv"           # leading slash, no trailing slash; empty string after cutover
+SITE_DOMAIN: str = "cv.jinholee.com"  # bare host
+SITE_PATH: str = ""                   # leading slash, no trailing slash; empty string after cutover
 PAGES_BASE_URL: str = f"https://{SITE_DOMAIN}{SITE_PATH}"
