@@ -22,7 +22,7 @@ Six phases, sequential. Each produces a usable artifact and gets its own brainst
 | 2b | German translations + DE PDF in CI | ✅ Done (merged 2026-05-22, commit `ee1290a`) |
 | 3 | Astro website + GitHub Pages | ✅ Done (merged 2026-05-25, commit `6018d60`) |
 | 4 | JSON Resume + JSON-LD + plain text + publication chart | ✅ Done (merged 2026-05-25, commit `5f3ce71`) |
-| 5 | Polish: custom domain, project deep-dive pages, OG images, chart interactivity | ✅ Done (merged YYYY-MM-DD, commit `xxxxxx`) |
+| 5 | Polish: custom domain, project deep-dive pages, OG images, chart interactivity | ✅ Done (merged 2026-05-26, commit `a3c682b`) |
 
 ## Layout
 
