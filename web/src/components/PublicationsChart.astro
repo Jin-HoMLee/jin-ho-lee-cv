@@ -58,14 +58,23 @@ function computeArcs(slices: { key: AuthorshipType; count: number }[], total: nu
 const arcs = computeArcs(slices, total);
 const totalLabel = { en: "publications", de: "Publikationen" }[lang];
 ---
-<figure class="my-6 flex items-center gap-6">
+<figure class="relative my-6 flex items-center gap-6">
   <svg
     viewBox="-1.1 -1.1 2.2 2.2"
     class="h-32 w-32 shrink-0"
     role="img"
     aria-label={`Authorship breakdown across ${total} ${totalLabel}`}
   >
-    {arcs.map((arc) => <path d={arc.d} fill={arc.color} />)}
+    {arcs.map((arc) => (
+      <path
+        d={arc.d}
+        fill={arc.color}
+        data-label={arc.label}
+        data-count={arc.count}
+        data-pct={((arc.count / total) * 100).toFixed(1)}
+        class="cursor-pointer"
+      />
+    ))}
   </svg>
   <ul class="space-y-1 text-sm text-neutral-700">
     {arcs.map((arc) => (
@@ -78,4 +87,48 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
       Σ {total} {totalLabel}
     </li>
   </ul>
+  <div
+    class="pub-tooltip pointer-events-none absolute hidden rounded bg-neutral-900 px-2 py-1 text-xs text-white shadow-lg"
+    role="status"
+    aria-live="polite"
+  ></div>
 </figure>
+
+<script>
+  // Hover (or tap) a pie slice to surface label + count + percentage.
+  const figures = document.querySelectorAll<HTMLElement>("figure.relative");
+  for (const fig of figures) {
+    const tooltip = fig.querySelector<HTMLElement>(".pub-tooltip");
+    const paths = fig.querySelectorAll<SVGPathElement>("svg path[data-label]");
+    if (!tooltip || paths.length === 0) continue;
+
+    const show = (e: MouseEvent | TouchEvent, target: SVGPathElement) => {
+      const label = target.dataset.label ?? "";
+      const count = target.dataset.count ?? "";
+      const pct = target.dataset.pct ?? "";
+      tooltip.textContent = `${label}: ${count} (${pct}%)`;
+      tooltip.classList.remove("hidden");
+      const rect = fig.getBoundingClientRect();
+      const point = "touches" in e ? e.touches[0] : e;
+      tooltip.style.left = `${point.clientX - rect.left + 8}px`;
+      tooltip.style.top = `${point.clientY - rect.top + 8}px`;
+    };
+    const hide = () => tooltip.classList.add("hidden");
+
+    paths.forEach((p) => {
+      p.addEventListener("mouseenter", (e) => show(e, p));
+      p.addEventListener("mousemove", (e) => show(e, p));
+      p.addEventListener("mouseleave", hide);
+      // Touch: tap toggles
+      p.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        if (tooltip.classList.contains("hidden")) show(e, p);
+        else hide();
+      }, { passive: false });
+    });
+    // Dismiss on outside tap
+    document.addEventListener("touchstart", (e) => {
+      if (!fig.contains(e.target as Node)) hide();
+    }, { passive: true });
+  }
+</script>
