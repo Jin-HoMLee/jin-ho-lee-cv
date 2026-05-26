@@ -2,7 +2,7 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://cv.jinholee.com",
+  site: "https://jinholee.is-a.dev",
   base: "/",
   trailingSlash: "always",
   i18n: {
