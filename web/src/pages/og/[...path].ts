@@ -1,3 +1,5 @@
+// Named [...path].ts, not [...path].png.ts: astro-og-canvas appends .png itself;
+// using [...path].png.ts would produce double-extension outputs (key.png.png).
 import { OGImageRoute } from "astro-og-canvas";
 import contentEn from "../../data/content.en.json";
 import contentDe from "../../data/content.de.json";
