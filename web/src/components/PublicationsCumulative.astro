@@ -92,7 +92,7 @@ const ariaLabel = lang === "en"
   : `Kumulative Anzahl von ${total} Publikationen von ${minYear} bis ${maxYear}`;
 const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[lang];
 ---
-<figure class="my-6">
+<figure class="relative my-6">
   <svg
     viewBox={`0 0 ${W} ${H}`}
     class="w-full max-h-40"
@@ -103,6 +103,26 @@ const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[
     <line x1={chartLeft} y1={chartBottom} x2={chartRight} y2={chartBottom} stroke="#e5e5e5" stroke-width="0.5" />
     <path d={areaPath} fill="#1f3a68" fill-opacity="0.18" />
     <path d={linePath} fill="none" stroke="#1f3a68" stroke-width="1.5" stroke-linejoin="miter" />
+    {points.map((pt, i) => {
+      const x = xScale(pt.year);
+      const prevCum = i === 0 ? 0 : points[i - 1].cum;
+      const delta = pt.cum - prevCum;
+      // Half-year bands left and right of each data point
+      const halfBand = (chartRight - chartLeft) / xDomainSpan / 2;
+      return (
+        <rect
+          x={x - halfBand}
+          y={chartTop}
+          width={halfBand * 2}
+          height={chartBottom - chartTop}
+          fill="transparent"
+          data-year={pt.year}
+          data-cum={pt.cum}
+          data-delta={delta}
+          class="cursor-pointer"
+        />
+      );
+    })}
     {yTicks.map((v) => (
       <text x={chartLeft - 5} y={yScale(v) + 4} text-anchor="end" font-size="11" fill="#525252">{v}</text>
     ))}
@@ -113,4 +133,47 @@ const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[
   <figcaption class="mt-1 text-xs text-neutral-500">
     {captionLabel} · {total} {totalLabel}
   </figcaption>
+  <div
+    class="pub-tooltip pointer-events-none absolute hidden rounded bg-neutral-900 px-2 py-1 text-xs text-white shadow-lg"
+    role="status"
+    aria-live="polite"
+  ></div>
 </figure>
+
+<script>
+  // Hover (or tap) a year band on the cumulative chart to show year + cumulative + delta.
+  const figures = document.querySelectorAll<HTMLElement>("figure.relative");
+  for (const fig of figures) {
+    const tooltip = fig.querySelector<HTMLElement>(".pub-tooltip");
+    const rects = fig.querySelectorAll<SVGRectElement>("svg rect[data-year]");
+    if (!tooltip || rects.length === 0) continue;
+
+    const show = (e: MouseEvent | TouchEvent, target: SVGRectElement) => {
+      const year = target.dataset.year ?? "";
+      const cum = target.dataset.cum ?? "";
+      const delta = target.dataset.delta ?? "";
+      const deltaStr = Number(delta) > 0 ? ` (+${delta})` : "";
+      tooltip.textContent = `${year}: ${cum}${deltaStr}`;
+      tooltip.classList.remove("hidden");
+      const rect = fig.getBoundingClientRect();
+      const point = "touches" in e ? e.touches[0] : e;
+      tooltip.style.left = `${point.clientX - rect.left + 8}px`;
+      tooltip.style.top = `${point.clientY - rect.top + 8}px`;
+    };
+    const hide = () => tooltip.classList.add("hidden");
+
+    rects.forEach((r) => {
+      r.addEventListener("mouseenter", (e) => show(e, r));
+      r.addEventListener("mousemove", (e) => show(e, r));
+      r.addEventListener("mouseleave", hide);
+      r.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        if (tooltip.classList.contains("hidden")) show(e, r);
+        else hide();
+      }, { passive: false });
+    });
+    document.addEventListener("touchstart", (e) => {
+      if (!fig.contains(e.target as Node)) hide();
+    }, { passive: true });
+  }
+</script>
