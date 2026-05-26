@@ -11,7 +11,7 @@ TS_PATH = REPO_ROOT / "web" / "src" / "lib" / "site-config.ts"
 
 def _extract(ts_source: str, name: str) -> str:
     """Pull a string-literal constant out of the TS file."""
-    m = re.search(rf'export const {name} = "([^"]+)"', ts_source)
+    m = re.search(rf'export const {name} = "([^"]*)"', ts_source)
     assert m, f"could not find `export const {name} = \"...\"` in {TS_PATH}"
     return m.group(1)
 
