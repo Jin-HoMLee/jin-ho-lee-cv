@@ -98,3 +98,8 @@ def test_pii_never_reaches_dump(tmp_path, monkeypatch):
             private_yaml.unlink()
         if cleanup_dir and private_dir.exists():
             private_dir.rmdir()
+
+
+def test_basics_url_uses_pages_base(doc):
+    from scripts.config import PAGES_BASE_URL
+    assert doc["basics"]["url"].startswith(PAGES_BASE_URL)
