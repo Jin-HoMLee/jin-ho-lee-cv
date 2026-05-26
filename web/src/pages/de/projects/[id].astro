@@ -1,0 +1,26 @@
+---
+import contentDe from "../../../data/content.de.json";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ProjectPage from "../../../components/ProjectPage.astro";
+import type { ContentData } from "../../../types/content";
+
+const data = contentDe as ContentData;
+
+export function getStaticPaths() {
+  return Object.keys(contentDe.projects).map((id) => ({ params: { id } }));
+}
+
+const { id } = Astro.params;
+const project = data.projects[id as string];
+const labels = data.labels;
+---
+<BaseLayout
+  lang="de"
+  data={data}
+  ogSlug={`projects-${id}-de`}
+  ogTitle={`${project.title} — ${data.personal.name.given} ${data.personal.name.family}`}
+  ogDescription={project.summary}
+  ogType="article"
+>
+  <ProjectPage project={project} labels={labels} lang="de" />
+</BaseLayout>

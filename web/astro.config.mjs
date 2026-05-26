@@ -2,8 +2,8 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://jin-homlee.github.io",
-  base: "/jin-ho-lee-cv/",
+  site: "https://jinholee.is-a.dev",
+  base: "/",
   trailingSlash: "always",
   i18n: {
     defaultLocale: "en",

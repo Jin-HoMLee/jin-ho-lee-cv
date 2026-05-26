@@ -41,7 +41,14 @@ const categoryOrder: Project["category"][] = ["life-science", "data-science", "c
           <article id={p.id} class="rounded-md border border-neutral-200 p-4">
             <header class="mb-2">
               <p class="text-xs font-mono text-neutral-500">{p.id}</p>
-              <h4 class="text-base font-semibold text-neutral-900">{p.title}</h4>
+              <h4 class="text-base font-semibold text-neutral-900">
+                {p.title}
+                <a
+                  href={lang === "en" ? `/projects/${p.id}/` : `/de/projects/${p.id}/`}
+                  class="ml-1 text-xs font-normal text-neutral-400 hover:text-[#1f3a68]"
+                  aria-label={lang === "en" ? `Open project page for ${p.title}` : `Projektseite für ${p.title} öffnen`}
+                >↗</a>
+              </h4>
               <p class="text-xs text-neutral-500">
                 {p.role} · {formatPeriod(p.period, labels)}
               </p>

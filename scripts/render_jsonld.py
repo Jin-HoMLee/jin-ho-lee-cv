@@ -6,14 +6,15 @@ import json
 from pathlib import Path
 
 from scripts.bib_loader import Publication, load_publications
+from scripts.config import PAGES_BASE_URL
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
-SITE_URL = "https://jin-homlee.github.io/jin-ho-lee-cv/"
-PHOTO_URL = f"{SITE_URL}photo.jpg"
+SITE_URL = f"{PAGES_BASE_URL}/"
+PHOTO_URL = f"{PAGES_BASE_URL}/photo.jpg"
 
 
 def _same_as(personal: dict) -> list[str]:
@@ -58,6 +59,22 @@ def _publications(pubs: list[Publication]) -> list[dict]:
     return out
 
 
+def _projects(content: dict) -> list[dict]:
+    """One CreativeWork per project, URL points at the eventual /projects/{id}/ page."""
+    out = []
+    for pid, proj in content["projects"].items():
+        item: dict = {
+            "@type": "CreativeWork",
+            "name": proj["title"],
+            "url": f"{PAGES_BASE_URL}/projects/{pid}/",
+            "description": proj["summary"],
+            "dateCreated": proj["period"]["start"],
+            "keywords": list(proj.get("technologies", [])),
+        }
+        out.append(item)
+    return out
+
+
 def to_jsonld(content: dict, pubs: list[Publication]) -> dict:
     """Compose the schema.org Person JSON-LD document."""
     personal = content["personal"]
@@ -85,7 +102,7 @@ def to_jsonld(content: dict, pubs: list[Publication]) -> dict:
     if (works_for := _works_for(content)) is not None:
         doc["worksFor"] = works_for
 
-    doc["@graph"] = _publications(pubs)
+    doc["@graph"] = _publications(pubs) + _projects(content)
     return doc
 
 
