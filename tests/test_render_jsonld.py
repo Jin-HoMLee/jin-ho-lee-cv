@@ -63,6 +63,36 @@ def test_image_is_absolute_url(doc):
     assert doc["image"].startswith("https://")
 
 
+def test_url_uses_pages_base(doc):
+    from scripts.config import PAGES_BASE_URL
+    assert doc["url"].startswith(PAGES_BASE_URL)
+
+
+def test_image_uses_pages_base(doc):
+    from scripts.config import PAGES_BASE_URL
+    assert doc["image"].startswith(PAGES_BASE_URL)
+
+
+def test_graph_includes_project_creativeworks(doc):
+    """Every project in content/projects/ should appear in @graph as a CreativeWork."""
+    from scripts.content_loader import load_content
+    from scripts.langstring import resolve_langstrings
+    content = resolve_langstrings(load_content(CONTENT_DIR, lang="en"), lang="en")
+    expected_ids = set(content["projects"].keys())
+    works = [g for g in doc["@graph"] if g["@type"] == "CreativeWork"]
+    assert len(works) == len(expected_ids), f"expected {len(expected_ids)} CreativeWorks, got {len(works)}"
+    work_urls = {w["url"] for w in works}
+    for pid in expected_ids:
+        assert any(pid in url for url in work_urls), f"no CreativeWork URL contains project id {pid!r}"
+
+
+def test_creativework_urls_use_pages_base(doc):
+    from scripts.config import PAGES_BASE_URL
+    works = [g for g in doc["@graph"] if g["@type"] == "CreativeWork"]
+    for w in works:
+        assert w["url"].startswith(PAGES_BASE_URL + "/projects/"), f"unexpected CreativeWork URL: {w['url']!r}"
+
+
 def test_pii_never_reaches_main_output(tmp_path):
     """Even if a private overlay exists in the repo, main() must not include it."""
     private_dir = REPO_ROOT / "content.private"

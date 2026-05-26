@@ -2,17 +2,32 @@
 import "../styles/global.css";
 import jsonld from "../../public/person.jsonld?raw";
 import type { ContentData, Lang } from "../types/content";
+import { PAGES_BASE_URL } from "../lib/site-config";
 
 interface Props {
   lang: Lang;
   data: ContentData;
+  // OG metadata — pages pass these. Homepage and project pages compute their own.
+  ogSlug?: string;       // e.g. "index-en", "projects-L1-en"
+  ogTitle?: string;      // override <title> and og:title
+  ogDescription?: string;
+  ogType?: "profile" | "article" | "website";
 }
 
-const { lang, data } = Astro.props;
-const title = `${data.personal.name.given} ${data.personal.name.family} — ${
+const { lang, data, ogSlug, ogTitle, ogDescription, ogType } = Astro.props;
+const defaultTitle = `${data.personal.name.given} ${data.personal.name.family} — ${
   lang === "en" ? "CV" : "Lebenslauf"
 }`;
-const description = data.profile.tagline;
+const title = ogTitle ?? defaultTitle;
+const description = ogDescription ?? data.profile.tagline;
+const slug = ogSlug ?? `index-${lang}`;
+const ogImageUrl = `${PAGES_BASE_URL}/og/${slug}.png`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const pathWithoutBase = Astro.url.pathname.startsWith(base)
+  ? Astro.url.pathname.slice(base.length)
+  : Astro.url.pathname;
+const canonicalUrl = `${PAGES_BASE_URL}${pathWithoutBase}`;
+const resolvedOgType = ogType ?? "profile";
 ---
 <!doctype html>
 <html lang={lang}>
@@ -20,8 +35,25 @@ const description = data.profile.tagline;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="canonical" href={Astro.url.href} />
+    <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
+
+    <meta property="og:site_name" content={`${data.personal.name.given} ${data.personal.name.family} — ${lang === "en" ? "CV" : "Lebenslauf"}`} />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "de_DE"} />
+    <meta property="og:type" content={resolvedOgType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
     <script type="application/ld+json" set:html={jsonld}></script>
   </head>
   <body class="min-h-screen bg-white text-neutral-900">

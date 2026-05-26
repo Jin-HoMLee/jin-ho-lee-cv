@@ -10,9 +10,11 @@ from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
 
 
+from scripts.config import PAGES_BASE_URL
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
-SITE_URL = "https://jin-homlee.github.io/jin-ho-lee-cv/"
+SITE_URL = f"{PAGES_BASE_URL}/"
 DIVIDER = "=" * 80
 SECTION_LABELS = {
     "profile":      {"en": "PROFILE",      "de": "PROFIL"},

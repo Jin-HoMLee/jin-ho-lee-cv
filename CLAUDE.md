@@ -22,7 +22,7 @@ Six phases, sequential. Each produces a usable artifact and gets its own brainst
 | 2b | German translations + DE PDF in CI | ✅ Done (merged 2026-05-22, commit `ee1290a`) |
 | 3 | Astro website + GitHub Pages | ✅ Done (merged 2026-05-25, commit `6018d60`) |
 | 4 | JSON Resume + JSON-LD + plain text + publication chart | ✅ Done (merged 2026-05-25, commit `5f3ce71`) |
-| 5 | Polish: custom domain, project deep-dive pages, OG images, chart interactivity | Not started |
+| 5 | Polish: custom domain, project deep-dive pages, OG images, chart interactivity | ✅ Done (merged YYYY-MM-DD, commit `xxxxxx`) |
 
 ## Layout
 
@@ -31,7 +31,7 @@ content/                  source of truth (YAML + BibTeX)
 content.private/          gitignored PII overlay (phone, address)
 content.private.example/  template showing required private keys
 schema/cv.schema.json     JSON Schema for content
-scripts/                  validate.py, bib_loader.py, content_loader.py, langstring.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py
+scripts/                  validate.py, bib_loader.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py
 tests/                    pytest suite
 pdf/                      Typst PDF renderer (Phase 1)
 web/                      Astro website (Phase 3)
@@ -78,7 +78,8 @@ validate + test + lint must all be green before merging anything.
 ## Files to read before any phase
 
 - `docs/superpowers/specs/2026-05-21-codified-cv-design.md` — full architectural spec for the whole codified-CV project
-- `docs/superpowers/specs/2026-05-25-phase-N-*-design.md` — the spec for the most recent completed phase, for the "what's the current shape" picture
+- `docs/superpowers/specs/2026-05-25-phase-4-machine-formats-design.md` — Phase 4 design spec (JSON Resume, JSON-LD, plain text, publication chart)
+- `docs/superpowers/specs/2026-05-26-phase-5-polish-design.md` — Phase 5 design spec (custom domain, project pages, OG images, chart tooltips)
 - `scripts/content_loader.py` + `scripts/bib_loader.py` + `scripts/langstring.py` — the data layer every renderer consumes
 - `scripts/render_web_data.py` — the closest pattern for a "Python script that emits JSON for a downstream renderer to consume"; mirror this style
 

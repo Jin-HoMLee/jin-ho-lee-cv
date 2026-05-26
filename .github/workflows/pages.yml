@@ -56,6 +56,28 @@ jobs:
       - name: Build site
         run: pnpm --dir web build
 
+      - name: Smoke-check build outputs
+        run: |
+          set -euo pipefail
+          # Homepages
+          test -f web/dist/index.html
+          test -f web/dist/de/index.html
+          # Project pages — L1 is a representative spot-check; if dynamic routes
+          # enumerated 0 projects, all 9 ids would be missing simultaneously.
+          test -f web/dist/projects/L1/index.html
+          test -f web/dist/de/projects/L1/index.html
+          # OG images — homepage + one project page, both langs
+          test -f web/dist/og/index-en.png
+          test -f web/dist/og/index-de.png
+          test -f web/dist/og/projects-L1-en.png
+          test -f web/dist/og/projects-L1-de.png
+          # OG image size sanity (> 5KB rules out blank/failed renders)
+          size=$(stat -c%s web/dist/og/index-en.png 2>/dev/null || stat -f%z web/dist/og/index-en.png)
+          [ "$size" -gt 5120 ] || (echo "OG image too small ($size bytes) — generation likely failed" && exit 1)
+          # OG meta wired into pages
+          grep -q 'property="og:image"' web/dist/index.html
+          grep -q 'property="og:image"' web/dist/projects/L1/index.html
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

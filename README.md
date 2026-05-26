@@ -2,9 +2,11 @@
 
 **Latest CV:** [EN](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-en.pdf) · [DE](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-de.pdf) — auto-published on every change to `main`.
 
-**Machine formats:** [JSON Resume](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/resume.json) · [Plain text EN](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-en.txt) · [Plain text DE](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-de.txt) · [JSON-LD](https://jin-homlee.github.io/jin-ho-lee-cv/person.jsonld)
+**Machine formats:** [JSON Resume](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/resume.json) · [Plain text EN](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-en.txt) · [Plain text DE](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-de.txt) · [JSON-LD](https://jinholee.is-a.dev/person.jsonld)
 
-**Website:** [jin-homlee.github.io/jin-ho-lee-cv](https://jin-homlee.github.io/jin-ho-lee-cv/) · [`/de/`](https://jin-homlee.github.io/jin-ho-lee-cv/de/) · auto-deployed on every change to `main`.
+**Website:** [jinholee.is-a.dev](https://jinholee.is-a.dev/) · auto-deployed on every change to `main`.
+
+Per-project deep-dives live under [`/projects/{id}/`](https://jinholee.is-a.dev/projects/L1/) (EN) and [`/de/projects/{id}/`](https://jinholee.is-a.dev/de/projects/L1/) (DE).
 
 Machine-readable, version-controlled CV. Single source of truth in YAML + BibTeX; renderers produce PDF, website, JSON Resume, JSON-LD, and plain text.
 
