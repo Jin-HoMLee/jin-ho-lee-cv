@@ -92,3 +92,8 @@ def test_pii_never_reaches_main_output(tmp_path):
             private_yaml.unlink()
         if cleanup_dir and private_dir.exists():
             private_dir.rmdir()
+
+
+def test_header_url_uses_pages_base(en_text):
+    from scripts.config import PAGES_BASE_URL
+    assert PAGES_BASE_URL in en_text, f"PAGES_BASE_URL ({PAGES_BASE_URL!r}) missing from header"
