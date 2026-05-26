@@ -38,6 +38,8 @@ const resolvedOgType = ogType ?? "profile";
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
 
+    <meta property="og:site_name" content={`${data.personal.name.given} ${data.personal.name.family} — ${lang === "en" ? "CV" : "Lebenslauf"}`} />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "de_DE"} />
     <meta property="og:type" content={resolvedOgType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
