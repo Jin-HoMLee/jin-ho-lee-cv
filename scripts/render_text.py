@@ -17,15 +17,17 @@ CONTENT_DIR = REPO_ROOT / "content"
 SITE_URL = f"{PAGES_BASE_URL}/"
 DIVIDER = "=" * 80
 SECTION_LABELS = {
-    "profile":      {"en": "PROFILE",      "de": "PROFIL"},
-    "experience":   {"en": "EXPERIENCE",   "de": "BERUFSERFAHRUNG"},
-    "education":    {"en": "EDUCATION",    "de": "AUSBILDUNG"},
-    "skills":       {"en": "SKILLS",       "de": "KENNTNISSE"},
-    "languages":    {"en": "LANGUAGES",    "de": "SPRACHEN"},
-    "volunteer":    {"en": "VOLUNTEER",    "de": "EHRENAMTLICH"},
-    "publications": {"en": "PUBLICATIONS", "de": "PUBLIKATIONEN"},
+    "profile":           {"en": "PROFILE",           "de": "PROFIL"},
+    "experience":        {"en": "EXPERIENCE",        "de": "BERUFSERFAHRUNG"},
+    "selected_projects": {"en": "SELECTED PROJECTS", "de": "AUSGEWÄHLTE PROJEKTE"},
+    "education":         {"en": "EDUCATION",         "de": "AUSBILDUNG"},
+    "skills":            {"en": "SKILLS",            "de": "KENNTNISSE"},
+    "languages":         {"en": "LANGUAGES",         "de": "SPRACHEN"},
+    "volunteer":         {"en": "VOLUNTEER",         "de": "EHRENAMTLICH"},
+    "publications":      {"en": "PUBLICATIONS",      "de": "PUBLIKATIONEN"},
 }
 PRESENT = {"en": "present", "de": "heute"}
+PERIOD_CONNECTOR = {"en": "to", "de": "bis"}
 
 
 def _wrap(paragraph: str, width: int = 80) -> str:
@@ -57,10 +59,26 @@ def _experience(content: dict, lang: str) -> str:
     for exp in content["experience"]:
         period_end = exp["period"].get("end") or PRESENT[lang]
         title_line = f"{exp['role']} - {exp['org']['name']}".strip()
-        period_line = f"{exp['period']['start']} to {period_end}"
+        period_line = f"{exp['period']['start']} {PERIOD_CONNECTOR[lang]} {period_end}"
         block = [f"{title_line}    ({period_line})"]
         for b in exp.get("bullets", []):
             block.append(f"  - {b[lang]}")
+        out.append("\n".join(block))
+    return "\n\n".join(out)
+
+
+def _selected_projects(content: dict, lang: str) -> str:
+    out: list[str] = []
+    outcome_label = {"en": "Outcome", "de": "Ergebnis"}[lang]
+    for proj in content["selected_projects"]:
+        period_end = proj["period"].get("end") or PRESENT[lang]
+        period = f"{proj['period']['start']} {PERIOD_CONNECTOR[lang]} {period_end}"
+        block = [
+            f"{proj['title']}    ({period})",
+            f"  {proj['role']}",
+            "  " + _wrap(proj["summary"], width=78).replace("\n", "\n  "),
+            "  " + _wrap(f"{outcome_label}: {proj['outcome']}", width=78).replace("\n", "\n  "),
+        ]
         out.append("\n".join(block))
     return "\n\n".join(out)
 
@@ -112,13 +130,14 @@ def render(lang: str) -> str:
 
     sections = [
         _header(content),
-        _section(L["profile"][lang],      _profile(content)),
-        _section(L["experience"][lang],   _experience(content, lang)),
-        _section(L["education"][lang],    _education(content)),
-        _section(L["skills"][lang],       _skills(content)),
-        _section(L["languages"][lang],    _languages(content)),
-        _section(L["volunteer"][lang],    _volunteer(content)),
-        _section(L["publications"][lang], _publications(pubs)),
+        _section(L["profile"][lang],           _profile(content)),
+        _section(L["experience"][lang],        _experience(content, lang)),
+        _section(L["selected_projects"][lang], _selected_projects(content, lang)),
+        _section(L["education"][lang],         _education(content)),
+        _section(L["skills"][lang],            _skills(content)),
+        _section(L["languages"][lang],         _languages(content)),
+        _section(L["volunteer"][lang],         _volunteer(content)),
+        _section(L["publications"][lang],      _publications(pubs)),
     ]
     return "\n\n".join(sections) + "\n"
 
