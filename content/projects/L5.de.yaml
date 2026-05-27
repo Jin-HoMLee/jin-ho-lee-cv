@@ -23,4 +23,4 @@ contributions:
   - "Patientenspezifische HLA-Typisierung (OptiType) und MHC-I-Peptidpräsentations-Vorhersage (MHCflurry 2.x Class1PresentationPredictor) integriert für End-to-End-Neoepitop-Kandidatenranking."
   - "Optionale strukturelle Validierung des TCR-pMHC-Ternärkomplexes via TCRdock (AlphaFold-v2-Backend) auf Google Cloud GPU; vorhergesagte Komplexe werden im interaktiven Mol* 3D-Viewer dargestellt."
   - "MIT-lizenziert, öffentlich auf GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
-outcome: "Demonstriert End-to-End-, cloud-fähige, reproduzierbare Neoepitop-Identifizierung von RNA-Seq-FASTQ bis zur validierten TCR-pMHC-Komplexstruktur — basierend auf patientenspezifischen HLA-Allelen und tumor-exklusiven Junctions."
+outcome: "Demonstriert End-to-End-, cloud-fähige, reproduzierbare Neoepitop-Identifizierung von RNA-Seq-FASTQ bis zur computergestützt modellierten TCR-pMHC-Komplexstruktur — basierend auf patientenspezifischen HLA-Allelen und tumor-exklusiven Junctions."
