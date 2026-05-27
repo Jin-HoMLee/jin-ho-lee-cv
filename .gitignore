@@ -1,6 +1,9 @@
 # PII overlay — never committed
 content.private/
 
+# Private headshot for --photo PDF build (German anti-discrimination convention: PDF default is photo-less)
+assets/photo.*
+
 # Build outputs
 dist/
 dist-private/
