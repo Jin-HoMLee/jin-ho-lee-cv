@@ -27,6 +27,7 @@ SECTION_LABELS = {
     "publications":      {"en": "PUBLICATIONS",      "de": "PUBLIKATIONEN"},
 }
 PRESENT = {"en": "present", "de": "heute"}
+PERIOD_CONNECTOR = {"en": "to", "de": "bis"}
 
 
 def _wrap(paragraph: str, width: int = 80) -> str:
@@ -58,7 +59,7 @@ def _experience(content: dict, lang: str) -> str:
     for exp in content["experience"]:
         period_end = exp["period"].get("end") or PRESENT[lang]
         title_line = f"{exp['role']} - {exp['org']['name']}".strip()
-        period_line = f"{exp['period']['start']} to {period_end}"
+        period_line = f"{exp['period']['start']} {PERIOD_CONNECTOR[lang]} {period_end}"
         block = [f"{title_line}    ({period_line})"]
         for b in exp.get("bullets", []):
             block.append(f"  - {b[lang]}")
@@ -71,7 +72,7 @@ def _selected_projects(content: dict, lang: str) -> str:
     outcome_label = {"en": "Outcome", "de": "Ergebnis"}[lang]
     for proj in content["selected_projects"]:
         period_end = proj["period"].get("end") or PRESENT[lang]
-        period = f"{proj['period']['start']} to {period_end}"
+        period = f"{proj['period']['start']} {PERIOD_CONNECTOR[lang]} {period_end}"
         block = [
             f"{proj['title']}    ({period})",
             f"  {proj['role']}",
