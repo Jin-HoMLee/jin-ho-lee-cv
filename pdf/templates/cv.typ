@@ -18,7 +18,7 @@
   size: size-body,
   fill: body-color,
 )
-#set par(leading: 0.58em)
+#set par(leading: 0.55em)
 
 // Use layout() so the columns grid fills the remaining page height after the
 // header. This bottom-aligns the main column and the sidebar — without this
