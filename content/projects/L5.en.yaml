@@ -1,5 +1,6 @@
 id: L5
 category: life-science
+open_source: true
 title: "Splice Neoepitope Pipeline – Reproducible Snakemake Workflow"
 summary: "Modernised, open-source reimplementation of the 2015 SNU splice-junction–based neoepitope discovery work as a reproducible Snakemake pipeline with optional structural validation."
 role: "Author and Maintainer (Open Source)"
@@ -23,4 +24,4 @@ contributions:
   - "Integrated patient-specific HLA typing (OptiType) and MHC-I peptide presentation prediction (MHCflurry 2.x Class1PresentationPredictor) for end-to-end neoepitope candidate ranking."
   - "Added optional TCR-pMHC ternary complex structural validation via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report."
   - "MIT-licensed, public on GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
-outcome: "Demonstrates end-to-end, cloud-deployable, reproducible neoepitope discovery from RNA-Seq FASTQ to computationally modeled TCR-pMHC complex structure — built on patient-specific HLA alleles and tumor-exclusive junctions."
+outcome: "Snakemake pipeline: end-to-end neoepitope discovery from RNA-Seq FASTQ to computationally modeled TCR-pMHC complex structure — patient-specific HLA alleles, tumor-exclusive junctions."

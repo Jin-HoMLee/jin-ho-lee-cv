@@ -65,13 +65,23 @@ def load_content(
         private = _load_yaml(private_path)
         personal = deep_merge(personal, private)
 
+    projects = _load_projects(content_dir / "projects", lang=lang)
+    selected_ids = _load_yaml(content_dir / "selected_projects.yaml")
+    unknown = [pid for pid in selected_ids if pid not in projects]
+    if unknown:
+        raise ValueError(
+            f"selected_projects.yaml references unknown project id(s): {unknown}"
+        )
+    selected_projects = [projects[pid] for pid in selected_ids]
+
     content = {
         "personal": personal,
         "profile": _load_yaml(content_dir / f"profile.{lang}.yaml"),
         "skills": _load_yaml(content_dir / "skills.yaml"),
         "education": _load_yaml(content_dir / "education.yaml"),
         "experience": _load_yaml(content_dir / "experience.yaml"),
-        "projects": _load_projects(content_dir / "projects", lang=lang),
+        "projects": projects,
+        "selected_projects": selected_projects,
         "languages": _load_yaml(content_dir / "languages.yaml"),
         "volunteer": _load_yaml(content_dir / "volunteer.yaml"),
         "publications": load_publications(content_dir / "publications.bib"),

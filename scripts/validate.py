@@ -97,6 +97,7 @@ _FILE_RULES: list[tuple[str, str]] = [
     ("skills.yaml", "skills"),
     ("education.yaml", "education"),
     ("experience.yaml", "experience"),
+    ("selected_projects.yaml", "selected_projects"),
     ("languages.yaml", "languages"),
     ("volunteer.yaml", "volunteer"),
 ]
@@ -128,6 +129,19 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
                 validate_file(path, schema_def=def_name, schema_path=schema_path, **kwargs)
             except ValidationError as e:
                 errors.append(FileError(path, str(e)))
+
+    selected_path = content_dir / "selected_projects.yaml"
+    if selected_path.exists():
+        try:
+            selected = _load_yaml(selected_path)
+            unknown = [pid for pid in selected if pid not in project_ids]
+            if unknown:
+                errors.append(FileError(
+                    selected_path,
+                    f"references unknown project id(s): {unknown}",
+                ))
+        except Exception as e:
+            errors.append(FileError(selected_path, str(e)))
 
     for path in (content_dir / "projects").glob("*.yaml"):
         try:
