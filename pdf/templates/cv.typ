@@ -2,6 +2,7 @@
 #import "header.typ": header
 #import "profile.typ": profile
 #import "experience.typ": experience
+#import "selected_projects.typ": selected_projects
 #import "education.typ": education
 #import "sidebar.typ": sidebar
 
@@ -17,6 +18,7 @@
   size: size-body,
   fill: body-color,
 )
+#set par(leading: 0.58em)
 
 // Use layout() so the columns grid fills the remaining page height after the
 // header. This bottom-aligns the main column and the sidebar — without this
@@ -37,6 +39,7 @@
       block(width: 100%, height: 100%, {
         profile(data.profile, data.labels)
         experience(data.experience, data.labels, lang)
+        selected_projects(data.selected_projects, data.labels)
         education(data.education, data.labels)
       }),
       sidebar(data, data.labels),
