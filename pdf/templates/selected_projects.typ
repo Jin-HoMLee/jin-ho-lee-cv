@@ -18,11 +18,9 @@
 
   for (i, entry) in entries.enumerate() {
     // Use just the lead portion of the title (before the em-dash subtitle) to
-    // keep the project header on one line. "(Open Source)" is parsed out of the
-    // project role so the dedicated role line can be dropped without losing the
-    // open-source signal.
+    // keep the project header on one line.
     let title-lead = entry.title.split(" – ").at(0)
-    let is-oss = entry.role.contains("Open Source")
+    let is-oss = entry.at("open_source", default: false)
     let title-suffix = if is-oss { text(size: size-small, fill: muted)[ (Open Source)] } else { none }
     grid(
       columns: (1fr, auto),
