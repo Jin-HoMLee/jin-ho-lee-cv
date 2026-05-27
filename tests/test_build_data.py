@@ -14,7 +14,7 @@ def test_prepare_data_returns_resolved_content(content_dir):
         assert key in result
 
     # Headline langmap was resolved
-    assert result["personal"]["headline"] == "Bioinformatics & Computational Biology"
+    assert result["personal"]["headline"] == "Cancer Immunogenomics | Bioinformatics"
 
     # Experience role langmap was resolved
     assert isinstance(result["experience"][0]["role"], str)
