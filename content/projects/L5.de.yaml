@@ -1,0 +1,26 @@
+id: L5
+category: life-science
+title: "Splice-Neoepitope-Pipeline – Reproduzierbarer Snakemake-Workflow"
+summary: "Modernisierte, Open-Source-Neuimplementierung der SNU-Arbeit von 2015 zur splice-junction-basierten Neoepitop-Identifizierung als reproduzierbare Snakemake-Pipeline mit optionaler struktureller Validierung."
+role: "Autor und Maintainer (Open Source)"
+period:
+  start: "2026-03"
+  end: null
+technologies:
+  - "Snakemake 8.x"
+  - "Conda"
+  - "Python 3.11"
+  - "HISAT2 / STAR"
+  - "OptiType"
+  - "MHCflurry 2.x"
+  - "TCRdock / AlphaFold v2"
+  - "bedtools"
+  - "Google Cloud GPU"
+  - "Mol*"
+contributions:
+  - "Neuentwicklung der ursprünglichen SNU-Pipeline als vollständig reproduzierbarer Snakemake-8.x-Workflow mit Conda-Umgebungen pro Rule — installierbar ohne manuelles Dependency-Management."
+  - "Tumor-vs-passendes-Normalgewebe-Junction-Filterung gegen GENCODE-Annotation implementiert; klassifiziert Junctions als annotated, normal_shared oder tumor_exclusive."
+  - "Patientenspezifische HLA-Typisierung (OptiType) und MHC-I-Peptidpräsentations-Vorhersage (MHCflurry 2.x Class1PresentationPredictor) integriert für End-to-End-Neoepitop-Kandidatenranking."
+  - "Optionale strukturelle Validierung des TCR-pMHC-Ternärkomplexes via TCRdock (AlphaFold-v2-Backend) auf Google Cloud GPU; vorhergesagte Komplexe werden im interaktiven Mol* 3D-Viewer dargestellt."
+  - "MIT-lizenziert, öffentlich auf GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
+outcome: "Demonstriert End-to-End-, cloud-fähige, reproduzierbare Neoepitop-Identifizierung von RNA-Seq-FASTQ bis zur computergestützt modellierten TCR-pMHC-Komplexstruktur — basierend auf patientenspezifischen HLA-Allelen und tumor-exklusiven Junctions."
