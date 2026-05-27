@@ -4,9 +4,9 @@ categories:
       de: "Bioinformatik & ML"
     groups:
       - label: { en: "Genomics", de: "Genomik" }
-        items: ["NGS", "RNA-Seq", "SNV Calling", "Splice Analysis"]
+        items: ["NGS", "RNA-Seq", "WES", "SNV Calling", "Splice Analysis", "HISAT2/STAR", "bedtools"]
       - label: { en: "Immunology", de: "Immunologie" }
-        items: ["MHC-I Prediction", "HLA Typing", "Neoepitopes"]
+        items: ["MHC-I Prediction", "HLA Typing", "OptiType", "MHCflurry", "Neoepitopes"]
       - label: { en: "Nanoscopy", de: "Nanoskopie" }
         items: ["Spatial Point-Pattern", "Cluster Analysis (DBSCAN)"]
 
@@ -28,6 +28,6 @@ categories:
       - label: { en: "AI & Vision", de: "KI & Vision" }
         items: ["TensorFlow", "Keras", "LSTMs", "OpenCV"]
       - label: { en: "Eng & Tools", de: "Eng & Tools" }
-        items: ["Python (Exp)", "R", "SQL", "Docker", "Git", "dbt"]
+        items: ["Python (Exp)", "R", "SQL", "Snakemake", "Conda", "Docker", "Git", "dbt"]
       - label: { en: "Cloud", de: "Cloud" }
         items: ["GCP", "BigQuery", "Vertex AI", "Looker"]
