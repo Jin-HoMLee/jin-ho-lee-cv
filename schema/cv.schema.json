@@ -195,6 +195,11 @@
       "required": ["id", "category", "title", "summary", "role", "period", "technologies", "contributions", "outcome"],
       "additionalProperties": false
     },
+    "selected_projects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ProjectId" },
+      "minItems": 1
+    },
     "languages": {
       "type": "array",
       "items": {

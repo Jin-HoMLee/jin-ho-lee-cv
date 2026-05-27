@@ -1,0 +1,4 @@
+# Project IDs surfaced in the PDF "Selected Projects" section.
+# Each ID must resolve to content/projects/<id>.{en,de}.yaml.
+# Order here is the rendering order.
+- L5

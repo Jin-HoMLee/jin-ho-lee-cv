@@ -28,7 +28,8 @@ def test_round_trip_structural_keys(rendered):
     en, de = rendered
     expected_keys = {
         "personal", "profile", "skills", "education", "experience",
-        "projects", "languages", "volunteer", "publications", "labels",
+        "projects", "selected_projects", "languages", "volunteer",
+        "publications", "labels",
     }
     assert set(en.keys()) == expected_keys
     assert set(de.keys()) == expected_keys
