@@ -2,8 +2,11 @@
 import json
 
 import pytest
+from ruamel.yaml import YAML
 
 from pdf.build import prepare_data
+
+_yaml = YAML(typ="safe")
 
 
 def test_prepare_data_returns_resolved_content(content_dir):
@@ -13,8 +16,12 @@ def test_prepare_data_returns_resolved_content(content_dir):
                 "experience", "projects", "languages", "volunteer", "publications"):
         assert key in result
 
-    # Headline langmap was resolved
-    assert result["personal"]["headline"] == "Cancer Immunogenomics | Bioinformatics"
+    # Headline langmap resolved to the EN value of the source YAML — structural
+    # check so this test tracks content edits instead of hardcoding the string.
+    with (content_dir / "personal.yaml").open() as f:
+        raw_headline = _yaml.load(f)["headline"]
+    assert isinstance(result["personal"]["headline"], str)
+    assert result["personal"]["headline"] == raw_headline["en"]
 
     # Experience role langmap was resolved
     assert isinstance(result["experience"][0]["role"], str)
