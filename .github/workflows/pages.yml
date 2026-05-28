@@ -56,7 +56,6 @@ jobs:
       - name: Build site
         env:
           PUBLIC_GSC_VERIFY: ${{ secrets.GSC_VERIFY }}
-          PUBLIC_BING_VERIFY: ${{ secrets.BING_VERIFY }}
           PUBLIC_ANALYTICS_ENABLED: "true"
           PUBLIC_ANALYTICS_ENDPOINT: "https://jinholee.goatcounter.com/count"
         run: pnpm --dir web build
@@ -97,10 +96,8 @@ jobs:
           # Analytics snippet doesn't depend on a repo secret — the flag and
           # endpoint are hardcoded in the env block above, so this is active.
           grep -q 'goatcounter' web/dist/index.html || (echo "Missing GoatCounter snippet — check PUBLIC_ANALYTICS_ENABLED env" && exit 1)
-          # Verification tags require repo secrets that aren't yet configured.
-          # TODO Phase 6 follow-up: uncomment after GSC_VERIFY/BING_VERIFY secrets are set
-          # grep -q 'google-site-verification' web/dist/index.html || (echo "Missing GSC tag — set GSC_VERIFY repo secret" && exit 1)
-          # grep -q 'msvalidate.01' web/dist/index.html || (echo "Missing Bing tag — set BING_VERIFY repo secret" && exit 1)
+          # GSC verification tag — GSC_VERIFY secret must be set.
+          grep -q 'google-site-verification' web/dist/index.html || (echo "Missing GSC tag — set GSC_VERIFY repo secret" && exit 1)
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
