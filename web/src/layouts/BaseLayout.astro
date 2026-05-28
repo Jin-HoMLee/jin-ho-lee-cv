@@ -29,7 +29,6 @@ const pathWithoutBase = Astro.url.pathname.startsWith(base)
 const canonicalUrl = `${PAGES_BASE_URL}${pathWithoutBase}`;
 const resolvedOgType = ogType ?? "profile";
 const gscVerify = import.meta.env.PUBLIC_GSC_VERIFY;
-const bingVerify = import.meta.env.PUBLIC_BING_VERIFY;
 const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === "true";
 const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;
 ---
@@ -40,7 +39,6 @@ const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     {gscVerify && <meta name="google-site-verification" content={gscVerify} />}
-    {bingVerify && <meta name="msvalidate.01" content={bingVerify} />}
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
 
