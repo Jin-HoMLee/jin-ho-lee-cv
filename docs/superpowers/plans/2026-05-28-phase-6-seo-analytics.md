@@ -114,10 +114,12 @@ If `just web-build` errors with "command not found", use `pnpm --dir web build` 
 Run:
 
 ```bash
-grep -c "<url>" web/dist/sitemap-0.xml
+grep -o "<url>" web/dist/sitemap-0.xml | wc -l
 ```
 
 Expected: `22` — 2 homepages (`/`, `/de/`) + 10 EN project pages (`/projects/L1/` … `/projects/L5/`, `/projects/D1/` … `/projects/D3/`, `/projects/C1/`, `/projects/C2/`) + 10 DE project pages.
+
+(Note: `grep -c` counts matching *lines* — the sitemap XML is minified to a single line, so `-c` returns 1. Use `-o | wc -l` to count occurrences.)
 
 If the count is wrong:
 
@@ -335,7 +337,9 @@ Locate the `Smoke-check build outputs` step (currently lines 59–80). At the en
           test -f web/dist/sitemap-0.xml
           test -f web/dist/robots.txt
           # Sitemap URL count (2 homepages + 10 projects × 2 langs = 22)
-          urls=$(grep -c "<url>" web/dist/sitemap-0.xml)
+          # grep -c counts matching lines; the sitemap is minified to one line,
+          # so we use -o | wc -l to count occurrences instead.
+          urls=$(grep -o "<url>" web/dist/sitemap-0.xml | wc -l | tr -d ' ')
           [ "$urls" -eq 22 ] || (echo "sitemap URL count: expected 22, got $urls" && exit 1)
           # robots.txt references the sitemap
           grep -q "sitemap-index.xml" web/dist/robots.txt
@@ -416,8 +420,8 @@ Expected: build succeeds with no warnings related to sitemap or BaseLayout.
 
 ```bash
 ls web/dist/sitemap-index.xml web/dist/sitemap-0.xml web/dist/robots.txt
-grep -c "<url>" web/dist/sitemap-0.xml
-grep -c 'google-site-verification\|msvalidate\|goatcounter' web/dist/index.html
+grep -o "<url>" web/dist/sitemap-0.xml | wc -l
+grep -E -c 'google-site-verification|msvalidate|goatcounter' web/dist/index.html
 ```
 
 Expected:
