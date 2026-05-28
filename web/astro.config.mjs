@@ -17,7 +17,7 @@ export default defineConfig({
         defaultLocale: "en",
         locales: { en: "en-US", de: "de-DE" },
       },
-      filter: (page) => !page.includes("/og/") && !page.includes("/404"),
+      filter: (page) => !page.includes("/og/") && !page.endsWith("/404/"),
     }),
   ],
   vite: {

@@ -207,6 +207,7 @@ Phase 6 code ships in a state where deploying with all four secrets unset is a g
 - **CNAME PUT API behavior carries over from Phase 5.** No new domain config needed in Phase 6, but if the domain ever changes, the existing `gh api -X PUT repos/.../pages -f cname=...` flow still applies — Phase 6 doesn't change it.
 - **GoatCounter subdomain is permanent.** Pick `jinholee` (matches the domain). Cannot easily rename later without re-verifying analytics in search consoles and migrating historical counts.
 - **Astro's `i18n.routing.prefixDefaultLocale: false` means EN routes have no `/en/` prefix.** Sitemap integration's `i18n` config block needs to match — if misconfigured, EN pages will be emitted with the wrong language attribute or duplicated. Test §7.1 includes the URL count check (22) which would catch double-emission.
+- **CSP not configured currently, but GoatCounter requires specific directives if one is added later.** Both the script load and the beacon target the same origin: `script-src https://gc.zgo.at; connect-src https://gc.zgo.at`. Document this here so a future CSP addition doesn't silently break analytics. Flagged by the @claude PR #27 review on 2026-05-28.
 
 ## 9. Open questions
 
