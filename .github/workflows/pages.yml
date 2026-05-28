@@ -94,12 +94,13 @@ jobs:
           [ "$urls" -eq 22 ] || (echo "sitemap URL count: expected 22, got $urls" && exit 1)
           # robots.txt references the sitemap
           grep -q "sitemap-index.xml" web/dist/robots.txt
-          # Production head tags wired (require all repo secrets to be set, so
-          # this also serves as a "did the user finish setup" check on CI runs).
+          # Analytics snippet doesn't depend on a repo secret — the flag and
+          # endpoint are hardcoded in the env block above, so this is active.
+          grep -q 'goatcounter' web/dist/index.html || (echo "Missing GoatCounter snippet — check PUBLIC_ANALYTICS_ENABLED env" && exit 1)
+          # Verification tags require repo secrets that aren't yet configured.
           # TODO Phase 6 follow-up: uncomment after GSC_VERIFY/BING_VERIFY secrets are set
           # grep -q 'google-site-verification' web/dist/index.html || (echo "Missing GSC tag — set GSC_VERIFY repo secret" && exit 1)
           # grep -q 'msvalidate.01' web/dist/index.html || (echo "Missing Bing tag — set BING_VERIFY repo secret" && exit 1)
-          # grep -q 'goatcounter' web/dist/index.html || (echo "Missing GoatCounter snippet — check PUBLIC_ANALYTICS_ENABLED" && exit 1)
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
