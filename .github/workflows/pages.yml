@@ -54,6 +54,11 @@ jobs:
         run: pnpm --dir web install --frozen-lockfile
 
       - name: Build site
+        env:
+          PUBLIC_GSC_VERIFY: ${{ secrets.GSC_VERIFY }}
+          PUBLIC_BING_VERIFY: ${{ secrets.BING_VERIFY }}
+          PUBLIC_ANALYTICS_ENABLED: "true"
+          PUBLIC_ANALYTICS_ENDPOINT: "https://jinholee.goatcounter.com/count"
         run: pnpm --dir web build
 
       - name: Smoke-check build outputs
@@ -77,6 +82,25 @@ jobs:
           # OG meta wired into pages
           grep -q 'property="og:image"' web/dist/index.html
           grep -q 'property="og:image"' web/dist/projects/L1/index.html
+          # Phase 6: SEO + analytics outputs
+          # Sitemap + robots.txt exist
+          test -f web/dist/sitemap-index.xml
+          test -f web/dist/sitemap-0.xml
+          test -f web/dist/robots.txt
+          # Sitemap URL count (2 homepages + 10 projects × 2 langs = 22)
+          # grep -c counts matching lines; the sitemap is minified to one line,
+          # so we use -o | wc -l to count occurrences instead.
+          urls=$(grep -o "<url>" web/dist/sitemap-0.xml | wc -l | tr -d ' ')
+          [ "$urls" -eq 22 ] || (echo "sitemap URL count: expected 22, got $urls" && exit 1)
+          # robots.txt references the sitemap
+          grep -q "sitemap-index.xml" web/dist/robots.txt
+          # Analytics snippet doesn't depend on a repo secret — the flag and
+          # endpoint are hardcoded in the env block above, so this is active.
+          grep -q 'goatcounter' web/dist/index.html || (echo "Missing GoatCounter snippet — check PUBLIC_ANALYTICS_ENABLED env" && exit 1)
+          # Verification tags require repo secrets that aren't yet configured.
+          # TODO Phase 6 follow-up: uncomment after GSC_VERIFY/BING_VERIFY secrets are set
+          # grep -q 'google-site-verification' web/dist/index.html || (echo "Missing GSC tag — set GSC_VERIFY repo secret" && exit 1)
+          # grep -q 'msvalidate.01' web/dist/index.html || (echo "Missing Bing tag — set BING_VERIFY repo secret" && exit 1)
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
