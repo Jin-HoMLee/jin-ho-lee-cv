@@ -116,6 +116,20 @@ def _volunteer(content: dict) -> list[dict]:
     return out
 
 
+def _awards(content: dict) -> list[dict]:
+    out = []
+    for a in content["awards"]:
+        entry = {
+            "title": a["title"],
+            "date": f"{a['year']}-01-01",
+            "awarder": a["issuer"],
+        }
+        if a.get("note"):
+            entry["summary"] = a["note"]
+        out.append(entry)
+    return out
+
+
 def _projects(content: dict) -> list[dict]:
     out = []
     for pid, proj in content["projects"].items():
@@ -156,6 +170,7 @@ def to_jsonresume(content: dict, pubs: list[Publication]) -> dict:
         "skills": _skills(content),
         "languages": _languages(content),
         "volunteer": _volunteer(content),
+        "awards": _awards(content),
         "projects": _projects(content),
         "publications": _publications(pubs),
     }

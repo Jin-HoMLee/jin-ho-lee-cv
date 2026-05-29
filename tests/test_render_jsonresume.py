@@ -127,3 +127,12 @@ def test_publication_url_omitted_when_no_doi():
 def test_bsc_education_area_is_bioinformatics(doc):
     bsc = next(e for e in doc["education"] if e["studyType"].startswith("B.Sc."))
     assert bsc["area"] == "Bioinformatics"
+
+
+def test_awards_array_present(doc):
+    titles = {a["title"] for a in doc["awards"]}
+    assert "DAAD PROMOS Scholarship" in titles
+    daad = next(a for a in doc["awards"] if a["title"] == "DAAD PROMOS Scholarship")
+    assert daad["awarder"] == "DAAD"
+    assert daad["date"] == "2015-01-01"
+    assert "summary" in daad

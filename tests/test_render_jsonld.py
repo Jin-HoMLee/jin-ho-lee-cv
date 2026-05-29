@@ -146,3 +146,8 @@ def test_orcid_and_website_in_same_as(doc):
     same_as = doc["sameAs"]
     assert "https://orcid.org/0009-0001-8784-1771" in same_as
     assert "https://jinholee.is-a.dev" in same_as
+
+
+def test_person_award_present(doc):
+    assert "DAAD PROMOS Scholarship" in doc["award"]
+    assert "DeGBS Poster Award" in doc["award"]
