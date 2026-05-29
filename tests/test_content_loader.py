@@ -121,3 +121,17 @@ def test_load_content_rejects_id_filename_mismatch(tmp_path):
     )
     with pytest.raises(ValueError, match="does not match filename"):
         load_content(fake, private_path=None)
+
+
+def test_corrected_project_periods(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    projects = content["projects"]
+    assert projects["L1"]["period"] == {"start": "2015-08", "end": "2015-11"}
+    assert projects["L2"]["period"] == {"start": "2014-04", "end": "2014-05"}
+    assert projects["L3"]["period"]["start"] == "2017-02"
+
+
+def test_research_entry_start_not_after_earliest_subproject(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    research = next(e for e in content["experience"] if e["id"] == "research")
+    assert research["period"]["start"] == "2014-04"
