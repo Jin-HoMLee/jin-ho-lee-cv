@@ -80,6 +80,7 @@ export interface Publication {
   title: string;
   year: number;
   type: PublicationType;
+  category: "research" | "applied";
   authorship: AuthorshipType;
   authors: string[];
   venue: string | null;
