@@ -8,10 +8,10 @@ from pathlib import Path
 import jsonschema
 import pytest
 
-from scripts.bib_loader import load_publications
+from scripts.bib_loader import Publication, load_publications
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
-from scripts.render_jsonresume import to_jsonresume
+from scripts.render_jsonresume import _publications as jsonresume_publications, to_jsonresume
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -103,3 +103,22 @@ def test_pii_never_reaches_dump(tmp_path, monkeypatch):
 def test_basics_url_uses_pages_base(doc):
     from scripts.config import PAGES_BASE_URL
     assert doc["basics"]["url"].startswith(PAGES_BASE_URL)
+
+
+def _pub(**over) -> Publication:
+    base = dict(
+        key="x", title="T", year=2019, type="article", authorship="first",
+        authors=("Lee, J.",), venue="Cancers", doi=None, raw={},
+    )
+    base.update(over)
+    return Publication(**base)
+
+
+def test_publication_url_is_doi_when_present():
+    [entry] = jsonresume_publications([_pub(doi="10.3390/cancers11121877")])
+    assert entry["url"] == "https://doi.org/10.3390/cancers11121877"
+
+
+def test_publication_url_omitted_when_no_doi():
+    [entry] = jsonresume_publications([_pub(doi=None)])
+    assert "url" not in entry
