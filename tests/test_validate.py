@@ -99,6 +99,14 @@ def test_malformed_doi_in_bib_fails_validate_tree(tmp_path):
     assert any("doi" in str(e) for e in errors), f"expected a doi error, got: {errors}"
 
 
+def test_malformed_awards_fails(schema_path, tmp_path):
+    """An award missing the required 'issuer' should fail validation."""
+    bad = tmp_path / "awards.yaml"
+    bad.write_text("- title: { en: \"X\" }\n  year: 2020\n")
+    with pytest.raises(ValidationError):
+        validate_file(bad, schema_def="awards", schema_path=schema_path)
+
+
 def test_de_en_project_file_parity_fails_on_missing_en(tmp_path):
     """validate_tree should also catch DE-only project files (something's wrong if EN is missing)."""
     content = tmp_path / "content"
