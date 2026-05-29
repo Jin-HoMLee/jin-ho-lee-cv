@@ -51,3 +51,45 @@ def test_missing_authorship_field_raises(tmp_path):
     )
     with pytest.raises(ValueError, match="authorship"):
         load_publications(bad)
+
+
+def test_doi_extracted_when_present(tmp_path):
+    bib = tmp_path / "doi.bib"
+    bib.write_text(
+        "@article{x, author={Lee, J.}, title={T}, year={2019}, "
+        "journal={Cancers}, type={article}, authorship={first}, "
+        "doi={10.3390/cancers11121877}}\n"
+    )
+    assert load_publications(bib)[0].doi == "10.3390/cancers11121877"
+
+
+def test_doi_is_none_when_absent(tmp_path):
+    bib = tmp_path / "nodoi.bib"
+    bib.write_text(
+        "@article{x, author={Lee, J.}, title={T}, year={2019}, "
+        "journal={Cancers}, type={article}, authorship={first}}\n"
+    )
+    assert load_publications(bib)[0].doi is None
+
+
+def test_doi_normalizes_resolver_url_and_label(tmp_path):
+    bib = tmp_path / "urls.bib"
+    bib.write_text(
+        "@article{a, author={Lee, J.}, title={A}, year={2019}, journal={J}, "
+        "type={article}, authorship={first}, doi={https://doi.org/10.3390/aaa}}\n"
+        "@article{b, author={Lee, J.}, title={B}, year={2018}, journal={J}, "
+        "type={article}, authorship={first}, doi={doi:10.1000/bbb}}\n"
+    )
+    by_key = {p.key: p for p in load_publications(bib)}
+    assert by_key["a"].doi == "10.3390/aaa"
+    assert by_key["b"].doi == "10.1000/bbb"
+
+
+def test_malformed_doi_raises(tmp_path):
+    bib = tmp_path / "bad.bib"
+    bib.write_text(
+        "@article{x, author={Lee, J.}, title={T}, year={2019}, journal={J}, "
+        "type={article}, authorship={first}, doi={not-a-doi}}\n"
+    )
+    with pytest.raises(ValueError, match="doi"):
+        load_publications(bib)

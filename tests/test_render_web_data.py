@@ -6,7 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from scripts.render_web_data import render_web_data, OUTPUT_DIR
+from scripts.bib_loader import Publication
+from scripts.render_web_data import _to_jsonable, render_web_data, OUTPUT_DIR
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -107,6 +108,7 @@ def test_publications_shape(rendered):
         assert isinstance(pub["year"], int)
         # raw bibtex dict should NOT be in the dump
         assert "raw" not in pub
+        assert "doi" in pub  # optional value, but key is always serialized
 
 
 def test_output_dir_default_matches_repo_layout():
@@ -114,3 +116,13 @@ def test_output_dir_default_matches_repo_layout():
     assert OUTPUT_DIR.name == "data"
     assert OUTPUT_DIR.parent.name == "src"
     assert OUTPUT_DIR.parent.parent.name == "web"
+
+
+def test_publication_doi_is_serialized():
+    pub = Publication(
+        key="x", title="T", year=2019, type="article", authorship="first",
+        authors=("Lee, J.",), venue="Cancers", doi="10.3390/x", raw={"foo": "bar"},
+    )
+    d = _to_jsonable(pub)
+    assert d["doi"] == "10.3390/x"
+    assert "raw" not in d  # bibtex-internal field stays out of the web dump

@@ -1,6 +1,7 @@
 """Load publications.bib and expose structured records with custom fields."""
 from __future__ import annotations
 
+import re
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
@@ -12,6 +13,10 @@ from pybtex.database import parse_file
 BIB_TYPES = {"article", "book-chapter", "conference", "book"}
 AUTHORSHIP_VALUES = {"first", "shared", "middle", "last", "corresponding"}
 
+# DOI = "10." + registrant digits + "/" + suffix. Suffix is case-insensitive but
+# the registrant is always digits; no flag needed.
+_DOI_RE = re.compile(r"^10\.\d{4,}/\S+$")
+
 
 @dataclass(frozen=True)
 class Publication:
@@ -22,6 +27,7 @@ class Publication:
     authorship: str
     authors: tuple[str, ...]
     venue: str | None
+    doi: str | None
     raw: dict
 
 
@@ -32,6 +38,30 @@ def _venue(entry) -> str | None:
         or fields.get("booktitle")
         or fields.get("publisher")
     )
+
+
+def _normalize_doi(value: str) -> str:
+    """Reduce a pasted DOI (resolver URL or 'doi:'-prefixed) to bare 10.xxxx/yyy."""
+    v = value.strip()
+    if v.lower().startswith("doi:"):
+        v = v[len("doi:"):].strip()
+    marker = "doi.org/"
+    idx = v.lower().find(marker)
+    if idx != -1:
+        v = v[idx + len(marker):].strip()
+    return v
+
+
+def _doi(key: str, fields) -> str | None:
+    raw = fields.get("doi")
+    if raw is None:
+        return None
+    value = _normalize_doi(str(raw))
+    if not value:
+        return None
+    if not _DOI_RE.match(value):
+        raise ValueError(f"{key}: malformed doi {value!r} (expected '10.xxxx/...')")
+    return value
 
 
 def _parse_entry(key: str, entry) -> Publication:
@@ -53,6 +83,7 @@ def _parse_entry(key: str, entry) -> Publication:
         authorship=fields["authorship"],
         authors=authors,
         venue=_venue(entry),
+        doi=_doi(key, fields),
         raw=dict(fields),
     )
 
