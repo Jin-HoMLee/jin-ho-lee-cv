@@ -159,3 +159,10 @@ def test_awards_loaded(content_dir):
     titles = {a["title"]["en"] for a in content["awards"]}
     assert "DAAD PROMOS Scholarship" in titles
     assert "DeGBS Poster Award" in titles
+
+
+def test_research_genomics_bullet_mentions_variant_calling(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    research = next(e for e in content["experience"] if e["id"] == "research")
+    first_bullet = research["bullets"][0]["en"]
+    assert "SNV" in first_bullet and "colorectal" in first_bullet.lower()
