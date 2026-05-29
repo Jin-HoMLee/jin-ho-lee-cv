@@ -37,15 +37,11 @@
   }
 }
 
+// Returns the sidebar content only. The colored background + left accent rule
+// are applied as a grid cell fill/stroke in cv.typ so the panel spans across
+// the page break (full-length rail), bottom-aligned with the main column.
 #let sidebar(data, labels) = {
-  block(
-    fill: sidebar-bg,
-    inset: (x: 10pt, y: 10pt),
-    stroke: (left: 3pt + accent),
-    width: 100%,
-  )[
-    #_skills(data.skills, labels)
-    #_languages(data.languages, labels)
-    #_volunteer(data.volunteer, labels)
-  ]
+  _skills(data.skills, labels)
+  _languages(data.languages, labels)
+  _volunteer(data.volunteer, labels)
 }

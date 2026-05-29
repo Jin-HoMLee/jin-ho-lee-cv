@@ -44,6 +44,12 @@
 #grid(
   columns: sidebar-ratio,
   gutter: column-gutter,
+  // Sidebar (column 1) gets the colored fill + left accent rule + padding as a
+  // grid cell so the panel spans the page break and bottom-aligns with the main
+  // column. The main column (0) is flush with no inset.
+  fill: (x, _) => if x == 1 { sidebar-bg },
+  stroke: (x, _) => if x == 1 { (left: 3pt + accent) },
+  inset: (x, _) => if x == 1 { 10pt } else { 0pt },
   block(width: 100%, {
     profile(data.profile, data.labels)
     experience(data.experience, data.labels, lang)
