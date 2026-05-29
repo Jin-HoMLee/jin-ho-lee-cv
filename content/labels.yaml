@@ -3,6 +3,7 @@ sections:
   experience:        { en: "Experience",        de: "Berufserfahrung" }
   selected_projects: { en: "Selected Projects", de: "Ausgewählte Projekte" }
   education:         { en: "Education",         de: "Ausbildung" }
+  awards:            { en: "Awards",            de: "Auszeichnungen" }
   skills:            { en: "Skills",            de: "Kenntnisse" }
   languages:         { en: "Languages",         de: "Sprachen" }
   volunteer:         { en: "Volunteer",         de: "Ehrenamtlich" }

@@ -16,6 +16,7 @@ const { education, labels } = Astro.props;
     {education.map((ed) => (
       <div>
         <p class="text-sm font-semibold text-neutral-900">{ed.degree}</p>
+        {ed.field && <p class="text-sm text-neutral-700">{ed.field}</p>}
         <p class="text-sm text-neutral-700">{ed.institution} · {ed.location}</p>
         <p class="text-xs text-neutral-500">{ed.year}</p>
       </div>

@@ -52,10 +52,45 @@ def test_real_bib_doi_presence():
         assert by_key[key].doi is None, f"{key} should have no DOI"
 
 
-def test_publications_sorted_by_year_desc():
+def test_category_defaults_to_research_when_absent(tmp_path):
+    bib = tmp_path / "nocat.bib"
+    bib.write_text(
+        "@article{x, author={Lee, J.}, title={T}, year={2019}, "
+        "journal={J}, type={article}, authorship={first}}\n"
+    )
+    assert load_publications(bib)[0].category == "research"
+
+
+def test_category_applied_parsed(tmp_path):
+    bib = tmp_path / "applied.bib"
+    bib.write_text(
+        "@incollection{x, author={Lee, J.}, title={T}, year={2025}, "
+        "booktitle={B}, type={book-chapter}, authorship={first}, category={applied}}\n"
+    )
+    assert load_publications(bib)[0].category == "applied"
+
+
+def test_unknown_category_raises(tmp_path):
+    bib = tmp_path / "badcat.bib"
+    bib.write_text(
+        "@article{x, author={Lee, J.}, title={T}, year={2019}, "
+        "journal={J}, type={article}, authorship={first}, category={bogus}}\n"
+    )
+    with pytest.raises(ValueError, match="category"):
+        load_publications(bib)
+
+
+def test_publications_sorted_research_then_applied_then_year_desc():
     pubs = load_publications(BIB_PATH)
-    years = [p.year for p in pubs]
-    assert years == sorted(years, reverse=True)
+    first_applied = next(
+        (i for i, p in enumerate(pubs) if p.category == "applied"), len(pubs)
+    )
+    assert all(p.category == "research" for p in pubs[:first_applied])
+    assert all(p.category == "applied" for p in pubs[first_applied:])
+    research_years = [p.year for p in pubs if p.category == "research"]
+    applied_years = [p.year for p in pubs if p.category == "applied"]
+    assert research_years == sorted(research_years, reverse=True)
+    assert applied_years == sorted(applied_years, reverse=True)
 
 
 def test_authorship_counts_sums_to_total():

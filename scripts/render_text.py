@@ -21,6 +21,7 @@ SECTION_LABELS = {
     "experience":        {"en": "EXPERIENCE",        "de": "BERUFSERFAHRUNG"},
     "selected_projects": {"en": "SELECTED PROJECTS", "de": "AUSGEWÄHLTE PROJEKTE"},
     "education":         {"en": "EDUCATION",         "de": "AUSBILDUNG"},
+    "awards":            {"en": "AWARDS",            "de": "AUSZEICHNUNGEN"},
     "skills":            {"en": "SKILLS",            "de": "KENNTNISSE"},
     "languages":         {"en": "LANGUAGES",         "de": "SPRACHEN"},
     "volunteer":         {"en": "VOLUNTEER",         "de": "EHRENAMTLICH"},
@@ -84,10 +85,20 @@ def _selected_projects(content: dict, lang: str) -> str:
 
 
 def _education(content: dict) -> str:
-    return "\n".join(
-        f"{e['year']}  {e['degree']} - {e['institution']} ({e['location']})"
-        for e in content["education"]
-    )
+    lines = []
+    for e in content["education"]:
+        major = f", {e['field']}" if e.get("field") else ""
+        lines.append(f"{e['year']}  {e['degree']}{major} - {e['institution']} ({e['location']})")
+    return "\n".join(lines)
+
+
+def _awards(content: dict) -> str:
+    lines = []
+    for a in content["awards"]:
+        lines.append(f"{a['year']}  {a['title']} - {a['issuer']}")
+        if a.get("note"):
+            lines.append(f"  {a['note']}")
+    return "\n".join(lines)
 
 
 def _skills(content: dict) -> str:
@@ -137,6 +148,7 @@ def render(lang: str) -> str:
         _section(L["experience"][lang],        _experience(content, lang)),
         _section(L["selected_projects"][lang], _selected_projects(content, lang)),
         _section(L["education"][lang],         _education(content)),
+        _section(L["awards"][lang],            _awards(content)),
         _section(L["skills"][lang],            _skills(content)),
         _section(L["languages"][lang],         _languages(content)),
         _section(L["volunteer"][lang],         _volunteer(content)),

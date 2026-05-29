@@ -1,0 +1,24 @@
+---
+import type { Award, Labels } from "../types/content";
+
+interface Props {
+  awards: Award[];
+  labels: Labels;
+}
+
+const { awards, labels } = Astro.props;
+---
+<section id="awards" class="py-6">
+  <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+    {labels.sections.awards}
+  </h2>
+  <div class="space-y-3">
+    {awards.map((a) => (
+      <div>
+        <p class="text-sm font-semibold text-neutral-900">{a.title} <span class="font-normal text-neutral-500">· {a.year}</span></p>
+        <p class="text-sm text-neutral-700">{a.issuer}</p>
+        {a.note && <p class="text-xs text-neutral-500">{a.note}</p>}
+      </div>
+    ))}
+  </div>
+</section>

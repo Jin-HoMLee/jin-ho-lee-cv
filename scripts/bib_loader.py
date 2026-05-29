@@ -12,6 +12,8 @@ from pybtex.database import parse_file
 
 BIB_TYPES = {"article", "book-chapter", "conference", "book"}
 AUTHORSHIP_VALUES = {"first", "shared", "middle", "last", "corresponding"}
+CATEGORY_VALUES = {"research", "applied"}
+CATEGORY_RANK = {"research": 0, "applied": 1}
 
 # DOI = "10." + registrant digits + "/" + suffix. Suffix is case-insensitive but
 # the registrant is always digits; no flag needed.
@@ -29,6 +31,7 @@ class Publication:
     venue: str | None
     doi: str | None
     raw: dict
+    category: str = "research"
 
 
 def _venue(entry) -> str | None:
@@ -64,6 +67,18 @@ def _doi(key: str, fields) -> str | None:
     return value
 
 
+def _category(key: str, fields) -> str:
+    raw = fields.get("category")
+    if raw is None:
+        return "research"
+    value = str(raw).strip().lower()
+    if value not in CATEGORY_VALUES:
+        raise ValueError(
+            f"{key}: unknown category {value!r} (expected one of {sorted(CATEGORY_VALUES)})"
+        )
+    return value
+
+
 def _parse_entry(key: str, entry) -> Publication:
     fields = entry.fields
     for required in ("title", "year", "type", "authorship"):
@@ -85,14 +100,20 @@ def _parse_entry(key: str, entry) -> Publication:
         venue=_venue(entry),
         doi=_doi(key, fields),
         raw=dict(fields),
+        category=_category(key, fields),
     )
 
 
 def load_publications(bib_path: Path) -> list[Publication]:
-    """Parse a .bib file into Publication records, sorted by year (newest first)."""
+    """Parse a .bib file into Publication records.
+
+    Sorted research-category first, then applied-category; year-descending
+    (newest first) within each category. Sort is stable, so same-(category, year)
+    entries keep their original .bib order.
+    """
     bib = parse_file(str(bib_path))
     pubs = [_parse_entry(key, entry) for key, entry in bib.entries.items()]
-    return sorted(pubs, key=lambda p: p.year, reverse=True)
+    return sorted(pubs, key=lambda p: (CATEGORY_RANK[p.category], -p.year))
 
 
 def authorship_counts(pubs: Iterable[Publication]) -> dict[str, int]:

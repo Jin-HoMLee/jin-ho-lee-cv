@@ -55,7 +55,8 @@ def load_content(
     """Load full content tree.
 
     Returns a dict with keys: personal, profile, skills, education, experience,
-    projects (dict keyed by id), languages, volunteer, publications (list of records).
+    projects (dict keyed by id), selected_projects (list), languages, volunteer,
+    awards (list of records), publications (list of records), labels.
 
     If private_path is provided and the file exists, its contents are merged into
     content["personal"].
@@ -84,6 +85,7 @@ def load_content(
         "selected_projects": selected_projects,
         "languages": _load_yaml(content_dir / "languages.yaml"),
         "volunteer": _load_yaml(content_dir / "volunteer.yaml"),
+        "awards": _load_yaml(content_dir / "awards.yaml"),
         "publications": load_publications(content_dir / "publications.bib"),
         "labels": _load_yaml(content_dir / "labels.yaml"),
     }

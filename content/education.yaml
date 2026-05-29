@@ -8,6 +8,9 @@
 - degree:
     en: "B.Sc. Molecular Biotechnology"
     de: "B.Sc. Molekulare Biotechnologie"
+  field:
+    en: "Bioinformatics"
+    de: "Bioinformatik"
   institution: "Heidelberg University"
   location: "Heidelberg, Germany"
   year: 2014
