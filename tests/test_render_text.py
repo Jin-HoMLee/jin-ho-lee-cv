@@ -6,6 +6,8 @@ from pathlib import Path
 
 import pytest
 
+from scripts.bib_loader import Publication
+from scripts.render_text import _publications as render_text_publications
 from scripts.render_text import render
 
 
@@ -97,3 +99,22 @@ def test_pii_never_reaches_main_output(tmp_path):
 def test_header_url_uses_pages_base(en_text):
     from scripts.config import PAGES_BASE_URL
     assert PAGES_BASE_URL in en_text, f"PAGES_BASE_URL ({PAGES_BASE_URL!r}) missing from header"
+
+
+def _pub(**over) -> Publication:
+    base = dict(
+        key="x", title="T", year=2019, type="article", authorship="first",
+        authors=("Lee, J.",), venue="Cancers", doi=None, raw={},
+    )
+    base.update(over)
+    return Publication(**base)
+
+
+def test_publications_include_doi_url_line():
+    out = render_text_publications([_pub(doi="10.3390/cancers11121877")])
+    assert "  https://doi.org/10.3390/cancers11121877" in out
+
+
+def test_publications_omit_doi_line_when_absent():
+    out = render_text_publications([_pub(doi=None)])
+    assert "https://doi.org/" not in out
