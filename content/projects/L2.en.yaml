@@ -4,8 +4,8 @@ title: "Personalized Immunotherapy – High-Throughput HLA Typing Pipeline"
 summary: "Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data."
 role: "Bioinformatics Bachelor Thesis Student (NCT Heidelberg)"
 period:
-  start: "2013-10"
-  end: "2014-06"
+  start: "2014-04"
+  end: "2014-05"
 technologies:
   - "Python"
   - "R"

@@ -45,7 +45,7 @@
     en: "Doctoral & Post-Graduate Researcher"
     de: "Doktorand & Postgraduierter Forscher"
   period:
-    start: "2014-06"
+    start: "2014-04"
     end: "2022-07"
   bullets:
     - en: "Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer patient NGS and RNA-Seq splice junction data."
