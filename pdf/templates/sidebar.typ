@@ -43,7 +43,6 @@
     inset: (x: 10pt, y: 10pt),
     stroke: (left: 3pt + accent),
     width: 100%,
-    height: 100%,  // fill the grid cell vertically so the sidebar bottom-aligns with the main column
   )[
     #_skills(data.skills, labels)
     #_languages(data.languages, labels)
