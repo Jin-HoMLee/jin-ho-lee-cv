@@ -129,6 +129,7 @@ def test_awards_section_renders():
     out = render("en")
     assert "AWARDS" in out
     assert "DAAD PROMOS Scholarship" in out
+    assert "DeGBS Poster Award" in out
 
 
 def test_awards_section_renders_de():

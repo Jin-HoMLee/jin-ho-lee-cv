@@ -9,6 +9,7 @@ export interface Links {
   linkedin: string | null;
   github: string | null;
   researchgate: string | null;
+  website: string | null;
   orcid: string | null;
 }
 export interface Personal {
