@@ -148,11 +148,11 @@ def render(lang: str) -> str:
         _section(L["experience"][lang],        _experience(content, lang)),
         _section(L["selected_projects"][lang], _selected_projects(content, lang)),
         _section(L["education"][lang],         _education(content)),
-        _section(L["awards"][lang],            _awards(content)),
         _section(L["skills"][lang],            _skills(content)),
         _section(L["languages"][lang],         _languages(content)),
         _section(L["volunteer"][lang],         _volunteer(content)),
         _section(L["publications"][lang],      _publications(pubs)),
+        _section(L["awards"][lang],            _awards(content)),
     ]
     return "\n\n".join(sections) + "\n"
 
