@@ -79,7 +79,7 @@ def _education(content: dict) -> list[dict]:
         out.append({
             "institution": edu["institution"],
             "studyType": edu["degree"],
-            "area": "",
+            "area": edu.get("field", ""),
             "startDate": f"{year}-01-01",
             "endDate": f"{year}-12-31",
         })

@@ -84,10 +84,11 @@ def _selected_projects(content: dict, lang: str) -> str:
 
 
 def _education(content: dict) -> str:
-    return "\n".join(
-        f"{e['year']}  {e['degree']} - {e['institution']} ({e['location']})"
-        for e in content["education"]
-    )
+    lines = []
+    for e in content["education"]:
+        major = f", {e['field']}" if e.get("field") else ""
+        lines.append(f"{e['year']}  {e['degree']}{major} - {e['institution']} ({e['location']})")
+    return "\n".join(lines)
 
 
 def _skills(content: dict) -> str:

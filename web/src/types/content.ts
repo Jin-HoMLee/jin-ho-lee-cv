@@ -34,6 +34,7 @@ export interface Period { start: string; end: string | null }
 // Education in this CV uses a flat shape (single graduation year, no start/end period).
 export interface Education {
   degree: string;
+  field?: string;
   institution: string;
   location: string;
   year: number;

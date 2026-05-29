@@ -122,6 +122,7 @@
         "type": "object",
         "properties": {
           "degree": { "$ref": "#/$defs/LangString" },
+          "field": { "$ref": "#/$defs/LangString" },
           "institution": { "type": "string" },
           "location": { "type": "string" },
           "year": { "type": "integer", "minimum": 1900, "maximum": 2100 }
