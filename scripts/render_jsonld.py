@@ -55,6 +55,8 @@ def _publications(pubs: list[Publication]) -> list[dict]:
         }
         if p.venue:
             item["isPartOf"] = {"@type": "Periodical", "name": p.venue}
+        if p.doi:
+            item["sameAs"] = [f"https://doi.org/{p.doi}"]
         out.append(item)
     return out
 

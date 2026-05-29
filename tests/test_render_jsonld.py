@@ -6,10 +6,10 @@ from pathlib import Path
 
 import pytest
 
-from scripts.bib_loader import load_publications
+from scripts.bib_loader import Publication, load_publications
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
-from scripts.render_jsonld import to_jsonld
+from scripts.render_jsonld import _publications as jsonld_publications, to_jsonld
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -121,3 +121,22 @@ def test_pii_never_reaches_main_output(tmp_path):
             private_yaml.unlink()
         if cleanup_dir and private_dir.exists():
             private_dir.rmdir()
+
+
+def _pub(**over) -> Publication:
+    base = dict(
+        key="x", title="T", year=2019, type="article", authorship="first",
+        authors=("Lee, J.",), venue="Cancers", doi=None, raw={},
+    )
+    base.update(over)
+    return Publication(**base)
+
+
+def test_scholarly_article_sameas_is_doi():
+    [item] = jsonld_publications([_pub(doi="10.3390/cancers11121877")])
+    assert item["sameAs"] == ["https://doi.org/10.3390/cancers11121877"]
+
+
+def test_scholarly_article_no_sameas_without_doi():
+    [item] = jsonld_publications([_pub(doi=None)])
+    assert "sameAs" not in item
