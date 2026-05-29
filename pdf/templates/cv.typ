@@ -13,6 +13,20 @@
 #set page(
   paper: "a4",
   margin: page-margin,
+  // Footer with name + page number, shown only on multi-page output so a
+  // single-page build stays clean.
+  footer: context {
+    let total = counter(page).final().first()
+    if total > 1 {
+      set text(size: size-small, fill: muted)
+      grid(
+        columns: (1fr, auto),
+        align: (left, right),
+        [#data.personal.name.given #data.personal.name.family],
+        [#counter(page).display() / #total],
+      )
+    }
+  },
 )
 #set text(
   font: font-family,
@@ -21,30 +35,27 @@
 )
 #set par(leading: 0.56em)
 
-// Use layout() so the columns grid fills the remaining page height after the
-// header. This bottom-aligns the main column and the sidebar — without this
-// the grid auto-sizes each cell to its content and the shorter column leaves
-// whitespace below it.
-#layout(size => {
-  grid(
-    columns: 1,
-    rows: (auto, 1fr),
-    {
-      header(data.personal)
-      v(6pt)
-    },
-    grid(
-      columns: sidebar-ratio,
-      gutter: column-gutter,
-      // Main column — block fills the grid cell so its height matches the sidebar.
-      block(width: 100%, height: 100%, {
-        profile(data.profile, data.labels)
-        experience(data.experience, data.labels, lang)
-        selected_projects(data.selected_projects, data.labels)
-        education(data.education, data.labels)
-        awards(data.awards, data.labels)
-      }),
-      sidebar(data, data.labels),
-    ),
-  )
-})
+// Two-column layout in normal document flow so content paginates across pages
+// when it exceeds one page: the breakable main column continues onto page 2,
+// while the sidebar sizes to its content.
+#header(data.personal)
+#v(6pt)
+
+#grid(
+  columns: sidebar-ratio,
+  gutter: column-gutter,
+  // Sidebar (column 1) gets the colored fill + left accent rule + padding as a
+  // grid cell so the panel spans the page break and bottom-aligns with the main
+  // column. The main column (0) is flush with no inset.
+  fill: (x, _) => if x == 1 { sidebar-bg },
+  stroke: (x, _) => if x == 1 { (left: 3pt + accent) },
+  inset: (x, _) => if x == 1 { 10pt } else { 0pt },
+  block(width: 100%, {
+    profile(data.profile, data.labels)
+    experience(data.experience, data.labels, lang)
+    selected_projects(data.selected_projects, data.labels)
+    education(data.education, data.labels)
+    awards(data.awards, data.labels)
+  }),
+  sidebar(data, data.labels),
+)
