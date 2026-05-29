@@ -47,7 +47,7 @@ def test_load_content_with_private_merges_overlay(content_dir, tmp_path):
 def test_load_content_includes_all_sections(content_dir):
     content = load_content(content_dir, private_path=None)
     for key in ("personal", "profile", "skills", "education",
-                "experience", "projects", "languages", "volunteer", "publications", "labels"):
+                "experience", "projects", "languages", "volunteer", "awards", "publications", "labels"):
         assert key in content, f"missing {key} in loaded content"
 
 
@@ -121,3 +121,48 @@ def test_load_content_rejects_id_filename_mismatch(tmp_path):
     )
     with pytest.raises(ValueError, match="does not match filename"):
         load_content(fake, private_path=None)
+
+
+def test_corrected_project_periods(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    projects = content["projects"]
+    assert projects["L1"]["period"] == {"start": "2015-08", "end": "2015-11"}
+    assert projects["L2"]["period"] == {"start": "2014-04", "end": "2014-05"}
+    assert projects["L3"]["period"]["start"] == "2017-02"
+
+
+def test_research_entry_start_not_after_earliest_subproject(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    research = next(e for e in content["experience"] if e["id"] == "research")
+    assert research["period"]["start"] == "2014-04"
+
+
+def test_skills_additions_present(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    bioml = next(c for c in content["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML")
+    groups = {g["label"]["en"]: g["items"] for g in bioml["groups"]}
+    assert "MapSplice" in groups["Genomics"]
+    assert "samtools/bcftools" in groups["Genomics"]
+    assert "Structural Biology" in groups
+    assert set(groups["Structural Biology"]) == {"TCRdock", "AlphaFold v2", "Mol*"}
+
+
+def test_italian_language_present(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    names = {lang["name"]["en"] for lang in content["languages"]}
+    assert "Italian" in names
+
+
+def test_awards_loaded(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    assert "awards" in content
+    titles = {a["title"]["en"] for a in content["awards"]}
+    assert "DAAD PROMOS Scholarship" in titles
+    assert "DeGBS Poster Award" in titles
+
+
+def test_research_genomics_bullet_mentions_variant_calling(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    research = next(e for e in content["experience"] if e["id"] == "research")
+    first_bullet = research["bullets"][0]["en"]
+    assert "SNV" in first_bullet and "colorectal" in first_bullet.lower()

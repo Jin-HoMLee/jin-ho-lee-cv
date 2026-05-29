@@ -118,3 +118,20 @@ def test_publications_include_doi_url_line():
 def test_publications_omit_doi_line_when_absent():
     out = render_text_publications([_pub(doi=None)])
     assert "https://doi.org/" not in out
+
+
+def test_education_includes_bsc_major():
+    out = render("en")
+    assert "Bioinformatics" in out
+
+
+def test_awards_section_renders():
+    out = render("en")
+    assert "AWARDS" in out
+    assert "DAAD PROMOS Scholarship" in out
+    assert "DeGBS Poster Award" in out
+
+
+def test_awards_section_renders_de():
+    out = render("de")
+    assert "AUSZEICHNUNGEN" in out

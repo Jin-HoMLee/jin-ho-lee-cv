@@ -4,9 +4,11 @@ categories:
       de: "Bioinformatik & ML"
     groups:
       - label: { en: "Genomics", de: "Genomik" }
-        items: ["NGS", "RNA-Seq", "WES", "SNV Calling", "Splice Analysis", "HISAT2/STAR", "bedtools"]
+        items: ["NGS", "RNA-Seq", "WES", "SNV Calling", "Splice Analysis", "MapSplice", "HISAT2/STAR", "samtools/bcftools", "bedtools"]
       - label: { en: "Immunology", de: "Immunologie" }
         items: ["MHC-I Prediction", "HLA Typing", "OptiType", "MHCflurry", "Neoepitopes"]
+      - label: { en: "Structural Biology", de: "Strukturbiologie" }
+        items: ["TCRdock", "AlphaFold v2", "Mol*"]
       - label: { en: "Nanoscopy", de: "Nanoskopie" }
         items: ["Spatial Point-Pattern", "Cluster Analysis (DBSCAN)"]
 

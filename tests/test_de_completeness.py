@@ -37,6 +37,8 @@ def _flatten_strings(tree, prefix=""):
 #       → university / organisation proper noun (education entries)
 #   .location
 #       → city / country strings are proper nouns (e.g. "Heidelberg, Germany")
+#   .issuer
+#       → awarding body proper noun (awards entries, e.g. "DAAD")
 #   .org.
 #       → employer proper noun + URL (experience entries)
 #   .bullets[
@@ -77,6 +79,8 @@ _INVARIANT_PATH_SUBSTRINGS = (
     # Education — institution is a proper noun; location is a city/country string
     ".institution",
     ".location",
+    # Awards — issuer is an organisation proper noun (e.g. "DAAD")
+    ".issuer",
     # Experience — employer proper nouns + structural bullets subtree
     ".org.",
     ".bullets[",

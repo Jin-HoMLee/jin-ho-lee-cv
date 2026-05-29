@@ -9,6 +9,7 @@ export interface Links {
   linkedin: string | null;
   github: string | null;
   researchgate: string | null;
+  website: string | null;
   orcid: string | null;
 }
 export interface Personal {
@@ -34,6 +35,7 @@ export interface Period { start: string; end: string | null }
 // Education in this CV uses a flat shape (single graduation year, no start/end period).
 export interface Education {
   degree: string;
+  field?: string;
   institution: string;
   location: string;
   year: number;
@@ -73,6 +75,13 @@ export interface Language { name: string; proficiency: string }
 export interface VolunteerCategory { name: string; entries: string[] }
 export interface Volunteer { categories: VolunteerCategory[] }
 
+export interface Award {
+  title: string;
+  issuer: string;
+  year: number;
+  note?: string;
+}
+
 export type PublicationType = "article" | "book-chapter" | "conference" | "book";
 export type AuthorshipType = "first" | "shared" | "middle" | "last" | "corresponding";
 export interface Publication {
@@ -80,6 +89,7 @@ export interface Publication {
   title: string;
   year: number;
   type: PublicationType;
+  category: "research" | "applied";
   authorship: AuthorshipType;
   authors: string[];
   venue: string | null;
@@ -91,6 +101,7 @@ export interface Labels {
     profile: string;
     experience: string;
     education: string;
+    awards: string;
     skills: string;
     languages: string;
     volunteer: string;
@@ -116,6 +127,7 @@ export interface ContentData {
   projects: Record<string, Project>;
   languages: Language[];
   volunteer: Volunteer;
+  awards: Award[];
   publications: Publication[];
   labels: Labels;
 }
