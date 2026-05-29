@@ -22,8 +22,8 @@ const data = contentDe as unknown as ContentData;
     <div>
       <ExperienceSection experience={data.experience} projects={data.projects} labels={data.labels} lang="de" />
       <ProjectsSection projects={data.projects} labels={data.labels} lang="de" />
-      <AwardsSection awards={data.awards} labels={data.labels} />
       <PublicationsList publications={data.publications} lang="de" />
+      <AwardsSection awards={data.awards} labels={data.labels} />
     </div>
     <aside>
       <SkillsSidebar skills={data.skills} labels={data.labels} />
