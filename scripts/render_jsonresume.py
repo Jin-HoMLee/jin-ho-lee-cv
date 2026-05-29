@@ -132,15 +132,18 @@ def _projects(content: dict) -> list[dict]:
 
 
 def _publications(pubs: list[Publication]) -> list[dict]:
-    return [
-        {
+    out = []
+    for p in pubs:
+        entry = {
             "name": p.title,
             "publisher": p.venue or "",
             "releaseDate": f"{p.year}-01-01",
             "summary": ", ".join(p.authors),
         }
-        for p in pubs
-    ]
+        if p.doi:
+            entry["url"] = f"https://doi.org/{p.doi}"
+        out.append(entry)
+    return out
 
 
 def to_jsonresume(content: dict, pubs: list[Publication]) -> dict:
