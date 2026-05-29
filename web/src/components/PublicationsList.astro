@@ -61,6 +61,14 @@ function renderAuthors(authors: string[]): string {
             <p set:html={renderAuthors(p.authors)} class="text-xs text-neutral-600" />
             <p class="text-xs text-neutral-500">
               {p.venue ? `${p.venue} · ` : ""}{p.year} · {p.authorship}
+              {p.doi && (
+                <> · <a
+                  href={`https://doi.org/${p.doi}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="underline decoration-dotted underline-offset-2 hover:text-neutral-800"
+                >{p.doi}</a></>
+              )}
             </p>
           </li>
         ))}

@@ -83,6 +83,7 @@ export interface Publication {
   authorship: AuthorshipType;
   authors: string[];
   venue: string | null;
+  doi: string | null;
 }
 
 export interface Labels {
