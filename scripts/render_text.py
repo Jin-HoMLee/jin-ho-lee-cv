@@ -118,7 +118,10 @@ def _publications(pubs: list[Publication]) -> str:
     for p in pubs:
         authors = ", ".join(p.authors)
         venue = f" - {p.venue}" if p.venue else ""
-        out.append(f"{p.year}  {p.title}\n  {authors}{venue}")
+        block = f"{p.year}  {p.title}\n  {authors}{venue}"
+        if p.doi:
+            block += f"\n  https://doi.org/{p.doi}"
+        out.append(block)
     return "\n\n".join(out)
 
 
