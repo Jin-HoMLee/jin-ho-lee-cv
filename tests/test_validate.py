@@ -86,6 +86,19 @@ def test_de_en_project_file_parity_fails_on_missing_de(tmp_path):
     )
 
 
+def test_malformed_doi_in_bib_fails_validate_tree(tmp_path):
+    """A malformed doi in publications.bib must surface as a validation error."""
+    content = tmp_path / "content"
+    (content / "projects").mkdir(parents=True)
+    _write_minimal_content_tree(content)
+    (content / "publications.bib").write_text(
+        "@article{x, author={Lee, J.}, title={T}, year={2019}, journal={J}, "
+        "type={article}, authorship={first}, doi={not-a-doi}}\n"
+    )
+    errors = validate_tree(content, _SCHEMA_PATH)
+    assert any("doi" in str(e) for e in errors), f"expected a doi error, got: {errors}"
+
+
 def test_de_en_project_file_parity_fails_on_missing_en(tmp_path):
     """validate_tree should also catch DE-only project files (something's wrong if EN is missing)."""
     content = tmp_path / "content"
