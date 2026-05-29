@@ -135,3 +135,19 @@ def test_research_entry_start_not_after_earliest_subproject(content_dir):
     content = load_content(content_dir, private_path=None, lang="en")
     research = next(e for e in content["experience"] if e["id"] == "research")
     assert research["period"]["start"] == "2014-04"
+
+
+def test_skills_additions_present(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    bioml = next(c for c in content["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML")
+    groups = {g["label"]["en"]: g["items"] for g in bioml["groups"]}
+    assert "MapSplice" in groups["Genomics"]
+    assert "samtools/bcftools" in groups["Genomics"]
+    assert "Structural Biology" in groups
+    assert set(groups["Structural Biology"]) == {"TCRdock", "AlphaFold v2", "Mol*"}
+
+
+def test_italian_language_present(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    names = {lang["name"]["en"] for lang in content["languages"]}
+    assert "Italian" in names
