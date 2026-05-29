@@ -47,7 +47,7 @@ def test_load_content_with_private_merges_overlay(content_dir, tmp_path):
 def test_load_content_includes_all_sections(content_dir):
     content = load_content(content_dir, private_path=None)
     for key in ("personal", "profile", "skills", "education",
-                "experience", "projects", "languages", "volunteer", "publications", "labels"):
+                "experience", "projects", "languages", "volunteer", "awards", "publications", "labels"):
         assert key in content, f"missing {key} in loaded content"
 
 
@@ -151,3 +151,11 @@ def test_italian_language_present(content_dir):
     content = load_content(content_dir, private_path=None, lang="en")
     names = {lang["name"]["en"] for lang in content["languages"]}
     assert "Italian" in names
+
+
+def test_awards_loaded(content_dir):
+    content = load_content(content_dir, private_path=None, lang="en")
+    assert "awards" in content
+    titles = {a["title"]["en"] for a in content["awards"]}
+    assert "DAAD PROMOS Scholarship" in titles
+    assert "DeGBS Poster Award" in titles

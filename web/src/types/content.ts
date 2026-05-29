@@ -74,6 +74,13 @@ export interface Language { name: string; proficiency: string }
 export interface VolunteerCategory { name: string; entries: string[] }
 export interface Volunteer { categories: VolunteerCategory[] }
 
+export interface Award {
+  title: string;
+  issuer: string;
+  year: number;
+  note?: string;
+}
+
 export type PublicationType = "article" | "book-chapter" | "conference" | "book";
 export type AuthorshipType = "first" | "shared" | "middle" | "last" | "corresponding";
 export interface Publication {
@@ -93,6 +100,7 @@ export interface Labels {
     profile: string;
     experience: string;
     education: string;
+    awards: string;
     skills: string;
     languages: string;
     volunteer: string;
@@ -118,6 +126,7 @@ export interface ContentData {
   projects: Record<string, Project>;
   languages: Language[];
   volunteer: Volunteer;
+  awards: Award[];
   publications: Publication[];
   labels: Labels;
 }

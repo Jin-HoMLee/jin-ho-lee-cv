@@ -238,6 +238,21 @@
       },
       "required": ["categories"],
       "additionalProperties": false
+    },
+    "awards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": { "$ref": "#/$defs/LangString" },
+          "issuer": { "type": "string" },
+          "year": { "type": "integer", "minimum": 1900, "maximum": 2100 },
+          "note": { "$ref": "#/$defs/LangString" }
+        },
+        "required": ["title", "issuer", "year"],
+        "additionalProperties": false
+      },
+      "minItems": 1
     }
   }
 }

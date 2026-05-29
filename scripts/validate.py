@@ -100,6 +100,7 @@ _FILE_RULES: list[tuple[str, str]] = [
     ("selected_projects.yaml", "selected_projects"),
     ("languages.yaml", "languages"),
     ("volunteer.yaml", "volunteer"),
+    ("awards.yaml", "awards"),
 ]
 
 
