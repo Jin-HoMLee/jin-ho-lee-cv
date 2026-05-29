@@ -31,6 +31,27 @@ def test_publications_have_required_fields():
         )
 
 
+def test_real_bib_doi_presence():
+    """The journal/chapter entries carry DOIs; conference talks + self-pub don't.
+
+    Asserted as a floor (not an exact count) to stay robust as publications are
+    added, mirroring test_loads_all_entries. load_publications() already raises
+    on any malformed DOI, so this guards against DOIs being silently dropped.
+    """
+    pubs = load_publications(BIB_PATH)
+    with_doi = [p for p in pubs if p.doi is not None]
+    assert len(with_doi) >= 11, f"expected 11+ entries with DOI, got {len(with_doi)}"
+
+    by_key = {p.key: p for p in pubs}
+    for key in (
+        "lee2021_degbs",
+        "lee2019_conrad",
+        "lee2018_dro",
+        "lee2025_marketing_automation",
+    ):
+        assert by_key[key].doi is None, f"{key} should have no DOI"
+
+
 def test_publications_sorted_by_year_desc():
     pubs = load_publications(BIB_PATH)
     years = [p.year for p in pubs]
@@ -72,6 +93,20 @@ def test_doi_is_none_when_absent(tmp_path):
     assert load_publications(bib)[0].doi is None
 
 
+def test_doi_empty_or_whitespace_field_is_none(tmp_path):
+    """An empty or whitespace-only doi field normalizes to None, not a ValueError."""
+    bib = tmp_path / "emptydoi.bib"
+    bib.write_text(
+        "@article{a, author={Lee, J.}, title={A}, year={2019}, journal={J}, "
+        "type={article}, authorship={first}, doi={}}\n"
+        "@article{b, author={Lee, J.}, title={B}, year={2018}, journal={J}, "
+        "type={article}, authorship={first}, doi={   }}\n"
+    )
+    by_key = {p.key: p for p in load_publications(bib)}
+    assert by_key["a"].doi is None
+    assert by_key["b"].doi is None
+
+
 def test_doi_normalizes_resolver_url_and_label(tmp_path):
     bib = tmp_path / "urls.bib"
     bib.write_text(
@@ -79,10 +114,19 @@ def test_doi_normalizes_resolver_url_and_label(tmp_path):
         "type={article}, authorship={first}, doi={https://doi.org/10.3390/aaa}}\n"
         "@article{b, author={Lee, J.}, title={B}, year={2018}, journal={J}, "
         "type={article}, authorship={first}, doi={doi:10.1000/bbb}}\n"
+        "@article{c, author={Lee, J.}, title={C}, year={2017}, journal={J}, "
+        "type={article}, authorship={first}, doi={DOI:10.1000/ccc}}\n"
+        "@article{d, author={Lee, J.}, title={D}, year={2016}, journal={J}, "
+        "type={article}, authorship={first}, doi={http://doi.org/10.3390/ddd}}\n"
+        "@article{e, author={Lee, J.}, title={E}, year={2015}, journal={J}, "
+        "type={article}, authorship={first}, doi={HTTP://DOI.ORG/10.3390/eee}}\n"
     )
     by_key = {p.key: p for p in load_publications(bib)}
-    assert by_key["a"].doi == "10.3390/aaa"
-    assert by_key["b"].doi == "10.1000/bbb"
+    assert by_key["a"].doi == "10.3390/aaa"  # https:// resolver
+    assert by_key["b"].doi == "10.1000/bbb"  # lowercase doi: label
+    assert by_key["c"].doi == "10.1000/ccc"  # uppercase DOI: label
+    assert by_key["d"].doi == "10.3390/ddd"  # http:// resolver
+    assert by_key["e"].doi == "10.3390/eee"  # mixed-case HTTP://DOI.ORG/
 
 
 def test_malformed_doi_raises(tmp_path):
