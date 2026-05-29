@@ -123,3 +123,14 @@ def test_publications_omit_doi_line_when_absent():
 def test_education_includes_bsc_major():
     out = render("en")
     assert "Bioinformatics" in out
+
+
+def test_awards_section_renders():
+    out = render("en")
+    assert "AWARDS" in out
+    assert "DAAD PROMOS Scholarship" in out
+
+
+def test_awards_section_renders_de():
+    out = render("de")
+    assert "AUSZEICHNUNGEN" in out

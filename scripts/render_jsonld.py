@@ -104,6 +104,9 @@ def to_jsonld(content: dict, pubs: list[Publication]) -> dict:
     if (works_for := _works_for(content)) is not None:
         doc["worksFor"] = works_for
 
+    if content["awards"]:
+        doc["award"] = [a["title"] for a in content["awards"]]
+
     doc["@graph"] = _publications(pubs) + _projects(content)
     return doc
 
