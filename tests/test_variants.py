@@ -10,6 +10,7 @@ from scripts.content_loader import (
     _select_project_ids,
     load_content,
 )
+from scripts.langstring import resolve_langstrings
 from scripts.validate import (
     _validate_headline_variant_completeness,
     _validate_profile_variant_parity,
@@ -164,3 +165,49 @@ def test_headline_variant_completeness_passes_when_bilingual(tmp_path):
         "variants": {"comp-bio": {"headline": {"en": "x", "de": "y"}}},
     })
     assert _validate_headline_variant_completeness(tmp_path) == []
+
+
+def _resolved(content_dir, lang, target):
+    return resolve_langstrings(
+        load_content(content_dir, lang=lang, target=target), lang=lang
+    )
+
+
+def test_comp_bio_headline_en_de(content_dir):
+    en = _resolved(content_dir, "en", "comp-bio")["personal"]["headline"]
+    de = _resolved(content_dir, "de", "comp-bio")["personal"]["headline"]
+    assert en == "Computational Biology · Cancer Genomics"
+    assert de == "Computational Biology · Krebsgenomik"
+
+
+def test_ds_ml_headline_en_de(content_dir):
+    en = _resolved(content_dir, "en", "ds-ml")["personal"]["headline"]
+    de = _resolved(content_dir, "de", "ds-ml")["personal"]["headline"]
+    assert en == "Data Science · Machine Learning"
+    assert de == "Data Science · Machine Learning"
+
+
+def test_comp_bio_tagline_and_lead_paragraph(content_dir):
+    profile = _resolved(content_dir, "en", "comp-bio")["profile"]
+    assert profile["tagline"].startswith("Bioinformatician")
+    assert profile["paragraphs"][0].startswith("Bioinformatician")
+
+
+def test_ds_ml_tagline_and_lead_paragraph(content_dir):
+    profile = _resolved(content_dir, "en", "ds-ml")["profile"]
+    assert profile["tagline"].startswith("Data scientist shipping")
+    assert profile["paragraphs"][0].startswith("Production")
+
+
+def test_second_paragraph_is_shared_across_targets(content_dir):
+    bridge = _resolved(content_dir, "en", "bridge")["profile"]["paragraphs"][1]
+    cb = _resolved(content_dir, "en", "comp-bio")["profile"]["paragraphs"][1]
+    ds = _resolved(content_dir, "en", "ds-ml")["profile"]["paragraphs"][1]
+    assert bridge == cb == ds
+
+
+def test_experience_is_shared_across_targets(content_dir):
+    bridge = _resolved(content_dir, "en", "bridge")["experience"]
+    cb = _resolved(content_dir, "en", "comp-bio")["experience"]
+    ds = _resolved(content_dir, "en", "ds-ml")["experience"]
+    assert bridge == cb == ds
