@@ -269,9 +269,42 @@ Expected: only gitignored build outputs are absent from the listing (no `dist/`,
 
 ---
 
+## Task 5: Update the CLAUDE.md phase table
+
+Per repo convention, every plan's final task keeps `CLAUDE.md` authoritative. Its `## Phasing` table currently stops at Phase 6, so this task also catches up the missing Phase 7 row.
+
+**Files:**
+- Modify: `CLAUDE.md` (the `## Phasing` table)
+
+- [ ] **Step 1: Add the missing rows**
+
+In `CLAUDE.md`, change the line under `## Phasing` from "Six phases, sequential." to "Eight phases (0–8), sequential." and append two rows after the Phase 6 row:
+
+```markdown
+| 7 | Content audit (bring CV up to date) | ✅ Done (merged 2026-05-29, PR #33, commit `b731222`) |
+| 8a | Sharpen positioning (Bioinformatics · Data Science) | 🚧 In progress (branch `phase-8a-sharpen-positioning`) |
+```
+
+The DOI-fields work merged 2026-05-29 was a standalone feat, not a phase — it gets no row.
+
+- [ ] **Step 2: Commit**
+
+```bash
+git add CLAUDE.md
+git commit -m "docs: add Phase 7 + 8a rows to the CLAUDE.md phasing table"
+```
+
+No code touched, so no test/lint run is needed.
+
+- [ ] **Step 3: At merge, flip 8a to Done**
+
+When finishing the branch (next section), edit the Phase 8a row status from `🚧 In progress …` to `✅ Done (merged <fill: date>, commit \`<fill: --no-ff merge hash>\`)`, substituting the real merge date and merge-commit hash. Do this on the PR (or a fast follow-up) so `main` reflects the completed phase.
+
+---
+
 ## Self-Review (completed during planning)
 
-- **Spec coverage:** headline (Task 3), tagline (Tasks 1–2), profile body re-lead + 2-paragraph split (Tasks 1–2), EN/DE parity (Tasks 1–3), all-renderer verification + OG/meta + PDF glyph (Task 4), no-artifact-commit invariant (Task 4 Step 5). Non-goals (no bullet edits, no schema change, no layout change) respected — no task touches `experience.yaml`, `schema/`, or web layout.
+- **Spec coverage:** headline (Task 3), tagline (Tasks 1–2), profile body re-lead + 2-paragraph split (Tasks 1–2), EN/DE parity (Tasks 1–3), all-renderer verification + OG/meta + PDF glyph (Task 4), no-artifact-commit invariant (Task 4 Step 5), CLAUDE.md phase-table currency (Task 5, per the 2026-05-30 repo convention — not in the spec but required by the convention added that day). Non-goals (no bullet edits, no schema change, no layout change) respected — no task touches `experience.yaml`, `schema/`, or web layout.
 - **Placeholder scan:** none — every YAML body and test function is written out in full.
 - **Type consistency:** test calls use the real API — `load_content(content_dir, lang=...)`, `["profile"]["tagline"]`, `["profile"]["paragraphs"]`, `["personal"]["headline"]["en"|"de"]` — matching `scripts/content_loader.py` and how renderers read these fields.
 
