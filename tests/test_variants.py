@@ -16,6 +16,7 @@ from scripts.render_text import _txt_filename, render
 from scripts.validate import (
     _validate_headline_variant_completeness,
     _validate_profile_variant_parity,
+    validate_tree,
 )
 
 _yaml = YAML(typ="safe")
@@ -167,6 +168,36 @@ def test_headline_variant_completeness_passes_when_bilingual(tmp_path):
         "variants": {"comp-bio": {"headline": {"en": "x", "de": "y"}}},
     })
     assert _validate_headline_variant_completeness(tmp_path) == []
+
+
+def test_headline_variant_completeness_does_not_crash_on_non_dict_headline(tmp_path):
+    # A non-iterable headline is schema-invalid; the parity validator must not
+    # crash on it (the schema validator reports the structural error).
+    _write(tmp_path / "personal.yaml", {
+        "headline": {"en": "B", "de": "B"},
+        "variants": {"comp-bio": {"headline": 123}},
+    })
+    assert _validate_headline_variant_completeness(tmp_path) == []
+
+
+def test_profile_variant_parity_does_not_crash_on_non_dict_variants(tmp_path):
+    # variants as a list is schema-invalid; the parity validator must not crash.
+    _write(tmp_path / "profile.en.yaml", {
+        "tagline": "t", "paragraphs": ["a", "b"], "variants": ["comp-bio"],
+    })
+    _write(tmp_path / "profile.de.yaml", {
+        "tagline": "t", "paragraphs": ["a", "b"], "variants": ["comp-bio"],
+    })
+    assert _validate_profile_variant_parity(tmp_path) == []
+
+
+def test_validate_tree_no_secondary_error_on_flat_list_selected_projects(tmp_path, schema_path):
+    # A legacy flat-list selected_projects.yaml is schema-invalid; the schema
+    # reports the type error, and the cross-ref walk must not add a confusing
+    # "'list' object has no attribute 'values'" secondary error.
+    _write(tmp_path / "selected_projects.yaml", ["L1", "L2"])
+    msgs = " ".join(str(e) for e in validate_tree(tmp_path, schema_path))
+    assert "has no attribute" not in msgs
 
 
 def _resolved(content_dir, lang, target):

@@ -125,10 +125,14 @@ def _validate_profile_variant_parity(content_dir: Path) -> list[FileError]:
         return []
     en = (_load_yaml(en_path).get("variants") or {})
     de = (_load_yaml(de_path).get("variants") or {})
+    if not (isinstance(en, dict) and isinstance(de, dict)):
+        return []  # malformed structure; the schema validator reports it
     errors: list[FileError] = []
     for target in sorted(set(en) | set(de)):
-        en_keys = set(en.get(target) or {})
-        de_keys = set(de.get(target) or {})
+        en_val = en.get(target)
+        de_val = de.get(target)
+        en_keys = set(en_val) if isinstance(en_val, dict) else set()
+        de_keys = set(de_val) if isinstance(de_val, dict) else set()
         if en_keys != de_keys:
             errors.append(FileError(
                 de_path,
@@ -145,10 +149,13 @@ def _validate_headline_variant_completeness(content_dir: Path) -> list[FileError
     if not path.exists():
         return []
     variants = (_load_yaml(path).get("variants") or {})
+    if not isinstance(variants, dict):
+        return []  # malformed structure; the schema validator reports it
     errors: list[FileError] = []
     for target in sorted(variants):
-        headline = (variants.get(target) or {}).get("headline")
-        if headline is not None and not ({"en", "de"} <= set(headline)):
+        spec = variants.get(target)
+        headline = spec.get("headline") if isinstance(spec, dict) else None
+        if isinstance(headline, dict) and not ({"en", "de"} <= set(headline)):
             errors.append(FileError(
                 path,
                 f"variant {target!r} headline must define both 'en' and 'de'",
@@ -175,13 +182,14 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     if selected_path.exists():
         try:
             selected = _load_yaml(selected_path)
-            all_ids = {pid for order in selected.values() for pid in order}
-            unknown = sorted(pid for pid in all_ids if pid not in project_ids)
-            if unknown:
-                errors.append(FileError(
-                    selected_path,
-                    f"references unknown project id(s): {unknown}",
-                ))
+            if isinstance(selected, dict):  # else the schema validator reports the type error
+                all_ids = {pid for order in selected.values() for pid in order}
+                unknown = sorted(pid for pid in all_ids if pid not in project_ids)
+                if unknown:
+                    errors.append(FileError(
+                        selected_path,
+                        f"references unknown project id(s): {unknown}",
+                    ))
         except Exception as e:
             errors.append(FileError(selected_path, str(e)))
 
