@@ -15,6 +15,20 @@
   }
 }
 
+#let _education(edu, labels) = {
+  section-heading(labels.sections.education)
+  for e in edu {
+    text(weight: 600, size: size-small)[#e.degree]
+    if "field" in e {
+      linebreak()
+      text(size: size-small, style: "italic", fill: muted)[#e.field]
+    }
+    linebreak()
+    text(size: size-small, fill: muted)[#e.institution · #e.year]
+    v(space-paragraph)
+  }
+}
+
 #let _languages(langs, labels) = {
   section-heading(labels.sections.languages)
   for l in langs {
@@ -42,6 +56,7 @@
 // the page break (full-length rail), bottom-aligned with the main column.
 #let sidebar(data, labels) = {
   _skills(data.skills, labels)
+  _education(data.education, labels)
   _languages(data.languages, labels)
   _volunteer(data.volunteer, labels)
 }
