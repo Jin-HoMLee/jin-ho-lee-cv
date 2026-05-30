@@ -6,7 +6,7 @@ import textwrap
 from pathlib import Path
 
 from scripts.bib_loader import Publication, load_publications
-from scripts.content_loader import load_content
+from scripts.content_loader import TARGETS, load_content
 from scripts.langstring import resolve_langstrings
 
 
@@ -136,9 +136,16 @@ def _publications(pubs: list[Publication]) -> str:
     return "\n\n".join(out)
 
 
-def render(lang: str) -> str:
-    """Return the full plain-text CV for the given language."""
-    content = resolve_langstrings(load_content(CONTENT_DIR, lang=lang), lang=lang)
+def _txt_filename(lang: str, target: str) -> str:
+    """Output filename; bridge is unsuffixed to match the PDF naming convention."""
+    return f"cv-{lang}.txt" if target == "bridge" else f"cv-{lang}-{target}.txt"
+
+
+def render(lang: str, target: str = "bridge") -> str:
+    """Return the full plain-text CV for the given language and target."""
+    content = resolve_langstrings(
+        load_content(CONTENT_DIR, lang=lang, target=target), lang=lang
+    )
     pubs = load_publications(CONTENT_DIR / "publications.bib")
     L = SECTION_LABELS
 
@@ -170,16 +177,21 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--lang", choices=("en", "de"), required=True)
     parser.add_argument(
+        "--target",
+        choices=tuple(TARGETS),
+        default="bridge",
+    )
+    parser.add_argument(
         "--output",
         type=Path,
         default=None,
-        help="Output path (default: dist/cv-{lang}.txt)",
+        help="Output path (default: dist/cv-{lang}.txt, or dist/cv-{lang}-{target}.txt for non-bridge targets)",
     )
     args = parser.parse_args(argv)
 
-    output = args.output or REPO_ROOT / "dist" / f"cv-{args.lang}.txt"
+    output = args.output or REPO_ROOT / "dist" / _txt_filename(args.lang, args.target)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(render(args.lang), encoding="utf-8")
+    output.write_text(render(args.lang, args.target), encoding="utf-8")
     _print_wrote(output)
 
 
