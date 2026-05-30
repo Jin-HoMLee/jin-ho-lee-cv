@@ -26,6 +26,19 @@ build-private:
 build-de:
     uv run python -m pdf.build --lang de
 
+# Build a targeted PDF → dist/cv-{lang}-{target}.pdf (bridge → dist/cv-{lang}.pdf)
+build-target target lang="en":
+    uv run python -m pdf.build --lang {{lang}} --target {{target}}
+
+# Build every target × lang PDF (bridge + comp-bio + ds-ml, EN + DE)
+build-targets:
+    uv run python -m pdf.build --lang en
+    uv run python -m pdf.build --lang de
+    uv run python -m pdf.build --lang en --target comp-bio
+    uv run python -m pdf.build --lang de --target comp-bio
+    uv run python -m pdf.build --lang en --target ds-ml
+    uv run python -m pdf.build --lang de --target ds-ml
+
 # Build the private DE PDF (with phone + address) → dist-private/cv-de.pdf
 build-private-de:
     uv run python -m pdf.build --lang de --private
@@ -46,6 +59,19 @@ build-jsonld:
 build-text:
     uv run python -m scripts.render_text --lang en
     uv run python -m scripts.render_text --lang de
+
+# Build a targeted plain-text CV → dist/cv-{lang}-{target}.txt
+build-text-target target lang="en":
+    uv run python -m scripts.render_text --lang {{lang}} --target {{target}}
+
+# Build every target × lang plain-text CV (bridge + comp-bio + ds-ml, EN + DE)
+build-text-targets:
+    uv run python -m scripts.render_text --lang en
+    uv run python -m scripts.render_text --lang de
+    uv run python -m scripts.render_text --lang en --target comp-bio
+    uv run python -m scripts.render_text --lang de --target comp-bio
+    uv run python -m scripts.render_text --lang en --target ds-ml
+    uv run python -m scripts.render_text --lang de --target ds-ml
 
 # Build every Phase 4 machine format (resume.json + person.jsonld + plain text)
 build-formats: build-resume build-jsonld build-text

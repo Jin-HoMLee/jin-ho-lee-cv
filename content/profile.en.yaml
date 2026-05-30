@@ -2,3 +2,10 @@ tagline: "Data scientist with cancer-genomics roots — HLA typing & neoantigen 
 paragraphs:
   - "Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, backed by 10+ peer-reviewed publications — first- and shared-first author in Cancers, Epigenetics Methods, and OBM Genetics — grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU."
   - "Now applying that rigor in industry: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML; secured third-party funding and supervised 10+ students."
+variants:
+  comp-bio:
+    tagline: "Bioinformatician with deep roots in cancer genomics — HLA typing & neoantigen discovery from real-patient NGS/RNA-Seq, reproducible Snakemake pipelines, 10+ publications."
+    lead_paragraph: "Bioinformatician with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data — packaged as reproducible Snakemake workflows — backed by 10+ peer-reviewed publications as first- and shared-first author in Cancers, Epigenetics Methods, and OBM Genetics, grounded in wet-lab training at DKFZ, NCT, FZ Jülich, KIP, and SNU."
+  ds-ml:
+    tagline: "Data scientist shipping production ML on GCP — BigQueryML for anti-financial-crime & KYC, 1,000+ processes migrated to cloud, on a cancer-genomics research foundation with 10+ publications."
+    lead_paragraph: "Production-focused data scientist. Architected the migration of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for anti-financial-crime & KYC; coached 100+ specialists in Python, SQL & ML — built on a cancer-genomics research foundation with 10+ peer-reviewed publications."

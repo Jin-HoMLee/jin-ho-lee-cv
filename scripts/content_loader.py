@@ -24,6 +24,47 @@ def deep_merge(base: dict, overlay: dict) -> dict:
     return result
 
 
+TARGETS = ("bridge", "comp-bio", "ds-ml")
+
+
+def _resolve_personal_target(personal: dict, target: str) -> dict:
+    """Apply the personal positioning variant for `target`; strip 'variants'.
+
+    Bridge — or any target without an entry — returns the base personal with the
+    'variants' key removed. The entire variant dict is deep-merged over the base
+    (the schema constrains a personal variant to only `headline`), so a variant
+    headline {en,de} map replaces the base headline.
+    """
+    result = copy.deepcopy(personal)
+    variants = result.pop("variants", {})
+    if target != "bridge" and target in variants:
+        result = deep_merge(result, variants[target])
+    return result
+
+
+def _resolve_profile_target(profile: dict, target: str) -> dict:
+    """Apply the profile positioning variant for `target`; strip 'variants'.
+
+    A variant may override `tagline` and/or `lead_paragraph`. `lead_paragraph`
+    replaces paragraphs[0]; the remaining paragraphs are inherited from bridge.
+    Assumes the profile has at least one paragraph when `lead_paragraph` is
+    overridden (guaranteed by the schema's `minItems`).
+    """
+    result = copy.deepcopy(profile)
+    variants = result.pop("variants", {})
+    override = variants.get(target, {}) if target != "bridge" else {}
+    if "tagline" in override:
+        result["tagline"] = override["tagline"]
+    if "lead_paragraph" in override:
+        result["paragraphs"] = [override["lead_paragraph"], *result["paragraphs"][1:]]
+    return result
+
+
+def _select_project_ids(selected_map: dict, target: str) -> list[str]:
+    """Return the project-id order for `target`, falling back to the bridge order."""
+    return selected_map.get(target, selected_map["bridge"])
+
+
 def _load_yaml(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as f:
         return yaml.load(f)
@@ -51,6 +92,7 @@ def load_content(
     *,
     private_path: Path | None = None,
     lang: str = "en",
+    target: str = "bridge",
 ) -> dict[str, Any]:
     """Load full content tree.
 
@@ -61,13 +103,18 @@ def load_content(
     If private_path is provided and the file exists, its contents are merged into
     content["personal"].
     """
+    if target not in TARGETS:
+        raise ValueError(f"unknown target {target!r}; expected one of {TARGETS}")
+
     personal = _load_yaml(content_dir / "personal.yaml")
     if private_path is not None and private_path.exists():
         private = _load_yaml(private_path)
         personal = deep_merge(personal, private)
+    personal = _resolve_personal_target(personal, target)
 
     projects = _load_projects(content_dir / "projects", lang=lang)
-    selected_ids = _load_yaml(content_dir / "selected_projects.yaml")
+    selected_map = _load_yaml(content_dir / "selected_projects.yaml")
+    selected_ids = _select_project_ids(selected_map, target)
     unknown = [pid for pid in selected_ids if pid not in projects]
     if unknown:
         raise ValueError(
@@ -77,7 +124,9 @@ def load_content(
 
     content = {
         "personal": personal,
-        "profile": _load_yaml(content_dir / f"profile.{lang}.yaml"),
+        "profile": _resolve_profile_target(
+            _load_yaml(content_dir / f"profile.{lang}.yaml"), target
+        ),
         "skills": _load_yaml(content_dir / "skills.yaml"),
         "education": _load_yaml(content_dir / "education.yaml"),
         "experience": _load_yaml(content_dir / "experience.yaml"),

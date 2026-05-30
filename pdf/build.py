@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from scripts.content_loader import load_content
+from scripts.content_loader import TARGETS, load_content
 from scripts.langstring import resolve_langstrings
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -58,14 +58,20 @@ def _to_serializable(obj: Any) -> Any:
     return obj
 
 
+def _pdf_filename(lang: str, target: str) -> str:
+    """Output filename; bridge is unsuffixed so existing links don't break."""
+    return f"cv-{lang}.pdf" if target == "bridge" else f"cv-{lang}-{target}.pdf"
+
+
 def prepare_data(
     content_dir: Path,
     *,
     private_path: Path | None,
     lang: str,
+    target: str = "bridge",
 ) -> dict[str, Any]:
     """Load content tree, merge private overlay, resolve langstrings, return flat dict."""
-    raw = load_content(content_dir, private_path=private_path, lang=lang)
+    raw = load_content(content_dir, private_path=private_path, lang=lang, target=target)
     resolved = resolve_langstrings(raw, lang=lang)
     return _to_serializable(resolved)
 
@@ -76,6 +82,12 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         description="Render the CV PDF via Typst.",
     )
     p.add_argument("--lang", default="en", help="Language code (default: en)")
+    p.add_argument(
+        "--target",
+        default="bridge",
+        choices=list(TARGETS),
+        help="Positioning target (default: bridge)",
+    )
     p.add_argument(
         "--private",
         action="store_true",
@@ -105,7 +117,9 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 2
 
-    data = prepare_data(content_dir, private_path=private_path, lang=args.lang)
+    data = prepare_data(
+        content_dir, private_path=private_path, lang=args.lang, target=args.target
+    )
 
     cache_dir = REPO_ROOT / "pdf" / ".cache"
     cache_dir.mkdir(parents=True, exist_ok=True)
@@ -113,7 +127,7 @@ def main(argv: list[str] | None = None) -> int:
 
     out_dir = REPO_ROOT / ("dist-private" if args.private else "dist")
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"cv-{args.lang}.pdf"
+    out_path = out_dir / _pdf_filename(args.lang, args.target)
 
     template = REPO_ROOT / "pdf" / "templates" / "cv.typ"
 

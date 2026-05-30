@@ -34,6 +34,11 @@
       "type": "string",
       "pattern": "^[LDC][0-9]+$"
     },
+    "ProjectOrder": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ProjectId" },
+      "minItems": 1
+    },
     "personal": {
       "type": "object",
       "properties": {
@@ -63,7 +68,16 @@
             "oneOf": [{ "type": "string", "format": "uri" }, { "type": "null" }]
           }
         },
-        "photo": { "type": "string" }
+        "photo": { "type": "string" },
+        "variants": {
+          "type": "object",
+          "propertyNames": { "enum": ["comp-bio", "ds-ml"] },
+          "additionalProperties": {
+            "type": "object",
+            "properties": { "headline": { "$ref": "#/$defs/LangString" } },
+            "additionalProperties": false
+          }
+        }
       },
       "required": ["name", "headline", "email", "location", "links"],
       "additionalProperties": false
@@ -76,6 +90,18 @@
           "type": "array",
           "items": { "type": "string", "minLength": 1 },
           "minItems": 1
+        },
+        "variants": {
+          "type": "object",
+          "propertyNames": { "enum": ["comp-bio", "ds-ml"] },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "tagline": { "type": "string", "minLength": 1 },
+              "lead_paragraph": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          }
         }
       },
       "required": ["paragraphs"],
@@ -198,9 +224,14 @@
       "additionalProperties": false
     },
     "selected_projects": {
-      "type": "array",
-      "items": { "$ref": "#/$defs/ProjectId" },
-      "minItems": 1
+      "type": "object",
+      "properties": {
+        "bridge":   { "$ref": "#/$defs/ProjectOrder" },
+        "comp-bio": { "$ref": "#/$defs/ProjectOrder" },
+        "ds-ml":    { "$ref": "#/$defs/ProjectOrder" }
+      },
+      "required": ["bridge"],
+      "additionalProperties": false
     },
     "languages": {
       "type": "array",

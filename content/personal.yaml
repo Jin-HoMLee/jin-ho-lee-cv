@@ -15,3 +15,12 @@ links:
   website: "https://jinholee.is-a.dev/"
   orcid: "https://orcid.org/0009-0001-8784-1771"
 photo: "assets/photo.jpg"
+variants:
+  comp-bio:
+    headline:
+      en: "Computational Biology · Cancer Genomics"
+      de: "Computational Biology · Krebsgenomik"
+  ds-ml:
+    headline:
+      en: "Data Science · Machine Learning"
+      de: "Data Science · Machine Learning"
