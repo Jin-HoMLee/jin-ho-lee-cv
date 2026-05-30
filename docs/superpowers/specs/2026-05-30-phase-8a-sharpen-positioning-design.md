@@ -82,7 +82,7 @@ Every number above already exists in `content/` (1,000+ processes, 10+ publicati
 | `tagline` | `profile.{en,de}.yaml` | PDF lead line (`profile.typ`), web `ProfileSection.astro`, **meta description** (`BaseLayout.astro`), **OG image headline** (`og/[...path].ts`) |
 | `paragraphs` | `profile.{en,de}.yaml` | PDF body, web profile, plain text, JSON Resume `basics.summary` (joined `\n\n`), JSON-LD `description` = `paragraphs[0]` |
 
-No renderer code changes — these are existing field reads. The checked-in generated files `web/src/data/content.{en,de}.json` must be **regenerated and committed** (they are build artifacts kept in git for the Astro build).
+No renderer code changes — these are existing field reads. The generated files `web/src/data/content.{en,de}.json` and everything under `dist/` are **gitignored** (CI runs `web-data` before the Astro build and regenerates the release artifacts), so **8a commits no build artifacts** — only the three source YAML files plus a regression test. Regeneration is a *local verification* step, not a commit.
 
 ## 6. Non-goals
 
@@ -100,8 +100,10 @@ No renderer code changes — these are existing field reads. The checked-in gene
 3. `just lint` green.
 4. `just build` + `just build-de` → PDFs show new header label, tagline lead line, re-led two-paragraph body.
 5. `just build-formats` + `just build-text` → JSON Resume `label`/`summary`, JSON-LD `jobTitle`/`description`, and plain text carry the new copy.
-6. `just web-build` → regenerates `content.{en,de}.json` (committed) and OG images; meta description = new tagline. Verify the EN and DE OG share images render the new tagline.
+6. `just web-build` → regenerates `content.{en,de}.json` (gitignored build artifact, not committed) and OG images; meta description = new tagline. Verify the EN and DE OG share images render the new tagline.
 7. EN/DE parity confirmed on every surface.
+
+All of steps 4–6 are **local verification only** — none of their outputs are committed (all gitignored).
 
 ## 8. Open detail
 
@@ -109,11 +111,12 @@ No renderer code changes — these are existing field reads. The checked-in gene
 
 ## 9. Commits / branch
 
-Per repo convention (atomic commits, per-phase branch, PR merge): branch `phase-8a-sharpen-positioning`. Suggested atomic commits:
+Per repo convention (atomic commits, per-phase branch, PR merge): branch `phase-8a-sharpen-positioning`. Atomic commits, each bundling its regression assertions with the content edit so every commit lands green (no build artifacts committed — all gitignored):
 
-1. `content: re-lead profile body and sharpen tagline (EN)` — `profile.en.yaml`.
-2. `content: German parity for sharpened positioning` — `profile.de.yaml`.
-3. `content: reposition headline to Bioinformatics · Data Science` — `personal.yaml` (EN + DE).
-4. `build: regenerate web content JSON + machine formats` — generated artifacts; update tests if needed.
+1. `content: re-lead profile body and sharpen tagline (EN)` — `profile.en.yaml` + EN assertions in `tests/test_positioning.py`.
+2. `content: German parity for sharpened positioning` — `profile.de.yaml` + DE assertions.
+3. `content: reposition headline to Bioinformatics · Data Science` — `personal.yaml` (EN + DE) + headline assertions.
+
+A final verification pass (`just validate && just test && just lint`, plus local `build` / `build-de` / `build-formats` / `web-build`) confirms every renderer carries the new copy; it commits nothing.
 
 (An issue can be opened to track 8a and the branch linked via `gh issue develop`; optional given the small scope.)
