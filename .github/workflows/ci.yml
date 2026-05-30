@@ -39,8 +39,10 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         lang: [en, de]
+        target: [bridge, comp-bio, ds-ml]
     steps:
       - uses: actions/checkout@v6
 
@@ -70,14 +72,23 @@ jobs:
           sudo apt-get install -y fonts-ibm-plex
           fc-cache -f
 
-      - name: Build ${{ matrix.lang }} PDF
-        run: uv run python -m pdf.build --lang ${{ matrix.lang }}
+      - name: Build ${{ matrix.lang }} / ${{ matrix.target }} PDF
+        run: uv run python -m pdf.build --lang ${{ matrix.lang }} --target ${{ matrix.target }}
+
+      - name: Compute artifact filename
+        id: pdf
+        run: |
+          if [ "${{ matrix.target }}" = "bridge" ]; then
+            echo "file=cv-${{ matrix.lang }}.pdf" >> "$GITHUB_OUTPUT"
+          else
+            echo "file=cv-${{ matrix.lang }}-${{ matrix.target }}.pdf" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v7
         with:
-          name: cv-${{ matrix.lang }}-pdf
-          path: dist/cv-${{ matrix.lang }}.pdf
+          name: cv-${{ matrix.lang }}-${{ matrix.target }}-pdf
+          path: dist/${{ steps.pdf.outputs.file }}
           retention-days: ${{ github.event_name == 'pull_request' && 30 || 1 }}
           if-no-files-found: error
 
@@ -144,6 +155,10 @@ jobs:
           files: |
             dist/cv-en.pdf
             dist/cv-de.pdf
+            dist/cv-en-comp-bio.pdf
+            dist/cv-de-comp-bio.pdf
+            dist/cv-en-ds-ml.pdf
+            dist/cv-de-ds-ml.pdf
             dist/resume.json
             dist/person.jsonld
             dist/cv-en.txt
