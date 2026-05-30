@@ -12,6 +12,7 @@ from scripts.content_loader import load_content
 def test_en_tagline_leads_with_data_science(content_dir):
     profile = load_content(content_dir, lang="en")["profile"]
     assert profile["tagline"].startswith("Data scientist")
+    assert "cancer-genomics" in profile["tagline"]
     assert "production ML on GCP" in profile["tagline"]
     # the old genomics-only framing is gone
     assert "Bioinformatics Engineer specializing" not in profile["tagline"]
