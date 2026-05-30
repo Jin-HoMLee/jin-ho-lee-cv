@@ -38,3 +38,9 @@ def test_de_profile_body_is_two_paragraphs_led_by_differentiator(content_dir):
     assert paragraphs[0].startswith("Data Scientist mit tiefen Wurzeln in der Krebsgenomik")
     assert "Google Cloud" not in paragraphs[0]
     assert "Google Cloud" in paragraphs[1]
+
+
+def test_headline_repositioned_to_bioinformatics_data_science(content_dir):
+    headline = load_content(content_dir)["personal"]["headline"]
+    assert headline["en"] == "Bioinformatics · Data Science"
+    assert headline["de"] == "Bioinformatik · Data Science"
