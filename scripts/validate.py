@@ -116,6 +116,46 @@ def _validate_publications(content_dir: Path) -> list[FileError]:
     return []
 
 
+def _validate_profile_variant_parity(content_dir: Path) -> list[FileError]:
+    """profile.en.yaml and profile.de.yaml must declare the same variant targets
+    with the same overridden keys (EN/DE positioning parity)."""
+    en_path = content_dir / "profile.en.yaml"
+    de_path = content_dir / "profile.de.yaml"
+    if not (en_path.exists() and de_path.exists()):
+        return []
+    en = (_load_yaml(en_path).get("variants") or {})
+    de = (_load_yaml(de_path).get("variants") or {})
+    errors: list[FileError] = []
+    for target in sorted(set(en) | set(de)):
+        en_keys = set(en.get(target) or {})
+        de_keys = set(de.get(target) or {})
+        if en_keys != de_keys:
+            errors.append(FileError(
+                de_path,
+                f"variant {target!r} key mismatch EN/DE: "
+                f"en={sorted(en_keys)} de={sorted(de_keys)}",
+            ))
+    return errors
+
+
+def _validate_headline_variant_completeness(content_dir: Path) -> list[FileError]:
+    """Each personal headline variant must define both 'en' and 'de' (parity with
+    the bilingual base headline)."""
+    path = content_dir / "personal.yaml"
+    if not path.exists():
+        return []
+    variants = (_load_yaml(path).get("variants") or {})
+    errors: list[FileError] = []
+    for target in sorted(variants):
+        headline = (variants.get(target) or {}).get("headline")
+        if headline is not None and not ({"en", "de"} <= set(headline)):
+            errors.append(FileError(
+                path,
+                f"variant {target!r} headline must define both 'en' and 'de'",
+            ))
+    return errors
+
+
 def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     """Validate every recognized file under content/. Returns list of errors (empty = clean)."""
     errors: list[FileError] = []
@@ -166,6 +206,8 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
             "missing EN counterpart for DE project file",
         ))
 
+    errors.extend(_validate_profile_variant_parity(content_dir))
+    errors.extend(_validate_headline_variant_completeness(content_dir))
     errors.extend(_validate_publications(content_dir))
     return errors
 

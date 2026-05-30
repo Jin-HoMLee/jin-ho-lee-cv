@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import pytest
+from ruamel.yaml import YAML
 
 from scripts.content_loader import (
     _resolve_personal_target,
@@ -9,6 +10,17 @@ from scripts.content_loader import (
     _select_project_ids,
     load_content,
 )
+from scripts.validate import (
+    _validate_headline_variant_completeness,
+    _validate_profile_variant_parity,
+)
+
+_yaml = YAML(typ="safe")
+
+
+def _write(path, data):
+    with path.open("w", encoding="utf-8") as f:
+        _yaml.dump(data, f)
 
 
 def test_resolve_profile_target_overrides_tagline_and_lead_keeps_rest():
@@ -110,3 +122,45 @@ def test_load_content_comp_bio_project_order(content_dir):
 def test_load_content_ds_ml_project_order(content_dir):
     content = load_content(content_dir, lang="en", target="ds-ml")
     assert _ids(content["selected_projects"]) == ["C1", "D1", "D2"]
+
+
+def test_profile_variant_parity_flags_key_mismatch(tmp_path):
+    _write(tmp_path / "profile.en.yaml", {
+        "tagline": "t", "paragraphs": ["a", "b"],
+        "variants": {"comp-bio": {"tagline": "x", "lead_paragraph": "y"}},
+    })
+    _write(tmp_path / "profile.de.yaml", {
+        "tagline": "t", "paragraphs": ["a", "b"],
+        "variants": {"comp-bio": {"tagline": "x"}},  # missing lead_paragraph
+    })
+    errors = _validate_profile_variant_parity(tmp_path)
+    assert errors
+    assert "comp-bio" in str(errors[0])
+
+
+def test_profile_variant_parity_passes_when_symmetric(tmp_path):
+    payload = {
+        "tagline": "t", "paragraphs": ["a", "b"],
+        "variants": {"ds-ml": {"tagline": "x", "lead_paragraph": "y"}},
+    }
+    _write(tmp_path / "profile.en.yaml", payload)
+    _write(tmp_path / "profile.de.yaml", payload)
+    assert _validate_profile_variant_parity(tmp_path) == []
+
+
+def test_headline_variant_completeness_flags_missing_de(tmp_path):
+    _write(tmp_path / "personal.yaml", {
+        "headline": {"en": "B", "de": "B"},
+        "variants": {"comp-bio": {"headline": {"en": "only-en"}}},
+    })
+    errors = _validate_headline_variant_completeness(tmp_path)
+    assert errors
+    assert "comp-bio" in str(errors[0])
+
+
+def test_headline_variant_completeness_passes_when_bilingual(tmp_path):
+    _write(tmp_path / "personal.yaml", {
+        "headline": {"en": "B", "de": "B"},
+        "variants": {"comp-bio": {"headline": {"en": "x", "de": "y"}}},
+    })
+    assert _validate_headline_variant_completeness(tmp_path) == []
