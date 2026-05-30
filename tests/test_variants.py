@@ -4,6 +4,7 @@ from __future__ import annotations
 import pytest
 from ruamel.yaml import YAML
 
+from pdf.build import _pdf_filename, _parse_args as _pdf_parse_args
 from scripts.content_loader import (
     _resolve_personal_target,
     _resolve_profile_target,
@@ -11,6 +12,7 @@ from scripts.content_loader import (
     load_content,
 )
 from scripts.langstring import resolve_langstrings
+from scripts.render_text import _txt_filename, render
 from scripts.validate import (
     _validate_headline_variant_completeness,
     _validate_profile_variant_parity,
@@ -211,3 +213,32 @@ def test_experience_is_shared_across_targets(content_dir):
     cb = _resolved(content_dir, "en", "comp-bio")["experience"]
     ds = _resolved(content_dir, "en", "ds-ml")["experience"]
     assert bridge == cb == ds
+
+
+def test_pdf_filename_bridge_is_unsuffixed():
+    assert _pdf_filename("en", "bridge") == "cv-en.pdf"
+    assert _pdf_filename("de", "bridge") == "cv-de.pdf"
+
+
+def test_pdf_filename_variants_are_suffixed():
+    assert _pdf_filename("en", "comp-bio") == "cv-en-comp-bio.pdf"
+    assert _pdf_filename("de", "ds-ml") == "cv-de-ds-ml.pdf"
+
+
+def test_pdf_parse_args_target_default_and_choices():
+    assert _pdf_parse_args(["--lang", "en"]).target == "bridge"
+    assert _pdf_parse_args(["--lang", "en", "--target", "comp-bio"]).target == "comp-bio"
+    with pytest.raises(SystemExit):
+        _pdf_parse_args(["--lang", "en", "--target", "nope"])
+
+
+def test_txt_filename_bridge_and_variant():
+    assert _txt_filename("en", "bridge") == "cv-en.txt"
+    assert _txt_filename("en", "comp-bio") == "cv-en-comp-bio.txt"
+
+
+def test_render_text_threads_target():
+    bridge = render("en", "bridge")
+    cb = render("en", "comp-bio")
+    assert bridge != cb
+    assert "Computational Biology · Cancer Genomics" in cb
