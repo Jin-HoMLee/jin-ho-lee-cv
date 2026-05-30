@@ -34,6 +34,11 @@
       "type": "string",
       "pattern": "^[LDC][0-9]+$"
     },
+    "ProjectOrder": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ProjectId" },
+      "minItems": 1
+    },
     "personal": {
       "type": "object",
       "properties": {
@@ -198,9 +203,14 @@
       "additionalProperties": false
     },
     "selected_projects": {
-      "type": "array",
-      "items": { "$ref": "#/$defs/ProjectId" },
-      "minItems": 1
+      "type": "object",
+      "properties": {
+        "bridge":   { "$ref": "#/$defs/ProjectOrder" },
+        "comp-bio": { "$ref": "#/$defs/ProjectOrder" },
+        "ds-ml":    { "$ref": "#/$defs/ProjectOrder" }
+      },
+      "required": ["bridge"],
+      "additionalProperties": false
     },
     "languages": {
       "type": "array",

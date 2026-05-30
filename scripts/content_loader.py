@@ -60,6 +60,11 @@ def _resolve_profile_target(profile: dict, target: str) -> dict:
     return result
 
 
+def _select_project_ids(selected_map: dict, target: str) -> list[str]:
+    """Return the project-id order for `target`, falling back to the bridge order."""
+    return selected_map.get(target, selected_map["bridge"])
+
+
 def _load_yaml(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as f:
         return yaml.load(f)
@@ -108,7 +113,8 @@ def load_content(
     personal = _resolve_personal_target(personal, target)
 
     projects = _load_projects(content_dir / "projects", lang=lang)
-    selected_ids = _load_yaml(content_dir / "selected_projects.yaml")
+    selected_map = _load_yaml(content_dir / "selected_projects.yaml")
+    selected_ids = _select_project_ids(selected_map, target)
     unknown = [pid for pid in selected_ids if pid not in projects]
     if unknown:
         raise ValueError(
