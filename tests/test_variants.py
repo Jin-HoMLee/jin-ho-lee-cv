@@ -1,0 +1,82 @@
+"""Tests for the Phase 8b target axis (bridge | comp-bio | ds-ml)."""
+from __future__ import annotations
+
+import pytest
+
+from scripts.content_loader import (
+    _resolve_personal_target,
+    _resolve_profile_target,
+    load_content,
+)
+
+
+def test_resolve_profile_target_overrides_tagline_and_lead_keeps_rest():
+    profile = {
+        "tagline": "BRIDGE tagline",
+        "paragraphs": ["BRIDGE lead", "SHARED second"],
+        "variants": {
+            "comp-bio": {"tagline": "CB tagline", "lead_paragraph": "CB lead"},
+        },
+    }
+    out = _resolve_profile_target(profile, "comp-bio")
+    assert out["tagline"] == "CB tagline"
+    assert out["paragraphs"] == ["CB lead", "SHARED second"]
+    assert "variants" not in out
+
+
+def test_resolve_profile_target_bridge_is_noop_but_strips_variants():
+    profile = {
+        "tagline": "BRIDGE tagline",
+        "paragraphs": ["BRIDGE lead", "SHARED second"],
+        "variants": {"comp-bio": {"tagline": "CB tagline"}},
+    }
+    out = _resolve_profile_target(profile, "bridge")
+    assert out["tagline"] == "BRIDGE tagline"
+    assert out["paragraphs"] == ["BRIDGE lead", "SHARED second"]
+    assert "variants" not in out
+
+
+def test_resolve_profile_target_partial_override_inherits_bridge_tagline():
+    profile = {
+        "tagline": "BRIDGE tagline",
+        "paragraphs": ["BRIDGE lead", "SHARED second"],
+        "variants": {"ds-ml": {"lead_paragraph": "DS lead"}},
+    }
+    out = _resolve_profile_target(profile, "ds-ml")
+    assert out["tagline"] == "BRIDGE tagline"  # not overridden → inherited
+    assert out["paragraphs"] == ["DS lead", "SHARED second"]
+
+
+def test_resolve_personal_target_replaces_headline():
+    personal = {
+        "headline": {"en": "BRIDGE", "de": "BRIDGE-DE"},
+        "email": "x@y.z",
+        "variants": {"comp-bio": {"headline": {"en": "CB", "de": "CB-DE"}}},
+    }
+    out = _resolve_personal_target(personal, "comp-bio")
+    assert out["headline"] == {"en": "CB", "de": "CB-DE"}
+    assert out["email"] == "x@y.z"
+    assert "variants" not in out
+
+
+def test_resolve_personal_target_bridge_is_noop_but_strips_variants():
+    personal = {
+        "headline": {"en": "BRIDGE", "de": "BRIDGE-DE"},
+        "email": "x@y.z",
+        "variants": {"comp-bio": {"headline": {"en": "CB", "de": "CB-DE"}}},
+    }
+    out = _resolve_personal_target(personal, "bridge")
+    assert out["headline"] == {"en": "BRIDGE", "de": "BRIDGE-DE"}
+    assert out["email"] == "x@y.z"
+    assert "variants" not in out
+
+
+def test_load_content_rejects_unknown_target(content_dir):
+    with pytest.raises(ValueError, match="unknown target"):
+        load_content(content_dir, target="nope")
+
+
+def test_load_content_strips_variants_key_from_personal_and_profile(content_dir):
+    content = load_content(content_dir, lang="en", target="bridge")
+    assert "variants" not in content["personal"]
+    assert "variants" not in content["profile"]
