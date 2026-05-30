@@ -32,8 +32,8 @@ def _resolve_personal_target(personal: dict, target: str) -> dict:
 
     Bridge — or any target without an entry — returns the base personal with the
     'variants' key removed. The entire variant dict is deep-merged over the base
-    (schema-constrained to only `headline` once Task 3 lands), so a variant headline
-    {en,de} map replaces the base headline.
+    (the schema constrains a personal variant to only `headline`), so a variant
+    headline {en,de} map replaces the base headline.
     """
     result = copy.deepcopy(personal)
     variants = result.pop("variants", {})
