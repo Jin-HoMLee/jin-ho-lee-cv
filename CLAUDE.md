@@ -25,7 +25,7 @@ Eight phases (0–8), sequential. Each produces a usable artifact and gets its o
 | 5 | Polish: custom domain, project deep-dive pages, OG images, chart interactivity | ✅ Done (merged 2026-05-26, commit `a3c682b`) |
 | 6 | SEO (sitemap + robots.txt + GSC verify) + privacy-friendly analytics (GoatCounter) | ✅ Done (merged 2026-05-28, commit `c05530e`); Bing dropped (is-a.dev PSL quota blocker) |
 | 7 | Content audit (bring CV up to date) | ✅ Done (merged 2026-05-29, PR #33, commit `b731222`) |
-| 8a | Sharpen positioning (Bioinformatics · Data Science) | 🚧 In progress (branch `phase-8a-sharpen-positioning`) |
+| 8a | Sharpen positioning (Bioinformatics · Data Science) | ✅ Done (merged 2026-05-30, PR #36, commit `c3862f5`) |
 
 ## Layout
 
