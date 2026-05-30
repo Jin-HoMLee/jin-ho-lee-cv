@@ -1,6 +1,6 @@
-# Project IDs surfaced in the PDF "Selected Projects" section.
+# Featured-project order per positioning target.
 # Each ID must resolve to content/projects/<id>.{en,de}.yaml.
-# Order here is the rendering order.
-- L5
-- L1
-- L2
+# `bridge` is required and is the fallback for any target without its own key.
+bridge:   [L5, L1, L2]   # genomics-led canonical (unchanged from Phase 8a)
+comp-bio: [L1, L2, L5]   # neoantigen discovery, HLA pipeline, reproducible splice workflow
+ds-ml:    [C1, D1, D2]   # KYC/BigQueryML, real-time ASL ML, badminton AI

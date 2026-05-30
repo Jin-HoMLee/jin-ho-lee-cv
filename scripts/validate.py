@@ -116,6 +116,53 @@ def _validate_publications(content_dir: Path) -> list[FileError]:
     return []
 
 
+def _validate_profile_variant_parity(content_dir: Path) -> list[FileError]:
+    """profile.en.yaml and profile.de.yaml must declare the same variant targets
+    with the same overridden keys (EN/DE positioning parity)."""
+    en_path = content_dir / "profile.en.yaml"
+    de_path = content_dir / "profile.de.yaml"
+    if not (en_path.exists() and de_path.exists()):
+        return []
+    en = (_load_yaml(en_path).get("variants") or {})
+    de = (_load_yaml(de_path).get("variants") or {})
+    if not (isinstance(en, dict) and isinstance(de, dict)):
+        return []  # malformed structure; the schema validator reports it
+    errors: list[FileError] = []
+    for target in sorted(set(en) | set(de)):
+        en_val = en.get(target)
+        de_val = de.get(target)
+        en_keys = set(en_val) if isinstance(en_val, dict) else set()
+        de_keys = set(de_val) if isinstance(de_val, dict) else set()
+        if en_keys != de_keys:
+            errors.append(FileError(
+                de_path,
+                f"variant {target!r} key mismatch EN/DE: "
+                f"en={sorted(en_keys)} de={sorted(de_keys)}",
+            ))
+    return errors
+
+
+def _validate_headline_variant_completeness(content_dir: Path) -> list[FileError]:
+    """Each personal headline variant must define both 'en' and 'de' (parity with
+    the bilingual base headline)."""
+    path = content_dir / "personal.yaml"
+    if not path.exists():
+        return []
+    variants = (_load_yaml(path).get("variants") or {})
+    if not isinstance(variants, dict):
+        return []  # malformed structure; the schema validator reports it
+    errors: list[FileError] = []
+    for target in sorted(variants):
+        spec = variants.get(target)
+        headline = spec.get("headline") if isinstance(spec, dict) else None
+        if isinstance(headline, dict) and not ({"en", "de"} <= set(headline)):
+            errors.append(FileError(
+                path,
+                f"variant {target!r} headline must define both 'en' and 'de'",
+            ))
+    return errors
+
+
 def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     """Validate every recognized file under content/. Returns list of errors (empty = clean)."""
     errors: list[FileError] = []
@@ -135,12 +182,14 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     if selected_path.exists():
         try:
             selected = _load_yaml(selected_path)
-            unknown = [pid for pid in selected if pid not in project_ids]
-            if unknown:
-                errors.append(FileError(
-                    selected_path,
-                    f"references unknown project id(s): {unknown}",
-                ))
+            if isinstance(selected, dict):  # else the schema validator reports the type error
+                all_ids = {pid for order in selected.values() for pid in order}
+                unknown = sorted(pid for pid in all_ids if pid not in project_ids)
+                if unknown:
+                    errors.append(FileError(
+                        selected_path,
+                        f"references unknown project id(s): {unknown}",
+                    ))
         except Exception as e:
             errors.append(FileError(selected_path, str(e)))
 
@@ -165,6 +214,8 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
             "missing EN counterpart for DE project file",
         ))
 
+    errors.extend(_validate_profile_variant_parity(content_dir))
+    errors.extend(_validate_headline_variant_completeness(content_dir))
     errors.extend(_validate_publications(content_dir))
     return errors
 
