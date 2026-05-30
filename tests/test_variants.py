@@ -6,6 +6,7 @@ import pytest
 from scripts.content_loader import (
     _resolve_personal_target,
     _resolve_profile_target,
+    _select_project_ids,
     load_content,
 )
 
@@ -80,3 +81,32 @@ def test_load_content_strips_variants_key_from_personal_and_profile(content_dir)
     content = load_content(content_dir, lang="en", target="bridge")
     assert "variants" not in content["personal"]
     assert "variants" not in content["profile"]
+
+
+def test_select_project_ids_returns_target_order():
+    m = {"bridge": ["L5", "L1"], "comp-bio": ["L1", "L2", "L5"]}
+    assert _select_project_ids(m, "comp-bio") == ["L1", "L2", "L5"]
+
+
+def test_select_project_ids_falls_back_to_bridge_when_target_absent():
+    m = {"bridge": ["L5", "L1", "L2"]}  # no ds-ml key
+    assert _select_project_ids(m, "ds-ml") == ["L5", "L1", "L2"]
+
+
+def _ids(projects):
+    return [p["id"] for p in projects]
+
+
+def test_load_content_bridge_project_order(content_dir):
+    content = load_content(content_dir, lang="en", target="bridge")
+    assert _ids(content["selected_projects"]) == ["L5", "L1", "L2"]
+
+
+def test_load_content_comp_bio_project_order(content_dir):
+    content = load_content(content_dir, lang="en", target="comp-bio")
+    assert _ids(content["selected_projects"]) == ["L1", "L2", "L5"]
+
+
+def test_load_content_ds_ml_project_order(content_dir):
+    content = load_content(content_dir, lang="en", target="ds-ml")
+    assert _ids(content["selected_projects"]) == ["C1", "D1", "D2"]

@@ -135,7 +135,8 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     if selected_path.exists():
         try:
             selected = _load_yaml(selected_path)
-            unknown = [pid for pid in selected if pid not in project_ids]
+            all_ids = {pid for order in selected.values() for pid in order}
+            unknown = sorted(pid for pid in all_ids if pid not in project_ids)
             if unknown:
                 errors.append(FileError(
                     selected_path,

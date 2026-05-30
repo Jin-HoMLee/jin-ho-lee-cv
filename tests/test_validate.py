@@ -123,3 +123,35 @@ def test_de_en_project_file_parity_fails_on_missing_en(tmp_path):
     assert any("L1.en.yaml" in str(e) for e in errors), (
         f"expected missing-EN-file error, got: {errors}"
     )
+
+
+_PROJECT_STUB = (
+    "id: {pid}\ncategory: life-science\ntitle: T\nsummary: S\n"
+    "role: R\nperiod: {{ start: '2020-01', end: '2020-02' }}\n"
+    "technologies: [X]\ncontributions: [C]\noutcome: O\n"
+)
+
+
+def test_selected_projects_map_unknown_id_fails(tmp_path):
+    """selected_projects.yaml whose target list contains an unknown id must surface an error.
+
+    Writes a map-shaped file with a bogus id ZZ9 in the comp-bio target list alongside a
+    valid id L1.  Expects validate_tree to return at least one error referencing ZZ9.
+    """
+    content = tmp_path / "content"
+    (content / "projects").mkdir(parents=True)
+    _write_minimal_content_tree(content)
+
+    # Provide a valid paired project so L1 is a known id and parity checks pass.
+    (content / "projects" / "L1.en.yaml").write_text(_PROJECT_STUB.format(pid="L1"))
+    (content / "projects" / "L1.de.yaml").write_text(_PROJECT_STUB.format(pid="L1"))
+
+    # Map shape: bridge is required by schema; comp-bio introduces the unknown id ZZ9.
+    (content / "selected_projects.yaml").write_text(
+        "bridge: [L1]\ncomp-bio: [L1, ZZ9]\n"
+    )
+
+    errors = validate_tree(content, _SCHEMA_PATH)
+    assert any("ZZ9" in str(e) for e in errors), (
+        f"expected unknown-id error referencing ZZ9, got: {errors}"
+    )
