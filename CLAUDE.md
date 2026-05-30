@@ -67,12 +67,13 @@ validate + test + lint must all be green before merging anything.
 - **`content/*.yaml` is the source of truth.** Renderers consume; never edit content from inside a renderer.
 - **LangString pattern.** Short user-facing strings use inline `{ en: "...", de: "..." }` maps; long prose lives in per-language files (`profile.en.yaml`). `en` is required; other languages optional until Phase 2.
 - **Cross-references validated.** Every `refs: [L1]` in `experience.yaml` must resolve to a `content/projects/L1.en.yaml` file. Filename and `id:` field must match. Enforced by `scripts/validate.py` and `scripts/content_loader.py`.
+- **Plans keep this file current.** Every implementation plan ends with a task to update CLAUDE.md — refresh the Phasing table row for the phase (and any changed convention) so phase status stays authoritative. A merged phase with no row here is a doc bug.
 
 ## Workflow for new phases
 
 1. Brainstorm: `superpowers:brainstorming` to refine scope, get user approval on design.
 2. Spec: written to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`.
-3. Plan: `superpowers:writing-plans` to produce step-by-step tasks at `docs/superpowers/plans/YYYY-MM-DD-<topic>.md`.
+3. Plan: `superpowers:writing-plans` to produce step-by-step tasks at `docs/superpowers/plans/YYYY-MM-DD-<topic>.md`. The plan's final task always updates the Phasing table in this file.
 4. Execute: `superpowers:subagent-driven-development` — fresh subagent per task with spec + code-quality review checkpoints.
 5. Finish: `superpowers:finishing-a-development-branch` — `--no-ff` merge to `main`.
 
