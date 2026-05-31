@@ -98,7 +98,8 @@
             "type": "object",
             "properties": {
               "tagline": { "type": "string", "minLength": 1 },
-              "lead_paragraph": { "type": "string", "minLength": 1 }
+              "lead_paragraph": { "type": "string", "minLength": 1 },
+              "second_paragraph": { "type": "string", "minLength": 1 }
             },
             "additionalProperties": false
           }

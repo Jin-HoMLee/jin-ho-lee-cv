@@ -45,18 +45,23 @@ def _resolve_personal_target(personal: dict, target: str) -> dict:
 def _resolve_profile_target(profile: dict, target: str) -> dict:
     """Apply the profile positioning variant for `target`; strip 'variants'.
 
-    A variant may override `tagline` and/or `lead_paragraph`. `lead_paragraph`
-    replaces paragraphs[0]; the remaining paragraphs are inherited from bridge.
-    Assumes the profile has at least one paragraph when `lead_paragraph` is
-    overridden (guaranteed by the schema's `minItems`).
+    A variant may override `tagline`, `lead_paragraph`, and/or `second_paragraph`.
+    `lead_paragraph` replaces paragraphs[0] and `second_paragraph` replaces
+    paragraphs[1]; any paragraph not overridden is inherited from bridge. The
+    paragraph overrides are guarded by length so a profile with fewer paragraphs
+    than the override targets is left untouched rather than raising.
     """
     result = copy.deepcopy(profile)
     variants = result.pop("variants", {})
     override = variants.get(target, {}) if target != "bridge" else {}
     if "tagline" in override:
         result["tagline"] = override["tagline"]
-    if "lead_paragraph" in override:
-        result["paragraphs"] = [override["lead_paragraph"], *result["paragraphs"][1:]]
+    paragraphs = list(result["paragraphs"])
+    if "lead_paragraph" in override and len(paragraphs) >= 1:
+        paragraphs[0] = override["lead_paragraph"]
+    if "second_paragraph" in override and len(paragraphs) >= 2:
+        paragraphs[1] = override["second_paragraph"]
+    result["paragraphs"] = paragraphs
     return result
 
 

@@ -232,11 +232,35 @@ def test_ds_ml_tagline_and_lead_paragraph(content_dir):
     assert profile["paragraphs"][0].startswith("Production")
 
 
-def test_second_paragraph_is_shared_across_targets(content_dir):
+def test_second_paragraph_varies_by_target(content_dir):
+    # Phase 8c+: the second profile paragraph is now a per-target override.
+    # comp-bio and ds-ml each tune it to their audience; all three differ.
     bridge = _resolved(content_dir, "en", "bridge")["profile"]["paragraphs"][1]
     cb = _resolved(content_dir, "en", "comp-bio")["profile"]["paragraphs"][1]
     ds = _resolved(content_dir, "en", "ds-ml")["profile"]["paragraphs"][1]
-    assert bridge == cb == ds
+    assert bridge != cb
+    assert bridge != ds
+    assert cb != ds
+
+
+def test_resolve_profile_target_overrides_second_paragraph():
+    profile = {
+        "tagline": "BRIDGE tagline",
+        "paragraphs": ["BRIDGE lead", "BRIDGE second"],
+        "variants": {"ds-ml": {"second_paragraph": "DS second"}},
+    }
+    out = _resolve_profile_target(profile, "ds-ml")
+    assert out["paragraphs"] == ["BRIDGE lead", "DS second"]
+
+
+def test_resolve_profile_target_overrides_both_paragraphs():
+    profile = {
+        "tagline": "BRIDGE tagline",
+        "paragraphs": ["BRIDGE lead", "BRIDGE second"],
+        "variants": {"comp-bio": {"lead_paragraph": "CB lead", "second_paragraph": "CB second"}},
+    }
+    out = _resolve_profile_target(profile, "comp-bio")
+    assert out["paragraphs"] == ["CB lead", "CB second"]
 
 
 def test_experience_is_shared_across_targets(content_dir):
