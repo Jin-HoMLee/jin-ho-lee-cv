@@ -1,6 +1,7 @@
 ---
 import type { Personal, Lang } from "../types/content";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
   personal: Personal;
@@ -11,27 +12,28 @@ const { personal, lang } = Astro.props;
 const downloadLabel = lang === "en" ? "Download PDF" : "PDF herunterladen";
 const pdfUrlBase = "https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download";
 ---
-<header class="sticky top-0 z-10 border-b border-neutral-200 bg-white/90 backdrop-blur">
+<header class="sticky top-0 z-10 border-b border-[var(--surface-border)] backdrop-blur" style="background-color: color-mix(in srgb, var(--bg) 85%, transparent)">
   <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3 md:px-8">
     <div class="mr-auto">
       <p class="text-lg font-semibold leading-tight" style="color: var(--color-accent)">
         {personal.name.given} {personal.name.family}
       </p>
-      <p class="text-xs text-neutral-600" data-cv-field="headline">{personal.headline}</p>
+      <p class="font-mono-plex text-xs text-[var(--accent)]" data-cv-field="headline">{personal.headline}</p>
     </div>
     <div class="flex items-center gap-2 text-sm">
-      <span class="text-neutral-500">{downloadLabel}:</span>
+      <span class="text-[var(--faint)]">{downloadLabel}:</span>
       <a
-        class="rounded-md px-3 py-1.5 text-white hover:opacity-90"
-        style="background-color: var(--color-accent)"
+        class="rounded-md px-3 py-1.5 text-[var(--accent-contrast)] hover:opacity-90"
+        style="background-color: var(--accent)"
         href={`${pdfUrlBase}/cv-en.pdf`}
       >EN</a>
       <a
-        class="rounded-md px-3 py-1.5 text-white hover:opacity-90"
-        style="background-color: var(--color-accent)"
+        class="rounded-md px-3 py-1.5 text-[var(--accent-contrast)] hover:opacity-90"
+        style="background-color: var(--accent)"
         href={`${pdfUrlBase}/cv-de.pdf`}
       >DE</a>
       <LanguageSwitcher currentLang={lang} />
+      <ThemeToggle />
     </div>
   </div>
 </header>
