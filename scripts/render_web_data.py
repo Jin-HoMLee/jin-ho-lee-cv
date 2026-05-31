@@ -40,6 +40,26 @@ def _to_jsonable(obj: Any) -> Any:
     return obj
 
 
+def _extract_overrides(bridge: dict, variant: dict) -> dict:
+    """Return only the fields that differ between bridge and variant.
+    
+    Args:
+        bridge: Fully-resolved bridge tree (all keys present)
+        variant: Fully-resolved variant tree (all keys present)
+    
+    Returns:
+        Dict with only the keys that differ; empty dict if identical.
+    """
+    OVERRIDE_KEYS = {"headline", "tagline", "lead_paragraph", "selected_projects"}
+    overrides = {}
+    for key in OVERRIDE_KEYS:
+        bridge_val = bridge.get(key)
+        variant_val = variant.get(key)
+        if bridge_val != variant_val:
+            overrides[key] = variant_val
+    return overrides
+
+
 def render_web_data(*, content_dir: Path = CONTENT_DIR, output_dir: Path = OUTPUT_DIR) -> None:
     """Render content.{en,de}.json into output_dir.
 
