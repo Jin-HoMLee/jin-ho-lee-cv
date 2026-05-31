@@ -44,9 +44,10 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
     """Return the web-rendered positioning fields that differ from bridge.
 
     Reads from the *nested* resolved tree (not top level):
-      headline       <- personal.headline   (rendered in the sticky header)
-      tagline        <- profile.tagline      (rendered in the profile intro)
-      lead_paragraph <- profile.paragraphs[0] (the lead; paragraphs[1] is shared)
+      headline         <- personal.headline      (rendered in the sticky header)
+      tagline          <- profile.tagline         (rendered in the profile intro)
+      lead_paragraph   <- profile.paragraphs[0]   (the lead profile paragraph)
+      second_paragraph <- profile.paragraphs[1]   (the second profile paragraph)
 
     A key is included only when the variant value differs from bridge.
     `selected_projects` is intentionally excluded: the website renders projects
@@ -78,6 +79,11 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
     v_lead = v_paras[0] if v_paras else None
     if v_lead is not None and v_lead != b_lead:
         overrides["lead_paragraph"] = v_lead
+
+    b_second = b_paras[1] if len(b_paras) > 1 else None
+    v_second = v_paras[1] if len(v_paras) > 1 else None
+    if v_second is not None and v_second != b_second:
+        overrides["second_paragraph"] = v_second
 
     return overrides
 

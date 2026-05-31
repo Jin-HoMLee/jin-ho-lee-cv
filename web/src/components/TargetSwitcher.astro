@@ -3,11 +3,12 @@
 //
 // Lets a visitor re-position the CV for a target audience without a page reload.
 // Bridge is rendered at build time and stays SEO-canonical; this control swaps
-// only the visible text of three already-rendered fields, marked in the DOM with
+// only the visible text of already-rendered fields, marked in the DOM with
 // `data-cv-field`:
 //   headline -> Header.astro      (sticky header)
 //   tagline  -> ProfileSection    (profile intro lead-in)
 //   lead     -> ProfileSection    (first profile paragraph)
+//   second   -> ProfileSection    (second profile paragraph)
 //
 // Pure progressive enhancement: with JS off, the control stays hidden and the
 // page is the complete bridge CV. Variant text is inlined at build time via
@@ -18,6 +19,7 @@ interface Variant {
   headline?: string;
   tagline?: string;
   lead_paragraph?: string;
+  second_paragraph?: string;
 }
 
 interface Props {
@@ -63,7 +65,12 @@ const order = ["bridge", "comp-bio", "ds-ml"] as const;
 
     const buttons = Array.from(root.querySelectorAll("[data-cv-target]"));
     // DOM field name -> key in the variants JSON.
-    const FIELDS = { headline: "headline", tagline: "tagline", lead: "lead_paragraph" };
+    const FIELDS = {
+      headline: "headline",
+      tagline: "tagline",
+      lead: "lead_paragraph",
+      second: "second_paragraph",
+    };
     const STORAGE_KEY = "cvTargetPreference";
     const VALID = new Set(["bridge", "comp-bio", "ds-ml"]);
 

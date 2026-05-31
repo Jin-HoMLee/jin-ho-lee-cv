@@ -101,7 +101,7 @@ jobs:
           # Phase 8c: target switcher reached the built HTML, both langs
           grep -q 'data-cv-switcher' web/dist/index.html || (echo "Target switcher missing in EN homepage" && exit 1)
           grep -q 'data-cv-switcher' web/dist/de/index.html || (echo "Target switcher missing in DE homepage" && exit 1)
-          for field in headline tagline lead; do
+          for field in headline tagline lead second; do
             grep -q "data-cv-field=\"$field\"" web/dist/index.html || (echo "Missing data-cv-field=$field hook in EN homepage" && exit 1)
           done
           # Variant text inlined for client-side swapping (EN + DE)
