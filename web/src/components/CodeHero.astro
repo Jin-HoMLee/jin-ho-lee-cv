@@ -1,0 +1,103 @@
+---
+import type { Personal, Profile, Publication, Skills, Lang } from "../types/content";
+
+interface Props {
+  personal: Personal;
+  profile: Profile;
+  publications: Publication[];
+  skills: Skills;
+  lang: Lang;
+}
+
+const { personal, profile, publications, skills, lang } = Astro.props;
+
+// roots — curated positioning trio (renderer-authored, like OG kickers; NOT in content/)
+const ROOTS = ["cancer-genomics", "HLA-typing", "neoantigens"];
+
+// stack — derived spread across the arc. NOTE: the original plan used
+// `categories.flatMap(c => c.groups.flatMap(g => g.items)).slice(0,4)`, but that only
+// surfaced genomics items (the first category has 4 groups). bioLead + engLeads spans
+// categories intentionally, so the hero signals bioinformatics → ML → cloud. Still fully
+// derived from skills data; no hardcoded skill values.
+const bioLead = skills.categories[0]?.groups?.[0]?.items?.[0];
+const engLeads = (skills.categories.at(-1)?.groups ?? []).map((g) => g.items?.[0]).filter(Boolean);
+const stack = [bioLead, ...engLeads].filter(Boolean).slice(0, 4);
+
+const name = `${personal.name.given} ${personal.name.family}`;
+const pubCount = publications.length;
+const tabs = ["profile.yaml", "experience.yaml", "publications.bib"];
+const eyebrow = lang === "en"
+  ? "// one source of truth — pdf · web · json · jsonld · text"
+  : "// eine Quelle — pdf · web · json · jsonld · text";
+const authorComment = lang === "en" ? "# first / shared-first author" : "# Erst-/geteilte Erstautorenschaft";
+const ctaLabel = lang === "en" ? "View work →" : "Projekte ansehen →";
+const pdfBase = "https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download";
+const pdfLabel = lang === "en" ? "download" : "Download";
+// 8 rendered rows: name / headline / roots / stack / publications / tagline-label / tagline-value / blank
+const lineCount = 8;
+---
+<section class="py-8" data-code-hero data-reveal aria-label={lang === "en" ? "Profile summary" : "Profilübersicht"}>
+  <p class="font-mono-plex mb-4 text-xs" style="color: var(--accent-hover)">{eyebrow}</p>
+
+  <div class="overflow-hidden rounded-xl border border-[var(--surface-border)] shadow-2xl" style="background: var(--code-bg)">
+    <!-- tab chrome (decorative) -->
+    <div class="flex items-center text-[11px]" style="background: var(--code-chrome)" aria-hidden="true">
+      {tabs.map((tab, i) => (
+        <span class="font-mono-plex px-3 py-2" style={i === 0
+          ? "color: var(--text); border-top: 2px solid var(--accent); background: var(--code-bg)"
+          : "color: var(--code-comment)"}>{tab}</span>
+      ))}
+    </div>
+
+    <!-- code body -->
+    <div class="flex font-mono-plex text-[13px] leading-[1.9]">
+      <div class="select-none py-3 pl-3 pr-2 text-right" style="color: var(--code-gutter)" aria-hidden="true">
+        {Array.from({ length: lineCount }, (_, i) => <div>{i + 1}</div>)}
+      </div>
+      <div class="overflow-x-auto py-3 pr-4">
+        <div><span class="ck">name</span>: <span class="cs">{name}</span></div>
+        <div><span class="ck">headline</span>: <span class="cs">{personal.headline}</span></div>
+        <div><span class="ck">roots</span>: [{ROOTS.map((r, i) => <Fragment><span class="cs">{r}</span>{i < ROOTS.length - 1 ? ", " : ""}</Fragment>)}]</div>
+        <div><span class="ck">stack</span>: [{stack.map((s, i) => <Fragment><span class="cs">{s}</span>{i < stack.length - 1 ? ", " : ""}</Fragment>)}]</div>
+        <div><span class="ck">publications</span>: <span class="cn">{pubCount}</span>&nbsp;&nbsp;<span class="cc">{authorComment}</span></div>
+        <div><span class="ck">tagline</span>: <span class="cp">&gt;-</span></div>
+        <div>&nbsp;&nbsp;<span class="cs" data-type={profile.tagline}>{profile.tagline}</span><span class="cursor" aria-hidden="true">&#x25AE;</span></div>
+        <div>&nbsp;</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5 flex flex-wrap items-center gap-4">
+    <a href="#experience" class="rounded-lg px-4 py-2 text-sm font-semibold text-[var(--accent-contrast)] hover:opacity-90" style="background: var(--accent)">{ctaLabel}</a>
+    <span class="font-mono-plex text-xs text-[var(--faint)]">{pdfLabel} · <a class="underline hover:text-[var(--text)]" href={`${pdfBase}/cv-en.pdf`}>cv-en.pdf</a> / <a class="underline hover:text-[var(--text)]" href={`${pdfBase}/cv-de.pdf`}>cv-de.pdf</a></span>
+  </div>
+</section>
+
+<style>
+  .ck { color: var(--code-key); }
+  .cs { color: var(--code-string); }
+  .cn { color: var(--code-number); }
+  .cc { color: var(--code-comment); }
+  .cp { color: var(--code-punct); }
+  .cursor { color: var(--accent); animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+</style>
+
+<script>
+  const el = document.querySelector<HTMLElement>("[data-code-hero] [data-type]");
+  if (el) {
+    const full = el.dataset.type ?? el.textContent ?? "";
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce) {
+      el.textContent = "";
+      let i = 0;
+      const tick = () => {
+        el.textContent = full.slice(0, ++i);
+        if (i < full.length) setTimeout(tick, 16);
+      };
+      tick();
+    }
+    // reduced-motion: leave the already-rendered full text in place.
+  }
+</script>
