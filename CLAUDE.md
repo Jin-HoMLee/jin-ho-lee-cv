@@ -28,7 +28,7 @@ Eight phases (0–8), sequential. Each produces a usable artifact and gets its o
 | 8a | Sharpen positioning (Bioinformatics · Data Science) | ✅ Done (merged 2026-05-30, PR #36, commit `c3862f5`) |
 | 8b | Targeted CV variants (comp-bio · ds-ml from one source) | ✅ Done (merged 2026-05-30, PR #38, commit `b9f6895`) |
 | 8c | Web target switcher (client-side variant positioning) | ✅ Done (merged 2026-05-31, PR #39, commit `6ced593`) |
-| 9 | Web design overhaul (2026 dark-technical: CV-as-code hero, bento stat band, dark/light theme) | 🚧 In progress (branch `phase-9-web-redesign`) |
+| 9 | Web design overhaul (2026 dark-technical: CV-as-code hero, bento stat band, dark/light theme) | ✅ Done (merged 2026-05-31, PR #40, commit `be80dc6`) |
 
 ## Layout
 
