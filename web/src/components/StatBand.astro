@@ -1,0 +1,74 @@
+---
+import type { ContentData, Lang } from "../types/content";
+
+interface Props { data: ContentData; lang: Lang }
+const { data, lang } = Astro.props;
+
+const pubs = data.publications.length;
+const firstShared = data.publications.filter(
+  (p) => p.authorship === "first" || p.authorship === "shared",
+).length;
+const startYears = data.experience
+  .map((e) => parseInt(e.period.start.slice(0, 4), 10))
+  .filter((n) => !Number.isNaN(n));
+const yearsActive = startYears.length ? new Date().getUTCFullYear() - Math.min(...startYears) : 0;
+const FORMATS = 5; // pdf · web · json resume · json-ld · text
+
+type Tile = { value: number; suffix: string; label: string; varName: string };
+const tiles: Tile[] = lang === "en"
+  ? [
+      { value: pubs, suffix: "", label: "peer-reviewed publications", varName: "--chart-1" },
+      { value: firstShared, suffix: "", label: "as first / shared-first author", varName: "--chart-4" },
+      { value: yearsActive, suffix: "+", label: "years, wet-lab → ML", varName: "--chart-3" },
+      { value: FORMATS, suffix: "", label: "output formats, one source", varName: "--code-key" },
+    ]
+  : [
+      { value: pubs, suffix: "", label: "begutachtete Publikationen", varName: "--chart-1" },
+      { value: firstShared, suffix: "", label: "als Erst-/geteilte Erstautorenschaft", varName: "--chart-4" },
+      { value: yearsActive, suffix: "+", label: "Jahre, Labor → ML", varName: "--chart-3" },
+      { value: FORMATS, suffix: "", label: "Ausgabeformate, eine Quelle", varName: "--code-key" },
+    ];
+---
+<section class="py-6" data-stat-band data-reveal>
+  <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
+    {tiles.map((t) => (
+      <div class="rounded-xl border border-[var(--surface-border)] p-4" style="background: var(--surface)" role="img" aria-label={`${t.value}${t.suffix} ${t.label}`}>
+        <div
+          class="font-mono-plex text-3xl font-extrabold tracking-tight"
+          style={`color: var(${t.varName})`}
+          data-count-to={t.value}
+          data-suffix={t.suffix}
+          aria-hidden="true"
+        >{t.value}{t.suffix}</div>
+        <div class="mt-1 text-xs text-[var(--muted)]" aria-hidden="true">{t.label}</div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  const nums = document.querySelectorAll<HTMLElement>("[data-stat-band] [data-count-to]");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (nums.length && !reduce && "IntersectionObserver" in window) {
+    const animate = (el: HTMLElement) => {
+      const target = Number(el.dataset.countTo ?? "0");
+      const suffix = el.dataset.suffix ?? "";
+      const dur = 900; // ms
+      const start = performance.now();
+      const step = (now: number) => {
+        const p = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) { animate(e.target as HTMLElement); io.unobserve(e.target); }
+      }
+    }, { rootMargin: "0px 0px -10% 0px" });
+    for (const n of nums) { n.textContent = "0" + (n.dataset.suffix ?? ""); io.observe(n); }
+  }
+  // reduced-motion / no-IO: leave the server-rendered final numbers as-is.
+</script>

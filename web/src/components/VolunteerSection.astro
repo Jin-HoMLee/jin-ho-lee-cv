@@ -9,14 +9,14 @@ interface Props {
 const { volunteer, labels } = Astro.props;
 ---
 <section id="volunteer" class="py-6">
-  <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+  <h2 class="eyebrow mb-3">
     {labels.sections.volunteer}
   </h2>
   <div class="space-y-3">
     {volunteer.categories.map((cat) => (
       <div>
-        <p class="text-sm font-semibold text-neutral-800">{cat.name}</p>
-        <ul class="mt-1 space-y-0.5 text-sm text-neutral-700">
+        <p class="text-sm font-semibold text-[var(--text)]">{cat.name}</p>
+        <ul class="mt-1 space-y-0.5 text-sm text-[var(--muted)]">
           {cat.entries.map((e) => (
             <li>{e}</li>
           ))}

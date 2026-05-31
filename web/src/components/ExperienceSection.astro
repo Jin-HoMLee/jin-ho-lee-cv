@@ -12,23 +12,23 @@ interface Props {
 const { experience, labels, lang } = Astro.props;
 ---
 <section id="experience" class="py-6">
-  <h2 class="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+  <h2 class="eyebrow mb-4">
     {labels.sections.experience}
   </h2>
   <div class="space-y-6">
     {experience.map((exp) => (
-      <article id={`exp-${exp.id}`} class="border-l-2 border-neutral-200 pl-4">
+      <article id={`exp-${exp.id}`} class="border-l-2 border-[var(--accent)] pl-4">
         <header class="mb-2 flex flex-wrap items-baseline justify-between gap-2">
-          <h3 class="text-base font-semibold text-neutral-900">
+          <h3 class="text-base font-semibold text-[var(--text)]">
             {exp.role}
-            <span class="font-normal text-neutral-600"> · {exp.org.name}</span>
+            <span class="font-normal text-[var(--muted)]"> · {exp.org.name}</span>
           </h3>
-          <p class="text-xs text-neutral-500">{formatPeriod(exp.period, labels)}</p>
+          <p class="font-mono-plex text-xs text-[var(--faint)]">{formatPeriod(exp.period, labels)}</p>
         </header>
-        <ul class="space-y-1.5 text-sm text-neutral-700">
+        <ul class="space-y-1.5 text-sm text-[var(--muted)]">
           {exp.bullets.map((b) => (
             <li class="flex gap-2">
-              <span aria-hidden="true" class="text-neutral-400">•</span>
+              <span aria-hidden="true" class="text-[var(--accent)]">▸</span>
               <span>
                 {b[lang]}
                 {b.refs && b.refs.length > 0 && (
@@ -36,7 +36,7 @@ const { experience, labels, lang } = Astro.props;
                     {b.refs.map((r) => (
                       <a
                         href={`#${r}`}
-                        class="rounded bg-neutral-100 px-1.5 py-0.5 text-xs font-medium text-neutral-700 no-underline hover:bg-neutral-200"
+                        class="font-mono-plex rounded bg-[var(--surface)] px-1.5 py-0.5 text-xs font-medium text-[var(--accent)] no-underline hover:bg-[var(--surface-2)]"
                       >{r}</a>
                     ))}
                   </span>
