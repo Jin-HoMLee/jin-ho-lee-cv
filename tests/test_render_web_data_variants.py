@@ -1,11 +1,12 @@
 """Tests for the web variants metadata emitted by render_web_data.
 
-The website renders three positioning fields that vary per target:
-  headline       (sticky header)   <- personal.headline
-  tagline        (profile intro)   <- profile.tagline
-  lead_paragraph (profile intro)   <- profile.paragraphs[0]
+The website renders four positioning fields that vary per target:
+  headline         (sticky header)   <- personal.headline
+  tagline          (profile intro)   <- profile.tagline
+  lead_paragraph   (profile intro)   <- profile.paragraphs[0]
+  second_paragraph (profile intro)   <- profile.paragraphs[1]
 
-The variants JSON must carry exactly these three text fields per target, with
+The variants JSON must carry exactly these four text fields per target, with
 no bridge values and no `selected_projects` (the site groups projects by
 category and never consumes selected_projects). These tests assert that
 *positioning correctness*, not merely structural validity.
@@ -45,10 +46,10 @@ def test_variants_files_keyed_by_target(rendered):
 
 
 def test_variants_have_all_positioning_fields(rendered):
-    """Every target carries headline + tagline + lead_paragraph as non-empty strings.
+    """Every target carries all four positioning fields as non-empty strings.
 
     Regression guard: the original extractor read top-level keys and emitted only
-    `selected_projects`, silently dropping all three rendered fields.
+    `selected_projects`, silently dropping every rendered positioning field.
     """
     for lang in ("en", "de"):
         for target in TARGETS:
