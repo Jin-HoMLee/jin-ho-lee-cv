@@ -101,15 +101,18 @@ jobs:
           # Phase 8c: target switcher reached the built HTML, both langs
           grep -q 'data-cv-switcher' web/dist/index.html || (echo "Target switcher missing in EN homepage" && exit 1)
           grep -q 'data-cv-switcher' web/dist/de/index.html || (echo "Target switcher missing in DE homepage" && exit 1)
-          for field in headline tagline lead second; do
-            grep -q "data-cv-field=\"$field\"" web/dist/index.html || (echo "Missing data-cv-field=$field hook in EN homepage" && exit 1)
+          for page in web/dist/index.html web/dist/de/index.html; do
+            for field in headline tagline lead second; do
+              grep -q "data-cv-field=\"$field\"" "$page" || (echo "Missing data-cv-field=$field hook in $page" && exit 1)
+            done
           done
           # Variant text inlined for client-side swapping (EN + DE)
           grep -q 'Computational Biology · Cancer Genomics' web/dist/index.html || (echo "comp-bio variant text not inlined (EN)" && exit 1)
           grep -q 'Computational Biology · Krebsgenomik' web/dist/de/index.html || (echo "comp-bio variant text not inlined (DE)" && exit 1)
-          # Bridge stays SEO-canonical: variant strings must NOT leak into <head>
-          head_en=$(sed -n 's/.*<head>\(.*\)<\/head>.*/\1/p' web/dist/index.html)
-          echo "$head_en" | grep -q 'Computational Biology' && (echo "Variant positioning leaked into <head> — canonical must stay bridge" && exit 1) || true
+          # Bridge stays SEO-canonical: variant strings must NOT leak into <head>.
+          # Split on </head> (robust to Astro's minified, multi-element lines) and
+          # fail if any variant string appears in the head segment.
+          python3 -c "import sys; head=open('web/dist/index.html',encoding='utf-8').read().split('</head>',1)[0]; sys.exit('Variant positioning leaked into <head> — canonical must stay bridge' if 'Computational Biology' in head else 0)"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
