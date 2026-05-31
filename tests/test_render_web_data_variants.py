@@ -19,7 +19,7 @@ import pytest
 from scripts.render_web_data import _extract_overrides, render_web_data
 
 TARGETS = ("comp-bio", "ds-ml")
-OVERRIDE_KEYS = {"headline", "tagline", "lead_paragraph"}
+OVERRIDE_KEYS = {"headline", "tagline", "lead_paragraph", "second_paragraph"}
 
 
 @pytest.fixture(scope="module")
@@ -79,6 +79,7 @@ def test_variants_differ_from_bridge(rendered):
             "headline": bridge["personal"]["headline"],
             "tagline": bridge["profile"]["tagline"],
             "lead_paragraph": bridge["profile"]["paragraphs"][0],
+            "second_paragraph": bridge["profile"]["paragraphs"][1],
         }
         for target in TARGETS:
             for key, value in rendered[lang]["variants"][target].items():
@@ -126,11 +127,20 @@ def test_extract_tagline_and_lead():
     }
 
 
-def test_extract_shared_paragraph_change_is_ignored():
-    """Only paragraphs[0] (lead) is an override; paragraphs[1] is shared and never emitted."""
+def test_extract_second_paragraph_difference():
+    """A paragraphs[1] difference is emitted as second_paragraph (Phase 8c+)."""
     bridge = _tree(paras=("lead", "shared"))
-    variant = _tree(paras=("lead", "DIFFERENT shared"))
-    assert _extract_overrides(bridge, variant) == {}
+    variant = _tree(paras=("lead", "tuned second"))
+    assert _extract_overrides(bridge, variant) == {"second_paragraph": "tuned second"}
+
+
+def test_extract_both_paragraphs_difference():
+    bridge = _tree(paras=("lead", "second"))
+    variant = _tree(paras=("new lead", "new second"))
+    assert _extract_overrides(bridge, variant) == {
+        "lead_paragraph": "new lead",
+        "second_paragraph": "new second",
+    }
 
 
 def test_extract_never_emits_selected_projects():

@@ -34,7 +34,7 @@ const photoUrl = `${import.meta.env.BASE_URL}photo.jpg`;
     <div>
       <p class="text-lg font-medium text-neutral-900" data-cv-field="tagline">{profile.tagline}</p>
       {profile.paragraphs.map((p, i) => (
-        <p class="mt-3 text-neutral-700 leading-relaxed" data-cv-field={i === 0 ? "lead" : undefined}>{p}</p>
+        <p class="mt-3 text-neutral-700 leading-relaxed" data-cv-field={i === 0 ? "lead" : i === 1 ? "second" : undefined}>{p}</p>
       ))}
     </div>
   </div>
