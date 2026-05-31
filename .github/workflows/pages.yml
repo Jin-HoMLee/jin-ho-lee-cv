@@ -119,6 +119,8 @@ jobs:
             grep -q 'data-theme-toggle' "$page" || (echo "Theme toggle missing in $page" && exit 1)
             grep -q 'data-code-hero' "$page" || (echo "CodeHero missing in $page" && exit 1)
             grep -q 'data-stat-band' "$page" || (echo "StatBand missing in $page" && exit 1)
+            grep -q 'data-count-to' "$page" || (echo "StatBand counter tiles missing in $page" && exit 1)
+            grep -q 'role="tab"' "$page" || (echo "CodeHero tab controls missing in $page" && exit 1)
             grep -q 'profile.yaml' "$page" || (echo "CodeHero YAML tab missing in $page" && exit 1)
           done
 
