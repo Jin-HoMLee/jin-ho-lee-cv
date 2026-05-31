@@ -16,12 +16,12 @@ const labels: Record<AuthorshipType, { en: string; de: string }> = {
   middle:        { en: "Co-author",            de: "Co-Autor" },
 };
 
-const colors: Record<AuthorshipType, string> = {
-  first:         "#1f3a68",
-  shared:        "#3d5a8a",
-  corresponding: "#5b7aac",
-  last:          "#7a99cd",
-  middle:        "#b8c7df",
+const colorVars: Record<AuthorshipType, string> = {
+  first:         "--chart-1",
+  shared:        "--chart-2",
+  corresponding: "--chart-3",
+  last:          "--chart-4",
+  middle:        "--chart-5",
 };
 
 const order: AuthorshipType[] = ["first", "shared", "corresponding", "last", "middle"];
@@ -51,7 +51,7 @@ function computeArcs(slices: { key: AuthorshipType; count: number }[], total: nu
     const d = slices.length === 1
       ? "M 0 -1 A 1 1 0 1 1 0 1 A 1 1 0 1 1 0 -1 Z"
       : `M 0 0 L ${x1} ${y1} A 1 1 0 ${large} 1 ${x2} ${y2} Z`;
-    return { d, color: colors[s.key], label: labels[s.key][lang], count: s.count };
+    return { d, varName: colorVars[s.key], label: labels[s.key][lang], count: s.count };
   });
 }
 
@@ -68,7 +68,7 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
     {arcs.map((arc) => (
       <path
         d={arc.d}
-        fill={arc.color}
+        style={`fill: var(${arc.varName})`}
         data-label={arc.label}
         data-count={arc.count}
         data-pct={((arc.count / total) * 100).toFixed(1)}
@@ -76,19 +76,20 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
       />
     ))}
   </svg>
-  <ul class="space-y-1 text-sm text-neutral-700">
+  <ul class="space-y-1 text-sm text-[var(--muted)]">
     {arcs.map((arc) => (
       <li class="flex items-center gap-2">
-        <span class="inline-block h-3 w-3 shrink-0" style={`background:${arc.color}`} />
+        <span class="inline-block h-3 w-3 shrink-0" style={`background: var(${arc.varName})`} />
         <span>{arc.label}: <span class="font-medium">{arc.count}</span></span>
       </li>
     ))}
-    <li class="pt-1 text-xs text-neutral-500">
+    <li class="pt-1 text-xs text-[var(--faint)]">
       Σ {total} {totalLabel}
     </li>
   </ul>
   <div
-    class="pub-tooltip pointer-events-none absolute hidden rounded bg-neutral-900 px-2 py-1 text-xs text-white shadow-lg"
+    class="pub-tooltip pointer-events-none absolute hidden rounded px-2 py-1 text-xs shadow-lg"
+    style="background: var(--text); color: var(--bg)"
     role="status"
     aria-live="polite"
   ></div>
