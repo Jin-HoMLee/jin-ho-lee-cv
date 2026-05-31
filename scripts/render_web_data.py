@@ -61,13 +61,14 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
 
 
 def render_web_data(*, content_dir: Path = CONTENT_DIR, output_dir: Path = OUTPUT_DIR) -> None:
-    """Render content.{en,de}.json into output_dir.
+    """Render content.{en,de}.json and content.{en,de}.variants.json into output_dir.
 
     `private_path` is HARD-CODED to None — the web site must never see PII.
     Tests assert this contract.
     """
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    # Render bridge JSON
     for lang in LANGS:
         tree = load_content(content_dir, private_path=None, lang=lang)
         resolved = resolve_langstrings(tree, lang=lang)
@@ -75,6 +76,30 @@ def render_web_data(*, content_dir: Path = CONTENT_DIR, output_dir: Path = OUTPU
         out_path = output_dir / f"content.{lang}.json"
         out_path.write_text(
             json.dumps(jsonable, indent=2, sort_keys=False, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+        try:
+            display = out_path.relative_to(REPO_ROOT)
+        except ValueError:
+            display = out_path
+        print(f"wrote {display}")
+
+    # Render variants metadata
+    for lang in LANGS:
+        variants_dict = {}
+        bridge_tree = load_content(content_dir, private_path=None, lang=lang, target="bridge")
+        bridge_resolved = resolve_langstrings(bridge_tree, lang=lang)
+        
+        for target in ["comp-bio", "ds-ml"]:
+            variant_tree = load_content(content_dir, private_path=None, lang=lang, target=target)
+            variant_resolved = resolve_langstrings(variant_tree, lang=lang)
+            overrides = _extract_overrides(bridge_resolved, variant_resolved)
+            variants_dict[target] = overrides
+        
+        jsonable_variants = _to_jsonable(variants_dict)
+        out_path = output_dir / f"content.{lang}.variants.json"
+        out_path.write_text(
+            json.dumps(jsonable_variants, indent=2, sort_keys=False, ensure_ascii=False) + "\n",
             encoding="utf-8",
         )
         try:
