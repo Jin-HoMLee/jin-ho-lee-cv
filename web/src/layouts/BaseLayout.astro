@@ -78,6 +78,7 @@ const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;
         src="//gc.zgo.at/count.js"
       ></script>
     )}
+    <noscript><style>[data-reveal]{opacity:1 !important;transform:none !important;}</style></noscript>
   </head>
   <body class="min-h-screen bg-[var(--bg)] text-[var(--text)]">
     <slot name="header" />
@@ -90,5 +91,19 @@ const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;
         <a class="underline hover:text-[var(--text)]" href="https://github.com/Jin-HoMLee/jin-ho-lee-cv">Source on GitHub</a>
       </p>
     </footer>
+    <script>
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const els = document.querySelectorAll("[data-reveal]");
+      if (reduce || !("IntersectionObserver" in window)) {
+        els.forEach((e) => e.classList.add("revealed"));
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) { e.target.classList.add("revealed"); io.unobserve(e.target); }
+          }
+        }, { rootMargin: "0px 0px -8% 0px" });
+        els.forEach((e) => io.observe(e));
+      }
+    </script>
   </body>
 </html>
