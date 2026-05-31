@@ -71,20 +71,20 @@ export const { getStaticPaths, GET } = await OGImageRoute({
     ]
       .filter(Boolean)
       .join("\n"),
-    bgGradient: [[244, 247, 251]],
-    border: { color: [31, 58, 104], width: 8, side: "inline-start" },
+    bgGradient: [[10, 12, 18], [12, 24, 38]],
+    border: { color: [45, 212, 191], width: 8, side: "inline-start" },
     padding: 60,
     font: {
       title: {
         size: 56,
-        color: [31, 58, 104],
+        color: [232, 237, 244],
         weight: "Bold",
         families: ["IBM Plex Sans", "Inter", "Helvetica", "Arial"],
         lineHeight: 1.15,
       },
       description: {
         size: 22,
-        color: [68, 68, 68],
+        color: [159, 176, 195],
         families: ["IBM Plex Sans", "Inter", "Helvetica", "Arial"],
         lineHeight: 1.4,
       },
