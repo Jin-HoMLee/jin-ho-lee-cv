@@ -4,38 +4,121 @@
 @import "@fontsource/ibm-plex-sans/500.css";
 @import "@fontsource/ibm-plex-sans/600.css";
 @import "@fontsource/ibm-plex-sans/700.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
 
+/* ── Semantic theme tokens ─────────────────────────────────────────────
+   Dark is the default (:root). Light overrides under [data-theme="light"].
+   Components reference these via arbitrary utilities, e.g. bg-[var(--bg)].
+   Back-compat aliases (--color-accent / --color-sidebar-bg) keep any
+   un-migrated reference working during the sweep. */
 :root {
-  --color-accent: #1f3a68; /* lifted from pdf/styles.typ */
-  --color-sidebar-bg: #f4f7fb;
+  --bg: #0a0c12;
+  --surface: #0e1520;
+  --surface-2: #11161f;
+  --surface-border: #1c2636;
+  --text: #e8edf4;
+  --muted: #9fb0c3;
+  --faint: #5b6b80;
+  --accent: #2dd4bf;
+  --accent-hover: #5eead4;
+  --accent-contrast: #042b25;
+
+  /* editor / code syntax (GitHub-dark family) */
+  --code-bg: #0d1117;
+  --code-chrome: #161b22;
+  --code-gutter: #3a414c;
+  --code-key: #7ee787;
+  --code-string: #a5d6ff;
+  --code-number: #79c0ff;
+  --code-comment: #8b949e;
+  --code-punct: #ff7b72;
+
+  /* publications chart ramp (accent → muted) */
+  --chart-1: #2dd4bf;
+  --chart-2: #3fb9a8;
+  --chart-3: #4f9d9b;
+  --chart-4: #5b7aac;
+  --chart-5: #8aa0bd;
+
+  /* aliases (legacy names) */
+  --color-accent: var(--accent);
+  --color-sidebar-bg: var(--surface);
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #f4f7fb;
+  --surface-2: #eef2f7;
+  --surface-border: #e2e8f0;
+  --text: #0f172a;
+  --muted: #475569;
+  --faint: #64748b;
+  --accent: #0f766e;
+  --accent-hover: #115e59;
+  --accent-contrast: #ffffff;
+
+  --code-bg: #f6f8fa;
+  --code-chrome: #eaeef2;
+  --code-gutter: #afb8c1;
+  --code-key: #116329;
+  --code-string: #0a3069;
+  --code-number: #0550ae;
+  --code-comment: #6e7781;
+  --code-punct: #cf222e;
+
+  --chart-1: #0f766e;
+  --chart-2: #2f6f6a;
+  --chart-3: #3f6a8a;
+  --chart-4: #5b7aac;
+  --chart-5: #64748b;
+
+  color-scheme: light;
 }
 
 html {
   font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-}
-
-body {
-  @apply text-neutral-900 bg-white;
-}
-
-/* Smooth-scroll for project-ref badge anchors */
-html {
   scroll-behavior: smooth;
 }
 
-/* Allow sticky header offset for anchor jumps */
-[id] {
-  scroll-margin-top: 80px;
+body {
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* Section headings inherit the accent color from --color-accent. */
-section > h2 {
-  color: var(--color-accent);
+/* Sticky-header offset for anchor jumps */
+[id] { scroll-margin-top: 80px; }
+
+/* Mono utility (editor, micro-labels, dates, chips) */
+.font-mono-plex {
+  font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
 
-/* Experience entries: left border in accent for the timeline feel. */
-section#experience article {
-  border-left-color: var(--color-accent);
+/* Reusable section eyebrow heading */
+.eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* Scroll-reveal (Task 6). Hidden until .revealed is added by the island. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
 }
