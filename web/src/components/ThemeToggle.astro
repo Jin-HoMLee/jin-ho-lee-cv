@@ -2,6 +2,11 @@
 interface Props { class?: string }
 const { class: className = "" } = Astro.props;
 ---
+<!--
+  aria-pressed is server-rendered "false" unconditionally. The no-flash head script may
+  set data-theme="light" before this component's script runs, so the bundled sync() call
+  corrects aria-pressed on load — the server can't know the client-only theme state.
+-->
 <button
   type="button"
   data-theme-toggle
@@ -46,4 +51,15 @@ const { class: className = "" } = Astro.props;
       sync(next);
     });
   }
+
+  // Follow live OS theme changes — but ONLY while the user hasn't chosen a theme.
+  // The localStorage check lives inside the callback (not just at attach time) so that
+  // once the user clicks the toggle, their explicit choice wins permanently.
+  window
+    .matchMedia("(prefers-color-scheme: light)")
+    .addEventListener("change", (e) => {
+      let stored: string | null = null;
+      try { stored = localStorage.getItem("cvTheme"); } catch { /* private mode */ }
+      if (!stored) sync(e.matches ? "light" : "dark");
+    });
 </script>
