@@ -5,6 +5,16 @@
 **Parent spec:** [`2026-05-21-codified-cv-design.md`](./2026-05-21-codified-cv-design.md)  
 **Predecessor work:** Phase 8b — Targeted CV variants (merged 2026-05-30, PR #38, commit `b9f6895`)
 
+> **Revision (2026-05-31):** This spec was first drafted and partially executed assuming
+> (a) overrides live at the top level of the resolved tree, (b) `selected_projects` is a
+> web-rendered field, and (c) the switcher would be a React/Preact island. A review found all
+> three assumptions wrong: `headline` lives under `personal`, `tagline`/lead live under `profile`,
+> the website never reads `selected_projects` (projects render grouped by `category`), and the
+> site ships **no** client framework. Sections 3–12 below are the corrected design. The data
+> shape is now **text-only** (`headline` + `tagline` + `lead_paragraph`), extraction walks the
+> **nested** tree, and the switcher is a **dependency-free vanilla-JS Astro island** whose data is
+> **inlined at build time** (no runtime fetch).
+
 ## 1. Context — third of a three-part arc
 
 8a defined positioning; 8b made variants exist at the data layer (backend); 8c wires the interactive experience on the website.
@@ -15,372 +25,223 @@
 | 8b | Targeted CV variants (comp-bio vs ds-ml from one source) | schema + loader + offline renderers + CI | ✅ Done |
 | **8c** | **Visual showcase refresh: client-side target switcher** | **web + render_web_data.py + Pages CI** | **this spec** |
 
-8c keeps the site rendering bridge (remains SEO-canonical, sitemap-canonical, schema.org-canonical), but adds a **client-side hydrated island** — the TargetSwitcher component — that lets visitors instantly switch between variants *without a page reload*. Users see the exact same page, but positioned for their audience.
+8c keeps the site rendering bridge (remains SEO-canonical, sitemap-canonical, schema.org-canonical), but adds a **client-side island** — the TargetSwitcher component — that lets visitors instantly switch between variants *without a page reload*. Users see the exact same page, but positioned for their audience.
 
 ## 2. Problem
 
 Phase 8b shipped the variants but left them invisible on the web:
 - The Astro site renders the bridge variant only
-- A computational-biology visitor sees "Data Science · Machine Learning" as the headline and the DS project list
+- A computational-biology visitor sees "Bioinformatics · Data Science" as the headline and the bridge tagline/intro
 - There is no way for them to see the same CV re-positioned for their market without manually requesting a different PDF
 
-The variants exist (buildable as PDFs, in plain-text output), but the website does not expose them. This defeats the UX goal: *show one person, three angles, chooseable*.
+The variants exist (buildable as PDFs, in plain-text output), but the website does not expose them. This defeats the UX goal: *show one person, multiple angles, chooseable*.
 
 ## 3. Goal
 
-From the bridge website, enable a visitor to **instantly switch between comp-bio and ds-ml variants** (and back to bridge) without reloading the page. All variant switching happens in the browser; no server request except for the variants metadata JSON (lazy-loaded on first switch).
+From the bridge website, enable a visitor to **instantly switch between comp-bio and ds-ml positioning** (and back to bridge) without reloading the page. All switching happens in the browser by swapping the text of three already-rendered fields.
 
-- **Day-one deliverable:** A visible, intuitive target-switcher UI component that updates the CV in-place.
-- The **bridge variant remains canonical** for SEO (sitemap, OG meta, schema.org `Person` all point to bridge).
-- Variant preference is **optionally persisted** to `localStorage` so repeat visitors see their chosen target on return.
+- **Day-one deliverable:** A visible, intuitive target-switcher UI that updates the CV's positioning in-place.
+- **What varies on the web (text-only):** `headline` (sticky header) · `tagline` (profile intro) · lead paragraph (`profile.paragraphs[0]`). These are the three positioning fields the page actually renders and the first thing a hiring manager reads.
+- **What does *not* vary on the web:** project ordering. The site renders **all** projects grouped by `category` and never consumes `selected_projects`; per-target project featuring is explicitly out of scope for 8c (a possible later "showcase" task). `selected_projects` remains a PDF/plain-text concept only.
+- The **bridge variant remains canonical** for SEO: the SSG-rendered HTML, `<title>`, `<meta description>`, OG/Twitter tags, `<link rel="canonical">`, sitemap, and schema.org `Person` all stay bridge. The switch mutates only **visible body text**, never `<head>` metadata.
+- Variant preference is **persisted** to `localStorage` and auto-applied on return visits.
 - **Zero impact on PDFs, JSON Resume, JSON-LD, or plain-text.** Those renderers continue to consume the `--target` flag directly.
 - **Sitemap stays at 22 URLs** (unchanged); only the in-memory display varies.
 
-## 4. Data shape — Approach 2: Separate variants metadata
+## 4. Data shape — lean, text-only overrides
 
-The existing `render_web_data.py` outputs two files per language:
+`render_web_data.py` outputs, per language, the existing bridge tree plus a small variants file containing **only the fields that differ and that the web renders**:
 
 | File | Contains | Usage |
 |---|---|---|
-| `web/src/data/content.{en,de}.json` | Full bridge tree, resolved | Static Astro build; page renders at build-time |
-| **`web/src/data/content.{en,de}.variants.json`** | **Overrides only** | **Loaded by TargetSwitcher on first switch** |
+| `web/src/data/content.{en,de}.json` | Full bridge tree, resolved | Imported at build time; page renders bridge statically |
+| **`web/src/data/content.{en,de}.variants.json`** | **Text overrides only** | **Imported at build time by the page, inlined into the switcher** |
 
 **Shape of `content.en.variants.json`:**
 ```json
 {
   "comp-bio": {
     "headline": "Computational Biology · Cancer Genomics",
-    "tagline": "Bioinformatician with a decade in cancer genomics …",
-    "lead_paragraph": "Specializing in cancer genomics, I have spent a decade …",
-    "selected_projects": ["L1", "L2", "L5"]
+    "tagline": "Bioinformatician with a decade in cancer genomics — …",
+    "lead_paragraph": "I build reproducible, production-grade pipelines for cancer genomics. …"
   },
   "ds-ml": {
     "headline": "Data Science · Machine Learning",
-    "tagline": "Production-focused data scientist shipping ML on GCP …",
-    "lead_paragraph": "I specialize in building and deploying machine-learning …",
-    "selected_projects": ["C1", "D1", "D2"]
+    "tagline": "Data scientist who ships production ML on GCP — …",
+    "lead_paragraph": "I build and ship production machine-learning systems on Google Cloud. …"
   }
 }
 ```
 
-Each target object contains **only the fields that vary** from bridge:
-- `headline`
-- `tagline`
-- `lead_paragraph` (replaces the first element of `paragraphs` array)
-- `selected_projects` (array of project IDs in desired order)
+Each target object contains **only** the three text fields, and only when they differ from bridge:
+- `headline` — sourced from the resolved tree's `personal.headline`
+- `tagline` — from `profile.tagline`
+- `lead_paragraph` — from `profile.paragraphs[0]` (the lead; `paragraphs[1]`, the shared industry-proof paragraph, never varies and is never emitted)
 
-The variant JSON does **not** include bridge values. Merging is additive: bridge + variant overrides = display data.
+The variant JSON does **not** include bridge values and does **not** include `selected_projects`. Merging is additive: bridge (rendered at build time) + variant text overrides = displayed positioning.
 
 ### 4.1 Why this shape
 
-- **Bridge stays lean:** No bloat in the main `content.json`; users with no interest in variants never fetch the variants file.
-- **Clear audit trail:** By storing only overrides, it is immediately obvious *what* varies per target.
-- **Lazy loading:** The variants file is fetched only on first target switch, not on every page load.
-- **Language-scoped:** Each language has its own variants file (parallel to bridge structure), ensuring EN/DE parity is enforced by schema + validation.
+- **Tiny payload (~300 bytes/lang):** Three short strings × two targets. Cheap to inline directly into the page — no separate network request, no flash-of-bridge while an async fetch resolves.
+- **Clear audit trail:** Storing only the overrides makes it obvious *what* varies per target.
+- **Web-truthful:** It contains exactly the fields the website renders, nothing it ignores. (The earlier draft emitted only `selected_projects` — the one field the web never displays — and dropped all three rendered fields; this shape is the corrective.)
+- **Language-scoped + parity-checked:** Each language has its own file; EN/DE parity is enforced by tests (§8).
 
-## 5. Implementation — Three components
+## 5. Implementation
 
-### 5.1 Python: expand `render_web_data.py`
+### 5.1 Python: `_extract_overrides` walks the nested tree
 
 **File:** `scripts/render_web_data.py`
 
-**Today's behavior (unchanged for bridge):**
-```python
-for lang in LANGS:
-    tree = load_content(content_dir, private_path=None, lang=lang)  # target="bridge" by default
-    resolved = resolve_langstrings(tree, lang=lang)
-    ...write web/src/data/content.{lang}.json...
-```
+`render_web_data()` keeps its existing bridge loop unchanged, then adds a variants loop. The helper compares the **resolved nested trees** of bridge and a variant and pulls the three positioning strings from their real locations:
 
-**New: render variants metadata**
-```python
-for lang in LANGS:
-    # Load each variant
-    variants_dict = {}
-    for target in ["comp-bio", "ds-ml"]:
-        variant_tree = load_content(content_dir, private_path=None, lang=lang, target=target)
-        variant_resolved = resolve_langstrings(variant_tree, lang=lang)
-        
-        # Bridge for comparison
-        bridge_tree = load_content(content_dir, private_path=None, lang=lang, target="bridge")
-        bridge_resolved = resolve_langstrings(bridge_tree, lang=lang)
-        
-        # Extract only changed fields
-        overrides = _extract_overrides(bridge_resolved, variant_resolved)
-        variants_dict[target] = overrides
-    
-    # Write variants metadata
-    out_path = OUTPUT_DIR / f"content.{lang}.variants.json"
-    out_path.write_text(
-        json.dumps(variants_dict, indent=2, sort_keys=False, ensure_ascii=False) + "\n",
-        encoding="utf-8",
-    )
-    print(f"wrote {out_path}")
-```
-
-**Helper: `_extract_overrides(bridge, variant) -> dict`**
 ```python
 def _extract_overrides(bridge: dict, variant: dict) -> dict:
-    """Return only the fields that differ between bridge and variant."""
-    overrides = {}
-    for key in ["headline", "tagline", "lead_paragraph", "selected_projects"]:
-        if bridge.get(key) != variant.get(key):
-            overrides[key] = variant[key]
+    """Return the web-rendered positioning fields that differ from bridge.
+
+    Reads from the nested resolved tree:
+      headline       <- personal.headline
+      tagline        <- profile.tagline
+      lead_paragraph <- profile.paragraphs[0]
+
+    Only includes a key when the variant value differs from bridge.
+    `selected_projects` is intentionally excluded — the website renders
+    projects grouped by category and never consumes it.
+    """
+    overrides: dict[str, str] = {}
+
+    b_headline = bridge.get("personal", {}).get("headline")
+    v_headline = variant.get("personal", {}).get("headline")
+    if v_headline is not None and v_headline != b_headline:
+        overrides["headline"] = v_headline
+
+    b_tagline = bridge.get("profile", {}).get("tagline")
+    v_tagline = variant.get("profile", {}).get("tagline")
+    if v_tagline is not None and v_tagline != b_tagline:
+        overrides["tagline"] = v_tagline
+
+    b_paras = bridge.get("profile", {}).get("paragraphs") or []
+    v_paras = variant.get("profile", {}).get("paragraphs") or []
+    b_lead = b_paras[0] if b_paras else None
+    v_lead = v_paras[0] if v_paras else None
+    if v_lead is not None and v_lead != b_lead:
+        overrides["lead_paragraph"] = v_lead
+
     return overrides
 ```
 
-**Contract:** The function must be fast and must never include bridge values in the output. All assertions should be in validation (see section 8).
+The variants loop loads each target with `load_content(..., target=…)`, resolves langstrings, extracts overrides against the resolved bridge, and writes `content.{lang}.variants.json`. Output is fed through `_to_jsonable` for consistency (the three values are plain strings, so this is a no-op safeguard).
 
-### 5.2 TypeScript: TargetSwitcher hydrated island
+**Contract:** never emit bridge values; never emit `selected_projects`; emit a key only when it genuinely differs.
 
-**File:** `web/src/components/TargetSwitcher.tsx` (new)
+### 5.2 Vanilla-JS TargetSwitcher (no framework)
 
-A **hydrated Astro component** (client-side React/Preact/Svelte, TBD by existing web stack choice).
+**File:** `web/src/components/TargetSwitcher.astro` (new)
 
-**Pseudo-code (React example):**
-```typescript
-import { useEffect, useState, useRef } from "react";
+The site ships **no** client framework (`web/package.json` has only Astro + Tailwind + sitemap + OG canvas). Adding React/Preact for one widget is unjustified. Astro processes and bundles `<script>` tags in `.astro` components out of the box (already used by `PublicationsChart.astro`), so the switcher is a plain component: markup + a bundled module script that mutates the DOM.
 
-interface Variant {
-  headline?: string;
-  tagline?: string;
-  lead_paragraph?: string;
-  selected_projects?: string[];
-}
+**Data delivery — inline, not fetch.** The parent page imports the variants JSON at build time (mirroring how it already imports `content.{lang}.json`) and passes it to `<TargetSwitcher>`. The component embeds it as a `<script type="application/json">` block. The client script reads that block — **no `fetch`, no public-dir asset, no 404 surface**. A missing/invalid variants file fails the Astro build (import error), which is stronger than a runtime check.
 
-interface VariantsMap {
-  [target: string]: Variant;
-}
+**Component responsibilities:**
+- Render a labelled segmented control (`role="group"`, `aria-label`) with three buttons: **Default** (`bridge`), **Comp Bio** (`comp-bio`), **DS · ML** (`ds-ml`), each with `aria-pressed`.
+- On load: snapshot the current (bridge) text of every `[data-cv-field]` element so "Default" can restore exactly; read `localStorage["cvTargetPreference"]`; if it names a non-bridge target, apply it.
+- On click: if `bridge`, restore snapshots; else read the inlined variants object and set `textContent` on each matching `[data-cv-field]` element for the keys present (`headline`, `tagline`, `lead`). Update `aria-pressed`, persist the choice.
+- Pure progressive enhancement: with JS disabled, the page is the fully-rendered bridge CV and the control simply does nothing (or is hidden via a `no-js`/`js` class toggle).
 
-export default function TargetSwitcher({ lang }: { lang: "en" | "de" }) {
-  const [currentTarget, setCurrentTarget] = useState<string>("bridge");
-  const variantsRef = useRef<VariantsMap | null>(null);
+**DOM hooks (added to existing components):**
+- `Header.astro` — the headline `<p>` gains `data-cv-field="headline"`.
+- `ProfileSection.astro` — the tagline `<p>` gains `data-cv-field="tagline"`; the **first** rendered paragraph gains `data-cv-field="lead"`.
 
-  // On mount, check localStorage for saved preference
-  useEffect(() => {
-    const saved = localStorage.getItem("cvTargetPreference");
-    if (saved && ["bridge", "comp-bio", "ds-ml"].includes(saved)) {
-      setCurrentTarget(saved);
-      applyVariant(saved);
-    }
-  }, []);
+Marking the swap targets with data attributes decouples them from the switcher's own location, so placement is movable without touching the swap logic.
 
-  // Lazy-load variants JSON on first switch away from bridge
-  const ensureVariantsLoaded = async (): Promise<VariantsMap> => {
-    if (variantsRef.current) return variantsRef.current;
-    const resp = await fetch(`/data/content.${lang}.variants.json`);
-    if (!resp.ok) throw new Error("Failed to load variants");
-    variantsRef.current = await resp.json();
-    return variantsRef.current;
-  };
+### 5.3 Wiring
 
-  // Apply variant overrides to global store
-  const applyVariant = async (target: string) => {
-    if (target === "bridge") {
-      // Reset to bridge (already rendered at build time, no action needed)
-      store.reset();
-    } else {
-      const variants = await ensureVariantsLoaded();
-      const overrides = variants[target];
-      if (!overrides) throw new Error(`Unknown target: ${target}`);
-      store.applyOverrides(overrides);
-    }
-    setCurrentTarget(target);
-    localStorage.setItem("cvTargetPreference", target);
-  };
+**Files:** `web/src/pages/index.astro`, `web/src/pages/de/index.astro`
 
-  const targets = [
-    { id: "bridge", label: "Default" },
-    { id: "comp-bio", label: "Comp Bio" },
-    { id: "ds-ml", label: "DS / ML" },
-  ];
-
-  return (
-    <div className="target-switcher">
-      <p className="label">View as:</p>
-      <div className="button-group">
-        {targets.map(({ id, label }) => (
-          <button
-            key={id}
-            onClick={() => applyVariant(id)}
-            className={`target-btn ${currentTarget === id ? "active" : ""}`}
-            aria-pressed={currentTarget === id}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-```
-
-**Key behaviors:**
-- Defaults to bridge (zero-overhead on first visit)
-- Loads variants JSON lazily (only if user clicks a variant button)
-- Caches loaded variants in memory (no re-fetch on toggle)
-- Persists choice to `localStorage` under key `cvTargetPreference`
-- On return visit, auto-applies saved preference (but does not block page render)
-
-**Placement:** Top of the CV card (above headline) or in a dedicated bar — UX TBD in the web styling phase. Should be visible but not intrusive.
-
-**Store integration:** Assumes the Astro site uses a global data store (likely Nanostores or Svelte stores). The `store.applyOverrides()` method merges variant overrides into the current data tree and triggers reactivity. If no store exists, this may need scaffolding.
-
-### 5.3 Astro layout: Wire the island
-
-**File:** `web/src/layouts/BaseLayout.astro` (or relevant page template)
-
-Insert the TargetSwitcher component as a **client:load island** (loads and hydrates on page load):
+Each page already imports `content.{lang}.json`. Add a sibling import of `content.{lang}.variants.json` and render the switcher at the **top of the profile section** (right above the tagline, where positioning lives):
 
 ```astro
----
-import TargetSwitcher from "../components/TargetSwitcher.tsx";
-const lang = Astro.props.lang || "en";
----
-
-<html lang={lang}>
-  <head>...</head>
-  <body>
-    <main>
-      <TargetSwitcher client:load lang={lang} />
-      <!-- Rest of CV content -->
-    </main>
-  </body>
-</html>
+import variants from "../data/content.en.variants.json";
+...
+<TargetSwitcher variants={variants} lang="en" />
+<ProfileSection ... />
 ```
 
-**Why `client:load`:** The switcher must be ready immediately (users may click before the page fully loads). Alternatives (`client:idle`, `client:visible`) would delay the first interaction.
+Placement is a low-risk visual choice (the data-attribute hooks make it movable); top-of-profile is the default and can be tuned later. The headline swap still happens in the sticky header via its `data-cv-field` hook regardless of where the control sits.
 
-## 6. Rendering & store logic (existing patterns)
+## 6. SEO / metadata invariance
 
-The site already consumes `content.en.json` and `content.de.json`. The **store** (whatever reactive pattern Astro uses) likely reads these and updates the DOM.
+The switch mutates only visible body text. It must **not** touch `<head>`:
+- `BaseLayout.astro` builds `<title>`, `<meta name="description">`, OG/Twitter title+description, and `<link rel="canonical">` from the **build-time bridge** `personal.headline` / `profile.tagline`. These stay bridge for every visitor and every crawler.
+- OG images (`/og/...`) remain bridge. schema.org `Person` (`person.jsonld`) remains bridge. `robots.txt`, sitemap unchanged.
 
-**No changes to existing rendering code.** The TargetSwitcher simply calls `store.applyOverrides(overrides)`, which shallow-merges variant fields into the store. All downstream components read from the store; they stay agnostic to whether data is bridge or variant.
+This preserves the single-canonical-identity principle 8b established for machine formats.
 
-**Example store method (pseudo-code):**
-```typescript
-export const contentStore = atom({
-  personal: { ... },
-  profile: { ... },
-  // ...
-});
-
-export function applyOverrides(overrides: Record<string, any>) {
-  contentStore.set(prev => ({
-    ...prev,
-    ...overrides,
-    // If lead_paragraph is in overrides, also update paragraphs[0]
-    profile: prev.profile 
-      ? { 
-          ...prev.profile, 
-          ...(overrides.lead_paragraph ? { paragraphs: [overrides.lead_paragraph, ...prev.profile.paragraphs.slice(1)] } : {})
-        }
-      : prev.profile,
-  }));
-}
-```
-
-## 7. CI/Pages workflow — minimal changes
+## 7. CI / Pages workflow
 
 **File:** `.github/workflows/pages.yml`
 
-The existing "Render web JSON" step already calls `python -m scripts.render_web_data`. The expanded script now produces both `content.{en,de}.json` and `content.{en,de}.variants.json`. **No workflow change needed** — the script's invocation stays identical.
+The "Render content JSON" step already runs `python -m scripts.render_web_data`, which now also emits the two variants files. Because the pages import those files, a missing/invalid variants file already fails `astro build`. Add one lightweight assertion to the existing "Smoke-check build outputs" step to confirm the switcher actually reached the built HTML:
 
-**New smoke-test (in pages.yml "Smoke-check build outputs"):**
 ```bash
-# Verify variants JSON files exist and are valid
-test -f web/dist/data/content.en.variants.json
-test -f web/dist/data/content.de.variants.json
-jq empty web/dist/data/content.en.variants.json || (echo "Invalid EN variants JSON" && exit 1)
-jq empty web/dist/data/content.de.variants.json || (echo "Invalid DE variants JSON" && exit 1)
+# Target switcher present in built pages
+grep -q 'data-cv-switcher' web/dist/index.html || (echo "switcher missing in EN" && exit 1)
+grep -q 'data-cv-switcher' web/dist/de/index.html || (echo "switcher missing in DE" && exit 1)
 ```
 
-**Sitemap and SEO:** Unchanged. Sitemap still lists 22 URLs (bridge only); OG images, robots.txt, schema.org `Person` all remain bridge. Variant switching is **in-memory display only**, not a navigational or indexable change.
+The sitemap smoke-check stays at **22 URLs** (no new routes). Release artifacts (6 PDFs + machine formats) are unchanged.
 
-**Release artifacts:** Unchanged. CI releases the 6 PDFs (with `--target` variants) + machine formats (bridge). The web deploy is separate and the variants JSON is part of the built site (in `web/dist/data/`).
+## 8. Validation & tests
 
-## 8. Schema & validation
+**`schema/cv.schema.json` / `scripts/validate.py`:** no changes — variant structure and EN/DE parity are already enforced by 8b at the content layer.
 
-**`schema/cv.schema.json`:** No changes. Variants are already defined in 8b; this phase only consumes them.
+**`tests/test_render_web_data_variants.py`** is rewritten to assert *positioning correctness*, not just structure. The original four tests passed against broken output because none checked that the rendered fields were present. The corrected suite asserts, after running the renderer into a `tmp_path`:
 
-**`scripts/validate.py`:** No changes. Validation already enforces variant structure and EN/DE parity.
+1. **Files valid:** both `content.{en,de}.variants.json` parse to dicts keyed exactly `{comp-bio, ds-ml}`.
+2. **Required fields present:** every target in every language has all three keys `headline`, `tagline`, `lead_paragraph`, each a non-empty string. *(This is the regression guard the bug slipped through.)*
+3. **No bridge leak:** each override value differs from the corresponding bridge value (`personal.headline`, `profile.tagline`, `profile.paragraphs[0]`).
+4. **`selected_projects` absent:** no target object contains `selected_projects` (or any key beyond the three).
+5. **EN/DE parity:** identical target keys and identical override-key sets across languages.
+6. **`_extract_overrides` unit tests:** identical trees → `{}`; a tree differing only in `personal.headline` → `{"headline": …}`; a difference in `paragraphs[1]` only → `{}` (shared paragraph never emitted); top-level `selected_projects` difference → ignored.
 
-**New validation in `render_web_data.py`:** Add runtime checks:
-- Each target in variants JSON must be one of the known targets (`comp-bio`, `ds-ml`)
-- EN and DE variants must have identical keys (if `comp-bio.headline` exists in EN, it must exist in DE)
-- `selected_projects` arrays must contain only valid project IDs
-- Override values must **differ** from bridge (catch accidental no-ops)
-
-**New test:** `tests/test_render_web_data_variants.py`
-```python
-def test_variants_json_valid():
-    """Verify content.{en,de}.variants.json are valid JSON."""
-    ...
-
-def test_variants_en_de_parity():
-    """Verify EN and DE variant keys match."""
-    en_variants = json.load(open("web/src/data/content.en.variants.json"))
-    de_variants = json.load(open("web/src/data/content.de.variants.json"))
-    assert en_variants.keys() == de_variants.keys()
-    for target in en_variants:
-        assert en_variants[target].keys() == de_variants[target].keys()
-
-def test_variants_differ_from_bridge():
-    """Verify variant values actually differ from bridge."""
-    bridge_en = json.load(open("web/src/data/content.en.json"))
-    variants_en = json.load(open("web/src/data/content.en.variants.json"))
-    for target, overrides in variants_en.items():
-        for key, value in overrides.items():
-            assert value != bridge_en.get(key), \
-                f"{target}.{key} == bridge.{key}; override should differ"
-
-def test_variants_projects_valid():
-    """Verify project IDs in selected_projects are resolvable."""
-    for lang in ["en", "de"]:
-        variants = json.load(open(f"web/src/data/content.{lang}.variants.json"))
-        for target, overrides in variants.items():
-            if "selected_projects" in overrides:
-                for proj_id in overrides["selected_projects"]:
-                    assert (Path("content/projects") / f"{proj_id}.{lang}.yaml").exists(), \
-                        f"Project {proj_id} not found"
-```
+Tests render into a temporary directory (not the gitignored working copy) so they are hermetic and CI-safe.
 
 ## 9. Non-goals
 
-- **Sitemap variants:** Do not add variant URLs to the sitemap. Bridge is the canonical URL.
-- **SEO per-variant:** The site is indexable only at bridge. Variants are a user preference display, not separate pages.
-- **PDF switcher:** PDFs are built with `--target`; no interactive component in the PDF itself.
-- **Server-side rendering per-variant:** No pre-built variant sites. All switching is client-side.
-- **Persistent variant storage beyond localStorage:** Do not add a server-side "remember my preference" feature in 8c. localStorage suffices.
+- **Project reordering / featuring on the web.** Projects stay grouped by category for all targets; `selected_projects` is not consumed by the site. (Possible later showcase task.)
+- **Sitemap/SEO per variant.** Bridge is the only indexable identity; no variant URLs, no per-variant OG, no `rel=canonical` juggling.
+- **New client framework.** Vanilla JS only.
+- **Runtime fetch / served data assets.** Variants are inlined at build time.
+- **`<head>` metadata switching.** Meta/OG/canonical stay bridge.
+- **Server-side preference storage.** `localStorage` only.
 
 ## 10. Success criteria
 
-- ✅ User can click "Comp Bio" and see headline + tagline + lead paragraph + project list update in-place.
-- ✅ Switching back to bridge or to DS/ML works instantly (no network latency on second click).
-- ✅ Preference persists across page reloads (localStorage).
-- ✅ Variants JSON files exist, are valid, and contain only override keys.
-- ✅ EN and DE variants have matching keys.
-- ✅ Sitemap still has 22 URLs (unchanged).
-- ✅ OG images, schema.org, robots.txt all remain bridge (unchanged).
-- ✅ Tests pass; no existing tests break.
+- ✅ Clicking **Comp Bio** updates the header headline, the profile tagline, and the lead paragraph in place; **DS · ML** likewise; **Default** restores bridge exactly.
+- ✅ Second and later switches are instant (data is inlined; no network at any point).
+- ✅ Preference persists across reloads (`localStorage`) and auto-applies on return.
+- ✅ `content.{en,de}.variants.json` contain exactly the three text keys per target, no bridge values, no `selected_projects`.
+- ✅ EN/DE variant key sets match.
+- ✅ `<title>`/`<meta>`/OG/canonical/sitemap/schema.org all remain bridge; sitemap still 22 URLs.
+- ✅ With JS disabled, the page is the complete bridge CV (graceful degradation).
+- ✅ `just validate && just test && just lint` green; `pnpm --dir web build` succeeds; no regressions.
 
-## 11. Dependencies & sequencing
+## 11. Resolved decisions
 
-**Blocks on:**
-- 8b must be complete (variants data layer + `load_content(target=…)` exists)
-- Web store/reactivity pattern must be clarified (how does TargetSwitcher signal updates?)
+The original spec's "open questions" are settled:
+1. **Store/reactivity:** none — vanilla DOM `textContent` swaps against `[data-cv-field]` hooks.
+2. **Framework:** vanilla JS; no dependency added.
+3. **UI placement:** segmented control at the top of the profile section (movable via data-attribute hooks).
+4. **localStorage:** auto-apply the saved preference on load.
+5. **JS-disabled visitors:** bridge CV renders fully server-side; the switcher is progressive enhancement.
 
-**Unblocks:**
-- None in the immediate roadmap. 8c is the final scheduled phase of the codified-CV project.
+## 12. Commits / branch
 
-## 12. Open questions for execution
+Branch `phase-8c-web-variants` (already created; three commits exist from the initial pass and are corrected in place rather than reverted). Remaining atomic commits:
 
-1. **Store implementation:** What reactivity library does the Astro site use (Nanostores, Svelte, plain Signals, etc.)? The TargetSwitcher needs to know how to trigger updates.
-2. **Component framework:** Which component framework is the site built in (React, Preact, Svelte)? The TypeScript pseudocode above assumes React.
-3. **UI placement & styling:** Where should the TargetSwitcher appear visually? A buttons bar at the top, a toggle in the header, a card sidebar?
-4. **localStorage behavior:** Should the preference auto-apply on page load (seamless return visit) or require the user to click again (explicit choice)?
-5. **Fallback for JS-disabled visitors:** Should there be a server-side content variant (graceful degradation)? Or is JS required for the feature?
+1. `fix(web-data): extract nested positioning overrides; drop selected_projects` — corrected `_extract_overrides` + rewritten/again-green `tests/test_render_web_data_variants.py` (TDD: failing assertions first).
+2. `feat(web): vanilla-JS target switcher island + data-cv-field hooks` — `TargetSwitcher.astro`, `Header.astro`/`ProfileSection.astro` hooks, page wiring.
+3. `ci(pages): assert target switcher present in built HTML` — `pages.yml` smoke-check.
+4. `docs: mark Phase 8c row in CLAUDE.md phasing table` — final task per repo convention.
 
----
-
-**Next step:** Execute phase 8c using subagent-driven development (see `docs/superpowers/plans/` template). Answer the open questions during the planning phase, then implement component-by-component with code-quality checkpoints.
+A final verification pass (`just validate && just test && just lint`, `pnpm --dir web build`, manual switch in `astro dev`) confirms the feature end-to-end; it commits nothing.
