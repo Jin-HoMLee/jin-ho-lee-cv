@@ -21,6 +21,7 @@ const data = contentEn as unknown as ContentData;
 ---
 <BaseLayout lang="en" data={data}>
   <Header slot="header" personal={data.personal} lang="en" />
+  <h1 class="sr-only">{data.personal.name.given} {data.personal.name.family}</h1>
   <CodeHero personal={data.personal} profile={data.profile} publications={data.publications} skills={data.skills} lang="en" />
   <StatBand data={data} lang="en" />
   <TargetSwitcher variants={variantsEn} lang="en" />
