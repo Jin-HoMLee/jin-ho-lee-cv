@@ -27,6 +27,7 @@ Eight phases (0–8), sequential. Each produces a usable artifact and gets its o
 | 7 | Content audit (bring CV up to date) | ✅ Done (merged 2026-05-29, PR #33, commit `b731222`) |
 | 8a | Sharpen positioning (Bioinformatics · Data Science) | ✅ Done (merged 2026-05-30, PR #36, commit `c3862f5`) |
 | 8b | Targeted CV variants (comp-bio · ds-ml from one source) | ✅ Done (merged 2026-05-30, PR #38, commit `b9f6895`) |
+| 8c | Web target switcher (client-side variant positioning) | 🚧 In review (branch `phase-8c-web-variants`) |
 
 ## Layout
 

@@ -1,0 +1,123 @@
+---
+// Client-side positioning switcher (Phase 8c).
+//
+// Lets a visitor re-position the CV for a target audience without a page reload.
+// Bridge is rendered at build time and stays SEO-canonical; this control swaps
+// only the visible text of already-rendered fields, marked in the DOM with
+// `data-cv-field`:
+//   headline -> Header.astro      (sticky header)
+//   tagline  -> ProfileSection    (profile intro lead-in)
+//   lead     -> ProfileSection    (first profile paragraph)
+//   second   -> ProfileSection    (second profile paragraph)
+//
+// Pure progressive enhancement: with JS off, the control stays hidden and the
+// page is the complete bridge CV. Variant text is inlined at build time via
+// `define:vars` — no runtime fetch, no served data asset.
+import type { Lang } from "../types/content";
+
+interface Variant {
+  headline?: string;
+  tagline?: string;
+  lead_paragraph?: string;
+  second_paragraph?: string;
+}
+
+interface Props {
+  variants: Record<string, Variant>;
+  lang: Lang;
+}
+
+const { variants, lang } = Astro.props as Props;
+
+const labels = {
+  en: { intro: "View as", bridge: "Default", "comp-bio": "Comp Bio", "ds-ml": "DS · ML" },
+  de: { intro: "Ansicht", bridge: "Standard", "comp-bio": "Comp Bio", "ds-ml": "DS · ML" },
+} as const;
+
+const t = labels[lang];
+const order = ["bridge", "comp-bio", "ds-ml"] as const;
+---
+<div
+  data-cv-switcher
+  role="group"
+  aria-label={t.intro}
+  class="hidden flex-wrap items-center gap-2 py-3 text-xs"
+>
+  <span class="font-semibold uppercase tracking-wider text-neutral-500">{t.intro}:</span>
+  <div class="flex flex-wrap gap-1">
+    {order.map((id) => (
+      <button
+        type="button"
+        data-cv-target={id}
+        aria-pressed={id === "bridge" ? "true" : "false"}
+        class="rounded-md border border-neutral-200 px-3 py-1.5 font-medium text-neutral-600 transition-colors hover:bg-neutral-100 aria-[pressed=true]:border-transparent aria-[pressed=true]:bg-[var(--color-accent)] aria-[pressed=true]:text-white aria-[pressed=true]:hover:bg-[var(--color-accent)]"
+      >
+        {t[id]}
+      </button>
+    ))}
+  </div>
+</div>
+
+<script is:inline define:vars={{ variants }}>
+  document.addEventListener("DOMContentLoaded", () => {
+    const root = document.querySelector("[data-cv-switcher]");
+    if (!root) return;
+
+    const buttons = Array.from(root.querySelectorAll("[data-cv-target]"));
+    // DOM field name -> key in the variants JSON.
+    const FIELDS = {
+      headline: "headline",
+      tagline: "tagline",
+      lead: "lead_paragraph",
+      second: "second_paragraph",
+    };
+    const STORAGE_KEY = "cvTargetPreference";
+    const VALID = new Set(["bridge", "comp-bio", "ds-ml"]);
+
+    // Snapshot the build-time bridge text so "Default" restores it exactly.
+    const bridge = {};
+    for (const field of Object.keys(FIELDS)) {
+      const el = document.querySelector(`[data-cv-field="${field}"]`);
+      if (el) bridge[field] = el.textContent;
+    }
+
+    function apply(target) {
+      const overrides = target === "bridge" ? null : variants[target];
+      for (const [field, jsonKey] of Object.entries(FIELDS)) {
+        const el = document.querySelector(`[data-cv-field="${field}"]`);
+        if (!el) continue;
+        const value = overrides && overrides[jsonKey] != null ? overrides[jsonKey] : bridge[field];
+        if (value != null) el.textContent = value;
+      }
+      for (const btn of buttons) {
+        btn.setAttribute("aria-pressed", String(btn.dataset.cvTarget === target));
+      }
+    }
+
+    for (const btn of buttons) {
+      btn.addEventListener("click", () => {
+        const target = btn.dataset.cvTarget;
+        apply(target);
+        try {
+          localStorage.setItem(STORAGE_KEY, target);
+        } catch {
+          /* storage may be unavailable (private mode); ignore */
+        }
+      });
+    }
+
+    // Restore a saved non-bridge preference BEFORE revealing the control, so a
+    // returning visitor never sees "Default" active for a frame (avoids FOUC).
+    let saved = null;
+    try {
+      saved = localStorage.getItem(STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
+    if (saved && VALID.has(saved) && saved !== "bridge") apply(saved);
+
+    // Reveal the control now that behaviour is wired (progressive enhancement).
+    root.classList.remove("hidden");
+    root.classList.add("flex");
+  });
+</script>

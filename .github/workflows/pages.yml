@@ -98,6 +98,22 @@ jobs:
           grep -q 'goatcounter' web/dist/index.html || (echo "Missing GoatCounter snippet — check PUBLIC_ANALYTICS_ENABLED env" && exit 1)
           # GSC verification tag — GSC_VERIFY secret must be set.
           grep -q 'google-site-verification' web/dist/index.html || (echo "Missing GSC tag — set GSC_VERIFY repo secret" && exit 1)
+          # Phase 8c: target switcher reached the built HTML, both langs
+          grep -q 'data-cv-switcher' web/dist/index.html || (echo "Target switcher missing in EN homepage" && exit 1)
+          grep -q 'data-cv-switcher' web/dist/de/index.html || (echo "Target switcher missing in DE homepage" && exit 1)
+          for page in web/dist/index.html web/dist/de/index.html; do
+            for field in headline tagline lead second; do
+              grep -q "data-cv-field=\"$field\"" "$page" || (echo "Missing data-cv-field=$field hook in $page" && exit 1)
+            done
+          done
+          # Variant text inlined for client-side swapping (EN + DE)
+          grep -q 'Computational Biology · Cancer Genomics' web/dist/index.html || (echo "comp-bio variant text not inlined (EN)" && exit 1)
+          grep -q 'Computational Biology · Krebsgenomik' web/dist/de/index.html || (echo "comp-bio variant text not inlined (DE)" && exit 1)
+          # Bridge stays SEO-canonical: variant strings must NOT leak into <head>.
+          # Split on </head> (robust to Astro's minified, multi-element lines) and
+          # fail if any variant string appears in the head segment. Both langs.
+          python3 -c "import sys; head=open('web/dist/index.html',encoding='utf-8').read().split('</head>',1)[0]; sys.exit('Variant positioning leaked into EN <head> — canonical must stay bridge' if 'Computational Biology' in head else 0)"
+          python3 -c "import sys; head=open('web/dist/de/index.html',encoding='utf-8').read().split('</head>',1)[0]; sys.exit('Variant positioning leaked into DE <head> — canonical must stay bridge' if 'Computational Biology' in head else 0)"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
