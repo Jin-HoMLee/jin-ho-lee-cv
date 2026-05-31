@@ -106,11 +106,8 @@ const order = ["bridge", "comp-bio", "ds-ml"] as const;
       });
     }
 
-    // Reveal the control now that behaviour is wired (progressive enhancement).
-    root.classList.remove("hidden");
-    root.classList.add("flex");
-
-    // Restore a saved non-bridge preference on return visits.
+    // Restore a saved non-bridge preference BEFORE revealing the control, so a
+    // returning visitor never sees "Default" active for a frame (avoids FOUC).
     let saved = null;
     try {
       saved = localStorage.getItem(STORAGE_KEY);
@@ -118,5 +115,9 @@ const order = ["bridge", "comp-bio", "ds-ml"] as const;
       /* ignore */
     }
     if (saved && VALID.has(saved) && saved !== "bridge") apply(saved);
+
+    // Reveal the control now that behaviour is wired (progressive enhancement).
+    root.classList.remove("hidden");
+    root.classList.add("flex");
   });
 </script>
