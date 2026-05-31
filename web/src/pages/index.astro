@@ -1,8 +1,10 @@
 ---
 import type { ContentData } from "../types/content";
 import contentEn from "../data/content.en.json";
+import variantsEn from "../data/content.en.variants.json";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
+import TargetSwitcher from "../components/TargetSwitcher.astro";
 import ProfileSection from "../components/ProfileSection.astro";
 import ExperienceSection from "../components/ExperienceSection.astro";
 import ProjectsSection from "../components/ProjectsSection.astro";
@@ -17,6 +19,7 @@ const data = contentEn as unknown as ContentData;
 ---
 <BaseLayout lang="en" data={data}>
   <Header slot="header" personal={data.personal} lang="en" />
+  <TargetSwitcher variants={variantsEn} lang="en" />
   <ProfileSection personal={data.personal} profile={data.profile} labels={data.labels} />
   <div class="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr]">
     <div>
