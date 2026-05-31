@@ -114,6 +114,15 @@ jobs:
           # fail if any variant string appears in the head segment. Both langs.
           python3 -c "import sys; head=open('web/dist/index.html',encoding='utf-8').read().split('</head>',1)[0]; sys.exit('Variant positioning leaked into EN <head> — canonical must stay bridge' if 'Computational Biology' in head else 0)"
           python3 -c "import sys; head=open('web/dist/de/index.html',encoding='utf-8').read().split('</head>',1)[0]; sys.exit('Variant positioning leaked into DE <head> — canonical must stay bridge' if 'Computational Biology' in head else 0)"
+          # Phase 9: redesign elements reached the built HTML, both langs
+          for page in web/dist/index.html web/dist/de/index.html; do
+            grep -q 'data-theme-toggle' "$page" || (echo "Theme toggle missing in $page" && exit 1)
+            grep -q 'data-code-hero' "$page" || (echo "CodeHero missing in $page" && exit 1)
+            grep -q 'data-stat-band' "$page" || (echo "StatBand missing in $page" && exit 1)
+            grep -q 'data-count-to' "$page" || (echo "StatBand counter tiles missing in $page" && exit 1)
+            grep -q 'role="tab"' "$page" || (echo "CodeHero tab controls missing in $page" && exit 1)
+            grep -q 'profile.yaml' "$page" || (echo "CodeHero YAML tab missing in $page" && exit 1)
+          done
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5

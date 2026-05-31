@@ -43,14 +43,14 @@ const order = ["bridge", "comp-bio", "ds-ml"] as const;
   aria-label={t.intro}
   class="hidden flex-wrap items-center gap-2 py-3 text-xs"
 >
-  <span class="font-semibold uppercase tracking-wider text-neutral-500">{t.intro}:</span>
+  <span class="font-semibold uppercase tracking-wider text-[var(--faint)]">{t.intro}:</span>
   <div class="flex flex-wrap gap-1">
     {order.map((id) => (
       <button
         type="button"
         data-cv-target={id}
         aria-pressed={id === "bridge" ? "true" : "false"}
-        class="rounded-md border border-neutral-200 px-3 py-1.5 font-medium text-neutral-600 transition-colors hover:bg-neutral-100 aria-[pressed=true]:border-transparent aria-[pressed=true]:bg-[var(--color-accent)] aria-[pressed=true]:text-white aria-[pressed=true]:hover:bg-[var(--color-accent)]"
+        class="rounded-md border border-[var(--surface-border)] px-3 py-1.5 font-medium text-[var(--muted)] transition-colors hover:bg-[var(--surface-2)] aria-[pressed=true]:border-transparent aria-[pressed=true]:bg-[var(--accent)] aria-[pressed=true]:text-[var(--accent-contrast)] aria-[pressed=true]:hover:bg-[var(--accent)]"
       >
         {t[id]}
       </button>
