@@ -99,10 +99,10 @@ const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[
     role="img"
     aria-label={ariaLabel}
   >
-    <line x1={chartLeft} y1={chartTop} x2={chartLeft} y2={chartBottom} stroke="#e5e5e5" stroke-width="0.5" />
-    <line x1={chartLeft} y1={chartBottom} x2={chartRight} y2={chartBottom} stroke="#e5e5e5" stroke-width="0.5" />
-    <path d={areaPath} fill="#1f3a68" fill-opacity="0.18" />
-    <path d={linePath} fill="none" stroke="#1f3a68" stroke-width="1.5" stroke-linejoin="miter" />
+    <line x1={chartLeft} y1={chartTop} x2={chartLeft} y2={chartBottom} style="stroke: var(--surface-border)" stroke-width="0.5" />
+    <line x1={chartLeft} y1={chartBottom} x2={chartRight} y2={chartBottom} style="stroke: var(--surface-border)" stroke-width="0.5" />
+    <path d={areaPath} style="fill: var(--accent)" fill-opacity="0.18" />
+    <path d={linePath} fill="none" style="stroke: var(--accent)" stroke-width="1.5" stroke-linejoin="miter" />
     {points.map((pt, i) => {
       const x = xScale(pt.year);
       const prevCum = i === 0 ? 0 : points[i - 1].cum;
@@ -124,17 +124,17 @@ const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[
       );
     })}
     {yTicks.map((v) => (
-      <text x={chartLeft - 5} y={yScale(v) + 4} text-anchor="end" font-size="11" fill="#525252">{v}</text>
+      <text x={chartLeft - 5} y={yScale(v) + 4} text-anchor="end" font-size="11" style="fill: var(--faint)">{v}</text>
     ))}
     {xTicks.map((y) => (
-      <text x={xScale(y)} y={chartBottom + 14} text-anchor="middle" font-size="11" fill="#525252">{y}</text>
+      <text x={xScale(y)} y={chartBottom + 14} text-anchor="middle" font-size="11" style="fill: var(--faint)">{y}</text>
     ))}
   </svg>
-  <figcaption class="mt-1 text-xs text-neutral-500">
+  <figcaption class="mt-1 text-xs text-[var(--faint)]">
     {captionLabel} · {total} {totalLabel}
   </figcaption>
   <div
-    class="pub-tooltip pointer-events-none absolute hidden rounded bg-neutral-900 px-2 py-1 text-xs text-white shadow-lg"
+    class="pub-tooltip pointer-events-none absolute hidden rounded bg-[var(--surface-border)] px-2 py-1 text-xs text-[var(--text)] shadow-lg"
     role="status"
     aria-live="polite"
   ></div>

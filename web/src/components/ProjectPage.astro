@@ -19,42 +19,42 @@ const backHref = lang === "en" ? `/#${project.id}` : `/de/#${project.id}`;
 ---
 <article class="mx-auto max-w-3xl">
   <nav class="mb-4 text-sm">
-    <a href={backHref} class="text-neutral-600 underline hover:text-neutral-900">{backLabel}</a>
+    <a href={backHref} class="text-[var(--muted)] underline hover:text-[var(--text)]">{backLabel}</a>
   </nav>
 
   <header class="mb-6">
-    <p class="font-mono text-xs text-neutral-500">{project.id}</p>
-    <h1 class="text-2xl font-semibold text-[#1f3a68] md:text-3xl">{project.title}</h1>
-    <p class="mt-2 text-sm text-neutral-600">
+    <p class="font-mono-plex text-xs text-[var(--faint)]">{project.id}</p>
+    <h1 class="text-2xl font-semibold text-[var(--text)] md:text-3xl">{project.title}</h1>
+    <p class="mt-2 text-sm text-[var(--muted)]">
       {project.role} · {formatPeriod(project.period, labels)}
     </p>
   </header>
 
-  <p class="mb-6 text-base text-neutral-800">{project.summary}</p>
+  <p class="mb-6 text-base text-[var(--text)]">{project.summary}</p>
 
   <section class="mb-6">
-    <h2 class="mb-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">{techLabel}</h2>
+    <h2 class="eyebrow mb-2">{techLabel}</h2>
     <p class="flex flex-wrap gap-1">
       {project.technologies.map((t) => (
-        <span class="rounded bg-neutral-100 px-2 py-0.5 text-xs text-neutral-700">{t}</span>
+        <span class="rounded bg-[var(--surface)] px-2 py-0.5 text-xs text-[var(--muted)]">{t}</span>
       ))}
     </p>
   </section>
 
   <section class="mb-6">
-    <h2 class="mb-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">{contribLabel}</h2>
-    <ul class="space-y-1 text-sm text-neutral-800">
+    <h2 class="eyebrow mb-2">{contribLabel}</h2>
+    <ul class="space-y-1 text-sm text-[var(--text)]">
       {project.contributions.map((c) => (
         <li class="flex gap-2">
-          <span aria-hidden="true" class="text-neutral-400">·</span>
+          <span aria-hidden="true" class="text-[var(--faint)]">·</span>
           <span>{c}</span>
         </li>
       ))}
     </ul>
   </section>
 
-  <section class="mb-6 rounded-md bg-[#f4f7fb] p-4">
-    <h2 class="mb-1 text-xs font-semibold uppercase tracking-wider text-[#1f3a68]">{outcomeLabel}</h2>
-    <p class="text-sm italic text-neutral-700">{project.outcome}</p>
+  <section class="mb-6 rounded-md bg-[var(--surface)] p-4">
+    <h2 class="eyebrow mb-1">{outcomeLabel}</h2>
+    <p class="text-sm italic text-[var(--muted)]">{project.outcome}</p>
   </section>
 </article>
