@@ -6,9 +6,22 @@
 
 ## Overview
 
-Implement a client-side target switcher on the Astro website so visitors can instantly switch between comp-bio, ds-ml, and bridge variants. The switcher loads variant metadata JSON on-demand and applies overrides to the in-memory data tree. Bridge remains the canonical, SEO-default variant.
+Implement a client-side target switcher on the Astro website so visitors can instantly switch between comp-bio, ds-ml, and bridge positioning. Bridge remains the canonical, SEO-default variant.
 
-**Sequencing:** 8 tasks, cleanest dependency flow: Python layer → validation → TypeScript component → Astro wiring → CI updates → testing.
+> **Revision (2026-05-31):** Tasks 1–3 were executed first against a flawed design and
+> corrected during review. The corrections (now reflected in the spec and the code):
+> - `_extract_overrides` reads the **nested** tree (`personal.headline`, `profile.tagline`,
+>   `profile.paragraphs[0]`), not top-level keys. The first pass emitted only
+>   `selected_projects` — the one field the web never renders — and silently dropped all
+>   three positioning fields. Tests now assert field **presence**, not just structure.
+> - The web variants JSON is **text-only** (headline + tagline + lead_paragraph); it omits
+>   `selected_projects` because the site groups projects by category and never consumes it.
+> - The switcher is a **dependency-free vanilla-JS Astro island** (`TargetSwitcher.astro`),
+>   not a React/Preact component. Variant text is **inlined at build time** via `define:vars`
+>   (no runtime fetch). Original Tasks 5–7 (store/framework research, `.tsx` component) are
+>   superseded by this.
+
+**Sequencing:** Python layer → validation → vanilla-JS component → Astro wiring → CI → E2E/verification.
 
 ---
 
