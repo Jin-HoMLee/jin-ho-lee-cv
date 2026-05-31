@@ -26,13 +26,13 @@ const data = contentDe as unknown as ContentData;
   <TargetSwitcher variants={variantsDe} lang="de" />
   <ProfileSection personal={data.personal} profile={data.profile} labels={data.labels} />
   <div class="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr]">
-    <div>
+    <div data-reveal>
       <ExperienceSection experience={data.experience} projects={data.projects} labels={data.labels} lang="de" />
       <ProjectsSection projects={data.projects} labels={data.labels} lang="de" />
       <PublicationsList publications={data.publications} lang="de" />
       <AwardsSection awards={data.awards} labels={data.labels} />
     </div>
-    <aside>
+    <aside data-reveal>
       <SkillsSidebar skills={data.skills} labels={data.labels} />
       <EducationSection education={data.education} labels={data.labels} />
       <LanguagesList languages={data.languages} labels={data.labels} />
