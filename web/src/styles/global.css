@@ -34,10 +34,10 @@
   --code-comment: #8b949e;
   --code-punct: #ff7b72;
 
-  /* publications chart ramp (accent → muted) */
+  /* publications chart — distinguishable categorical palette (teal · blue · violet · slate-blue · slate) */
   --chart-1: #2dd4bf;
-  --chart-2: #3fb9a8;
-  --chart-3: #4f9d9b;
+  --chart-2: #60a5fa;
+  --chart-3: #a78bfa;
   --chart-4: #5b7aac;
   --chart-5: #8aa0bd;
 
@@ -70,8 +70,8 @@
   --code-punct: #cf222e;
 
   --chart-1: #0f766e;
-  --chart-2: #2f6f6a;
-  --chart-3: #3f6a8a;
+  --chart-2: #2563eb;
+  --chart-3: #7c3aed;
   --chart-4: #5b7aac;
   --chart-5: #64748b;
 
