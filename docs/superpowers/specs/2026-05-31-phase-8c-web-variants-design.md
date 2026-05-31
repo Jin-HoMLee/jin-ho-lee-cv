@@ -41,7 +41,15 @@ The variants exist (buildable as PDFs, in plain-text output), but the website do
 From the bridge website, enable a visitor to **instantly switch between comp-bio and ds-ml positioning** (and back to bridge) without reloading the page. All switching happens in the browser by swapping the text of three already-rendered fields.
 
 - **Day-one deliverable:** A visible, intuitive target-switcher UI that updates the CV's positioning in-place.
-- **What varies on the web (text-only):** `headline` (sticky header) · `tagline` (profile intro) · lead paragraph (`profile.paragraphs[0]`). These are the three positioning fields the page actually renders and the first thing a hiring manager reads.
+- **What varies on the web (text-only):** `headline` (sticky header) · `tagline` (profile intro) · lead paragraph (`profile.paragraphs[0]`) · second paragraph (`profile.paragraphs[1]`). These are the positioning fields the page renders and the first thing a hiring manager reads.
+
+> **Revision (2026-05-31, post-review):** The second profile paragraph was originally the
+> single *shared* cross-market anchor (kept identical across targets in 8b). A copy review
+> found that for `ds-ml` it restated the lead almost verbatim, and that each audience is
+> better served by a tuned ¶1. It is now a **per-target override** (`second_paragraph`),
+> symmetric with `lead_paragraph`: it replaces `paragraphs[1]`, falling back to bridge.
+> This extends 8b's profile-variant model (schema + `_resolve_profile_target`) and reverses
+> the former "¶1 is shared" guard test. bridge keeps its canonical ¶1.
 - **What does *not* vary on the web:** project ordering. The site renders **all** projects grouped by `category` and never consumes `selected_projects`; per-target project featuring is explicitly out of scope for 8c (a possible later "showcase" task). `selected_projects` remains a PDF/plain-text concept only.
 - The **bridge variant remains canonical** for SEO: the SSG-rendered HTML, `<title>`, `<meta description>`, OG/Twitter tags, `<link rel="canonical">`, sitemap, and schema.org `Person` all stay bridge. The switch mutates only **visible body text**, never `<head>` metadata.
 - Variant preference is **persisted** to `localStorage` and auto-applied on return visits.

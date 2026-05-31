@@ -6,6 +6,8 @@ variants:
   comp-bio:
     tagline: "Bioinformatician with deep roots in cancer genomics — HLA typing & neoantigen discovery from real-patient NGS/RNA-Seq, reproducible Snakemake pipelines, 10+ publications."
     lead_paragraph: "Bioinformatician specializing in HLA typing and neoantigen discovery — engineering in-silico pipelines from real-patient NGS and RNA-Seq data, packaged as reproducible Snakemake workflows. Backed by 10+ peer-reviewed publications as first- and shared-first author in Cancers, Epigenetics Methods, and OBM Genetics, grounded in wet-lab training at DKFZ, NCT, FZ Jülich, KIP, and SNU."
+    second_paragraph: "Equally at home in production: migrated 1,000+ analytical processes to Google Cloud, built reproducible data pipelines, and mentored 100+ specialists in Python, SQL & ML — while securing third-party funding and supervising 10+ students."
   ds-ml:
     tagline: "Data scientist shipping production ML on GCP, built on a decade of cancer-genomics research and 10+ peer-reviewed publications."
     lead_paragraph: "Production-focused data scientist who builds and ships machine-learning systems end to end — bringing the experimental rigor of a decade in cancer genomics, and 10+ peer-reviewed publications, to every model and pipeline."
+    second_paragraph: "In industry: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML."
