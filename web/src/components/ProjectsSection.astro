@@ -30,46 +30,46 @@ for (const p of Object.values(projects)) {
 const categoryOrder: Project["category"][] = ["life-science", "data-science", "consulting"];
 ---
 <section id="projects" class="py-6">
-  <h2 class="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+  <h2 class="eyebrow mb-4">
     {sectionLabel[lang]}
   </h2>
   {categoryOrder.map((cat) => grouped[cat].length > 0 && (
     <div class="mb-6">
-      <h3 class="mb-3 text-sm font-semibold text-neutral-700">{categoryLabel[cat][lang]}</h3>
+      <h3 class="mb-3 text-sm font-semibold text-[var(--text)]">{categoryLabel[cat][lang]}</h3>
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         {grouped[cat].map((p) => (
-          <article id={p.id} class="rounded-md border border-neutral-200 p-4">
+          <article id={p.id} class="rounded-md border border-[var(--surface-border)] p-4">
             <header class="mb-2">
-              <p class="text-xs font-mono text-neutral-500">{p.id}</p>
-              <h4 class="text-base font-semibold text-neutral-900">
+              <p class="font-mono-plex text-xs text-[var(--faint)]">{p.id}</p>
+              <h4 class="text-base font-semibold text-[var(--text)]">
                 {p.title}
                 <a
                   href={lang === "en" ? `/projects/${p.id}/` : `/de/projects/${p.id}/`}
-                  class="ml-1 text-xs font-normal text-neutral-400 hover:text-[#1f3a68]"
+                  class="ml-1 text-xs font-normal text-[var(--faint)] hover:text-[var(--text)]"
                   aria-label={lang === "en" ? `Open project page for ${p.title}` : `Projektseite für ${p.title} öffnen`}
                 >↗</a>
               </h4>
-              <p class="text-xs text-neutral-500">
+              <p class="text-xs text-[var(--faint)]">
                 {p.role} · {formatPeriod(p.period, labels)}
               </p>
             </header>
-            <p class="mb-3 text-sm text-neutral-700">{p.summary}</p>
+            <p class="mb-3 text-sm text-[var(--muted)]">{p.summary}</p>
             <details class="text-sm">
-              <summary class="cursor-pointer text-neutral-600 hover:text-neutral-900">
+              <summary class="cursor-pointer text-[var(--muted)] hover:text-[var(--text)]">
                 {detailsLabel[lang]}
               </summary>
-              <ul class="mt-2 space-y-1 text-neutral-700">
+              <ul class="mt-2 space-y-1 text-[var(--muted)]">
                 {p.contributions.map((c) => (
                   <li class="flex gap-2">
-                    <span aria-hidden="true" class="text-neutral-400">·</span>
+                    <span aria-hidden="true" class="text-[var(--faint)]">·</span>
                     <span>{c}</span>
                   </li>
                 ))}
               </ul>
-              <p class="mt-2 text-sm italic text-neutral-600">{p.outcome}</p>
+              <p class="mt-2 text-sm italic text-[var(--muted)]">{p.outcome}</p>
               <p class="mt-3 flex flex-wrap gap-1">
                 {p.technologies.map((t) => (
-                  <span class="rounded bg-neutral-100 px-1.5 py-0.5 text-xs text-neutral-700">{t}</span>
+                  <span class="rounded bg-[var(--surface)] px-1.5 py-0.5 text-xs text-[var(--muted)]">{t}</span>
                 ))}
               </p>
             </details>

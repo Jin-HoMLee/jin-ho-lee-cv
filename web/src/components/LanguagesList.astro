@@ -13,14 +13,14 @@ function profLabel(p: string): string {
 }
 ---
 <section id="languages" class="py-6">
-  <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+  <h2 class="eyebrow mb-3">
     {labels.sections.languages}
   </h2>
   <ul class="space-y-1">
     {languages.map((l) => (
       <li class="flex items-baseline justify-between text-sm">
-        <span class="text-neutral-900">{l.name}</span>
-        <span class="text-neutral-500">{profLabel(l.proficiency)}</span>
+        <span class="text-[var(--text)]">{l.name}</span>
+        <span class="text-[var(--faint)]">{profLabel(l.proficiency)}</span>
       </li>
     ))}
   </ul>

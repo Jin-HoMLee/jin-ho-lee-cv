@@ -9,15 +9,15 @@ interface Props {
 const { awards, labels } = Astro.props;
 ---
 <section id="awards" class="py-6">
-  <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+  <h2 class="eyebrow mb-3">
     {labels.sections.awards}
   </h2>
   <div class="space-y-3">
     {awards.map((a) => (
       <div>
-        <p class="text-sm font-semibold text-neutral-900">{a.title} <span class="font-normal text-neutral-500">· {a.year}</span></p>
-        <p class="text-sm text-neutral-700">{a.issuer}</p>
-        {a.note && <p class="text-xs text-neutral-500">{a.note}</p>}
+        <p class="text-sm font-semibold text-[var(--text)]">{a.title} <span class="font-normal text-[var(--faint)]">· {a.year}</span></p>
+        <p class="text-sm text-[var(--muted)]">{a.issuer}</p>
+        {a.note && <p class="text-xs text-[var(--faint)]">{a.note}</p>}
       </div>
     ))}
   </div>
