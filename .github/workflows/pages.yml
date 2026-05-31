@@ -98,6 +98,18 @@ jobs:
           grep -q 'goatcounter' web/dist/index.html || (echo "Missing GoatCounter snippet — check PUBLIC_ANALYTICS_ENABLED env" && exit 1)
           # GSC verification tag — GSC_VERIFY secret must be set.
           grep -q 'google-site-verification' web/dist/index.html || (echo "Missing GSC tag — set GSC_VERIFY repo secret" && exit 1)
+          # Phase 8c: target switcher reached the built HTML, both langs
+          grep -q 'data-cv-switcher' web/dist/index.html || (echo "Target switcher missing in EN homepage" && exit 1)
+          grep -q 'data-cv-switcher' web/dist/de/index.html || (echo "Target switcher missing in DE homepage" && exit 1)
+          for field in headline tagline lead; do
+            grep -q "data-cv-field=\"$field\"" web/dist/index.html || (echo "Missing data-cv-field=$field hook in EN homepage" && exit 1)
+          done
+          # Variant text inlined for client-side swapping (EN + DE)
+          grep -q 'Computational Biology · Cancer Genomics' web/dist/index.html || (echo "comp-bio variant text not inlined (EN)" && exit 1)
+          grep -q 'Computational Biology · Krebsgenomik' web/dist/de/index.html || (echo "comp-bio variant text not inlined (DE)" && exit 1)
+          # Bridge stays SEO-canonical: variant strings must NOT leak into <head>
+          head_en=$(sed -n 's/.*<head>\(.*\)<\/head>.*/\1/p' web/dist/index.html)
+          echo "$head_en" | grep -q 'Computational Biology' && (echo "Variant positioning leaked into <head> — canonical must stay bridge" && exit 1) || true
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
