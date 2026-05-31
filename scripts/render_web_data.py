@@ -41,22 +41,44 @@ def _to_jsonable(obj: Any) -> Any:
 
 
 def _extract_overrides(bridge: dict, variant: dict) -> dict:
-    """Return only the fields that differ between bridge and variant.
-    
+    """Return the web-rendered positioning fields that differ from bridge.
+
+    Reads from the *nested* resolved tree (not top level):
+      headline       <- personal.headline   (rendered in the sticky header)
+      tagline        <- profile.tagline      (rendered in the profile intro)
+      lead_paragraph <- profile.paragraphs[0] (the lead; paragraphs[1] is shared)
+
+    A key is included only when the variant value differs from bridge.
+    `selected_projects` is intentionally excluded: the website renders projects
+    grouped by category and never consumes it, so emitting it produced a
+    payload of the one field the web ignores while dropping the three it shows.
+
     Args:
-        bridge: Fully-resolved bridge tree (all keys present)
-        variant: Fully-resolved variant tree (all keys present)
-    
+        bridge: Fully-resolved bridge tree.
+        variant: Fully-resolved variant tree.
+
     Returns:
-        Dict with only the keys that differ; empty dict if identical.
+        Dict with only the differing text fields; empty dict if none differ.
     """
-    OVERRIDE_KEYS = {"headline", "tagline", "lead_paragraph", "selected_projects"}
-    overrides = {}
-    for key in OVERRIDE_KEYS:
-        bridge_val = bridge.get(key)
-        variant_val = variant.get(key)
-        if bridge_val != variant_val:
-            overrides[key] = variant_val
+    overrides: dict[str, str] = {}
+
+    b_headline = bridge.get("personal", {}).get("headline")
+    v_headline = variant.get("personal", {}).get("headline")
+    if v_headline is not None and v_headline != b_headline:
+        overrides["headline"] = v_headline
+
+    b_tagline = bridge.get("profile", {}).get("tagline")
+    v_tagline = variant.get("profile", {}).get("tagline")
+    if v_tagline is not None and v_tagline != b_tagline:
+        overrides["tagline"] = v_tagline
+
+    b_paras = bridge.get("profile", {}).get("paragraphs") or []
+    v_paras = variant.get("profile", {}).get("paragraphs") or []
+    b_lead = b_paras[0] if b_paras else None
+    v_lead = v_paras[0] if v_paras else None
+    if v_lead is not None and v_lead != b_lead:
+        overrides["lead_paragraph"] = v_lead
+
     return overrides
 
 
