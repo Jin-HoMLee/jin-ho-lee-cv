@@ -128,8 +128,46 @@ jobs:
           retention-days: ${{ github.event_name == 'pull_request' && 30 || 1 }}
           if-no-files-found: error
 
+  ats-guard:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync --all-groups
+
+      - name: Read pinned Typst version
+        id: typst-version
+        run: echo "version=$(cat .typstversion)" >> "$GITHUB_OUTPUT"
+
+      - name: Install Typst
+        uses: typst-community/setup-typst@v5
+        with:
+          typst-version: ${{ steps.typst-version.outputs.version }}
+
+      - name: Install IBM Plex Sans font
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-ibm-plex
+          fc-cache -f
+
+      - name: Install pdftotext (poppler)
+        run: sudo apt-get install -y poppler-utils
+
+      - name: Run ATS text-layer guard
+        run: uv run pytest tests/test_ats_pdf.py -v
+
   release:
-    needs: [build-pdf, build-formats]
+    needs: [build-pdf, build-formats, ats-guard]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
