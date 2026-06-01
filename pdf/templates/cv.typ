@@ -3,6 +3,7 @@
 #import "profile.typ": profile
 #import "experience.typ": experience
 #import "selected_projects.typ": selected_projects
+#import "publications.typ": publications
 #import "awards.typ": awards
 #import "sidebar.typ": sidebar
 
@@ -53,6 +54,7 @@
     profile(data.profile, data.labels)
     experience(data.experience, data.labels, lang)
     selected_projects(data.selected_projects, data.labels)
+    publications(data.publications, data.publications_heading, data.personal.name.family)
     awards(data.awards, data.labels)
   }),
   sidebar(data, data.labels),

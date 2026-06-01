@@ -63,6 +63,23 @@ def _pdf_filename(lang: str, target: str) -> str:
     return f"cv-{lang}.pdf" if target == "bridge" else f"cv-{lang}-{target}.pdf"
 
 
+def select_publications(pubs: list, target: str) -> tuple[list, bool]:
+    """Pick which publications the PDF shows for `target`.
+
+    `comp-bio` shows the full list (is_selected=False); `bridge` and `ds-ml`
+    show the first+shared subset (is_selected=True) — `middle`, `last`, and
+    `corresponding` authorship are intentionally excluded, since only
+    first-author signalling makes the short list. Order is preserved from
+    bib_loader. Depth is a PDF *rendering* choice — the web and plain-text
+    renderers always show all publications — so this lives here, not in the
+    shared content_loader.
+    """
+    if target == "comp-bio":
+        return list(pubs), False
+    subset = [p for p in pubs if p.authorship in ("first", "shared")]
+    return subset, True
+
+
 def prepare_data(
     content_dir: Path,
     *,
@@ -70,9 +87,19 @@ def prepare_data(
     lang: str,
     target: str = "bridge",
 ) -> dict[str, Any]:
-    """Load content tree, merge private overlay, resolve langstrings, return flat dict."""
+    """Load content tree, merge private overlay, resolve langstrings, return flat dict.
+
+    Also applies variant-aware publication selection and injects the resolved
+    ``publications_heading`` (PDF-only rendering depth — web/text show all).
+    """
     raw = load_content(content_dir, private_path=private_path, lang=lang, target=target)
     resolved = resolve_langstrings(raw, lang=lang)
+    pubs, is_selected = select_publications(resolved.get("publications", []), target)
+    resolved["publications"] = pubs
+    sections = resolved["labels"]["sections"]
+    resolved["publications_heading"] = (
+        sections["publications_selected"] if is_selected else sections["publications"]
+    )
     return _to_serializable(resolved)
 
 
