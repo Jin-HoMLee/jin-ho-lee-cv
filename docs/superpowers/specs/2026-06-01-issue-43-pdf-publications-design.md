@@ -34,7 +34,7 @@ The decisive constraint: `bridge` means **all 15** for the web and plain-text re
 | `pdf/build.py` | Add `select_publications()` helper; call it in the data-prep step; inject `publications` (filtered) + `publications_heading` (resolved string) into the dict written to `pdf/.cache/data.json`. |
 | `pdf/templates/publications.typ` | **New.** `#let publications(pubs, heading, family)` — renders the section. |
 | `pdf/templates/cv.typ` | Add `#import "publications.typ": publications` (with the other section imports) and `publications(data.publications, data.publications_heading, data.personal.name.family)` in the main-column block **between `selected_projects(...)` (cv.typ:55) and `awards(...)` (cv.typ:56)**. |
-| `content/labels.yaml` | Add to `sections`: `publications: { en: "Publications", de: "Publikationen" }` and `publications_selected: { en: "Publications (selected)", de: "Publikationen (ausgewählte)" }`. |
+| `content/labels.yaml` | Add to `sections`: `publications: { en: "Publications", de: "Publikationen" }` and `publications_selected: { en: "Selected Publications", de: "Ausgewählte Publikationen" }`. |
 
 ## Data flow
 
@@ -56,7 +56,7 @@ Single-column flow in the main column (paginates to page 2 — already how the m
 - **Line 3 — venue.** Muted colour, smaller size, when `venue != none`.
 - Inter-entry spacing follows the awards/selected_projects pattern (`v(space-paragraph)`), with the trailing gap omitted after the last entry.
 
-Section heading: `section-heading(heading)` (the helper upper-cases it). Full list → `PUBLICATIONS` / `PUBLIKATIONEN`; selected subset → `PUBLICATIONS (SELECTED)` / `PUBLIKATIONEN (AUSGEWÄHLTE)`. The noun leads in both variants, so `PUBLIKATIONEN` sits in the same position whether full or subset.
+Section heading: `section-heading(heading)` (the helper upper-cases it). Full list → `PUBLICATIONS` / `PUBLIKATIONEN`; selected subset → `SELECTED PUBLICATIONS` / `AUSGEWÄHLTE PUBLIKATIONEN`. The subset heading mirrors the adjective-leading `SELECTED PROJECTS` / `AUSGEWÄHLTE PROJEKTE` heading for consistency (revised post-review from the earlier parenthetical `PUBLICATIONS (SELECTED)` form — the full vs subset variants are separate PDFs never seen together, so the parenthetical's stable-leading-noun benefit never showed to a reader).
 
 ## Edge cases
 
@@ -67,7 +67,7 @@ Section heading: `section-heading(heading)` (the helper upper-cases it). Full li
 
 ## Localization
 
-EN + DE via the two new `labels.sections` keys. Publication titles/authors/venues are language-agnostic Unicode straight from BibTeX (no `{en,de}` variants), so only the heading is translated. Both languages keep the noun leading with a parenthetical qualifier — full: `Publications` / `Publikationen`; subset: `Publications (selected)` / `Publikationen (ausgewählte)` — so the leading word is stable across the full/subset variants.
+EN + DE via the two new `labels.sections` keys. Publication titles/authors/venues are language-agnostic Unicode straight from BibTeX (no `{en,de}` variants), so only the heading is translated. Full: `Publications` / `Publikationen`; subset: `Selected Publications` / `Ausgewählte Publikationen` — the subset form matches the existing adjective-leading `Selected Projects` / `Ausgewählte Projekte` heading for in-document consistency.
 
 ## Testing
 
