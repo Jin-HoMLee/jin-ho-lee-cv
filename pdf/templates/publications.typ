@@ -22,7 +22,10 @@
         a
       }
     }
-    [ · #str(p.year)]
+    // Separator only when authors were emitted — a bib entry should always
+    // have authors, but don't leave a dangling " · year" if one somehow has none.
+    if p.authors.len() > 0 { [ · ] }
+    [#str(p.year)]
     linebreak()
 
     // Line 2 — title. DOI link in accent colour when present; plain otherwise.
