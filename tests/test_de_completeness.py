@@ -74,6 +74,8 @@ _INVARIANT_PATH_SUBSTRINGS = (
     ".personal.location.",
     ".personal.photo",
     ".personal.links.",
+    # knowsAbout — curated, language-neutral technical topics (JSON-LD/entity-resolution; EN-only)
+    ".personal.knowsAbout",
     # Publications — raw BibTeX, language-agnostic
     ".publications",
     # Education — institution is a proper noun; location is a city/country string
