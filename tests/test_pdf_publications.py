@@ -1,4 +1,10 @@
 """Tests for the PDF publications section (issue #43)."""
+import shutil
+import subprocess
+import sys
+
+import pytest
+
 from pdf.build import prepare_data, select_publications
 from scripts.bib_loader import Publication
 
@@ -72,3 +78,54 @@ def test_prepare_data_publication_entries_have_render_fields(content_dir):
     for field in ("title", "authors", "year", "doi", "venue", "authorship"):
         assert field in entry
     assert isinstance(entry["authors"], list)
+
+
+def _typst_available():
+    return shutil.which("typst") is not None
+
+
+def _pdftotext_available():
+    return shutil.which("pdftotext") is not None
+
+
+def _norm(s):
+    return " ".join(s.split()).lower()
+
+
+@pytest.mark.skipif(
+    not (_typst_available() and _pdftotext_available()),
+    reason="needs typst + pdftotext (poppler) to extract and assert PDF text",
+)
+def test_pdf_bridge_shows_heading_and_omits_middle_author_titles(repo_root, content_dir):
+    from scripts.bib_loader import load_publications
+
+    out = repo_root / "dist" / "cv-en.pdf"
+    if out.exists():
+        out.unlink()
+
+    build = subprocess.run(
+        [sys.executable, "-m", "pdf.build", "--lang", "en"],  # default target = bridge
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+    )
+    assert build.returncode == 0, f"build failed:\n{build.stderr}"
+    assert out.exists()
+
+    text = subprocess.run(
+        ["pdftotext", str(out), "-"], capture_output=True, text=True
+    ).stdout
+    norm = _norm(text)
+
+    # Heading present (section-heading upper-cases it → "PUBLICATIONS (SELECTED)").
+    # Letter-spacing in the Typst style causes pdftotext to insert spaces inside
+    # words (e.g. "SELE CTED"), so compare with all spaces removed.
+    norm_nospace = norm.replace(" ", "")
+    assert "publications(selected)" in norm_nospace
+
+    # A first-author title renders; a middle-author-only title does not (bridge = 9).
+    pubs = load_publications(content_dir / "publications.bib")
+    first = next(p for p in pubs if p.authorship == "first")
+    middle = next(p for p in pubs if p.authorship == "middle")
+    assert _norm(first.title) in norm
+    assert _norm(middle.title) not in norm
