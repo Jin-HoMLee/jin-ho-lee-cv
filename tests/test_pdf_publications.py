@@ -53,7 +53,7 @@ def test_prepare_data_bridge_selects_first_and_shared_with_selected_heading(cont
     expected_keys = [p.key for p in all_pubs if p.authorship in ("first", "shared")]
     result = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
     assert [p["key"] for p in result["publications"]] == expected_keys
-    assert result["publications_heading"] == "Publications (selected)"
+    assert result["publications_heading"] == "Selected Publications"
 
 
 def test_prepare_data_comp_bio_selects_all_with_plain_heading(content_dir):
@@ -68,13 +68,13 @@ def test_prepare_data_ds_ml_selects_first_and_shared(content_dir):
     expected_keys = [p.key for p in all_pubs if p.authorship in ("first", "shared")]
     result = prepare_data(content_dir, private_path=None, lang="en", target="ds-ml")
     assert [p["key"] for p in result["publications"]] == expected_keys
-    assert result["publications_heading"] == "Publications (selected)"
+    assert result["publications_heading"] == "Selected Publications"
 
 
 def test_prepare_data_publications_heading_localized_de(content_dir):
     bridge = prepare_data(content_dir, private_path=None, lang="de", target="bridge")
     comp = prepare_data(content_dir, private_path=None, lang="de", target="comp-bio")
-    assert bridge["publications_heading"] == "Publikationen (ausgewählte)"
+    assert bridge["publications_heading"] == "Ausgewählte Publikationen"
     assert comp["publications_heading"] == "Publikationen"
 
 
@@ -121,11 +121,11 @@ def test_pdf_bridge_shows_heading_and_omits_middle_author_titles(repo_root, cont
     ).stdout
     norm = _norm(text)
 
-    # Heading present (section-heading upper-cases it → "PUBLICATIONS (SELECTED)").
-    # Letter-spacing in the Typst style causes pdftotext to insert spaces inside
-    # words (e.g. "SELE CTED"), so compare with all spaces removed.
+    # Heading present (section-heading upper-cases it → "SELECTED PUBLICATIONS").
+    # Letter-spacing in the Typst style makes pdftotext insert spaces inside
+    # words, so compare with all spaces removed.
     norm_nospace = norm.replace(" ", "")
-    assert "publications(selected)" in norm_nospace
+    assert "selectedpublications" in norm_nospace
 
     # A first-author title renders; a middle-author-only title does not (bridge = 9).
     pubs = load_publications(content_dir / "publications.bib")
