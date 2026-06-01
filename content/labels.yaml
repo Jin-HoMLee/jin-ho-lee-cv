@@ -32,3 +32,11 @@ proficiency:
 
 misc:
   present: { en: "present", de: "heute" }
+
+publications:
+  summary:
+    en: "{peer_reviewed} peer-reviewed publications ({pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author) and {conferences} first-author conference contributions, {span}, in radiation biophysics & super-resolution DNA-repair imaging."
+    de: "{peer_reviewed} begutachtete Publikationen ({pr_first} als Erstautor, {pr_shared} geteilte Erstautorenschaft, {pr_coauthor} als Co-Autor) sowie {conferences} Konferenzbeiträge als Erstautor, {span}, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur."
+  full_list_pointer:
+    en: "Full list & metrics:"
+    de: "Vollständige Liste:"
