@@ -1,0 +1,639 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Jin-Ho Lee",
+  "url": "https://jinholee.is-a.dev/",
+  "image": "https://jinholee.is-a.dev/photo.jpg",
+  "email": "mailto:jinho.michael.lee@gmail.com",
+  "jobTitle": "Bioinformatics · Data Science",
+  "description": "Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, backed by 10+ peer-reviewed publications — first- and shared-first author in Cancers, Epigenetics Methods, and OBM Genetics — grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Mannheim",
+    "addressCountry": "GER"
+  },
+  "sameAs": [
+    "https://linkedin.com/in/jin-holee",
+    "https://github.com/Jin-HoMLee",
+    "https://researchgate.net/profile/Jin-Ho-Lee-8",
+    "https://jinholee.is-a.dev/",
+    "https://orcid.org/0009-0001-8784-1771"
+  ],
+  "alumniOf": [
+    {
+      "@type": "EducationalOrganization",
+      "name": "Heidelberg University"
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "Heidelberg University"
+    }
+  ],
+  "knowsAbout": [
+    "NGS",
+    "RNA-Seq",
+    "WES",
+    "SNV Calling",
+    "Splice Analysis",
+    "MapSplice",
+    "HISAT2/STAR",
+    "samtools/bcftools",
+    "bedtools",
+    "MHC-I Prediction",
+    "HLA Typing",
+    "OptiType",
+    "MHCflurry",
+    "Neoepitopes",
+    "TCRdock",
+    "AlphaFold v2",
+    "Mol*",
+    "Spatial Point-Pattern",
+    "Cluster Analysis (DBSCAN)",
+    "Cancer/Tumor",
+    "3D Cell Culture",
+    "Neural Progenitors",
+    "Super-Resolution",
+    "Confocal",
+    "Fluorescence",
+    "FISH",
+    "IF",
+    "qPCR",
+    "FACS",
+    "TensorFlow",
+    "Keras",
+    "LSTMs",
+    "OpenCV",
+    "Python (Exp)",
+    "R",
+    "SQL",
+    "Snakemake",
+    "Conda",
+    "Docker",
+    "Git",
+    "dbt",
+    "GCP",
+    "BigQuery",
+    "Vertex AI",
+    "Looker"
+  ],
+  "award": [
+    "DAAD PROMOS Scholarship",
+    "DeGBS Poster Award"
+  ],
+  "@graph": [
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Super-Resolution Radiation Biology: From Bio-Dosimetry towards Nano-Studies of DNA Repair Mechanisms",
+      "datePublished": "2021",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "Hausmann, M."
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "DNA - Damages and Repair Mechanisms"
+      },
+      "sameAs": [
+        "https://doi.org/10.5772/intechopen.95597"
+      ]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "DeGBS 2021 Conference Contribution",
+      "datePublished": "2021",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "Deutsche Gesellschaft für Biologische Strahlenforschung"
+      }
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "3D DNA FISH for analyses of chromatin-nuclear architecture",
+      "datePublished": "2020",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Hausmann, M."
+        },
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "others"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "Epigenetics Methods"
+      },
+      "sameAs": [
+        "https://doi.org/10.1016/b978-0-12-819414-0.00020-3"
+      ]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Nanostructure of Clustered DNA Damage in Leukocytes after In-Solution Irradiation with the Alpha Emitter Ra-223",
+      "datePublished": "2019",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Scherthan, H."
+        },
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "others"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "Cancers"
+      },
+      "sameAs": [
+        "https://doi.org/10.3390/cancers11121877"
+      ]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "COMBO-FISH: A versatile tool beyond standard FISH to study chromatin organization by fluorescence light microscopy",
+      "datePublished": "2019",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "others"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "OBM Genetics"
+      },
+      "sameAs": [
+        "https://doi.org/10.21926/obm.genet.1901064"
+      ]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Challenges and contradictions of metal nano-particle applications for radio-sensitivity enhancement in cancer therapy",
+      "datePublished": "2019",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Pagacova, E."
+        },
+        {
+          "@type": "Person",
+          "name": "Stefancikova, L."
+        },
+        {
+          "@type": "Person",
+          "name": "Schmidt-Kaler, F."
+        },
+        {
+          "@type": "Person",
+          "name": "Hildenbrand, G."
+        },
+        {
+          "@type": "Person",
+          "name": "Vicar, T."
+        },
+        {
+          "@type": "Person",
+          "name": "Depes, D."
+        },
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "others"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "International Journal of Molecular Sciences"
+      },
+      "sameAs": [
+        "https://doi.org/10.3390/ijms20030588"
+      ]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Mechanisms and Challenges for Understanding Radiation Induced Changes in Chromatin Nanoarchitecture and Repair Complex Formation",
+      "datePublished": "2019",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "ConRad 2019 - Global Conference on Radiation Topics"
+      }
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Recruitment of 53BP1 Proteins for DNA Repair and Persistence of Repair Clusters Differ for Cell Types as Detected by Single Molecule Localization Microscopy",
+      "datePublished": "2018",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Bobkova, E."
+        },
+        {
+          "@type": "Person",
+          "name": "Depes, D."
+        },
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "others"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "International Journal of Molecular Sciences"
+      },
+      "sameAs": [
+        "https://doi.org/10.3390/ijms19123713"
+      ]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Single-molecule localization microscopy as a promising tool for gammaH2AX/53BP1 foci exploration",
+      "datePublished": "2018",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Depes, D."
+        },
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "others"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "The European Physical Journal D"
+      },
+      "sameAs": [
+        "https://doi.org/10.1140/epjd/e2018-90148-1"
+      ]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Super-Resolution Localization Microscopy of Radiation-Induced Histone H2AX-Phosphorylation in relation to H3K9-Trimethylation in HeLa Cells",
+      "datePublished": "2018",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Hausmann, M."
+        },
+        {
+          "@type": "Person",
+          "name": "Wagner, E."
+        },
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "others"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "Nanoscale"
+      },
+      "sameAs": [
+        "https://doi.org/10.1039/c7nr08145f"
+      ]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Localization Microscopy Analyses of MRE11 Clusters in 3D-Conserved Cell Nuclei of Different Cell Lines",
+      "datePublished": "2018",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Eryilmaz, M."
+        },
+        {
+          "@type": "Person",
+          "name": "Schmitt, E."
+        },
+        {
+          "@type": "Person",
+          "name": "Krufczik, M."
+        },
+        {
+          "@type": "Person",
+          "name": "Theda, F."
+        },
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "others"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "Cancers"
+      },
+      "sameAs": [
+        "https://doi.org/10.3390/cancers10010025"
+      ]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Mechanisms and challenges for understanding radiation induced changes in chromatin nanoarchitecture",
+      "datePublished": "2018",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "Dny radiační ochrany (DRO 2018)"
+      }
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Challenges for Super-Resolution Localization Microscopy and Biomolecular Fluorescent Nano-Probing in Cancer Research",
+      "datePublished": "2017",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Hausmann, M."
+        },
+        {
+          "@type": "Person",
+          "name": "Ilic, N."
+        },
+        {
+          "@type": "Person",
+          "name": "Pilarczyk, G."
+        },
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "others"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "International Journal of Molecular Sciences"
+      },
+      "sameAs": [
+        "https://doi.org/10.3390/ijms18102066"
+      ]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Combining Low Temperature Fluorescence DNA-Hybridization, Immunostaining, and Super-Resolution Localization Microscopy for Nano-Structure Analysis of ALU Elements and Their Influence on Chromatin Structure",
+      "datePublished": "2017",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Krufczik, M."
+        },
+        {
+          "@type": "Person",
+          "name": "Sievers, A."
+        },
+        {
+          "@type": "Person",
+          "name": "Hausmann, A."
+        },
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "others"
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "International Journal of Molecular Sciences"
+      },
+      "sameAs": [
+        "https://doi.org/10.3390/ijms18051005"
+      ]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Marketing Automation Tool Selection & Implementation @DeutschlandCard",
+      "datePublished": "2025",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Lee, J."
+        },
+        {
+          "@type": "Person",
+          "name": "Eckhardt, C."
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "Essentials of Modern Marketing, Germany Edition"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Anti-Financial Crime – Know Your Customer (KYC) Platform",
+      "url": "https://jinholee.is-a.dev/projects/C1/",
+      "description": "Cloud migration and analytics environment development for financial crime detection at a large international bank.",
+      "dateCreated": "2024-08",
+      "keywords": [
+        "Google Cloud Platform",
+        "BigQuery",
+        "Python",
+        "SAS",
+        "Looker"
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Hyper-Personalized Digital Customer Platform",
+      "url": "https://jinholee.is-a.dev/projects/C2/",
+      "description": "Data model development supporting hyper-personalized customer communication during migration of customer data infrastructure to Google Cloud.",
+      "dateCreated": "2024-05",
+      "keywords": [
+        "Google Cloud Platform",
+        "BigQuery",
+        "SQL",
+        "Python"
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "SignMeUp – Real-Time American Sign Language (ASL) Recognition",
+      "url": "https://jinholee.is-a.dev/projects/D1/",
+      "description": "Machine learning pipeline and application prototype for real-time ASL gesture recognition, designed for integration into a digital sign language learning app.",
+      "dateCreated": "2023-09",
+      "keywords": [
+        "Python",
+        "TensorFlow (Keras)",
+        "LSTM",
+        "MediaPipe",
+        "OpenCV",
+        "Google Cloud",
+        "Scikit-Learn",
+        "MLflow"
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Shuttle Insights – AI Badminton Match Analysis",
+      "url": "https://jinholee.is-a.dev/projects/D2/",
+      "description": "Computer vision system for analyzing badminton gameplay from video recordings.",
+      "dateCreated": "2024-01",
+      "keywords": [
+        "Python",
+        "OpenCV",
+        "TensorFlow",
+        "MediaPipe"
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Data Science Bootcamp Program",
+      "url": "https://jinholee.is-a.dev/projects/D3/",
+      "description": "Professional training program for transitioning participants into data science careers.",
+      "dateCreated": "2023-09",
+      "keywords": [
+        "Python",
+        "Pandas",
+        "NumPy",
+        "Scikit-Learn",
+        "TensorFlow",
+        "SQL",
+        "Docker",
+        "dbt",
+        "Google Cloud"
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis",
+      "url": "https://jinholee.is-a.dev/projects/L1/",
+      "description": "Bioinformatics pipeline for identifying novel immunotherapy targets derived from aberrant alternative splicing in RNA-Seq data.",
+      "dateCreated": "2015-08",
+      "keywords": [
+        "Python",
+        "R",
+        "MapSplice",
+        "RNA-Seq",
+        "TCGA Datasets",
+        "MHC-I Prediction Tools"
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Personalized Immunotherapy – High-Throughput HLA Typing Pipeline",
+      "url": "https://jinholee.is-a.dev/projects/L2/",
+      "description": "Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data.",
+      "dateCreated": "2014-04",
+      "keywords": [
+        "Python",
+        "R",
+        "HLAMiner",
+        "Seq2HLA",
+        "NetMHCPan (Neural Networks)",
+        "Shell Scripting"
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Experimental Biophysics — Chromatin Nano-Architecture & DNA Repair",
+      "url": "https://jinholee.is-a.dev/projects/L3/",
+      "description": "Advanced research utilizing super-resolution microscopy and computational analysis to investigate DNA repair mechanisms and chromatin nano-architecture.",
+      "dateCreated": "2017-02",
+      "keywords": [
+        "MATLAB",
+        "Linux",
+        "R",
+        "Python",
+        "COMBO-FISH",
+        "SPDM",
+        "DBSCAN"
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Neural Stem Cell Research – Radiation Effects on 3D Differentiation",
+      "url": "https://jinholee.is-a.dev/projects/L4/",
+      "description": "Scientific research project investigating the impact of ionizing radiation and extracellular vesicles on human neural progenitor cell differentiation.",
+      "dateCreated": "2018-09",
+      "keywords": [
+        "3D Cell Culture Modeling",
+        "qPCR",
+        "Fluorescence Microscopy",
+        "FACS",
+        "Biochemistry",
+        "ImageJ",
+        "MS Office"
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Splice Neoepitope Pipeline – Reproducible Snakemake Workflow",
+      "url": "https://jinholee.is-a.dev/projects/L5/",
+      "description": "Modernised, open-source reimplementation of the 2015 SNU splice-junction–based neoepitope discovery work as a reproducible Snakemake pipeline with optional structural validation.",
+      "dateCreated": "2026-03",
+      "keywords": [
+        "Snakemake 8.x",
+        "Conda",
+        "Python 3.11",
+        "HISAT2 / STAR",
+        "OptiType",
+        "MHCflurry 2.x",
+        "TCRdock / AlphaFold v2",
+        "bedtools",
+        "Google Cloud GPU",
+        "Mol*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,628 @@
+{
+  "$schema": "https://jsonresume.org/schema/0.0.0/resume.json",
+  "basics": {
+    "name": "Jin-Ho Lee",
+    "label": "Bioinformatics · Data Science",
+    "email": "jinho.michael.lee@gmail.com",
+    "url": "https://jinholee.is-a.dev/",
+    "summary": "Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, backed by 10+ peer-reviewed publications — first- and shared-first author in Cancers, Epigenetics Methods, and OBM Genetics — grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU.\n\nNow applying that rigor in industry: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML; secured third-party funding and supervised 10+ students.",
+    "location": {
+      "city": "Mannheim",
+      "countryCode": "GER"
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "url": "https://linkedin.com/in/jin-holee"
+      },
+      {
+        "network": "GitHub",
+        "url": "https://github.com/Jin-HoMLee"
+      },
+      {
+        "network": "ResearchGate",
+        "url": "https://researchgate.net/profile/Jin-Ho-Lee-8"
+      },
+      {
+        "network": "Website",
+        "url": "https://jinholee.is-a.dev/"
+      },
+      {
+        "network": "ORCID",
+        "url": "https://orcid.org/0009-0001-8784-1771"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Cintellic / International Bank",
+      "position": "Consultant, Lead Business Functional Analyst",
+      "startDate": "2024-05-01",
+      "endDate": "2025-07-28",
+      "highlights": [
+        "Scale: Architected the migration of 1,000+ analytical processes to Google Cloud.",
+        "AI in Production: Developed BigQueryML models for anti-financial crime & KYC.",
+        "Stakeholder Lead: Bridged technical data engineering with business requirements for high-stakes banking."
+      ]
+    },
+    {
+      "name": "neuefische GmbH",
+      "position": "Data Science Trainee, Associate & Coach",
+      "startDate": "2023-02-01",
+      "endDate": "2024-04-28",
+      "highlights": [
+        "Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles.",
+        "ML Development: Independently engineered a Real-Time ASL Recognition prototype using LSTMs, MediaPipe, and TensorFlow."
+      ]
+    },
+    {
+      "name": "FZ Jülich / KIP / NCT / SNU / DKFZ",
+      "position": "Doctoral & Post-Graduate Researcher",
+      "startDate": "2014-04-01",
+      "endDate": "2022-07-28",
+      "highlights": [
+        "Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer-patient NGS and RNA-Seq splice-junction data; validated SNV calls against gold-standard sequencing in clinical colorectal-cancer cohorts (NCT/DKFZ).",
+        "Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects — from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin.",
+        "Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Heidelberg University",
+      "studyType": "M.Sc. Molecular Biotechnology",
+      "area": "",
+      "startDate": "2019-01-01",
+      "endDate": "2019-12-31"
+    },
+    {
+      "institution": "Heidelberg University",
+      "studyType": "B.Sc. Molecular Biotechnology",
+      "area": "Bioinformatics",
+      "startDate": "2014-01-01",
+      "endDate": "2014-12-31"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Bioinformatics & ML",
+      "level": "Genomics",
+      "keywords": [
+        "NGS",
+        "RNA-Seq",
+        "WES",
+        "SNV Calling",
+        "Splice Analysis",
+        "MapSplice",
+        "HISAT2/STAR",
+        "samtools/bcftools",
+        "bedtools"
+      ]
+    },
+    {
+      "name": "Bioinformatics & ML",
+      "level": "Immunology",
+      "keywords": [
+        "MHC-I Prediction",
+        "HLA Typing",
+        "OptiType",
+        "MHCflurry",
+        "Neoepitopes"
+      ]
+    },
+    {
+      "name": "Bioinformatics & ML",
+      "level": "Structural Biology",
+      "keywords": [
+        "TCRdock",
+        "AlphaFold v2",
+        "Mol*"
+      ]
+    },
+    {
+      "name": "Bioinformatics & ML",
+      "level": "Nanoscopy",
+      "keywords": [
+        "Spatial Point-Pattern",
+        "Cluster Analysis (DBSCAN)"
+      ]
+    },
+    {
+      "name": "Biotech Wet-Lab",
+      "level": "Models",
+      "keywords": [
+        "Cancer/Tumor",
+        "3D Cell Culture",
+        "Neural Progenitors"
+      ]
+    },
+    {
+      "name": "Biotech Wet-Lab",
+      "level": "Imaging",
+      "keywords": [
+        "Super-Resolution",
+        "Confocal",
+        "Fluorescence"
+      ]
+    },
+    {
+      "name": "Biotech Wet-Lab",
+      "level": "Assays",
+      "keywords": [
+        "FISH",
+        "IF",
+        "qPCR",
+        "FACS"
+      ]
+    },
+    {
+      "name": "Data & Engineering",
+      "level": "AI & Vision",
+      "keywords": [
+        "TensorFlow",
+        "Keras",
+        "LSTMs",
+        "OpenCV"
+      ]
+    },
+    {
+      "name": "Data & Engineering",
+      "level": "Eng & Tools",
+      "keywords": [
+        "Python (Exp)",
+        "R",
+        "SQL",
+        "Snakemake",
+        "Conda",
+        "Docker",
+        "Git",
+        "dbt"
+      ]
+    },
+    {
+      "name": "Data & Engineering",
+      "level": "Cloud",
+      "keywords": [
+        "GCP",
+        "BigQuery",
+        "Vertex AI",
+        "Looker"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "German",
+      "fluency": "native"
+    },
+    {
+      "language": "English",
+      "fluency": "fluent"
+    },
+    {
+      "language": "Korean",
+      "fluency": "native"
+    },
+    {
+      "language": "French",
+      "fluency": "basic"
+    },
+    {
+      "language": "Italian",
+      "fluency": "basic"
+    },
+    {
+      "language": "Latin",
+      "fluency": "passive"
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Jülicher Tafel e.V.",
+      "position": "Community"
+    },
+    {
+      "organization": "In via - Café Gemeinsam",
+      "position": "Community"
+    },
+    {
+      "organization": "Amnesty International",
+      "position": "Community"
+    },
+    {
+      "organization": "Florence-Nightingale-Krankenhaus",
+      "position": "Community"
+    },
+    {
+      "organization": "Foodsharing e.V. (Operations Manager)",
+      "position": "Environment"
+    },
+    {
+      "organization": "Österreichisches Waldgarten-Institut",
+      "position": "Environment"
+    },
+    {
+      "organization": "Hofwaerts",
+      "position": "Environment"
+    },
+    {
+      "organization": "UBC Mannheim",
+      "position": "Sports"
+    },
+    {
+      "organization": "Sobell Badminton Club",
+      "position": "Sports"
+    },
+    {
+      "organization": "ASD Gymnase",
+      "position": "Sports"
+    },
+    {
+      "organization": "BSG Jülich 1963 e.V.",
+      "position": "Sports"
+    },
+    {
+      "organization": "WAT Simmering",
+      "position": "Sports"
+    },
+    {
+      "organization": "TSG 1889 Dossenheim e.V.",
+      "position": "Sports"
+    },
+    {
+      "organization": "HTV 1846 e.V.",
+      "position": "Sports"
+    }
+  ],
+  "awards": [
+    {
+      "title": "DAAD PROMOS Scholarship",
+      "date": "2015-01-01",
+      "awarder": "DAAD",
+      "summary": "Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery."
+    },
+    {
+      "title": "DeGBS Poster Award",
+      "date": "2021-01-01",
+      "awarder": "Deutsche Gesellschaft für Biologische Strahlenforschung"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Anti-Financial Crime – Know Your Customer (KYC) Platform",
+      "description": "Cloud migration and analytics environment development for financial crime detection at a large international bank.",
+      "highlights": [
+        "Expanded the Python-based analytics environment in Google Cloud.",
+        "Migrated legacy SAS reporting workflows to Python-based pipelines.",
+        "Explored BI capabilities using Looker and prepared the data model.",
+        "Conducted stakeholder management and requirements analysis.",
+        "Supported AML risk analysis through ad-hoc investigations of customer relationships."
+      ],
+      "keywords": [
+        "Google Cloud Platform",
+        "BigQuery",
+        "Python",
+        "SAS",
+        "Looker"
+      ],
+      "startDate": "2024-08-01",
+      "endDate": "2025-07-28",
+      "roles": [
+        "Lead Business Functional Analyst (Cintellic GmbH)"
+      ]
+    },
+    {
+      "name": "Hyper-Personalized Digital Customer Platform",
+      "description": "Data model development supporting hyper-personalized customer communication during migration of customer data infrastructure to Google Cloud.",
+      "highlights": [
+        "Conducted requirements analysis with business and analytics stakeholders.",
+        "Mapped data tables from legacy systems to the new cloud architecture.",
+        "Supported integration of over 1000 analytical processes into the cloud platform."
+      ],
+      "keywords": [
+        "Google Cloud Platform",
+        "BigQuery",
+        "SQL",
+        "Python"
+      ],
+      "startDate": "2024-05-01",
+      "endDate": "2024-10-28",
+      "roles": [
+        "Lead Business Functional Analyst (Cintellic GmbH)"
+      ]
+    },
+    {
+      "name": "SignMeUp – Real-Time American Sign Language (ASL) Recognition",
+      "description": "Machine learning pipeline and application prototype for real-time ASL gesture recognition, designed for integration into a digital sign language learning app.",
+      "highlights": [
+        "Project Leadership: Defined project scope, managed team communication, and delivered stakeholder presentations.",
+        "Model Development: Designed and optimized an LSTM neural network to classify temporal sequences of ASL gestures.",
+        "Data Engineering: Developed a pipeline for real-time landmark extraction, feature engineering, and data cleaning from video feeds."
+      ],
+      "keywords": [
+        "Python",
+        "TensorFlow (Keras)",
+        "LSTM",
+        "MediaPipe",
+        "OpenCV",
+        "Google Cloud",
+        "Scikit-Learn",
+        "MLflow"
+      ],
+      "startDate": "2023-09-01",
+      "endDate": "2023-12-28",
+      "roles": [
+        "Project Manager / Data Scientist (neuefische GmbH)"
+      ]
+    },
+    {
+      "name": "Shuttle Insights – AI Badminton Match Analysis",
+      "description": "Computer vision system for analyzing badminton gameplay from video recordings.",
+      "highlights": [
+        "Developed a computer vision pipeline for detecting players and tracking shuttle trajectories.",
+        "Implemented pose estimation models to analyze player movement patterns.",
+        "Extracted gameplay metrics such as rally duration and player positioning."
+      ],
+      "keywords": [
+        "Python",
+        "OpenCV",
+        "TensorFlow",
+        "MediaPipe"
+      ],
+      "startDate": "2024-01-01",
+      "endDate": "2024-04-28",
+      "roles": [
+        "Data Scientist / Developer"
+      ]
+    },
+    {
+      "name": "Data Science Bootcamp Program",
+      "description": "Professional training program for transitioning participants into data science careers.",
+      "highlights": [
+        "Delivered lectures on Python, machine learning, SQL, and data visualization.",
+        "Mentored students throughout the data science lifecycle.",
+        "Supervised capstone projects and technical presentations.",
+        "Developed and improved training materials."
+      ],
+      "keywords": [
+        "Python",
+        "Pandas",
+        "NumPy",
+        "Scikit-Learn",
+        "TensorFlow",
+        "SQL",
+        "Docker",
+        "dbt",
+        "Google Cloud"
+      ],
+      "startDate": "2023-09-01",
+      "endDate": "2024-04-28",
+      "roles": [
+        "Data Science Coach (neuefische GmbH)"
+      ]
+    },
+    {
+      "name": "Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis",
+      "description": "Bioinformatics pipeline for identifying novel immunotherapy targets derived from aberrant alternative splicing in RNA-Seq data.",
+      "highlights": [
+        "Developed a discovery pipeline to identify tumor-specific splice junctions across large-scale cancer datasets.",
+        "Mapped the epitope landscape by predicting high-affinity MHC-I binding peptides from non-canonical transcripts.",
+        "Validated the predictive model by cross-referencing findings with high-impact transcriptomic studies.",
+        "Evaluated synergistic strategies for co-targeting mutation-derived and splice-derived neoantigens."
+      ],
+      "keywords": [
+        "Python",
+        "R",
+        "MapSplice",
+        "RNA-Seq",
+        "TCGA Datasets",
+        "MHC-I Prediction Tools"
+      ],
+      "startDate": "2015-08-01",
+      "endDate": "2015-11-28",
+      "roles": [
+        "Bioinformatics Research Intern (Seoul National University)"
+      ]
+    },
+    {
+      "name": "Personalized Immunotherapy – High-Throughput HLA Typing Pipeline",
+      "description": "Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data.",
+      "highlights": [
+        "Developed an in silico genotyping pipeline to extract HLA alleles directly from Whole-Exome Sequencing (WXS) data.",
+        "Implemented predictive modeling using ANNs (NetMHCPan) to screen missense mutations for MHC-I binding affinity.",
+        "Engineered a consensus methodology integrating multiple HLA typing algorithms to resolve sequence ambiguities and improve diagnostic reliability.",
+        "Validated the pipeline by analyzing binding specificities across HLA alleles to mitigate genotyping errors in vaccine design."
+      ],
+      "keywords": [
+        "Python",
+        "R",
+        "HLAMiner",
+        "Seq2HLA",
+        "NetMHCPan (Neural Networks)",
+        "Shell Scripting"
+      ],
+      "startDate": "2014-04-01",
+      "endDate": "2014-05-28",
+      "roles": [
+        "Bioinformatics Bachelor Thesis Student (NCT Heidelberg)"
+      ]
+    },
+    {
+      "name": "Experimental Biophysics — Chromatin Nano-Architecture & DNA Repair",
+      "description": "Advanced research utilizing super-resolution microscopy and computational analysis to investigate DNA repair mechanisms and chromatin nano-architecture.",
+      "highlights": [
+        "Experimental Design: Developed and executed research projects focused on DNA repair pathways and super-resolution imaging of chromatin structures.",
+        "Data Analysis & Modeling: Leveraged MATLAB, R, and Python to process complex imaging data and perform quantitative analysis of nano-scale structures.",
+        "Academic Leadership: Managed international research collaborations and mentored several Bachelor and Master's students throughout the project lifecycle."
+      ],
+      "keywords": [
+        "MATLAB",
+        "Linux",
+        "R",
+        "Python",
+        "COMBO-FISH",
+        "SPDM",
+        "DBSCAN"
+      ],
+      "startDate": "2017-02-01",
+      "endDate": "2018-08-28",
+      "roles": [
+        "Graduate Researcher / Master's Candidate"
+      ]
+    },
+    {
+      "name": "Neural Stem Cell Research – Radiation Effects on 3D Differentiation",
+      "description": "Scientific research project investigating the impact of ionizing radiation and extracellular vesicles on human neural progenitor cell differentiation.",
+      "highlights": [
+        "Experimental Design: Developed and executed a multi-year research project at the intersection of radiation biology and neuroscience.",
+        "Leadership & Mentoring: Supervised and guided students, junior researchers, and technical staff through complex laboratory workflows.",
+        "Scientific Communication: Secured third-party funding, established research collaborations, and published findings in peer-reviewed journals."
+      ],
+      "keywords": [
+        "3D Cell Culture Modeling",
+        "qPCR",
+        "Fluorescence Microscopy",
+        "FACS",
+        "Biochemistry",
+        "ImageJ",
+        "MS Office"
+      ],
+      "startDate": "2018-09-01",
+      "endDate": "2022-07-28",
+      "roles": [
+        "Doctoral Researcher (RWTH Aachen, Forschungszentrum Jülich)"
+      ]
+    },
+    {
+      "name": "Splice Neoepitope Pipeline – Reproducible Snakemake Workflow",
+      "description": "Modernised, open-source reimplementation of the 2015 SNU splice-junction–based neoepitope discovery work as a reproducible Snakemake pipeline with optional structural validation.",
+      "highlights": [
+        "Re-engineered the original SNU pipeline as a fully reproducible Snakemake 8.x workflow with per-rule Conda environments — installable without manual dependency management.",
+        "Implemented tumor-vs-matched-normal junction filtering against GENCODE annotation, classifying junctions as annotated, normal_shared, or tumor_exclusive.",
+        "Integrated patient-specific HLA typing (OptiType) and MHC-I peptide presentation prediction (MHCflurry 2.x Class1PresentationPredictor) for end-to-end neoepitope candidate ranking.",
+        "Added optional TCR-pMHC ternary complex structural validation via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.",
+        "MIT-licensed, public on GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
+      ],
+      "keywords": [
+        "Snakemake 8.x",
+        "Conda",
+        "Python 3.11",
+        "HISAT2 / STAR",
+        "OptiType",
+        "MHCflurry 2.x",
+        "TCRdock / AlphaFold v2",
+        "bedtools",
+        "Google Cloud GPU",
+        "Mol*"
+      ],
+      "startDate": "2026-03-01",
+      "endDate": "2026-03-01",
+      "roles": [
+        "Author and Maintainer (Open Source)"
+      ]
+    }
+  ],
+  "publications": [
+    {
+      "name": "Super-Resolution Radiation Biology: From Bio-Dosimetry towards Nano-Studies of DNA Repair Mechanisms",
+      "publisher": "DNA - Damages and Repair Mechanisms",
+      "releaseDate": "2021-01-01",
+      "summary": "Lee, J., Hausmann, M.",
+      "url": "https://doi.org/10.5772/intechopen.95597"
+    },
+    {
+      "name": "DeGBS 2021 Conference Contribution",
+      "publisher": "Deutsche Gesellschaft für Biologische Strahlenforschung",
+      "releaseDate": "2021-01-01",
+      "summary": "Lee, J."
+    },
+    {
+      "name": "3D DNA FISH for analyses of chromatin-nuclear architecture",
+      "publisher": "Epigenetics Methods",
+      "releaseDate": "2020-01-01",
+      "summary": "Hausmann, M., Lee, J., others",
+      "url": "https://doi.org/10.1016/b978-0-12-819414-0.00020-3"
+    },
+    {
+      "name": "Nanostructure of Clustered DNA Damage in Leukocytes after In-Solution Irradiation with the Alpha Emitter Ra-223",
+      "publisher": "Cancers",
+      "releaseDate": "2019-01-01",
+      "summary": "Scherthan, H., Lee, J., others",
+      "url": "https://doi.org/10.3390/cancers11121877"
+    },
+    {
+      "name": "COMBO-FISH: A versatile tool beyond standard FISH to study chromatin organization by fluorescence light microscopy",
+      "publisher": "OBM Genetics",
+      "releaseDate": "2019-01-01",
+      "summary": "Lee, J., others",
+      "url": "https://doi.org/10.21926/obm.genet.1901064"
+    },
+    {
+      "name": "Challenges and contradictions of metal nano-particle applications for radio-sensitivity enhancement in cancer therapy",
+      "publisher": "International Journal of Molecular Sciences",
+      "releaseDate": "2019-01-01",
+      "summary": "Pagacova, E., Stefancikova, L., Schmidt-Kaler, F., Hildenbrand, G., Vicar, T., Depes, D., Lee, J., others",
+      "url": "https://doi.org/10.3390/ijms20030588"
+    },
+    {
+      "name": "Mechanisms and Challenges for Understanding Radiation Induced Changes in Chromatin Nanoarchitecture and Repair Complex Formation",
+      "publisher": "ConRad 2019 - Global Conference on Radiation Topics",
+      "releaseDate": "2019-01-01",
+      "summary": "Lee, J."
+    },
+    {
+      "name": "Recruitment of 53BP1 Proteins for DNA Repair and Persistence of Repair Clusters Differ for Cell Types as Detected by Single Molecule Localization Microscopy",
+      "publisher": "International Journal of Molecular Sciences",
+      "releaseDate": "2018-01-01",
+      "summary": "Bobkova, E., Depes, D., Lee, J., others",
+      "url": "https://doi.org/10.3390/ijms19123713"
+    },
+    {
+      "name": "Single-molecule localization microscopy as a promising tool for gammaH2AX/53BP1 foci exploration",
+      "publisher": "The European Physical Journal D",
+      "releaseDate": "2018-01-01",
+      "summary": "Depes, D., Lee, J., others",
+      "url": "https://doi.org/10.1140/epjd/e2018-90148-1"
+    },
+    {
+      "name": "Super-Resolution Localization Microscopy of Radiation-Induced Histone H2AX-Phosphorylation in relation to H3K9-Trimethylation in HeLa Cells",
+      "publisher": "Nanoscale",
+      "releaseDate": "2018-01-01",
+      "summary": "Hausmann, M., Wagner, E., Lee, J., others",
+      "url": "https://doi.org/10.1039/c7nr08145f"
+    },
+    {
+      "name": "Localization Microscopy Analyses of MRE11 Clusters in 3D-Conserved Cell Nuclei of Different Cell Lines",
+      "publisher": "Cancers",
+      "releaseDate": "2018-01-01",
+      "summary": "Eryilmaz, M., Schmitt, E., Krufczik, M., Theda, F., Lee, J., others",
+      "url": "https://doi.org/10.3390/cancers10010025"
+    },
+    {
+      "name": "Mechanisms and challenges for understanding radiation induced changes in chromatin nanoarchitecture",
+      "publisher": "Dny radiační ochrany (DRO 2018)",
+      "releaseDate": "2018-01-01",
+      "summary": "Lee, J."
+    },
+    {
+      "name": "Challenges for Super-Resolution Localization Microscopy and Biomolecular Fluorescent Nano-Probing in Cancer Research",
+      "publisher": "International Journal of Molecular Sciences",
+      "releaseDate": "2017-01-01",
+      "summary": "Hausmann, M., Ilic, N., Pilarczyk, G., Lee, J., others",
+      "url": "https://doi.org/10.3390/ijms18102066"
+    },
+    {
+      "name": "Combining Low Temperature Fluorescence DNA-Hybridization, Immunostaining, and Super-Resolution Localization Microscopy for Nano-Structure Analysis of ALU Elements and Their Influence on Chromatin Structure",
+      "publisher": "International Journal of Molecular Sciences",
+      "releaseDate": "2017-01-01",
+      "summary": "Krufczik, M., Sievers, A., Hausmann, A., Lee, J., others",
+      "url": "https://doi.org/10.3390/ijms18051005"
+    },
+    {
+      "name": "Marketing Automation Tool Selection & Implementation @DeutschlandCard",
+      "publisher": "Essentials of Modern Marketing, Germany Edition",
+      "releaseDate": "2025-01-01",
+      "summary": "Lee, J., Eckhardt, C."
+    }
+  ]
+}
