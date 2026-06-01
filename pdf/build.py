@@ -63,6 +63,21 @@ def _pdf_filename(lang: str, target: str) -> str:
     return f"cv-{lang}.pdf" if target == "bridge" else f"cv-{lang}-{target}.pdf"
 
 
+def select_publications(pubs: list, target: str) -> tuple[list, bool]:
+    """Pick which publications the PDF shows for `target`.
+
+    `comp-bio` shows the full list (is_selected=False); `bridge` and `ds-ml`
+    show the first+shared subset (is_selected=True). Order is preserved from
+    bib_loader. Depth is a PDF *rendering* choice — the web and plain-text
+    renderers always show all publications — so this lives here, not in the
+    shared content_loader.
+    """
+    if target == "comp-bio":
+        return list(pubs), False
+    subset = [p for p in pubs if p.authorship in ("first", "shared")]
+    return subset, True
+
+
 def prepare_data(
     content_dir: Path,
     *,
