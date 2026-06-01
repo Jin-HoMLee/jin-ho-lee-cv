@@ -63,7 +63,7 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
   <svg
     viewBox="-1.1 -1.1 2.2 2.2"
     class="h-32 w-32 shrink-0"
-    role="img"
+    role="group"
     aria-label={`Authorship breakdown across ${total} ${totalLabel}`}
   >
     {arcs.map((arc) => (
@@ -122,10 +122,11 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
         tooltip.style.left = `${point.clientX - rect.left + 8}px`;
         tooltip.style.top = `${point.clientY - rect.top + 8}px`;
       } else {
-        // Keyboard focus / activation has no pointer coords — anchor to the slice's bbox center.
+        // Keyboard focus / activation has no pointer coords — anchor near the slice's
+        // bbox center, matching the mouse branch's +8px nudge so the tooltip clears the slice.
         const b = target.getBoundingClientRect();
-        tooltip.style.left = `${b.left + b.width / 2 - rect.left}px`;
-        tooltip.style.top = `${b.top + b.height / 2 - rect.top}px`;
+        tooltip.style.left = `${b.left + b.width / 2 - rect.left + 8}px`;
+        tooltip.style.top = `${b.top + b.height / 2 - rect.top + 8}px`;
       }
     };
     const hide = () => tooltip.classList.add("hidden");
@@ -144,7 +145,7 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
       p.addEventListener("focus", (e) => show(e, p));
       p.addEventListener("blur", hide);
       p.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+        if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           if (tooltip.classList.contains("hidden")) show(e, p);
           else hide();
