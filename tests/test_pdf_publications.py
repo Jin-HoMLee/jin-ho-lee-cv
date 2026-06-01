@@ -1,89 +1,48 @@
-"""Tests for the PDF publications section (issue #43)."""
+"""Tests for the PDF publications section (issues #43, #46)."""
 import shutil
 import subprocess
 import sys
 
 import pytest
 
-from pdf.build import prepare_data, select_publications
-from scripts.bib_loader import Publication, load_publications
+from pdf.build import prepare_data
+from scripts.bib_loader import load_publications
+from scripts.publications import publication_summary
 
 
-def _pub(authorship, key="k", title="T", authors=("Lee, J.",)):
-    """Minimal Publication record for exercising select_publications()."""
-    return Publication(
-        key=key,
-        title=title,
-        year=2020,
-        type="article",
-        authorship=authorship,
-        authors=authors,
-        venue="V",
-        doi=None,
-        raw={},
-        category="research",
-    )
-
-
-def test_select_publications_comp_bio_returns_all_unselected():
-    pubs = [_pub("first"), _pub("shared"), _pub("middle")]
-    selected, is_selected = select_publications(pubs, "comp-bio")
-    assert [p.authorship for p in selected] == ["first", "shared", "middle"]
-    assert is_selected is False
-
-
-def test_select_publications_bridge_keeps_first_and_shared_in_order():
-    pubs = [_pub("first", key="a"), _pub("middle", key="b"), _pub("shared", key="c")]
-    selected, is_selected = select_publications(pubs, "bridge")
-    assert [p.key for p in selected] == ["a", "c"]  # middle dropped, order preserved
-    assert is_selected is True
-
-
-def test_select_publications_ds_ml_keeps_first_and_shared():
-    pubs = [_pub("first"), _pub("middle"), _pub("shared")]
-    selected, is_selected = select_publications(pubs, "ds-ml")
-    assert [p.authorship for p in selected] == ["first", "shared"]
-    assert is_selected is True
-
-
-def test_prepare_data_bridge_selects_first_and_shared_with_selected_heading(content_dir):
-    # Assert the subset equals the live bib's first+shared entries (by key, in
-    # order) rather than a hardcoded count — resilient to bib edits.
-    all_pubs = load_publications(content_dir / "publications.bib")
-    expected_keys = [p.key for p in all_pubs if p.authorship in ("first", "shared")]
-    result = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
-    assert [p["key"] for p in result["publications"]] == expected_keys
-    assert result["publications_heading"] == "Selected Publications"
-
-
-def test_prepare_data_comp_bio_selects_all_with_plain_heading(content_dir):
+def test_prepare_data_comp_bio_full_list(content_dir):
     all_pubs = load_publications(content_dir / "publications.bib")
     result = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
+    assert result["publications_mode"] == "full"
     assert [p["key"] for p in result["publications"]] == [p.key for p in all_pubs]
     assert result["publications_heading"] == "Publications"
+    assert result["publications_summary"] is None
+    assert result["publications_pointer"] is None
 
 
-def test_prepare_data_ds_ml_selects_first_and_shared(content_dir):
-    all_pubs = load_publications(content_dir / "publications.bib")
-    expected_keys = [p.key for p in all_pubs if p.authorship in ("first", "shared")]
-    result = prepare_data(content_dir, private_path=None, lang="en", target="ds-ml")
-    assert [p["key"] for p in result["publications"]] == expected_keys
-    assert result["publications_heading"] == "Selected Publications"
-
-
-def test_prepare_data_publications_heading_localized_de(content_dir):
-    bridge = prepare_data(content_dir, private_path=None, lang="de", target="bridge")
-    comp = prepare_data(content_dir, private_path=None, lang="de", target="comp-bio")
-    assert bridge["publications_heading"] == "Ausgewählte Publikationen"
-    assert comp["publications_heading"] == "Publikationen"
-
-
-def test_prepare_data_publication_entries_have_render_fields(content_dir):
+def test_prepare_data_bridge_aggregate(content_dir):
+    s = publication_summary(load_publications(content_dir / "publications.bib"))
     result = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
-    entry = result["publications"][0]
-    for field in ("title", "authors", "year", "doi", "venue", "authorship"):
-        assert field in entry
-    assert isinstance(entry["authors"], list)
+    assert result["publications_mode"] == "aggregate"
+    assert result["publications_heading"] == "Publications"
+    assert f"{s.peer_reviewed} peer-reviewed publications" in result["publications_summary"]
+    assert f"{s.conferences} first-author conference contributions" in result["publications_summary"]
+    assert result["publications_pointer"] == "Full list & metrics:"
+
+
+def test_prepare_data_ds_ml_aggregate(content_dir):
+    s = publication_summary(load_publications(content_dir / "publications.bib"))
+    result = prepare_data(content_dir, private_path=None, lang="en", target="ds-ml")
+    assert result["publications_mode"] == "aggregate"
+    assert f"{s.peer_reviewed} peer-reviewed publications" in result["publications_summary"]
+    assert result["publications_pointer"] == "Full list & metrics:"
+
+
+def test_prepare_data_de_aggregate_localized(content_dir):
+    result = prepare_data(content_dir, private_path=None, lang="de", target="bridge")
+    assert result["publications_heading"] == "Publikationen"
+    assert "begutachtete Publikationen" in result["publications_summary"]
+    assert result["publications_pointer"] == "Vollständige Liste:"
 
 
 def _typst_available():
@@ -102,34 +61,28 @@ def _norm(s):
     not (_typst_available() and _pdftotext_available()),
     reason="needs typst + pdftotext (poppler) to extract and assert PDF text",
 )
-def test_pdf_bridge_shows_heading_and_omits_middle_author_titles(repo_root, content_dir):
-    out = repo_root / "dist" / "cv-en.pdf"
-    if out.exists():
-        out.unlink()
-
-    build = subprocess.run(
-        [sys.executable, "-m", "pdf.build", "--lang", "en"],  # default target = bridge
-        cwd=repo_root,
-        capture_output=True,
-        text=True,
-    )
-    assert build.returncode == 0, f"build failed:\n{build.stderr}"
-    assert out.exists()
-
-    text = subprocess.run(
-        ["pdftotext", str(out), "-"], capture_output=True, text=True
-    ).stdout
-    norm = _norm(text)
-
-    # Heading present (section-heading upper-cases it → "SELECTED PUBLICATIONS").
-    # Letter-spacing in the Typst style makes pdftotext insert spaces inside
-    # words, so compare with all spaces removed.
-    norm_nospace = norm.replace(" ", "")
-    assert "selectedpublications" in norm_nospace
-
-    # A first-author title renders; a middle-author-only title does not (bridge = 9).
+def test_pdf_bridge_aggregate_vs_comp_bio_full(repo_root, content_dir):
     pubs = load_publications(content_dir / "publications.bib")
-    first = next(p for p in pubs if p.authorship == "first")
     middle = next(p for p in pubs if p.authorship == "middle")
-    assert _norm(first.title) in norm
-    assert _norm(middle.title) not in norm
+
+    def build(target, name):
+        out = repo_root / "dist" / name
+        if out.exists():
+            out.unlink()
+        r = subprocess.run(
+            [sys.executable, "-m", "pdf.build", "--lang", "en", "--target", target],
+            cwd=repo_root, capture_output=True, text=True,
+        )
+        assert r.returncode == 0, f"build failed:\n{r.stderr}"
+        assert out.exists()
+        return subprocess.run(["pdftotext", str(out), "-"], capture_output=True, text=True).stdout
+
+    bridge = _norm(build("bridge", "cv-en.pdf"))
+    compbio = _norm(build("comp-bio", "cv-en-comp-bio.pdf"))
+
+    # bridge → aggregate: ORCID pointer present, the middle-author paper title absent.
+    assert "orcid.org/0009-0001-8784-1771" in bridge.replace(" ", "")
+    # Hyphen-insensitive: pdftotext drops a hyphen when a title word wraps at it.
+    assert _norm(middle.title).replace("-", "") not in bridge.replace("-", "")
+    # comp-bio → full list: the middle-author paper title present.
+    assert _norm(middle.title).replace("-", "") in compbio.replace("-", "")
