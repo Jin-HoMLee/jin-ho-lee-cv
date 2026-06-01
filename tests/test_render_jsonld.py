@@ -151,3 +151,27 @@ def test_orcid_and_website_in_same_as(doc):
 def test_person_award_present(doc):
     assert "DAAD PROMOS Scholarship" in doc["award"]
     assert "DeGBS Poster Award" in doc["award"]
+
+
+# --- #42: period-end edge cases (characterization of _works_for selection) ---
+from scripts.render_jsonld import _works_for  # noqa: E402
+
+
+def _content(*ends):
+    """Build experience entries; pass None for explicit null end, False to omit the key."""
+    exps = []
+    for i, e in enumerate(ends):
+        period = {"start": "2014-04"}
+        if e is not False:
+            period["end"] = e
+        exps.append({"org": {"name": f"Org{i}"}, "role": "R", "period": period})
+    return {"experience": exps}
+
+
+def test_works_for_picks_null_end_entry():
+    wf = _works_for(_content("2020-01", None))
+    assert wf is not None and wf["name"] == "Org1"
+
+
+def test_works_for_none_when_all_dated():
+    assert _works_for(_content("2020-01", "2025-07")) is None
