@@ -76,6 +76,10 @@ build-text-targets:
 # Build every Phase 4 machine format (resume.json + person.jsonld + plain text)
 build-formats: build-resume build-jsonld build-text
 
+# Regenerate committed renderer golden snapshots (run after an intentional output change)
+snapshots-update:
+    uv run pytest tests/test_snapshots.py --snapshot-update
+
 # Render JSON-LD and copy into web/public/ so BaseLayout's raw import resolves.
 web-jsonld:
     uv run python -m scripts.render_jsonld

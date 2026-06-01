@@ -1,0 +1,124 @@
+JIN-HO LEE
+Data Science · Machine Learning - Mannheim, GER
+jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/in/jin-holee | https://github.com/Jin-HoMLee | https://researchgate.net/profile/Jin-Ho-Lee-8 | https://jinholee.is-a.dev/ | https://orcid.org/0009-0001-8784-1771
+
+================================================================================
+PROFILE
+================================================================================
+Production-focused data scientist who builds and ships machine-learning systems
+end to end — bringing the experimental rigor of a decade in cancer genomics, and
+10+ peer-reviewed publications, to every model and pipeline.
+
+In industry: architected the migration of 1,000+ analytical processes to Google
+Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached
+100+ specialists in Python, SQL & ML.
+
+================================================================================
+EXPERIENCE
+================================================================================
+Consultant, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 to 2025-07)
+  - Scale: Architected the migration of 1,000+ analytical processes to Google Cloud.
+  - AI in Production: Developed BigQueryML models for anti-financial crime & KYC.
+  - Stakeholder Lead: Bridged technical data engineering with business requirements for high-stakes banking.
+
+Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 to 2024-04)
+  - Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles.
+  - ML Development: Independently engineered a Real-Time ASL Recognition prototype using LSTMs, MediaPipe, and TensorFlow.
+
+Doctoral & Post-Graduate Researcher - FZ Jülich / KIP / NCT / SNU / DKFZ    (2014-04 to 2022-07)
+  - Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer-patient NGS and RNA-Seq splice-junction data; validated SNV calls against gold-standard sequencing in clinical colorectal-cancer cohorts (NCT/DKFZ).
+  - Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects — from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin.
+  - Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles.
+
+================================================================================
+SELECTED PROJECTS
+================================================================================
+Anti-Financial Crime – Know Your Customer (KYC) Platform    (2024-08 to 2025-07)
+  Lead Business Functional Analyst (Cintellic GmbH)
+  Cloud migration and analytics environment development for financial crime
+  detection at a large international bank.
+  Outcome: Enabled transition of legacy reporting processes into a scalable
+  cloud-based analytics environment.
+
+SignMeUp – Real-Time American Sign Language (ASL) Recognition    (2023-09 to 2023-12)
+  Project Manager / Data Scientist (neuefische GmbH)
+  Machine learning pipeline and application prototype for real-time ASL gesture
+  recognition, designed for integration into a digital sign language learning
+  app.
+  Outcome: Delivered a functional prototype for real-time inference, enabling
+  instant feedback for sign language learners.
+
+Shuttle Insights – AI Badminton Match Analysis    (2024-01 to 2024-04)
+  Data Scientist / Developer
+  Computer vision system for analyzing badminton gameplay from video recordings.
+  Outcome: Functional prototype capable of generating match statistics and
+  movement analytics.
+
+================================================================================
+EDUCATION
+================================================================================
+2019  M.Sc. Molecular Biotechnology - Heidelberg University (Heidelberg, Germany)
+2014  B.Sc. Molecular Biotechnology, Bioinformatics - Heidelberg University (Heidelberg, Germany)
+
+================================================================================
+SKILLS
+================================================================================
+Bioinformatics & ML
+  Genomics: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
+  Immunology: MHC-I Prediction, HLA Typing, OptiType, MHCflurry, Neoepitopes
+  Structural Biology: TCRdock, AlphaFold v2, Mol*
+  Nanoscopy: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
+Biotech Wet-Lab
+  Models: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
+  Imaging: Super-Resolution, Confocal, Fluorescence
+  Assays: FISH, IF, qPCR, FACS
+Data & Engineering
+  AI & Vision: TensorFlow, Keras, LSTMs, OpenCV
+  Eng & Tools: Python (Exp), R, SQL, Snakemake, Conda, Docker, Git, dbt
+  Cloud: GCP, BigQuery, Vertex AI, Looker
+
+================================================================================
+LANGUAGES
+================================================================================
+  German: native
+  English: fluent
+  Korean: native
+  French: basic
+  Italian: basic
+  Latin: passive
+
+================================================================================
+VOLUNTEER
+================================================================================
+Community
+  - Jülicher Tafel e.V.
+  - In via - Café Gemeinsam
+  - Amnesty International
+  - Florence-Nightingale-Krankenhaus
+Environment
+  - Foodsharing e.V. (Operations Manager)
+  - Österreichisches Waldgarten-Institut
+  - Hofwaerts
+Sports
+  - UBC Mannheim
+  - Sobell Badminton Club
+  - ASD Gymnase
+  - BSG Jülich 1963 e.V.
+  - WAT Simmering
+  - TSG 1889 Dossenheim e.V.
+  - HTV 1846 e.V.
+
+================================================================================
+PUBLICATIONS
+================================================================================
+11 peer-reviewed publications (2 first-author, 3 shared-first, 6 co-author) and
+3 first-author conference contributions, 2017–2021, in radiation biophysics &
+super-resolution DNA-repair imaging.
+Full list & metrics: https://orcid.org/0009-0001-8784-1771
+
+================================================================================
+AWARDS
+================================================================================
+2015  DAAD PROMOS Scholarship - DAAD
+  Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery.
+2021  DeGBS Poster Award - Deutsche Gesellschaft für Biologische Strahlenforschung
