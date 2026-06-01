@@ -85,9 +85,19 @@ def prepare_data(
     lang: str,
     target: str = "bridge",
 ) -> dict[str, Any]:
-    """Load content tree, merge private overlay, resolve langstrings, return flat dict."""
+    """Load content tree, merge private overlay, resolve langstrings, return flat dict.
+
+    Also applies variant-aware publication selection and injects the resolved
+    ``publications_heading`` (PDF-only rendering depth — web/text show all).
+    """
     raw = load_content(content_dir, private_path=private_path, lang=lang, target=target)
     resolved = resolve_langstrings(raw, lang=lang)
+    pubs, is_selected = select_publications(resolved.get("publications", []), target)
+    resolved["publications"] = pubs
+    sections = resolved["labels"]["sections"]
+    resolved["publications_heading"] = (
+        sections["publications_selected"] if is_selected else sections["publications"]
+    )
     return _to_serializable(resolved)
 
 
