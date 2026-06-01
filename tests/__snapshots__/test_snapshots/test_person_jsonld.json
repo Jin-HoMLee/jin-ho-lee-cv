@@ -94,7 +94,7 @@
     },
     {
       "@type": "ScholarlyArticle",
-      "@id": "https://jinholee.is-a.dev/#publication-1",
+      "@id": "https://jinholee.is-a.dev/#publication-lee2021_degbs",
       "name": "DeGBS 2021 Conference Contribution",
       "datePublished": "2021",
       "author": [
@@ -249,7 +249,7 @@
     },
     {
       "@type": "ScholarlyArticle",
-      "@id": "https://jinholee.is-a.dev/#publication-6",
+      "@id": "https://jinholee.is-a.dev/#publication-lee2019_conrad",
       "name": "Mechanisms and Challenges for Understanding Radiation Induced Changes in Chromatin Nanoarchitecture and Repair Complex Formation",
       "datePublished": "2019",
       "author": [
@@ -408,7 +408,7 @@
     },
     {
       "@type": "ScholarlyArticle",
-      "@id": "https://jinholee.is-a.dev/#publication-11",
+      "@id": "https://jinholee.is-a.dev/#publication-lee2018_dro",
       "name": "Mechanisms and challenges for understanding radiation induced changes in chromatin nanoarchitecture",
       "datePublished": "2018",
       "author": [
@@ -501,7 +501,7 @@
     },
     {
       "@type": "ScholarlyArticle",
-      "@id": "https://jinholee.is-a.dev/#publication-14",
+      "@id": "https://jinholee.is-a.dev/#publication-lee2025_marketing_automation",
       "name": "Marketing Automation Tool Selection & Implementation @DeutschlandCard",
       "datePublished": "2025",
       "author": [
