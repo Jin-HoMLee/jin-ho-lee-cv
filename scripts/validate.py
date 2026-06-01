@@ -200,7 +200,9 @@ def date_warnings(content_dir: Path, *, today: date | None = None) -> list[FileE
     warnings: list[FileError] = []
     for path, period in _iter_periods(content_dir):
         for ym in (period.get("start"), period.get("end")):
-            if not ym:
+            # Skip null/absent and any non-'YYYY-MM' value, so this stays safe to
+            # call in isolation (schema guarantees the format in the main pipeline).
+            if not (isinstance(ym, str) and ym[:4].isdigit()):
                 continue
             year = int(ym[:4])
             if year > ceiling:

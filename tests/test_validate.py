@@ -211,3 +211,21 @@ def test_real_content_has_no_integrity_errors_or_warnings(content_dir):
     from scripts.validate import _validate_periods, date_warnings
     assert _validate_periods(content_dir) == []
     assert date_warnings(content_dir, today=date(2026, 6, 1)) == []
+
+
+def test_date_warnings_boundaries_are_clean(tmp_path):
+    """year == 2014 (floor, inclusive-ok) and year == today.year+5 (ceiling, > is False) → no warnings."""
+    from scripts.validate import date_warnings
+    _write_exp(tmp_path, "2014-01", "2031-12")
+    assert date_warnings(tmp_path, today=date(2026, 6, 1)) == []
+
+
+def test_date_warnings_skips_non_yyyymm(tmp_path):
+    """A non-'YYYY-MM' end value (e.g. 'present') is skipped, not crashed — callable in isolation."""
+    from scripts.validate import date_warnings
+    (tmp_path / "experience.yaml").write_text(
+        '- id: x\n  org: {name: O}\n  role: {en: R, de: R}\n'
+        '  period: {start: "2024-05", end: "present"}\n  bullets: []\n'
+    )
+    (tmp_path / "projects").mkdir()
+    assert date_warnings(tmp_path, today=date(2026, 6, 1)) == []
