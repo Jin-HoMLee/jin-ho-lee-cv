@@ -1,4 +1,11 @@
-"""Render the CV as schema.org Person JSON-LD."""
+"""Render the CV as a schema.org @graph (JSON-LD).
+
+The output is a top-level ``@graph`` of ``@id``-linked entities (Person + works),
+optimized for **AI/LLM entity resolution and knowledge-graph ingestion** — NOT for
+SEO rich results (Google surfaces no Person rich result and dropped EstimatedSalary
+in June 2025). The Person ``@id`` is the ORCID URI; authored works link back to it
+via ``author`` / ``creator: {"@id": <orcid>}``.
+"""
 from __future__ import annotations
 
 import argparse
@@ -22,70 +29,82 @@ def _same_as(personal: dict) -> list[str]:
 
 
 def _alumni_of(content: dict) -> list[dict]:
-    return [
-        {"@type": "EducationalOrganization", "name": e["institution"]}
-        for e in content["education"]
-    ]
-
-
-def _knows_about(content: dict) -> list[str]:
-    out: list[str] = []
-    for cat in content["skills"]["categories"]:
-        for grp in cat["groups"]:
-            out.extend(grp["items"])
+    """Educational organizations, deduped by name (order-preserving)."""
+    seen: set[str] = set()
+    out: list[dict] = []
+    for e in content["education"]:
+        inst = e["institution"]
+        if inst not in seen:
+            seen.add(inst)
+            out.append({"@type": "EducationalOrganization", "name": inst})
     return out
 
 
-def _works_for(content: dict) -> dict | None:
-    """First experience entry whose period.end is null is the current employer."""
-    for exp in content["experience"]:
-        if exp["period"].get("end") in (None, "present"):
-            return {"@type": "Organization", "name": exp["org"]["name"]}
-    return None
+def _knows_about(content: dict) -> list[str]:
+    """Curated, disambiguated topics from content (single source of truth)."""
+    return list(content["personal"].get("knowsAbout", []))
 
 
-def _publications(pubs: list[Publication]) -> list[dict]:
+def _has_occupation(content: dict) -> list[dict]:
+    """One Occupation per facet of the (resolved) headline, split on '·'."""
+    headline = content["personal"]["headline"]
+    return [
+        {"@type": "Occupation", "name": part.strip()}
+        for part in headline.split("·")
+        if part.strip()
+    ]
+
+
+def _publications(pubs: list[Publication], person_id: str) -> list[dict]:
     out = []
-    for p in pubs:
+    for i, p in enumerate(pubs):
+        doi_url = f"https://doi.org/{p.doi}" if p.doi else None
         item: dict = {
             "@type": "ScholarlyArticle",
+            "@id": doi_url or f"{PAGES_BASE_URL}/#publication-{i}",
             "name": p.title,
             "datePublished": str(p.year),
-            "author": [{"@type": "Person", "name": a} for a in p.authors],
+            "author": [
+                {"@id": person_id} if a.startswith("Lee, J") else {"@type": "Person", "name": a}
+                for a in p.authors
+            ],
         }
         if p.venue:
             item["isPartOf"] = {"@type": "Periodical", "name": p.venue}
         if p.doi:
-            item["sameAs"] = [f"https://doi.org/{p.doi}"]
+            item["sameAs"] = [doi_url]
+            item["identifier"] = {"@type": "PropertyValue", "propertyID": "DOI", "value": p.doi}
         out.append(item)
     return out
 
 
-def _projects(content: dict) -> list[dict]:
-    """One CreativeWork per project, URL points at the eventual /projects/{id}/ page."""
+def _projects(content: dict, person_id: str) -> list[dict]:
+    """One CreativeWork per project; @id == its eventual /projects/{id}/ page URL."""
     out = []
     for pid, proj in content["projects"].items():
-        item: dict = {
+        url = f"{PAGES_BASE_URL}/projects/{pid}/"
+        out.append({
             "@type": "CreativeWork",
+            "@id": url,
             "name": proj["title"],
-            "url": f"{PAGES_BASE_URL}/projects/{pid}/",
+            "url": url,
             "description": proj["summary"],
             "dateCreated": proj["period"]["start"],
             "keywords": list(proj.get("technologies", [])),
-        }
-        out.append(item)
+            "creator": {"@id": person_id},
+        })
     return out
 
 
-def to_jsonld(content: dict, pubs: list[Publication]) -> dict:
-    """Compose the schema.org Person JSON-LD document."""
+def _person(content: dict) -> dict:
+    """The Person node — @id is the ORCID URI (canonical entity identifier)."""
     personal = content["personal"]
     profile = content["profile"]
     name = f"{personal['name']['given']} {personal['name']['family']}"
-
-    doc: dict = {
-        "@context": "https://schema.org",
+    orcid = personal["links"].get("orcid") or f"{SITE_URL}#person"
+    person: dict = {
         "@type": "Person",
+        "@id": orcid,
         "name": name,
         "url": SITE_URL,
         "image": PHOTO_URL,
@@ -97,18 +116,25 @@ def to_jsonld(content: dict, pubs: list[Publication]) -> dict:
             "addressLocality": personal["location"]["city"],
             "addressCountry": personal["location"]["country"],
         },
+        "identifier": {"@type": "PropertyValue", "propertyID": "ORCID", "value": orcid},
         "sameAs": _same_as(personal),
         "alumniOf": _alumni_of(content),
         "knowsAbout": _knows_about(content),
+        "hasOccupation": _has_occupation(content),
     }
-    if (works_for := _works_for(content)) is not None:
-        doc["worksFor"] = works_for
-
     if content["awards"]:
-        doc["award"] = [a["title"] for a in content["awards"]]
+        person["award"] = [a["title"] for a in content["awards"]]
+    return person
 
-    doc["@graph"] = _publications(pubs) + _projects(content)
-    return doc
+
+def to_jsonld(content: dict, pubs: list[Publication]) -> dict:
+    """Compose the schema.org @graph (see module docstring for the entity-resolution rationale)."""
+    person = _person(content)
+    person_id = person["@id"]
+    return {
+        "@context": "https://schema.org",
+        "@graph": [person, *_publications(pubs, person_id), *_projects(content, person_id)],
+    }
 
 
 def _print_wrote(output: Path) -> None:
