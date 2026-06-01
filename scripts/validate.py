@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import sys
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -163,6 +164,52 @@ def _validate_headline_variant_completeness(content_dir: Path) -> list[FileError
     return errors
 
 
+def _iter_periods(content_dir: Path):
+    """Yield (path, period_dict) for every period in experience + projects (.en files)."""
+    exp_path = content_dir / "experience.yaml"
+    if exp_path.exists():
+        for entry in _load_yaml(exp_path) or []:
+            period = entry.get("period") if isinstance(entry, dict) else None
+            if isinstance(period, dict):
+                yield exp_path, period
+    for proj_path in sorted((content_dir / "projects").glob("*.en.yaml")):
+        data = _load_yaml(proj_path)
+        period = data.get("period") if isinstance(data, dict) else None
+        if isinstance(period, dict):
+            yield proj_path, period
+
+
+def _validate_periods(content_dir: Path) -> list[FileError]:
+    """Hard error when a period's end precedes its start (lexicographic on 'YYYY-MM')."""
+    errors: list[FileError] = []
+    for path, period in _iter_periods(content_dir):
+        start, end = period.get("start"), period.get("end")
+        if start and end and end < start:
+            errors.append(FileError(path, f"period end {end!r} precedes start {start!r}"))
+    return errors
+
+
+def date_warnings(content_dir: Path, *, today: date | None = None) -> list[FileError]:
+    """Advisory (non-failing) warnings for implausible period years.
+
+    Flags any year > today.year + 5 (likely a typo) or < 2014 (predates this CV's
+    earliest real activity). `today` is injectable for deterministic tests.
+    """
+    today = today or date.today()
+    ceiling = today.year + 5
+    warnings: list[FileError] = []
+    for path, period in _iter_periods(content_dir):
+        for ym in (period.get("start"), period.get("end")):
+            if not ym:
+                continue
+            year = int(ym[:4])
+            if year > ceiling:
+                warnings.append(FileError(path, f"implausible future date {ym!r} (> {ceiling})"))
+            elif year < 2014:
+                warnings.append(FileError(path, f"implausibly early date {ym!r} (< 2014)"))
+    return warnings
+
+
 def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     """Validate every recognized file under content/. Returns list of errors (empty = clean)."""
     errors: list[FileError] = []
@@ -217,6 +264,7 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     errors.extend(_validate_profile_variant_parity(content_dir))
     errors.extend(_validate_headline_variant_completeness(content_dir))
     errors.extend(_validate_publications(content_dir))
+    errors.extend(_validate_periods(content_dir))
     return errors
 
 
@@ -230,6 +278,10 @@ def main() -> int:
         return 2
 
     errors = validate_tree(content_dir, schema_path)
+
+    for warn in date_warnings(content_dir):
+        print(f"WARN: {warn}", file=sys.stderr)
+
     if errors:
         print(f"FAIL: {len(errors)} validation error(s)", file=sys.stderr)
         for err in errors:
