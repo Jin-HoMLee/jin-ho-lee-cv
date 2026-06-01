@@ -6,7 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from scripts.bib_loader import Publication
+from scripts.bib_loader import Publication, load_publications
+from scripts.publications import publication_summary
 from scripts.render_text import _publications as render_text_publications
 from scripts.render_text import render
 
@@ -135,3 +136,28 @@ def test_awards_section_renders():
 def test_awards_section_renders_de():
     out = render("de")
     assert "AUSZEICHNUNGEN" in out
+
+
+CONTENT_DIR = REPO_ROOT / "content"
+
+
+def test_publications_aggregate_for_bridge_en():
+    s = publication_summary(load_publications(CONTENT_DIR / "publications.bib"))
+    text = render(lang="en", target="bridge")
+    assert f"{s.peer_reviewed} peer-reviewed publications" in text
+    assert "Full list & metrics: https://orcid.org/0009-0001-8784-1771" in text
+
+
+def test_publications_aggregate_for_bridge_de():
+    text = render(lang="de", target="bridge")
+    assert "begutachtete Publikationen" in text
+    assert "Vollständige Liste: https://orcid.org/0009-0001-8784-1771" in text
+
+
+def test_publications_full_list_for_comp_bio():
+    pubs = load_publications(CONTENT_DIR / "publications.bib")
+    middle = next(p for p in pubs if p.authorship == "middle")
+    full = render(lang="en", target="comp-bio")
+    bridge = render(lang="en", target="bridge")
+    assert middle.title in full          # verbatim list present
+    assert middle.title not in bridge    # aggregate omits per-paper titles
