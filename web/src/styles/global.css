@@ -122,3 +122,10 @@ body {
   html { scroll-behavior: auto; }
   [data-reveal] { opacity: 1; transform: none; transition: none; }
 }
+
+/* Site-wide keyboard focus ring. Mirrors CodeHero .cv-tab:focus-visible.
+   :where() keeps specificity 0 so components can still override. */
+:where(button, a, [role="button"]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
