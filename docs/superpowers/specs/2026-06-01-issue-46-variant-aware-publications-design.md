@@ -27,21 +27,25 @@ SOTA academia→industry CV guidance is *de-emphasize-but-don't-delete*: an indu
 
 **Default (no-JS / bridge) web state:** charts + aggregate visible, full list `hidden`. Structured publication data for crawlers is already covered by the JSON-LD `@graph` (all 15), so hiding the verbose list by default has no SEO cost.
 
-## Aggregate copy (from the agreed issue comment)
+## Aggregate copy (honest, type-segmented — resolved 2026-06-01)
 
-**EN:** `15 peer-reviewed publications — 6 first-author, 3 shared-first, 6 co-author (2017–2021), in radiation biophysics & super-resolution DNA-repair imaging.` + pointer `Full list & metrics: <orcid>`
+**EN:** `11 peer-reviewed publications (2 first-author, 3 shared-first, 6 co-author) and 3 first-author conference contributions, 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.` + pointer `Full list & metrics: <orcid>`
 
-**DE:** `15 begutachtete Publikationen — 6 als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor (2017–2021), in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.` + pointer `Vollständige Liste: <orcid>`
+**DE:** `11 begutachtete Publikationen (2 als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor) sowie 3 Konferenzbeiträge als Erstautor, 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.` + pointer `Vollständige Liste: <orcid>`
 
-The **numbers** (`total`, `first`, `shared`, `coauthor`) and the **year span** are *derived* (never hardcoded). The editorial prose, role wording, domain phrase, and word order live in `content/labels.yaml` per language.
+All figures are *derived* from `bib_loader` (never hardcoded); only the editorial prose, role wording, domain phrase, the "first-author conference contributions" descriptor, and per-language word order live in `content/labels.yaml`.
 
-### Content-accuracy notes (please confirm at review)
+### What counts as "peer-reviewed" (verified against the live bib)
 
-Verified against the live bib (`python -c` over `bib_loader`):
-- `total=15`, `first=6`, `shared=3`, `coauthor=6` (middle/last/corresponding folded into co-author; live data has only `middle`).
-- The lone 2025 entry is **applied, first-author** (`category: applied`). So:
-  1. `first=6` **includes** the 2025 applied piece; the `(2017–2021)` span is derived from **research-category** years only, so it intentionally does not cover that one entry.
-  2. The agreed wording says "15 **peer-reviewed** publications" — but one of the 15 is the applied 2025 piece. If that piece is not peer-reviewed, "peer-reviewed" slightly overclaims. Because the prose lives in `labels.yaml`, the word is a one-line content edit. **Flagging for your call** — keep "peer-reviewed" as agreed, or soften (e.g. "15 publications").
+The full record is **15** entries: 10 journal articles, 2 book chapters, 3 conference contributions. The aggregate honestly summarizes only the **research** body (14 — the lone 2025 applied marketing book chapter is excluded as off-domain) and distinguishes peer-reviewed from conference work:
+
+| Bucket | Rule | Count | first / shared / co-author |
+|---|---|---|---|
+| **Peer-reviewed** | research, `type ∈ {article, book-chapter}` | **11** (10 articles + the 2021 *Super-Resolution Radiation Biology* book chapter) | 2 / 3 / 6 |
+| **Conference contributions** | research, `type == conference` | **3** | 3 / 0 / 0 (all first-author) |
+| *Excluded* | the 2025 applied marketing book chapter (`category: applied`) | 1 | — |
+
+Peer-review is inferred from type: research **articles + book chapters are peer-reviewed**, **conference contributions are not** (per the author, 2026-06-01). The span `2017–2021` is the research-body min/max year. Everything ties out: 11 + 3 = 14 research items; peer-reviewed authorship 2 + 3 + 6 = 11. The descriptor "3 **first-author** conference contributions" is editorial in the label (true for all three current conference entries; a future non-first-author conference entry would be a one-line content edit).
 
 ## Architecture — shared policy module
 
@@ -62,7 +66,8 @@ from dataclasses import dataclass
 
 from scripts.bib_loader import Publication, authorship_counts
 
-_COAUTHOR = ("middle", "last", "corresponding")  # everything that isn't first/shared
+_PEER_REVIEWED_TYPES = ("article", "book-chapter")  # conference contributions are not
+_COAUTHOR = ("middle", "last", "corresponding")      # everything that isn't first/shared
 EN_DASH = "–"
 
 
@@ -77,43 +82,48 @@ def publication_mode(target: str) -> str:
 
 @dataclass(frozen=True)
 class PublicationSummary:
-    total: int
-    first: int
-    shared: int
-    coauthor: int
+    peer_reviewed: int   # research articles + book chapters
+    pr_first: int        # …of which first-author
+    pr_shared: int       # …shared-first
+    pr_coauthor: int     # …co-author (middle/last/corresponding)
+    conferences: int     # research conference contributions (all first-author)
     year_start: int
     year_end: int
 
 
 def publication_summary(pubs: list[Publication]) -> PublicationSummary:
-    """Derive aggregate counts + research-year span from the full publication list.
+    """Derive the honest, type-segmented aggregate from the research publications.
 
-    Counts cover all publications; ``coauthor`` folds middle/last/corresponding
-    into one bucket. The span is taken from research-category entries only, so the
-    lone applied piece does not stretch the stated research period.
+    Only ``category == "research"`` entries are summarized (the lone applied piece
+    is off-domain and excluded). Peer-reviewed = research articles + book chapters;
+    conference contributions are counted separately. ``pr_coauthor`` folds
+    middle/last/corresponding. The span is the research-body min/max year.
     """
-    counts = authorship_counts(pubs)
-    research_years = [p.year for p in pubs if p.category == "research"] or [p.year for p in pubs]
+    research = [p for p in pubs if p.category == "research"]
+    peer = [p for p in research if p.type in _PEER_REVIEWED_TYPES]
+    years = [p.year for p in research] or [p.year for p in pubs]
     return PublicationSummary(
-        total=len(pubs),
-        first=counts.get("first", 0),
-        shared=counts.get("shared", 0),
-        coauthor=sum(counts.get(k, 0) for k in _COAUTHOR),
-        year_start=min(research_years),
-        year_end=max(research_years),
+        peer_reviewed=len(peer),
+        pr_first=sum(1 for p in peer if p.authorship == "first"),
+        pr_shared=sum(1 for p in peer if p.authorship == "shared"),
+        pr_coauthor=sum(1 for p in peer if p.authorship in _COAUTHOR),
+        conferences=sum(1 for p in research if p.type == "conference"),
+        year_start=min(years),
+        year_end=max(years),
     )
 
 
 def format_publication_summary(template: str, pubs: list[Publication]) -> str:
     """Fill a resolved (single-language) label template with derived figures.
 
-    The template owns the prose + per-language word order; only numbers and the
-    span are substituted, so counts are never hardcoded.
+    The template owns the prose + per-language word order; only the derived counts
+    and the span are substituted, so nothing is hardcoded.
     """
     s = publication_summary(pubs)
     span = f"{s.year_start}{EN_DASH}{s.year_end}"
     return template.format(
-        total=s.total, first=s.first, shared=s.shared, coauthor=s.coauthor, span=span
+        peer_reviewed=s.peer_reviewed, pr_first=s.pr_first, pr_shared=s.pr_shared,
+        pr_coauthor=s.pr_coauthor, conferences=s.conferences, span=span,
     )
 ```
 
@@ -130,8 +140,8 @@ sections:
 
 publications:
   summary:
-    en: "{total} peer-reviewed publications — {first} first-author, {shared} shared-first, {coauthor} co-author ({span}), in radiation biophysics & super-resolution DNA-repair imaging."
-    de: "{total} begutachtete Publikationen — {first} als Erstautor, {shared} geteilte Erstautorenschaft, {coauthor} als Co-Autor ({span}), in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur."
+    en: "{peer_reviewed} peer-reviewed publications ({pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author) and {conferences} first-author conference contributions, {span}, in radiation biophysics & super-resolution DNA-repair imaging."
+    de: "{peer_reviewed} begutachtete Publikationen ({pr_first} als Erstautor, {pr_shared} geteilte Erstautorenschaft, {pr_coauthor} als Co-Autor) sowie {conferences} Konferenzbeiträge als Erstautor, {span}, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur."
   full_list_pointer:
     en: "Full list & metrics:"
     de: "Vollständige Liste:"
@@ -290,8 +300,8 @@ if (aggBlock)  aggBlock.hidden  = pubMode !== "aggregate";
 
 ## Testing strategy (TDD)
 
-- **`tests/test_publications.py`** (NEW): `publication_mode` (comp-bio→full, bridge/ds-ml→aggregate); `publication_summary` on synthetic pubs (count buckets, coauthor folding, research-only span); `format_publication_summary` (placeholder fill, en-dash span); live-bib assertions (`total=15, first=6, shared=3, coauthor=6, span=2017–2021`) — derived, not hardcoded.
-- **`tests/test_pdf_publications.py`** (REWORK): remove `select_publications` tests; assert `prepare_data` sets `publications_mode`/`publications_summary`/`publications_pointer`/plain `publications_heading` per target and language; PDF-text test — bridge PDF contains aggregate markers (`orcid.org/0009…`, the derived counts) and omits a middle-author title; comp-bio PDF contains a middle-author title.
+- **`tests/test_publications.py`** (NEW): `publication_mode` (comp-bio→full, bridge/ds-ml→aggregate); `publication_summary` on synthetic pubs (peer-reviewed = research articles+chapters, conference excluded from peer-reviewed, applied excluded entirely, coauthor folding, research-only span); `format_publication_summary` (placeholder fill, en-dash span); live-bib assertions (`peer_reviewed=11, pr_first=2, pr_shared=3, pr_coauthor=6, conferences=3, span=2017–2021`) — derived, not hardcoded.
+- **`tests/test_pdf_publications.py`** (REWORK): remove `select_publications` tests; assert `prepare_data` sets `publications_mode`/`publications_summary`/`publications_pointer`/plain `publications_heading` per target and language; PDF-text test — bridge PDF contains aggregate markers (`orcid.org/0009…`, "11 peer-reviewed") and omits a middle-author title; comp-bio PDF contains a middle-author title.
 - **`tests/test_render_text.py`**: comp-bio contains a known paper title; bridge contains the aggregate summary substring + the full ORCID URL and omits the middle-author title.
 - **`tests/test_render_web_data.py`**: `content.{lang}.json` carries `publications_aggregate.summary`/`.pointer`; `variants[comp-bio].publications_mode == "full"`; `ds-ml` has no `publications_mode` key.
 - `just validate && just test && just lint` green; `just web-build` succeeds.
