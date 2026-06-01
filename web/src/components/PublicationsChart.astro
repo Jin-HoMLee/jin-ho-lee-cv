@@ -51,7 +51,8 @@ function computeArcs(slices: { key: AuthorshipType; count: number }[], total: nu
     const d = slices.length === 1
       ? "M 0 -1 A 1 1 0 1 1 0 1 A 1 1 0 1 1 0 -1 Z"
       : `M 0 0 L ${x1} ${y1} A 1 1 0 ${large} 1 ${x2} ${y2} Z`;
-    return { d, varName: colorVars[s.key], label: labels[s.key][lang], count: s.count };
+    const pct = ((s.count / total) * 100).toFixed(1);
+    return { d, varName: colorVars[s.key], label: labels[s.key][lang], count: s.count, pct };
   });
 }
 
@@ -71,7 +72,10 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
         style={`fill: var(${arc.varName})`}
         data-label={arc.label}
         data-count={arc.count}
-        data-pct={((arc.count / total) * 100).toFixed(1)}
+        data-pct={arc.pct}
+        tabindex="0"
+        role="button"
+        aria-label={`${arc.label}: ${arc.count} (${arc.pct}%)`}
         class="cursor-pointer"
       />
     ))}
@@ -103,16 +107,26 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
     const paths = fig.querySelectorAll<SVGPathElement>("svg path[data-label]");
     if (!tooltip || paths.length === 0) continue;
 
-    const show = (e: MouseEvent | TouchEvent, target: SVGPathElement) => {
+    const show = (e: Event, target: SVGPathElement) => {
       const label = target.dataset.label ?? "";
       const count = target.dataset.count ?? "";
       const pct = target.dataset.pct ?? "";
       tooltip.textContent = `${label}: ${count} (${pct}%)`;
       tooltip.classList.remove("hidden");
       const rect = fig.getBoundingClientRect();
-      const point = "touches" in e ? e.touches[0] : e;
-      tooltip.style.left = `${point.clientX - rect.left + 8}px`;
-      tooltip.style.top = `${point.clientY - rect.top + 8}px`;
+      const usePointer =
+        e.type === "mouseenter" || e.type === "mousemove" || e.type === "touchstart";
+      if (usePointer) {
+        const pe = e as MouseEvent | TouchEvent;
+        const point = "touches" in pe ? pe.touches[0] : pe;
+        tooltip.style.left = `${point.clientX - rect.left + 8}px`;
+        tooltip.style.top = `${point.clientY - rect.top + 8}px`;
+      } else {
+        // Keyboard focus / activation has no pointer coords — anchor to the slice's bbox center.
+        const b = target.getBoundingClientRect();
+        tooltip.style.left = `${b.left + b.width / 2 - rect.left}px`;
+        tooltip.style.top = `${b.top + b.height / 2 - rect.top}px`;
+      }
     };
     const hide = () => tooltip.classList.add("hidden");
 
@@ -126,6 +140,16 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
         if (tooltip.classList.contains("hidden")) show(e, p);
         else hide();
       }, { passive: false });
+      // Keyboard: focus surfaces the datum; Enter/Space toggles; blur hides.
+      p.addEventListener("focus", (e) => show(e, p));
+      p.addEventListener("blur", hide);
+      p.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+          e.preventDefault();
+          if (tooltip.classList.contains("hidden")) show(e, p);
+          else hide();
+        }
+      });
     });
     // Dismiss on outside tap
     document.addEventListener("touchstart", (e) => {
