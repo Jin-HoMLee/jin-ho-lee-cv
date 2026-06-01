@@ -6,6 +6,7 @@ import pytest
 from scripts.bib_loader import (
     AUTHORSHIP_VALUES,
     BIB_TYPES,
+    _clean_tex,
     authorship_counts,
     load_publications,
 )
@@ -172,3 +173,81 @@ def test_malformed_doi_raises(tmp_path):
     )
     with pytest.raises(ValueError, match="doi"):
         load_publications(bib)
+
+
+# --- _clean_tex: BibTeX brace / LaTeX accent normalization (issue #41) ---
+
+
+def test_clean_tex_strips_protective_braces():
+    assert _clean_tex(r"{3D} {DNA} {FISH}") == "3D DNA FISH"
+
+
+def test_clean_tex_decodes_umlaut():
+    assert _clean_tex(r"f\"ur") == "für"
+
+
+def test_clean_tex_decodes_caron_and_acute():
+    # The caron form \v{c} is the one the web cleanTex misses.
+    assert _clean_tex(r"radia\v{c}n\'i") == "radiační"
+
+
+def test_clean_tex_decodes_braced_accent_form():
+    assert _clean_tex(r"f\"{u}r") == "für"
+
+
+def test_clean_tex_decodes_latex_special_escape():
+    assert _clean_tex(r"Selection \& Implementation") == "Selection & Implementation"
+
+
+def test_clean_tex_leaves_plain_text_untouched():
+    assert _clean_tex("Cancers") == "Cancers"
+    assert _clean_tex("T") == "T"
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "R&D",  # bare ampersand is not an escape
+        "50% increase",  # bare percent
+        "$100 budget",  # bare dollar
+        "$E=mc^2$",  # math mode: \^ needs a letter, never fires on digits
+        "Fig.~3",  # LaTeX NBSP tilde without a following accent letter
+    ],
+)
+def test_clean_tex_preserves_unescaped_specials(text):
+    """Only backslash-escaped forms decode; bare specials/math/NBSP pass through."""
+    assert _clean_tex(text) == text
+
+
+@pytest.mark.parametrize(
+    "raw",
+    [
+        r"{3D} {DNA} {FISH}",
+        r"f\"ur",
+        r"radia\v{c}n\'i",
+        r"f\"{u}r",
+        r"Selection \& Implementation",
+        "already clean",
+    ],
+)
+def test_clean_tex_is_idempotent(raw):
+    once = _clean_tex(raw)
+    assert _clean_tex(once) == once
+
+
+def test_real_bib_has_no_latex_residue():
+    """Every user-facing field of the live bib parses free of braces/backslashes.
+
+    This is the guard: any future un-decoded accent or brace fails the build
+    instead of leaking into person.jsonld / resume.json / cv-*.txt / web JSON.
+    """
+    for pub in load_publications(BIB_PATH):
+        fields = {"title": pub.title}
+        if pub.venue is not None:
+            fields["venue"] = pub.venue
+        for i, author in enumerate(pub.authors):
+            fields[f"author[{i}]"] = author
+        for name, value in fields.items():
+            assert not (set(value) & set("{}\\")), (
+                f"{pub.key}.{name} has LaTeX residue: {value!r}"
+            )
