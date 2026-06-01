@@ -182,6 +182,11 @@ def test_clean_tex_strips_protective_braces():
     assert _clean_tex(r"{3D} {DNA} {FISH}") == "3D DNA FISH"
 
 
+def test_clean_tex_preserves_at_inside_braces():
+    # @{DeutschlandCard}: braces protect the case; the @ is part of the title.
+    assert _clean_tex(r"@{DeutschlandCard}") == "@DeutschlandCard"
+
+
 def test_clean_tex_decodes_umlaut():
     assert _clean_tex(r"f\"ur") == "für"
 
