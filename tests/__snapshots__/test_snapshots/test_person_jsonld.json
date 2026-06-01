@@ -1,94 +1,78 @@
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Jin-Ho Lee",
-  "url": "https://jinholee.is-a.dev/",
-  "image": "https://jinholee.is-a.dev/photo.jpg",
-  "email": "mailto:jinho.michael.lee@gmail.com",
-  "jobTitle": "Bioinformatics · Data Science",
-  "description": "Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, backed by 10+ peer-reviewed publications — first- and shared-first author in Cancers, Epigenetics Methods, and OBM Genetics — grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU.",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Mannheim",
-    "addressCountry": "GER"
-  },
-  "sameAs": [
-    "https://linkedin.com/in/jin-holee",
-    "https://github.com/Jin-HoMLee",
-    "https://researchgate.net/profile/Jin-Ho-Lee-8",
-    "https://jinholee.is-a.dev/",
-    "https://orcid.org/0009-0001-8784-1771"
-  ],
-  "alumniOf": [
-    {
-      "@type": "EducationalOrganization",
-      "name": "Heidelberg University"
-    },
-    {
-      "@type": "EducationalOrganization",
-      "name": "Heidelberg University"
-    }
-  ],
-  "knowsAbout": [
-    "NGS",
-    "RNA-Seq",
-    "WES",
-    "SNV Calling",
-    "Splice Analysis",
-    "MapSplice",
-    "HISAT2/STAR",
-    "samtools/bcftools",
-    "bedtools",
-    "MHC-I Prediction",
-    "HLA Typing",
-    "OptiType",
-    "MHCflurry",
-    "Neoepitopes",
-    "TCRdock",
-    "AlphaFold v2",
-    "Mol*",
-    "Spatial Point-Pattern",
-    "Cluster Analysis (DBSCAN)",
-    "Cancer/Tumor",
-    "3D Cell Culture",
-    "Neural Progenitors",
-    "Super-Resolution",
-    "Confocal",
-    "Fluorescence",
-    "FISH",
-    "IF",
-    "qPCR",
-    "FACS",
-    "TensorFlow",
-    "Keras",
-    "LSTMs",
-    "OpenCV",
-    "Python (Exp)",
-    "R",
-    "SQL",
-    "Snakemake",
-    "Conda",
-    "Docker",
-    "Git",
-    "dbt",
-    "GCP",
-    "BigQuery",
-    "Vertex AI",
-    "Looker"
-  ],
-  "award": [
-    "DAAD PROMOS Scholarship",
-    "DeGBS Poster Award"
-  ],
   "@graph": [
     {
+      "@type": "Person",
+      "@id": "https://orcid.org/0009-0001-8784-1771",
+      "name": "Jin-Ho Lee",
+      "url": "https://jinholee.is-a.dev/",
+      "image": "https://jinholee.is-a.dev/photo.jpg",
+      "email": "mailto:jinho.michael.lee@gmail.com",
+      "jobTitle": "Bioinformatics · Data Science",
+      "description": "Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, backed by 10+ peer-reviewed publications — first- and shared-first author in Cancers, Epigenetics Methods, and OBM Genetics — grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Mannheim",
+        "addressCountry": "GER"
+      },
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "ORCID",
+        "value": "https://orcid.org/0009-0001-8784-1771"
+      },
+      "sameAs": [
+        "https://linkedin.com/in/jin-holee",
+        "https://github.com/Jin-HoMLee",
+        "https://researchgate.net/profile/Jin-Ho-Lee-8",
+        "https://jinholee.is-a.dev/",
+        "https://orcid.org/0009-0001-8784-1771"
+      ],
+      "alumniOf": [
+        {
+          "@type": "EducationalOrganization",
+          "name": "Heidelberg University"
+        }
+      ],
+      "knowsAbout": [
+        "Bioinformatics",
+        "Cancer Genomics",
+        "Computational Biology",
+        "Data Science",
+        "Machine Learning",
+        "Next-Generation Sequencing",
+        "RNA-Seq Analysis",
+        "Variant Calling",
+        "HLA Typing",
+        "Neoantigen Discovery",
+        "Immunoinformatics",
+        "Super-Resolution Microscopy",
+        "Spatial Point-Pattern Analysis",
+        "Cloud Data Engineering",
+        "Bioimage Analysis"
+      ],
+      "hasOccupation": [
+        {
+          "@type": "Occupation",
+          "name": "Bioinformatics"
+        },
+        {
+          "@type": "Occupation",
+          "name": "Data Science"
+        }
+      ],
+      "award": [
+        "DAAD PROMOS Scholarship",
+        "DeGBS Poster Award"
+      ]
+    },
+    {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.5772/intechopen.95597",
       "name": "Super-Resolution Radiation Biology: From Bio-Dosimetry towards Nano-Studies of DNA Repair Mechanisms",
       "datePublished": "2021",
       "author": [
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -101,16 +85,21 @@
       },
       "sameAs": [
         "https://doi.org/10.5772/intechopen.95597"
-      ]
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.5772/intechopen.95597"
+      }
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://jinholee.is-a.dev/#publication-1",
       "name": "DeGBS 2021 Conference Contribution",
       "datePublished": "2021",
       "author": [
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         }
       ],
       "isPartOf": {
@@ -120,6 +109,7 @@
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.1016/b978-0-12-819414-0.00020-3",
       "name": "3D DNA FISH for analyses of chromatin-nuclear architecture",
       "datePublished": "2020",
       "author": [
@@ -128,8 +118,7 @@
           "name": "Hausmann, M."
         },
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -142,10 +131,16 @@
       },
       "sameAs": [
         "https://doi.org/10.1016/b978-0-12-819414-0.00020-3"
-      ]
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.1016/b978-0-12-819414-0.00020-3"
+      }
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.3390/cancers11121877",
       "name": "Nanostructure of Clustered DNA Damage in Leukocytes after In-Solution Irradiation with the Alpha Emitter Ra-223",
       "datePublished": "2019",
       "author": [
@@ -154,8 +149,7 @@
           "name": "Scherthan, H."
         },
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -168,16 +162,21 @@
       },
       "sameAs": [
         "https://doi.org/10.3390/cancers11121877"
-      ]
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.3390/cancers11121877"
+      }
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.21926/obm.genet.1901064",
       "name": "COMBO-FISH: A versatile tool beyond standard FISH to study chromatin organization by fluorescence light microscopy",
       "datePublished": "2019",
       "author": [
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -190,10 +189,16 @@
       },
       "sameAs": [
         "https://doi.org/10.21926/obm.genet.1901064"
-      ]
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.21926/obm.genet.1901064"
+      }
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.3390/ijms20030588",
       "name": "Challenges and contradictions of metal nano-particle applications for radio-sensitivity enhancement in cancer therapy",
       "datePublished": "2019",
       "author": [
@@ -222,8 +227,7 @@
           "name": "Depes, D."
         },
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -236,16 +240,21 @@
       },
       "sameAs": [
         "https://doi.org/10.3390/ijms20030588"
-      ]
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.3390/ijms20030588"
+      }
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://jinholee.is-a.dev/#publication-6",
       "name": "Mechanisms and Challenges for Understanding Radiation Induced Changes in Chromatin Nanoarchitecture and Repair Complex Formation",
       "datePublished": "2019",
       "author": [
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         }
       ],
       "isPartOf": {
@@ -255,6 +264,7 @@
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.3390/ijms19123713",
       "name": "Recruitment of 53BP1 Proteins for DNA Repair and Persistence of Repair Clusters Differ for Cell Types as Detected by Single Molecule Localization Microscopy",
       "datePublished": "2018",
       "author": [
@@ -267,8 +277,7 @@
           "name": "Depes, D."
         },
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -281,10 +290,16 @@
       },
       "sameAs": [
         "https://doi.org/10.3390/ijms19123713"
-      ]
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.3390/ijms19123713"
+      }
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.1140/epjd/e2018-90148-1",
       "name": "Single-molecule localization microscopy as a promising tool for gammaH2AX/53BP1 foci exploration",
       "datePublished": "2018",
       "author": [
@@ -293,8 +308,7 @@
           "name": "Depes, D."
         },
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -307,10 +321,16 @@
       },
       "sameAs": [
         "https://doi.org/10.1140/epjd/e2018-90148-1"
-      ]
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.1140/epjd/e2018-90148-1"
+      }
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.1039/c7nr08145f",
       "name": "Super-Resolution Localization Microscopy of Radiation-Induced Histone H2AX-Phosphorylation in relation to H3K9-Trimethylation in HeLa Cells",
       "datePublished": "2018",
       "author": [
@@ -323,8 +343,7 @@
           "name": "Wagner, E."
         },
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -337,10 +356,16 @@
       },
       "sameAs": [
         "https://doi.org/10.1039/c7nr08145f"
-      ]
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.1039/c7nr08145f"
+      }
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.3390/cancers10010025",
       "name": "Localization Microscopy Analyses of MRE11 Clusters in 3D-Conserved Cell Nuclei of Different Cell Lines",
       "datePublished": "2018",
       "author": [
@@ -361,8 +386,7 @@
           "name": "Theda, F."
         },
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -375,16 +399,21 @@
       },
       "sameAs": [
         "https://doi.org/10.3390/cancers10010025"
-      ]
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.3390/cancers10010025"
+      }
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://jinholee.is-a.dev/#publication-11",
       "name": "Mechanisms and challenges for understanding radiation induced changes in chromatin nanoarchitecture",
       "datePublished": "2018",
       "author": [
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         }
       ],
       "isPartOf": {
@@ -394,6 +423,7 @@
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.3390/ijms18102066",
       "name": "Challenges for Super-Resolution Localization Microscopy and Biomolecular Fluorescent Nano-Probing in Cancer Research",
       "datePublished": "2017",
       "author": [
@@ -410,8 +440,7 @@
           "name": "Pilarczyk, G."
         },
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -424,10 +453,16 @@
       },
       "sameAs": [
         "https://doi.org/10.3390/ijms18102066"
-      ]
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.3390/ijms18102066"
+      }
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.3390/ijms18051005",
       "name": "Combining Low Temperature Fluorescence DNA-Hybridization, Immunostaining, and Super-Resolution Localization Microscopy for Nano-Structure Analysis of ALU Elements and Their Influence on Chromatin Structure",
       "datePublished": "2017",
       "author": [
@@ -444,8 +479,7 @@
           "name": "Hausmann, A."
         },
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -458,16 +492,21 @@
       },
       "sameAs": [
         "https://doi.org/10.3390/ijms18051005"
-      ]
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.3390/ijms18051005"
+      }
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://jinholee.is-a.dev/#publication-14",
       "name": "Marketing Automation Tool Selection & Implementation @DeutschlandCard",
       "datePublished": "2025",
       "author": [
         {
-          "@type": "Person",
-          "name": "Lee, J."
+          "@id": "https://orcid.org/0009-0001-8784-1771"
         },
         {
           "@type": "Person",
@@ -481,6 +520,7 @@
     },
     {
       "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/C1/",
       "name": "Anti-Financial Crime – Know Your Customer (KYC) Platform",
       "url": "https://jinholee.is-a.dev/projects/C1/",
       "description": "Cloud migration and analytics environment development for financial crime detection at a large international bank.",
@@ -491,10 +531,14 @@
         "Python",
         "SAS",
         "Looker"
-      ]
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
     },
     {
       "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/C2/",
       "name": "Hyper-Personalized Digital Customer Platform",
       "url": "https://jinholee.is-a.dev/projects/C2/",
       "description": "Data model development supporting hyper-personalized customer communication during migration of customer data infrastructure to Google Cloud.",
@@ -504,10 +548,14 @@
         "BigQuery",
         "SQL",
         "Python"
-      ]
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
     },
     {
       "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/D1/",
       "name": "SignMeUp – Real-Time American Sign Language (ASL) Recognition",
       "url": "https://jinholee.is-a.dev/projects/D1/",
       "description": "Machine learning pipeline and application prototype for real-time ASL gesture recognition, designed for integration into a digital sign language learning app.",
@@ -521,10 +569,14 @@
         "Google Cloud",
         "Scikit-Learn",
         "MLflow"
-      ]
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
     },
     {
       "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/D2/",
       "name": "Shuttle Insights – AI Badminton Match Analysis",
       "url": "https://jinholee.is-a.dev/projects/D2/",
       "description": "Computer vision system for analyzing badminton gameplay from video recordings.",
@@ -534,10 +586,14 @@
         "OpenCV",
         "TensorFlow",
         "MediaPipe"
-      ]
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
     },
     {
       "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/D3/",
       "name": "Data Science Bootcamp Program",
       "url": "https://jinholee.is-a.dev/projects/D3/",
       "description": "Professional training program for transitioning participants into data science careers.",
@@ -552,10 +608,14 @@
         "Docker",
         "dbt",
         "Google Cloud"
-      ]
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
     },
     {
       "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/L1/",
       "name": "Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis",
       "url": "https://jinholee.is-a.dev/projects/L1/",
       "description": "Bioinformatics pipeline for identifying novel immunotherapy targets derived from aberrant alternative splicing in RNA-Seq data.",
@@ -567,10 +627,14 @@
         "RNA-Seq",
         "TCGA Datasets",
         "MHC-I Prediction Tools"
-      ]
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
     },
     {
       "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/L2/",
       "name": "Personalized Immunotherapy – High-Throughput HLA Typing Pipeline",
       "url": "https://jinholee.is-a.dev/projects/L2/",
       "description": "Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data.",
@@ -582,10 +646,14 @@
         "Seq2HLA",
         "NetMHCPan (Neural Networks)",
         "Shell Scripting"
-      ]
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
     },
     {
       "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/L3/",
       "name": "Experimental Biophysics — Chromatin Nano-Architecture & DNA Repair",
       "url": "https://jinholee.is-a.dev/projects/L3/",
       "description": "Advanced research utilizing super-resolution microscopy and computational analysis to investigate DNA repair mechanisms and chromatin nano-architecture.",
@@ -598,10 +666,14 @@
         "COMBO-FISH",
         "SPDM",
         "DBSCAN"
-      ]
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
     },
     {
       "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/L4/",
       "name": "Neural Stem Cell Research – Radiation Effects on 3D Differentiation",
       "url": "https://jinholee.is-a.dev/projects/L4/",
       "description": "Scientific research project investigating the impact of ionizing radiation and extracellular vesicles on human neural progenitor cell differentiation.",
@@ -614,10 +686,14 @@
         "Biochemistry",
         "ImageJ",
         "MS Office"
-      ]
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
     },
     {
       "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/L5/",
       "name": "Splice Neoepitope Pipeline – Reproducible Snakemake Workflow",
       "url": "https://jinholee.is-a.dev/projects/L5/",
       "description": "Modernised, open-source reimplementation of the 2015 SNU splice-junction–based neoepitope discovery work as a reproducible Snakemake pipeline with optional structural validation.",
@@ -633,7 +709,10 @@
         "bedtools",
         "Google Cloud GPU",
         "Mol*"
-      ]
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
     }
   ]
 }
