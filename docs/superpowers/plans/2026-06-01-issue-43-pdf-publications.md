@@ -54,17 +54,13 @@ content/publications.bib
 
 - [ ] **Step 1: Write the failing test**
 
-Create `tests/test_pdf_publications.py`:
+Create `tests/test_pdf_publications.py`. Import only what this task uses — later
+tasks add their own imports at point-of-use (incremental imports keep `ruff`
+F401 clean without `# noqa` suppressions):
 
 ```python
 """Tests for the PDF publications section (issue #43)."""
-import shutil
-import subprocess
-import sys
-
-import pytest
-
-from pdf.build import prepare_data, select_publications
+from pdf.build import select_publications
 from scripts.bib_loader import Publication
 
 
@@ -153,7 +149,13 @@ git commit -m "feat(pdf): add select_publications depth helper for #43"
 
 - [ ] **Step 1: Write the failing tests**
 
-Append to `tests/test_pdf_publications.py`:
+First, add `prepare_data` to the existing import line at the top of `tests/test_pdf_publications.py` (the integration tests below use it):
+
+```python
+from pdf.build import prepare_data, select_publications
+```
+
+Then append these tests:
 
 ```python
 def test_prepare_data_bridge_selects_nine_with_selected_heading(content_dir):
@@ -261,7 +263,21 @@ This task is driven by an observable behavior — the heading text appearing in 
 
 - [ ] **Step 1: Write the failing test**
 
-Append to `tests/test_pdf_publications.py`:
+First, add the stdlib + pytest imports this test needs at the TOP of `tests/test_pdf_publications.py`, above the existing `from pdf.build ...` line (stdlib group, then third-party, matching the import grouping in `tests/test_build_public.py`):
+
+```python
+"""Tests for the PDF publications section (issue #43)."""
+import shutil
+import subprocess
+import sys
+
+import pytest
+
+from pdf.build import prepare_data, select_publications
+from scripts.bib_loader import Publication
+```
+
+Then append the test:
 
 ```python
 def _typst_available():
