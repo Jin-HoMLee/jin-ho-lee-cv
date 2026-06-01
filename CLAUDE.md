@@ -37,7 +37,7 @@ content/                  source of truth (YAML + BibTeX)
 content.private/          gitignored PII overlay (phone, address)
 content.private.example/  template showing required private keys
 schema/cv.schema.json     JSON Schema for content
-scripts/                  validate.py, bib_loader.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py
+scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py
 tests/                    pytest suite
 pdf/                      Typst PDF renderer (Phase 1)
 web/                      Astro website (Phase 3)
