@@ -67,7 +67,9 @@ def select_publications(pubs: list, target: str) -> tuple[list, bool]:
     """Pick which publications the PDF shows for `target`.
 
     `comp-bio` shows the full list (is_selected=False); `bridge` and `ds-ml`
-    show the first+shared subset (is_selected=True). Order is preserved from
+    show the first+shared subset (is_selected=True) — `middle`, `last`, and
+    `corresponding` authorship are intentionally excluded, since only
+    first-author signalling makes the short list. Order is preserved from
     bib_loader. Depth is a PDF *rendering* choice — the web and plain-text
     renderers always show all publications — so this lives here, not in the
     shared content_loader.
