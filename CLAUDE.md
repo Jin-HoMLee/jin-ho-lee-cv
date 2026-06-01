@@ -58,6 +58,7 @@ just build-resume      # → dist/resume.json (JSON Resume)
 just build-jsonld      # → dist/person.jsonld (schema.org)
 just build-text        # → dist/cv-{en,de}.txt
 just build-formats     # all three Phase 4 machine formats
+just snapshots-update  # regenerate committed renderer golden snapshots (after intentional output changes)
 just web-dev           # Astro dev server (regenerates content JSON + JSON-LD)
 just web-build         # Production build of web/dist
 ```
@@ -67,6 +68,7 @@ validate + test + lint must all be green before merging anything.
 ## Conventions
 
 - **TDD for non-trivial Python.** Tests first, watch them fail, then implement.
+- **Golden snapshots.** Renderer outputs (`resume.json`, `person.jsonld`, `cv-{en,de}.txt`, web `content.*.json`) are byte-snapshotted with syrupy under `tests/__snapshots__/`; CI fails on unintended drift. Regenerate intentionally with `just snapshots-update` and eyeball the diff. `scripts/validate.py` also hard-fails reversed periods and advisory-warns implausible dates.
 - **Atomic commits.** One logical change per commit. Plain commit messages — no Claude attribution / co-authored-by trailers unless explicitly requested.
 - **Per-phase branches.** Phase N work happens on `phase-N-<topic>` branch, merged to `main` with `--no-ff` at the end of the phase to preserve the boundary in history.
 - **`content/*.yaml` is the source of truth.** Renderers consume; never edit content from inside a renderer.
