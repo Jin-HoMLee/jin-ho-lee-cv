@@ -4,8 +4,7 @@ sections:
   selected_projects: { en: "Selected Projects", de: "Ausgewählte Projekte" }
   education:         { en: "Education",         de: "Ausbildung" }
   awards:            { en: "Awards",            de: "Auszeichnungen" }
-  publications:          { en: "Publications",          de: "Publikationen" }
-  publications_selected: { en: "Selected Publications", de: "Ausgewählte Publikationen" }
+  publications:      { en: "Publications",      de: "Publikationen" }
   skills:            { en: "Skills",            de: "Kenntnisse" }
   languages:         { en: "Languages",         de: "Sprachen" }
   volunteer:         { en: "Volunteer",         de: "Ehrenamtlich" }
