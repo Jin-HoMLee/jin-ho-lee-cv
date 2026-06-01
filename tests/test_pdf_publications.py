@@ -6,7 +6,7 @@ import sys
 import pytest
 
 from pdf.build import prepare_data, select_publications
-from scripts.bib_loader import Publication
+from scripts.bib_loader import Publication, load_publications
 
 
 def _pub(authorship, key="k", title="T", authors=("Lee, J.",)):
@@ -46,22 +46,28 @@ def test_select_publications_ds_ml_keeps_first_and_shared():
     assert is_selected is True
 
 
-def test_prepare_data_bridge_selects_nine_with_selected_heading(content_dir):
+def test_prepare_data_bridge_selects_first_and_shared_with_selected_heading(content_dir):
+    # Assert the subset equals the live bib's first+shared entries (by key, in
+    # order) rather than a hardcoded count — resilient to bib edits.
+    all_pubs = load_publications(content_dir / "publications.bib")
+    expected_keys = [p.key for p in all_pubs if p.authorship in ("first", "shared")]
     result = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
-    assert len(result["publications"]) == 9
+    assert [p["key"] for p in result["publications"]] == expected_keys
     assert result["publications_heading"] == "Publications (selected)"
-    assert all(p["authorship"] in ("first", "shared") for p in result["publications"])
 
 
 def test_prepare_data_comp_bio_selects_all_with_plain_heading(content_dir):
+    all_pubs = load_publications(content_dir / "publications.bib")
     result = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
-    assert len(result["publications"]) == 15
+    assert [p["key"] for p in result["publications"]] == [p.key for p in all_pubs]
     assert result["publications_heading"] == "Publications"
 
 
-def test_prepare_data_ds_ml_selects_nine(content_dir):
+def test_prepare_data_ds_ml_selects_first_and_shared(content_dir):
+    all_pubs = load_publications(content_dir / "publications.bib")
+    expected_keys = [p.key for p in all_pubs if p.authorship in ("first", "shared")]
     result = prepare_data(content_dir, private_path=None, lang="en", target="ds-ml")
-    assert len(result["publications"]) == 9
+    assert [p["key"] for p in result["publications"]] == expected_keys
     assert result["publications_heading"] == "Publications (selected)"
 
 
@@ -97,8 +103,6 @@ def _norm(s):
     reason="needs typst + pdftotext (poppler) to extract and assert PDF text",
 )
 def test_pdf_bridge_shows_heading_and_omits_middle_author_titles(repo_root, content_dir):
-    from scripts.bib_loader import load_publications
-
     out = repo_root / "dist" / "cv-en.pdf"
     if out.exists():
         out.unlink()
