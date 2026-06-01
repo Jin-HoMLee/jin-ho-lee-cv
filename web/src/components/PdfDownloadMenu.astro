@@ -1,0 +1,98 @@
+---
+import type { Lang } from "../types/content";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const label = lang === "en" ? "Download PDF" : "PDF herunterladen";
+// GitHub-release base for the built PDFs (unchanged from the prior header markup).
+const base = "https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download";
+const items = [
+  { name: "English", code: "EN", href: `${base}/cv-en.pdf`, hreflang: "en" },
+  { name: "Deutsch", code: "DE", href: `${base}/cv-de.pdf`, hreflang: "de" },
+];
+---
+<details class="pdf-menu relative" data-pdf-menu>
+  <summary
+    class="flex cursor-pointer items-center gap-2 rounded-md px-3 py-1.5 text-sm font-semibold text-[var(--accent-contrast)] hover:opacity-90"
+    style="background-color: var(--accent)"
+    aria-expanded="false"
+  >
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+      <polyline points="7 10 12 15 17 10"></polyline>
+      <line x1="12" x2="12" y1="15" y2="3"></line>
+    </svg>
+    <span>{label}</span>
+    <svg class="caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </summary>
+  <div
+    class="absolute right-0 top-full z-20 mt-2 min-w-[12rem] rounded-lg border border-[var(--surface-border)] p-1.5 text-sm shadow-xl"
+    style="background-color: var(--surface)"
+  >
+    {items.map((it) => (
+      <a
+        href={it.href}
+        hreflang={it.hreflang}
+        download
+        class="flex items-center justify-between gap-4 rounded-md px-3 py-2 text-[var(--text)] no-underline hover:bg-[var(--surface-2)]"
+      >
+        <span lang={it.hreflang}>{it.name}</span>
+        <span class="font-mono-plex text-xs text-[var(--faint)]">{it.code} · PDF</span>
+      </a>
+    ))}
+  </div>
+</details>
+
+<style>
+  /* Hide the native disclosure marker; the caret SVG is our affordance. */
+  .pdf-menu > summary { list-style: none; }
+  .pdf-menu > summary::-webkit-details-marker { display: none; }
+  .pdf-menu .caret { transition: transform 0.15s ease; }
+  .pdf-menu[open] .caret { transform: rotate(180deg); }
+</style>
+
+<script>
+  // Progressive enhancement over the native <details> disclosure: it already
+  // opens/closes and is keyboard-operable. We only add Escape-to-close and
+  // click-outside-to-close. The trigger never downloads — it only toggles —
+  // so the PDF/language misclick is structurally impossible.
+  const menus = document.querySelectorAll<HTMLDetailsElement>("[data-pdf-menu]");
+
+  for (const menu of menus) {
+    const summary = menu.querySelector("summary");
+    // Mirror open state to aria-expanded — native <details> doesn't reliably
+    // expose it to Safari/VoiceOver. `toggle` fires for every state change
+    // (summary click, Escape, click-outside, link select), so this stays in sync.
+    menu.addEventListener("toggle", () => {
+      summary?.setAttribute("aria-expanded", String(menu.open));
+    });
+    // Escape closes the menu and returns focus to the trigger.
+    menu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        menu.open = false;
+        summary?.focus();
+      }
+    });
+    // Collapse after a selection so the disclosure acknowledges the download.
+    for (const link of menu.querySelectorAll("a")) {
+      link.addEventListener("click", () => { menu.open = false; });
+    }
+    // Close when keyboard focus leaves the menu entirely (Tab past the last
+    // link / Shift+Tab past the summary) — the disclosure has no focus trap.
+    menu.addEventListener("focusout", (event) => {
+      if (!menu.contains(event.relatedTarget as Node | null)) menu.open = false;
+    });
+  }
+
+  document.addEventListener("click", (event) => {
+    for (const menu of menus) {
+      if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
+    }
+  });
+</script>
