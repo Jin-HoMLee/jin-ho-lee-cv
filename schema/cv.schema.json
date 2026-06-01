@@ -69,6 +69,11 @@
           }
         },
         "photo": { "type": "string" },
+        "knowsAbout": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        },
         "variants": {
           "type": "object",
           "propertyNames": { "enum": ["comp-bio", "ds-ml"] },

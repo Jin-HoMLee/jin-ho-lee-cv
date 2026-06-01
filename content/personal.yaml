@@ -15,6 +15,22 @@ links:
   website: "https://jinholee.is-a.dev/"
   orcid: "https://orcid.org/0009-0001-8784-1771"
 photo: "assets/photo.jpg"
+knowsAbout:
+  - "Bioinformatics"
+  - "Cancer Genomics"
+  - "Computational Biology"
+  - "Data Science"
+  - "Machine Learning"
+  - "Next-Generation Sequencing"
+  - "RNA-Seq Analysis"
+  - "Variant Calling"
+  - "HLA Typing"
+  - "Neoantigen Discovery"
+  - "Immunoinformatics"
+  - "Super-Resolution Microscopy"
+  - "Spatial Point-Pattern Analysis"
+  - "Cloud Data Engineering"
+  - "Bioimage Analysis"
 variants:
   comp-bio:
     headline:
