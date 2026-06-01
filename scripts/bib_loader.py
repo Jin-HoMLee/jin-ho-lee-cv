@@ -35,9 +35,8 @@ class Publication:
 
 
 # --- BibTeX / LaTeX text normalization (issue #41) ---------------------------
-# Protective braces and accent macros in publications.bib must not leak into the
-# machine outputs (person.jsonld, resume.json, cv-*.txt, web JSON). Decode once
-# here so every renderer consumes clean Unicode from a single chokepoint.
+# Decode protective braces + accent macros once here so every renderer consumes
+# clean Unicode from one chokepoint (jsonld, resume, txt, web).
 
 # Collapse braced accent forms so the maps below catch them: \"{u} -> \"u, \'{e} -> \'e.
 _BRACED_ACCENT_RE = re.compile(r'\\(["\'`^~])\{(\w)\}')
@@ -68,12 +67,7 @@ _ESCAPES = {r"\&": "&", r"\%": "%", r"\$": "$", r"\_": "_", r"\#": "#"}
 
 
 def _clean_tex(s: str) -> str:
-    """Decode BibTeX field text to plain Unicode.
-
-    Strips non-semantic protective braces and decodes the LaTeX accent macros
-    that appear in our titles, author names, and venues. Idempotent: cleaning
-    already-clean text is a no-op.
-    """
+    """Decode BibTeX field text (accent macros + protective braces) to plain Unicode. Idempotent."""
     s = _BRACED_ACCENT_RE.sub(r"\\\1\2", s)
     s = _CARON_RE.sub(lambda m: _CARON[m.group(1)], s)
     s = _CEDILLA_RE.sub(lambda m: _CEDILLA[m.group(1)], s)
