@@ -1,0 +1,182 @@
+JIN-HO LEE
+Computational Biology · Cancer Genomics - Mannheim, GER
+jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/in/jin-holee | https://github.com/Jin-HoMLee | https://researchgate.net/profile/Jin-Ho-Lee-8 | https://jinholee.is-a.dev/ | https://orcid.org/0009-0001-8784-1771
+
+================================================================================
+PROFILE
+================================================================================
+Bioinformatician specializing in HLA typing and neoantigen discovery —
+engineering in-silico pipelines from real-patient NGS and RNA-Seq data, packaged
+as reproducible Snakemake workflows. Backed by 10+ peer-reviewed publications as
+first- and shared-first author in Cancers, Epigenetics Methods, and OBM
+Genetics, grounded in wet-lab training at DKFZ, NCT, FZ Jülich, KIP, and SNU.
+
+Equally at home in production: migrated 1,000+ analytical processes to Google
+Cloud, built reproducible data pipelines, and mentored 100+ specialists in
+Python, SQL & ML — while securing third-party funding and supervising 10+
+students.
+
+================================================================================
+EXPERIENCE
+================================================================================
+Consultant, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 to 2025-07)
+  - Scale: Architected the migration of 1,000+ analytical processes to Google Cloud.
+  - AI in Production: Developed BigQueryML models for anti-financial crime & KYC.
+  - Stakeholder Lead: Bridged technical data engineering with business requirements for high-stakes banking.
+
+Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 to 2024-04)
+  - Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles.
+  - ML Development: Independently engineered a Real-Time ASL Recognition prototype using LSTMs, MediaPipe, and TensorFlow.
+
+Doctoral & Post-Graduate Researcher - FZ Jülich / KIP / NCT / SNU / DKFZ    (2014-04 to 2022-07)
+  - Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer-patient NGS and RNA-Seq splice-junction data; validated SNV calls against gold-standard sequencing in clinical colorectal-cancer cohorts (NCT/DKFZ).
+  - Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects — from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin.
+  - Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles.
+
+================================================================================
+SELECTED PROJECTS
+================================================================================
+Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis    (2015-08 to 2015-11)
+  Bioinformatics Research Intern (Seoul National University)
+  Bioinformatics pipeline for identifying novel immunotherapy targets derived
+  from aberrant alternative splicing in RNA-Seq data.
+  Outcome: Demonstrated that alternative splicing is a viable source for high-
+  affinity epitopes, expanding target discovery beyond traditional somatic
+  mutations.
+
+Personalized Immunotherapy – High-Throughput HLA Typing Pipeline    (2014-04 to 2014-05)
+  Bioinformatics Bachelor Thesis Student (NCT Heidelberg)
+  Bioinformatics workflow for identifying patient-specific cancer targets and
+  automating HLA genotyping from Next-Generation Sequencing (NGS) data.
+  Outcome: Demonstrated the feasibility of a fully computational approach to
+  neoantigen discovery, significantly reducing costs and lead times compared to
+  traditional PCR-based clinical assays.
+
+Splice Neoepitope Pipeline – Reproducible Snakemake Workflow    (2026-03 to present)
+  Author and Maintainer (Open Source)
+  Modernised, open-source reimplementation of the 2015 SNU splice-junction–based
+  neoepitope discovery work as a reproducible Snakemake pipeline with optional
+  structural validation.
+  Outcome: Snakemake pipeline: end-to-end neoepitope discovery from RNA-Seq
+  FASTQ to computationally modeled TCR-pMHC complex structure — patient-specific
+  HLA alleles, tumor-exclusive junctions.
+
+================================================================================
+EDUCATION
+================================================================================
+2019  M.Sc. Molecular Biotechnology - Heidelberg University (Heidelberg, Germany)
+2014  B.Sc. Molecular Biotechnology, Bioinformatics - Heidelberg University (Heidelberg, Germany)
+
+================================================================================
+SKILLS
+================================================================================
+Bioinformatics & ML
+  Genomics: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
+  Immunology: MHC-I Prediction, HLA Typing, OptiType, MHCflurry, Neoepitopes
+  Structural Biology: TCRdock, AlphaFold v2, Mol*
+  Nanoscopy: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
+Biotech Wet-Lab
+  Models: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
+  Imaging: Super-Resolution, Confocal, Fluorescence
+  Assays: FISH, IF, qPCR, FACS
+Data & Engineering
+  AI & Vision: TensorFlow, Keras, LSTMs, OpenCV
+  Eng & Tools: Python (Exp), R, SQL, Snakemake, Conda, Docker, Git, dbt
+  Cloud: GCP, BigQuery, Vertex AI, Looker
+
+================================================================================
+LANGUAGES
+================================================================================
+  German: native
+  English: fluent
+  Korean: native
+  French: basic
+  Italian: basic
+  Latin: passive
+
+================================================================================
+VOLUNTEER
+================================================================================
+Community
+  - Jülicher Tafel e.V.
+  - In via - Café Gemeinsam
+  - Amnesty International
+  - Florence-Nightingale-Krankenhaus
+Environment
+  - Foodsharing e.V. (Operations Manager)
+  - Österreichisches Waldgarten-Institut
+  - Hofwaerts
+Sports
+  - UBC Mannheim
+  - Sobell Badminton Club
+  - ASD Gymnase
+  - BSG Jülich 1963 e.V.
+  - WAT Simmering
+  - TSG 1889 Dossenheim e.V.
+  - HTV 1846 e.V.
+
+================================================================================
+PUBLICATIONS
+================================================================================
+2021  Super-Resolution Radiation Biology: From Bio-Dosimetry towards Nano-Studies of DNA Repair Mechanisms
+  Lee, J., Hausmann, M. - DNA - Damages and Repair Mechanisms
+  https://doi.org/10.5772/intechopen.95597
+
+2021  DeGBS 2021 Conference Contribution
+  Lee, J. - Deutsche Gesellschaft für Biologische Strahlenforschung
+
+2020  3D DNA FISH for analyses of chromatin-nuclear architecture
+  Hausmann, M., Lee, J., others - Epigenetics Methods
+  https://doi.org/10.1016/b978-0-12-819414-0.00020-3
+
+2019  Nanostructure of Clustered DNA Damage in Leukocytes after In-Solution Irradiation with the Alpha Emitter Ra-223
+  Scherthan, H., Lee, J., others - Cancers
+  https://doi.org/10.3390/cancers11121877
+
+2019  COMBO-FISH: A versatile tool beyond standard FISH to study chromatin organization by fluorescence light microscopy
+  Lee, J., others - OBM Genetics
+  https://doi.org/10.21926/obm.genet.1901064
+
+2019  Challenges and contradictions of metal nano-particle applications for radio-sensitivity enhancement in cancer therapy
+  Pagacova, E., Stefancikova, L., Schmidt-Kaler, F., Hildenbrand, G., Vicar, T., Depes, D., Lee, J., others - International Journal of Molecular Sciences
+  https://doi.org/10.3390/ijms20030588
+
+2019  Mechanisms and Challenges for Understanding Radiation Induced Changes in Chromatin Nanoarchitecture and Repair Complex Formation
+  Lee, J. - ConRad 2019 - Global Conference on Radiation Topics
+
+2018  Recruitment of 53BP1 Proteins for DNA Repair and Persistence of Repair Clusters Differ for Cell Types as Detected by Single Molecule Localization Microscopy
+  Bobkova, E., Depes, D., Lee, J., others - International Journal of Molecular Sciences
+  https://doi.org/10.3390/ijms19123713
+
+2018  Single-molecule localization microscopy as a promising tool for gammaH2AX/53BP1 foci exploration
+  Depes, D., Lee, J., others - The European Physical Journal D
+  https://doi.org/10.1140/epjd/e2018-90148-1
+
+2018  Super-Resolution Localization Microscopy of Radiation-Induced Histone H2AX-Phosphorylation in relation to H3K9-Trimethylation in HeLa Cells
+  Hausmann, M., Wagner, E., Lee, J., others - Nanoscale
+  https://doi.org/10.1039/c7nr08145f
+
+2018  Localization Microscopy Analyses of MRE11 Clusters in 3D-Conserved Cell Nuclei of Different Cell Lines
+  Eryilmaz, M., Schmitt, E., Krufczik, M., Theda, F., Lee, J., others - Cancers
+  https://doi.org/10.3390/cancers10010025
+
+2018  Mechanisms and challenges for understanding radiation induced changes in chromatin nanoarchitecture
+  Lee, J. - Dny radiační ochrany (DRO 2018)
+
+2017  Challenges for Super-Resolution Localization Microscopy and Biomolecular Fluorescent Nano-Probing in Cancer Research
+  Hausmann, M., Ilic, N., Pilarczyk, G., Lee, J., others - International Journal of Molecular Sciences
+  https://doi.org/10.3390/ijms18102066
+
+2017  Combining Low Temperature Fluorescence DNA-Hybridization, Immunostaining, and Super-Resolution Localization Microscopy for Nano-Structure Analysis of ALU Elements and Their Influence on Chromatin Structure
+  Krufczik, M., Sievers, A., Hausmann, A., Lee, J., others - International Journal of Molecular Sciences
+  https://doi.org/10.3390/ijms18051005
+
+2025  Marketing Automation Tool Selection & Implementation @DeutschlandCard
+  Lee, J., Eckhardt, C. - Essentials of Modern Marketing, Germany Edition
+
+================================================================================
+AWARDS
+================================================================================
+2015  DAAD PROMOS Scholarship - DAAD
+  Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery.
+2021  DeGBS Poster Award - Deutsche Gesellschaft für Biologische Strahlenforschung

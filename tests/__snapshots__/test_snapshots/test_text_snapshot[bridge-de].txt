@@ -1,0 +1,133 @@
+JIN-HO LEE
+Bioinformatik · Data Science - Mannheim, GER
+jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/in/jin-holee | https://github.com/Jin-HoMLee | https://researchgate.net/profile/Jin-Ho-Lee-8 | https://jinholee.is-a.dev/ | https://orcid.org/0009-0001-8784-1771
+
+================================================================================
+PROFIL
+================================================================================
+Data Scientist mit tiefen Wurzeln in der Krebsgenomik. Entwicklung von In-
+silico-Pipelines zur HLA-Typisierung und Neoantigen-Identifizierung aus realen
+Patienten-NGS- und RNA-Seq-Daten, gestützt auf 10+ peer-reviewed Publikationen —
+als Erstautor sowie mit geteilter Erstautorschaft in Cancers, Epigenetics
+Methods und OBM Genetics —, aufbauend auf Wet-Lab-Ausbildung und Pipeline-
+Entwicklung an DKFZ, NCT, FZ Jülich, KIP und SNU.
+
+Diese Sorgfalt nun in der Industrie: Architektur der Migration von 1.000+
+analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen
+für Geldwäscheprävention & KYC sowie Schulung von 100+ Fachkräften in Python,
+SQL & ML; Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden.
+
+================================================================================
+BERUFSERFAHRUNG
+================================================================================
+Berater, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 bis 2025-07)
+  - Skalierung: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
+  - KI in Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC.
+  - Stakeholder Lead: Brückenfunktion zwischen technischem Data Engineering und Fachanforderungen im hochregulierten Bankensektor.
+
+Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-04)
+  - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen.
+  - ML-Entwicklung: Eigenständige Entwicklung eines Echtzeit-ASL-Erkennungsprototyps mit LSTMs, MediaPipe und TensorFlow.
+
+Doktorand & Postgraduierter Forscher - FZ Jülich / KIP / NCT / SNU / DKFZ    (2014-04 bis 2022-07)
+  - Genomik & Immuntherapie: Entwicklung von in-silico-Pipelines zur HLA-Typisierung und Neoantigen-Discovery aus NGS- und RNA-Seq-Splice-Junction-Daten von Krebspatienten; Validierung von SNV-Calls gegen Goldstandard-Sequenzierung in klinischen Kolorektal-Kohorten (NCT/DKFZ).
+  - Biophysik & Bildgebung: End-to-End-Leitung von Super-Resolution-Mikroskopie-Projekten — von Wet-Lab-Forschung bis zur räumlichen Punktmuster-Analyse (MATLAB/Python) zur Untersuchung von Chromatin.
+  - Neurobiologie: Untersuchung von Strahlungseffekten auf die neuronale Vorläuferdifferenzierung mit 3D-Zellmodellen sowie der Rolle extrazellulärer Vesikel.
+
+================================================================================
+AUSGEWÄHLTE PROJEKTE
+================================================================================
+Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bis heute)
+  Autor und Maintainer (Open Source)
+  Modernisierte, Open-Source-Neuimplementierung der SNU-Arbeit von 2015 zur
+  splice-junction-basierten Neoepitop-Identifizierung als reproduzierbare
+  Snakemake-Pipeline mit optionaler struktureller Validierung.
+  Ergebnis: Snakemake-Pipeline: End-to-End-Neoepitop-Identifizierung von RNA-
+  Seq-FASTQ bis zur computergestützt modellierten TCR-pMHC-Komplexstruktur —
+  patientenspezifische HLA-Allele, tumor-exklusive Junctions.
+
+Krebs-Neoantigen-Entdeckung – Transkriptomweite Splice-Analyse    (2015-08 bis 2015-11)
+  Bioinformatik-Forschungspraktikant (Seoul National University)
+  Bioinformatik-Pipeline zur Identifizierung neuartiger Immuntherapie-Targets
+  aus aberrantem alternativem Splicing in RNA-Seq-Daten.
+  Ergebnis: Nachgewiesen, dass alternatives Splicing eine geeignete Quelle für
+  hochaffine Epitope darstellt und die Target-Identifizierung über klassische
+  somatische Mutationen hinaus erweitert.
+
+Personalisierte Immuntherapie – Hochdurchsatz-HLA-Typisierungs-Pipeline    (2014-04 bis 2014-05)
+  Bioinformatik-Bachelorand (NCT Heidelberg)
+  Bioinformatischer Workflow zur Identifizierung patientenspezifischer Krebs-
+  Targets und Automatisierung der HLA-Genotypisierung aus Next-Generation-
+  Sequencing-Daten (NGS).
+  Ergebnis: Nachgewiesen, dass ein vollständig computergestützter Ansatz zur
+  Neoantigen-Entdeckung praktikabel ist und Kosten sowie Vorlaufzeiten gegenüber
+  klassischen PCR-basierten klinischen Assays deutlich reduziert.
+
+================================================================================
+AUSBILDUNG
+================================================================================
+2019  M.Sc. Molekulare Biotechnologie - Heidelberg University (Heidelberg, Germany)
+2014  B.Sc. Molekulare Biotechnologie, Bioinformatik - Heidelberg University (Heidelberg, Germany)
+
+================================================================================
+KENNTNISSE
+================================================================================
+Bioinformatik & ML
+  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
+  Immunologie: MHC-I Prediction, HLA Typing, OptiType, MHCflurry, Neoepitopes
+  Strukturbiologie: TCRdock, AlphaFold v2, Mol*
+  Nanoskopie: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
+Biotech Wet-Lab
+  Modelle: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
+  Bildgebung: Super-Resolution, Confocal, Fluorescence
+  Assays: FISH, IF, qPCR, FACS
+Daten & Engineering
+  KI & Vision: TensorFlow, Keras, LSTMs, OpenCV
+  Eng & Tools: Python (Exp), R, SQL, Snakemake, Conda, Docker, Git, dbt
+  Cloud: GCP, BigQuery, Vertex AI, Looker
+
+================================================================================
+SPRACHEN
+================================================================================
+  Deutsch: native
+  Englisch: fluent
+  Koreanisch: native
+  Französisch: basic
+  Italienisch: basic
+  Latein: passive
+
+================================================================================
+EHRENAMTLICH
+================================================================================
+Soziales
+  - Jülicher Tafel e.V.
+  - In via - Café Gemeinsam
+  - Amnesty International
+  - Florence-Nightingale-Krankenhaus
+Umwelt
+  - Foodsharing e.V. (Operations Manager)
+  - Österreichisches Waldgarten-Institut
+  - Hofwaerts
+Sport
+  - UBC Mannheim
+  - Sobell Badminton Club
+  - ASD Gymnase
+  - BSG Jülich 1963 e.V.
+  - WAT Simmering
+  - TSG 1889 Dossenheim e.V.
+  - HTV 1846 e.V.
+
+================================================================================
+PUBLIKATIONEN
+================================================================================
+11 begutachtete Publikationen (2 als Erstautor, 3 geteilte Erstautorenschaft, 6
+als Co-Autor) sowie 3 Konferenzbeiträge als Erstautor, 2017–2021, in
+Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.
+Vollständige Liste: https://orcid.org/0009-0001-8784-1771
+
+================================================================================
+AUSZEICHNUNGEN
+================================================================================
+2015  DAAD-PROMOS-Stipendium - DAAD
+  Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung.
+2021  DeGBS-Posterpreis - Deutsche Gesellschaft für Biologische Strahlenforschung
