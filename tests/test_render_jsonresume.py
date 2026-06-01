@@ -136,3 +136,29 @@ def test_awards_array_present(doc):
     assert daad["awarder"] == "DAAD"
     assert daad["date"] == "2015-01-01"
     assert "summary" in daad
+
+
+# --- #42: period-end edge cases (characterization of existing _work behavior) ---
+from scripts.render_jsonresume import _work, _pad_end  # noqa: E402
+
+
+def _exp(period):
+    return {"experience": [{
+        "org": {"name": "Org"}, "role": "Dev", "period": period, "bullets": [],
+    }]}
+
+
+def test_work_dated_end_emits_enddate():
+    w = _work(_exp({"start": "2024-05", "end": "2025-07"}))[0]
+    assert w["startDate"] == "2024-05-01"
+    assert w["endDate"] == _pad_end("2025-07")
+
+
+def test_work_null_end_omits_enddate():
+    w = _work(_exp({"start": "2014-04", "end": None}))[0]
+    assert "endDate" not in w
+
+
+def test_work_absent_end_omits_enddate():
+    w = _work(_exp({"start": "2014-04"}))[0]
+    assert "endDate" not in w

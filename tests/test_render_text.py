@@ -161,3 +161,20 @@ def test_publications_full_list_for_comp_bio():
     bridge = render(lang="en", target="bridge")
     assert middle.title in full          # verbatim list present
     assert middle.title not in bridge    # aggregate omits per-paper titles
+
+
+# --- #42: period-end edge cases on the extracted formatter ---
+
+def test_format_period_dated():
+    from scripts.render_text import _format_period
+    assert _format_period({"start": "2024-05", "end": "2025-07"}, "en") == "2024-05 to 2025-07"
+
+
+def test_format_period_null_end_en():
+    from scripts.render_text import _format_period
+    assert _format_period({"start": "2014-04", "end": None}, "en") == "2014-04 to present"
+
+
+def test_format_period_absent_end_de():
+    from scripts.render_text import _format_period
+    assert _format_period({"start": "2014-04"}, "de") == "2014-04 bis heute"

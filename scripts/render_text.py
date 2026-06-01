@@ -55,12 +55,17 @@ def _profile(content: dict) -> str:
     return "\n\n".join(_wrap(p) for p in content["profile"]["paragraphs"])
 
 
+def _format_period(period: dict, lang: str) -> str:
+    """'2024-05 to 2025-07', or '… to present' / '… bis heute' for an open end."""
+    end = period.get("end") or PRESENT[lang]
+    return f"{period['start']} {PERIOD_CONNECTOR[lang]} {end}"
+
+
 def _experience(content: dict, lang: str) -> str:
     out: list[str] = []
     for exp in content["experience"]:
-        period_end = exp["period"].get("end") or PRESENT[lang]
         title_line = f"{exp['role']} - {exp['org']['name']}".strip()
-        period_line = f"{exp['period']['start']} {PERIOD_CONNECTOR[lang]} {period_end}"
+        period_line = _format_period(exp["period"], lang)
         block = [f"{title_line}    ({period_line})"]
         for b in exp.get("bullets", []):
             block.append(f"  - {b[lang]}")
@@ -72,8 +77,7 @@ def _selected_projects(content: dict, lang: str) -> str:
     out: list[str] = []
     outcome_label = {"en": "Outcome", "de": "Ergebnis"}[lang]
     for proj in content["selected_projects"]:
-        period_end = proj["period"].get("end") or PRESENT[lang]
-        period = f"{proj['period']['start']} {PERIOD_CONNECTOR[lang]} {period_end}"
+        period = _format_period(proj["period"], lang)
         block = [
             f"{proj['title']}    ({period})",
             f"  {proj['role']}",
