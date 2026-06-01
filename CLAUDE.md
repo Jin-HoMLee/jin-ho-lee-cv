@@ -37,7 +37,7 @@ content/                  source of truth (YAML + BibTeX)
 content.private/          gitignored PII overlay (phone, address)
 content.private.example/  template showing required private keys
 schema/cv.schema.json     JSON Schema for content
-scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py
+scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py
 tests/                    pytest suite
 pdf/                      Typst PDF renderer (Phase 1)
 web/                      Astro website (Phase 3)
@@ -57,7 +57,7 @@ just build-de          # → dist/cv-de.pdf
 just build-resume      # → dist/resume.json (JSON Resume)
 just build-jsonld      # → dist/person.jsonld (schema.org)
 just build-text        # → dist/cv-{en,de}.txt
-just build-formats     # all three Phase 4 machine formats
+just build-formats     # all machine formats (resume.json + person.jsonld + plain text + llms.txt)
 just snapshots-update  # regenerate committed renderer golden snapshots (after intentional output changes)
 just web-dev           # Astro dev server (regenerates content JSON + JSON-LD)
 just web-build         # Production build of web/dist
@@ -68,7 +68,8 @@ validate + test + lint must all be green before merging anything.
 ## Conventions
 
 - **TDD for non-trivial Python.** Tests first, watch them fail, then implement.
-- **Golden snapshots.** Renderer outputs (`resume.json`, `person.jsonld`, `cv-{en,de}.txt`, web `content.*.json`) are byte-snapshotted with syrupy under `tests/__snapshots__/`; CI fails on unintended drift. Regenerate intentionally with `just snapshots-update` and eyeball the diff. `scripts/validate.py` also hard-fails reversed periods and advisory-warns implausible dates.
+- **Golden snapshots.** Renderer outputs (`resume.json`, `person.jsonld`, `cv-{en,de}.txt`, `llms.txt`, web `content.*.json`) are byte-snapshotted with syrupy under `tests/__snapshots__/`; CI fails on unintended drift. Regenerate intentionally with `just snapshots-update` and eyeball the diff. `scripts/validate.py` also hard-fails reversed periods and advisory-warns implausible dates.
+- **ATS guard.** The built PDF's text layer is CI-verified (`tests/test_ats_pdf.py` via the `ats-guard` job — name/email/headings/umlauts round-trip through `pdftotext`); the `release` job depends on it. `/llms.txt` (llmstxt.org site map) is generated into `web/public/` for the deployed site (gitignored, like `person.jsonld`).
 - **Atomic commits.** One logical change per commit. Plain commit messages — no Claude attribution / co-authored-by trailers unless explicitly requested.
 - **Per-phase branches.** Phase N work happens on `phase-N-<topic>` branch, merged to `main` with `--no-ff` at the end of the phase to preserve the boundary in history.
 - **`content/*.yaml` is the source of truth.** Renderers consume; never edit content from inside a renderer.
