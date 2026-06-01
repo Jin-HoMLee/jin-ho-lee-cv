@@ -8,7 +8,7 @@
 
 The header right cluster is one flat `gap-2` row ([Header.astro:23-37](../../../web/src/components/Header.astro)):
 
-```
+```text
 Download PDF: [EN▣] [DE▣]   [DE▢]   [☾]
               └ PDF links ┘   │ lang  │ theme
 ```
@@ -47,9 +47,11 @@ A self-contained island. Props: `{ lang: Lang }`.
 - Panel positioned `absolute right-0` below the trigger; trigger wrapper `relative`.
 
 **Behaviour script** (small vanilla `<script>`, same island pattern as `ThemeToggle.astro`):
+
 - **Escape** closes the open menu and returns focus to the `<summary>`.
-- **Click/focus outside** closes it.
-- Selecting a language is a normal link navigation (GitHub release asset → download); no JS needed for the action itself.
+- **Click outside** closes it.
+- `aria-expanded` on the trigger is kept in sync via a `toggle` listener.
+- Selecting a language navigates to the release asset (download) and collapses the menu.
 - Clicking the trigger **only toggles the menu** — it never triggers a download, so the reported misclick is structurally impossible.
 
 ### Header changes — `web/src/components/Header.astro`
@@ -61,9 +63,10 @@ A self-contained island. Props: `{ lang: Lang }`.
 
 ### Accessibility
 
-- `<summary>` is natively a button and keyboard-operable (Enter/Space toggles; Tab reaches the two links; Escape closes via the script).
+- `<summary>` is natively a button and keyboard-operable (Enter/Space toggles; Tab reaches the two links; Escape closes + restores focus to the trigger via the script).
 - Renders **closed** server-side → no theme/no-flash interaction, no layout shift.
-- `aria-label` on the trigger; `hreflang` on each link.
+- `aria-expanded` is mirrored on the `<summary>` via a `toggle` listener — native `<details>` does not reliably expose expanded/collapsed state to Safari/VoiceOver. The accessible name comes from the visible label (icons are `aria-hidden`); no redundant `aria-label`.
+- `hreflang` on each link declares the target language; each visible endonym (`English`/`Deutsch`) carries `lang=` so screen readers pronounce it in its own language.
 
 ## Testing
 
