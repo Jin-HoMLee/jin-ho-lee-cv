@@ -122,7 +122,14 @@ jobs:
             grep -q 'data-count-to' "$page" || (echo "StatBand counter tiles missing in $page" && exit 1)
             grep -q 'role="tab"' "$page" || (echo "CodeHero tab controls missing in $page" && exit 1)
             grep -q 'profile.yaml' "$page" || (echo "CodeHero YAML tab missing in $page" && exit 1)
+            # Issue #50: header PDF download menu (replaced the adjacent EN/DE buttons)
+            grep -q 'data-pdf-menu' "$page" || (echo "PDF download menu missing in $page" && exit 1)
+            grep -q 'cv-en.pdf' "$page" || (echo "EN PDF link missing in $page" && exit 1)
+            grep -q 'cv-de.pdf' "$page" || (echo "DE PDF link missing in $page" && exit 1)
           done
+          # Localized trigger label rendered per locale
+          grep -q 'Download PDF' web/dist/index.html || (echo "EN PDF menu trigger label missing" && exit 1)
+          grep -q 'PDF herunterladen' web/dist/de/index.html || (echo "DE PDF menu trigger label missing" && exit 1)
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
