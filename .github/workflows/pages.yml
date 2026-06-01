@@ -40,6 +40,12 @@ jobs:
           mkdir -p web/public
           cp dist/person.jsonld web/public/person.jsonld
 
+      - name: Render llms.txt into web/public/
+        run: |
+          uv run python -m scripts.render_llms
+          mkdir -p web/public
+          cp dist/llms.txt web/public/llms.txt
+
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
@@ -86,6 +92,8 @@ jobs:
           test -f web/dist/sitemap-index.xml
           test -f web/dist/sitemap-0.xml
           test -f web/dist/robots.txt
+          # llms.txt site map is served at the site root
+          test -f web/dist/llms.txt
           # Sitemap URL count (2 homepages + 10 projects × 2 langs = 22)
           # grep -c counts matching lines; the sitemap is minified to one line,
           # so we use -o | wc -l to count occurrences instead.

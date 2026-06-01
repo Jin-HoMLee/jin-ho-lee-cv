@@ -3,3 +3,4 @@ dist/
 src/data/*.json
 .astro/
 public/person.jsonld
+public/llms.txt

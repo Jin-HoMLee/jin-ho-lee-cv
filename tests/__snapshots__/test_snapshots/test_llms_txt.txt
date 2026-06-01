@@ -1,0 +1,41 @@
+# Jin-Ho Lee — Bioinformatics · Data Science
+
+> Data scientist with cancer-genomics roots — HLA typing & neoantigen discovery on real-patient data, production ML on GCP, 10+ publications.
+
+Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, backed by 10+ peer-reviewed publications — first- and shared-first author in Cancers, Epigenetics Methods, and OBM Genetics — grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU.
+
+## Selected Projects
+- [Splice Neoepitope Pipeline – Reproducible Snakemake Workflow](https://jinholee.is-a.dev/projects/L5/): Modernised, open-source reimplementation of the 2015 SNU splice-junction–based neoepitope discovery work as a reproducible Snakemake pipeline with optional structural validation.
+- [Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis](https://jinholee.is-a.dev/projects/L1/): Bioinformatics pipeline for identifying novel immunotherapy targets derived from aberrant alternative splicing in RNA-Seq data.
+- [Personalized Immunotherapy – High-Throughput HLA Typing Pipeline](https://jinholee.is-a.dev/projects/L2/): Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data.
+
+## Publications
+- [Super-Resolution Radiation Biology: From Bio-Dosimetry towards Nano-Studies of DNA Repair Mechanisms](https://doi.org/10.5772/intechopen.95597): DNA - Damages and Repair Mechanisms, 2021
+- DeGBS 2021 Conference Contribution: Deutsche Gesellschaft für Biologische Strahlenforschung, 2021
+- [3D DNA FISH for analyses of chromatin-nuclear architecture](https://doi.org/10.1016/b978-0-12-819414-0.00020-3): Epigenetics Methods, 2020
+- [Nanostructure of Clustered DNA Damage in Leukocytes after In-Solution Irradiation with the Alpha Emitter Ra-223](https://doi.org/10.3390/cancers11121877): Cancers, 2019
+- [COMBO-FISH: A versatile tool beyond standard FISH to study chromatin organization by fluorescence light microscopy](https://doi.org/10.21926/obm.genet.1901064): OBM Genetics, 2019
+- [Challenges and contradictions of metal nano-particle applications for radio-sensitivity enhancement in cancer therapy](https://doi.org/10.3390/ijms20030588): International Journal of Molecular Sciences, 2019
+- Mechanisms and Challenges for Understanding Radiation Induced Changes in Chromatin Nanoarchitecture and Repair Complex Formation: ConRad 2019 - Global Conference on Radiation Topics, 2019
+- [Recruitment of 53BP1 Proteins for DNA Repair and Persistence of Repair Clusters Differ for Cell Types as Detected by Single Molecule Localization Microscopy](https://doi.org/10.3390/ijms19123713): International Journal of Molecular Sciences, 2018
+- [Single-molecule localization microscopy as a promising tool for gammaH2AX/53BP1 foci exploration](https://doi.org/10.1140/epjd/e2018-90148-1): The European Physical Journal D, 2018
+- [Super-Resolution Localization Microscopy of Radiation-Induced Histone H2AX-Phosphorylation in relation to H3K9-Trimethylation in HeLa Cells](https://doi.org/10.1039/c7nr08145f): Nanoscale, 2018
+- [Localization Microscopy Analyses of MRE11 Clusters in 3D-Conserved Cell Nuclei of Different Cell Lines](https://doi.org/10.3390/cancers10010025): Cancers, 2018
+- Mechanisms and challenges for understanding radiation induced changes in chromatin nanoarchitecture: Dny radiační ochrany (DRO 2018), 2018
+- [Challenges for Super-Resolution Localization Microscopy and Biomolecular Fluorescent Nano-Probing in Cancer Research](https://doi.org/10.3390/ijms18102066): International Journal of Molecular Sciences, 2017
+- [Combining Low Temperature Fluorescence DNA-Hybridization, Immunostaining, and Super-Resolution Localization Microscopy for Nano-Structure Analysis of ALU Elements and Their Influence on Chromatin Structure](https://doi.org/10.3390/ijms18051005): International Journal of Molecular Sciences, 2017
+- Marketing Automation Tool Selection & Implementation @DeutschlandCard: Essentials of Modern Marketing, Germany Edition, 2025
+
+## CV & machine-readable formats
+- [CV (PDF, EN)](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-en.pdf)
+- [CV (PDF, DE)](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-de.pdf)
+- [JSON Resume](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/resume.json)
+- [JSON-LD (schema.org)](https://jinholee.is-a.dev/person.jsonld)
+- [Plain text (EN)](https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download/cv-en.txt)
+
+## Links
+- [GitHub](https://github.com/Jin-HoMLee)
+- [LinkedIn](https://linkedin.com/in/jin-holee)
+- [ResearchGate](https://researchgate.net/profile/Jin-Ho-Lee-8)
+- [Website](https://jinholee.is-a.dev/)
+- [ORCID](https://orcid.org/0009-0001-8784-1771)
