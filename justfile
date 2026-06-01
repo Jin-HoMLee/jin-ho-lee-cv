@@ -73,8 +73,12 @@ build-text-targets:
     uv run python -m scripts.render_text --lang en --target ds-ml
     uv run python -m scripts.render_text --lang de --target ds-ml
 
-# Build every Phase 4 machine format (resume.json + person.jsonld + plain text)
-build-formats: build-resume build-jsonld build-text
+# Render the llms.txt site map (llmstxt.org) → dist/llms.txt
+build-llms:
+    uv run python -m scripts.render_llms
+
+# Build every machine format (resume.json + person.jsonld + plain text + llms.txt)
+build-formats: build-resume build-jsonld build-text build-llms
 
 # Regenerate committed renderer golden snapshots (run after an intentional output change)
 snapshots-update:
@@ -85,18 +89,23 @@ web-jsonld:
     uv run python -m scripts.render_jsonld
     cp dist/person.jsonld web/public/person.jsonld
 
-# Run the Astro dev server (regenerates data + JSON-LD first)
-web-dev: web-data web-jsonld
+# Render llms.txt and copy into web/public/ so the deployed site serves /llms.txt
+web-llms:
+    uv run python -m scripts.render_llms
+    cp dist/llms.txt web/public/llms.txt
+
+# Run the Astro dev server (regenerates data + JSON-LD + llms.txt first)
+web-dev: web-data web-jsonld web-llms
     pnpm --dir web dev
 
 # Build the static site → web/dist/
-web-build: web-data web-jsonld
+web-build: web-data web-jsonld web-llms
     pnpm --dir web install --frozen-lockfile
     pnpm --dir web build
 
 # Remove web build artifacts
 web-clean:
-    rm -rf web/dist web/node_modules web/src/data/*.json web/public/person.jsonld
+    rm -rf web/dist web/node_modules web/src/data/*.json web/public/person.jsonld web/public/llms.txt
 
 # Remove build outputs (PDF + web)
 clean: web-clean
