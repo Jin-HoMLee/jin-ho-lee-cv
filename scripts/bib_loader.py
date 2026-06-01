@@ -34,13 +34,60 @@ class Publication:
     category: str = "research"
 
 
+# --- BibTeX / LaTeX text normalization (issue #41) ---------------------------
+# Decode protective braces + accent macros once here so every renderer consumes
+# clean Unicode from one chokepoint (jsonld, resume, txt, web).
+
+# Collapse braced accent forms so the maps below catch them: \"{u} -> \"u, \'{e} -> \'e.
+_BRACED_ACCENT_RE = re.compile(r'\\(["\'`^~])\{(\w)\}')
+
+# Caron / háček and cedilla. Braces are required (matches our data and avoids
+# false matches against macros like \verb or \cite).
+_CARON = {
+    "c": "č", "C": "Č", "s": "š", "S": "Š", "z": "ž", "Z": "Ž",
+    "r": "ř", "R": "Ř", "e": "ě", "E": "Ě", "n": "ň", "N": "Ň",
+}
+_CARON_RE = re.compile(r"\\v\{([cCsSzZrReEnN])\}")
+_CEDILLA = {"c": "ç", "C": "Ç"}
+_CEDILLA_RE = re.compile(r"\\c\{([cC])\}")
+
+# Unbraced diacritics (after the braced-accent collapse) plus ß.
+_ACCENTS = {
+    r'\"a': "ä", r'\"o': "ö", r'\"u': "ü",
+    r'\"A': "Ä", r'\"O': "Ö", r'\"U': "Ü",
+    r"\ss": "ß",
+    r"\'e": "é", r"\'E": "É", r"\`e": "è",
+    r"\'a": "á", r"\`a": "à", r"\^a": "â",
+    r"\'o": "ó", r"\^o": "ô", r"\'i": "í",
+    r"\'u": "ú", r"\~n": "ñ", r"\~N": "Ñ",
+}
+
+# LaTeX special-character escapes (e.g. "Selection \& Implementation").
+_ESCAPES = {r"\&": "&", r"\%": "%", r"\$": "$", r"\_": "_", r"\#": "#"}
+
+
+def _clean_tex(s: str) -> str:
+    """Decode BibTeX field text (accent macros + protective braces) to plain Unicode. Idempotent."""
+    s = _BRACED_ACCENT_RE.sub(r"\\\1\2", s)
+    s = _CARON_RE.sub(lambda m: _CARON[m.group(1)], s)
+    s = _CEDILLA_RE.sub(lambda m: _CEDILLA[m.group(1)], s)
+    for tex, uni in _ACCENTS.items():
+        s = s.replace(tex, uni)
+    for tex, uni in _ESCAPES.items():
+        s = s.replace(tex, uni)
+    # Strip protective braces last. Intentionally lossy: BibTeX titles use braces
+    # only for case-protection, never for display, so removing all of them is safe.
+    return s.replace("{", "").replace("}", "")
+
+
 def _venue(entry) -> str | None:
     fields = entry.fields
-    return (
+    raw = (
         fields.get("journal")
         or fields.get("booktitle")
         or fields.get("publisher")
     )
+    return _clean_tex(raw) if raw is not None else None
 
 
 def _normalize_doi(value: str) -> str:
@@ -89,10 +136,10 @@ def _parse_entry(key: str, entry) -> Publication:
     if fields["authorship"] not in AUTHORSHIP_VALUES:
         raise ValueError(f"{key}: unknown authorship {fields['authorship']!r}")
 
-    authors = tuple(str(p) for p in entry.persons.get("author", []))
+    authors = tuple(_clean_tex(str(p)) for p in entry.persons.get("author", []))
     return Publication(
         key=key,
-        title=fields["title"],
+        title=_clean_tex(fields["title"]),
         year=int(fields["year"]),
         type=fields["type"],
         authorship=fields["authorship"],
