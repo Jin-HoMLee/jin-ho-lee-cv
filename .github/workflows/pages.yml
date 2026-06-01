@@ -40,6 +40,12 @@ jobs:
           mkdir -p web/public
           cp dist/person.jsonld web/public/person.jsonld
 
+      - name: Render llms.txt into web/public/
+        run: |
+          uv run python -m scripts.render_llms
+          mkdir -p web/public
+          cp dist/llms.txt web/public/llms.txt
+
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
