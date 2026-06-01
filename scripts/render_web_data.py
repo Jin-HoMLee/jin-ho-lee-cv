@@ -16,6 +16,7 @@ from typing import Any
 from scripts.bib_loader import Publication
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
+from scripts.publications import format_publication_summary
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -115,6 +116,11 @@ def render_web_data(*, content_dir: Path = CONTENT_DIR, output_dir: Path = OUTPU
             load_content(content_dir, private_path=None, lang=lang, target="bridge"),
             lang=lang,
         )
+        pub_labels = bridge_resolved["labels"]["publications"]
+        bridge_resolved["publications_aggregate"] = {
+            "summary": format_publication_summary(pub_labels["summary"], bridge_resolved["publications"]),
+            "pointer": pub_labels["full_list_pointer"],
+        }
         _dump(bridge_resolved, f"content.{lang}.json")
 
         variants_dict = {}

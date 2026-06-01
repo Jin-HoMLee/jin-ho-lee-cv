@@ -5,10 +5,13 @@ import PublicationsCumulative from "./PublicationsCumulative.astro";
 
 interface Props {
   publications: Publication[];
+  aggregate: { summary: string; pointer: string };
+  orcid: string | null;
   lang: Lang;
 }
 
-const { publications, lang } = Astro.props;
+const { publications, aggregate, orcid, lang } = Astro.props;
+const orcidDisplay = orcid ? orcid.replace(/^https?:\/\//, "") : "";
 
 const sectionLabel = { en: "Publications", de: "Publikationen" };
 const typeLabel: Record<PublicationType, { en: string; de: string }> = {
@@ -51,28 +54,48 @@ function renderAuthors(authors: string[]): string {
       <PublicationsCumulative publications={publications} lang={lang} />
     </div>
   </div>
-  {typeOrder.map((t) => grouped[t].length > 0 && (
-    <div class="mb-5">
-      <h3 class="mb-2 text-sm font-semibold text-[var(--text)]">{typeLabel[t][lang]}</h3>
-      <ol class="space-y-2 text-sm text-[var(--muted)]">
-        {grouped[t].map((p) => (
-          <li>
-            <p class="font-medium text-[var(--text)]">{p.title}</p>
-            <p set:html={renderAuthors(p.authors)} class="text-xs text-[var(--muted)]" />
-            <p class="text-xs text-[var(--faint)]">
-              {p.venue ? `${p.venue} · ` : ""}{p.year} · {p.authorship}
-              {p.doi && (
-                <> · <a
-                  href={`https://doi.org/${p.doi}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="underline decoration-dotted underline-offset-2 hover:text-[var(--text)]"
-                >{p.doi}</a></>
-              )}
-            </p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  ))}
+
+  <!-- Aggregate (bridge / ds-ml) — visible by default; charts above stay for every target. -->
+  <div data-cv-pub="aggregate" class="mt-4 text-sm text-[var(--muted)]">
+    <p>{aggregate.summary}</p>
+    {orcid && (
+      <p class="mt-1 text-xs text-[var(--faint)]">
+        {aggregate.pointer}{" "}
+        <a
+          href={orcid}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline decoration-dotted underline-offset-2 hover:text-[var(--text)]"
+        >{orcidDisplay}</a>
+      </p>
+    )}
+  </div>
+
+  <!-- Full verbatim list (comp-bio) — hidden by default; the switcher reveals it. -->
+  <div data-cv-pub="full" hidden class="mt-4">
+    {typeOrder.map((t) => grouped[t].length > 0 && (
+      <div class="mb-5">
+        <h3 class="mb-2 text-sm font-semibold text-[var(--text)]">{typeLabel[t][lang]}</h3>
+        <ol class="space-y-2 text-sm text-[var(--muted)]">
+          {grouped[t].map((p) => (
+            <li>
+              <p class="font-medium text-[var(--text)]">{p.title}</p>
+              <p set:html={renderAuthors(p.authors)} class="text-xs text-[var(--muted)]" />
+              <p class="text-xs text-[var(--faint)]">
+                {p.venue ? `${p.venue} · ` : ""}{p.year} · {p.authorship}
+                {p.doi && (
+                  <> · <a
+                    href={`https://doi.org/${p.doi}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="underline decoration-dotted underline-offset-2 hover:text-[var(--text)]"
+                  >{p.doi}</a></>
+                )}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    ))}
+  </div>
 </section>

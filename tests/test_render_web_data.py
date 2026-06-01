@@ -6,7 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from scripts.bib_loader import Publication
+from scripts.bib_loader import Publication, load_publications
+from scripts.publications import publication_summary
 from scripts.render_web_data import _to_jsonable, render_web_data, OUTPUT_DIR
 
 
@@ -30,7 +31,7 @@ def test_round_trip_structural_keys(rendered):
     expected_keys = {
         "personal", "profile", "skills", "education", "experience",
         "projects", "selected_projects", "languages", "volunteer",
-        "publications", "labels", "awards",
+        "publications", "labels", "awards", "publications_aggregate",
     }
     assert set(en.keys()) == expected_keys
     assert set(de.keys()) == expected_keys
@@ -116,6 +117,15 @@ def test_output_dir_default_matches_repo_layout():
     assert OUTPUT_DIR.name == "data"
     assert OUTPUT_DIR.parent.name == "src"
     assert OUTPUT_DIR.parent.parent.name == "web"
+
+
+def test_publications_aggregate_present(rendered):
+    s = publication_summary(load_publications(CONTENT_DIR / "publications.bib"))
+    en, de = rendered
+    assert f"{s.peer_reviewed} peer-reviewed publications" in en["publications_aggregate"]["summary"]
+    assert en["publications_aggregate"]["pointer"] == "Full list & metrics:"
+    assert "begutachtete Publikationen" in de["publications_aggregate"]["summary"]
+    assert de["publications_aggregate"]["pointer"] == "Vollständige Liste:"
 
 
 def test_publication_doi_is_serialized():

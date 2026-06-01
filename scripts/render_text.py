@@ -8,7 +8,7 @@ from pathlib import Path
 from scripts.bib_loader import Publication, load_publications
 from scripts.content_loader import TARGETS, load_content
 from scripts.langstring import resolve_langstrings
-
+from scripts.publications import publication_mode, format_publication_summary
 
 from scripts.config import PAGES_BASE_URL
 
@@ -136,6 +136,15 @@ def _publications(pubs: list[Publication]) -> str:
     return "\n\n".join(out)
 
 
+def _publications_aggregate(content: dict, pubs: list[Publication]) -> str:
+    """One-line derived summary + ORCID pointer (full URL, matching the DOI style)."""
+    pub_labels = content["labels"]["publications"]
+    summary = format_publication_summary(pub_labels["summary"], pubs)
+    orcid = content["personal"]["links"]["orcid"]
+    pointer_line = f"{pub_labels['full_list_pointer']} {orcid}" if orcid else ""
+    return f"{_wrap(summary)}\n{pointer_line}".rstrip()
+
+
 def _txt_filename(lang: str, target: str) -> str:
     """Output filename; bridge is unsuffixed to match the PDF naming convention."""
     return f"cv-{lang}.txt" if target == "bridge" else f"cv-{lang}-{target}.txt"
@@ -149,6 +158,12 @@ def render(lang: str, target: str = "bridge") -> str:
     pubs = load_publications(CONTENT_DIR / "publications.bib")
     L = SECTION_LABELS
 
+    pub_body = (
+        _publications(pubs)
+        if publication_mode(target) == "full"
+        else _publications_aggregate(content, pubs)
+    )
+
     sections = [
         _header(content),
         _section(L["profile"][lang],           _profile(content)),
@@ -158,7 +173,7 @@ def render(lang: str, target: str = "bridge") -> str:
         _section(L["skills"][lang],            _skills(content)),
         _section(L["languages"][lang],         _languages(content)),
         _section(L["volunteer"][lang],         _volunteer(content)),
-        _section(L["publications"][lang],      _publications(pubs)),
+        _section(L["publications"][lang],      pub_body),
         _section(L["awards"][lang],            _awards(content)),
     ]
     return "\n\n".join(sections) + "\n"

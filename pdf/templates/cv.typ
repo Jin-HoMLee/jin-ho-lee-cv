@@ -54,7 +54,7 @@
     profile(data.profile, data.labels)
     experience(data.experience, data.labels, lang)
     selected_projects(data.selected_projects, data.labels)
-    publications(data.publications, data.publications_heading, data.personal.name.family)
+    publications(data)
     awards(data.awards, data.labels)
   }),
   sidebar(data, data.labels),
