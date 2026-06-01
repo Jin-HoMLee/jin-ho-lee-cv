@@ -72,7 +72,20 @@ def test_alumni_deduped(doc):
 
 
 def test_no_works_for(doc):
+    # Current content has no open-ended role → worksFor omitted (honest, no current employer).
     assert "worksFor" not in _person_node(doc)
+
+
+def test_works_for_emitted_when_open_ended():
+    """If a future role has end:null, the renderer auto-detects it as current employer."""
+    content = resolve_langstrings(load_content(CONTENT_DIR, lang="en"), lang="en")
+    content["experience"] = [
+        {"org": {"name": "Future Corp"}, "role": "Lead", "period": {"start": "2026-01", "end": None}},
+        *content["experience"],
+    ]
+    pubs = load_publications(CONTENT_DIR / "publications.bib")
+    person = next(g for g in to_jsonld(content, pubs)["@graph"] if g["@type"] == "Person")
+    assert person["worksFor"] == {"@type": "Organization", "name": "Future Corp"}
 
 
 def test_has_occupation_from_headline(doc):
@@ -168,31 +181,31 @@ def _pub(**over) -> Publication:
 
 
 def test_scholarly_article_sameas_is_doi():
-    [item] = jsonld_publications([_pub(doi="10.3390/cancers11121877")], "https://orcid.org/X")
+    [item] = jsonld_publications([_pub(doi="10.3390/cancers11121877")], "https://orcid.org/X", "Lee, J")
     assert item["sameAs"] == ["https://doi.org/10.3390/cancers11121877"]
 
 
 def test_scholarly_article_no_sameas_without_doi():
-    [item] = jsonld_publications([_pub(doi=None)], "https://orcid.org/X")
+    [item] = jsonld_publications([_pub(doi=None)], "https://orcid.org/X", "Lee, J")
     assert "sameAs" not in item
 
 
 def test_scholarly_article_doi_identifier_and_id():
-    [item] = jsonld_publications([_pub(doi="10.3390/cancers11121877")], "https://orcid.org/X")
+    [item] = jsonld_publications([_pub(doi="10.3390/cancers11121877")], "https://orcid.org/X", "Lee, J")
     assert item["@id"] == "https://doi.org/10.3390/cancers11121877"
     assert item["identifier"] == {
         "@type": "PropertyValue", "propertyID": "DOI", "value": "10.3390/cancers11121877"
     }
 
 
-def test_scholarly_article_no_doi_uses_fragment_id():
-    [item] = jsonld_publications([_pub(doi=None)], "https://orcid.org/X")
-    assert item["@id"].endswith("#publication-0")
+def test_scholarly_article_no_doi_uses_stable_key_fragment():
+    [item] = jsonld_publications([_pub(doi=None, key="lee2019_conrad")], "https://orcid.org/X", "Lee, J")
+    assert item["@id"].endswith("#publication-lee2019_conrad")
     assert "identifier" not in item
 
 
 def test_scholarly_article_links_author_to_person():
-    [item] = jsonld_publications([_pub(authors=("Lee, J.", "Hausmann, M."))], "https://orcid.org/X")
+    [item] = jsonld_publications([_pub(authors=("Lee, J.", "Hausmann, M."))], "https://orcid.org/X", "Lee, J")
     assert {"@id": "https://orcid.org/X"} in item["author"]
     assert {"@type": "Person", "name": "Hausmann, M."} in item["author"]
 

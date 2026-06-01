@@ -55,17 +55,31 @@ def _has_occupation(content: dict) -> list[dict]:
     ]
 
 
-def _publications(pubs: list[Publication], person_id: str) -> list[dict]:
+def _works_for(content: dict) -> dict | None:
+    """Current employer = first experience entry whose period.end is null/absent.
+
+    Returns None today (all roles have dated ends) — so worksFor is omitted — but
+    auto-detects a current role if one is ever added, keeping the renderer correct.
+    """
+    for exp in content["experience"]:
+        if exp["period"].get("end") in (None, "present"):
+            return {"@type": "Organization", "name": exp["org"]["name"]}
+    return None
+
+
+def _publications(pubs: list[Publication], person_id: str, author_prefix: str) -> list[dict]:
     out = []
-    for i, p in enumerate(pubs):
+    for p in pubs:
         doi_url = f"https://doi.org/{p.doi}" if p.doi else None
         item: dict = {
             "@type": "ScholarlyArticle",
-            "@id": doi_url or f"{PAGES_BASE_URL}/#publication-{i}",
+            # DOI URL is the canonical persistent ID; fall back to the stable bib key
+            # (NOT an enumeration index, which shifts when the bib is reordered).
+            "@id": doi_url or f"{PAGES_BASE_URL}/#publication-{p.key}",
             "name": p.title,
             "datePublished": str(p.year),
             "author": [
-                {"@id": person_id} if a.startswith("Lee, J") else {"@type": "Person", "name": a}
+                {"@id": person_id} if a.startswith(author_prefix) else {"@type": "Person", "name": a}
                 for a in p.authors
             ],
         }
@@ -101,10 +115,10 @@ def _person(content: dict) -> dict:
     personal = content["personal"]
     profile = content["profile"]
     name = f"{personal['name']['given']} {personal['name']['family']}"
-    orcid = personal["links"].get("orcid") or f"{SITE_URL}#person"
+    orcid = personal["links"].get("orcid")
     person: dict = {
         "@type": "Person",
-        "@id": orcid,
+        "@id": orcid or f"{SITE_URL}#person",
         "name": name,
         "url": SITE_URL,
         "image": PHOTO_URL,
@@ -116,12 +130,17 @@ def _person(content: dict) -> dict:
             "addressLocality": personal["location"]["city"],
             "addressCountry": personal["location"]["country"],
         },
-        "identifier": {"@type": "PropertyValue", "propertyID": "ORCID", "value": orcid},
-        "sameAs": _same_as(personal),
-        "alumniOf": _alumni_of(content),
-        "knowsAbout": _knows_about(content),
-        "hasOccupation": _has_occupation(content),
     }
+    # Only claim an ORCID identifier when a real ORCID is present (don't label the
+    # site-URL @id fallback as an ORCID value).
+    if orcid:
+        person["identifier"] = {"@type": "PropertyValue", "propertyID": "ORCID", "value": orcid}
+    person["sameAs"] = _same_as(personal)
+    person["alumniOf"] = _alumni_of(content)
+    person["knowsAbout"] = _knows_about(content)
+    person["hasOccupation"] = _has_occupation(content)
+    if (works_for := _works_for(content)) is not None:
+        person["worksFor"] = works_for
     if content["awards"]:
         person["award"] = [a["title"] for a in content["awards"]]
     return person
@@ -131,9 +150,17 @@ def to_jsonld(content: dict, pubs: list[Publication]) -> dict:
     """Compose the schema.org @graph (see module docstring for the entity-resolution rationale)."""
     person = _person(content)
     person_id = person["@id"]
+    # Match the author entry that is the CV owner (his own bib) by "Family, G" prefix,
+    # derived from content rather than hardcoded.
+    pname = content["personal"]["name"]
+    author_prefix = f"{pname['family']}, {pname['given'][0]}"
     return {
         "@context": "https://schema.org",
-        "@graph": [person, *_publications(pubs, person_id), *_projects(content, person_id)],
+        "@graph": [
+            person,
+            *_publications(pubs, person_id, author_prefix),
+            *_projects(content, person_id),
+        ],
     }
 
 
