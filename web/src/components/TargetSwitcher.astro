@@ -89,6 +89,14 @@ const order = ["bridge", "comp-bio", "ds-ml"] as const;
         const value = overrides && overrides[jsonKey] != null ? overrides[jsonKey] : bridge[field];
         if (value != null) el.textContent = value;
       }
+      // Publications depth: comp-bio shows the verbatim list; bridge/ds-ml the
+      // aggregate. Charts (rendered outside both blocks) stay visible for all.
+      const showFull = target === "comp-bio";
+      const fullBlock = document.querySelector('[data-cv-pub="full"]');
+      const aggBlock = document.querySelector('[data-cv-pub="aggregate"]');
+      if (fullBlock) fullBlock.hidden = !showFull;
+      if (aggBlock) aggBlock.hidden = showFull;
+
       for (const btn of buttons) {
         btn.setAttribute("aria-pressed", String(btn.dataset.cvTarget === target));
       }
