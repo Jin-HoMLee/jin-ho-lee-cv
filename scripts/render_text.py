@@ -141,7 +141,8 @@ def _publications_aggregate(content: dict, pubs: list[Publication]) -> str:
     pub_labels = content["labels"]["publications"]
     summary = format_publication_summary(pub_labels["summary"], pubs)
     orcid = content["personal"]["links"]["orcid"]
-    return f"{_wrap(summary)}\n{pub_labels['full_list_pointer']} {orcid}"
+    pointer_line = f"{pub_labels['full_list_pointer']} {orcid}" if orcid else ""
+    return f"{_wrap(summary)}\n{pointer_line}".rstrip()
 
 
 def _txt_filename(lang: str, target: str) -> str:
