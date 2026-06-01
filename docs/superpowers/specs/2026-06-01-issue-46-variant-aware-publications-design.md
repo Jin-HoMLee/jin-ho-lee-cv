@@ -218,10 +218,10 @@ The text `SECTION_LABELS["publications"]` is already plain "PUBLICATIONS"/"PUBLI
 
 ## Web renderer
 
-**`scripts/render_web_data.py`** — inject the (target-independent) aggregate strings into the bridge content JSON, and add a `publications_mode` override for `comp-bio` only:
+**`scripts/render_web_data.py`** — inject the (target-independent) aggregate strings into the bridge content JSON. The `variants.json` payload is **not** touched: which targets show the full list vs. the aggregate is a pure function of the target name, so the client computes it (below) rather than carrying a `publications_mode` field — this keeps the `variants.json` "exactly four positioning fields" contract (and its regression guard `test_render_web_data_variants.py`) intact.
 
 ```python
-from scripts.publications import publication_mode, format_publication_summary
+from scripts.publications import format_publication_summary
 
 # after building bridge_resolved, before _dump:
 pub_labels = bridge_resolved["labels"]["publications"]
@@ -229,13 +229,6 @@ bridge_resolved["publications_aggregate"] = {
     "summary": format_publication_summary(pub_labels["summary"], bridge_resolved["publications"]),
     "pointer": pub_labels["full_list_pointer"],
 }
-
-# in the variant loop:
-overrides = _extract_overrides(bridge_resolved, variant_resolved)
-mode = publication_mode(target)
-if mode != publication_mode("bridge"):     # only comp-bio differs from the aggregate default
-    overrides["publications_mode"] = mode
-variants_dict[target] = overrides
 ```
 
 **`web/src/components/PublicationsList.astro`** — keep the charts always visible; render the aggregate block (visible by default) and wrap the existing grouped list in a `hidden` full block:
@@ -273,14 +266,15 @@ const orcidDisplay = orcid.replace(/^https?:\/\//, "");
 </section>
 ```
 
-**`web/src/components/TargetSwitcher.astro`** — extend the `Variant` interface with `publications_mode?: "full" | "aggregate"`, and toggle the two blocks inside `apply()` (charts untouched):
+**`web/src/components/TargetSwitcher.astro`** — toggle the two pre-rendered blocks inside `apply()` based on the target name (charts untouched). The full list shows only for `comp-bio`; the aggregate shows for everyone else, matching the default (bridge) server-rendered state. No `Variant` type change needed.
 
 ```js
-const pubMode = (overrides && overrides.publications_mode) || "aggregate";
+// publications depth: comp-bio shows the verbatim list; bridge/ds-ml the aggregate.
+const showFull = target === "comp-bio";
 const fullBlock = document.querySelector('[data-cv-pub="full"]');
 const aggBlock  = document.querySelector('[data-cv-pub="aggregate"]');
-if (fullBlock) fullBlock.hidden = pubMode !== "full";
-if (aggBlock)  aggBlock.hidden  = pubMode !== "aggregate";
+if (fullBlock) fullBlock.hidden = !showFull;
+if (aggBlock)  aggBlock.hidden  = showFull;
 ```
 
 **`web/src/pages/index.astro` + `web/src/pages/de/index.astro`** — pass the new props:
@@ -290,7 +284,7 @@ if (aggBlock)  aggBlock.hidden  = pubMode !== "aggregate";
                   orcid={data.personal.links.orcid} lang="en" />
 ```
 
-**`web/src/types/content.ts`** — add `publications_aggregate: { summary: string; pointer: string }` to `ContentData`; add `publications: { summary: string; full_list_pointer: string }` to `Labels`.
+**`web/src/types/content.ts`** — add `publications_aggregate: { summary: string; pointer: string }` to `ContentData`. (No `Variant`/`Labels` change needed — the switcher derives depth from the target name, and the web reads the aggregate via `ContentData`, not `labels`.)
 
 ## What #46 removes
 
@@ -303,7 +297,7 @@ if (aggBlock)  aggBlock.hidden  = pubMode !== "aggregate";
 - **`tests/test_publications.py`** (NEW): `publication_mode` (comp-bio→full, bridge/ds-ml→aggregate); `publication_summary` on synthetic pubs (peer-reviewed = research articles+chapters, conference excluded from peer-reviewed, applied excluded entirely, coauthor folding, research-only span); `format_publication_summary` (placeholder fill, en-dash span); live-bib assertions (`peer_reviewed=11, pr_first=2, pr_shared=3, pr_coauthor=6, conferences=3, span=2017–2021`) — derived, not hardcoded.
 - **`tests/test_pdf_publications.py`** (REWORK): remove `select_publications` tests; assert `prepare_data` sets `publications_mode`/`publications_summary`/`publications_pointer`/plain `publications_heading` per target and language; PDF-text test — bridge PDF contains aggregate markers (`orcid.org/0009…`, "11 peer-reviewed") and omits a middle-author title; comp-bio PDF contains a middle-author title.
 - **`tests/test_render_text.py`**: comp-bio contains a known paper title; bridge contains the aggregate summary substring + the full ORCID URL and omits the middle-author title.
-- **`tests/test_render_web_data.py`**: `content.{lang}.json` carries `publications_aggregate.summary`/`.pointer`; `variants[comp-bio].publications_mode == "full"`; `ds-ml` has no `publications_mode` key.
+- **`tests/test_render_web_data.py`**: `content.{lang}.json` carries `publications_aggregate.summary`/`.pointer` (and `test_round_trip_structural_keys`'s exact key-set adds `publications_aggregate`). `tests/test_render_web_data_variants.py` is **unchanged** — `publications_mode` is not in the variants payload (client derives it from the target).
 - `just validate && just test && just lint` green; `just web-build` succeeds.
 
 ## Out of scope
@@ -322,11 +316,11 @@ if (aggBlock)  aggBlock.hidden  = pubMode !== "aggregate";
 | `pdf/templates/publications.typ` | branch full vs aggregate; `publications(data)` |
 | `pdf/templates/cv.typ` | call `publications(data)` |
 | `scripts/render_text.py` | per-target aggregate branch |
-| `scripts/render_web_data.py` | inject aggregate; `publications_mode` override |
+| `scripts/render_web_data.py` | inject `publications_aggregate` into content JSON |
 | `web/src/components/PublicationsList.astro` | charts always; aggregate + full blocks |
-| `web/src/components/TargetSwitcher.astro` | toggle pub blocks; `Variant` type |
+| `web/src/components/TargetSwitcher.astro` | toggle pub blocks (derive from target) |
 | `web/src/pages/index.astro`, `…/de/index.astro` | pass new props |
-| `web/src/types/content.ts` | `ContentData` + `Labels` additions |
+| `web/src/types/content.ts` | `ContentData.publications_aggregate` |
 | `tests/test_publications.py` | **NEW** |
 | `tests/test_pdf_publications.py`, `test_render_text.py`, `test_render_web_data.py` | reworked/extended |
 | `CLAUDE.md` | add `scripts/publications.py` to Layout; confirm phasing table unchanged (maintenance item) |
