@@ -10,10 +10,12 @@
   if data.publications_mode == "aggregate" {
     // Derived summary sentence (counts + span filled in Python) + ORCID pointer.
     [#data.publications_summary]
-    linebreak()
     let orcid = data.personal.links.orcid
-    let shown = orcid.replace("https://", "").replace("http://", "")
-    text(size: size-small, fill: muted)[#data.publications_pointer #link(orcid)[#text(fill: accent)[#shown]]]
+    if orcid != none {
+      linebreak()
+      let shown = orcid.replace("https://", "").replace("http://", "")
+      text(size: size-small, fill: muted)[#data.publications_pointer #link(orcid)[#text(fill: accent)[#shown]]]
+    }
   } else {
     // Full verbatim list (comp-bio) — the #43 per-paper rendering.
     let family = data.personal.name.family

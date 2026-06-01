@@ -80,7 +80,8 @@ def test_summary_year_span_falls_back_to_all_pubs_when_no_research():
     ]
     s = publication_summary(pubs)
     assert (s.year_start, s.year_end) == (2023, 2025)
-    assert s.peer_reviewed == 0  # applied entries are not peer-reviewed
+    # No research items → every count bucket is zero.
+    assert (s.peer_reviewed, s.pr_first, s.pr_shared, s.pr_coauthor, s.conferences) == (0, 0, 0, 0, 0)
 
 
 def test_summary_raises_on_empty_list():
