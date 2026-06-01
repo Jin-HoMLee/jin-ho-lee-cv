@@ -109,11 +109,13 @@ jobs:
           # Variant text inlined for client-side swapping (EN + DE)
           grep -q 'Computational Biology · Cancer Genomics' web/dist/index.html || (echo "comp-bio variant text not inlined (EN)" && exit 1)
           grep -q 'Computational Biology · Krebsgenomik' web/dist/de/index.html || (echo "comp-bio variant text not inlined (DE)" && exit 1)
-          # Bridge stays SEO-canonical: variant strings must NOT leak into <head>.
-          # Split on </head> (robust to Astro's minified, multi-element lines) and
-          # fail if any variant string appears in the head segment. Both langs.
-          python3 -c "import sys; head=open('web/dist/index.html',encoding='utf-8').read().split('</head>',1)[0]; sys.exit('Variant positioning leaked into EN <head> — canonical must stay bridge' if 'Computational Biology' in head else 0)"
-          python3 -c "import sys; head=open('web/dist/de/index.html',encoding='utf-8').read().split('</head>',1)[0]; sys.exit('Variant positioning leaked into DE <head> — canonical must stay bridge' if 'Computational Biology' in head else 0)"
+          # Bridge stays SEO-canonical: variant positioning must NOT leak into <head>.
+          # Split on </head> (robust to Astro's minified, multi-element lines), then strip
+          # the JSON-LD <script> first — its knowsAbout legitimately carries discipline
+          # topics (e.g. "Computational Biology") and that machine data is not a positioning
+          # leak. Fail only if the sentinel survives in the human/SEO head. Both langs.
+          python3 -c "import sys,re; head=open('web/dist/index.html',encoding='utf-8').read().split('</head>',1)[0]; head=re.sub(r'<script type=\"application/ld\+json\">.*?</script>','',head,flags=re.S); sys.exit('Variant positioning leaked into EN <head> — canonical must stay bridge' if 'Computational Biology' in head else 0)"
+          python3 -c "import sys,re; head=open('web/dist/de/index.html',encoding='utf-8').read().split('</head>',1)[0]; head=re.sub(r'<script type=\"application/ld\+json\">.*?</script>','',head,flags=re.S); sys.exit('Variant positioning leaked into DE <head> — canonical must stay bridge' if 'Computational Biology' in head else 0)"
           # Phase 9: redesign elements reached the built HTML, both langs
           for page in web/dist/index.html web/dist/de/index.html; do
             grep -q 'data-theme-toggle' "$page" || (echo "Theme toggle missing in $page" && exit 1)
