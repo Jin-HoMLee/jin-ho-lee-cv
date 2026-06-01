@@ -12,7 +12,7 @@ A machine-readable, codified CV / resume for Jin-Ho Lee. Single source of truth 
 
 ## Phasing
 
-Eight phases (0–8), sequential. Each produces a usable artifact and gets its own brainstorm + plan + execution.
+Ten phases (0–9), sequential. Each produces a usable artifact and gets its own brainstorm + plan + execution.
 
 | Phase | Scope | Status |
 |---|---|---|
@@ -87,6 +87,12 @@ validate + test + lint must all be green before merging anything.
 - `docs/superpowers/specs/2026-05-21-codified-cv-design.md` — full architectural spec for the whole codified-CV project
 - `docs/superpowers/specs/2026-05-25-phase-4-machine-formats-design.md` — Phase 4 design spec (JSON Resume, JSON-LD, plain text, publication chart)
 - `docs/superpowers/specs/2026-05-26-phase-5-polish-design.md` — Phase 5 design spec (custom domain, project pages, OG images, chart tooltips)
+- `docs/superpowers/specs/2026-05-28-phase-6-seo-analytics-design.md` — Phase 6 design spec (sitemap, robots.txt, GSC verify, GoatCounter analytics)
+- `docs/superpowers/specs/2026-05-29-phase-7-content-audit-design.md` — Phase 7 design spec (content audit — bring the CV up to date)
+- `docs/superpowers/specs/2026-05-30-phase-8a-sharpen-positioning-design.md` — Phase 8a design spec (sharpen positioning — Bioinformatics · Data Science)
+- `docs/superpowers/specs/2026-05-30-phase-8b-targeted-variants-design.md` — Phase 8b design spec (targeted CV variants — comp-bio · ds-ml from one source)
+- `docs/superpowers/specs/2026-05-31-phase-8c-web-variants-design.md` — Phase 8c design spec (web target switcher — client-side variant positioning)
+- `docs/superpowers/specs/2026-05-31-phase-9-web-redesign-design.md` — Phase 9 design spec (2026 dark-technical web overhaul)
 - `scripts/content_loader.py` + `scripts/bib_loader.py` + `scripts/langstring.py` — the data layer every renderer consumes
 - `scripts/render_web_data.py` — the closest pattern for a "Python script that emits JSON for a downstream renderer to consume"; mirror this style
 
