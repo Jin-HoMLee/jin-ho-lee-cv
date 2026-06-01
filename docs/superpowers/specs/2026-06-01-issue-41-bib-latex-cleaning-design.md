@@ -45,7 +45,11 @@ Order is load-bearing: collapse braced accents → specific decodes → generic 
 
 ### Scope note — web `cleanTex`
 
-Once `bib_loader` cleans upstream, `CodeHero.astro`'s `cleanTex` runs on already-clean strings → harmless idempotent no-op. It will be **left in place** (removing it is a web refactor beyond this S-sized bug) with a one-line comment noting it is now belt-and-suspenders, so the duplication is not mistaken for load-bearing.
+Once `bib_loader` cleans upstream, `CodeHero.astro`'s `cleanTex` runs on already-clean strings → harmless idempotent no-op. The web layer is **left entirely untouched**: the issue scope is `bib_loader`, the redundant `cleanTex` is dead-but-harmless, and Pages CI runs only on `main` (no PR validation of the web build), so an unverified web edit — even a comment — carries needless risk for no functional gain. Removing `cleanTex` is recorded as an optional follow-up. (Adversarial verification confirmed the bib_loader fix additionally closes a latent leak the hero had: `CodeHero` never ran `cleanTex` over `p.authors`, so author-name accents would previously have leaked there — now cleaned at the chokepoint.)
+
+### Fail-closed coverage guarantee
+
+`_clean_tex` decodes a deliberately **closed set** of accent macros — the ones present in the live bib (`\"`, `\v`, `\'`, `\&`) plus a reasonable common surround. Macros outside that set (e.g. `\H{o}` Hungarian double-acute, `\u` breve) are **not** silently stripped to ASCII; they survive as a backslash sequence and are caught by the `test_real_bib_has_no_latex_residue` guard, which fails the build. This is intentional: a future contributor adding an unsupported accent gets a loud CI failure prompting a one-line map addition, rather than a silent mojibake leak. A generic lossy fallback was therefore **rejected** — it would defeat the fail-closed property.
 
 ## Testing (TDD — failing test first)
 
