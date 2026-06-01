@@ -129,5 +129,6 @@ export interface ContentData {
   volunteer: Volunteer;
   awards: Award[];
   publications: Publication[];
+  publications_aggregate: { summary: string; pointer: string };
   labels: Labels;
 }
