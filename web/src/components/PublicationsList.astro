@@ -2,6 +2,7 @@
 import type { Publication, PublicationType, Lang } from "../types/content";
 import PublicationsChart from "./PublicationsChart.astro";
 import PublicationsCumulative from "./PublicationsCumulative.astro";
+import PublicationsCitations from "./PublicationsCitations.astro";
 
 interface Props {
   publications: Publication[];
@@ -55,6 +56,8 @@ function renderAuthors(authors: string[]): string {
     </div>
   </div>
 
+  <PublicationsCitations publications={publications} lang={lang} />
+
   <!-- Aggregate (bridge / ds-ml) — visible by default; charts above stay for every target. -->
   <div data-cv-pub="aggregate" class="mt-4 text-sm text-[var(--muted)]">
     <p>{aggregate.summary}</p>
@@ -90,6 +93,10 @@ function renderAuthors(authors: string[]): string {
                     rel="noopener noreferrer"
                     class="underline decoration-dotted underline-offset-2 hover:text-[var(--text)]"
                   >{p.doi}</a></>
+                )}
+                {/* Indicative Crossref citation count */}
+                {p.citation_count != null && (
+                  <> · cited by {p.citation_count}</>
                 )}
               </p>
             </li>
