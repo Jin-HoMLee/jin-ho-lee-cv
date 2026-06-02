@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import datetime
 import json
+import sys
 import urllib.request
 from pathlib import Path
 from typing import Callable
@@ -55,15 +56,20 @@ def build_counts(
 ) -> dict[str, int]:
     """Fetch each DOI; on per-DOI error, RETAIN the prior cached value (never clobber).
 
-    A DOI that both fails AND has no prior value is omitted. Callers sort keys on write.
+    A DOI that both fails AND has no prior value is omitted. Per-DOI failures are logged to
+    stderr (this is the manual operator path) so a silently-retained stale value is visible.
+    Callers sort keys on write.
     """
     counts: dict[str, int] = {}
     for doi in dois:
         try:
             counts[doi] = fetch(doi)
-        except Exception:
+        except Exception as exc:
             if doi in prior:
                 counts[doi] = prior[doi]
+                print(f"  retained prior count for {doi} (fetch failed: {exc})", file=sys.stderr)
+            else:
+                print(f"  no count for {doi} (fetch failed, no prior): {exc}", file=sys.stderr)
     return counts
 
 
