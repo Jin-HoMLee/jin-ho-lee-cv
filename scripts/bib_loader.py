@@ -32,6 +32,7 @@ class Publication:
     doi: str | None
     raw: dict
     category: str = "research"
+    citation_count: int | None = None
 
 
 # --- BibTeX / LaTeX text normalization (issue #41) ---------------------------
