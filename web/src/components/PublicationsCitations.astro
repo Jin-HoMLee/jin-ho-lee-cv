@@ -20,15 +20,20 @@ const captionLabel = {
   de: "Crossref-Zitationen · indikativ (untererfasst ggü. Google Scholar)",
 }[lang];
 
+// Axis label: venue (falls back to title), truncated to fit the label column so a
+// long journal name can't overflow the left edge. The full title is in the tooltip.
+const MAX_LABEL = 20;
 function shortLabel(p: Publication): string {
   const yy = `'${String(p.year).slice(-2)}`;
-  return p.venue ? `${p.venue} ${yy}` : `${p.title.slice(0, 18)}… ${yy}`;
+  const base = p.venue ?? p.title;
+  const short = base.length > MAX_LABEL ? `${base.slice(0, MAX_LABEL - 1).trimEnd()}…` : base;
+  return `${short} ${yy}`;
 }
 
 // SVG geometry: one row per cited paper.
 const rowH = 22;
 const gap = 6;
-const labelW = 130;
+const labelW = 162;
 const barMax = 220;
 const numW = 34;
 const W = labelW + barMax + numW;
