@@ -90,6 +90,11 @@
         "@type": "PropertyValue",
         "propertyID": "DOI",
         "value": "10.5772/intechopen.95597"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 4
       }
     },
     {
@@ -136,6 +141,11 @@
         "@type": "PropertyValue",
         "propertyID": "DOI",
         "value": "10.1016/b978-0-12-819414-0.00020-3"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 3
       }
     },
     {
@@ -167,6 +177,11 @@
         "@type": "PropertyValue",
         "propertyID": "DOI",
         "value": "10.3390/cancers11121877"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 38
       }
     },
     {
@@ -194,6 +209,11 @@
         "@type": "PropertyValue",
         "propertyID": "DOI",
         "value": "10.21926/obm.genet.1901064"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 11
       }
     },
     {
@@ -245,6 +265,11 @@
         "@type": "PropertyValue",
         "propertyID": "DOI",
         "value": "10.3390/ijms20030588"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 43
       }
     },
     {
@@ -295,6 +320,11 @@
         "@type": "PropertyValue",
         "propertyID": "DOI",
         "value": "10.3390/ijms19123713"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 42
       }
     },
     {
@@ -326,6 +356,11 @@
         "@type": "PropertyValue",
         "propertyID": "DOI",
         "value": "10.1140/epjd/e2018-90148-1"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 26
       }
     },
     {
@@ -361,6 +396,11 @@
         "@type": "PropertyValue",
         "propertyID": "DOI",
         "value": "10.1039/c7nr08145f"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 59
       }
     },
     {
@@ -404,6 +444,11 @@
         "@type": "PropertyValue",
         "propertyID": "DOI",
         "value": "10.3390/cancers10010025"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 33
       }
     },
     {
@@ -458,6 +503,11 @@
         "@type": "PropertyValue",
         "propertyID": "DOI",
         "value": "10.3390/ijms18102066"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 42
       }
     },
     {
@@ -497,6 +547,11 @@
         "@type": "PropertyValue",
         "propertyID": "DOI",
         "value": "10.3390/ijms18051005"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 35
       }
     },
     {

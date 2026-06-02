@@ -80,6 +80,10 @@ build-llms:
 # Build every machine format (resume.json + person.jsonld + plain text + llms.txt)
 build-formats: build-resume build-jsonld build-text build-llms
 
+# Refresh Crossref citation counts → data/citations.json (the ONLY networked recipe; run manually)
+refresh-citations:
+    uv run python -m scripts.fetch_citations
+
 # Regenerate committed renderer golden snapshots (run after an intentional output change)
 snapshots-update:
     uv run pytest tests/test_snapshots.py --snapshot-update
