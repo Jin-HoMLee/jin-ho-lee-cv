@@ -49,6 +49,12 @@ def test_load_cache_garbage_is_empty(tmp_path):
     assert load_citation_cache(f) == {}
 
 
+def test_load_cache_non_dict_top_level_is_empty(tmp_path):
+    f = tmp_path / "citations.json"
+    f.write_text("[]", encoding="utf-8")  # valid JSON, but not an object
+    assert load_citation_cache(f) == {}
+
+
 def test_load_cache_non_int_values_dropped(tmp_path):
     f = tmp_path / "citations.json"
     payload = {"counts": {"10.1/a": 5, "10.2/b": "oops", "10.3/c": None}}
