@@ -34,6 +34,18 @@
       "Spatial Point-Pattern Analysis",
       "Cloud Data Engineering",
       "Bioimage Analysis"
+    ],
+    "highlight_stats": [
+      {
+        "value": 100,
+        "suffix": "+",
+        "label": "specialists mentored · Python/SQL/ML"
+      },
+      {
+        "value": 1000,
+        "suffix": "+",
+        "label": "analytical processes → GCP"
+      }
     ]
   },
   "profile": {
