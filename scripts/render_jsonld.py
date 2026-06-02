@@ -90,14 +90,13 @@ def _publications(pubs: list[Publication], person_id: str, author_prefix: str) -
         if p.doi:
             item["sameAs"] = [doi_url]
             item["identifier"] = {"@type": "PropertyValue", "propertyID": "DOI", "value": p.doi}
-        # --- NEW: indicative Crossref citation count -------------------------------
         if p.citation_count is not None:
+            # Indicative Crossref citation count (schema.org InteractionCounter).
             item["interactionStatistic"] = {
                 "@type": "InteractionCounter",
                 "interactionType": "https://schema.org/CiteAction",
                 "userInteractionCount": p.citation_count,
             }
-        # --------------------------------------------------------------------------
         out.append(item)
     return out
 
