@@ -114,6 +114,7 @@ def render_web_data(
             display = out_path
         print(f"wrote {display}")
 
+    citations = load_citation_cache(citations_path)  # parse once; reused across languages
     for lang in LANGS:
         # Load bridge once: it is both the site's static content and the baseline
         # against which variant overrides are diffed.
@@ -122,7 +123,7 @@ def render_web_data(
             lang=lang,
         )
         bridge_resolved["publications"] = enrich_publications(
-            bridge_resolved["publications"], load_citation_cache(citations_path)
+            bridge_resolved["publications"], citations
         )
         pub_labels = bridge_resolved["labels"]["publications"]
         bridge_resolved["publications_aggregate"] = {
