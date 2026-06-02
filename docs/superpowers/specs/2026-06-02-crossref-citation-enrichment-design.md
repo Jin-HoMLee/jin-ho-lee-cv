@@ -94,8 +94,8 @@ Run manually via `just refresh-citations`. Steps:
 1. Load DOIs from `content/publications.bib` (via `load_publications`).
 2. For each DOI, GET `https://api.crossref.org/works/{doi}` using stdlib
    **`urllib.request`** (no new dependency), with a polite `User-Agent` header
-   carrying the CV's public contact email (read from content; falls back to a
-   generic contact if absent).
+   carrying the CV's public contact email — read from `content/personal.yaml`
+   (`personal.email`), the single source of truth (always present; no fallback needed).
 3. Extract `message.is-referenced-by-count` (a non-negative int).
 4. **Robust merge:** start from the existing cache; on a per-DOI fetch/parse error,
    **retain the existing cached value** rather than dropping it (one transient 5xx
