@@ -37,7 +37,7 @@ const citationsTile: Tile = totalCitations > 0
   : {
       value: FORMATS, suffix: "",
       label: lang === "en" ? "output formats, one source" : "Ausgabeformate, eine Quelle",
-      varName: "--code-key",
+      varName: "--chart-5", // distinct from the authored tiles' --code-key (offline-degrade case)
     };
 const authoredColors = ["--chart-4", "--code-key"];
 const authoredTiles: Tile[] = (data.personal.highlight_stats ?? []).map((h, i) => ({
@@ -67,7 +67,7 @@ const tiles: Tile[] = [yearsTile, pubsTile, citationsTile, ...authoredTiles];
 
 <script>
   const band = document.querySelector<HTMLElement>("[data-stat-band]");
-  const locale = band?.dataset.locale || "en";
+  const locale = band?.dataset.locale || "en-US";
   const nums = document.querySelectorAll<HTMLElement>("[data-stat-band] [data-count-to]");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (nums.length && !reduce && "IntersectionObserver" in window) {
