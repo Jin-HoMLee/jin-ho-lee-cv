@@ -175,6 +175,11 @@ def test_malformed_doi_raises(tmp_path):
         load_publications(bib)
 
 
+def test_publication_has_citation_count_defaulting_none():
+    pub = load_publications(BIB_PATH)[0]
+    assert pub.citation_count is None
+
+
 # --- _clean_tex: BibTeX brace / LaTeX accent normalization (issue #41) ---
 
 

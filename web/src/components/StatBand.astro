@@ -13,21 +13,34 @@ const startYears = data.experience
   .filter((n) => !Number.isNaN(n));
 const yearsActive = startYears.length ? new Date().getUTCFullYear() - Math.min(...startYears) : 0;
 const FORMATS = 5; // pdf · web · json resume · json-ld · text
+const totalCitations = data.publications.reduce((s, p) => s + (p.citation_count ?? 0), 0);
 
 type Tile = { value: number; suffix: string; label: string; varName: string };
-const tiles: Tile[] = lang === "en"
+const baseTiles: Tile[] = lang === "en"
   ? [
       { value: pubs, suffix: "", label: "peer-reviewed publications", varName: "--chart-1" },
       { value: firstShared, suffix: "", label: "as first / shared-first author", varName: "--chart-4" },
       { value: yearsActive, suffix: "+", label: "years, wet-lab → ML", varName: "--chart-3" },
-      { value: FORMATS, suffix: "", label: "output formats, one source", varName: "--code-key" },
     ]
   : [
       { value: pubs, suffix: "", label: "begutachtete Publikationen", varName: "--chart-1" },
       { value: firstShared, suffix: "", label: "als Erst-/geteilte Erstautorenschaft", varName: "--chart-4" },
       { value: yearsActive, suffix: "+", label: "Jahre, Labor → ML", varName: "--chart-3" },
-      { value: FORMATS, suffix: "", label: "Ausgabeformate, eine Quelle", varName: "--code-key" },
     ];
+// Fourth tile: Crossref citations when available, else the "output formats" flourish
+// (offline-degrade — never surface a bare "0 citations").
+const fourthTile: Tile = totalCitations > 0
+  ? {
+      value: totalCitations, suffix: "",
+      label: lang === "en" ? "Crossref citations · indicative" : "Crossref-Zitationen · indikativ",
+      varName: "--chart-2",
+    }
+  : {
+      value: FORMATS, suffix: "",
+      label: lang === "en" ? "output formats, one source" : "Ausgabeformate, eine Quelle",
+      varName: "--code-key",
+    };
+const tiles: Tile[] = [...baseTiles, fourthTile];
 ---
 <section class="py-6" data-stat-band data-reveal>
   <div class="grid grid-cols-2 gap-3 md:grid-cols-4">

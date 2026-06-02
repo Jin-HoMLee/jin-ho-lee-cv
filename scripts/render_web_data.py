@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from scripts.bib_loader import Publication
+from scripts.citations import enrich_publications, load_citation_cache
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
 from scripts.publications import format_publication_summary
@@ -22,6 +23,7 @@ from scripts.publications import format_publication_summary
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
 OUTPUT_DIR = REPO_ROOT / "web" / "src" / "data"
+CITATIONS_PATH = REPO_ROOT / "data" / "citations.json"
 LANGS = ("en", "de")
 
 
@@ -89,7 +91,10 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
     return overrides
 
 
-def render_web_data(*, content_dir: Path = CONTENT_DIR, output_dir: Path = OUTPUT_DIR) -> None:
+def render_web_data(
+    *, content_dir: Path = CONTENT_DIR, output_dir: Path = OUTPUT_DIR,
+    citations_path: Path = CITATIONS_PATH,
+) -> None:
     """Render content.{en,de}.json and content.{en,de}.variants.json into output_dir.
 
     `private_path` is HARD-CODED to None — the web site must never see PII.
@@ -109,12 +114,16 @@ def render_web_data(*, content_dir: Path = CONTENT_DIR, output_dir: Path = OUTPU
             display = out_path
         print(f"wrote {display}")
 
+    citations = load_citation_cache(citations_path)  # parse once; reused across languages
     for lang in LANGS:
         # Load bridge once: it is both the site's static content and the baseline
         # against which variant overrides are diffed.
         bridge_resolved = resolve_langstrings(
             load_content(content_dir, private_path=None, lang=lang, target="bridge"),
             lang=lang,
+        )
+        bridge_resolved["publications"] = enrich_publications(
+            bridge_resolved["publications"], citations
         )
         pub_labels = bridge_resolved["labels"]["publications"]
         bridge_resolved["publications_aggregate"] = {

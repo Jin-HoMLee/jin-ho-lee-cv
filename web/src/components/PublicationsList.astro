@@ -13,6 +13,17 @@ interface Props {
 const { publications, aggregate, orcid, lang } = Astro.props;
 const orcidDisplay = orcid ? orcid.replace(/^https?:\/\//, "") : "";
 
+// Compact citation metric — one line instead of a full bar chart. Indicative; counts
+// also appear inline per paper in the full list below.
+const citedPubs = publications.filter((p) => p.citation_count != null);
+const totalCitations = citedPubs.reduce((s, p) => s + (p.citation_count ?? 0), 0);
+const maxCitations = citedPubs.reduce((m, p) => Math.max(m, p.citation_count ?? 0), 0);
+const indexedWorks = citedPubs.length;
+const citationSummary = lang === "en"
+  ? `citations across ${indexedWorks} indexed works · most-cited ${maxCitations}`
+  : `Zitationen über ${indexedWorks} indexierte Arbeiten · meistzitiert ${maxCitations}`;
+const citationCaveat = lang === "en" ? "Crossref, indicative" : "Crossref, indikativ";
+
 const sectionLabel = { en: "Publications", de: "Publikationen" };
 const typeLabel: Record<PublicationType, { en: string; de: string }> = {
   "article":      { en: "Peer-reviewed articles", de: "Peer-Review-Artikel" },
@@ -55,6 +66,13 @@ function renderAuthors(authors: string[]): string {
     </div>
   </div>
 
+  {totalCitations > 0 && (
+    <p class="mt-3 text-sm text-[var(--muted)]">
+      ≈<span class="font-medium text-[var(--text)]">{totalCitations}</span> {citationSummary}
+      <span class="text-xs text-[var(--faint)]"> · {citationCaveat}</span>
+    </p>
+  )}
+
   <!-- Aggregate (bridge / ds-ml) — visible by default; charts above stay for every target. -->
   <div data-cv-pub="aggregate" class="mt-4 text-sm text-[var(--muted)]">
     <p>{aggregate.summary}</p>
@@ -90,6 +108,10 @@ function renderAuthors(authors: string[]): string {
                     rel="noopener noreferrer"
                     class="underline decoration-dotted underline-offset-2 hover:text-[var(--text)]"
                   >{p.doi}</a></>
+                )}
+                {/* Indicative Crossref citation count */}
+                {p.citation_count != null && (
+                  <> · cited by {p.citation_count}</>
                 )}
               </p>
             </li>
