@@ -24,6 +24,8 @@ def load_citation_cache(path: Path) -> dict[str, int]:
         raw = json.loads(path.read_text(encoding="utf-8"))
     except (FileNotFoundError, ValueError):
         return {}
+    if not isinstance(raw, dict):
+        return {}
     counts = raw.get("counts", {})
     if not isinstance(counts, dict):
         return {}
