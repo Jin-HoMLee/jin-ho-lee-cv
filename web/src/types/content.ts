@@ -94,6 +94,7 @@ export interface Publication {
   authors: string[];
   venue: string | null;
   doi: string | null;
+  citation_count: number | null;
 }
 
 export interface Labels {
