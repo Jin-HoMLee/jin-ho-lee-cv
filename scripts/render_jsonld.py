@@ -13,6 +13,7 @@ import json
 from pathlib import Path
 
 from scripts.bib_loader import Publication, load_publications
+from scripts.citations import enrich_publications, load_citation_cache
 from scripts.config import PAGES_BASE_URL
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
@@ -20,6 +21,7 @@ from scripts.langstring import resolve_langstrings
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
+CITATIONS_PATH = REPO_ROOT / "data" / "citations.json"
 SITE_URL = f"{PAGES_BASE_URL}/"
 PHOTO_URL = f"{PAGES_BASE_URL}/photo.jpg"
 
@@ -88,6 +90,14 @@ def _publications(pubs: list[Publication], person_id: str, author_prefix: str) -
         if p.doi:
             item["sameAs"] = [doi_url]
             item["identifier"] = {"@type": "PropertyValue", "propertyID": "DOI", "value": p.doi}
+        # --- NEW: indicative Crossref citation count -------------------------------
+        if p.citation_count is not None:
+            item["interactionStatistic"] = {
+                "@type": "InteractionCounter",
+                "interactionType": "https://schema.org/CiteAction",
+                "userInteractionCount": p.citation_count,
+            }
+        # --------------------------------------------------------------------------
         out.append(item)
     return out
 
@@ -184,7 +194,10 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
 
     content = resolve_langstrings(load_content(CONTENT_DIR, lang="en"), lang="en")
-    pubs = load_publications(CONTENT_DIR / "publications.bib")
+    pubs = enrich_publications(
+        load_publications(CONTENT_DIR / "publications.bib"),
+        load_citation_cache(CITATIONS_PATH),
+    )
     doc = to_jsonld(content, pubs)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)

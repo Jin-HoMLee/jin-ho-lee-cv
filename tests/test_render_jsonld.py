@@ -210,6 +210,25 @@ def test_scholarly_article_links_author_to_person():
     assert {"@type": "Person", "name": "Hausmann, M."} in item["author"]
 
 
+def test_publication_with_citation_count_emits_interaction_statistic():
+    [item] = jsonld_publications(
+        [_pub(doi="10.3390/cancers11121877", citation_count=58)],
+        "https://orcid.org/X", "Lee, J",
+    )
+    assert item["interactionStatistic"] == {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 58,
+    }
+
+
+def test_publication_without_citation_count_omits_interaction_statistic():
+    [item] = jsonld_publications(
+        [_pub(doi="10.3390/cancers11121877")], "https://orcid.org/X", "Lee, J",
+    )
+    assert "interactionStatistic" not in item
+
+
 # --- CreativeWork (project) nodes ---
 
 def test_graph_includes_project_creativeworks(doc):
