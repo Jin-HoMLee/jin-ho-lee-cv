@@ -18,14 +18,14 @@ const totalCitations = data.publications.reduce((s, p) => s + (p.citation_count 
 type Tile = { value: number; suffix: string; label: string; varName: string };
 const baseTiles: Tile[] = lang === "en"
   ? [
+      { value: yearsActive, suffix: "+", label: "years, wet-lab → ML", varName: "--chart-3" },
       { value: pubs, suffix: "", label: "peer-reviewed publications", varName: "--chart-1" },
       { value: firstShared, suffix: "", label: "as first / shared-first author", varName: "--chart-4" },
-      { value: yearsActive, suffix: "+", label: "years, wet-lab → ML", varName: "--chart-3" },
     ]
   : [
+      { value: yearsActive, suffix: "+", label: "Jahre, Labor → ML", varName: "--chart-3" },
       { value: pubs, suffix: "", label: "begutachtete Publikationen", varName: "--chart-1" },
       { value: firstShared, suffix: "", label: "als Erst-/geteilte Erstautorenschaft", varName: "--chart-4" },
-      { value: yearsActive, suffix: "+", label: "Jahre, Labor → ML", varName: "--chart-3" },
     ];
 // Fourth tile: Crossref citations when available, else the "output formats" flourish
 // (offline-degrade — never surface a bare "0 citations").
