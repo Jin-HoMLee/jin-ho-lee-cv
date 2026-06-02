@@ -37,20 +37,27 @@ const slices = order
 
 const total = slices.reduce((s, x) => s + x.count, 0);
 
+const DONUT_INNER = 0.58; // inner radius → donut hole (viewBox radius is 1)
 function computeArcs(slices: { key: AuthorshipType; count: number }[], total: number) {
   let cumulative = 0;
   return slices.map((s) => {
     const startAngle = (cumulative / total) * Math.PI * 2;
     cumulative += s.count;
     const endAngle = (cumulative / total) * Math.PI * 2;
-    const x1 = Math.sin(startAngle);
-    const y1 = -Math.cos(startAngle);
-    const x2 = Math.sin(endAngle);
-    const y2 = -Math.cos(endAngle);
+    const ox1 = Math.sin(startAngle);
+    const oy1 = -Math.cos(startAngle);
+    const ox2 = Math.sin(endAngle);
+    const oy2 = -Math.cos(endAngle);
+    const ix1 = DONUT_INNER * Math.sin(startAngle);
+    const iy1 = -DONUT_INNER * Math.cos(startAngle);
+    const ix2 = DONUT_INNER * Math.sin(endAngle);
+    const iy2 = -DONUT_INNER * Math.cos(endAngle);
     const large = endAngle - startAngle > Math.PI ? 1 : 0;
     const d = slices.length === 1
-      ? "M 0 -1 A 1 1 0 1 1 0 1 A 1 1 0 1 1 0 -1 Z"
-      : `M 0 0 L ${x1} ${y1} A 1 1 0 ${large} 1 ${x2} ${y2} Z`;
+      // Single authorship type → full ring (outer circle + inner circle; evenodd cuts the hole).
+      ? `M 0 -1 A 1 1 0 1 1 0 1 A 1 1 0 1 1 0 -1 Z M 0 ${-DONUT_INNER} A ${DONUT_INNER} ${DONUT_INNER} 0 1 0 0 ${DONUT_INNER} A ${DONUT_INNER} ${DONUT_INNER} 0 1 0 0 ${-DONUT_INNER} Z`
+      // Annular sector: outer arc → step in to inner radius → inner arc back → close.
+      : `M ${ox1} ${oy1} A 1 1 0 ${large} 1 ${ox2} ${oy2} L ${ix2} ${iy2} A ${DONUT_INNER} ${DONUT_INNER} 0 ${large} 0 ${ix1} ${iy1} Z`;
     const pct = ((s.count / total) * 100).toFixed(1);
     return { d, varName: colorVars[s.key], label: labels[s.key][lang], count: s.count, pct };
   });
@@ -69,6 +76,7 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
     {arcs.map((arc) => (
       <path
         d={arc.d}
+        fill-rule="evenodd"
         style={`fill: var(${arc.varName})`}
         data-label={arc.label}
         data-count={arc.count}

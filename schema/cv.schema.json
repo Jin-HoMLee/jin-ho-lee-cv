@@ -74,6 +74,20 @@
           "items": { "type": "string", "minLength": 1 },
           "minItems": 1
         },
+        "highlight_stats": {
+          "type": "array",
+          "description": "Authored headline metrics surfaced in the web stat band.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": { "type": "integer", "minimum": 0 },
+              "suffix": { "type": "string" },
+              "label": { "$ref": "#/$defs/LangString" }
+            },
+            "required": ["value", "label"],
+            "additionalProperties": false
+          }
+        },
         "variants": {
           "type": "object",
           "propertyNames": { "enum": ["comp-bio", "ds-ml"] },

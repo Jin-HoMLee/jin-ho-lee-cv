@@ -31,6 +31,19 @@ knowsAbout:
   - "Spatial Point-Pattern Analysis"
   - "Cloud Data Engineering"
   - "Bioimage Analysis"
+# Authored headline metrics for the web stat band (in display order, after the derived
+# years/publications/citations tiles). Numbers mirror the experience.yaml achievements.
+highlight_stats:
+  - value: 100
+    suffix: "+"
+    label:
+      en: "specialists mentored · Python/SQL/ML"
+      de: "Fachkräfte geschult · Python/SQL/ML"
+  - value: 1000
+    suffix: "+"
+    label:
+      en: "analytical processes → GCP"
+      de: "analytische Prozesse → GCP"
 variants:
   comp-bio:
     headline:

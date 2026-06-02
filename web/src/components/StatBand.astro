@@ -5,31 +5,30 @@ interface Props { data: ContentData; lang: Lang }
 const { data, lang } = Astro.props;
 
 const pubs = data.publications.length;
-const firstShared = data.publications.filter(
-  (p) => p.authorship === "first" || p.authorship === "shared",
-).length;
 const startYears = data.experience
   .map((e) => parseInt(e.period.start.slice(0, 4), 10))
   .filter((n) => !Number.isNaN(n));
 const yearsActive = startYears.length ? new Date().getUTCFullYear() - Math.min(...startYears) : 0;
 const FORMATS = 5; // pdf · web · json resume · json-ld · text
 const totalCitations = data.publications.reduce((s, p) => s + (p.citation_count ?? 0), 0);
+const numberLocale = lang === "de" ? "de-DE" : "en-US";
 
 type Tile = { value: number; suffix: string; label: string; varName: string };
-const baseTiles: Tile[] = lang === "en"
-  ? [
-      { value: pubs, suffix: "", label: "peer-reviewed publications", varName: "--chart-1" },
-      { value: firstShared, suffix: "", label: "as first / shared-first author", varName: "--chart-4" },
-      { value: yearsActive, suffix: "+", label: "years, wet-lab → ML", varName: "--chart-3" },
-    ]
-  : [
-      { value: pubs, suffix: "", label: "begutachtete Publikationen", varName: "--chart-1" },
-      { value: firstShared, suffix: "", label: "als Erst-/geteilte Erstautorenschaft", varName: "--chart-4" },
-      { value: yearsActive, suffix: "+", label: "Jahre, Labor → ML", varName: "--chart-3" },
-    ];
-// Fourth tile: Crossref citations when available, else the "output formats" flourish
-// (offline-degrade — never surface a bare "0 citations").
-const fourthTile: Tile = totalCitations > 0
+
+// Tiles 1–3 are derived from structured data; tiles 4+ are authored highlight stats from
+// content/personal.yaml (labels already resolved to `lang`). Tile 3 shows Crossref citations,
+// degrading to the "output formats" flourish when the cache is absent (never a bare "0").
+const yearsTile: Tile = {
+  value: yearsActive, suffix: "+",
+  label: lang === "en" ? "years, wet-lab → ML" : "Jahre, Labor → ML",
+  varName: "--chart-3",
+};
+const pubsTile: Tile = {
+  value: pubs, suffix: "",
+  label: lang === "en" ? "peer-reviewed publications" : "begutachtete Publikationen",
+  varName: "--chart-1",
+};
+const citationsTile: Tile = totalCitations > 0
   ? {
       value: totalCitations, suffix: "",
       label: lang === "en" ? "Crossref citations · indicative" : "Crossref-Zitationen · indikativ",
@@ -38,21 +37,28 @@ const fourthTile: Tile = totalCitations > 0
   : {
       value: FORMATS, suffix: "",
       label: lang === "en" ? "output formats, one source" : "Ausgabeformate, eine Quelle",
-      varName: "--code-key",
+      varName: "--chart-5", // distinct from the authored tiles' --code-key (offline-degrade case)
     };
-const tiles: Tile[] = [...baseTiles, fourthTile];
+const authoredColors = ["--chart-4", "--code-key"];
+const authoredTiles: Tile[] = (data.personal.highlight_stats ?? []).map((h, i) => ({
+  value: h.value,
+  suffix: h.suffix ?? "",
+  label: h.label,
+  varName: authoredColors[i % authoredColors.length],
+}));
+const tiles: Tile[] = [yearsTile, pubsTile, citationsTile, ...authoredTiles];
 ---
-<section class="py-6" data-stat-band data-reveal>
-  <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
+<section class="py-6" data-stat-band data-reveal data-locale={numberLocale}>
+  <div class="grid grid-cols-2 gap-3 md:grid-cols-5">
     {tiles.map((t) => (
-      <div class="rounded-xl border border-[var(--surface-border)] p-4" style="background: var(--surface)" role="img" aria-label={`${t.value}${t.suffix} ${t.label}`}>
+      <div class="rounded-xl border border-[var(--surface-border)] p-4" style="background: var(--surface)" role="img" aria-label={`${t.value.toLocaleString(numberLocale)}${t.suffix} ${t.label}`}>
         <div
           class="font-mono-plex text-3xl font-extrabold tracking-tight"
           style={`color: var(${t.varName})`}
           data-count-to={t.value}
           data-suffix={t.suffix}
           aria-hidden="true"
-        >{t.value}{t.suffix}</div>
+        >{t.value.toLocaleString(numberLocale)}{t.suffix}</div>
         <div class="mt-1 text-xs text-[var(--muted)]" aria-hidden="true">{t.label}</div>
       </div>
     ))}
@@ -60,6 +66,8 @@ const tiles: Tile[] = [...baseTiles, fourthTile];
 </section>
 
 <script>
+  const band = document.querySelector<HTMLElement>("[data-stat-band]");
+  const locale = band?.dataset.locale || "en-US";
   const nums = document.querySelectorAll<HTMLElement>("[data-stat-band] [data-count-to]");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (nums.length && !reduce && "IntersectionObserver" in window) {
@@ -71,7 +79,7 @@ const tiles: Tile[] = [...baseTiles, fourthTile];
       const step = (now: number) => {
         const p = Math.min(1, (now - start) / dur);
         const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(target * eased) + suffix;
+        el.textContent = Math.round(target * eased).toLocaleString(locale) + suffix;
         if (p < 1) requestAnimationFrame(step);
       };
       requestAnimationFrame(step);
@@ -81,7 +89,7 @@ const tiles: Tile[] = [...baseTiles, fourthTile];
         if (e.isIntersecting) { animate(e.target as HTMLElement); io.unobserve(e.target); }
       }
     }, { rootMargin: "0px 0px -10% 0px" });
-    for (const n of nums) { n.textContent = "0" + (n.dataset.suffix ?? ""); io.observe(n); }
+    for (const n of nums) { n.textContent = (0).toLocaleString(locale) + (n.dataset.suffix ?? ""); io.observe(n); }
   }
   // reduced-motion / no-IO: leave the server-rendered final numbers as-is.
 </script>
