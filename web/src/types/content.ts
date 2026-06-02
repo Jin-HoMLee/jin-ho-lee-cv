@@ -12,6 +12,11 @@ export interface Links {
   website: string | null;
   orcid: string | null;
 }
+export interface HighlightStat {
+  value: number;
+  suffix?: string;
+  label: string; // resolved to the page language
+}
 export interface Personal {
   name: Name;
   headline: string;
@@ -19,6 +24,7 @@ export interface Personal {
   location: Location;
   links: Links;
   photo: string;
+  highlight_stats?: HighlightStat[];
 }
 
 export interface Profile {
