@@ -136,3 +136,30 @@ def test_publication_doi_is_serialized():
     d = _to_jsonable(pub)
     assert d["doi"] == "10.3390/x"
     assert "raw" not in d  # bibtex-internal field stays out of the web dump
+
+
+def test_publications_carry_citation_count_from_cache(tmp_path):
+    from scripts.bib_loader import load_publications
+
+    target_doi = next(p.doi for p in load_publications(CONTENT_DIR / "publications.bib") if p.doi)
+    cache = tmp_path / "citations.json"
+    cache.write_text(json.dumps({"counts": {target_doi: 99}}), encoding="utf-8")
+    out_dir = tmp_path / "out"
+    render_web_data(content_dir=CONTENT_DIR, output_dir=out_dir, citations_path=cache)
+    pubs = json.loads((out_dir / "content.en.json").read_text(encoding="utf-8"))["publications"]
+    assert all("citation_count" in p for p in pubs)
+    hit = next(p for p in pubs if p["doi"] == target_doi)
+    assert hit["citation_count"] == 99
+    # Every other publication (absent from the single-entry cache) stays None.
+    assert all(p["citation_count"] is None for p in pubs if p["doi"] != target_doi)
+
+
+def test_missing_cache_yields_null_counts(tmp_path):
+    """Offline-degrade contract: a nonexistent cache → all counts None, no failure."""
+    out_dir = tmp_path / "out"
+    render_web_data(
+        content_dir=CONTENT_DIR, output_dir=out_dir,
+        citations_path=tmp_path / "does-not-exist.json",
+    )
+    pubs = json.loads((out_dir / "content.en.json").read_text(encoding="utf-8"))["publications"]
+    assert all(p["citation_count"] is None for p in pubs)
