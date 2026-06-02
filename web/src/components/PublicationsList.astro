@@ -2,7 +2,6 @@
 import type { Publication, PublicationType, Lang } from "../types/content";
 import PublicationsChart from "./PublicationsChart.astro";
 import PublicationsCumulative from "./PublicationsCumulative.astro";
-import PublicationsCitations from "./PublicationsCitations.astro";
 
 interface Props {
   publications: Publication[];
@@ -13,6 +12,17 @@ interface Props {
 
 const { publications, aggregate, orcid, lang } = Astro.props;
 const orcidDisplay = orcid ? orcid.replace(/^https?:\/\//, "") : "";
+
+// Compact citation metric — one line instead of a full bar chart. Indicative; counts
+// also appear inline per paper in the full list below.
+const citedPubs = publications.filter((p) => p.citation_count != null);
+const totalCitations = citedPubs.reduce((s, p) => s + (p.citation_count ?? 0), 0);
+const maxCitations = citedPubs.reduce((m, p) => Math.max(m, p.citation_count ?? 0), 0);
+const indexedWorks = citedPubs.length;
+const citationSummary = lang === "en"
+  ? `citations across ${indexedWorks} indexed works · most-cited ${maxCitations}`
+  : `Zitationen über ${indexedWorks} indexierte Arbeiten · meistzitiert ${maxCitations}`;
+const citationCaveat = lang === "en" ? "Crossref, indicative" : "Crossref, indikativ";
 
 const sectionLabel = { en: "Publications", de: "Publikationen" };
 const typeLabel: Record<PublicationType, { en: string; de: string }> = {
@@ -56,7 +66,12 @@ function renderAuthors(authors: string[]): string {
     </div>
   </div>
 
-  <PublicationsCitations publications={publications} lang={lang} />
+  {indexedWorks > 0 && (
+    <p class="mt-3 text-sm text-[var(--muted)]">
+      ≈<span class="font-medium text-[var(--text)]">{totalCitations}</span> {citationSummary}
+      <span class="text-xs text-[var(--faint)]"> · {citationCaveat}</span>
+    </p>
+  )}
 
   <!-- Aggregate (bridge / ds-ml) — visible by default; charts above stay for every target. -->
   <div data-cv-pub="aggregate" class="mt-4 text-sm text-[var(--muted)]">
