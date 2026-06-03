@@ -176,3 +176,40 @@ def test_apply_edit_refuses_invalid(cv_tree):
 def test_apply_edit_refuses_unsafe_path(cv_tree, bad):
     with pytest.raises(ValueError):
         agent_core.apply_edit(bad, "id: x\n", content_dir=cv_tree)
+
+
+def test_resolve_recipes_rejects_invalid_which():
+    with pytest.raises(ValueError):
+        agent_core._resolve_recipes("formats; rm -rf /")
+
+
+def test_resolve_recipes_skips_missing_tools(monkeypatch):
+    monkeypatch.setattr(agent_core.shutil, "which", lambda tool: None)
+    to_run, skipped = agent_core._resolve_recipes("all")
+    assert "build-formats" in to_run
+    assert {"build", "build-de", "web-build"} <= set(skipped)
+
+
+def test_rerun_renderers_validate_first(cv_tree):
+    (cv_tree / "personal.yaml").write_text("{}\n", encoding="utf-8")
+    res = agent_core.rerun_renderers(content_dir=cv_tree)
+    assert res["ok"] is False
+    assert res["ran"] == []
+
+
+def test_rerun_renderers_invokes_just_list_form(cv_tree, monkeypatch):
+    calls = []
+
+    class FakeProc:
+        returncode = 0
+        stdout = "ok"
+        stderr = ""
+
+    monkeypatch.setattr(agent_core.subprocess, "run", lambda argv, **kw: calls.append((argv, kw)) or FakeProc())
+    monkeypatch.setattr(agent_core.shutil, "which", lambda tool: "/usr/bin/" + tool)
+    res = agent_core.rerun_renderers("formats", content_dir=cv_tree)
+    assert res["ok"] is True
+    assert res["ran"] == ["build-formats"]
+    argv, kw = calls[0]
+    assert argv == ["just", "build-formats"]
+    assert kw.get("shell") in (None, False)
