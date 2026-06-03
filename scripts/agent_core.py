@@ -4,25 +4,42 @@ Shared foundation for the MCP server (scripts/mcp_server.py) and the Claude
 skill (.claude/skills/cv/). Pure Python, no MCP/CLI coupling. Every path / PII /
 subprocess guard lives here so both surfaces inherit it.
 """
+
 from __future__ import annotations
 
 import difflib
+import io
 import shutil
 import tempfile
 from pathlib import Path, PurePosixPath
+
+from ruamel.yaml import YAML
+from ruamel.yaml.error import YAMLError
 
 from scripts.content_loader import TARGETS, load_content
 from scripts.langstring import resolve_langstrings
 from scripts.render_web_data import _to_jsonable
 from scripts.validate import date_warnings, validate_tree
 
+_yaml = YAML(typ="safe")
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
 SCHEMA_PATH = REPO_ROOT / "schema" / "cv.schema.json"
 
 SECTIONS = (
-    "personal", "profile", "skills", "education", "experience", "projects",
-    "selected_projects", "languages", "volunteer", "awards", "publications", "labels",
+    "personal",
+    "profile",
+    "skills",
+    "education",
+    "experience",
+    "projects",
+    "selected_projects",
+    "languages",
+    "volunteer",
+    "awards",
+    "publications",
+    "labels",
 )
 
 
@@ -118,6 +135,27 @@ def propose_edit(
     )
     target_file = content_dir / dst_rel
     current = target_file.read_text(encoding="utf-8") if target_file.exists() else ""
+
+    # Pre-parse: catch malformed YAML before touching the temp tree so callers
+    # always get the documented dict (valid:False) rather than an unhandled exception.
+    try:
+        _yaml.load(io.StringIO(new_content))
+    except YAMLError as exc:
+        diff = "".join(
+            difflib.unified_diff(
+                current.splitlines(keepends=True),
+                new_content.splitlines(keepends=True),
+                fromfile=dst_rel.as_posix(),
+                tofile=dst_rel.as_posix(),
+                n=3,
+            )
+        )
+        return {
+            "diff": diff,
+            "valid": False,
+            "errors": [f"YAML parse error: {exc}"],
+            "warnings": [],
+        }
 
     with tempfile.TemporaryDirectory() as tmp:
         tmp_content = Path(tmp) / "content"
