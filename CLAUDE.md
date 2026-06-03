@@ -30,7 +30,7 @@ Twelve phases (0–11), sequential. Each produces a usable artifact and gets its
 | 8c | Web target switcher (client-side variant positioning) | ✅ Done (merged 2026-05-31, PR #39, commit `6ced593`) |
 | 9 | Web design overhaul (2026 dark-technical: CV-as-code hero, bento stat band, dark/light theme) | ✅ Done (merged 2026-05-31, PR #40, commit `be80dc6`) |
 | 10 | Agent interface (MCP server + skill over `content/` + validate) | ✅ Done (merged 2026-06-03, PR #63, commit `fbc18fe`) |
-| 11 | Cover-letter generator (interview + JD → tailored letter, PDF + text) | 🚧 In review (issue #65, branch `phase-11-cover-letter`) |
+| 11 | Cover-letter generator (interview + JD → tailored letter, PDF + text) | ✅ Done (merged 2026-06-03, `--no-ff`, PR #66 @claude-approved) |
 
 ## Layout
 
