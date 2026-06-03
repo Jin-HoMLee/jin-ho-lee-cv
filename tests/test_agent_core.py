@@ -50,3 +50,24 @@ def test_safe_path_rejects_symlink_escape(cv_tree):
 def test_safe_path_accepts_real_file(cv_tree):
     p = agent_core._safe_content_path("personal.yaml", content_dir=cv_tree)
     assert p == (cv_tree / "personal.yaml").resolve()
+
+
+def test_read_cv_never_leaks_pii(cv_tree):
+    out = agent_core.read_cv(content_dir=cv_tree)
+    blob = repr(out)
+    assert "SECRET" not in blob
+    assert "Nowhere" not in blob
+
+
+def test_read_cv_section_filter(cv_tree):
+    full = agent_core.read_cv(content_dir=cv_tree)
+    assert {"personal", "experience", "education"} <= set(full)
+    edu = agent_core.read_cv(section="education", content_dir=cv_tree)
+    assert set(edu) == {"education"}
+    with pytest.raises(ValueError):
+        agent_core.read_cv(section="nope", content_dir=cv_tree)
+
+
+def test_read_cv_rejects_bad_target(cv_tree):
+    with pytest.raises(ValueError):
+        agent_core.read_cv(target="bogus", content_dir=cv_tree)
