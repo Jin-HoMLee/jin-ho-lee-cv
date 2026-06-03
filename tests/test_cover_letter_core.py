@@ -290,3 +290,16 @@ def test_render_letter_rejects_bad_fmt(apps):
     clc.save_draft(slug, "Body.\n", apps_dir=apps)
     with pytest.raises(ValueError):
         clc.render_letter(slug, fmt="docx", apps_dir=apps)
+
+
+def test_validate_application_accepts_unquoted_date(apps):
+    """An unquoted YAML date (parsed as datetime.date) must validate, not be rejected."""
+    from datetime import date
+
+    slug = _make_app(apps)
+    data = clc.read_application(slug, apps_dir=apps)["application"]
+    data["date"] = date(2026, 6, 3)  # ruamel dumps unquoted -> reloads as datetime.date
+    clc._write_yaml(f"{slug}/application.yaml", data, apps_dir=apps)
+    clc.save_draft(slug, "body\n", apps_dir=apps)
+    res = clc.validate_application(slug, apps_dir=apps)
+    assert res["valid"] is True, res["errors"]

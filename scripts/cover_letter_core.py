@@ -233,6 +233,11 @@ def validate_application(slug: str, *, apps_dir: Path = APPS_DIR) -> dict:
         return {"valid": False, "errors": ["missing application.yaml"], "warnings": []}
 
     data = _read_yaml(app_file)
+    # ruamel parses an unquoted `date: 2026-06-03` as a datetime.date; normalize it
+    # to an ISO string so it satisfies the schema's string type (and _format_date,
+    # which already accepts both, renders it identically either way).
+    if isinstance(data.get("date"), _date):
+        data["date"] = data["date"].isoformat()
     errors = _schema_errors(data, APP_SCHEMA)
     warnings: list[str] = []
 
