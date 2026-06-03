@@ -31,10 +31,16 @@ def test_tools_listed():
 def test_tool_annotations():
     tools = _tools()
     for name in ("get_cv_content", "list_cv_files", "validate_cv", "propose_edit"):
-        assert tools[name].annotations.readOnlyHint is True
+        ann = tools[name].annotations
+        assert ann.readOnlyHint is True
+        assert ann.destructiveHint is False
+        assert ann.idempotentHint is True
+        assert ann.openWorldHint is False
     assert tools["apply_edit"].annotations.readOnlyHint is False
     assert tools["apply_edit"].annotations.destructiveHint is True
+    assert tools["apply_edit"].annotations.idempotentHint is False
     assert tools["rerun_renderers"].annotations.readOnlyHint is False
+    assert tools["rerun_renderers"].annotations.idempotentHint is True
 
 
 def test_get_cv_content_returns_tree():

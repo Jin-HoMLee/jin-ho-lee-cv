@@ -41,25 +41,41 @@ class RenderResult(BaseModel):
     output: dict[str, str]
 
 
-@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=False))
+@mcp.tool(
+    annotations=ToolAnnotations(
+        readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False
+    )
+)
 def get_cv_content(lang: str = "en", target: str = "bridge", section: str | None = None) -> dict:
     """Load the CV content tree (LangStrings resolved) for a language and target variant."""
     return agent_core.read_cv(lang=lang, target=target, section=section)
 
 
-@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=False))
+@mcp.tool(
+    annotations=ToolAnnotations(
+        readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False
+    )
+)
 def list_cv_files() -> list[str]:
     """List the editable content YAML files as content-relative paths."""
     return agent_core.list_content_files()
 
 
-@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=False))
+@mcp.tool(
+    annotations=ToolAnnotations(
+        readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False
+    )
+)
 def validate_cv() -> ValidateResult:
     """Validate the current content tree (schema + cross-refs + parity + periods + bib)."""
     return ValidateResult(**agent_core.validate_cv())
 
 
-@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=False))
+@mcp.tool(
+    annotations=ToolAnnotations(
+        readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False
+    )
+)
 def propose_edit(path: str, new_content: str) -> ProposeResult:
     """Dry-run an edit: return a unified diff + full-tree validation. Writes nothing."""
     return ProposeResult(**agent_core.propose_edit(path, new_content))
