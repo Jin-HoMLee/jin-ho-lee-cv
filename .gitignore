@@ -4,6 +4,12 @@ content.private/
 # Private headshot for --photo PDF build (German anti-discrimination convention: PDF default is photo-less)
 assets/photo.*
 
+# Cover letters — per-application material is private, never committed (this repo is public)
+applications/
+
+# Handwritten signature image for cover-letter PDFs (optional, like the photo)
+assets/signature.*
+
 # Build outputs
 dist/
 dist-private/
