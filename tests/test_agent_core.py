@@ -87,3 +87,16 @@ def test_list_content_files_excludes_symlink_to_private(cv_tree):
     (cv_tree / "leak.yaml").symlink_to(cv_tree.parent / "content.private" / "private.yaml")
     files = agent_core.list_content_files(content_dir=cv_tree)
     assert "leak.yaml" not in files
+
+
+def test_validate_cv_clean(cv_tree):
+    res = agent_core.validate_cv(content_dir=cv_tree)
+    assert res["valid"] is True
+    assert res["errors"] == []
+
+
+def test_validate_cv_detects_break(cv_tree):
+    (cv_tree / "personal.yaml").write_text("{}\n", encoding="utf-8")
+    res = agent_core.validate_cv(content_dir=cv_tree)
+    assert res["valid"] is False
+    assert res["errors"]
