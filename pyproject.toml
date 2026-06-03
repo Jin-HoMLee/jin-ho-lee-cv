@@ -16,6 +16,9 @@ dev = [
     "ruff>=0.7",
     "syrupy>=5.3.1",
 ]
+mcp = [
+    "mcp[cli]>=1.12",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

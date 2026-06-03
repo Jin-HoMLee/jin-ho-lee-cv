@@ -27,8 +27,9 @@ web/.astro/
 # OS
 .DS_Store
 
-# Claude Code session state + brainstorming mockups
-.claude/
+# Claude Code session state + brainstorming mockups (keep skills/ committed)
+.claude/*
+!.claude/skills/
 .superpowers/
 
 # PDF build cache (JSON intermediate written by pdf/build.py)
