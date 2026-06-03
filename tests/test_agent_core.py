@@ -71,3 +71,19 @@ def test_read_cv_section_filter(cv_tree):
 def test_read_cv_rejects_bad_target(cv_tree):
     with pytest.raises(ValueError):
         agent_core.read_cv(target="bogus", content_dir=cv_tree)
+
+
+def test_list_content_files_relative_sorted(cv_tree):
+    files = agent_core.list_content_files(content_dir=cv_tree)
+    assert files == sorted(files)
+    assert "personal.yaml" in files
+    assert any(f.startswith("projects/") for f in files)
+    assert all(not f.startswith("/") for f in files)
+    assert "publications.bib" not in files
+    assert not any("content.private" in f for f in files)
+
+
+def test_list_content_files_excludes_symlink_to_private(cv_tree):
+    (cv_tree / "leak.yaml").symlink_to(cv_tree.parent / "content.private" / "private.yaml")
+    files = agent_core.list_content_files(content_dir=cv_tree)
+    assert "leak.yaml" not in files

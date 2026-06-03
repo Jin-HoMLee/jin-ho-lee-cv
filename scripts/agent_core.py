@@ -65,3 +65,20 @@ def read_cv(
     if section not in SECTIONS:
         raise ValueError(f"unknown section {section!r}; expected one of {SECTIONS}")
     return {section: data.get(section)}
+
+
+def list_content_files(*, content_dir: Path = CONTENT_DIR) -> list[str]:
+    """List editable content YAML as sorted, content-relative posix paths.
+
+    Excludes content.private/ (even via symlink) and non-.yaml files.
+    """
+    content_root = content_dir.resolve()
+    out: list[str] = []
+    for p in content_root.rglob("*.yaml"):
+        rp = p.resolve()
+        if content_root != rp and content_root not in rp.parents:
+            continue
+        if "content.private" in rp.parts:
+            continue
+        out.append(rp.relative_to(content_root).as_posix())
+    return sorted(out)
