@@ -11,6 +11,7 @@ import difflib
 import io
 import os
 import shutil
+import subprocess
 import tempfile
 from pathlib import Path, PurePosixPath
 
@@ -42,6 +43,13 @@ SECTIONS = (
     "publications",
     "labels",
 )
+
+# which-group -> ordered (just recipe, required tool on PATH or None)
+_RECIPE_PLAN = {
+    "formats": [("build-formats", None)],
+    "pdf": [("build", "typst"), ("build-de", "typst")],
+    "web": [("web-build", "pnpm")],
+}
 
 
 def _safe_content_path(rel_path: str, *, content_dir: Path = CONTENT_DIR) -> Path:
@@ -211,3 +219,55 @@ def apply_edit(
             os.unlink(tmp_path)
         raise
     return {"applied": True, "errors": [], "warnings": result["warnings"]}
+
+
+def _resolve_recipes(which: str) -> tuple[list[str], list[str]]:
+    """Return (to_run, skipped) recipe names for `which`, honoring tool availability."""
+    if which not in {"formats", "pdf", "web", "all"}:
+        raise ValueError(f"unknown which {which!r}; expected formats|pdf|web|all")
+    groups = ["formats", "pdf", "web"] if which == "all" else [which]
+    to_run: list[str] = []
+    skipped: list[str] = []
+    for group in groups:
+        for recipe, tool in _RECIPE_PLAN[group]:
+            if tool is not None and shutil.which(tool) is None:
+                skipped.append(recipe)
+            else:
+                to_run.append(recipe)
+    return to_run, skipped
+
+
+def rerun_renderers(
+    which: str = "formats",
+    *,
+    content_dir: Path = CONTENT_DIR,
+    schema_path: Path = SCHEMA_PATH,
+) -> dict:
+    """Validate-first, then run the whitelisted `just` recipes for `which`.
+
+    Renderers always operate on the repo's real content/ (via `just`, cwd=REPO_ROOT);
+    `content_dir` only governs the validate-first gate. pdf/web skip gracefully when
+    Typst/pnpm are absent; refresh-citations is never invoked.
+    Returns {"ran": list[str], "ok": bool, "skipped": list[str], "output": dict[str, str]}.
+    """
+    to_run, skipped = _resolve_recipes(which)
+    errors = validate_tree(content_dir, schema_path)
+    if errors:
+        return {
+            "ran": [],
+            "ok": False,
+            "skipped": to_run + skipped,
+            "output": {"validate": "\n".join(str(e) for e in errors)},
+        }
+    ran: list[str] = []
+    output: dict[str, str] = {}
+    ok = True
+    for recipe in to_run:
+        proc = subprocess.run(
+            ["just", recipe], cwd=REPO_ROOT, capture_output=True, text=True, timeout=600
+        )
+        ran.append(recipe)
+        output[recipe] = (proc.stdout or "") + (proc.stderr or "")
+        if proc.returncode != 0:
+            ok = False
+    return {"ran": ran, "ok": ok, "skipped": skipped, "output": output}
