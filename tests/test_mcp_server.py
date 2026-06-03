@@ -54,3 +54,5 @@ def test_core_server_parity():
     server = mcp_server.propose_edit(rel, current).model_dump()
     core = agent_core.propose_edit(rel, current)
     assert server == core
+    # get_cv_content is a thin pass-through to read_cv — assert byte-identical too.
+    assert mcp_server.get_cv_content() == agent_core.read_cv()
