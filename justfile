@@ -73,6 +73,10 @@ build-text-targets:
     uv run python -m scripts.render_text --lang en --target ds-ml
     uv run python -m scripts.render_text --lang de --target ds-ml
 
+# Render a cover letter (validate-first) → applications/<slug>/cover-letter-*.{pdf,txt}
+letter slug:
+    uv run python -m scripts.render_letter {{slug}}
+
 # Render the llms.txt site map (llmstxt.org) → dist/llms.txt
 build-llms:
     uv run python -m scripts.render_llms
