@@ -29,7 +29,7 @@ Eleven phases (0–10), sequential. Each produces a usable artifact and gets its
 | 8b | Targeted CV variants (comp-bio · ds-ml from one source) | ✅ Done (merged 2026-05-30, PR #38, commit `b9f6895`) |
 | 8c | Web target switcher (client-side variant positioning) | ✅ Done (merged 2026-05-31, PR #39, commit `6ced593`) |
 | 9 | Web design overhaul (2026 dark-technical: CV-as-code hero, bento stat band, dark/light theme) | ✅ Done (merged 2026-05-31, PR #40, commit `be80dc6`) |
-| 10 | Agent interface (MCP server + skill over `content/` + validate) | ✅ Done (merged 2026-06-03, PR #63) |
+| 10 | Agent interface (MCP server + skill over `content/` + validate) | ✅ Done (merged 2026-06-03, PR #63, commit `fbc18fe`) |
 
 ## Layout
 
