@@ -1,4 +1,5 @@
 """Tests for the thin MCP server (skipped if the mcp SDK is absent)."""
+
 from __future__ import annotations
 
 import asyncio
@@ -10,8 +11,12 @@ pytest.importorskip("mcp")
 from scripts import agent_core, mcp_server  # noqa: E402
 
 EXPECTED_TOOLS = {
-    "get_cv_content", "list_cv_files", "validate_cv",
-    "propose_edit", "apply_edit", "rerun_renderers",
+    "get_cv_content",
+    "list_cv_files",
+    "validate_cv",
+    "propose_edit",
+    "apply_edit",
+    "rerun_renderers",
 }
 
 

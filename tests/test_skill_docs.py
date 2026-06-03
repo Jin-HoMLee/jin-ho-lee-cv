@@ -1,4 +1,5 @@
 """Drift-guards for the CV skill docs (no mcp dependency)."""
+
 from __future__ import annotations
 
 import re

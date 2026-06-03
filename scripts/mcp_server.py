@@ -3,6 +3,7 @@
 Each tool maps 1:1 to scripts.agent_core; the only added logic is Pydantic
 result shaping and MCP tool annotations. Run: `uv run --group mcp python -m scripts.mcp_server`.
 """
+
 from __future__ import annotations
 
 from mcp.server.fastmcp import FastMCP

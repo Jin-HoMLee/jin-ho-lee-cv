@@ -205,7 +205,9 @@ def test_rerun_renderers_invokes_just_list_form(cv_tree, monkeypatch):
         stdout = "ok"
         stderr = ""
 
-    monkeypatch.setattr(agent_core.subprocess, "run", lambda argv, **kw: calls.append((argv, kw)) or FakeProc())
+    monkeypatch.setattr(
+        agent_core.subprocess, "run", lambda argv, **kw: calls.append((argv, kw)) or FakeProc()
+    )
     monkeypatch.setattr(agent_core.shutil, "which", lambda tool: "/usr/bin/" + tool)
     res = agent_core.rerun_renderers("formats", content_dir=cv_tree)
     assert res["ok"] is True
