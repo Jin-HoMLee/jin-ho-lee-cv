@@ -12,7 +12,7 @@ A machine-readable, codified CV / resume for Jin-Ho Lee. Single source of truth 
 
 ## Phasing
 
-Eleven phases (0–10), sequential. Each produces a usable artifact and gets its own brainstorm + plan + execution.
+Twelve phases (0–11), sequential. Each produces a usable artifact and gets its own brainstorm + plan + execution.
 
 | Phase | Scope | Status |
 |---|---|---|
@@ -30,6 +30,7 @@ Eleven phases (0–10), sequential. Each produces a usable artifact and gets its
 | 8c | Web target switcher (client-side variant positioning) | ✅ Done (merged 2026-05-31, PR #39, commit `6ced593`) |
 | 9 | Web design overhaul (2026 dark-technical: CV-as-code hero, bento stat band, dark/light theme) | ✅ Done (merged 2026-05-31, PR #40, commit `be80dc6`) |
 | 10 | Agent interface (MCP server + skill over `content/` + validate) | ✅ Done (merged 2026-06-03, PR #63, commit `fbc18fe`) |
+| 11 | Cover-letter generator (interview + JD → tailored letter, PDF + text) | 🚧 In review (issue #65, branch `phase-11-cover-letter`) |
 
 ## Layout
 
@@ -37,13 +38,18 @@ Eleven phases (0–10), sequential. Each produces a usable artifact and gets its
 content/                  source of truth (YAML + BibTeX)
 content.private/          gitignored PII overlay (phone, address)
 content.private.example/  template showing required private keys
+applications/             per-application cover-letter material (gitignored overlay)
+applications.example/     committed template showing the applications/ shape
 data/citations.json      generated, committed Crossref citation cache (lockfile)
-schema/cv.schema.json     JSON Schema for content
-scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py, fetch_citations.py, citations.py, agent_core.py, mcp_server.py
+schema/cv.schema.json          JSON Schema for content
+schema/application.schema.json schema for cover-letter application.yaml
+schema/profile.schema.json     schema for the evergreen cover-letter profile.yaml
+scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py, fetch_citations.py, citations.py, agent_core.py, mcp_server.py, cover_letter_core.py, letter_text.py, render_letter.py
 tests/                    pytest suite
-pdf/                      Typst PDF renderer (Phase 1)
+pdf/                      Typst PDF renderer (Phase 1; incl. templates/cover-letter.typ for the DIN 5008 letter)
 web/                      Astro website (Phase 3)
 .claude/skills/cv/        committed Claude skill (agent interface) — SKILL.md + reference.md
+.claude/skills/cover-letter/  committed Claude skill (cover-letter interview + render)
 .mcp.json                 Claude Code project-scoped MCP server config
 docs/superpowers/         specs and implementation plans for each phase
 .github/workflows/        ci.yml (validate + PDF + release), pages.yml (web deploy)
@@ -68,6 +74,7 @@ just web-dev           # Astro dev server (regenerates content JSON + JSON-LD)
 just web-build         # Production build of web/dist
 just mcp-server        # run the CV MCP server (stdio) — point an MCP client at this
 just mcp-dev           # MCP Inspector against the server (needs the mcp dep group)
+just letter <slug>     # render a cover letter → applications/<slug>/cover-letter-*.{pdf,txt}
 ```
 
 validate + test + lint must all be green before merging anything.
@@ -90,6 +97,13 @@ validate + test + lint must all be green before merging anything.
   mirrors of it. PII can never leak — `read_cv` forces `private_path=None` and edit paths
   pass `_safe_content_path` (no `..`/symlink/`content.private`). Edits are gated by the
   full `validate_tree`; the skill docs are drift-guarded against the `justfile`/schema.
+- **Cover letters are a read-only CV consumer.** `applications/` is gitignored (this
+  repo is public); the generator reads `content/` via `cover_letter_core.cv_facts`
+  (PII-safe `agent_core.read_cv`) and writes only under `applications/`. PDFs merge
+  `content.private/` at render time and stay gitignored. Never commit `applications/`.
+  Core: `scripts/cover_letter_core.py` (+ `letter_text.py`, `render_letter.py`); skill:
+  `.claude/skills/cover-letter/`. Rendered text never contains the private address;
+  only the gitignored PDF does.
 
 ## Workflow for new phases
 
@@ -116,11 +130,15 @@ validate + test + lint must all be green before merging anything.
 - `docs/superpowers/plans/2026-06-03-agent-interface-mcp-skill.md` — implementation plan for the agent interface (#48)
 - `scripts/content_loader.py` + `scripts/bib_loader.py` + `scripts/langstring.py` — the data layer every renderer consumes
 - `scripts/render_web_data.py` — the closest pattern for a "Python script that emits JSON for a downstream renderer to consume"; mirror this style
+- `docs/superpowers/specs/2026-06-03-phase-11-cover-letter-design.md` — Phase 11 design spec (cover-letter generator)
+- `docs/superpowers/plans/2026-06-03-phase-11-cover-letter.md` — implementation plan for the cover-letter generator (#65)
 
 ## Local-only files (not in git)
 
 - `assets/photo.jpg` — headshot for the private PDF build, only included when `--photo` is passed. Optional; omit and the PDF renders without a photo. Kept gitignored by convention (PDFs are intentionally photo-less to avoid discrimination per German hiring norms).
 - `content.private/private.yaml` — phone + address. Copy from `content.private.example/private.example.yaml` template.
+- `applications/` — per-application cover-letter material (job descriptions, drafts, rendered letters). Gitignored; mirror the shape in `applications.example/`.
+- `assets/signature.png` — handwritten signature for the cover-letter PDF, included only when present (mirrors the optional `--photo` pattern). Gitignored.
 
 ## Don't
 
