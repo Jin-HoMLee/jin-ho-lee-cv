@@ -12,7 +12,7 @@ A machine-readable, codified CV / resume for Jin-Ho Lee. Single source of truth 
 
 ## Phasing
 
-Ten phases (0–9), sequential. Each produces a usable artifact and gets its own brainstorm + plan + execution.
+Eleven phases (0–10), sequential. Each produces a usable artifact and gets its own brainstorm + plan + execution.
 
 | Phase | Scope | Status |
 |---|---|---|
