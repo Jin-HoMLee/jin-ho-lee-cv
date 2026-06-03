@@ -1,0 +1,14 @@
+# Evergreen answers, reused across every application. Prose fields are { en, de }.
+# Copy this file to applications/profile.yaml and fill in once.
+motivation:
+  en: "I want to apply computational methods to problems that matter for human health."
+  de: "Ich möchte computergestützte Methoden auf Probleme anwenden, die für die menschliche Gesundheit zählen."
+work_style:
+  en: "Reproducible, well-documented pipelines; close collaboration with wet-lab and clinical teams."
+  de: "Reproduzierbare, gut dokumentierte Pipelines; enge Zusammenarbeit mit Labor- und klinischen Teams."
+availability: "Available from 2026-09 (3 months' notice)"
+salary_expectation: "EUR 65,000–75,000 (context only — never rendered unless the JD asks)"
+relocation: "Open to relocation within the Rhine-Neckar region; remote-friendly preferred."
+preferences:
+  en: "Mid-size research-driven company; genomics or clinical data; hybrid remote."
+  de: "Mittelgroßes forschungsgetriebenes Unternehmen; Genomik oder klinische Daten; hybrid."

@@ -1,0 +1,9 @@
+why_company: "Acme's focus on reproducible clinical genomics matches my pipeline work."
+emphasis:
+  - "L1"
+  - "GCP migration"
+gaps:
+  - requirement: "5 years of Rust"
+    decision: "transferable"
+    note: "frame C/performance work honestly; no Rust claim"
+notes: "Keep it to one page; lead with the pipeline outcome."

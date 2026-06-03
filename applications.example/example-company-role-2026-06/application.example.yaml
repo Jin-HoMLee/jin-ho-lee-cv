@@ -1,0 +1,15 @@
+company: "Acme Genomics GmbH"
+role: "Bioinformatician"
+language: "de"
+date: "2026-06-03"
+recipient:
+  name: "Dr. Erika Mustermann"
+  company: "Acme Genomics GmbH"
+  address:
+    street: "Musterstraße 1"
+    postal_code: "68159"
+    city: "Mannheim"
+subject: "Bewerbung als Bioinformatician"
+source: "LinkedIn"
+url: "https://example.com/jobs/123"
+status: "draft"

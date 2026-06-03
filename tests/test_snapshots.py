@@ -4,12 +4,13 @@ Each test invokes the renderer's real write path (or render() string) and snapsh
 the exact bytes, so a silent shape/byte change in resume.json / person.jsonld /
 cv-*.txt / content.*.json fails CI. Regenerate intentionally with `just snapshots-update`.
 """
+
 from __future__ import annotations
 
 import pytest
 from syrupy.extensions.single_file import SingleFileSnapshotExtension, WriteMode
 
-from scripts import render_jsonld, render_jsonresume, render_llms, render_web_data
+from scripts import letter_text, render_jsonld, render_jsonresume, render_llms, render_web_data
 from scripts.render_text import render as render_text
 
 
@@ -65,3 +66,49 @@ def web_data_dir(tmp_path_factory):
 )
 def test_web_data_snapshot(name, web_data_dir, snapshot):
     assert (web_data_dir / name).read_text(encoding="utf-8") == snapshot.use_extension(_JsonSnap)
+
+
+_FIXTURE_LETTER = {
+    "en": {
+        "lang": "en",
+        "date_display": "June 3, 2026",
+        "recipient": {
+            "name": "Dr. Erika Mustermann",
+            "company": "Acme Genomics GmbH",
+            "address": {"street": "Sample St 1", "postal_code": "68159", "city": "Mannheim"},
+        },
+        "subject": "Application: Bioinformatician",
+        "salutation": "Dear Dr. Erika Mustermann,",
+        "closing": "Sincerely,",
+        "signer_name": "Jin-Ho Lee",
+        "body_paragraphs": [
+            "I am writing to apply for the Bioinformatician role.",
+            "My pipeline work maps directly onto your reproducibility goals.",
+        ],
+    },
+    "de": {
+        "lang": "de",
+        "date_display": "3. Juni 2026",
+        "recipient": None,
+        "subject": "Bewerbung als Bioinformatician",
+        "salutation": "Sehr geehrte Damen und Herren,",
+        "closing": "Mit freundlichen Grüßen",
+        "signer_name": "Jin-Ho Lee",
+        "body_paragraphs": [
+            "mit großem Interesse habe ich Ihre Ausschreibung gelesen.",
+            "Meine Pipeline-Arbeit passt zu Ihren Reproduzierbarkeitszielen.",
+        ],
+    },
+}
+_FIXTURE_SENDER = {
+    "name": "Jin-Ho Lee",
+    "email": "jinho.michael.lee@gmail.com",
+    "location_line": "Mannheim, Germany",
+}
+
+
+@pytest.mark.parametrize("lang", ["en", "de"])
+@pytest.mark.parametrize("flavor", ["full", "body"])
+def test_letter_text_snapshot(lang, flavor, snapshot):
+    out = letter_text.render(_FIXTURE_LETTER[lang], _FIXTURE_SENDER, flavor)
+    assert out == snapshot.use_extension(_TextSnap)
