@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import difflib
 import io
+import os
 import shutil
 import tempfile
 from pathlib import Path, PurePosixPath
@@ -181,3 +182,32 @@ def propose_edit(
         "errors": [str(e) for e in errors],
         "warnings": [str(w) for w in warnings],
     }
+
+
+def apply_edit(
+    rel_path: str,
+    new_content: str,
+    *,
+    content_dir: Path = CONTENT_DIR,
+    schema_path: Path = SCHEMA_PATH,
+) -> dict:
+    """Validate the would-be tree, then atomically write only if it validates.
+
+    Returns {"applied": bool, "errors": list[str], "warnings": list[str]}.
+    """
+    result = propose_edit(rel_path, new_content, content_dir=content_dir, schema_path=schema_path)
+    if not result["valid"]:
+        return {"applied": False, "errors": result["errors"], "warnings": result["warnings"]}
+
+    dst = _safe_content_path(rel_path, content_dir=content_dir)
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp_path = tempfile.mkstemp(dir=str(dst.parent), suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(new_content)
+        os.replace(tmp_path, dst)  # atomic within the same directory
+    except BaseException:
+        if os.path.exists(tmp_path):
+            os.unlink(tmp_path)
+        raise
+    return {"applied": True, "errors": [], "warnings": result["warnings"]}
