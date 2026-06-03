@@ -136,7 +136,7 @@ phone: "+49 ... ..."
 address:
   street: "Example Street 1"
   postal_code: "00000"
-  city: "Mannheim"
+  city: "Example City"
   country: "GER"
 ```
 

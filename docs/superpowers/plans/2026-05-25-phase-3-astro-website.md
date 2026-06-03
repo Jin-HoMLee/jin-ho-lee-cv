@@ -292,7 +292,7 @@ Expected: `web/src/data/content.en.json` and `web/src/data/content.de.json` exis
 - [ ] **Step 7: Quick sanity-grep the dump for PII**
 
 ```bash
-grep -c "0000000\|Example Street\|00000" web/src/data/content.*.json || echo "no PII (good)"
+grep -c "phone\|strasse\|straße\|+49" web/src/data/content.*.json || echo "no PII (good)"
 ```
 Expected: `no PII (good)`. (The grep returns non-zero when nothing matches; the `|| echo` catches it.)
 
