@@ -8,9 +8,18 @@ from __future__ import annotations
 
 from pathlib import Path, PurePosixPath
 
+from scripts.content_loader import TARGETS, load_content
+from scripts.langstring import resolve_langstrings
+from scripts.render_web_data import _to_jsonable
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
 SCHEMA_PATH = REPO_ROOT / "schema" / "cv.schema.json"
+
+SECTIONS = (
+    "personal", "profile", "skills", "education", "experience", "projects",
+    "selected_projects", "languages", "volunteer", "awards", "publications", "labels",
+)
 
 
 def _safe_content_path(rel_path: str, *, content_dir: Path = CONTENT_DIR) -> Path:
@@ -33,3 +42,26 @@ def _safe_content_path(rel_path: str, *, content_dir: Path = CONTENT_DIR) -> Pat
     if "content.private" in resolved.parts:
         raise ValueError(f"refusing content.private path: {rel_path!r}")
     return resolved
+
+
+def read_cv(
+    lang: str = "en",
+    target: str = "bridge",
+    section: str | None = None,
+    *,
+    content_dir: Path = CONTENT_DIR,
+) -> dict:
+    """Load the CV content tree (LangStrings resolved, JSON-able), PII excluded.
+
+    Never passes private_path, so content.private/ can never surface. `section`,
+    if given, must be one of SECTIONS and returns {section: value}.
+    """
+    if target not in TARGETS:
+        raise ValueError(f"unknown target {target!r}; expected one of {TARGETS}")
+    tree = load_content(content_dir, private_path=None, lang=lang, target=target)
+    data = _to_jsonable(resolve_langstrings(tree, lang))
+    if section is None:
+        return data
+    if section not in SECTIONS:
+        raise ValueError(f"unknown section {section!r}; expected one of {SECTIONS}")
+    return {section: data.get(section)}
