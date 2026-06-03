@@ -228,3 +228,65 @@ def test_validate_application_bad_gap_in_interview(apps):
     res = clc.validate_application(slug, apps_dir=apps)
     assert res["valid"] is False
     assert any("gap" in e for e in res["errors"])
+
+
+def test_format_date():
+    assert clc._format_date("2026-06-03", "en") == "June 3, 2026"
+    assert clc._format_date("2026-06-03", "de") == "3. Juni 2026"
+    assert clc._format_date("not-a-date", "en") == "not-a-date"  # graceful
+
+
+def test_format_date_accepts_date_object():
+    from datetime import date
+
+    assert clc._format_date(date(2026, 6, 3), "en") == "June 3, 2026"
+    assert clc._format_date(date(2026, 6, 3), "de") == "3. Juni 2026"
+
+
+def test_salutation_and_closing():
+    assert clc._salutation("de", "Dr. Mustermann") == "Sehr geehrte/r Dr. Mustermann,"
+    assert clc._salutation("de", None) == "Sehr geehrte Damen und Herren,"
+    assert clc._salutation("en", "Dr. Lee") == "Dear Dr. Lee,"
+    assert clc._salutation("en", None) == "Dear Hiring Manager,"
+    assert clc._closing("de") == "Mit freundlichen Grüßen"
+    assert clc._closing("en") == "Sincerely,"
+
+
+def test_render_letter_text_writes_both_flavors(apps):
+    slug = _make_app(apps, language="en", subject="Application: Bioinformatician")
+    clc.save_draft(slug, "First paragraph.\n\nSecond paragraph.\n", apps_dir=apps)
+    res = clc.render_letter(slug, fmt="text", apps_dir=apps)
+    assert res["ok"] is True
+    assert "cover-letter-en.txt" in res["rendered"]
+    assert "cover-letter-en-body.txt" in res["rendered"]
+    full = (apps / slug / "cover-letter-en.txt").read_text(encoding="utf-8")
+    body = (apps / slug / "cover-letter-en-body.txt").read_text(encoding="utf-8")
+    assert "Jin-Ho Lee" in full  # sender block in full
+    assert "First paragraph." in body
+    assert "Jin-Ho Lee" in body  # signer line in body
+    assert "Dear Hiring Manager," in body  # no recipient name -> generic salutation
+
+
+def test_render_letter_refuses_invalid(apps):
+    slug = _make_app(apps, language="fr")  # invalid language fails schema
+    res = clc.render_letter(slug, fmt="text", apps_dir=apps)
+    assert res["ok"] is False
+    assert res["errors"]
+    assert res["rendered"] == []
+
+
+def test_render_letter_skips_pdf_without_typst(apps, monkeypatch):
+    monkeypatch.setattr(clc.shutil, "which", lambda tool: None)
+    slug = _make_app(apps, language="en")
+    clc.save_draft(slug, "Body.\n", apps_dir=apps)
+    res = clc.render_letter(slug, fmt="all", apps_dir=apps)
+    assert res["ok"] is True
+    assert "cover-letter-en.pdf" in res["skipped"]
+    assert "cover-letter-en.txt" in res["rendered"]
+
+
+def test_render_letter_rejects_bad_fmt(apps):
+    slug = _make_app(apps, language="en")
+    clc.save_draft(slug, "Body.\n", apps_dir=apps)
+    with pytest.raises(ValueError):
+        clc.render_letter(slug, fmt="docx", apps_dir=apps)

@@ -11,6 +11,8 @@ import io
 import json
 import os
 import re
+import shutil
+import subprocess
 import tempfile
 from datetime import date as _date
 from pathlib import Path, PurePosixPath
@@ -18,7 +20,10 @@ from pathlib import Path, PurePosixPath
 from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
 
-from scripts import agent_core
+from scripts import agent_core, letter_text
+from scripts.content_loader import load_content
+from scripts.langstring import resolve_langstrings
+from scripts.render_web_data import _to_jsonable
 
 _yaml = YAML(typ="safe")
 _yaml.default_flow_style = False
@@ -27,9 +32,42 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 APPS_DIR = REPO_ROOT / "applications"
 APP_SCHEMA = REPO_ROOT / "schema" / "application.schema.json"
 PROFILE_SCHEMA = REPO_ROOT / "schema" / "profile.schema.json"
+CONTENT_DIR = REPO_ROOT / "content"
+PRIVATE_PATH = REPO_ROOT / "content.private" / "private.yaml"
 
 ALLOWED_SUFFIXES = {".yaml", ".md", ".txt", ".pdf"}
 _GAP_DECISIONS = {"transferable", "omit", "example"}
+
+_MONTHS = {
+    "en": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ],
+    "de": [
+        "Januar",
+        "Februar",
+        "März",
+        "April",
+        "Mai",
+        "Juni",
+        "Juli",
+        "August",
+        "September",
+        "Oktober",
+        "November",
+        "Dezember",
+    ],
+}
 
 
 # --- path safety & low-level IO -------------------------------------------------
@@ -216,3 +254,160 @@ def validate_application(slug: str, *, apps_dir: Path = APPS_DIR) -> dict:
                 errors.append(f"invalid gap decision {val!r}")
 
     return {"valid": not errors, "errors": errors, "warnings": warnings}
+
+
+# --- rendering ------------------------------------------------------------------
+
+
+def _format_date(iso: str, lang: str) -> str:
+    """'June 3, 2026' (en) / '3. Juni 2026' (de). Returns str(iso) on parse failure.
+
+    Accepts a datetime.date directly (ruamel parses unquoted YAML dates that way).
+    """
+    if isinstance(iso, _date):
+        d = iso
+    else:
+        try:
+            d = _date.fromisoformat(iso)
+        except (ValueError, TypeError):
+            return str(iso)
+    months = _MONTHS.get(lang, _MONTHS["en"])
+    month = months[d.month - 1]
+    return f"{d.day}. {month} {d.year}" if lang == "de" else f"{month} {d.day}, {d.year}"
+
+
+def _salutation(lang: str, name: str | None) -> str:
+    if lang == "de":
+        return f"Sehr geehrte/r {name}," if name else "Sehr geehrte Damen und Herren,"
+    return f"Dear {name}," if name else "Dear Hiring Manager,"
+
+
+def _closing(lang: str) -> str:
+    return "Mit freundlichen Grüßen" if lang == "de" else "Sincerely,"
+
+
+def _split_paragraphs(text: str) -> list[str]:
+    return [p.strip() for p in re.split(r"\n\s*\n", (text or "").strip()) if p.strip()]
+
+
+def _signer_name() -> str:
+    name = cv_facts()["personal"]["name"]
+    return f"{name['given']} {name['family']}"
+
+
+def _public_sender(lang: str) -> dict:
+    """Public identity for the text 'full' flavor — name, email, city/country only."""
+    personal = cv_facts(lang=lang)["personal"]
+    loc = personal.get("location") or {}
+    location_line = ", ".join(x for x in (loc.get("city"), loc.get("country")) if x)
+    return {
+        "name": f"{personal['name']['given']} {personal['name']['family']}",
+        "email": personal["email"],
+        "location_line": location_line,
+    }
+
+
+def _assemble_letter(application: dict, draft: str | None, lang: str) -> dict:
+    recipient = application.get("recipient")
+    name = recipient.get("name") if recipient else None
+    return {
+        "lang": lang,
+        "date_display": _format_date(application["date"], lang),
+        "recipient": recipient,
+        "subject": application["subject"],
+        "salutation": _salutation(lang, name),
+        "closing": _closing(lang),
+        "signer_name": _signer_name(),
+        "body_paragraphs": _split_paragraphs(draft),
+    }
+
+
+def _letter_personal(lang: str) -> dict:
+    """Resolved personal block WITH the private address merged (PDF render only).
+
+    This is the one place PII is intentionally merged — exactly like pdf/build.py
+    --private. The output PDF is gitignored. Degrades to the public location block
+    when content.private/ is absent.
+    """
+    private = PRIVATE_PATH if PRIVATE_PATH.exists() else None
+    raw = load_content(CONTENT_DIR, private_path=private, lang=lang, target="bridge")
+    resolved = resolve_langstrings(raw, lang=lang)
+    return _to_jsonable(resolved["personal"])
+
+
+def _render_pdf(slug: str, letter: dict, lang: str, *, apps_dir: Path) -> None:
+    data = {"personal": _letter_personal(lang), "letter": letter, "lang": lang}
+    cache_dir = REPO_ROOT / "pdf" / ".cache"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    (cache_dir / "letter.json").write_text(
+        json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    out = _safe_application_path(f"{slug}/cover-letter-{lang}.pdf", apps_dir=apps_dir)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    template = REPO_ROOT / "pdf" / "templates" / "cover-letter.typ"
+    has_sig = "1" if (REPO_ROOT / "assets" / "signature.png").exists() else "0"
+    proc = subprocess.run(
+        [
+            "typst",
+            "compile",
+            "--root",
+            str(REPO_ROOT),
+            "--input",
+            f"lang={lang}",
+            "--input",
+            f"has-signature={has_sig}",
+            str(template),
+            str(out),
+        ],
+        capture_output=True,
+        text=True,
+        timeout=600,
+        shell=False,
+    )
+    if proc.returncode != 0:
+        raise RuntimeError(f"typst compile failed (exit {proc.returncode}):\n{proc.stderr}")
+
+
+def render_letter(slug: str, *, fmt: str = "all", apps_dir: Path = APPS_DIR) -> dict:
+    """Validate-first, then render fmt in {'pdf','text','all'} into the app folder.
+
+    PDF skips gracefully when typst is absent. Returns
+    {'ok', 'errors', 'rendered': [filenames], 'skipped': [filenames]}.
+    """
+    if fmt not in {"pdf", "text", "all"}:
+        raise ValueError(f"unknown fmt {fmt!r}; expected pdf|text|all")
+
+    slug = _sanitize_slug(slug)
+    check = validate_application(slug, apps_dir=apps_dir)
+    if not check["valid"]:
+        return {"ok": False, "errors": check["errors"], "rendered": [], "skipped": []}
+
+    bundle = read_application(slug, apps_dir=apps_dir)
+    lang = bundle["application"]["language"]
+    letter = _assemble_letter(bundle["application"], bundle["draft"], lang)
+    sender = _public_sender(lang)
+
+    rendered: list[str] = []
+    skipped: list[str] = []
+
+    if fmt in {"text", "all"}:
+        _atomic_write(
+            f"{slug}/cover-letter-{lang}.txt",
+            letter_text.render(letter, sender, "full"),
+            apps_dir=apps_dir,
+        )
+        _atomic_write(
+            f"{slug}/cover-letter-{lang}-body.txt",
+            letter_text.render(letter, sender, "body"),
+            apps_dir=apps_dir,
+        )
+        rendered += [f"cover-letter-{lang}.txt", f"cover-letter-{lang}-body.txt"]
+
+    if fmt in {"pdf", "all"}:
+        if shutil.which("typst") is None:
+            skipped.append(f"cover-letter-{lang}.pdf")
+        else:
+            _render_pdf(slug, letter, lang, apps_dir=apps_dir)
+            rendered.append(f"cover-letter-{lang}.pdf")
+
+    return {"ok": True, "errors": [], "rendered": rendered, "skipped": skipped}
