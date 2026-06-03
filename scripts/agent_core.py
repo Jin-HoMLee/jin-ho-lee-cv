@@ -11,6 +11,7 @@ from pathlib import Path, PurePosixPath
 from scripts.content_loader import TARGETS, load_content
 from scripts.langstring import resolve_langstrings
 from scripts.render_web_data import _to_jsonable
+from scripts.validate import date_warnings, validate_tree
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
@@ -82,3 +83,17 @@ def list_content_files(*, content_dir: Path = CONTENT_DIR) -> list[str]:
             continue
         out.append(rp.relative_to(content_root).as_posix())
     return sorted(out)
+
+
+def validate_cv(*, content_dir: Path = CONTENT_DIR, schema_path: Path = SCHEMA_PATH) -> dict:
+    """Validate the content tree (schema + cross-refs + parity + periods + bib).
+
+    Returns {"valid": bool, "errors": list[str], "warnings": list[str]}.
+    """
+    errors = validate_tree(content_dir, schema_path)
+    warnings = date_warnings(content_dir)
+    return {
+        "valid": not errors,
+        "errors": [str(e) for e in errors],
+        "warnings": [str(w) for w in warnings],
+    }
