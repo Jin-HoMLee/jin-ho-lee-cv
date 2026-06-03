@@ -6,6 +6,9 @@ subprocess guard lives here so both surfaces inherit it.
 """
 from __future__ import annotations
 
+import difflib
+import shutil
+import tempfile
 from pathlib import Path, PurePosixPath
 
 from scripts.content_loader import TARGETS, load_content
@@ -93,6 +96,49 @@ def validate_cv(*, content_dir: Path = CONTENT_DIR, schema_path: Path = SCHEMA_P
     errors = validate_tree(content_dir, schema_path)
     warnings = date_warnings(content_dir)
     return {
+        "valid": not errors,
+        "errors": [str(e) for e in errors],
+        "warnings": [str(w) for w in warnings],
+    }
+
+
+def propose_edit(
+    rel_path: str,
+    new_content: str,
+    *,
+    content_dir: Path = CONTENT_DIR,
+    schema_path: Path = SCHEMA_PATH,
+) -> dict:
+    """Dry-run an edit: validate the whole would-be tree, return a diff. No write.
+
+    Returns {"diff": str, "valid": bool, "errors": list[str], "warnings": list[str]}.
+    """
+    dst_rel = _safe_content_path(rel_path, content_dir=content_dir).relative_to(
+        content_dir.resolve()
+    )
+    target_file = content_dir / dst_rel
+    current = target_file.read_text(encoding="utf-8") if target_file.exists() else ""
+
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_content = Path(tmp) / "content"
+        shutil.copytree(content_dir, tmp_content)  # content/ only — never PII sibling
+        edited = tmp_content / dst_rel
+        edited.parent.mkdir(parents=True, exist_ok=True)
+        edited.write_text(new_content, encoding="utf-8")
+        errors = validate_tree(tmp_content, schema_path)
+        warnings = date_warnings(tmp_content)
+
+    diff = "".join(
+        difflib.unified_diff(
+            current.splitlines(keepends=True),
+            new_content.splitlines(keepends=True),
+            fromfile=dst_rel.as_posix(),
+            tofile=dst_rel.as_posix(),
+            n=3,
+        )
+    )
+    return {
+        "diff": diff,
         "valid": not errors,
         "errors": [str(e) for e in errors],
         "warnings": [str(w) for w in warnings],

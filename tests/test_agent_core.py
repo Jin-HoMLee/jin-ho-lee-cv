@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import shutil
+import tempfile
 from pathlib import Path
 
 import pytest
@@ -100,3 +101,40 @@ def test_validate_cv_detects_break(cv_tree):
     res = agent_core.validate_cv(content_dir=cv_tree)
     assert res["valid"] is False
     assert res["errors"]
+
+
+def test_propose_edit_clean_change(cv_tree):
+    rel = "personal.yaml"
+    current = (cv_tree / rel).read_text(encoding="utf-8")
+    res = agent_core.propose_edit(rel, current + "\n# harmless comment\n", content_dir=cv_tree)
+    assert res["valid"] is True
+    assert res["diff"]  # non-empty unified diff
+    assert (cv_tree / rel).read_text(encoding="utf-8") == current  # source untouched
+
+
+def test_propose_edit_schema_break(cv_tree):
+    rel = "personal.yaml"
+    current = (cv_tree / rel).read_text(encoding="utf-8")
+    res = agent_core.propose_edit(rel, "{}\n", content_dir=cv_tree)
+    assert res["valid"] is False
+    assert res["errors"]
+    assert (cv_tree / rel).read_text(encoding="utf-8") == current
+
+
+def test_propose_edit_unpaired_project_rejected(cv_tree):
+    res = agent_core.propose_edit("projects/ZZ.de.yaml", "id: ZZ\n", content_dir=cv_tree)
+    assert res["valid"] is False  # missing ZZ.en.yaml / invalid project
+
+
+def test_propose_edit_cleans_tempdir(cv_tree, monkeypatch):
+    created = []
+    real_td = tempfile.TemporaryDirectory
+
+    class Recording(real_td):
+        def __init__(self, *a, **k):
+            super().__init__(*a, **k)
+            created.append(Path(self.name))
+
+    monkeypatch.setattr(agent_core.tempfile, "TemporaryDirectory", Recording)
+    agent_core.propose_edit("personal.yaml", "{}\n", content_dir=cv_tree)
+    assert created and all(not p.exists() for p in created)
