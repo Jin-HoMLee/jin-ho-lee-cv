@@ -36,12 +36,14 @@ def test_safe_path_rejects(apps, bad):
 
 
 def test_safe_path_accepts_dir_and_file(apps):
-    assert clc._safe_application_path("acme-bio-2026-06", apps_dir=apps) == (
-        apps / "acme-bio-2026-06"
-    ).resolve()
-    assert clc._safe_application_path("acme-bio-2026-06/draft.md", apps_dir=apps) == (
-        apps / "acme-bio-2026-06" / "draft.md"
-    ).resolve()
+    assert (
+        clc._safe_application_path("acme-bio-2026-06", apps_dir=apps)
+        == (apps / "acme-bio-2026-06").resolve()
+    )
+    assert (
+        clc._safe_application_path("acme-bio-2026-06/draft.md", apps_dir=apps)
+        == (apps / "acme-bio-2026-06" / "draft.md").resolve()
+    )
 
 
 def test_safe_path_rejects_symlink_escape(apps):
@@ -128,3 +130,101 @@ def test_core_never_writes_under_content(apps):
     """All write helpers route through _safe_application_path; content/ is untouchable."""
     with pytest.raises(ValueError):
         clc._atomic_write("../content/personal.yaml", "boom", apps_dir=apps)
+
+
+def _make_app(apps: Path, slug: str = "acme-bio-2026-06", **overrides) -> str:
+    meta = {
+        "company": "Acme",
+        "role": "Bioinformatician",
+        "language": "de",
+        "date": "2026-06-03",
+        "subject": "Bewerbung",
+        "status": "draft",
+    }
+    meta.update(overrides)
+    return clc.create_application(slug, job_text="x", meta=meta, apps_dir=apps)
+
+
+def test_save_interview_and_draft(apps):
+    slug = _make_app(apps)
+    clc.save_interview(
+        slug,
+        {
+            "why_company": "fit",
+            "emphasis": ["L1"],
+            "gaps": [{"requirement": "Rust", "decision": "transferable", "note": "C work"}],
+        },
+        apps_dir=apps,
+    )
+    clc.save_draft(slug, "para one\n\npara two\n", apps_dir=apps)
+    bundle = clc.read_application(slug, apps_dir=apps)
+    assert bundle["interview"]["why_company"] == "fit"
+    assert bundle["draft"].startswith("para one")
+
+
+def test_save_interview_rejects_bad_decision(apps):
+    slug = _make_app(apps)
+    with pytest.raises(ValueError):
+        clc.save_interview(slug, {"gaps": [{"requirement": "x", "decision": "lie"}]}, apps_dir=apps)
+
+
+def test_cv_facts_is_pii_safe():
+    facts = clc.cv_facts(lang="en")
+    assert "personal" in facts
+    blob = repr(facts)
+    # Address/phone live only in content.private/ and must never surface here.
+    assert "phone" not in facts["personal"]
+    assert "address" not in facts["personal"]
+    assert "Musterstraße" not in blob
+
+
+def test_validate_application_clean(apps):
+    slug = _make_app(apps)
+    clc.save_draft(slug, "body\n", apps_dir=apps)
+    res = clc.validate_application(slug, apps_dir=apps)
+    assert res["valid"] is True
+    assert res["errors"] == []
+
+
+def test_validate_application_missing_required_field(apps):
+    slug = _make_app(apps)
+    # Corrupt application.yaml: drop the required 'subject'.
+    data = clc.read_application(slug, apps_dir=apps)["application"]
+    del data["subject"]
+    clc._write_yaml(f"{slug}/application.yaml", data, apps_dir=apps)
+    res = clc.validate_application(slug, apps_dir=apps)
+    assert res["valid"] is False
+    assert any("subject" in e for e in res["errors"])
+
+
+def test_validate_application_bad_language(apps):
+    slug = _make_app(apps, language="fr")
+    res = clc.validate_application(slug, apps_dir=apps)
+    assert res["valid"] is False
+
+
+def test_validate_application_implausible_date_warns(apps):
+    slug = _make_app(apps, date="2026-02-30")  # passes regex, not a real calendar day
+    clc.save_draft(slug, "body\n", apps_dir=apps)
+    res = clc.validate_application(slug, apps_dir=apps)
+    assert any("date" in w for w in res["warnings"])
+
+
+def test_validate_application_missing_draft_warns(apps):
+    slug = _make_app(apps)
+    res = clc.validate_application(slug, apps_dir=apps)
+    assert any("draft" in w for w in res["warnings"])
+
+
+def test_validate_application_bad_gap_in_interview(apps):
+    slug = _make_app(apps)
+    clc.save_draft(slug, "body\n", apps_dir=apps)
+    # Write interview.yaml directly with a bad gap decision, bypassing save_interview's guard.
+    clc._write_yaml(
+        f"{slug}/interview.yaml",
+        {"gaps": [{"requirement": "x", "decision": "lie"}]},
+        apps_dir=apps,
+    )
+    res = clc.validate_application(slug, apps_dir=apps)
+    assert res["valid"] is False
+    assert any("gap" in e for e in res["errors"])

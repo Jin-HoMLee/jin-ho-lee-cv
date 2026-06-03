@@ -12,16 +12,20 @@ import json
 import os
 import re
 import tempfile
+from datetime import date as _date
 from pathlib import Path, PurePosixPath
 
 from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
+
+from scripts import agent_core
 
 _yaml = YAML(typ="safe")
 _yaml.default_flow_style = False
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 APPS_DIR = REPO_ROOT / "applications"
+APP_SCHEMA = REPO_ROOT / "schema" / "application.schema.json"
 PROFILE_SCHEMA = REPO_ROOT / "schema" / "profile.schema.json"
 
 ALLOWED_SUFFIXES = {".yaml", ".md", ".txt", ".pdf"}
@@ -162,13 +166,53 @@ def read_application(slug: str, *, apps_dir: Path = APPS_DIR) -> dict:
 def save_interview(slug: str, data: dict, *, apps_dir: Path = APPS_DIR) -> None:
     """Validate-light (gap decisions) then atomically write interview.yaml."""
     for gap in data.get("gaps") or []:
-        if gap.get("decision") not in _GAP_DECISIONS:
-            raise ValueError(
-                f"invalid gap decision {gap.get('decision')!r}; expected one of {_GAP_DECISIONS}"
-            )
+        if not isinstance(gap, dict) or gap.get("decision") not in _GAP_DECISIONS:
+            raise ValueError(f"invalid gap decision in {gap!r}; expected one of {_GAP_DECISIONS}")
     _write_yaml(f"{_sanitize_slug(slug)}/interview.yaml", data, apps_dir=apps_dir)
 
 
 def save_draft(slug: str, body: str, *, apps_dir: Path = APPS_DIR) -> None:
     """Atomically write the editable letter body to draft.md."""
     _atomic_write(f"{_sanitize_slug(slug)}/draft.md", body, apps_dir=apps_dir)
+
+
+# --- grounding & validation -----------------------------------------------------
+
+
+def cv_facts(*, lang: str = "en", target: str = "bridge") -> dict:
+    """The single grounding source — a PII-safe reuse of agent_core.read_cv."""
+    return agent_core.read_cv(lang=lang, target=target)
+
+
+def validate_application(slug: str, *, apps_dir: Path = APPS_DIR) -> dict:
+    """Schema + sanity checks. Returns {'valid', 'errors', 'warnings'}."""
+    slug = _sanitize_slug(slug)
+    app_dir = _safe_application_path(slug, apps_dir=apps_dir)
+    if not app_dir.is_dir():
+        return {"valid": False, "errors": [f"no such application: {slug}"], "warnings": []}
+    app_file = app_dir / "application.yaml"
+    if not app_file.exists():
+        return {"valid": False, "errors": ["missing application.yaml"], "warnings": []}
+
+    data = _read_yaml(app_file)
+    errors = _schema_errors(data, APP_SCHEMA)
+    warnings: list[str] = []
+
+    raw_date = data.get("date")
+    if isinstance(raw_date, str):
+        try:
+            _date.fromisoformat(raw_date)
+        except ValueError:
+            warnings.append(f"implausible date: {raw_date!r}")
+
+    if not (app_dir / "draft.md").exists():
+        warnings.append("no draft.md yet — nothing to render")
+
+    interview_file = app_dir / "interview.yaml"
+    if interview_file.exists():
+        for gap in _read_yaml(interview_file).get("gaps") or []:
+            if not isinstance(gap, dict) or gap.get("decision") not in _GAP_DECISIONS:
+                val = gap.get("decision") if isinstance(gap, dict) else gap
+                errors.append(f"invalid gap decision {val!r}")
+
+    return {"valid": not errors, "errors": errors, "warnings": warnings}
