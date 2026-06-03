@@ -264,7 +264,12 @@ def rerun_renderers(
     ok = True
     for recipe in to_run:
         proc = subprocess.run(
-            ["just", recipe], cwd=REPO_ROOT, capture_output=True, text=True, timeout=600
+            ["just", recipe],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            timeout=600,
+            shell=False,
         )
         ran.append(recipe)
         output[recipe] = (proc.stdout or "") + (proc.stderr or "")

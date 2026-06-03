@@ -214,4 +214,4 @@ def test_rerun_renderers_invokes_just_list_form(cv_tree, monkeypatch):
     assert res["ran"] == ["build-formats"]
     argv, kw = calls[0]
     assert argv == ["just", "build-formats"]
-    assert kw.get("shell") in (None, False)
+    assert kw.get("shell") is False
