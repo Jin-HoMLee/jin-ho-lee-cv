@@ -152,3 +152,27 @@ def test_propose_edit_malformed_yaml_returns_dict(cv_tree):
     assert "parse" in res["errors"][0].lower() or "yaml" in res["errors"][0].lower()
     # Source must be completely untouched
     assert (cv_tree / rel).read_text(encoding="utf-8") == current
+
+
+def test_apply_edit_writes_on_valid(cv_tree):
+    rel = "personal.yaml"
+    new = (cv_tree / rel).read_text(encoding="utf-8") + "\n# applied\n"
+    res = agent_core.apply_edit(rel, new, content_dir=cv_tree)
+    assert res["applied"] is True
+    assert (cv_tree / rel).read_text(encoding="utf-8") == new
+    assert not agent_core.validate_tree(cv_tree, agent_core.SCHEMA_PATH)
+
+
+def test_apply_edit_refuses_invalid(cv_tree):
+    rel = "personal.yaml"
+    current = (cv_tree / rel).read_text(encoding="utf-8")
+    res = agent_core.apply_edit(rel, "{}\n", content_dir=cv_tree)
+    assert res["applied"] is False
+    assert res["errors"]
+    assert (cv_tree / rel).read_text(encoding="utf-8") == current  # byte-identical
+
+
+@pytest.mark.parametrize("bad", ["../content.private/private.yaml", "/abs.yaml", "x.txt"])
+def test_apply_edit_refuses_unsafe_path(cv_tree, bad):
+    with pytest.raises(ValueError):
+        agent_core.apply_edit(bad, "id: x\n", content_dir=cv_tree)
