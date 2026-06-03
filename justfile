@@ -75,7 +75,7 @@ build-text-targets:
 
 # Render a cover letter (validate-first) → applications/<slug>/cover-letter-*.{pdf,txt}
 letter slug:
-    uv run python -m scripts.render_letter {{slug}}
+    uv run python -m scripts.render_letter "{{slug}}"
 
 # Render the llms.txt site map (llmstxt.org) → dist/llms.txt
 build-llms:
