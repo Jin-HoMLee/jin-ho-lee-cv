@@ -114,3 +114,11 @@ web-clean:
 # Remove build outputs (PDF + web)
 clean: web-clean
     rm -rf dist/ dist-private/ pdf/.cache/
+
+# Run the CV MCP server (stdio) — point an MCP client at this
+mcp-server:
+    uv run --group mcp python -m scripts.mcp_server
+
+# Launch the MCP Inspector against the server for interactive testing
+mcp-dev:
+    uv run --group mcp mcp dev scripts/mcp_server.py
