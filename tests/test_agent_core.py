@@ -1,4 +1,5 @@
 """Tests for the agent-facing core (read/validate/propose/apply/rerun)."""
+
 from __future__ import annotations
 
 import shutil
@@ -138,3 +139,16 @@ def test_propose_edit_cleans_tempdir(cv_tree, monkeypatch):
     monkeypatch.setattr(agent_core.tempfile, "TemporaryDirectory", Recording)
     agent_core.propose_edit("personal.yaml", "{}\n", content_dir=cv_tree)
     assert created and all(not p.exists() for p in created)
+
+
+def test_propose_edit_malformed_yaml_returns_dict(cv_tree):
+    """Malformed YAML must return valid:False (not raise) — the primary LLM failure mode."""
+    rel = "personal.yaml"
+    current = (cv_tree / rel).read_text(encoding="utf-8")
+    res = agent_core.propose_edit(rel, "foo: [unclosed\n", content_dir=cv_tree)
+    assert isinstance(res, dict)
+    assert res["valid"] is False
+    assert res["errors"]
+    assert "parse" in res["errors"][0].lower() or "yaml" in res["errors"][0].lower()
+    # Source must be completely untouched
+    assert (cv_tree / rel).read_text(encoding="utf-8") == current
