@@ -7,10 +7,11 @@ PROFIL
 ================================================================================
 Bioinformatiker mit Spezialisierung auf HLA-Typisierung und Neoantigen-
 Identifizierung — Entwicklung von In-silico-Pipelines aus realen Patienten-NGS-
-und RNA-Seq-Daten, verpackt als reproduzierbare Snakemake-Workflows. Gestützt
-auf 10+ peer-reviewed Publikationen als Erst- und geteilter Erstautor in
-Cancers, Epigenetics Methods und OBM Genetics, aufbauend auf Wet-Lab-Ausbildung
-an DKFZ, NCT, FZ Jülich, KIP und SNU.
+und RNA-Seq-Daten, verpackt als reproduzierbare Snakemake-Workflows, mit Wet-
+Lab-Ausbildung an DKFZ, NCT, FZ Jülich, KIP und SNU. Eine parallele
+Forschungslinie in der experimentellen Biophysik brachte 10+ peer-reviewed
+Publikationen — als Erst- und geteilter Erstautor — in der hochauflösenden
+Mikroskopie von DNA-Schadensreparatur und Chromatin hervor.
 
 Ebenso zu Hause in der Produktion: Migration von 1.000+ analytischen Prozessen
 in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Mentoring von

@@ -9,7 +9,7 @@
       "image": "https://jinholee.is-a.dev/photo.jpg",
       "email": "mailto:jinho.michael.lee@gmail.com",
       "jobTitle": "Bioinformatics · Data Science",
-      "description": "Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, backed by 10+ peer-reviewed publications — first- and shared-first author in Cancers, Epigenetics Methods, and OBM Genetics — grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU.",
+      "description": "Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU. A parallel line of experimental-biophysics research produced 10+ peer-reviewed papers — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Mannheim",
@@ -763,6 +763,7 @@
         "TCRdock / AlphaFold v2",
         "bedtools",
         "Google Cloud GPU",
+        "SLURM",
         "Mol*"
       ],
       "creator": {

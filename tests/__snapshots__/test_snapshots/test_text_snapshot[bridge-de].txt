@@ -7,10 +7,11 @@ PROFIL
 ================================================================================
 Data Scientist mit tiefen Wurzeln in der Krebsgenomik. Entwicklung von In-
 silico-Pipelines zur HLA-Typisierung und Neoantigen-Identifizierung aus realen
-Patienten-NGS- und RNA-Seq-Daten, gestützt auf 10+ peer-reviewed Publikationen —
-als Erstautor sowie mit geteilter Erstautorschaft in Cancers, Epigenetics
-Methods und OBM Genetics —, aufbauend auf Wet-Lab-Ausbildung und Pipeline-
-Entwicklung an DKFZ, NCT, FZ Jülich, KIP und SNU.
+Patienten-NGS- und RNA-Seq-Daten, aufbauend auf Wet-Lab-Ausbildung und Pipeline-
+Entwicklung an DKFZ, NCT, FZ Jülich, KIP und SNU. Eine parallele Forschungslinie
+in der experimentellen Biophysik brachte 10+ peer-reviewed Publikationen — als
+Erstautor sowie mit geteilter Erstautorschaft — in der hochauflösenden
+Mikroskopie von DNA-Schadensreparatur und Chromatin hervor.
 
 Diese Sorgfalt nun in der Industrie: Architektur der Migration von 1.000+
 analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen
