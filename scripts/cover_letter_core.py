@@ -331,8 +331,9 @@ def _parse_block(block: str) -> dict:
     whose full text is parsed for inline bold spans.
     """
     lines = [ln.strip() for ln in block.splitlines() if ln.strip()]
-    if lines and all(_BULLET_RE.match(ln) for ln in lines):
-        items = [_parse_spans(_BULLET_RE.match(ln).group(1).strip()) for ln in lines]
+    matches = [_BULLET_RE.match(ln) for ln in lines]
+    if lines and all(matches):
+        items = [_parse_spans(m.group(1).strip()) for m in matches]
         return {"type": "bullet_list", "items": items}
     return {"type": "paragraph", "spans": _parse_spans(block.strip())}
 

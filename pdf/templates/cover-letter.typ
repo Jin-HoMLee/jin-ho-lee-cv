@@ -55,14 +55,14 @@
 }
 #for blk in letter.body_blocks {
   if blk.at("type") == "bullet_list" {
-    for item in blk.items {
+    for (i, item) in blk.items.enumerate() {
+      if i > 0 { v(2pt) }
       grid(
         columns: (8pt, 1fr),
         gutter: 4pt,
         text(fill: accent)[•],
         render-spans(item),
       )
-      v(2pt)
     }
     parbreak()
   } else {
