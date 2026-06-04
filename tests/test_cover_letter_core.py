@@ -292,6 +292,93 @@ def test_render_letter_rejects_bad_fmt(apps):
         clc.render_letter(slug, fmt="docx", apps_dir=apps)
 
 
+# --- body markup parsing (issue #69) -------------------------------------------
+
+
+def test_parse_spans_plain_text_single_span():
+    assert clc._parse_spans("just text") == [{"text": "just text", "bold": False}]
+
+
+def test_parse_spans_bold_in_middle():
+    assert clc._parse_spans("a **b** c") == [
+        {"text": "a ", "bold": False},
+        {"text": "b", "bold": True},
+        {"text": " c", "bold": False},
+    ]
+
+
+def test_parse_spans_leading_and_trailing_bold_have_no_empty_span():
+    assert clc._parse_spans("**x** mid **y**") == [
+        {"text": "x", "bold": True},
+        {"text": " mid ", "bold": False},
+        {"text": "y", "bold": True},
+    ]
+
+
+def test_parse_spans_unmatched_marker_is_literal():
+    assert clc._parse_spans("a ** b") == [{"text": "a ** b", "bold": False}]
+
+
+def test_parse_block_paragraph_with_bold():
+    assert clc._parse_block("Hello **world**.") == {
+        "type": "paragraph",
+        "spans": [
+            {"text": "Hello ", "bold": False},
+            {"text": "world", "bold": True},
+            {"text": ".", "bold": False},
+        ],
+    }
+
+
+def test_parse_block_bullet_list_dash():
+    blk = clc._parse_block("- one\n- two")
+    assert blk["type"] == "bullet_list"
+    assert blk["items"] == [
+        [{"text": "one", "bold": False}],
+        [{"text": "two", "bold": False}],
+    ]
+
+
+def test_parse_block_bullet_list_star_marker():
+    blk = clc._parse_block("* a\n* b")
+    assert blk["type"] == "bullet_list"
+    assert [item[0]["text"] for item in blk["items"]] == ["a", "b"]
+
+
+def test_parse_block_mixed_lines_is_paragraph_not_list():
+    assert clc._parse_block("- one\nplain line")["type"] == "paragraph"
+
+
+def test_parse_block_bullet_item_keeps_inline_bold():
+    blk = clc._parse_block("- **key**: detail")
+    assert blk["items"][0] == [
+        {"text": "key", "bold": True},
+        {"text": ": detail", "bold": False},
+    ]
+
+
+def test_parse_body_mixed_blocks_in_order():
+    draft = "Intro paragraph.\n\n- first\n- second\n\nOutro **bold**."
+    assert [b["type"] for b in clc._parse_body(draft)] == [
+        "paragraph",
+        "bullet_list",
+        "paragraph",
+    ]
+
+
+def test_parse_body_empty_is_empty_list():
+    assert clc._parse_body(None) == []
+    assert clc._parse_body("   ") == []
+
+
+def test_assemble_letter_emits_body_blocks_not_paragraphs():
+    app = {"date": "2026-06-03", "subject": "S", "recipient": None}
+    letter = clc._assemble_letter(app, "Plain para.", "en")
+    assert "body_paragraphs" not in letter
+    assert letter["body_blocks"][0]["type"] == "paragraph"
+    assert letter["body_blocks"][0]["spans"] == [{"text": "Plain para.", "bold": False}]
+
+
 def test_validate_application_accepts_unquoted_date(apps):
     """An unquoted YAML date (parsed as datetime.date) must validate, not be rejected."""
     from datetime import date

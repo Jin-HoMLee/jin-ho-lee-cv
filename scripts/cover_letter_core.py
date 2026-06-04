@@ -295,6 +295,54 @@ def _split_paragraphs(text: str) -> list[str]:
     return [p.strip() for p in re.split(r"\n\s*\n", (text or "").strip()) if p.strip()]
 
 
+# --- body markup: minimal **bold** + `- `/`* ` bullet lists (issue #69) ---------
+#
+# Parsing lives here, in ONE place, so the PDF and plain-text renderers consume the
+# same structured blocks and can never diverge. A draft using none of this markup
+# parses into plain paragraph blocks and renders exactly as before (backward-compat).
+
+_BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
+_BULLET_RE = re.compile(r"^[-*]\s+(.+)$")
+
+
+def _parse_spans(text: str) -> list[dict]:
+    """Split inline text into {text, bold} spans on `**bold**` runs.
+
+    An unmatched/lone `**` stays literal. No empty spans are emitted (except the
+    single empty span for empty input, which callers don't produce).
+    """
+    spans: list[dict] = []
+    pos = 0
+    for m in _BOLD_RE.finditer(text):
+        if m.start() > pos:
+            spans.append({"text": text[pos : m.start()], "bold": False})
+        spans.append({"text": m.group(1), "bold": True})
+        pos = m.end()
+    if pos < len(text):
+        spans.append({"text": text[pos:], "bold": False})
+    return spans or [{"text": "", "bold": False}]
+
+
+def _parse_block(block: str) -> dict:
+    """Classify one blank-line-delimited block as a bullet_list or a paragraph.
+
+    A block whose non-empty lines ALL start with `- ` or `* ` becomes a
+    bullet_list (each line → an item span list); otherwise it is a paragraph
+    whose full text is parsed for inline bold spans.
+    """
+    lines = [ln.strip() for ln in block.splitlines() if ln.strip()]
+    matches = [_BULLET_RE.match(ln) for ln in lines]
+    if lines and all(matches):
+        items = [_parse_spans(m.group(1).strip()) for m in matches]
+        return {"type": "bullet_list", "items": items}
+    return {"type": "paragraph", "spans": _parse_spans(block.strip())}
+
+
+def _parse_body(draft: str | None) -> list[dict]:
+    """Parse the draft body into ordered structured blocks (paragraph|bullet_list)."""
+    return [_parse_block(b) for b in _split_paragraphs(draft)]
+
+
 def _signer_name() -> str:
     name = cv_facts()["personal"]["name"]
     return f"{name['given']} {name['family']}"
@@ -323,7 +371,7 @@ def _assemble_letter(application: dict, draft: str | None, lang: str) -> dict:
         "salutation": _salutation(lang, name),
         "closing": _closing(lang),
         "signer_name": _signer_name(),
-        "body_paragraphs": _split_paragraphs(draft),
+        "body_blocks": _parse_body(draft),
     }
 
 

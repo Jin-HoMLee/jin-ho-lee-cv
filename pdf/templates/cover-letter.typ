@@ -36,18 +36,39 @@
   v(14pt)
 }
 
-// Bold subject (Betreff).
-#text(weight: 700)[#letter.subject]
+// Subject (Betreff): accent + bold + a thin rule beneath (mirrors the header divider).
+#text(weight: 700, fill: accent)[#letter.subject]
+#v(3pt)
+#line(length: 100%, stroke: 0.5pt + accent.lighten(40%))
 #v(10pt)
 
 // Salutation.
 #letter.salutation
 #v(8pt)
 
-// Body paragraphs.
-#for para in letter.body_paragraphs {
-  [#para]
-  parbreak()
+// Body blocks: paragraphs (with **bold** spans) and accent-bullet lists.
+// Parsing lives in scripts/cover_letter_core.py so PDF + text never diverge.
+#let render-spans(spans) = {
+  for s in spans {
+    if s.bold { text(weight: 700)[#s.text] } else { [#s.text] }
+  }
+}
+#for blk in letter.body_blocks {
+  if blk.at("type") == "bullet_list" {
+    for (i, item) in blk.items.enumerate() {
+      if i > 0 { v(2pt) }
+      grid(
+        columns: (8pt, 1fr),
+        gutter: 4pt,
+        text(fill: accent)[•],
+        render-spans(item),
+      )
+    }
+    parbreak()
+  } else {
+    render-spans(blk.spans)
+    parbreak()
+  }
 }
 
 #v(6pt)

@@ -14,12 +14,24 @@ from __future__ import annotations
 _FLAVORS = ("full", "body")
 
 
+def _spans_text(spans: list[dict]) -> str:
+    """Flatten {text, bold} spans to plain text (bold markup is dropped)."""
+    return "".join(s["text"] for s in spans)
+
+
+def _block_text(block: dict) -> str:
+    """Render one body block to ATS-safe plain text: paragraph or `• ` bullet list."""
+    if block["type"] == "bullet_list":
+        return "\n".join("• " + _spans_text(item) for item in block["items"])
+    return _spans_text(block["spans"])
+
+
 def render(letter: dict, sender: dict, flavor: str) -> str:
     """Serialize a cover letter to plain text. `flavor` in {'full', 'body'}."""
     if flavor not in _FLAVORS:
         raise ValueError(f"unknown flavor {flavor!r}; expected one of {_FLAVORS}")
 
-    body = "\n\n".join(letter["body_paragraphs"])
+    body = "\n\n".join(_block_text(b) for b in letter["body_blocks"])
     parts: list[str] = []
 
     if flavor == "full":

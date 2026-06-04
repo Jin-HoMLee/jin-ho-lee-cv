@@ -54,3 +54,15 @@ Copy shapes from the committed `applications.example/` folder.
   closing `Sincerely,`.
 - The salutation and closing are added deterministically at render time — `draft.md`
   holds only the body paragraphs.
+
+## Body formatting in `draft.md` (optional)
+`draft.md` is plain paragraphs separated by blank lines. Two light markups are
+supported — both **optional**; a draft using neither renders exactly as before:
+- `**bold**` — inline bold. Rendered bold-black in the PDF, **stripped** in the text
+  flavors. Use sparingly (~3 anchor phrases per letter — restraint keeps it professional).
+- A blank-line-separated block whose lines **all** start with `- ` (or `* `) becomes a
+  **bullet list** — accent-`•` markers in the PDF, `• ` items in the text flavors.
+
+Parsing lives in `scripts/cover_letter_core.py` (one place, so PDF and text never
+diverge). Intentionally minimal: no nesting, italics, links, or headings. The subject
+line is always rendered in accent + bold with a thin rule beneath (no markup needed).
