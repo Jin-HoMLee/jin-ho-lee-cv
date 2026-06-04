@@ -10,7 +10,10 @@ Sehr geehrte Damen und Herren,
 
 mit großem Interesse habe ich Ihre Ausschreibung gelesen.
 
-Meine Pipeline-Arbeit passt zu Ihren Reproduzierbarkeitszielen.
+Meine Pipeline-Arbeit passt zu Ihren Reproduzierbarkeitszielen:
+
+• reproduzierbare Snakemake-Workflows
+• HLA-Typisierung und Neoepitop-Vorhersage
 
 Mit freundlichen Grüßen
 Jin-Ho Lee

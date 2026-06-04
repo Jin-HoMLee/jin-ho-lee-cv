@@ -81,9 +81,28 @@ _FIXTURE_LETTER = {
         "salutation": "Dear Dr. Erika Mustermann,",
         "closing": "Sincerely,",
         "signer_name": "Jin-Ho Lee",
-        "body_paragraphs": [
-            "I am writing to apply for the Bioinformatician role.",
-            "My pipeline work maps directly onto your reproducibility goals.",
+        "body_blocks": [
+            {
+                "type": "paragraph",
+                "spans": [
+                    {"text": "I am writing to apply for the Bioinformatician role.", "bold": False}
+                ],
+            },
+            {
+                "type": "paragraph",
+                "spans": [
+                    {"text": "My ", "bold": False},
+                    {"text": "pipeline work", "bold": True},
+                    {"text": " maps directly onto your reproducibility goals:", "bold": False},
+                ],
+            },
+            {
+                "type": "bullet_list",
+                "items": [
+                    [{"text": "reproducible Snakemake workflows", "bold": False}],
+                    [{"text": "HLA typing and neoepitope prediction", "bold": False}],
+                ],
+            },
         ],
     },
     "de": {
@@ -94,9 +113,31 @@ _FIXTURE_LETTER = {
         "salutation": "Sehr geehrte Damen und Herren,",
         "closing": "Mit freundlichen Grüßen",
         "signer_name": "Jin-Ho Lee",
-        "body_paragraphs": [
-            "mit großem Interesse habe ich Ihre Ausschreibung gelesen.",
-            "Meine Pipeline-Arbeit passt zu Ihren Reproduzierbarkeitszielen.",
+        "body_blocks": [
+            {
+                "type": "paragraph",
+                "spans": [
+                    {
+                        "text": "mit großem Interesse habe ich Ihre Ausschreibung gelesen.",
+                        "bold": False,
+                    }
+                ],
+            },
+            {
+                "type": "paragraph",
+                "spans": [
+                    {"text": "Meine ", "bold": False},
+                    {"text": "Pipeline-Arbeit", "bold": True},
+                    {"text": " passt zu Ihren Reproduzierbarkeitszielen:", "bold": False},
+                ],
+            },
+            {
+                "type": "bullet_list",
+                "items": [
+                    [{"text": "reproduzierbare Snakemake-Workflows", "bold": False}],
+                    [{"text": "HLA-Typisierung und Neoepitop-Vorhersage", "bold": False}],
+                ],
+            },
         ],
     },
 }

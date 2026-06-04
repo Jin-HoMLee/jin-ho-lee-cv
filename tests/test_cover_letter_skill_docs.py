@@ -55,6 +55,13 @@ def test_skill_documents_profile_fields():
     assert not missing, f"reference.md is missing profile fields: {missing}"
 
 
+def test_reference_documents_body_markup():
+    """Drift-guard: reference.md must document the optional draft.md body markup."""
+    ref = (SKILL_DIR / "reference.md").read_text(encoding="utf-8")
+    assert "**bold**" in ref, "reference.md must document the **bold** inline markup"
+    assert "bullet" in ref.lower(), "reference.md must document the bullet-list markup"
+
+
 def test_skill_frontmatter_has_name_and_description():
     text = (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8")
     assert text.startswith("---")

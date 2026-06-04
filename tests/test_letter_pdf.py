@@ -75,6 +75,36 @@ def test_cover_letter_pdf_compiles_minimal_recipient(apps):
     assert (apps / slug / "cover-letter-en.pdf").exists()
 
 
+def test_cover_letter_pdf_compiles_with_body_markup(apps):
+    """A draft using **bold** + a `- ` bullet block compiles to a real PDF."""
+    slug = clc.create_application(
+        "markup-bio-2026-06",
+        job_text="# Job\n",
+        meta={
+            "company": "Acme",
+            "role": "Bioinformatician",
+            "language": "en",
+            "date": "2026-06-03",
+            "subject": "Application: Bioinformatician",
+            "status": "draft",
+        },
+        apps_dir=apps,
+    )
+    clc.save_draft(
+        slug,
+        "I led the **pipeline** work, which maps onto your goals:\n\n"
+        "- reproducible Snakemake workflows\n"
+        "- HLA typing and neoepitope prediction\n\n"
+        "I would welcome a conversation.\n",
+        apps_dir=apps,
+    )
+    res = clc.render_letter(slug, fmt="pdf", apps_dir=apps)
+    assert res["ok"] is True, res["errors"]
+    out = apps / slug / "cover-letter-en.pdf"
+    assert out.exists()
+    assert out.stat().st_size > 1000, "PDF looks empty"
+
+
 def test_cover_letter_pdf_compiles_no_recipient(apps):
     """No recipient block at all must still compile."""
     slug = clc.create_application(

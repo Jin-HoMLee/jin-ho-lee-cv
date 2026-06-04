@@ -2,7 +2,10 @@ Dear Dr. Erika Mustermann,
 
 I am writing to apply for the Bioinformatician role.
 
-My pipeline work maps directly onto your reproducibility goals.
+My pipeline work maps directly onto your reproducibility goals:
+
+• reproducible Snakemake workflows
+• HLA typing and neoepitope prediction
 
 Sincerely,
 Jin-Ho Lee
