@@ -1,4 +1,5 @@
 """Tests for scripts.bib_loader."""
+
 from pathlib import Path
 
 import pytest
@@ -83,9 +84,7 @@ def test_unknown_category_raises(tmp_path):
 
 def test_publications_sorted_research_then_applied_then_year_desc():
     pubs = load_publications(BIB_PATH)
-    first_applied = next(
-        (i for i, p in enumerate(pubs) if p.category == "applied"), len(pubs)
-    )
+    first_applied = next((i for i, p in enumerate(pubs) if p.category == "applied"), len(pubs))
     assert all(p.category == "research" for p in pubs[:first_applied])
     assert all(p.category == "applied" for p in pubs[first_applied:])
     research_years = [p.year for p in pubs if p.category == "research"]
@@ -103,9 +102,7 @@ def test_authorship_counts_sums_to_total():
 def test_missing_authorship_field_raises(tmp_path):
     """A bib entry without the custom 'authorship' field should fail loading."""
     bad = tmp_path / "missing_authorship.bib"
-    bad.write_text(
-        "@article{x, author={X}, title={T}, year={2020}, journal={J}, type={article}}\n"
-    )
+    bad.write_text("@article{x, author={X}, title={T}, year={2020}, journal={J}, type={article}}\n")
     with pytest.raises(ValueError, match="authorship"):
         load_publications(bad)
 
@@ -258,6 +255,4 @@ def test_real_bib_has_no_latex_residue():
         for i, author in enumerate(pub.authors):
             fields[f"author[{i}]"] = author
         for name, value in fields.items():
-            assert not (set(value) & set("{}\\")), (
-                f"{pub.key}.{name} has LaTeX residue: {value!r}"
-            )
+            assert not (set(value) & set("{}\\")), f"{pub.key}.{name} has LaTeX residue: {value!r}"

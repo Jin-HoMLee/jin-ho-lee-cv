@@ -1,4 +1,5 @@
 """Tests for scripts.content_loader."""
+
 import pytest
 
 from scripts.content_loader import (
@@ -33,7 +34,7 @@ def test_load_content_with_private_merges_overlay(content_dir, tmp_path):
     private = tmp_path / "private.yaml"
     private.write_text(
         'phone: "+49 000 0000000"\n'
-        'address:\n'
+        "address:\n"
         '  street: "Teststraße 1"\n'
         '  postal_code: "00000"\n'
         '  city: "Testville"\n'
@@ -46,8 +47,19 @@ def test_load_content_with_private_merges_overlay(content_dir, tmp_path):
 
 def test_load_content_includes_all_sections(content_dir):
     content = load_content(content_dir, private_path=None)
-    for key in ("personal", "profile", "skills", "education",
-                "experience", "projects", "languages", "volunteer", "awards", "publications", "labels"):
+    for key in (
+        "personal",
+        "profile",
+        "skills",
+        "education",
+        "experience",
+        "projects",
+        "languages",
+        "volunteer",
+        "awards",
+        "publications",
+        "labels",
+    ):
         assert key in content, f"missing {key} in loaded content"
 
 
@@ -78,15 +90,9 @@ def test_load_content_rejects_id_filename_mismatch(tmp_path):
     )
     (fake / "profile.en.yaml").write_text("paragraphs:\n  - p\n")
     (fake / "skills.yaml").write_text(
-        "categories:\n"
-        "  - name: {en: A}\n"
-        "    groups:\n"
-        "      - label: {en: B}\n"
-        "        items: [x]\n"
+        "categories:\n  - name: {en: A}\n    groups:\n      - label: {en: B}\n        items: [x]\n"
     )
-    (fake / "education.yaml").write_text(
-        "- degree: {en: D}\n  institution: I\n  year: 2020\n"
-    )
+    (fake / "education.yaml").write_text("- degree: {en: D}\n  institution: I\n  year: 2020\n")
     (fake / "experience.yaml").write_text(
         "- id: x\n"
         "  org: {name: O}\n"
@@ -94,14 +100,8 @@ def test_load_content_rejects_id_filename_mismatch(tmp_path):
         "  period: {start: '2020-01', end: '2021-01'}\n"
         "  bullets:\n    - en: b\n"
     )
-    (fake / "languages.yaml").write_text(
-        "- name: {en: English}\n  proficiency: fluent\n"
-    )
-    (fake / "volunteer.yaml").write_text(
-        "categories:\n"
-        "  - name: {en: A}\n"
-        "    entries: [x]\n"
-    )
+    (fake / "languages.yaml").write_text("- name: {en: English}\n  proficiency: fluent\n")
+    (fake / "volunteer.yaml").write_text("categories:\n  - name: {en: A}\n    entries: [x]\n")
     (fake / "publications.bib").write_text(
         "@article{x, author={X}, title={T}, year={2020},"
         " journal={J}, type={article}, authorship={first}}\n"
@@ -139,7 +139,9 @@ def test_research_entry_start_not_after_earliest_subproject(content_dir):
 
 def test_skills_additions_present(content_dir):
     content = load_content(content_dir, private_path=None, lang="en")
-    bioml = next(c for c in content["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML")
+    bioml = next(
+        c for c in content["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML"
+    )
     groups = {g["label"]["en"]: g["items"] for g in bioml["groups"]}
     assert "MapSplice" in groups["Genomics"]
     assert "samtools/bcftools" in groups["Genomics"]

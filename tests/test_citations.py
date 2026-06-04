@@ -13,8 +13,15 @@ CACHE_PATH = REPO_ROOT / "data" / "citations.json"
 
 def _pub(**over) -> Publication:
     base = dict(
-        key="x", title="T", year=2019, type="article", authorship="first",
-        authors=("Lee, J.",), venue="Cancers", doi=None, raw={},
+        key="x",
+        title="T",
+        year=2019,
+        type="article",
+        authorship="first",
+        authors=("Lee, J.",),
+        venue="Cancers",
+        doi=None,
+        raw={},
     )
     base.update(over)
     return Publication(**base)
@@ -30,12 +37,17 @@ def test_load_cache_reads_counts_from_full_document(tmp_path):
     # Mirrors the real shape that fetch_citations.refresh() writes (Task 3/5):
     # the reader must extract `counts` and ignore the metadata fields.
     f = tmp_path / "citations.json"
-    f.write_text(json.dumps({
-        "_generated_by": "just refresh-citations — do not hand-edit",
-        "source": "crossref",
-        "fetched_at": "2026-06-02",
-        "counts": {"10.1/a": 5},
-    }), encoding="utf-8")
+    f.write_text(
+        json.dumps(
+            {
+                "_generated_by": "just refresh-citations — do not hand-edit",
+                "source": "crossref",
+                "fetched_at": "2026-06-02",
+                "counts": {"10.1/a": 5},
+            }
+        ),
+        encoding="utf-8",
+    )
     assert load_citation_cache(f) == {"10.1/a": 5}
 
 

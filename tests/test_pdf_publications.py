@@ -1,4 +1,5 @@
 """Tests for the PDF publications section (issues #43, #46)."""
+
 import shutil
 import subprocess
 import sys
@@ -26,7 +27,9 @@ def test_prepare_data_bridge_aggregate(content_dir):
     assert result["publications_mode"] == "aggregate"
     assert result["publications_heading"] == "Publications"
     assert f"{s.peer_reviewed} peer-reviewed publications" in result["publications_summary"]
-    assert f"{s.conferences} first-author conference contributions" in result["publications_summary"]
+    assert (
+        f"{s.conferences} first-author conference contributions" in result["publications_summary"]
+    )
     assert result["publications_pointer"] == "Full list & metrics:"
 
 
@@ -71,7 +74,9 @@ def test_pdf_bridge_aggregate_vs_comp_bio_full(repo_root, content_dir):
             out.unlink()
         r = subprocess.run(
             [sys.executable, "-m", "pdf.build", "--lang", "en", "--target", target],
-            cwd=repo_root, capture_output=True, text=True,
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
         )
         assert r.returncode == 0, f"build failed:\n{r.stderr}"
         assert out.exists()

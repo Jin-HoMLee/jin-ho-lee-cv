@@ -5,6 +5,7 @@ scripts/fetch_citations.py (`just refresh-citations`). This module is the ONLY r
 that cache and never touches the network — every renderer enriches offline and degrades
 gracefully when a DOI (or the whole cache) is absent.
 """
+
 from __future__ import annotations
 
 import dataclasses
@@ -30,9 +31,7 @@ def load_citation_cache(path: Path) -> dict[str, int]:
     if not isinstance(counts, dict):
         return {}
     return {
-        str(doi): n
-        for doi, n in counts.items()
-        if isinstance(n, int) and not isinstance(n, bool)
+        str(doi): n for doi, n in counts.items() if isinstance(n, int) and not isinstance(n, bool)
     }
 
 

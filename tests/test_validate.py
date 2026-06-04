@@ -1,4 +1,5 @@
 """Tests for scripts.validate — content validation suite."""
+
 from pathlib import Path
 
 import pytest
@@ -28,8 +29,9 @@ def test_broken_project_ref_fails(content_dir, schema_path, tmp_path):
     """experience.yaml with refs: [L99] should fail cross-reference check."""
     bad = FIXTURES / "bad_project_ref.yaml"
     with pytest.raises(ValidationError) as exc:
-        validate_file(bad, schema_def="experience", schema_path=schema_path,
-                      known_project_ids={"L1", "L2"})
+        validate_file(
+            bad, schema_def="experience", schema_path=schema_path, known_project_ids={"L1", "L2"}
+        )
     assert "L99" in str(exc.value) or "unknown project" in str(exc.value).lower()
 
 
@@ -102,7 +104,7 @@ def test_malformed_doi_in_bib_fails_validate_tree(tmp_path):
 def test_malformed_awards_fails(schema_path, tmp_path):
     """An award missing the required 'issuer' should fail validation."""
     bad = tmp_path / "awards.yaml"
-    bad.write_text("- title: { en: \"X\" }\n  year: 2020\n")
+    bad.write_text('- title: { en: "X" }\n  year: 2020\n')
     with pytest.raises(ValidationError):
         validate_file(bad, schema_def="awards", schema_path=schema_path)
 
@@ -147,9 +149,7 @@ def test_selected_projects_map_unknown_id_fails(tmp_path):
     (content / "projects" / "L1.de.yaml").write_text(_PROJECT_STUB.format(pid="L1"))
 
     # Map shape: bridge is required by schema; comp-bio introduces the unknown id ZZ9.
-    (content / "selected_projects.yaml").write_text(
-        "bridge: [L1]\ncomp-bio: [L1, ZZ9]\n"
-    )
+    (content / "selected_projects.yaml").write_text("bridge: [L1]\ncomp-bio: [L1, ZZ9]\n")
 
     errors = validate_tree(content, _SCHEMA_PATH)
     assert any("ZZ9" in str(e) for e in errors), (
@@ -161,7 +161,7 @@ def test_selected_projects_map_unknown_id_fails(tmp_path):
 from datetime import date  # noqa: E402
 
 _EXP = (
-    '- id: x\n  org: {{name: O}}\n  role: {{en: R, de: R}}\n'
+    "- id: x\n  org: {{name: O}}\n  role: {{en: R, de: R}}\n"
     '  period: {{start: "{start}", end: {end}}}\n  bullets: []\n'
 )
 
@@ -174,6 +174,7 @@ def _write_exp(tmp_path, start, end):
 
 def test_reversed_period_is_error(tmp_path):
     from scripts.validate import _validate_periods
+
     _write_exp(tmp_path, "2025-07", "2024-05")
     errors = _validate_periods(tmp_path)
     assert len(errors) == 1
@@ -182,33 +183,38 @@ def test_reversed_period_is_error(tmp_path):
 
 def test_forward_period_is_clean(tmp_path):
     from scripts.validate import _validate_periods
+
     _write_exp(tmp_path, "2024-05", "2025-07")
     assert _validate_periods(tmp_path) == []
 
 
 def test_null_end_period_is_clean(tmp_path):
     from scripts.validate import _validate_periods
+
     _write_exp(tmp_path, "2024-05", None)
     assert _validate_periods(tmp_path) == []
 
 
 def test_date_warnings_flags_future_and_ancient(tmp_path):
     from scripts.validate import date_warnings
+
     _write_exp(tmp_path, "2010-01", "2035-01")
     warns = date_warnings(tmp_path, today=date(2026, 6, 1))
     msgs = " ".join(str(w) for w in warns)
-    assert "2010-01" in msgs   # < 2014 floor
-    assert "2035-01" in msgs   # > 2026 + 5
+    assert "2010-01" in msgs  # < 2014 floor
+    assert "2035-01" in msgs  # > 2026 + 5
 
 
 def test_date_warnings_clean_within_bounds(tmp_path):
     from scripts.validate import date_warnings
+
     _write_exp(tmp_path, "2024-05", "2025-07")
     assert date_warnings(tmp_path, today=date(2026, 6, 1)) == []
 
 
 def test_real_content_has_no_integrity_errors_or_warnings(content_dir):
     from scripts.validate import _validate_periods, date_warnings
+
     assert _validate_periods(content_dir) == []
     assert date_warnings(content_dir, today=date(2026, 6, 1)) == []
 
@@ -216,6 +222,7 @@ def test_real_content_has_no_integrity_errors_or_warnings(content_dir):
 def test_date_warnings_boundaries_are_clean(tmp_path):
     """year == 2014 (floor, inclusive-ok) and year == today.year+5 (ceiling, > is False) → no warnings."""
     from scripts.validate import date_warnings
+
     _write_exp(tmp_path, "2014-01", "2031-12")
     assert date_warnings(tmp_path, today=date(2026, 6, 1)) == []
 
@@ -223,8 +230,9 @@ def test_date_warnings_boundaries_are_clean(tmp_path):
 def test_date_warnings_skips_non_yyyymm(tmp_path):
     """A non-'YYYY-MM' end value (e.g. 'present') is skipped, not crashed — callable in isolation."""
     from scripts.validate import date_warnings
+
     (tmp_path / "experience.yaml").write_text(
-        '- id: x\n  org: {name: O}\n  role: {en: R, de: R}\n'
+        "- id: x\n  org: {name: O}\n  role: {en: R, de: R}\n"
         '  period: {start: "2024-05", end: "present"}\n  bullets: []\n'
     )
     (tmp_path / "projects").mkdir()

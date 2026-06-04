@@ -1,4 +1,5 @@
 """Tests for pdf.build data-prep pipeline (no Typst invocation)."""
+
 import json
 
 import pytest
@@ -12,8 +13,17 @@ _yaml = YAML(typ="safe")
 def test_prepare_data_returns_resolved_content(content_dir):
     result = prepare_data(content_dir, private_path=None, lang="en")
     # Top-level keys mirror content_loader output
-    for key in ("personal", "profile", "skills", "education",
-                "experience", "projects", "languages", "volunteer", "publications"):
+    for key in (
+        "personal",
+        "profile",
+        "skills",
+        "education",
+        "experience",
+        "projects",
+        "languages",
+        "volunteer",
+        "publications",
+    ):
         assert key in result
 
     # Headline langmap resolved to the EN value of the source YAML — structural
@@ -31,7 +41,7 @@ def test_prepare_data_includes_phone_when_private_provided(content_dir, tmp_path
     private = tmp_path / "private.yaml"
     private.write_text(
         'phone: "+49 000 0000000"\n'
-        'address:\n'
+        "address:\n"
         '  street: "Teststr. 1"\n'
         '  postal_code: "00000"\n'
         '  city: "Testville"\n'

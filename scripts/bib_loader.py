@@ -1,4 +1,5 @@
 """Load publications.bib and expose structured records with custom fields."""
+
 from __future__ import annotations
 
 import re
@@ -45,8 +46,18 @@ _BRACED_ACCENT_RE = re.compile(r'\\(["\'`^~])\{(\w)\}')
 # Caron / háček and cedilla. Braces are required (matches our data and avoids
 # false matches against macros like \verb or \cite).
 _CARON = {
-    "c": "č", "C": "Č", "s": "š", "S": "Š", "z": "ž", "Z": "Ž",
-    "r": "ř", "R": "Ř", "e": "ě", "E": "Ě", "n": "ň", "N": "Ň",
+    "c": "č",
+    "C": "Č",
+    "s": "š",
+    "S": "Š",
+    "z": "ž",
+    "Z": "Ž",
+    "r": "ř",
+    "R": "Ř",
+    "e": "ě",
+    "E": "Ě",
+    "n": "ň",
+    "N": "Ň",
 }
 _CARON_RE = re.compile(r"\\v\{([cCsSzZrReEnN])\}")
 _CEDILLA = {"c": "ç", "C": "Ç"}
@@ -54,13 +65,25 @@ _CEDILLA_RE = re.compile(r"\\c\{([cC])\}")
 
 # Unbraced diacritics (after the braced-accent collapse) plus ß.
 _ACCENTS = {
-    r'\"a': "ä", r'\"o': "ö", r'\"u': "ü",
-    r'\"A': "Ä", r'\"O': "Ö", r'\"U': "Ü",
+    r"\"a": "ä",
+    r"\"o": "ö",
+    r"\"u": "ü",
+    r"\"A": "Ä",
+    r"\"O": "Ö",
+    r"\"U": "Ü",
     r"\ss": "ß",
-    r"\'e": "é", r"\'E": "É", r"\`e": "è",
-    r"\'a": "á", r"\`a": "à", r"\^a": "â",
-    r"\'o": "ó", r"\^o": "ô", r"\'i": "í",
-    r"\'u": "ú", r"\~n": "ñ", r"\~N": "Ñ",
+    r"\'e": "é",
+    r"\'E": "É",
+    r"\`e": "è",
+    r"\'a": "á",
+    r"\`a": "à",
+    r"\^a": "â",
+    r"\'o": "ó",
+    r"\^o": "ô",
+    r"\'i": "í",
+    r"\'u": "ú",
+    r"\~n": "ñ",
+    r"\~N": "Ñ",
 }
 
 # LaTeX special-character escapes (e.g. "Selection \& Implementation").
@@ -83,11 +106,7 @@ def _clean_tex(s: str) -> str:
 
 def _venue(entry) -> str | None:
     fields = entry.fields
-    raw = (
-        fields.get("journal")
-        or fields.get("booktitle")
-        or fields.get("publisher")
-    )
+    raw = fields.get("journal") or fields.get("booktitle") or fields.get("publisher")
     return _clean_tex(raw) if raw is not None else None
 
 
@@ -95,11 +114,11 @@ def _normalize_doi(value: str) -> str:
     """Reduce a pasted DOI (resolver URL or 'doi:'-prefixed) to bare 10.xxxx/yyy."""
     v = value.strip()
     if v.lower().startswith("doi:"):
-        v = v[len("doi:"):].strip()
+        v = v[len("doi:") :].strip()
     marker = "doi.org/"
     idx = v.lower().find(marker)
     if idx != -1:
-        v = v[idx + len(marker):].strip()
+        v = v[idx + len(marker) :].strip()
     return v
 
 

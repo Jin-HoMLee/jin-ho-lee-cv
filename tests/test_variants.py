@@ -1,4 +1,5 @@
 """Tests for the Phase 8b target axis (bridge | comp-bio | ds-ml)."""
+
 from __future__ import annotations
 
 import pytest
@@ -129,14 +130,22 @@ def test_load_content_ds_ml_project_order(content_dir):
 
 
 def test_profile_variant_parity_flags_key_mismatch(tmp_path):
-    _write(tmp_path / "profile.en.yaml", {
-        "tagline": "t", "paragraphs": ["a", "b"],
-        "variants": {"comp-bio": {"tagline": "x", "lead_paragraph": "y"}},
-    })
-    _write(tmp_path / "profile.de.yaml", {
-        "tagline": "t", "paragraphs": ["a", "b"],
-        "variants": {"comp-bio": {"tagline": "x"}},  # missing lead_paragraph
-    })
+    _write(
+        tmp_path / "profile.en.yaml",
+        {
+            "tagline": "t",
+            "paragraphs": ["a", "b"],
+            "variants": {"comp-bio": {"tagline": "x", "lead_paragraph": "y"}},
+        },
+    )
+    _write(
+        tmp_path / "profile.de.yaml",
+        {
+            "tagline": "t",
+            "paragraphs": ["a", "b"],
+            "variants": {"comp-bio": {"tagline": "x"}},  # missing lead_paragraph
+        },
+    )
     errors = _validate_profile_variant_parity(tmp_path)
     assert errors
     assert "comp-bio" in str(errors[0])
@@ -144,7 +153,8 @@ def test_profile_variant_parity_flags_key_mismatch(tmp_path):
 
 def test_profile_variant_parity_passes_when_symmetric(tmp_path):
     payload = {
-        "tagline": "t", "paragraphs": ["a", "b"],
+        "tagline": "t",
+        "paragraphs": ["a", "b"],
         "variants": {"ds-ml": {"tagline": "x", "lead_paragraph": "y"}},
     }
     _write(tmp_path / "profile.en.yaml", payload)
@@ -153,41 +163,60 @@ def test_profile_variant_parity_passes_when_symmetric(tmp_path):
 
 
 def test_headline_variant_completeness_flags_missing_de(tmp_path):
-    _write(tmp_path / "personal.yaml", {
-        "headline": {"en": "B", "de": "B"},
-        "variants": {"comp-bio": {"headline": {"en": "only-en"}}},
-    })
+    _write(
+        tmp_path / "personal.yaml",
+        {
+            "headline": {"en": "B", "de": "B"},
+            "variants": {"comp-bio": {"headline": {"en": "only-en"}}},
+        },
+    )
     errors = _validate_headline_variant_completeness(tmp_path)
     assert errors
     assert "comp-bio" in str(errors[0])
 
 
 def test_headline_variant_completeness_passes_when_bilingual(tmp_path):
-    _write(tmp_path / "personal.yaml", {
-        "headline": {"en": "B", "de": "B"},
-        "variants": {"comp-bio": {"headline": {"en": "x", "de": "y"}}},
-    })
+    _write(
+        tmp_path / "personal.yaml",
+        {
+            "headline": {"en": "B", "de": "B"},
+            "variants": {"comp-bio": {"headline": {"en": "x", "de": "y"}}},
+        },
+    )
     assert _validate_headline_variant_completeness(tmp_path) == []
 
 
 def test_headline_variant_completeness_does_not_crash_on_non_dict_headline(tmp_path):
     # A non-iterable headline is schema-invalid; the parity validator must not
     # crash on it (the schema validator reports the structural error).
-    _write(tmp_path / "personal.yaml", {
-        "headline": {"en": "B", "de": "B"},
-        "variants": {"comp-bio": {"headline": 123}},
-    })
+    _write(
+        tmp_path / "personal.yaml",
+        {
+            "headline": {"en": "B", "de": "B"},
+            "variants": {"comp-bio": {"headline": 123}},
+        },
+    )
     assert _validate_headline_variant_completeness(tmp_path) == []
 
 
 def test_profile_variant_parity_does_not_crash_on_non_dict_variants(tmp_path):
     # variants as a list is schema-invalid; the parity validator must not crash.
-    _write(tmp_path / "profile.en.yaml", {
-        "tagline": "t", "paragraphs": ["a", "b"], "variants": ["comp-bio"],
-    })
-    _write(tmp_path / "profile.de.yaml", {
-        "tagline": "t", "paragraphs": ["a", "b"], "variants": ["comp-bio"],
-    })
+    _write(
+        tmp_path / "profile.en.yaml",
+        {
+            "tagline": "t",
+            "paragraphs": ["a", "b"],
+            "variants": ["comp-bio"],
+        },
+    )
+    _write(
+        tmp_path / "profile.de.yaml",
+        {
+            "tagline": "t",
+            "paragraphs": ["a", "b"],
+            "variants": ["comp-bio"],
+        },
+    )
     assert _validate_profile_variant_parity(tmp_path) == []
 
 
@@ -201,9 +230,7 @@ def test_validate_tree_no_secondary_error_on_flat_list_selected_projects(tmp_pat
 
 
 def _resolved(content_dir, lang, target):
-    return resolve_langstrings(
-        load_content(content_dir, lang=lang, target=target), lang=lang
-    )
+    return resolve_langstrings(load_content(content_dir, lang=lang, target=target), lang=lang)
 
 
 def test_comp_bio_headline_en_de(content_dir):

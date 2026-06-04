@@ -1,4 +1,5 @@
 """Render the CV to a JSON Resume document (https://jsonresume.org/schema/)."""
+
 from __future__ import annotations
 
 import argparse
@@ -29,10 +30,10 @@ def _pad_end(yyyy_mm: str | None) -> str | None:
 
 def _network_for(key: str) -> str:
     return {
-        "linkedin":     "LinkedIn",
-        "github":       "GitHub",
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
         "researchgate": "ResearchGate",
-        "orcid":        "ORCID",
+        "orcid": "ORCID",
     }.get(key, key.title())
 
 
@@ -62,13 +63,15 @@ def _basics(content: dict) -> dict:
 def _work(content: dict) -> list[dict]:
     out = []
     for exp in content["experience"]:
-        out.append({
-            "name": exp["org"]["name"],
-            "position": exp["role"],
-            "startDate": _pad_start(exp["period"]["start"]),
-            **({"endDate": _pad_end(exp["period"]["end"])} if exp["period"].get("end") else {}),
-            "highlights": [b["en"] for b in exp.get("bullets", [])],
-        })
+        out.append(
+            {
+                "name": exp["org"]["name"],
+                "position": exp["role"],
+                "startDate": _pad_start(exp["period"]["start"]),
+                **({"endDate": _pad_end(exp["period"]["end"])} if exp["period"].get("end") else {}),
+                "highlights": [b["en"] for b in exp.get("bullets", [])],
+            }
+        )
     return out
 
 
@@ -76,13 +79,15 @@ def _education(content: dict) -> list[dict]:
     out = []
     for edu in content["education"]:
         year = str(edu["year"])
-        out.append({
-            "institution": edu["institution"],
-            "studyType": edu["degree"],
-            "area": edu.get("field", ""),
-            "startDate": f"{year}-01-01",
-            "endDate": f"{year}-12-31",
-        })
+        out.append(
+            {
+                "institution": edu["institution"],
+                "studyType": edu["degree"],
+                "area": edu.get("field", ""),
+                "startDate": f"{year}-01-01",
+                "endDate": f"{year}-12-31",
+            }
+        )
     return out
 
 
@@ -90,18 +95,19 @@ def _skills(content: dict) -> list[dict]:
     out = []
     for cat in content["skills"]["categories"]:
         for grp in cat["groups"]:
-            out.append({
-                "name": cat["name"],
-                "level": grp["label"],
-                "keywords": list(grp["items"]),
-            })
+            out.append(
+                {
+                    "name": cat["name"],
+                    "level": grp["label"],
+                    "keywords": list(grp["items"]),
+                }
+            )
     return out
 
 
 def _languages(content: dict) -> list[dict]:
     return [
-        {"language": lang["name"], "fluency": lang["proficiency"]}
-        for lang in content["languages"]
+        {"language": lang["name"], "fluency": lang["proficiency"]} for lang in content["languages"]
     ]
 
 
@@ -109,10 +115,12 @@ def _volunteer(content: dict) -> list[dict]:
     out = []
     for cat in content["volunteer"]["categories"]:
         for entry in cat["entries"]:
-            out.append({
-                "organization": entry,
-                "position": cat["name"],
-            })
+            out.append(
+                {
+                    "organization": entry,
+                    "position": cat["name"],
+                }
+            )
     return out
 
 
@@ -133,15 +141,17 @@ def _awards(content: dict) -> list[dict]:
 def _projects(content: dict) -> list[dict]:
     out = []
     for pid, proj in content["projects"].items():
-        out.append({
-            "name": proj["title"],
-            "description": proj["summary"],
-            "highlights": list(proj.get("contributions", [])),
-            "keywords": list(proj.get("technologies", [])),
-            "startDate": _pad_start(proj["period"]["start"]),
-            "endDate": _pad_end(proj["period"]["end"]) or _pad_start(proj["period"]["start"]),
-            "roles": [proj["role"]],
-        })
+        out.append(
+            {
+                "name": proj["title"],
+                "description": proj["summary"],
+                "highlights": list(proj.get("contributions", [])),
+                "keywords": list(proj.get("technologies", [])),
+                "startDate": _pad_start(proj["period"]["start"]),
+                "endDate": _pad_end(proj["period"]["end"]) or _pad_start(proj["period"]["start"]),
+                "roles": [proj["role"]],
+            }
+        )
     return out
 
 

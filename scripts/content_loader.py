@@ -1,4 +1,5 @@
 """Load CV content from YAML tree + optional private overlay."""
+
 from __future__ import annotations
 
 import copy
@@ -122,9 +123,7 @@ def load_content(
     selected_ids = _select_project_ids(selected_map, target)
     unknown = [pid for pid in selected_ids if pid not in projects]
     if unknown:
-        raise ValueError(
-            f"selected_projects.yaml references unknown project id(s): {unknown}"
-        )
+        raise ValueError(f"selected_projects.yaml references unknown project id(s): {unknown}")
     selected_projects = [projects[pid] for pid in selected_ids]
 
     content = {

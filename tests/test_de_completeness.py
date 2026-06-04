@@ -1,4 +1,5 @@
 """Detect missing `de:` keys by comparing en/de resolved content trees."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -119,16 +120,16 @@ _INVARIANT_PATH_SUBSTRINGS = (
 _INVARIANT_EXACT = frozenset(
     {
         # Skill category / group labels — English tech terms used verbatim in German
-        ".skills.categories[1].name",              # "Biotech Wet-Lab"
-        ".skills.categories[1].groups[2].label",   # "Assays"
-        ".skills.categories[2].groups[1].label",   # "Eng & Tools"
-        ".skills.categories[2].groups[2].label",   # "Cloud"
+        ".skills.categories[1].name",  # "Biotech Wet-Lab"
+        ".skills.categories[1].groups[2].label",  # "Assays"
+        ".skills.categories[2].groups[1].label",  # "Eng & Tools"
+        ".skills.categories[2].groups[2].label",  # "Cloud"
         # Experience roles — English job-title strings used verbatim in German
         ".experience[1].role",  # "Data Science Trainee, Associate & Coach"
         # Project roles — English job-title strings used verbatim in German
-        ".projects.C1.role",    # "Lead Business Functional Analyst (Cintellic GmbH)"
-        ".projects.C2.role",    # "Lead Business Functional Analyst (Cintellic GmbH)"
-        ".projects.D3.role",    # "Data Science Coach (neuefische GmbH)"
+        ".projects.C1.role",  # "Lead Business Functional Analyst (Cintellic GmbH)"
+        ".projects.C2.role",  # "Lead Business Functional Analyst (Cintellic GmbH)"
+        ".projects.D3.role",  # "Data Science Coach (neuefische GmbH)"
     }
 )
 
