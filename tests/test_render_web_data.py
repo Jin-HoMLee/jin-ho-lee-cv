@@ -1,4 +1,5 @@
 """Tests for scripts/render_web_data.py — dumps bilingual content JSON for Astro."""
+
 from __future__ import annotations
 
 import json
@@ -29,9 +30,19 @@ def test_round_trip_structural_keys(rendered):
     """Both JSON files have the expected top-level keys."""
     en, de = rendered
     expected_keys = {
-        "personal", "profile", "skills", "education", "experience",
-        "projects", "selected_projects", "languages", "volunteer",
-        "publications", "labels", "awards", "publications_aggregate",
+        "personal",
+        "profile",
+        "skills",
+        "education",
+        "experience",
+        "projects",
+        "selected_projects",
+        "languages",
+        "volunteer",
+        "publications",
+        "labels",
+        "awards",
+        "publications_aggregate",
     }
     assert set(en.keys()) == expected_keys
     assert set(de.keys()) == expected_keys
@@ -122,7 +133,9 @@ def test_output_dir_default_matches_repo_layout():
 def test_publications_aggregate_present(rendered):
     s = publication_summary(load_publications(CONTENT_DIR / "publications.bib"))
     en, de = rendered
-    assert f"{s.peer_reviewed} peer-reviewed publications" in en["publications_aggregate"]["summary"]
+    assert (
+        f"{s.peer_reviewed} peer-reviewed publications" in en["publications_aggregate"]["summary"]
+    )
     assert en["publications_aggregate"]["pointer"] == "Full list & metrics:"
     assert "begutachtete Publikationen" in de["publications_aggregate"]["summary"]
     assert de["publications_aggregate"]["pointer"] == "Vollständige Liste:"
@@ -130,8 +143,15 @@ def test_publications_aggregate_present(rendered):
 
 def test_publication_doi_is_serialized():
     pub = Publication(
-        key="x", title="T", year=2019, type="article", authorship="first",
-        authors=("Lee, J.",), venue="Cancers", doi="10.3390/x", raw={"foo": "bar"},
+        key="x",
+        title="T",
+        year=2019,
+        type="article",
+        authorship="first",
+        authors=("Lee, J.",),
+        venue="Cancers",
+        doi="10.3390/x",
+        raw={"foo": "bar"},
     )
     d = _to_jsonable(pub)
     assert d["doi"] == "10.3390/x"
@@ -158,7 +178,8 @@ def test_missing_cache_yields_null_counts(tmp_path):
     """Offline-degrade contract: a nonexistent cache → all counts None, no failure."""
     out_dir = tmp_path / "out"
     render_web_data(
-        content_dir=CONTENT_DIR, output_dir=out_dir,
+        content_dir=CONTENT_DIR,
+        output_dir=out_dir,
         citations_path=tmp_path / "does-not-exist.json",
     )
     pubs = json.loads((out_dir / "content.en.json").read_text(encoding="utf-8"))["publications"]

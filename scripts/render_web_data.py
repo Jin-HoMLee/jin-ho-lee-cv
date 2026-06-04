@@ -6,6 +6,7 @@ Produces web/src/data/content.{en,de}.json by composing:
   - Publication dataclass → dict conversion
   - Path → str conversion
 """
+
 from __future__ import annotations
 
 import dataclasses
@@ -92,7 +93,9 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
 
 
 def render_web_data(
-    *, content_dir: Path = CONTENT_DIR, output_dir: Path = OUTPUT_DIR,
+    *,
+    content_dir: Path = CONTENT_DIR,
+    output_dir: Path = OUTPUT_DIR,
     citations_path: Path = CITATIONS_PATH,
 ) -> None:
     """Render content.{en,de}.json and content.{en,de}.variants.json into output_dir.
@@ -127,7 +130,9 @@ def render_web_data(
         )
         pub_labels = bridge_resolved["labels"]["publications"]
         bridge_resolved["publications_aggregate"] = {
-            "summary": format_publication_summary(pub_labels["summary"], bridge_resolved["publications"]),
+            "summary": format_publication_summary(
+                pub_labels["summary"], bridge_resolved["publications"]
+            ),
             "pointer": pub_labels["full_list_pointer"],
         }
         _dump(bridge_resolved, f"content.{lang}.json")

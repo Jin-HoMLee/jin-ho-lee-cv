@@ -4,6 +4,7 @@ These guard the "Bioinformatics · Data Science" repositioning: the tagline and
 profile body must lead with the data-science + cancer-genomics differentiator,
 and the cloud-migration work must be demoted to the second profile paragraph.
 """
+
 from __future__ import annotations
 
 from scripts.content_loader import load_content

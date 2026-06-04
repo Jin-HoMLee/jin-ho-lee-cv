@@ -1,4 +1,5 @@
 """Pytest assertions for the JSON Resume renderer."""
+
 from __future__ import annotations
 
 import json
@@ -34,7 +35,10 @@ def test_output_validates_against_schema_fixture(doc):
 def test_basics_round_trip(doc):
     content = resolve_langstrings(load_content(CONTENT_DIR, lang="en"), lang="en")
     basics = doc["basics"]
-    assert basics["name"] == f"{content['personal']['name']['given']} {content['personal']['name']['family']}"
+    assert (
+        basics["name"]
+        == f"{content['personal']['name']['given']} {content['personal']['name']['family']}"
+    )
     assert basics["email"] == content["personal"]["email"]
     assert basics["summary"]  # non-empty
     assert any(p["network"].lower() == "github" for p in basics["profiles"])
@@ -81,14 +85,12 @@ def test_pii_never_reaches_dump(tmp_path, monkeypatch):
     try:
         private_dir.mkdir(exist_ok=True)
         private_yaml.write_text(
-            f"personal:\n"
-            f"  phone: '{marker_phone}'\n"
-            f"  location:\n"
-            f"    street: '{marker_street}'\n",
+            f"personal:\n  phone: '{marker_phone}'\n  location:\n    street: '{marker_street}'\n",
             encoding="utf-8",
         )
         output = tmp_path / "resume.json"
         from scripts.render_jsonresume import main
+
         main(["--output", str(output)])
         text = output.read_text()
         assert marker_phone not in text, "PII leaked: private phone in resume.json"
@@ -102,13 +104,21 @@ def test_pii_never_reaches_dump(tmp_path, monkeypatch):
 
 def test_basics_url_uses_pages_base(doc):
     from scripts.config import PAGES_BASE_URL
+
     assert doc["basics"]["url"].startswith(PAGES_BASE_URL)
 
 
 def _pub(**over) -> Publication:
     base = dict(
-        key="x", title="T", year=2019, type="article", authorship="first",
-        authors=("Lee, J.",), venue="Cancers", doi=None, raw={},
+        key="x",
+        title="T",
+        year=2019,
+        type="article",
+        authorship="first",
+        authors=("Lee, J.",),
+        venue="Cancers",
+        doi=None,
+        raw={},
     )
     base.update(over)
     return Publication(**base)
@@ -143,9 +153,16 @@ from scripts.render_jsonresume import _work, _pad_end  # noqa: E402
 
 
 def _exp(period):
-    return {"experience": [{
-        "org": {"name": "Org"}, "role": "Dev", "period": period, "bullets": [],
-    }]}
+    return {
+        "experience": [
+            {
+                "org": {"name": "Org"},
+                "role": "Dev",
+                "period": period,
+                "bullets": [],
+            }
+        ]
+    }
 
 
 def test_work_dated_end_emits_enddate():

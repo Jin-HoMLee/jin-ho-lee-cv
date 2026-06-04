@@ -1,4 +1,5 @@
 """PDF build orchestrator: load content → resolve langs → serialize JSON → compile Typst."""
+
 from __future__ import annotations
 
 import argparse
@@ -24,9 +25,7 @@ def _check_typst_version() -> None:
     pinned = pinned_file.read_text().strip()
 
     try:
-        result = subprocess.run(
-            ["typst", "--version"], capture_output=True, text=True, check=False
-        )
+        result = subprocess.run(["typst", "--version"], capture_output=True, text=True, check=False)
     except FileNotFoundError:
         return  # typst not installed; the compile call will surface that error
     if result.returncode != 0:
@@ -137,9 +136,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 2
 
-    data = prepare_data(
-        content_dir, private_path=private_path, lang=args.lang, target=args.target
-    )
+    data = prepare_data(content_dir, private_path=private_path, lang=args.lang, target=args.target)
 
     cache_dir = REPO_ROOT / "pdf" / ".cache"
     cache_dir.mkdir(parents=True, exist_ok=True)
@@ -165,10 +162,14 @@ def main(argv: list[str] | None = None) -> int:
 
     result = subprocess.run(
         [
-            "typst", "compile",
-            "--root", str(REPO_ROOT),
-            "--input", photo_input,
-            "--input", f"lang={args.lang}",
+            "typst",
+            "compile",
+            "--root",
+            str(REPO_ROOT),
+            "--input",
+            photo_input,
+            "--input",
+            f"lang={args.lang}",
             str(template),
             str(out_path),
         ],

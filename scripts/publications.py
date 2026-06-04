@@ -6,6 +6,7 @@ targets show the full per-paper list vs. a one-line aggregate, and (b) the exact
 wording of that aggregate. The machine formats (JSON Resume, JSON-LD) bypass this
 and always emit the full structured list.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -13,7 +14,7 @@ from dataclasses import dataclass
 from scripts.bib_loader import Publication
 
 _PEER_REVIEWED_TYPES = ("article", "book-chapter")  # conference contributions are not
-_COAUTHOR = ("middle", "last", "corresponding")      # everything that isn't first/shared
+_COAUTHOR = ("middle", "last", "corresponding")  # everything that isn't first/shared
 EN_DASH = "–"
 
 
@@ -29,11 +30,11 @@ def publication_mode(target: str) -> str:
 
 @dataclass(frozen=True)
 class PublicationSummary:
-    peer_reviewed: int   # research articles + book chapters
-    pr_first: int        # …of which first-author
-    pr_shared: int       # …shared-first
-    pr_coauthor: int     # …co-author (middle/last/corresponding)
-    conferences: int     # research conference contributions (all first-author)
+    peer_reviewed: int  # research articles + book chapters
+    pr_first: int  # …of which first-author
+    pr_shared: int  # …shared-first
+    pr_coauthor: int  # …co-author (middle/last/corresponding)
+    conferences: int  # research conference contributions (all first-author)
     year_start: int
     year_end: int
 
@@ -73,6 +74,10 @@ def format_publication_summary(template: str, pubs: list[Publication]) -> str:
     s = publication_summary(pubs)
     span = f"{s.year_start}{EN_DASH}{s.year_end}"
     return template.format(
-        peer_reviewed=s.peer_reviewed, pr_first=s.pr_first, pr_shared=s.pr_shared,
-        pr_coauthor=s.pr_coauthor, conferences=s.conferences, span=span,
+        peer_reviewed=s.peer_reviewed,
+        pr_first=s.pr_first,
+        pr_shared=s.pr_shared,
+        pr_coauthor=s.pr_coauthor,
+        conferences=s.conferences,
+        span=span,
     )

@@ -1,4 +1,5 @@
 """Pytest assertions for the llms.txt renderer."""
+
 from __future__ import annotations
 
 from pathlib import Path

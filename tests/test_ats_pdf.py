@@ -4,6 +4,7 @@ section headings, and umlauts round-tripping through a parser (pdftotext/poppler
 Turns "ATS-clean" from an assumption into a verified property. Skip-guarded locally;
 the CI `ats-guard` job installs Typst + poppler so it actually runs there.
 """
+
 from __future__ import annotations
 
 import shutil
@@ -33,7 +34,9 @@ def _build_and_extract(lang: str) -> str:
         out.unlink()
     r = subprocess.run(
         [sys.executable, "-m", "pdf.build", "--lang", lang, "--target", "bridge"],
-        cwd=REPO_ROOT, capture_output=True, text=True,
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
     )
     assert r.returncode == 0, f"PDF build failed:\n{r.stderr}"
     assert out.exists(), f"expected {out} to be written"

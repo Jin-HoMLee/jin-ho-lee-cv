@@ -1,4 +1,5 @@
 """Render the CV as section-headed ATS-friendly plain text."""
+
 from __future__ import annotations
 
 import argparse
@@ -17,15 +18,15 @@ CONTENT_DIR = REPO_ROOT / "content"
 SITE_URL = f"{PAGES_BASE_URL}/"
 DIVIDER = "=" * 80
 SECTION_LABELS = {
-    "profile":           {"en": "PROFILE",           "de": "PROFIL"},
-    "experience":        {"en": "EXPERIENCE",        "de": "BERUFSERFAHRUNG"},
+    "profile": {"en": "PROFILE", "de": "PROFIL"},
+    "experience": {"en": "EXPERIENCE", "de": "BERUFSERFAHRUNG"},
     "selected_projects": {"en": "SELECTED PROJECTS", "de": "AUSGEWÄHLTE PROJEKTE"},
-    "education":         {"en": "EDUCATION",         "de": "AUSBILDUNG"},
-    "awards":            {"en": "AWARDS",            "de": "AUSZEICHNUNGEN"},
-    "skills":            {"en": "SKILLS",            "de": "KENNTNISSE"},
-    "languages":         {"en": "LANGUAGES",         "de": "SPRACHEN"},
-    "volunteer":         {"en": "VOLUNTEER",         "de": "EHRENAMTLICH"},
-    "publications":      {"en": "PUBLICATIONS",      "de": "PUBLIKATIONEN"},
+    "education": {"en": "EDUCATION", "de": "AUSBILDUNG"},
+    "awards": {"en": "AWARDS", "de": "AUSZEICHNUNGEN"},
+    "skills": {"en": "SKILLS", "de": "KENNTNISSE"},
+    "languages": {"en": "LANGUAGES", "de": "SPRACHEN"},
+    "volunteer": {"en": "VOLUNTEER", "de": "EHRENAMTLICH"},
+    "publications": {"en": "PUBLICATIONS", "de": "PUBLIKATIONEN"},
 }
 PRESENT = {"en": "present", "de": "heute"}
 PERIOD_CONNECTOR = {"en": "to", "de": "bis"}
@@ -156,9 +157,7 @@ def _txt_filename(lang: str, target: str) -> str:
 
 def render(lang: str, target: str = "bridge") -> str:
     """Return the full plain-text CV for the given language and target."""
-    content = resolve_langstrings(
-        load_content(CONTENT_DIR, lang=lang, target=target), lang=lang
-    )
+    content = resolve_langstrings(load_content(CONTENT_DIR, lang=lang, target=target), lang=lang)
     pubs = load_publications(CONTENT_DIR / "publications.bib")
     L = SECTION_LABELS
 
@@ -170,15 +169,15 @@ def render(lang: str, target: str = "bridge") -> str:
 
     sections = [
         _header(content),
-        _section(L["profile"][lang],           _profile(content)),
-        _section(L["experience"][lang],        _experience(content, lang)),
+        _section(L["profile"][lang], _profile(content)),
+        _section(L["experience"][lang], _experience(content, lang)),
         _section(L["selected_projects"][lang], _selected_projects(content, lang)),
-        _section(L["education"][lang],         _education(content)),
-        _section(L["skills"][lang],            _skills(content)),
-        _section(L["languages"][lang],         _languages(content)),
-        _section(L["volunteer"][lang],         _volunteer(content)),
-        _section(L["publications"][lang],      pub_body),
-        _section(L["awards"][lang],            _awards(content)),
+        _section(L["education"][lang], _education(content)),
+        _section(L["skills"][lang], _skills(content)),
+        _section(L["languages"][lang], _languages(content)),
+        _section(L["volunteer"][lang], _volunteer(content)),
+        _section(L["publications"][lang], pub_body),
+        _section(L["awards"][lang], _awards(content)),
     ]
     return "\n\n".join(sections) + "\n"
 

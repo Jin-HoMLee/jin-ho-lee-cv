@@ -11,6 +11,7 @@ no bridge values and no `selected_projects` (the site groups projects by
 category and never consumes selected_projects). These tests assert that
 *positioning correctness*, not merely structural validity.
 """
+
 from __future__ import annotations
 
 import json
@@ -100,6 +101,7 @@ def test_variants_en_de_parity(rendered):
 
 
 # --- _extract_overrides unit tests -------------------------------------------------
+
 
 def _tree(headline="H", tagline="T", paras=("lead", "shared")):
     return {

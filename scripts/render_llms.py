@@ -4,6 +4,7 @@ derived from the same YAML + bib as every other renderer (single source of truth
 A cheap discoverability aid (honoured by Anthropic/Perplexity), NOT a replacement
 for the JSON-LD entity graph.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -45,14 +46,16 @@ def _publications_section(pubs: list[Publication]) -> str:
 
 
 def _formats_section() -> str:
-    return "\n".join([
-        "## CV & machine-readable formats",
-        f"- [CV (PDF, EN)]({RELEASES_BASE_URL}/cv-en.pdf)",
-        f"- [CV (PDF, DE)]({RELEASES_BASE_URL}/cv-de.pdf)",
-        f"- [JSON Resume]({RELEASES_BASE_URL}/resume.json)",
-        f"- [JSON-LD (schema.org)]({PAGES_BASE_URL}/person.jsonld)",
-        f"- [Plain text (EN)]({RELEASES_BASE_URL}/cv-en.txt)",
-    ])
+    return "\n".join(
+        [
+            "## CV & machine-readable formats",
+            f"- [CV (PDF, EN)]({RELEASES_BASE_URL}/cv-en.pdf)",
+            f"- [CV (PDF, DE)]({RELEASES_BASE_URL}/cv-de.pdf)",
+            f"- [JSON Resume]({RELEASES_BASE_URL}/resume.json)",
+            f"- [JSON-LD (schema.org)]({PAGES_BASE_URL}/person.jsonld)",
+            f"- [Plain text (EN)]({RELEASES_BASE_URL}/cv-en.txt)",
+        ]
+    )
 
 
 def _links_section(personal: dict) -> str:

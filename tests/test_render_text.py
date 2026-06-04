@@ -1,4 +1,5 @@
 """Pytest assertions for the plain-text renderer."""
+
 from __future__ import annotations
 
 import re
@@ -31,13 +32,29 @@ def test_en_and_de_differ(en_text, de_text):
 
 
 def test_section_headers_present_en(en_text):
-    for section in ("PROFILE", "EXPERIENCE", "EDUCATION", "SKILLS", "LANGUAGES", "VOLUNTEER", "PUBLICATIONS"):
+    for section in (
+        "PROFILE",
+        "EXPERIENCE",
+        "EDUCATION",
+        "SKILLS",
+        "LANGUAGES",
+        "VOLUNTEER",
+        "PUBLICATIONS",
+    ):
         assert section in en_text, f"missing section header: {section}"
 
 
 def test_section_headers_present_de(de_text):
     # uppercase translations from labels.yaml
-    for section in ("PROFIL", "BERUFSERFAHRUNG", "AUSBILDUNG", "KENNTNISSE", "SPRACHEN", "EHRENAMTLICH", "PUBLIKATIONEN"):
+    for section in (
+        "PROFIL",
+        "BERUFSERFAHRUNG",
+        "AUSBILDUNG",
+        "KENNTNISSE",
+        "SPRACHEN",
+        "EHRENAMTLICH",
+        "PUBLIKATIONEN",
+    ):
         assert section in de_text, f"missing section header: {section}"
 
 
@@ -78,14 +95,12 @@ def test_pii_never_reaches_main_output(tmp_path):
     try:
         private_dir.mkdir(exist_ok=True)
         private_yaml.write_text(
-            f"personal:\n"
-            f"  phone: '{marker_phone}'\n"
-            f"  location:\n"
-            f"    street: '{marker_street}'\n",
+            f"personal:\n  phone: '{marker_phone}'\n  location:\n    street: '{marker_street}'\n",
             encoding="utf-8",
         )
         output = tmp_path / "cv-en.txt"
         from scripts.render_text import main
+
         main(["--lang", "en", "--output", str(output)])
         text = output.read_text()
         assert marker_phone not in text, "PII leaked: private phone in cv-en.txt"
@@ -99,13 +114,21 @@ def test_pii_never_reaches_main_output(tmp_path):
 
 def test_header_url_uses_pages_base(en_text):
     from scripts.config import PAGES_BASE_URL
+
     assert PAGES_BASE_URL in en_text, f"PAGES_BASE_URL ({PAGES_BASE_URL!r}) missing from header"
 
 
 def _pub(**over) -> Publication:
     base = dict(
-        key="x", title="T", year=2019, type="article", authorship="first",
-        authors=("Lee, J.",), venue="Cancers", doi=None, raw={},
+        key="x",
+        title="T",
+        year=2019,
+        type="article",
+        authorship="first",
+        authors=("Lee, J.",),
+        venue="Cancers",
+        doi=None,
+        raw={},
     )
     base.update(over)
     return Publication(**base)
@@ -159,22 +182,26 @@ def test_publications_full_list_for_comp_bio():
     middle = next(p for p in pubs if p.authorship == "middle")
     full = render(lang="en", target="comp-bio")
     bridge = render(lang="en", target="bridge")
-    assert middle.title in full          # verbatim list present
-    assert middle.title not in bridge    # aggregate omits per-paper titles
+    assert middle.title in full  # verbatim list present
+    assert middle.title not in bridge  # aggregate omits per-paper titles
 
 
 # --- #42: period-end edge cases on the extracted formatter ---
 
+
 def test_format_period_dated():
     from scripts.render_text import _format_period
+
     assert _format_period({"start": "2024-05", "end": "2025-07"}, "en") == "2024-05 to 2025-07"
 
 
 def test_format_period_null_end_en():
     from scripts.render_text import _format_period
+
     assert _format_period({"start": "2014-04", "end": None}, "en") == "2014-04 to present"
 
 
 def test_format_period_absent_end_de():
     from scripts.render_text import _format_period
+
     assert _format_period({"start": "2014-04"}, "de") == "2014-04 bis heute"

@@ -1,4 +1,5 @@
 """Smoke test: public PDF build produces a valid PDF."""
+
 import shutil
 import subprocess
 import sys

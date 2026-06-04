@@ -8,6 +8,7 @@ public contact email (read from content — single source of truth).
 Crossref counts lag and undercount relative to Google Scholar; web and JSON-LD consumers
 label the figures "indicative" to avoid overstating them.
 """
+
 from __future__ import annotations
 
 import datetime
@@ -88,6 +89,7 @@ def refresh(
         # Nested name differs from the `fetch` param to avoid any redefinition ambiguity.
         def _default_fetch(doi: str) -> int:
             return fetch_citation_count(doi, mailto=mailto)
+
         fetch = _default_fetch
 
     dois = [p.doi for p in load_publications(bib_path) if p.doi]

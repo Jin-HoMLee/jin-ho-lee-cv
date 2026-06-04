@@ -6,6 +6,7 @@ SEO rich results (Google surfaces no Person rich result and dropped EstimatedSal
 in June 2025). The Person ``@id`` is the ORCID URI; authored works link back to it
 via ``author`` / ``creator: {"@id": <orcid>}``.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -81,7 +82,9 @@ def _publications(pubs: list[Publication], person_id: str, author_prefix: str) -
             "name": p.title,
             "datePublished": str(p.year),
             "author": [
-                {"@id": person_id} if a.startswith(author_prefix) else {"@type": "Person", "name": a}
+                {"@id": person_id}
+                if a.startswith(author_prefix)
+                else {"@type": "Person", "name": a}
                 for a in p.authors
             ],
         }
@@ -106,16 +109,18 @@ def _projects(content: dict, person_id: str) -> list[dict]:
     out = []
     for pid, proj in content["projects"].items():
         url = f"{PAGES_BASE_URL}/projects/{pid}/"
-        out.append({
-            "@type": "CreativeWork",
-            "@id": url,
-            "name": proj["title"],
-            "url": url,
-            "description": proj["summary"],
-            "dateCreated": proj["period"]["start"],
-            "keywords": list(proj.get("technologies", [])),
-            "creator": {"@id": person_id},
-        })
+        out.append(
+            {
+                "@type": "CreativeWork",
+                "@id": url,
+                "name": proj["title"],
+                "url": url,
+                "description": proj["summary"],
+                "dateCreated": proj["period"]["start"],
+                "keywords": list(proj.get("technologies", [])),
+                "creator": {"@id": person_id},
+            }
+        )
     return out
 
 

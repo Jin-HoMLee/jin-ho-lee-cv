@@ -12,6 +12,7 @@ BIB_PATH = CONTENT_DIR / "publications.bib"
 
 class _FakeResp:
     """Minimal context-manager stand-in for an http response (no network)."""
+
     def __init__(self, data: bytes):
         self._data = data
 
@@ -57,8 +58,11 @@ def test_refresh_writes_sorted_documented_cache(tmp_path):
         return len(doi)  # deterministic, no network
 
     doc = refresh(
-        bib_path=BIB_PATH, cache_path=cache, content_dir=CONTENT_DIR,
-        fetch=fetch, today="2026-06-02",
+        bib_path=BIB_PATH,
+        cache_path=cache,
+        content_dir=CONTENT_DIR,
+        fetch=fetch,
+        today="2026-06-02",
     )
     assert doc["_generated_by"] == "just refresh-citations — do not hand-edit"
     assert doc["source"] == "crossref"

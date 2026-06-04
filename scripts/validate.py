@@ -1,4 +1,5 @@
 """Validate CV content against the JSON Schema and check cross-references."""
+
 from __future__ import annotations
 
 import json
@@ -64,8 +65,7 @@ def validate_file(
     errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
     if errors:
         joined = "; ".join(
-            f"{'.'.join(str(p) for p in e.path) or '<root>'}: {e.message}"
-            for e in errors
+            f"{'.'.join(str(p) for p in e.path) or '<root>'}: {e.message}" for e in errors
         )
         raise ValidationError(joined)
 
@@ -74,9 +74,7 @@ def validate_file(
             for bullet in entry.get("bullets", []):
                 for ref in bullet.get("refs", []):
                     if ref not in known_project_ids:
-                        raise ValidationError(
-                            f"unknown project ref {ref!r}"
-                        )
+                        raise ValidationError(f"unknown project ref {ref!r}")
 
 
 def _enumerate_project_ids(content_dir: Path) -> set[str]:
@@ -111,6 +109,7 @@ def _validate_publications(content_dir: Path) -> list[FileError]:
         return [FileError(bib_path, "publications.bib missing")]
     try:
         from scripts.bib_loader import load_publications  # local import avoids cycles
+
         load_publications(bib_path)
     except Exception as e:
         return [FileError(bib_path, str(e))]
@@ -124,8 +123,8 @@ def _validate_profile_variant_parity(content_dir: Path) -> list[FileError]:
     de_path = content_dir / "profile.de.yaml"
     if not (en_path.exists() and de_path.exists()):
         return []
-    en = (_load_yaml(en_path).get("variants") or {})
-    de = (_load_yaml(de_path).get("variants") or {})
+    en = _load_yaml(en_path).get("variants") or {}
+    de = _load_yaml(de_path).get("variants") or {}
     if not (isinstance(en, dict) and isinstance(de, dict)):
         return []  # malformed structure; the schema validator reports it
     errors: list[FileError] = []
@@ -135,11 +134,13 @@ def _validate_profile_variant_parity(content_dir: Path) -> list[FileError]:
         en_keys = set(en_val) if isinstance(en_val, dict) else set()
         de_keys = set(de_val) if isinstance(de_val, dict) else set()
         if en_keys != de_keys:
-            errors.append(FileError(
-                de_path,
-                f"variant {target!r} key mismatch EN/DE: "
-                f"en={sorted(en_keys)} de={sorted(de_keys)}",
-            ))
+            errors.append(
+                FileError(
+                    de_path,
+                    f"variant {target!r} key mismatch EN/DE: "
+                    f"en={sorted(en_keys)} de={sorted(de_keys)}",
+                )
+            )
     return errors
 
 
@@ -149,7 +150,7 @@ def _validate_headline_variant_completeness(content_dir: Path) -> list[FileError
     path = content_dir / "personal.yaml"
     if not path.exists():
         return []
-    variants = (_load_yaml(path).get("variants") or {})
+    variants = _load_yaml(path).get("variants") or {}
     if not isinstance(variants, dict):
         return []  # malformed structure; the schema validator reports it
     errors: list[FileError] = []
@@ -157,10 +158,12 @@ def _validate_headline_variant_completeness(content_dir: Path) -> list[FileError
         spec = variants.get(target)
         headline = spec.get("headline") if isinstance(spec, dict) else None
         if isinstance(headline, dict) and not ({"en", "de"} <= set(headline)):
-            errors.append(FileError(
-                path,
-                f"variant {target!r} headline must define both 'en' and 'de'",
-            ))
+            errors.append(
+                FileError(
+                    path,
+                    f"variant {target!r} headline must define both 'en' and 'de'",
+                )
+            )
     return errors
 
 
@@ -235,10 +238,12 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
                 all_ids = {pid for order in selected.values() for pid in order}
                 unknown = sorted(pid for pid in all_ids if pid not in project_ids)
                 if unknown:
-                    errors.append(FileError(
-                        selected_path,
-                        f"references unknown project id(s): {unknown}",
-                    ))
+                    errors.append(
+                        FileError(
+                            selected_path,
+                            f"references unknown project id(s): {unknown}",
+                        )
+                    )
         except Exception as e:
             errors.append(FileError(selected_path, str(e)))
 
@@ -253,15 +258,19 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     en_ids = {p.name.split(".")[0] for p in project_dir.glob("*.en.yaml")}
     de_ids = {p.name.split(".")[0] for p in project_dir.glob("*.de.yaml")}
     for missing_id in en_ids - de_ids:
-        errors.append(FileError(
-            project_dir / f"{missing_id}.de.yaml",
-            "missing DE counterpart for EN project file",
-        ))
+        errors.append(
+            FileError(
+                project_dir / f"{missing_id}.de.yaml",
+                "missing DE counterpart for EN project file",
+            )
+        )
     for missing_id in de_ids - en_ids:
-        errors.append(FileError(
-            project_dir / f"{missing_id}.en.yaml",
-            "missing EN counterpart for DE project file",
-        ))
+        errors.append(
+            FileError(
+                project_dir / f"{missing_id}.en.yaml",
+                "missing EN counterpart for DE project file",
+            )
+        )
 
     errors.extend(_validate_profile_variant_parity(content_dir))
     errors.extend(_validate_headline_variant_completeness(content_dir))

@@ -1,4 +1,5 @@
 """Smoke test: --private overlay produces a different PDF in dist-private/."""
+
 import shutil
 import subprocess
 import sys
@@ -35,7 +36,7 @@ def fake_private_yaml(repo_root):
     private_dir.mkdir(exist_ok=True)
     private_file.write_text(
         'phone: "+49 000 0000000"\n'
-        'address:\n'
+        "address:\n"
         '  street: "Teststr. 1"\n'
         '  postal_code: "00000"\n'
         '  city: "Testville"\n'
@@ -69,7 +70,9 @@ def test_private_build_produces_pdf_different_from_public(repo_root, fake_privat
     # Public build
     r_pub = subprocess.run(
         [sys.executable, "-m", "pdf.build", "--lang", "en"],
-        cwd=repo_root, capture_output=True, text=True,
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
     )
     assert r_pub.returncode == 0, f"public build failed: {r_pub.stderr}"
     assert public_out.exists()
@@ -77,7 +80,9 @@ def test_private_build_produces_pdf_different_from_public(repo_root, fake_privat
     # Private build (with fixture overlay)
     r_priv = subprocess.run(
         [sys.executable, "-m", "pdf.build", "--lang", "en", "--private"],
-        cwd=repo_root, capture_output=True, text=True,
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
     )
     assert r_priv.returncode == 0, f"private build failed: {r_priv.stderr}"
     assert private_out.exists()
@@ -102,7 +107,9 @@ def test_private_build_fails_when_private_yaml_missing(repo_root):
     try:
         result = subprocess.run(
             [sys.executable, "-m", "pdf.build", "--lang", "en", "--private"],
-            cwd=repo_root, capture_output=True, text=True,
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
         )
         assert result.returncode != 0, "expected non-zero exit when private.yaml missing"
         assert "does not exist" in result.stderr, (
