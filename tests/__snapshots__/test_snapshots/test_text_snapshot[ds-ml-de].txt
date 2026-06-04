@@ -6,9 +6,9 @@ jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/
 PROFIL
 ================================================================================
 Produktionsorientierter Data Scientist, der Machine-Learning-Systeme durchgängig
-entwickelt und ausliefert — und die experimentelle Sorgfalt eines Jahrzehnts in
-der Krebsgenomik sowie 10+ peer-reviewed Publikationen in jedes Modell und jede
-Pipeline einbringt.
+entwickelt und ausliefert — und die experimentelle Sorgfalt eines
+Forschungsjahrzehnts in Krebsgenomik und experimenteller Biophysik sowie 10+
+peer-reviewed Publikationen in jedes Modell und jede Pipeline einbringt.
 
 In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in
 die Google Cloud, Entwicklung von BigQueryML-Modellen für Geldwäscheprävention &

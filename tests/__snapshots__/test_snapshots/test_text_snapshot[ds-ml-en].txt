@@ -6,8 +6,9 @@ jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/
 PROFILE
 ================================================================================
 Production-focused data scientist who builds and ships machine-learning systems
-end to end — bringing the experimental rigor of a decade in cancer genomics, and
-10+ peer-reviewed publications, to every model and pipeline.
+end to end — bringing the experimental rigor of a research decade across cancer
+genomics and experimental biophysics, and 10+ peer-reviewed publications, to
+every model and pipeline.
 
 In industry: architected the migration of 1,000+ analytical processes to Google
 Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached

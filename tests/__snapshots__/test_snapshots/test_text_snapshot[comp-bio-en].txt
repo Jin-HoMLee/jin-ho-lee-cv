@@ -7,9 +7,10 @@ PROFILE
 ================================================================================
 Bioinformatician specializing in HLA typing and neoantigen discovery —
 engineering in-silico pipelines from real-patient NGS and RNA-Seq data, packaged
-as reproducible Snakemake workflows. Backed by 10+ peer-reviewed publications as
-first- and shared-first author in Cancers, Epigenetics Methods, and OBM
-Genetics, grounded in wet-lab training at DKFZ, NCT, FZ Jülich, KIP, and SNU.
+as reproducible Snakemake workflows, with wet-lab training at DKFZ, NCT, FZ
+Jülich, KIP, and SNU. A parallel line of experimental-biophysics research
+produced 10+ peer-reviewed papers — first- and shared-first author — in super-
+resolution microscopy of DNA-damage repair and chromatin.
 
 Equally at home in production: migrated 1,000+ analytical processes to Google
 Cloud, built reproducible data pipelines, and mentored 100+ specialists in

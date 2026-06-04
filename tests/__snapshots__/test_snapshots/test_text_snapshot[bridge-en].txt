@@ -7,9 +7,10 @@ PROFILE
 ================================================================================
 Data scientist with deep roots in cancer genomics. Engineered in-silico
 pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-
-Seq data, backed by 10+ peer-reviewed publications — first- and shared-first
-author in Cancers, Epigenetics Methods, and OBM Genetics — grounded in wet-lab
-training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU.
+Seq data, grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ
+Jülich, KIP, and SNU. A parallel line of experimental-biophysics research
+produced 10+ peer-reviewed papers — first- and shared-first author — in super-
+resolution microscopy of DNA-damage repair and chromatin.
 
 Now applying that rigor in industry: architected the migration of 1,000+
 analytical processes to Google Cloud, shipped BigQueryML models for anti-
