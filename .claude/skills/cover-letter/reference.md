@@ -38,6 +38,7 @@ Copy shapes from the committed `applications.example/` folder.
 | `salary_expectation` | Range — **context only**, never rendered unless the JD asks + user confirms. |
 | `relocation` | Willingness / constraints. |
 | `preferences` | Company size, remote, domain (`{ en, de }`). |
+| `joy` | What you genuinely enjoy about the day-to-day work (`{ en, de }`) — distinct from `motivation` (the bigger why). |
 
 ## `interview.yaml` fields (per job)
 - `why_company` — why this company/role.
@@ -45,6 +46,9 @@ Copy shapes from the committed `applications.example/` folder.
 - `gaps` — list of `{ requirement, decision, note }`; `decision` ∈
   `transferable` / `omit` / `example`.
 - `notes` — extra context for the draft.
+- `voice_sample` — one concrete anecdote in the user's own words, captured
+  **verbatim** (problem → what they did → outcome). The voice exemplar for drafting
+  and a STAR source. Optional; schema-free.
 
 ## Letter conventions
 - **DIN 5008 (de):** sender letterhead, right-aligned date, recipient block, bold
