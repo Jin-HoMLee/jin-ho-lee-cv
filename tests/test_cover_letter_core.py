@@ -411,3 +411,58 @@ def test_render_letter_clean_draft_emits_no_warn(apps, capsys):
     )
     clc.render_letter(slug, fmt="text", apps_dir=apps)
     assert "WARN" not in capsys.readouterr().err
+
+
+# --- JD↔CV keyword gap (issue #74) ---------------------------------------------
+
+
+def test_flatten_strings_walks_nested_structures():
+    facts = {"a": ["x", {"b": "y"}], "c": "z", "n": 3, "ok": True}
+    assert set(clc._flatten_strings(facts)) == {"x", "y", "z"}
+
+
+def test_tokenize_lowercases_drops_stopwords_and_short_tokens():
+    toks = clc._tokenize("The CRISPR and a to Python")
+    assert "crispr" in toks
+    assert "python" in toks
+    assert "the" not in toks  # stopword
+    assert "and" not in toks  # stopword
+    assert "to" not in toks  # too short
+    assert "a" not in toks  # too short
+
+
+def test_keyword_gap_buckets_evidenced_vs_gaps():
+    cv = {"skills": ["Python", "Snakemake"], "exp": {"text": "variant calling pipelines"}}
+    job = "We need Python and CRISPR screening experience."
+    out = clc._keyword_gap(cv, job)
+    assert "python" in out["evidenced"]
+    assert "crispr" in out["gaps"]
+    assert "screening" in out["gaps"]
+    assert "python" not in out["gaps"]
+
+
+def test_keyword_gap_drops_stopwords_and_short_tokens():
+    cv = {"x": "alpha"}
+    out = clc._keyword_gap(cv, "the and for a to alpha")
+    assert out["evidenced"] == ["alpha"]
+    assert out["gaps"] == []
+
+
+def test_keyword_gap_dedupes_and_handles_empty():
+    cv = {"x": "alpha"}
+    out = clc._keyword_gap(cv, "beta beta beta")
+    assert out["gaps"] == ["beta"]  # deduped, single occurrence
+    assert clc._keyword_gap({}, "") == {"evidenced": [], "gaps": []}
+
+
+def test_tokenize_handles_german_umlauts():
+    toks = clc._tokenize("Erfahrung mit Qualität und Lösungen für Daten")
+    assert "qualität" in toks
+    assert "lösungen" in toks
+    assert "für" not in toks  # stopword, now reachable with the Unicode regex
+    assert "und" not in toks  # stopword
+
+
+def test_keyword_gap_preserves_jd_first_seen_order():
+    out = clc._keyword_gap({}, "ruby java python ruby")
+    assert out["gaps"] == ["ruby", "java", "python"]  # first-seen order, deduped
