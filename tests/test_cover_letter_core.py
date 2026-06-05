@@ -390,3 +390,24 @@ def test_validate_application_accepts_unquoted_date(apps):
     clc.save_draft(slug, "body\n", apps_dir=apps)
     res = clc.validate_application(slug, apps_dir=apps)
     assert res["valid"] is True, res["errors"]
+
+
+def test_render_letter_warns_on_cliche(apps, capsys):
+    slug = _make_app(apps, language="en")
+    clc.save_draft(slug, "I am passionate about leveraging robust solutions.\n", apps_dir=apps)
+    res = clc.render_letter(slug, fmt="text", apps_dir=apps)
+    assert res["ok"] is True  # advisory: never blocks rendering
+    err = capsys.readouterr().err
+    assert "WARN" in err
+    assert "passionate" in err
+
+
+def test_render_letter_clean_draft_emits_no_warn(apps, capsys):
+    slug = _make_app(apps, language="en")
+    clc.save_draft(
+        slug,
+        "I rebuilt the variant-calling pipeline after it kept dropping reads.\n",
+        apps_dir=apps,
+    )
+    clc.render_letter(slug, fmt="text", apps_dir=apps)
+    assert "WARN" not in capsys.readouterr().err

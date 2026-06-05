@@ -13,6 +13,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 from datetime import date as _date
 from pathlib import Path, PurePosixPath
@@ -20,7 +21,7 @@ from pathlib import Path, PurePosixPath
 from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
 
-from scripts import agent_core, letter_text
+from scripts import agent_core, letter_lint, letter_text
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
 from scripts.render_web_data import _to_jsonable
@@ -438,6 +439,8 @@ def render_letter(slug: str, *, fmt: str = "all", apps_dir: Path = APPS_DIR) -> 
     bundle = read_application(slug, apps_dir=apps_dir)
     lang = bundle["application"]["language"]
     letter = _assemble_letter(bundle["application"], bundle["draft"], lang)
+    for finding in letter_lint.lint_body(bundle["draft"] or "", lang):
+        print(f"WARN: {finding}", file=sys.stderr)
     sender = _public_sender(lang)
 
     rendered: list[str] = []
