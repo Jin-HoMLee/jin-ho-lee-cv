@@ -30,7 +30,7 @@ Twelve phases (0–11), sequential. Each produces a usable artifact and gets its
 | 8c | Web target switcher (client-side variant positioning) | ✅ Done (merged 2026-05-31, PR #39, commit `6ced593`) |
 | 9 | Web design overhaul (2026 dark-technical: CV-as-code hero, bento stat band, dark/light theme) | ✅ Done (merged 2026-05-31, PR #40, commit `be80dc6`) |
 | 10 | Agent interface (MCP server + skill over `content/` + validate) | ✅ Done (merged 2026-06-03, PR #63, commit `fbc18fe`) |
-| 11 | Cover-letter generator (interview + JD → tailored letter, PDF + text) | ✅ Done (merged 2026-06-03, `--no-ff`, PR #66 @claude-approved) |
+| 11 | Cover-letter generator (interview + JD → tailored letter, PDF + text) | ✅ Done (merged 2026-06-03, `--no-ff`, PR #66 @claude-approved); personal-voice craft upgrade (anti-slop brief, voice sample, self-critique, jd-gap report, cliché linter) added 2026-06-05 (#74) |
 
 ## Layout
 
@@ -44,7 +44,7 @@ data/citations.json      generated, committed Crossref citation cache (lockfile)
 schema/cv.schema.json          JSON Schema for content
 schema/application.schema.json schema for cover-letter application.yaml
 schema/profile.schema.json     schema for the evergreen cover-letter profile.yaml
-scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py, fetch_citations.py, citations.py, agent_core.py, mcp_server.py, cover_letter_core.py, letter_text.py, render_letter.py
+scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py, fetch_citations.py, citations.py, agent_core.py, mcp_server.py, cover_letter_core.py, letter_text.py, render_letter.py, letter_lint.py, jd_gap.py
 tests/                    pytest suite
 pdf/                      Typst PDF renderer (Phase 1; incl. templates/cover-letter.typ for the DIN 5008 letter)
 web/                      Astro website (Phase 3)
@@ -75,6 +75,7 @@ just web-build         # Production build of web/dist
 just mcp-server        # run the CV MCP server (stdio) — point an MCP client at this
 just mcp-dev           # MCP Inspector against the server (needs the mcp dep group)
 just letter <slug>     # render a cover letter → applications/<slug>/cover-letter-*.{pdf,txt}
+just jd-gap <slug>     # advisory JD↔CV keyword report (checklist, not a verdict) for an application
 ```
 
 validate + test + lint must all be green before merging anything.
@@ -101,9 +102,13 @@ validate + test + lint must all be green before merging anything.
   repo is public); the generator reads `content/` via `cover_letter_core.cv_facts`
   (PII-safe `agent_core.read_cv`) and writes only under `applications/`. PDFs merge
   `content.private/` at render time and stay gitignored. Never commit `applications/`.
-  Core: `scripts/cover_letter_core.py` (+ `letter_text.py`, `render_letter.py`); skill:
-  `.claude/skills/cover-letter/`. Rendered text never contains the private address;
-  only the gitignored PDF does.
+  Core: `scripts/cover_letter_core.py` (+ `letter_text.py`, `render_letter.py`,
+  `letter_lint.py`, `jd_gap.py`); skill: `.claude/skills/cover-letter/`. The skill carries
+  craft guidance ("How to write the body" + "AI tells & clichés to avoid" in reference.md);
+  `just jd-gap <slug>` prints an advisory JD↔CV keyword checklist (not a verdict) and the
+  cliché linter prints advisory `WARN:` lines from `render_letter` — both deterministic,
+  neither ever blocks. Rendered text never contains the private address; only the gitignored
+  PDF does.
 
 ## Workflow for new phases
 
