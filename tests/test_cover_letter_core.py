@@ -466,3 +466,36 @@ def test_tokenize_handles_german_umlauts():
 def test_keyword_gap_preserves_jd_first_seen_order():
     out = clc._keyword_gap({}, "ruby java python ruby")
     assert out["gaps"] == ["ruby", "java", "python"]  # first-seen order, deduped
+
+
+def test_jd_keyword_gap_reads_job_md_and_grounds_in_cv(apps):
+    slug = _make_app(apps, language="en")  # _make_app writes job.md = "x"
+    clc._atomic_write(
+        f"{slug}/job.md",
+        "Seeking Python and bioinformatics; frobnicatorxyz mastery required.",
+        apps_dir=apps,
+    )
+    out = clc.jd_keyword_gap(slug, apps_dir=apps)
+    assert isinstance(out["evidenced"], list)
+    assert "python" in out["evidenced"]  # Python is a core CV skill
+    assert "frobnicatorxyz" in out["gaps"]  # nonsense token absent from the CV
+
+
+def test_jd_keyword_gap_missing_job_raises(apps):
+    slug = _make_app(apps, language="en")
+    (apps / slug / "job.md").unlink()
+    with pytest.raises(FileNotFoundError):
+        clc.jd_keyword_gap(slug, apps_dir=apps)
+
+
+def test_jd_keyword_gap_unknown_slug_raises_no_such_application(apps):
+    with pytest.raises(FileNotFoundError, match="no such application"):
+        clc.jd_keyword_gap("never-created-slug", apps_dir=apps)
+
+
+def test_jd_gap_cli_reports_error_cleanly(capsys):
+    from scripts import jd_gap
+
+    rc = jd_gap.main(["definitely-not-a-real-application-slug-xyz"])
+    assert rc == 1
+    assert "error" in capsys.readouterr().err.lower()

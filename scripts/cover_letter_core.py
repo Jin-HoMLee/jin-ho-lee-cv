@@ -397,6 +397,23 @@ def _keyword_gap(facts: dict, job_text: str) -> dict:
     }
 
 
+def jd_keyword_gap(slug: str, *, apps_dir: Path = APPS_DIR) -> dict:
+    """Advisory JD↔CV keyword report for an application: {'evidenced', 'gaps'}.
+
+    Reads applications/<slug>/job.md and grounds against the PII-safe cv_facts().
+    A checklist, not a verdict — see _keyword_gap. Raises FileNotFoundError if the
+    application has no job.md yet.
+    """
+    slug = _sanitize_slug(slug)
+    app_dir = _safe_application_path(slug, apps_dir=apps_dir)
+    if not app_dir.is_dir():
+        raise FileNotFoundError(f"no such application: {slug}")
+    job_file = app_dir / "job.md"
+    if not job_file.exists():
+        raise FileNotFoundError(f"no job.md for application: {slug}")
+    return _keyword_gap(cv_facts(), job_file.read_text(encoding="utf-8"))
+
+
 def validate_application(slug: str, *, apps_dir: Path = APPS_DIR) -> dict:
     """Schema + sanity checks. Returns {'valid', 'errors', 'warnings'}."""
     slug = _sanitize_slug(slug)
