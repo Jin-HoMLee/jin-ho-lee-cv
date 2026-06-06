@@ -68,3 +68,11 @@ def test_skill_frontmatter_has_name_and_description():
     fm = text.split("---", 2)[1]
     assert re.search(r"^name:\s*\S", fm, re.M)
     assert re.search(r"^description:\s*\S", fm, re.M)
+
+
+def test_reference_documents_craft_sections():
+    """Drift-guard: reference.md must carry the craft-upgrade sections (#74)."""
+    ref = (SKILL_DIR / "reference.md").read_text(encoding="utf-8")
+    assert "How to write the body" in ref
+    assert "AI tells" in ref
+    assert "voice_sample" in ref  # documented in the interview field list

@@ -19,7 +19,8 @@
     "availability": { "type": "string" },
     "salary_expectation": { "type": "string" },
     "relocation": { "type": "string" },
-    "preferences": { "$ref": "#/$defs/LangString" }
+    "preferences": { "$ref": "#/$defs/LangString" },
+    "joy": { "$ref": "#/$defs/LangString" }
   },
   "additionalProperties": false
 }

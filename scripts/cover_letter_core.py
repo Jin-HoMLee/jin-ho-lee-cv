@@ -13,6 +13,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 from datetime import date as _date
 from pathlib import Path, PurePosixPath
@@ -20,7 +21,7 @@ from pathlib import Path, PurePosixPath
 from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
 
-from scripts import agent_core, letter_text
+from scripts import agent_core, letter_lint, letter_text
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
 from scripts.render_web_data import _to_jsonable
@@ -220,6 +221,201 @@ def save_draft(slug: str, body: str, *, apps_dir: Path = APPS_DIR) -> None:
 def cv_facts(*, lang: str = "en", target: str = "bridge") -> dict:
     """The single grounding source — a PII-safe reuse of agent_core.read_cv."""
     return agent_core.read_cv(lang=lang, target=target)
+
+
+# --- JD↔CV keyword gap: advisory honesty diff (issue #74) -----------------------
+#
+# A CHECKLIST, NOT A VERDICT. Deliberately over-surfaces: the gap list will contain
+# false alarms (semantic near-misses, generic words). The agent prunes them. The
+# high-precision signal is *absence* — a specific technical term appearing literally
+# nowhere in the CV is a trustworthy "do not claim this" anti-fabrication flag.
+# Deterministic; never blocks anything.
+
+# First char a Unicode letter (handles German umlauts: ä ö ü ß), then letters/
+# digits/underscore plus + and # (so "c++", "c#" survive). Python `re` is Unicode
+# by default for str patterns, so no flag is needed.
+_TOKEN_RE = re.compile(r"[^\W\d_][\w+#]*")
+_MIN_TOKEN_LEN = 3
+_STOPWORDS = frozenset(
+    {
+        # English
+        "the",
+        "and",
+        "for",
+        "with",
+        "you",
+        "your",
+        "our",
+        "will",
+        "are",
+        "has",
+        "have",
+        "this",
+        "that",
+        "from",
+        "who",
+        "all",
+        "any",
+        "can",
+        "not",
+        "but",
+        "its",
+        "their",
+        "they",
+        "them",
+        "was",
+        "were",
+        "been",
+        "being",
+        "into",
+        "out",
+        "off",
+        "over",
+        "under",
+        "more",
+        "most",
+        "such",
+        "than",
+        "then",
+        "also",
+        "may",
+        "must",
+        "should",
+        "would",
+        "could",
+        "about",
+        "across",
+        "within",
+        "using",
+        "use",
+        "used",
+        "work",
+        "working",
+        "role",
+        "team",
+        "teams",
+        "including",
+        "etc",
+        "ability",
+        "experience",
+        "years",
+        "year",
+        "strong",
+        "good",
+        "excellent",
+        "required",
+        "preferred",
+        "plus",
+        # German
+        "und",
+        "oder",
+        "der",
+        "die",
+        "das",
+        "den",
+        "dem",
+        "des",
+        "ein",
+        "eine",
+        "einen",
+        "einer",
+        "mit",
+        "für",
+        "von",
+        "aus",
+        "bei",
+        "sich",
+        "sie",
+        "wir",
+        "ihr",
+        "ihre",
+        "ihren",
+        "auf",
+        "als",
+        "auch",
+        "sind",
+        "ist",
+        "wird",
+        "werden",
+        "haben",
+        "sein",
+        "nicht",
+        "kann",
+        "sowie",
+        "bzw",
+        "unsere",
+        "unseren",
+    }
+)
+
+
+def _flatten_strings(obj) -> list[str]:
+    """Recursively collect every string leaf from a nested dict/list structure.
+
+    Non-string leaves (ints, bools, ``datetime.date``) are intentionally skipped —
+    only text is tokenizable for the keyword-gap comparison.
+    """
+    out: list[str] = []
+    if isinstance(obj, str):
+        out.append(obj)
+    elif isinstance(obj, dict):
+        for v in obj.values():
+            out.extend(_flatten_strings(v))
+    elif isinstance(obj, (list, tuple)):
+        for v in obj:
+            out.extend(_flatten_strings(v))
+    return out
+
+
+def _tokenize(text: str | None) -> set[str]:
+    """Lowercase word tokens, dropping stopwords and tokens shorter than the floor."""
+    return {
+        tok
+        for m in _TOKEN_RE.finditer(text or "")
+        if (tok := m.group(0).lower()) not in _STOPWORDS and len(tok) >= _MIN_TOKEN_LEN
+    }
+
+
+def _keyword_gap(facts: dict, job_text: str) -> dict:
+    """Bucket JD tokens into evidenced (present in the CV) and gaps (absent).
+
+    Advisory: over-surfaces by design. Output lists preserve JD first-seen order and
+    are deduplicated.
+    """
+    cv_tokens: set[str] = set()
+    for s in _flatten_strings(facts):
+        cv_tokens |= _tokenize(s)
+
+    seen: list[str] = []
+    jd_seen: set[str] = set()
+    for m in _TOKEN_RE.finditer(job_text or ""):
+        tok = m.group(0).lower()
+        if tok in _STOPWORDS or len(tok) < _MIN_TOKEN_LEN or tok in jd_seen:
+            continue
+        jd_seen.add(tok)
+        seen.append(tok)
+
+    return {
+        "evidenced": [t for t in seen if t in cv_tokens],
+        "gaps": [t for t in seen if t not in cv_tokens],
+    }
+
+
+def jd_keyword_gap(slug: str, *, apps_dir: Path = APPS_DIR) -> dict:
+    """Advisory JD↔CV keyword report for an application: {'evidenced', 'gaps'}.
+
+    Reads applications/<slug>/job.md and grounds against the PII-safe cv_facts().
+    A checklist, not a verdict — see _keyword_gap. Raises FileNotFoundError if the
+    application has no job.md yet.
+    """
+    slug = _sanitize_slug(slug)
+    app_dir = _safe_application_path(slug, apps_dir=apps_dir)
+    if not app_dir.is_dir():
+        raise FileNotFoundError(f"no such application: {slug}")
+    job_file = app_dir / "job.md"
+    if not job_file.exists():
+        raise FileNotFoundError(f"no job.md for application: {slug}")
+    return _keyword_gap(cv_facts(), job_file.read_text(encoding="utf-8"))
 
 
 def validate_application(slug: str, *, apps_dir: Path = APPS_DIR) -> dict:
@@ -438,6 +634,8 @@ def render_letter(slug: str, *, fmt: str = "all", apps_dir: Path = APPS_DIR) -> 
     bundle = read_application(slug, apps_dir=apps_dir)
     lang = bundle["application"]["language"]
     letter = _assemble_letter(bundle["application"], bundle["draft"], lang)
+    for finding in letter_lint.lint_body(bundle["draft"] or "", lang):
+        print(f"WARN: {finding}", file=sys.stderr)
     sender = _public_sender(lang)
 
     rendered: list[str] = []

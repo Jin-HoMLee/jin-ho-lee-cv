@@ -12,3 +12,6 @@ relocation: "Open to relocation within the Rhine-Neckar region; remote-friendly 
 preferences:
   en: "Mid-size research-driven company; genomics or clinical data; hybrid remote."
   de: "Mittelgroßes forschungsgetriebenes Unternehmen; Genomik oder klinische Daten; hybrid."
+joy:
+  en: "The moment a messy dataset finally clicks into a clean, queryable pipeline."
+  de: "Der Moment, in dem aus chaotischen Daten endlich eine saubere, abfragbare Pipeline wird."

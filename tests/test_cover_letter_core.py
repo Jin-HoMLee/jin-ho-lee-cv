@@ -390,3 +390,126 @@ def test_validate_application_accepts_unquoted_date(apps):
     clc.save_draft(slug, "body\n", apps_dir=apps)
     res = clc.validate_application(slug, apps_dir=apps)
     assert res["valid"] is True, res["errors"]
+
+
+def test_render_letter_warns_on_cliche(apps, capsys):
+    slug = _make_app(apps, language="en")
+    clc.save_draft(slug, "I am passionate about leveraging robust solutions.\n", apps_dir=apps)
+    res = clc.render_letter(slug, fmt="text", apps_dir=apps)
+    assert res["ok"] is True  # advisory: never blocks rendering
+    err = capsys.readouterr().err
+    assert "WARN" in err
+    assert "passionate" in err
+
+
+def test_render_letter_clean_draft_emits_no_warn(apps, capsys):
+    slug = _make_app(apps, language="en")
+    clc.save_draft(
+        slug,
+        "I rebuilt the variant-calling pipeline after it kept dropping reads.\n",
+        apps_dir=apps,
+    )
+    clc.render_letter(slug, fmt="text", apps_dir=apps)
+    assert "WARN" not in capsys.readouterr().err
+
+
+# --- JD↔CV keyword gap (issue #74) ---------------------------------------------
+
+
+def test_flatten_strings_walks_nested_structures():
+    facts = {"a": ["x", {"b": "y"}], "c": "z", "n": 3, "ok": True}
+    assert set(clc._flatten_strings(facts)) == {"x", "y", "z"}
+
+
+def test_tokenize_lowercases_drops_stopwords_and_short_tokens():
+    toks = clc._tokenize("The CRISPR and a to Python")
+    assert "crispr" in toks
+    assert "python" in toks
+    assert "the" not in toks  # stopword
+    assert "and" not in toks  # stopword
+    assert "to" not in toks  # too short
+    assert "a" not in toks  # too short
+
+
+def test_keyword_gap_buckets_evidenced_vs_gaps():
+    cv = {"skills": ["Python", "Snakemake"], "exp": {"text": "variant calling pipelines"}}
+    job = "We need Python and CRISPR screening experience."
+    out = clc._keyword_gap(cv, job)
+    assert "python" in out["evidenced"]
+    assert "crispr" in out["gaps"]
+    assert "screening" in out["gaps"]
+    assert "python" not in out["gaps"]
+
+
+def test_keyword_gap_drops_stopwords_and_short_tokens():
+    cv = {"x": "alpha"}
+    out = clc._keyword_gap(cv, "the and for a to alpha")
+    assert out["evidenced"] == ["alpha"]
+    assert out["gaps"] == []
+
+
+def test_keyword_gap_dedupes_and_handles_empty():
+    cv = {"x": "alpha"}
+    out = clc._keyword_gap(cv, "beta beta beta")
+    assert out["gaps"] == ["beta"]  # deduped, single occurrence
+    assert clc._keyword_gap({}, "") == {"evidenced": [], "gaps": []}
+
+
+def test_tokenize_handles_german_umlauts():
+    toks = clc._tokenize("Erfahrung mit Qualität und Lösungen für Daten")
+    assert "qualität" in toks
+    assert "lösungen" in toks
+    assert "für" not in toks  # stopword, now reachable with the Unicode regex
+    assert "und" not in toks  # stopword
+
+
+def test_keyword_gap_preserves_jd_first_seen_order():
+    out = clc._keyword_gap({}, "ruby java python ruby")
+    assert out["gaps"] == ["ruby", "java", "python"]  # first-seen order, deduped
+
+
+def test_jd_keyword_gap_reads_job_md_and_grounds_in_cv(apps):
+    slug = _make_app(apps, language="en")  # _make_app writes job.md = "x"
+    clc._atomic_write(
+        f"{slug}/job.md",
+        "Seeking Python and bioinformatics; frobnicatorxyz mastery required.",
+        apps_dir=apps,
+    )
+    out = clc.jd_keyword_gap(slug, apps_dir=apps)
+    assert isinstance(out["evidenced"], list)
+    assert "python" in out["evidenced"]  # Python is a core CV skill
+    assert "frobnicatorxyz" in out["gaps"]  # nonsense token absent from the CV
+
+
+def test_jd_keyword_gap_missing_job_raises(apps):
+    slug = _make_app(apps, language="en")
+    (apps / slug / "job.md").unlink()
+    with pytest.raises(FileNotFoundError):
+        clc.jd_keyword_gap(slug, apps_dir=apps)
+
+
+def test_jd_keyword_gap_unknown_slug_raises_no_such_application(apps):
+    with pytest.raises(FileNotFoundError, match="no such application"):
+        clc.jd_keyword_gap("never-created-slug", apps_dir=apps)
+
+
+def test_jd_gap_cli_reports_error_cleanly(capsys):
+    from scripts import jd_gap
+
+    rc = jd_gap.main(["definitely-not-a-real-application-slug-xyz"])
+    assert rc == 1
+    assert "error" in capsys.readouterr().err.lower()
+
+
+def test_jd_gap_cli_prints_report(capsys, monkeypatch):
+    from scripts import jd_gap
+
+    monkeypatch.setattr(
+        jd_gap, "jd_keyword_gap", lambda slug: {"evidenced": ["python"], "gaps": ["rust"]}
+    )
+    rc = jd_gap.main(["any-slug"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "EVIDENCED" in out and "GAPS" in out  # section headers
+    assert "+ python" in out  # evidenced term, bulleted
+    assert "? rust" in out  # gap term, bulleted

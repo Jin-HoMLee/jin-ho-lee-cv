@@ -77,6 +77,10 @@ build-text-targets:
 letter slug:
     uv run python -m scripts.render_letter "{{slug}}"
 
+# Advisory JD↔CV keyword gap report (checklist, not a verdict) → stdout
+jd-gap slug:
+    uv run python -m scripts.jd_gap "{{slug}}"
+
 # Render the llms.txt site map (llmstxt.org) → dist/llms.txt
 build-llms:
     uv run python -m scripts.render_llms

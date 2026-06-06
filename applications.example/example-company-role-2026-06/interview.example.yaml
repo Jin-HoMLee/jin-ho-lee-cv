@@ -7,3 +7,7 @@ gaps:
     decision: "transferable"
     note: "frame C/performance work honestly; no Rust claim"
 notes: "Keep it to one page; lead with the pipeline outcome."
+voice_sample: >-
+  The variant-calling pipeline I inherited kept silently dropping reads, so I
+  rewrote the filtering step over a weekend and added a check that fails loudly
+  when coverage drops. Caught two bad runs the next month.
