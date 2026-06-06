@@ -50,9 +50,11 @@ write lands under the gitignored `applications/` overlay — **never** commit it
    of work (not what they're good at) and save it to `profile.yaml: joy`.
    Save the per-job answers to `interview.yaml`.
 5. **Draft** — write the body into `draft.md`, grounded strictly in CV + profile +
-   interview answers. Before drafting, read the "How to write the body" and "AI tells
+   interview answers (and, if present, the work-style themes in `references.md` —
+   paraphrase those, never reuse them verbatim: they are referees' words *about*
+   Jin-Ho, not his own). Before drafting, read the "How to write the body" and "AI tells
    & clichés to avoid" sections in `reference.md`, and treat the raw `interview.yaml`
-   answers + `profile.yaml` + `references.md` as a `<voice_sample>`: these are Jin-Ho's
+   answers + `profile.yaml` as a `<voice_sample>`: these are Jin-Ho's
    own words — match his diction, sentence rhythm, and formality, and reuse his actual
    phrasings; do **not** upgrade his plain, specific words into polished corporate
    English (that laundering is the main way letters read as AI). Apply the drafting

@@ -499,3 +499,17 @@ def test_jd_gap_cli_reports_error_cleanly(capsys):
     rc = jd_gap.main(["definitely-not-a-real-application-slug-xyz"])
     assert rc == 1
     assert "error" in capsys.readouterr().err.lower()
+
+
+def test_jd_gap_cli_prints_report(capsys, monkeypatch):
+    from scripts import jd_gap
+
+    monkeypatch.setattr(
+        jd_gap, "jd_keyword_gap", lambda slug: {"evidenced": ["python"], "gaps": ["rust"]}
+    )
+    rc = jd_gap.main(["any-slug"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "EVIDENCED" in out and "GAPS" in out  # section headers
+    assert "+ python" in out  # evidenced term, bulleted
+    assert "? rust" in out  # gap term, bulleted

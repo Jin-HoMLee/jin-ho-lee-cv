@@ -350,7 +350,11 @@ _STOPWORDS = frozenset(
 
 
 def _flatten_strings(obj) -> list[str]:
-    """Recursively collect every string leaf from a nested dict/list structure."""
+    """Recursively collect every string leaf from a nested dict/list structure.
+
+    Non-string leaves (ints, bools, ``datetime.date``) are intentionally skipped —
+    only text is tokenizable for the keyword-gap comparison.
+    """
     out: list[str] = []
     if isinstance(obj, str):
         out.append(obj)
