@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import dataclasses
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -15,6 +16,13 @@ from scripts.langstring import resolve_langstrings
 from scripts.publications import format_publication_summary, publication_mode
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def _private_yaml_path() -> Path:
+    """Path to the private overlay. `CV_PRIVATE_YAML` overrides the default so
+    tests can point at a temp file instead of the real content.private/."""
+    override = os.environ.get("CV_PRIVATE_YAML")
+    return Path(override) if override else REPO_ROOT / "content.private" / "private.yaml"
 
 
 def _check_typst_version() -> None:
@@ -126,7 +134,7 @@ def main(argv: list[str] | None = None) -> int:
     _check_typst_version()
 
     content_dir = REPO_ROOT / "content"
-    private_path = REPO_ROOT / "content.private" / "private.yaml" if args.private else None
+    private_path = _private_yaml_path() if args.private else None
 
     if args.private and not private_path.exists():
         print(
