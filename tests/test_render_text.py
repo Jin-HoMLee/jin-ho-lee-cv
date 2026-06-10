@@ -84,32 +84,13 @@ def test_no_trailing_whitespace(en_text, de_text):
             assert line == line.rstrip(), f"trailing whitespace on line {i}"
 
 
-def test_pii_never_reaches_main_output(tmp_path):
+def test_pii_never_reaches_main_output(tmp_path, private_leak_check):
     """Even if a private overlay exists, the main() CLI must not include it."""
-    private_dir = REPO_ROOT / "content.private"
-    private_yaml = private_dir / "private.yaml"
-    marker_phone = "+49-555-PYTEST-MARKER"
-    marker_street = "Pytest-Marker-Strasse 99"
-    cleanup_dir = not private_dir.exists()
-    cleanup_file = not private_yaml.exists()
-    try:
-        private_dir.mkdir(exist_ok=True)
-        private_yaml.write_text(
-            f"personal:\n  phone: '{marker_phone}'\n  location:\n    street: '{marker_street}'\n",
-            encoding="utf-8",
-        )
-        output = tmp_path / "cv-en.txt"
-        from scripts.render_text import main
+    from scripts.render_text import main
 
-        main(["--lang", "en", "--output", str(output)])
-        text = output.read_text()
-        assert marker_phone not in text, "PII leaked: private phone in cv-en.txt"
-        assert marker_street not in text, "PII leaked: private street in cv-en.txt"
-    finally:
-        if cleanup_file and private_yaml.exists():
-            private_yaml.unlink()
-        if cleanup_dir and private_dir.exists():
-            private_dir.rmdir()
+    private_leak_check(
+        lambda out: main(["--lang", "en", "--output", str(out)]), tmp_path / "cv-en.txt"
+    )
 
 
 def test_header_url_uses_pages_base(en_text):

@@ -83,6 +83,10 @@ validate + test + lint must all be green before merging anything.
 ## Conventions
 
 - **TDD for non-trivial Python.** Tests first, watch them fail, then implement.
+- **Tests never touch `content.private/`.** The real `private.yaml` is PII outside git's
+  protection — tests write private overlays only under `tmp_path` (PDF build: via the
+  `CV_PRIVATE_YAML` env override). A session-wide autouse guard in `tests/conftest.py`
+  fails the run if any test mutates the real file (issue #77).
 - **Golden snapshots.** Renderer outputs (`resume.json`, `person.jsonld`, `cv-{en,de}.txt`, `llms.txt`, web `content.*.json`) are byte-snapshotted with syrupy under `tests/__snapshots__/`; CI fails on unintended drift. Regenerate intentionally with `just snapshots-update` and eyeball the diff. `scripts/validate.py` also hard-fails reversed periods and advisory-warns implausible dates.
 - **ATS guard.** The built PDF's text layer is CI-verified (`tests/test_ats_pdf.py` via the `ats-guard` job — name/email/headings/umlauts round-trip through `pdftotext`); the `release` job depends on it. Note: Typst letter-spacing makes `pdftotext` emit intra-word spaces in styled headings (e.g. `SELECTED PROJECTS` → `PROJ ECTS`), so the guard asserts only cleanly-extracting headings (`PROFILE`/`SKILLS`/`EDUCATION`/`PUBLICATIONS`) — don't re-add spaced ones. `/llms.txt` (llmstxt.org site map) is generated into `web/public/` for the deployed site (gitignored, like `person.jsonld`).
 - **Atomic commits.** One logical change per commit. Plain commit messages — no Claude attribution / co-authored-by trailers unless explicitly requested.

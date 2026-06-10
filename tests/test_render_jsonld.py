@@ -149,32 +149,11 @@ def test_no_pii_in_output(doc):
         assert kw not in text, f"unexpected PII keyword in output: {kw!r}"
 
 
-def test_pii_never_reaches_main_output(tmp_path):
+def test_pii_never_reaches_main_output(tmp_path, private_leak_check):
     """Even if a private overlay exists in the repo, main() must not include it."""
-    private_dir = REPO_ROOT / "content.private"
-    private_yaml = private_dir / "private.yaml"
-    marker_phone = "+49-555-PYTEST-MARKER"
-    marker_street = "Pytest-Marker-Strasse 99"
-    cleanup_dir = not private_dir.exists()
-    cleanup_file = not private_yaml.exists()
-    try:
-        private_dir.mkdir(exist_ok=True)
-        private_yaml.write_text(
-            f"personal:\n  phone: '{marker_phone}'\n  location:\n    street: '{marker_street}'\n",
-            encoding="utf-8",
-        )
-        output = tmp_path / "person.jsonld"
-        from scripts.render_jsonld import main
+    from scripts.render_jsonld import main
 
-        main(["--output", str(output)])
-        text = output.read_text()
-        assert marker_phone not in text, "PII leaked: private phone in person.jsonld"
-        assert marker_street not in text, "PII leaked: private street in person.jsonld"
-    finally:
-        if cleanup_file and private_yaml.exists():
-            private_yaml.unlink()
-        if cleanup_dir and private_dir.exists():
-            private_dir.rmdir()
+    private_leak_check(lambda out: main(["--output", str(out)]), tmp_path / "person.jsonld")
 
 
 # --- ScholarlyArticle nodes ---
