@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# PII-leak guard: block commits that would leak content.private values or PII paths.
+# Activate once per clone with:  just install-hooks  (sets core.hooksPath=.githooks)
+exec uv run python -m scripts.check_pii --staged

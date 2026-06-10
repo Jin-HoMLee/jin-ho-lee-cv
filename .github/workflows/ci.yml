@@ -29,6 +29,9 @@ jobs:
       - name: Validate content
         run: uv run python -m scripts.validate
 
+      - name: Check for PII leaks
+        run: uv run python -m scripts.check_pii --tree
+
       - name: Run tests
         run: uv run pytest -v --tb=short
 

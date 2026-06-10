@@ -14,6 +14,14 @@ lint:
 fmt:
     uv run ruff format .
 
+# Scan staged files for PII leaks (content.private values + gitignored PII paths)
+check-pii:
+    uv run python -m scripts.check_pii --staged
+
+# Activate the committed git hooks (run once per clone)
+install-hooks:
+    git config core.hooksPath .githooks
+
 # Build the public PDF (no PII) → dist/cv-en.pdf
 build:
     uv run python -m pdf.build --lang en
