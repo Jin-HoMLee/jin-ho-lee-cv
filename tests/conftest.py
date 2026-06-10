@@ -57,8 +57,11 @@ def private_leak_check():
             marker_street = "Pytest-Marker-Strasse 99"
             created_dir = not REAL_PRIVATE_YAML.parent.exists()
             REAL_PRIVATE_YAML.parent.mkdir(exist_ok=True)
+            # Top-level keys, matching content.private.example/ — content_loader
+            # deep_merges the file into personal, so a `personal:` root would
+            # land at personal['personal'] and never be read (vacuous test).
             REAL_PRIVATE_YAML.write_text(
-                f"personal:\n  phone: '{marker_phone}'\n  location:\n    street: '{marker_street}'\n",
+                f"phone: '{marker_phone}'\naddress:\n  street: '{marker_street}'\n",
                 encoding="utf-8",
             )
             try:
@@ -67,7 +70,7 @@ def private_leak_check():
                 assert marker_phone not in text, f"PII leaked into {output_path.name}"
                 assert marker_street not in text, f"PII leaked into {output_path.name}"
             finally:
-                REAL_PRIVATE_YAML.unlink()
+                REAL_PRIVATE_YAML.unlink(missing_ok=True)
                 if created_dir:
                     REAL_PRIVATE_YAML.parent.rmdir()
 
