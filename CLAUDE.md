@@ -44,13 +44,14 @@ data/citations.json      generated, committed Crossref citation cache (lockfile)
 schema/cv.schema.json          JSON Schema for content
 schema/application.schema.json schema for cover-letter application.yaml
 schema/profile.schema.json     schema for the evergreen cover-letter profile.yaml
-scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py, fetch_citations.py, citations.py, agent_core.py, mcp_server.py, cover_letter_core.py, letter_text.py, render_letter.py, letter_lint.py, jd_gap.py
+scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py, fetch_citations.py, citations.py, agent_core.py, mcp_server.py, cover_letter_core.py, letter_text.py, render_letter.py, letter_lint.py, jd_gap.py, check_pii.py
 tests/                    pytest suite
 pdf/                      Typst PDF renderer (Phase 1; incl. templates/cover-letter.typ for the DIN 5008 letter)
 web/                      Astro website (Phase 3)
 .claude/skills/cv/        committed Claude skill (agent interface) — SKILL.md + reference.md
 .claude/skills/cover-letter/  committed Claude skill (cover-letter interview + render)
 .mcp.json                 Claude Code project-scoped MCP server config
+.githooks/pre-commit      committed git PII guard; activate per-clone with `just install-hooks`
 docs/superpowers/         specs and implementation plans for each phase
 .github/workflows/        ci.yml (validate + PDF + release), pages.yml (web deploy)
 ```
@@ -76,7 +77,11 @@ just mcp-server        # run the CV MCP server (stdio) — point an MCP client a
 just mcp-dev           # MCP Inspector against the server (needs the mcp dep group)
 just letter <slug>     # render a cover letter → applications/<slug>/cover-letter-*.{pdf,txt}
 just jd-gap <slug>     # advisory JD↔CV keyword report (checklist, not a verdict) for an application
+just check-pii         # scan staged files for PII leaks (content.private values + gitignored PII paths)
+just install-hooks     # activate the committed git hooks (run once per clone — sets core.hooksPath=.githooks)
 ```
+
+**First-clone setup:** run `just install-hooks` once to activate the git pre-commit PII guard.
 
 validate + test + lint must all be green before merging anything.
 
@@ -113,6 +118,17 @@ validate + test + lint must all be green before merging anything.
   cliché linter prints advisory `WARN:` lines from `render_letter` — both deterministic,
   neither ever blocks. Rendered text never contains the private address; only the gitignored
   PDF does.
+- **PII guard (block-hard).** `scripts/check_pii.py` is one detection core (`scan_files`,
+  pure: path + content bytes in, violations out) behind three surfaces — Claude Code
+  PreToolUse(Bash) hook (`.claude/settings.local.json` → `--hook`, denies a `git commit`
+  that leaks; gitignored so per-machine), committed git pre-commit hook (`.githooks/pre-commit`
+  → `--staged`, activated once per clone by `just install-hooks`, no new dependency), and the
+  CI `check-pii` step (`--tree`, the post-push backstop). It catches **known values** (the
+  guarded `content.private` literals: `phone`, `address.street`, `address.postal_code` —
+  `city`/`country` are intentionally public and excluded) and **PII paths** (`content.private/`,
+  `applications/`, `assets/{photo,signature}.*`; `content.private.example/` is allowed). Violation
+  messages never echo the matched secret. Tests use **synthetic** private values only (a real one
+  would self-flag); a drift-guard asserts `ci.yml` + `.githooks/pre-commit` actually invoke it.
 
 ## Workflow for new phases
 
