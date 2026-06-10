@@ -121,7 +121,7 @@ def scan_files(
             continue
         try:
             text = content.decode("utf-8")
-        except (UnicodeDecodeError, AttributeError):
+        except UnicodeDecodeError:
             continue  # binary / undecodable — path guard already had its turn
         if any(value in text for value in private_values):
             # Never echo the matched value — that would re-leak it into logs.

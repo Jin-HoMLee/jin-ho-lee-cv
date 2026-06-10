@@ -105,6 +105,19 @@ def test_main_staged_fails_closed_on_malformed_private(monkeypatch, capsys):
     assert "Traceback" not in err  # clean message, not a stack trace
 
 
+def test_main_tree_fails_closed_on_malformed_private(monkeypatch, capsys):
+    def boom():
+        raise PrivateConfigError("content.private/private.yaml is malformed (line 3)")
+
+    monkeypatch.setattr(check_pii, "_tracked_files", list)  # hermetic: no real git walk
+    monkeypatch.setattr(check_pii, "load_private_values", boom)
+    rc = check_pii.main(["--tree"])
+    assert rc == 1
+    err = capsys.readouterr().err
+    assert "malformed" in err
+    assert "Traceback" not in err
+
+
 def test_hook_denies_when_private_config_malformed():
     def boom():
         raise PrivateConfigError("content.private/private.yaml is malformed (line 3)")
