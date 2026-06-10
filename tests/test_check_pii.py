@@ -9,7 +9,9 @@ from pathlib import Path
 
 import pytest
 
+import scripts.check_pii as check_pii
 from scripts.check_pii import (
+    PrivateConfigError,
     Violation,
     _is_git_commit,
     hook_decision,
@@ -61,6 +63,55 @@ def test_load_private_values_excludes_city_and_country(tmp_path):
 
 def test_load_private_values_empty_when_file_absent(tmp_path):
     assert load_private_values(tmp_path / "does-not-exist.yaml") == set()
+
+
+# ---- malformed private.yaml → fail-closed, never crash, never echo content ----
+
+
+def _write_malformed(tmp_path):
+    p = tmp_path / "private.yaml"
+    # Unquoted value with stray colons → YAML ParserError (the real-world cause).
+    p.write_text(
+        'phone: "+49 000 0000000"\naddress:\n  street: Bad: value: here\n',
+        encoding="utf-8",
+    )
+    return p
+
+
+def test_load_private_values_raises_clean_error_on_malformed_yaml(tmp_path):
+    with pytest.raises(PrivateConfigError):
+        load_private_values(_write_malformed(tmp_path))
+
+
+def test_malformed_error_does_not_echo_file_content(tmp_path):
+    # A PII tool must never leak the offending line's value into its error text.
+    try:
+        load_private_values(_write_malformed(tmp_path))
+    except PrivateConfigError as e:
+        assert "Bad: value: here" not in str(e)
+    else:  # pragma: no cover
+        pytest.fail("expected PrivateConfigError")
+
+
+def test_main_staged_fails_closed_on_malformed_private(monkeypatch, capsys):
+    def boom():
+        raise PrivateConfigError("content.private/private.yaml is malformed (line 3)")
+
+    monkeypatch.setattr(check_pii, "run_staged_scan", boom)
+    rc = check_pii.main(["--staged"])
+    assert rc == 1  # blocks the commit
+    err = capsys.readouterr().err
+    assert "malformed" in err
+    assert "Traceback" not in err  # clean message, not a stack trace
+
+
+def test_hook_denies_when_private_config_malformed():
+    def boom():
+        raise PrivateConfigError("content.private/private.yaml is malformed (line 3)")
+
+    decision = hook_decision(_stdin("git commit -m x"), scan_fn=boom)
+    assert decision["hookSpecificOutput"]["permissionDecision"] == "deny"
+    assert "malformed" in decision["hookSpecificOutput"]["permissionDecisionReason"]
 
 
 # ---- scan_files: known-value scan (the "yesterday's leak" scenario) -------

@@ -24,6 +24,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from ruamel.yaml import YAML
+from ruamel.yaml.error import YAMLError
 
 
 yaml = YAML(typ="safe")
@@ -43,6 +44,10 @@ PII_PATH_ROOTS = (
 PII_PATH_ALLOW = ("content.private.example/",)
 
 
+class PrivateConfigError(Exception):
+    """content.private/private.yaml exists but can't be parsed (fail-closed)."""
+
+
 @dataclass(frozen=True)
 class Violation:
     path: str
@@ -60,8 +65,18 @@ def load_private_values(private_path: Path = PRIVATE_YAML) -> set[str]:
     """
     if not private_path.exists():
         return set()
-    with private_path.open("r", encoding="utf-8") as f:
-        data = yaml.load(f) or {}
+    try:
+        with private_path.open("r", encoding="utf-8") as f:
+            data = yaml.load(f) or {}
+    except YAMLError as e:
+        # Report only the location, never the offending line's content (it's PII).
+        mark = getattr(e, "problem_mark", None)
+        where = f" (line {mark.line + 1})" if mark is not None else ""
+        raise PrivateConfigError(
+            f"content.private/private.yaml is malformed{where} — the PII known-value "
+            "scan cannot run. Fix the YAML (quote values containing ':' or special "
+            "characters) or move the file aside."
+        ) from None
 
     values: set[str] = set()
     phone = data.get("phone")
@@ -204,18 +219,26 @@ def hook_decision(stdin_text: str, scan_fn=run_staged_scan) -> dict | None:
         return None
     if not isinstance(command, str) or not _is_git_commit(command):
         return None
-    violations = scan_fn()
+    try:
+        violations = scan_fn()
+    except PrivateConfigError as e:
+        # Fail-closed: a guard that can't run must not wave the commit through.
+        return _deny(f"PII guard could not run — {e} Commit blocked (fail-closed).")
     if not violations:
         return None
     paths = ", ".join(sorted({v.path for v in violations}))
+    return _deny(
+        "PII guard blocked this commit — staged files would leak private "
+        f"content.private values or paths: {paths}. Unstage them before committing."
+    )
+
+
+def _deny(reason: str) -> dict:
     return {
         "hookSpecificOutput": {
             "hookEventName": "PreToolUse",
             "permissionDecision": "deny",
-            "permissionDecisionReason": (
-                "PII guard blocked this commit — staged files would leak private "
-                f"content.private values or paths: {paths}. Unstage them before committing."
-            ),
+            "permissionDecisionReason": reason,
         }
     }
 
@@ -247,11 +270,18 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(decision))
         return 0  # decision is conveyed via JSON, not exit code
 
-    if args.staged:
-        return _report(run_staged_scan())
-
-    # --tree: CI backstop. CI has no content.private/, so this is path-guard only.
-    return _report(scan_files(_tracked_files(), load_private_values()))
+    # --staged: pre-commit. --tree: CI backstop (no content.private/ → path-guard only).
+    scan = (
+        run_staged_scan
+        if args.staged
+        else lambda: scan_files(_tracked_files(), load_private_values())
+    )
+    try:
+        violations = scan()
+    except PrivateConfigError as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        return 1  # fail-closed: block rather than skip the known-value scan
+    return _report(violations)
 
 
 if __name__ == "__main__":
