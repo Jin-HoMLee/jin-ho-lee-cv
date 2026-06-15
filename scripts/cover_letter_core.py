@@ -636,6 +636,8 @@ def render_letter(slug: str, *, fmt: str = "all", apps_dir: Path = APPS_DIR) -> 
     letter = _assemble_letter(bundle["application"], bundle["draft"], lang)
     for finding in letter_lint.lint_body(bundle["draft"] or "", lang):
         print(f"WARN: {finding}", file=sys.stderr)
+    for finding in letter_lint.lint_length(bundle["draft"] or ""):
+        print(f"WARN: {finding}", file=sys.stderr)
     sender = _public_sender(lang)
 
     rendered: list[str] = []

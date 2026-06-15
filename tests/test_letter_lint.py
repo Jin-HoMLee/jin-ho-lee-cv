@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from scripts.letter_lint import lint_body
+from scripts.letter_lint import lint_body, lint_length
 
 
 def test_flags_llm_signature_vocab():
@@ -59,3 +59,45 @@ def test_each_term_reported_at_most_once():
     out = lint_body("leverage leverage leverage robust", "en")
     leverage_hits = [f for f in out if "leverage" in f]
     assert len(leverage_hits) == 1
+
+
+# --- lint_length: advisory long-letter warning (issue #79) -------------------
+
+
+def test_length_under_threshold_yields_no_finding():
+    body = " ".join(["word"] * 300)
+    assert lint_length(body) == []
+
+
+def test_length_at_threshold_yields_no_finding():
+    # Threshold is strict-greater: exactly 400 words is still clean.
+    body = " ".join(["word"] * 400)
+    assert lint_length(body) == []
+
+
+def test_length_just_over_threshold_yields_finding():
+    # 401 words pins the off-by-one: strict-greater means 401 warns, 400 does not.
+    body = " ".join(["word"] * 401)
+    out = lint_length(body)
+    assert len(out) == 1
+    assert "401" in out[0]
+
+
+def test_length_over_threshold_yields_one_finding_with_count():
+    body = " ".join(["word"] * 450)
+    out = lint_length(body)
+    assert len(out) == 1
+    assert "450" in out[0]
+
+
+def test_length_ignores_bold_and_bullet_markup():
+    # 401 plain words would warn, but markup tokens must not be what pushes it over.
+    # Build exactly 350 real words wrapped in bold + a leading bullet marker.
+    words = " ".join([f"**word{i}**" for i in range(350)])
+    body = f"- {words}"
+    assert lint_length(body) == []
+
+
+def test_length_never_raises_on_empty_or_none():
+    assert lint_length("") == []
+    assert lint_length(None) == []
