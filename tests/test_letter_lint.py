@@ -75,6 +75,14 @@ def test_length_at_threshold_yields_no_finding():
     assert lint_length(body) == []
 
 
+def test_length_just_over_threshold_yields_finding():
+    # 401 words pins the off-by-one: strict-greater means 401 warns, 400 does not.
+    body = " ".join(["word"] * 401)
+    out = lint_length(body)
+    assert len(out) == 1
+    assert "401" in out[0]
+
+
 def test_length_over_threshold_yields_one_finding_with_count():
     body = " ".join(["word"] * 450)
     out = lint_length(body)
