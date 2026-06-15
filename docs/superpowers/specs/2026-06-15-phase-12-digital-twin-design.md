@@ -151,6 +151,12 @@ skill's anti-slop voice rules (specific, contractions allowed, no corporate clic
   configurable; daily during the pilot**, easy to drop to weekly later.
 - **`/twin-insights?token=…`**: token-protected page showing the latest digest prominently
   plus browsable raw questions. Email-push is a future add-on, not MVP.
+- **Operator cap-visibility (12b).** The same dashboard surfaces the live monthly usage
+  counter (e.g. "this month: 3,200 / 5,000 calls") so Jin-Ho can see how close the bot is to
+  the ceiling. In 12a, visitors get a graceful "twin's resting" fallback when the ceiling is
+  hit, but there is no operator-facing usage view — that is intentionally deferred here, since
+  this dashboard (already token-protected, with storage) is its natural home. Until 12b ships,
+  Cloudflare's own dashboard + a free native usage alert cover operator visibility.
 
 ## Testing
 

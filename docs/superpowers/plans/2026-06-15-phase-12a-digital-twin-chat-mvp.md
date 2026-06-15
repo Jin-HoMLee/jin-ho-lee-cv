@@ -1143,12 +1143,16 @@ git commit -m "test(twin): guardrail contract eval set (grounding/PII/injection)
 Create `web/src/lib/twin.ts`:
 
 ```ts
-// Posts the conversation to the Worker and yields streamed text deltas (SSE).
+// Discriminated stream chunks: text deltas, plus a one-off "truncated" signal when
+// Claude stopped because it hit max_tokens (so the UI can show a graceful affordance).
+export type TwinChunk = { type: "text"; text: string } | { type: "truncated" };
+
+// Posts the conversation to the Worker and yields streamed chunks (SSE).
 export async function* streamTwin(
   endpoint: string,
   messages: { role: "user" | "assistant"; content: string }[],
   turnstileToken: string,
-): AsyncGenerator<string> {
+): AsyncGenerator<TwinChunk> {
   const res = await fetch(endpoint, {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -1168,7 +1172,12 @@ export async function* streamTwin(
       if (!line.startsWith("data: ")) continue;
       try {
         const evt = JSON.parse(line.slice(6));
-        if (evt.type === "content_block_delta" && evt.delta?.text) yield evt.delta.text;
+        if (evt.type === "content_block_delta" && evt.delta?.text) {
+          yield { type: "text", text: evt.delta.text };
+        } else if (evt.type === "message_delta" && evt.delta?.stop_reason === "max_tokens") {
+          // The reply was cut at the per-answer cap — signal the UI, don't silently truncate.
+          yield { type: "truncated" };
+        }
       } catch {
         /* keep-alive / non-JSON line — ignore */
       }
@@ -1251,8 +1260,12 @@ const starters = [
       const out = bubble("assistant", "");
       let acc = "";
       try {
-        for await (const delta of streamTwin(endpoint, history, token)) {
-          acc += delta;
+        for await (const chunk of streamTwin(endpoint, history, token)) {
+          if (chunk.type === "text") {
+            acc += chunk.text;
+          } else if (chunk.type === "truncated") {
+            acc += " …(trimmed — ask me to go on)";
+          }
           out.textContent = acc;
           log.scrollTop = log.scrollHeight;
         }
@@ -1393,9 +1406,9 @@ git commit -m "docs(twin): worker deploy recipes + README + CLAUDE.md phase 12a 
 - Serverless proxy + own key, Haiku 4.5, prompt caching → Tasks 7, 8, 10, 11 ✅
 - Persona/guardrails (grounding, no-PII, anti-injection, AI-honesty) → Tasks 7, 12 ✅
 - Abuse guard: Turnstile + per-IP rate-limit + max_tokens + monthly ceiling → Tasks 9, 10, 11 ✅
-- Web widget: launcher/panel, preamble + privacy line, starters, streaming, theme-aware, graceful fallback → Tasks 13, 14 ✅
+- Web widget: launcher/panel, preamble + privacy line, starters, streaming, theme-aware, graceful fallback, `max_tokens` "trimmed" affordance → Tasks 13, 14 ✅
 - Deploy outside Pages, secrets via wrangler, new recipes, cost note → Task 15 ✅
-- **Deferred to 12b (correctly out of scope here):** D1 question log, cron digest, `/twin-insights` dashboard.
+- **Deferred to 12b (correctly out of scope here):** D1 question log, cron digest, `/twin-insights` dashboard, and operator cap-visibility (the live monthly-usage counter lives on that dashboard). 12a visitors still get the graceful "twin's resting" fallback when the ceiling is hit.
 
 **Placeholder scan:** The only intentional fill-in is `wrangler.toml`'s KV namespace id (created at deploy, documented in Task 15 README) and the post-merge commit hash in the CLAUDE.md row — both unavoidable deploy-time values, not logic gaps.
 
