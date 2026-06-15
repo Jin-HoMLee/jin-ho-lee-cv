@@ -115,8 +115,11 @@ CLOSE ON CONTRIBUTING + A CONCRETE NEXT STEP. End by naming what he'd contribute
 and propose a specific action ("I'd welcome a short call to walk through the [named] pipeline").
 Never the rote "thank you for your consideration".
 
-LENGTH. Half a page to one page; 3–4 paragraphs (intro/close 1–3 sentences, body 3–5). Pick
-only the strongest evidence — shorter, specific, and selective beats comprehensive.
+LENGTH. Aim ~300–350 words, hard stop ~375 — half to two-thirds of a page; 3–4 paragraphs
+(intro/close 1–3 sentences, body 3–5). When over, CUT IDEAS, NOT WORDS: drop the weakest 1–2
+points rather than shaving every sentence evenly. Pick only the strongest evidence — shorter,
+specific, and selective beats comprehensive. (`render_letter` prints an advisory `WARN:` above
+400 words; it never blocks.)
 
 ## AI tells & clichés to avoid (advisory — backstop, not the main defense)
 

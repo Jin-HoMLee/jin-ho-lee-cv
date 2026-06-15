@@ -76,3 +76,5 @@ def test_reference_documents_craft_sections():
     assert "How to write the body" in ref
     assert "AI tells" in ref
     assert "voice_sample" in ref  # documented in the interview field list
+    # Firm LENGTH target replaced the loose "half a page to one page" (#79).
+    assert "hard stop ~375" in ref

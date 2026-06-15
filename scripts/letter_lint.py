@@ -118,6 +118,40 @@ _PATTERNS = {
 }
 
 
+# Advisory length backstop (issue #79). The craft guide aims ~300–350 words with a
+# hard stop ~375; the linter warns only above 400 — a ~25-word grace band so a letter
+# at target that creeps slightly over does not trip a warning.
+_LENGTH_THRESHOLD = 400
+
+# Drop bold markers (**…**) and a leading bullet marker (- / *) so the count reflects
+# rendered words, not markup tokens.
+_BOLD_MARKER = re.compile(r"\*\*")
+_BULLET_MARKER = re.compile(r"^[ \t]*[-*]\s+", re.MULTILINE)
+
+
+def _word_count(text: str | None) -> int:
+    """Count rendered words in a draft body, ignoring bold + bullet markup."""
+    if not text:
+        return 0
+    cleaned = _BULLET_MARKER.sub(" ", _BOLD_MARKER.sub("", text))
+    return len(cleaned.split())
+
+
+def lint_length(text: str | None, threshold: int = _LENGTH_THRESHOLD) -> list[str]:
+    """Return an advisory finding when the body runs long (> threshold words).
+
+    Never raises. Markup (bold + bullets) is stripped before counting. Returns at
+    most one finding; an empty/None body or one at/under the threshold yields [].
+    """
+    n = _word_count(text)
+    if n <= threshold:
+        return []
+    return [
+        f"letter body runs long: {n} words "
+        "(aim ~300–350, hard stop ~375); cut the weakest 1–2 ideas, not words"
+    ]
+
+
 def lint_body(text: str | None, lang: str = "en") -> list[str]:
     """Return advisory findings (human-readable strings) for clichés / AI-tells.
 
