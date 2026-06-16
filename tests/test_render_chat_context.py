@@ -1,0 +1,24 @@
+"""Pytest assertions for the digital-twin chat-context compiler."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+from scripts.content_loader import load_content
+from scripts.langstring import resolve_langstrings
+from scripts.render_chat_context import render
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+CONTENT_DIR = REPO_ROOT / "content"
+
+
+def _content():
+    return resolve_langstrings(load_content(CONTENT_DIR, lang="en"), lang="en")
+
+
+def test_starts_with_identity_header():
+    c = _content()
+    name = f"{c['personal']['name']['given']} {c['personal']['name']['family']}"
+    out = render()
+    assert out.startswith(f"# {name} — {c['personal']['headline']}\n")
+    assert c["profile"]["tagline"] in out
