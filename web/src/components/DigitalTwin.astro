@@ -231,9 +231,10 @@ const starters = [
       height: 100%;
       border-radius: 50%;
       background-repeat: no-repeat;
-      /* Face-framing crop (whole head, centered) tuned against the source image. */
-      background-size: 175%;
-      background-position: 48% 25%;
+      /* Source is pre-cropped to a tight face square, so plain cover/center frames
+         it like the site's profile picture (ProfileSection.astro), just smaller. */
+      background-size: cover;
+      background-position: center;
       box-shadow: 0 0 0 1px var(--surface-border);
     }
     .twin-avatar-lg {
