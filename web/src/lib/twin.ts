@@ -1,5 +1,5 @@
 // Discriminated stream chunks: text deltas, plus a one-off "truncated" signal when
-// Claude stopped because it hit max_tokens (so the UI can show a graceful affordance).
+// the model stopped because it hit max_tokens (so the UI can show a graceful affordance).
 export type TwinChunk = { type: "text"; text: string } | { type: "truncated" };
 
 // Posts the conversation to the Worker and yields streamed chunks (SSE).
