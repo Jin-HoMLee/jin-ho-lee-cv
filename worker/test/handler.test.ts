@@ -4,8 +4,9 @@ import worker, { type Env } from "../src/index";
 const ALLOWED = "https://jinholee.is-a.dev";
 
 // In-memory KV stub: enough of the KVNamespace surface for read/bump counters.
-function fakeKv() {
-  const store = new Map<string, string>();
+// Accepts seed entries so tests can pre-load the rate-limit counters.
+function fakeKv(initial: Record<string, string> = {}) {
+  const store = new Map<string, string>(Object.entries(initial));
   return {
     get: vi.fn(async (key: string) => store.get(key) ?? null),
     put: vi.fn(async (key: string, value: string) => {
@@ -14,9 +15,9 @@ function fakeKv() {
   } as unknown as KVNamespace;
 }
 
-function makeEnv(): Env {
+function makeEnv(kv: KVNamespace = fakeKv()): Env {
   return {
-    RATE_KV: fakeKv(),
+    RATE_KV: kv,
     GEMINI_API_KEY: "k",
     TURNSTILE_SECRET_KEY: "s",
     ALLOWED_ORIGIN: ALLOWED,
@@ -146,6 +147,29 @@ describe("fetch handler", () => {
     stubFetch({ turnstileSuccess: false });
     const res = await worker.fetch(post(ALLOWED, validBody), makeEnv());
     expect(res.status).toBe(403);
+  });
+
+  it("POST when the per-IP rate is exhausted → 429 'slow down' (rate limit)", async () => {
+    // ip defaults to "0.0.0.0" (no CF-Connecting-IP header); perMinute limit is 10.
+    const env = makeEnv(fakeKv({ "m:0.0.0.0": "10" }));
+    stubFetch({});
+    const res = await worker.fetch(post(ALLOWED, validBody), env);
+    expect(res.status).toBe(429);
+    expect(await res.text()).toContain("slow down");
+  });
+
+  it("POST when the monthly ceiling is hit → 503 'resting', Gemini not called (wallet guard)", async () => {
+    // monthlyCeiling defaults to 5000; the ceiling is checked before per-IP fairness.
+    const fetchMock = stubFetch({});
+    const env = makeEnv(fakeKv({ month: "5000" }));
+    const res = await worker.fetch(post(ALLOWED, validBody), env);
+    expect(res.status).toBe(503);
+    expect(await res.text()).toContain("resting");
+    // The ceiling short-circuits before any upstream call — Gemini must NOT be hit.
+    const hitGemini = fetchMock.mock.calls.some(([u]) =>
+      String(u).includes("generativelanguage.googleapis.com"),
+    );
+    expect(hitGemini).toBe(false);
   });
 
   it("POST when Gemini returns 429 → 502 application/json, not SSE (I1)", async () => {
