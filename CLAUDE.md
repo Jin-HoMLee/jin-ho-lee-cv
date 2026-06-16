@@ -108,6 +108,10 @@ validate + test + lint must all be green before merging anything.
   uses the Google Gemini free tier (`gemini-3.5-flash`) — no out-of-pocket cost at expected
   traffic; bounded by `MAX_TOKENS` + `MONTHLY_CEILING`. The Worker transforms Gemini's native
   SSE back into the browser widget's client envelope, so the frontend contract is unchanged.
+  The widget only appears on the deployed site when the Pages build receives
+  `PUBLIC_TWIN_ENDPOINT` + `PUBLIC_TURNSTILE_SITE_KEY` — both public values, set as GitHub repo
+  *variables* and injected in `pages.yml` (unset → empty → widget renders nothing, the graceful
+  default). The Worker deploy itself is still a separate `wrangler` step, never wired into Pages.
 - **`content/*.yaml` is the source of truth.** Renderers consume; never edit content from inside a renderer.
 - **LangString pattern.** Short user-facing strings use inline `{ en: "...", de: "..." }` maps; long prose lives in per-language files (`profile.en.yaml`). `en` is required; other languages optional until Phase 2.
 - **Cross-references validated.** Every `refs: [L1]` in `experience.yaml` must resolve to a `content/projects/L1.en.yaml` file. Filename and `id:` field must match. Enforced by `scripts/validate.py` and `scripts/content_loader.py`.

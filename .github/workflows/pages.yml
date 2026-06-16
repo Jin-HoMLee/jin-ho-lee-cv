@@ -64,6 +64,12 @@ jobs:
           PUBLIC_GSC_VERIFY: ${{ secrets.GSC_VERIFY }}
           PUBLIC_ANALYTICS_ENABLED: "true"
           PUBLIC_ANALYTICS_ENDPOINT: "https://jinholee.goatcounter.com/count"
+          # Phase 12a digital-twin widget. Both are public values (the Worker URL and the
+          # Turnstile *site* key, which ships in client HTML by design), so they live in repo
+          # *variables*, not secrets. When unset they're empty → the widget renders nothing
+          # (the intended graceful default), so this is safe before the variables exist.
+          PUBLIC_TWIN_ENDPOINT: ${{ vars.PUBLIC_TWIN_ENDPOINT }}
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
         run: pnpm --dir web build
 
       - name: Smoke-check build outputs
