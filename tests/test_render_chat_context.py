@@ -35,3 +35,20 @@ def test_includes_full_profile_and_skills():
             assert group["label"] in out
             for item in group["items"]:
                 assert item in out
+
+
+def test_includes_experience_and_education():
+    c = _content()
+    out = render()
+    assert "## Experience" in out
+    first = c["experience"][0]
+    assert first["role"] in out
+    assert first["org"]["name"] in out
+    # bullets are {en, de, refs} mixed dicts — the EN text must render verbatim.
+    for bullet in first["bullets"]:
+        assert bullet["en"] in out
+    assert "## Education" in out
+    first_edu = c["education"][0]
+    assert first_edu["degree"] in out
+    assert first_edu["institution"] in out
+    assert str(first_edu["year"]) in out

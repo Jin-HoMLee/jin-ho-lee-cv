@@ -37,9 +37,36 @@ def _skills(content: dict) -> str:
     return "\n".join(lines)
 
 
+def _experience(content: dict) -> str:
+    lines = ["## Experience"]
+    for job in content["experience"]:
+        role = job["role"]
+        org = job["org"]["name"]
+        period = job["period"]
+        start = period["start"]
+        end = period.get("end") or "present"
+        lines.append(f"### {role} — {org} ({start}–{end})")
+        for bullet in job["bullets"]:
+            lines.append(f"- {bullet['en']}")
+    return "\n".join(lines)
+
+
+def _education(content: dict) -> str:
+    lines = ["## Education"]
+    for ed in content["education"]:
+        lines.append(f"- {ed['degree']}, {ed['institution']} ({ed['year']})")
+    return "\n".join(lines)
+
+
 def render() -> str:
     content = resolve_langstrings(load_content(CONTENT_DIR, lang="en"), lang="en")
-    blocks = [_identity(content), _profile(content), _skills(content)]
+    blocks = [
+        _identity(content),
+        _profile(content),
+        _skills(content),
+        _experience(content),
+        _education(content),
+    ]
     return "\n\n".join(blocks) + "\n"
 
 
