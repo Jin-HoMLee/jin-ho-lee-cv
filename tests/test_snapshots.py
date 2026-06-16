@@ -10,7 +10,14 @@ from __future__ import annotations
 import pytest
 from syrupy.extensions.single_file import SingleFileSnapshotExtension, WriteMode
 
-from scripts import letter_text, render_jsonld, render_jsonresume, render_llms, render_web_data
+from scripts import (
+    letter_text,
+    render_chat_context,
+    render_jsonld,
+    render_jsonresume,
+    render_llms,
+    render_web_data,
+)
 from scripts.render_text import render as render_text
 
 
@@ -39,6 +46,12 @@ def test_person_jsonld(tmp_path, snapshot):
 def test_llms_txt(tmp_path, snapshot):
     out = tmp_path / "llms.txt"
     render_llms.main(["--output", str(out)])
+    assert out.read_text(encoding="utf-8") == snapshot.use_extension(_TextSnap)
+
+
+def test_chat_context_md(tmp_path, snapshot):
+    out = tmp_path / "chat-context.md"
+    render_chat_context.main(["--output", str(out)])
     assert out.read_text(encoding="utf-8") == snapshot.use_extension(_TextSnap)
 
 

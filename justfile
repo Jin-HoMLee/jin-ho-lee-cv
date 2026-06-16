@@ -93,8 +93,12 @@ jd-gap slug:
 build-llms:
     uv run python -m scripts.render_llms
 
+# Compile the whole CV into one context blob for the digital-twin chat → dist/chat-context.md
+build-chat-context:
+    uv run python -m scripts.render_chat_context
+
 # Build every machine format (resume.json + person.jsonld + plain text + llms.txt)
-build-formats: build-resume build-jsonld build-text build-llms
+build-formats: build-resume build-jsonld build-text build-llms build-chat-context
 
 # Refresh Crossref citation counts → data/citations.json (the ONLY networked recipe; run manually)
 refresh-citations:
