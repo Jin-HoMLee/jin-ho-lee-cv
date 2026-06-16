@@ -231,8 +231,8 @@ const starters = [
       height: 100%;
       border-radius: 50%;
       background-repeat: no-repeat;
-      /* Source is pre-cropped to a tight face square, so plain cover/center frames
-         it like the site's profile picture (ProfileSection.astro), just smaller. */
+      /* Same treatment as the site's profile picture (ProfileSection.astro):
+         object-cover, centered — applied to the full image, no pre-crop. */
       background-size: cover;
       background-position: center;
       box-shadow: 0 0 0 1px var(--surface-border);
