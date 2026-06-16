@@ -78,7 +78,21 @@ export default {
     } catch {
       return new Response("bad request", { status: 400, headers: cors });
     }
-    if (!Array.isArray(body.messages) || typeof body.turnstileToken !== "string")
+    // Bound the conversation to stop token-amplification abuse: a caller past Turnstile
+    // could otherwise send a long history of large messages, inflating Gemini input tokens
+    // (and burning the free-tier quota) well beyond what MAX_TOKENS — an OUTPUT cap — guards.
+    if (
+      !Array.isArray(body.messages) ||
+      typeof body.turnstileToken !== "string" ||
+      body.messages.length === 0 ||
+      body.messages.length > 20 ||
+      body.messages.some(
+        (m) =>
+          (m.role !== "user" && m.role !== "assistant") ||
+          typeof m.content !== "string" ||
+          m.content.length > 4000,
+      )
+    )
       return new Response("bad request", { status: 400, headers: cors });
 
     const ok = await verifyTurnstile(body.turnstileToken, env.TURNSTILE_SECRET_KEY, ip);

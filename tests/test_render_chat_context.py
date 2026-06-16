@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import shutil
 from pathlib import Path
 
+from scripts import render_chat_context as rcc
 from scripts.bib_loader import load_publications
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
@@ -77,11 +79,20 @@ def test_no_pii_keywords_in_context():
 
 
 def test_render_never_reads_content_private(tmp_path, monkeypatch):
+    # Faithful proof (not tautological): clone the real content/ into a tmp tree and plant a
+    # populated content.private/ *sibling* — mirroring the real on-disk layout — carrying a
+    # synthetic secret. We then point the compiler at the tmp content/ and assert the secret
+    # never surfaces. Because the secret is genuinely reachable on disk (right next to the dir
+    # render() reads), a regression that walked into content.private/ WOULD leak it here. It
+    # doesn't, because render() reads only CONTENT_DIR — that's the guarantee under test.
     secret = "SYNTHETIC-SECRET-0049-DO-NOT-LEAK"
+    tmp_content = tmp_path / "content"
+    shutil.copytree(CONTENT_DIR, tmp_content)
     private = tmp_path / "content.private"
     private.mkdir()
     (private / "private.yaml").write_text(
         f"phone: '{secret}'\naddress:\n  street: '{secret}'\n", encoding="utf-8"
     )
-    out = render()
+    monkeypatch.setattr(rcc, "CONTENT_DIR", tmp_content)
+    out = rcc.render()
     assert secret not in out

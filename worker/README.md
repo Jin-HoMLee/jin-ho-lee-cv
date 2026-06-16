@@ -77,5 +77,9 @@ Secrets (set via `wrangler secret put`, never in git): `GEMINI_API_KEY`,
   guarantee.
 - **Rolling window.** The "monthly" window is a rolling ~31-day TTL from the
   first write, not a calendar month.
+- **Bounded conversation.** To prevent token-amplification abuse (and to stay
+  within the Gemini free-tier per-request limit), the Worker rejects requests with
+  an empty history, more than 20 messages, a non-`user`/`assistant` role, or any
+  message over 4,000 characters. The widget also caps its input at 2,000 chars.
 - **No operator usage visibility.** Question logging / usage dashboards are
   deferred to Phase 12b.

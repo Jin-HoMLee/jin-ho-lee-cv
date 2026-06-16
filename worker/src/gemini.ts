@@ -3,6 +3,9 @@ export interface ChatMessage {
   content: string;
 }
 
+// Free-tier Flash model. Bump here when Google ships a newer default.
+const MODEL = "gemini-3.5-flash";
+
 // Streams a Gemini 3.5 Flash response (free tier). The API key is a query param
 // (server-side only — never exposed to the browser). Returns the raw upstream SSE
 // Response; the body is transformed back into the client envelope by
@@ -19,7 +22,7 @@ export async function streamGemini(
     parts: [{ text: m.content }],
   }));
   const url =
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:streamGenerateContent" +
+    `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:streamGenerateContent` +
     `?alt=sse&key=${apiKey}`;
   return fetchImpl(url, {
     method: "POST",
