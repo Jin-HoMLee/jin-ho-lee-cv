@@ -17,8 +17,16 @@ export interface Env {
   MAX_TOKENS: string;
 }
 
+// ALLOWED_ORIGIN may be a single origin or a comma-separated allowlist (e.g. the
+// prod site plus http://localhost:4321 for local dev). An exact match against one
+// of the listed origins is required.
 export function isAllowedOrigin(origin: string | null, allowed: string): boolean {
-  return origin === allowed;
+  if (!origin) return false;
+  return allowed
+    .split(",")
+    .map((o) => o.trim())
+    .filter(Boolean)
+    .includes(origin);
 }
 
 // Parse a config var to a finite, non-negative number, falling back to a safe
@@ -30,8 +38,9 @@ export function finite(v: string, fallback: number): number {
 }
 
 export function corsHeaders(origin: string | null, allowed: string): Record<string, string> {
+  // ACAO must echo the single matched request origin, never the whole allowlist.
   return {
-    "Access-Control-Allow-Origin": isAllowedOrigin(origin, allowed) ? allowed : "",
+    "Access-Control-Allow-Origin": isAllowedOrigin(origin, allowed) ? origin! : "",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "content-type",
   };
