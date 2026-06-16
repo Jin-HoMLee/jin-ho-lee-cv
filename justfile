@@ -97,6 +97,16 @@ build-llms:
 build-chat-context:
     uv run python -m scripts.render_chat_context
 
+# Run the digital-twin Worker locally (needs `cd worker && npm install` once)
+worker-dev: build-chat-context
+    cp dist/chat-context.md worker/chat-context.md
+    cd worker && npx wrangler dev
+
+# Deploy the digital-twin Worker (bundles a fresh chat-context.md). Needs wrangler auth + secrets set.
+worker-deploy: build-chat-context
+    cp dist/chat-context.md worker/chat-context.md
+    cd worker && npx wrangler deploy
+
 # Build every machine format (resume.json + person.jsonld + plain text + llms.txt)
 build-formats: build-resume build-jsonld build-text build-llms build-chat-context
 

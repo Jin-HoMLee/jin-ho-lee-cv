@@ -31,6 +31,7 @@ Twelve phases (0–11), sequential. Each produces a usable artifact and gets its
 | 9 | Web design overhaul (2026 dark-technical: CV-as-code hero, bento stat band, dark/light theme) | ✅ Done (merged 2026-05-31, PR #40, commit `be80dc6`) |
 | 10 | Agent interface (MCP server + skill over `content/` + validate) | ✅ Done (merged 2026-06-03, PR #63, commit `fbc18fe`) |
 | 11 | Cover-letter generator (interview + JD → tailored letter, PDF + text) | ✅ Done (merged 2026-06-03, `--no-ff`, PR #66 @claude-approved); personal-voice craft upgrade (anti-slop brief, voice sample, self-critique, jd-gap report, cliché linter) added 2026-06-05 (#74) |
+| 12a | Digital-twin chat MVP (CV-grounded conversational chat: context compiler + Cloudflare Worker + web widget + guardrails) | ✅ Done (branch `phase-12-digital-twin`; merge commit TBD) |
 
 ## Layout
 
@@ -44,10 +45,11 @@ data/citations.json      generated, committed Crossref citation cache (lockfile)
 schema/cv.schema.json          JSON Schema for content
 schema/application.schema.json schema for cover-letter application.yaml
 schema/profile.schema.json     schema for the evergreen cover-letter profile.yaml
-scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py, fetch_citations.py, citations.py, agent_core.py, mcp_server.py, cover_letter_core.py, letter_text.py, render_letter.py, letter_lint.py, jd_gap.py, check_pii.py
+scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py, render_chat_context.py, fetch_citations.py, citations.py, agent_core.py, mcp_server.py, cover_letter_core.py, letter_text.py, render_letter.py, letter_lint.py, jd_gap.py, check_pii.py
 tests/                    pytest suite
 pdf/                      Typst PDF renderer (Phase 1; incl. templates/cover-letter.typ for the DIN 5008 letter)
 web/                      Astro website (Phase 3)
+worker/                   Cloudflare Worker — digital-twin chat proxy (Phase 12a; deploys outside Pages)
 .claude/skills/cv/        committed Claude skill (agent interface) — SKILL.md + reference.md
 .claude/skills/cover-letter/  committed Claude skill (cover-letter interview + render)
 .mcp.json                 Claude Code project-scoped MCP server config
@@ -69,6 +71,9 @@ just build-resume      # → dist/resume.json (JSON Resume)
 just build-jsonld      # → dist/person.jsonld (schema.org)
 just build-text        # → dist/cv-{en,de}.txt
 just build-formats     # all machine formats (resume.json + person.jsonld + plain text + llms.txt)
+just build-chat-context # compile the whole CV into one blob → dist/chat-context.md (digital-twin)
+just worker-dev        # run the digital-twin Worker locally (bundles chat-context.md, wrangler dev)
+just worker-deploy     # deploy the digital-twin Worker to Cloudflare (bundles chat-context.md, wrangler deploy)
 just refresh-citations # fetch Crossref citation counts → data/citations.json (manual, networked)
 just snapshots-update  # regenerate committed renderer golden snapshots (after intentional output changes)
 just web-dev           # Astro dev server (regenerates content JSON + JSON-LD)
@@ -96,6 +101,11 @@ validate + test + lint must all be green before merging anything.
 - **ATS guard.** The built PDF's text layer is CI-verified (`tests/test_ats_pdf.py` via the `ats-guard` job — name/email/headings/umlauts round-trip through `pdftotext`); the `release` job depends on it. Note: Typst letter-spacing makes `pdftotext` emit intra-word spaces in styled headings (e.g. `SELECTED PROJECTS` → `PROJ ECTS`), so the guard asserts only cleanly-extracting headings (`PROFILE`/`SKILLS`/`EDUCATION`/`PUBLICATIONS`) — don't re-add spaced ones. `/llms.txt` (llmstxt.org site map) is generated into `web/public/` for the deployed site (gitignored, like `person.jsonld`).
 - **Atomic commits.** One logical change per commit. Plain commit messages — no Claude attribution / co-authored-by trailers unless explicitly requested.
 - **Per-phase branches.** Phase N work happens on `phase-N-<topic>` branch, merged to `main` with `--no-ff` at the end of the phase to preserve the boundary in history.
+- **Deploys outside GitHub Pages.** The digital-twin Worker (`worker/`) is the first repo
+  component that deploys to Cloudflare (via `just worker-deploy` / `wrangler`), not GitHub
+  Pages. The Pages build only needs the generated `dist/chat-context.md`; the Worker is
+  deployed separately and holds `ANTHROPIC_API_KEY` as a Worker secret (never in git). The
+  only out-of-pocket cost is Anthropic API usage, bounded by `MAX_TOKENS` + `MONTHLY_CEILING`.
 - **`content/*.yaml` is the source of truth.** Renderers consume; never edit content from inside a renderer.
 - **LangString pattern.** Short user-facing strings use inline `{ en: "...", de: "..." }` maps; long prose lives in per-language files (`profile.en.yaml`). `en` is required; other languages optional until Phase 2.
 - **Cross-references validated.** Every `refs: [L1]` in `experience.yaml` must resolve to a `content/projects/L1.en.yaml` file. Filename and `id:` field must match. Enforced by `scripts/validate.py` and `scripts/content_loader.py`.
