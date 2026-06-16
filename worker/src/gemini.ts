@@ -27,7 +27,13 @@ export async function streamGemini(
     body: JSON.stringify({
       systemInstruction: { parts: [{ text: systemText }] },
       contents,
-      generationConfig: { maxOutputTokens: maxTokens },
+      // thinkingLevel "low": Gemini 3.x Flash thinks by default and that reasoning
+      // competes with the visible answer for the token budget — short, grounded CV
+      // replies don't need it, and minimizing it stops answers truncating mid-sentence.
+      generationConfig: {
+        maxOutputTokens: maxTokens,
+        thinkingConfig: { thinkingLevel: "low" },
+      },
     }),
   });
 }
