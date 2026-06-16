@@ -43,6 +43,7 @@ const starters = [
     const form = document.getElementById("twin-form") as HTMLFormElement;
     const input = document.getElementById("twin-input") as HTMLInputElement;
     const history: { role: "user" | "assistant"; content: string }[] = [];
+    let busy = false; // in-flight guard: ignore Send while a reply is streaming
 
     // Mirror open state to aria-expanded and focus the input so keyboard/SR
     // users aren't stranded; Escape closes and returns focus to the launcher.
@@ -80,6 +81,7 @@ const starters = [
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      if (busy) return; // a reply is already streaming — ignore double-sends
       const q = input.value.trim();
       if (!q) return;
 
@@ -96,10 +98,16 @@ const starters = [
         return;
       }
 
+      busy = true;
       input.value = "";
       bubble("user", q);
       history.push({ role: "user", content: q });
+      // Assistant bubble starts as an animated "typing" indicator; the first text
+      // chunk replaces the dots (out.textContent wipes the child span), so there's
+      // no empty-bubble flash while we wait on the first token.
       const out = bubble("assistant", "");
+      out.classList.add("twin-typing");
+      out.innerHTML = '<span class="twin-dots" aria-hidden="true"><i></i><i></i><i></i></span>';
       let acc = "";
       try {
         for await (const chunk of streamTwin(endpoint, history, token)) {
@@ -108,20 +116,24 @@ const starters = [
           } else if (chunk.type === "truncated") {
             acc += " …(trimmed — ask me to go on)";
           }
-          out.textContent = acc;
+          if (acc) {
+            out.classList.remove("twin-typing");
+            out.textContent = acc;
+          }
           log.scrollTop = log.scrollHeight;
         }
+        if (!acc) throw new Error("empty response"); // route to the resting fallback
         history.push({ role: "assistant", content: acc });
       } catch {
-        // Mid-stream failure: the assistant turn was never recorded, so pop the
-        // orphaned user turn — otherwise the next submit sends two user turns in
-        // a row and Anthropic rejects the non-alternating roles, cascading errors.
-        // (#7 the empty bubble flashes briefly; #9 errors aren't granular — both
-        // MVP-acceptable.)
+        // Mid-stream failure (or empty response): the assistant turn was never
+        // recorded, so pop the orphaned user turn — otherwise the next submit sends
+        // two user turns in a row and the API rejects the non-alternating roles.
         history.pop();
+        out.classList.remove("twin-typing");
         out.textContent =
           "My twin's resting right now — meanwhile, grab my CV PDF or email me from the links above.";
       } finally {
+        busy = false;
         // Invalidate the just-used token and re-mint a fresh one for the next
         // turn (the managed widget auto-executes after reset) — without this the
         // 2nd message in a conversation reuses a redeemed token and 403s.
@@ -223,6 +235,30 @@ const starters = [
       background: var(--surface-2);
       color: var(--text);
       border: 1px solid var(--surface-border);
+    }
+
+    /* "Thinking" indicator: three dots that bounce while we await the first token. */
+    .twin-dots {
+      display: inline-flex;
+      gap: 0.25rem;
+      align-items: center;
+      padding: 0.125rem 0;
+    }
+    .twin-dots i {
+      width: 0.375rem;
+      height: 0.375rem;
+      border-radius: 50%;
+      background: var(--muted);
+      animation: twin-bounce 1.2s infinite ease-in-out;
+    }
+    .twin-dots i:nth-child(2) { animation-delay: 0.15s; }
+    .twin-dots i:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes twin-bounce {
+      0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+      30% { opacity: 1; transform: translateY(-0.2rem); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .twin-dots i { animation: none; opacity: 0.6; }
     }
 
     #twin-starters {
