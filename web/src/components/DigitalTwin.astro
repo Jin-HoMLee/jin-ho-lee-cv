@@ -127,6 +127,9 @@ const starters = [
 
       busy = true;
       input.value = "";
+      // Starters are only useful before the conversation begins — hide them once
+      // the first turn is sent so they don't clutter the space above the input.
+      document.getElementById("twin-starters")!.style.display = "none";
       bubble("user", q);
       history.push({ role: "user", content: q });
       // Assistant bubble starts as an animated "typing" indicator; the first text
