@@ -67,3 +67,21 @@ def test_includes_projects_and_publications():
     assert pubs, "expected at least one publication"
     for pub in pubs:
         assert pub.title in out
+
+
+def test_no_pii_keywords_in_context():
+    out = render().lower()
+    assert "phone" not in out
+    for kw in ("strasse", "straße", "hausnummer", "postal_code"):
+        assert kw not in out
+
+
+def test_render_never_reads_content_private(tmp_path, monkeypatch):
+    secret = "SYNTHETIC-SECRET-0049-DO-NOT-LEAK"
+    private = tmp_path / "content.private"
+    private.mkdir()
+    (private / "private.yaml").write_text(
+        f"phone: '{secret}'\naddress:\n  street: '{secret}'\n", encoding="utf-8"
+    )
+    out = render()
+    assert secret not in out
