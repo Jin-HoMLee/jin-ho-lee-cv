@@ -40,3 +40,8 @@ web/.astro/
 
 # PDF build cache (JSON intermediate written by pdf/build.py)
 pdf/.cache/
+
+# Phase 12 digital-twin Worker
+worker/node_modules/
+worker/.wrangler/
+worker/chat-context.md
