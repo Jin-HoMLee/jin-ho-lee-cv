@@ -1,9 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
   <!-- Digital-twin avatar: original mark inspired by the real photo (upswept hair
-       silhouette), not the photo. Theme-aware via CSS custom properties; imported
-       and inlined by DigitalTwin.astro so var() resolves against the page theme. -->
-  <circle cx="20" cy="20" r="18.4" style="fill:var(--surface-2);stroke:var(--accent)" stroke-width="1.4" />
-  <g style="fill:var(--accent)">
+       silhouette), not the photo. Colors are theme-driven via CSS custom properties
+       resolved against the page theme once inlined by DigitalTwin.astro. The var()
+       fallbacks use the dark-theme palette so the file still previews in color
+       standalone (instead of black) when those properties are undefined. -->
+  <circle cx="20" cy="20" r="18.4" style="fill:var(--surface-2,#11161f);stroke:var(--accent,#2dd4bf)" stroke-width="1.4" />
+  <g style="fill:var(--accent,#2dd4bf)">
     <rect x="18.1" y="21" width="3.8" height="5.5" rx="1.4" />
     <path d="M11 33c1-5.4 4.3-7.8 9-7.8s8 2.4 9 7.8c-2.7 1.1-5.8 1.7-9 1.7s-6.3-.6-9-1.7z" />
     <circle cx="20" cy="16.4" r="6" />
