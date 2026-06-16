@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import worker, { type Env } from "../src/index";
 
-const ALLOWED = "https://jin-ho-lee.is-a.dev";
+const ALLOWED = "https://jinholee.is-a.dev";
 
 // In-memory KV stub: enough of the KVNamespace surface for read/bump counters.
 function fakeKv() {
