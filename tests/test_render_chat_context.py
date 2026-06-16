@@ -22,3 +22,16 @@ def test_starts_with_identity_header():
     out = render()
     assert out.startswith(f"# {name} — {c['personal']['headline']}\n")
     assert c["profile"]["tagline"] in out
+
+
+def test_includes_full_profile_and_skills():
+    c = _content()
+    out = render()
+    for para in c["profile"]["paragraphs"]:
+        assert para in out
+    assert "## Skills" in out
+    for category in c["skills"]["categories"]:
+        for group in category["groups"]:
+            assert group["label"] in out
+            for item in group["items"]:
+                assert item in out

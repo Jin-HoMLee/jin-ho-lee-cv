@@ -25,9 +25,21 @@ def _identity(content: dict) -> str:
     return f"# {name} — {personal['headline']}\n\n> {profile['tagline']}"
 
 
+def _profile(content: dict) -> str:
+    return "\n\n".join(["## Profile", *content["profile"]["paragraphs"]])
+
+
+def _skills(content: dict) -> str:
+    lines = ["## Skills"]
+    for category in content["skills"]["categories"]:
+        for group in category["groups"]:
+            lines.append(f"- **{group['label']}**: {', '.join(group['items'])}")
+    return "\n".join(lines)
+
+
 def render() -> str:
     content = resolve_langstrings(load_content(CONTENT_DIR, lang="en"), lang="en")
-    blocks = [_identity(content)]
+    blocks = [_identity(content), _profile(content), _skills(content)]
     return "\n\n".join(blocks) + "\n"
 
 
