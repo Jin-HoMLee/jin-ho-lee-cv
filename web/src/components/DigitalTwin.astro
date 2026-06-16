@@ -15,10 +15,10 @@ const starters = [
   <div id="twin-root" data-endpoint={endpoint} data-sitekey={siteKey}>
     <button
       id="twin-launch"
-      aria-label="Ask my digital twin"
+      aria-label="Talk to my digital twin!"
       aria-controls="twin-panel"
       aria-expanded="false"
-    ><span class="twin-avatar-wrap twin-avatar-launch" id="twin-launch-avatar"></span><span>Ask my digital twin</span></button>
+    ><span class="twin-avatar-wrap twin-avatar-launch" id="twin-launch-avatar"></span><span>Talk to my digital twin!</span></button>
     <section id="twin-panel" hidden aria-labelledby="twin-title">
       <header>
         <div class="twin-head-row">
@@ -242,8 +242,8 @@ const starters = [
       box-shadow: 0 0 0 1px var(--surface-border);
     }
     .twin-avatar-lg {
-      width: 2rem;
-      height: 2rem;
+      width: 3rem;
+      height: 3rem;
     }
     .twin-avatar-sm {
       width: 1.5rem;
@@ -251,9 +251,9 @@ const starters = [
       margin-top: 0.0625rem;
     }
     .twin-avatar-launch {
-      width: 1.25rem;
-      height: 1.25rem;
-      margin-left: -0.125rem;
+      width: 2rem;
+      height: 2rem;
+      margin-left: -0.25rem;
     }
 
     #twin-panel header strong {
