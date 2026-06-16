@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from scripts.bib_loader import Publication, load_publications
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
 
@@ -58,14 +59,36 @@ def _education(content: dict) -> str:
     return "\n".join(lines)
 
 
+def _projects(content: dict) -> str:
+    lines = ["## Selected Projects"]
+    for p in content["selected_projects"]:
+        lines.append(f"### {p['title']}")
+        lines.append(p["summary"])
+        for detail in p["contributions"]:
+            lines.append(f"- {detail}")
+    return "\n".join(lines)
+
+
+def _publications(pubs: list[Publication]) -> str:
+    lines = ["## Publications"]
+    for p in pubs:
+        venue = f", {p.venue}" if p.venue else ""
+        year = f" ({p.year})" if p.year else ""
+        lines.append(f"- {p.title}{venue}{year}")
+    return "\n".join(lines)
+
+
 def render() -> str:
     content = resolve_langstrings(load_content(CONTENT_DIR, lang="en"), lang="en")
+    pubs = load_publications(CONTENT_DIR / "publications.bib")
     blocks = [
         _identity(content),
         _profile(content),
         _skills(content),
         _experience(content),
         _education(content),
+        _projects(content),
+        _publications(pubs),
     ]
     return "\n\n".join(blocks) + "\n"
 

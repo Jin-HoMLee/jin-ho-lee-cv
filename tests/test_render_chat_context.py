@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from scripts.bib_loader import load_publications
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
 from scripts.render_chat_context import render
@@ -52,3 +53,17 @@ def test_includes_experience_and_education():
     assert first_edu["degree"] in out
     assert first_edu["institution"] in out
     assert str(first_edu["year"]) in out
+
+
+def test_includes_projects_and_publications():
+    c = _content()
+    out = render()
+    assert "## Selected Projects" in out
+    for p in c["selected_projects"]:
+        assert p["title"] in out
+        assert p["summary"] in out
+    assert "## Publications" in out
+    pubs = load_publications(CONTENT_DIR / "publications.bib")
+    assert pubs, "expected at least one publication"
+    for pub in pubs:
+        assert pub.title in out
