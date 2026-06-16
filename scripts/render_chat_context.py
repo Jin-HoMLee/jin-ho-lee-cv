@@ -2,7 +2,7 @@
 
 A richer sibling of render_llms.py: where llms.txt is a slim site map, this is the full
 profile + experience + skills + education + project deep-dives + publications that the
-chat Worker injects as a cached prompt prefix. PII-safe by construction — reads only
+chat Worker injects as a system instruction each request. PII-safe by construction — reads only
 content/ (never content.private/), mirroring agent_core.read_cv.
 """
 
