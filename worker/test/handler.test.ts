@@ -17,7 +17,7 @@ function fakeKv() {
 function makeEnv(): Env {
   return {
     RATE_KV: fakeKv(),
-    ANTHROPIC_API_KEY: "k",
+    GEMINI_API_KEY: "k",
     TURNSTILE_SECRET_KEY: "s",
     ALLOWED_ORIGIN: ALLOWED,
     MONTHLY_CEILING: "5000",
@@ -25,22 +25,35 @@ function makeEnv(): Env {
   };
 }
 
-// Branch the global fetch mock on URL: Turnstile siteverify vs Anthropic messages.
+// A ReadableStream that emits one string then closes — stands in for the Gemini
+// upstream SSE body.
+function streamOf(text: string): ReadableStream<Uint8Array> {
+  return new ReadableStream<Uint8Array>({
+    start(controller) {
+      controller.enqueue(new TextEncoder().encode(text));
+      controller.close();
+    },
+  });
+}
+
+// Branch the global fetch mock on URL: Turnstile siteverify vs Gemini streaming.
 function stubFetch(opts: {
   turnstileSuccess?: boolean;
-  anthropicOk?: boolean;
-  anthropicStatus?: number;
+  geminiOk?: boolean;
+  geminiStatus?: number;
 }) {
-  const { turnstileSuccess = true, anthropicOk = true, anthropicStatus = 200 } = opts;
+  const { turnstileSuccess = true, geminiOk = true, geminiStatus = 200 } = opts;
   const mock = vi.fn(async (url: string) => {
-    if (String(url).includes("siteverify")) {
+    if (String(url).includes("challenges.cloudflare.com/turnstile")) {
       return { json: async () => ({ success: turnstileSuccess }) } as unknown as Response;
     }
-    if (String(url).includes("api.anthropic.com")) {
+    if (String(url).includes("generativelanguage.googleapis.com")) {
       return {
-        ok: anthropicOk,
-        status: anthropicStatus,
-        body: "SSE-STREAM-BODY",
+        ok: geminiOk,
+        status: geminiStatus,
+        body: geminiOk
+          ? streamOf(`data: {"candidates":[{"content":{"parts":[{"text":"hello"}]}}]}\n\n`)
+          : null,
       } as unknown as Response;
     }
     throw new Error(`unexpected fetch URL: ${url}`);
@@ -103,18 +116,21 @@ describe("fetch handler", () => {
     expect(res.status).toBe(403);
   });
 
-  it("POST when Anthropic returns 529 → 502 application/json, not SSE (I1)", async () => {
-    stubFetch({ anthropicOk: false, anthropicStatus: 529 });
+  it("POST when Gemini returns 429 → 502 application/json, not SSE (I1)", async () => {
+    stubFetch({ geminiOk: false, geminiStatus: 429 });
     const res = await worker.fetch(post(ALLOWED, validBody), makeEnv());
     expect(res.status).toBe(502);
     expect(res.headers.get("content-type")).toBe("application/json");
     expect(res.headers.get("content-type")).not.toBe("text/event-stream");
   });
 
-  it("POST happy path → 200 text/event-stream", async () => {
-    stubFetch({ anthropicOk: true, anthropicStatus: 200 });
+  it("POST happy path → 200 text/event-stream with transformed client envelope", async () => {
+    stubFetch({ geminiOk: true, geminiStatus: 200 });
     const res = await worker.fetch(post(ALLOWED, validBody), makeEnv());
     expect(res.status).toBe(200);
     expect(res.headers.get("content-type")).toBe("text/event-stream");
+    const text = await res.text();
+    expect(text).toContain('"type":"content_block_delta"');
+    expect(text).toContain('"text":"hello"');
   });
 });

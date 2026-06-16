@@ -1,6 +1,6 @@
-import { streamClaude, type ChatMessage } from "./anthropic";
+import { streamGemini, geminiToClientStream, type ChatMessage } from "./gemini";
 import { PERSONA } from "./persona";
-import { buildSystemPrompt } from "./prompt";
+import { buildSystemText } from "./prompt";
 import { checkLimits, type Counters, type Limits } from "./ratelimit";
 import { verifyTurnstile } from "./turnstile";
 
@@ -10,7 +10,7 @@ import CV_CONTEXT from "../chat-context.md";
 
 export interface Env {
   RATE_KV: KVNamespace;
-  ANTHROPIC_API_KEY: string;
+  GEMINI_API_KEY: string;
   TURNSTILE_SECRET_KEY: string;
   ALLOWED_ORIGIN: string;
   MONTHLY_CEILING: string;
@@ -97,14 +97,14 @@ export default {
     }
     await bumpCounters(env.RATE_KV, ip, counters);
 
-    const system = buildSystemPrompt(PERSONA, CV_CONTEXT as unknown as string);
-    const upstream = await streamClaude(
-      env.ANTHROPIC_API_KEY,
-      system,
+    const systemText = buildSystemText(PERSONA, CV_CONTEXT as unknown as string);
+    const upstream = await streamGemini(
+      env.GEMINI_API_KEY,
+      systemText,
       body.messages,
       finite(env.MAX_TOKENS, 700),
     );
-    // On a non-200 from Anthropic (529 overloaded, 401, 400, 429) the body is a
+    // On a non-200 from Gemini (429 quota exhausted, 400, 401, 500) the body is a
     // JSON error object, NOT an SSE stream — mislabeling it as text/event-stream
     // leaves a browser EventSource with a broken connection. Don't pass the raw
     // upstream error through (it can leak internal detail); return a generic 502.
@@ -113,7 +113,10 @@ export default {
         status: 502,
         headers: { ...cors, "content-type": "application/json" },
       });
-    return new Response(upstream.body, {
+    // Transform Gemini's native SSE back into the client envelope the browser
+    // widget already parses (web/src/lib/twin.ts) — the frontend contract is
+    // unchanged across the provider swap.
+    return new Response(geminiToClientStream(upstream.body!), {
       status: upstream.status,
       headers: { ...cors, "content-type": "text/event-stream" },
     });
