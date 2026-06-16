@@ -104,8 +104,10 @@ validate + test + lint must all be green before merging anything.
 - **Deploys outside GitHub Pages.** The digital-twin Worker (`worker/`) is the first repo
   component that deploys to Cloudflare (via `just worker-deploy` / `wrangler`), not GitHub
   Pages. The Pages build only needs the generated `dist/chat-context.md`; the Worker is
-  deployed separately and holds `ANTHROPIC_API_KEY` as a Worker secret (never in git). The
-  only out-of-pocket cost is Anthropic API usage, bounded by `MAX_TOKENS` + `MONTHLY_CEILING`.
+  deployed separately and holds `GEMINI_API_KEY` as a Worker secret (never in git). Inference
+  uses the Google Gemini free tier (`gemini-3.5-flash`) — no out-of-pocket cost at expected
+  traffic; bounded by `MAX_TOKENS` + `MONTHLY_CEILING`. The Worker transforms Gemini's native
+  SSE back into the browser widget's client envelope, so the frontend contract is unchanged.
 - **`content/*.yaml` is the source of truth.** Renderers consume; never edit content from inside a renderer.
 - **LangString pattern.** Short user-facing strings use inline `{ en: "...", de: "..." }` maps; long prose lives in per-language files (`profile.en.yaml`). `en` is required; other languages optional until Phase 2.
 - **Cross-references validated.** Every `refs: [L1]` in `experience.yaml` must resolve to a `content/projects/L1.en.yaml` file. Filename and `id:` field must match. Enforced by `scripts/validate.py` and `scripts/content_loader.py`.

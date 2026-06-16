@@ -1,18 +1,23 @@
 # Digital-twin chat Worker
 
 The Phase 12a digital-twin chat Worker: a Cloudflare Worker that proxies
-CV-grounded questions to Claude Haiku 4.5, holding the Anthropic API key as a
-Worker secret. It reads only the generated public `dist/chat-context.md`
-(compiled from `content/` by `scripts/render_chat_context.py`) — no PII, nothing
-from `content.private/`.
+CV-grounded questions to Google Gemini (`gemini-3.5-flash`), holding the Gemini
+API key as a Worker secret. It reads only the generated public
+`dist/chat-context.md` (compiled from `content/` by
+`scripts/render_chat_context.py`) — no PII, nothing from `content.private/`.
+
+The Worker transforms Gemini's native SSE back into the client envelope the
+browser widget already parses, so the frontend contract is unchanged.
 
 ## Cost (read this first)
 
 Every Cloudflare service this Worker uses — Workers, KV, Turnstile — is on the
-**free tier** at expected traffic. The **only** out-of-pocket cost is **Anthropic
-API usage** (Claude Haiku 4.5 tokens). That spend is bounded by `MAX_TOKENS` per
-answer and the global `MONTHLY_CEILING` request cap. Raising either raises
-potential spend.
+**free tier** at expected traffic. The inference provider is the **Google Gemini
+free tier** (`gemini-3.5-flash`, ~250 requests/day for Flash) — **no out-of-pocket
+cost** at expected personal-site traffic. When the free quota is exhausted, Gemini
+returns an error and the Worker shows the graceful "twin's resting" fallback. Usage
+stays bounded by `MAX_TOKENS` per answer and the global `MONTHLY_CEILING` request
+cap.
 
 ## One-time setup
 
@@ -22,9 +27,10 @@ potential spend.
    ```bash
    npx wrangler kv namespace create RATE_KV
    ```
-3. Set the Anthropic API key as a Worker secret:
+3. Set the Gemini API key as a Worker secret. Create a free key in
+   [Google AI Studio](https://aistudio.google.com/apikey) (no credit card):
    ```bash
-   npx wrangler secret put ANTHROPIC_API_KEY
+   npx wrangler secret put GEMINI_API_KEY
    ```
 4. Set the Turnstile secret as a Worker secret:
    ```bash
@@ -60,7 +66,7 @@ commit it.
 | `MONTHLY_CEILING` | Global monthly request cap (wallet guard) | `5000` |
 | `MAX_TOKENS` | Per-answer token cap | `700` |
 
-Secrets (set via `wrangler secret put`, never in git): `ANTHROPIC_API_KEY`,
+Secrets (set via `wrangler secret put`, never in git): `GEMINI_API_KEY`,
 `TURNSTILE_SECRET_KEY`.
 
 ## Known limitations

@@ -16,4 +16,4 @@ globs = ["**/*.md"]
 ALLOWED_ORIGIN = "https://jinholee.is-a.dev"
 MONTHLY_CEILING = "5000"
 MAX_TOKENS = "700"
-# Secrets set via `wrangler secret put`: ANTHROPIC_API_KEY, TURNSTILE_SECRET_KEY
+# Secrets set via `wrangler secret put`: GEMINI_API_KEY, TURNSTILE_SECRET_KEY
