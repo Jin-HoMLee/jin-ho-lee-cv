@@ -3,6 +3,7 @@ import "../styles/global.css";
 import jsonld from "../../public/person.jsonld?raw";
 import type { ContentData, Lang } from "../types/content";
 import { PAGES_BASE_URL } from "../lib/site-config";
+import DigitalTwin from "../components/DigitalTwin.astro";
 
 interface Props {
   lang: Lang;
@@ -105,5 +106,6 @@ const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;
         els.forEach((e) => io.observe(e));
       }
     </script>
+    <DigitalTwin />
   </body>
 </html>

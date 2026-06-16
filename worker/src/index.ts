@@ -1,0 +1,147 @@
+import { streamGemini, geminiToClientStream, type ChatMessage } from "./gemini";
+import { PERSONA } from "./persona";
+import { buildSystemText } from "./prompt";
+import { checkLimits, type Counters, type Limits } from "./ratelimit";
+import { verifyTurnstile } from "./turnstile";
+
+// chat-context.md is copied into worker/ at deploy time and imported as text.
+// @ts-expect-error — bundler text import of the generated context blob.
+import CV_CONTEXT from "../chat-context.md";
+
+export interface Env {
+  RATE_KV: KVNamespace;
+  GEMINI_API_KEY: string;
+  TURNSTILE_SECRET_KEY: string;
+  ALLOWED_ORIGIN: string;
+  MONTHLY_CEILING: string;
+  MAX_TOKENS: string;
+}
+
+// ALLOWED_ORIGIN may be a single origin or a comma-separated allowlist (e.g. the
+// prod site plus http://localhost:4321 for local dev). An exact match against one
+// of the listed origins is required.
+export function isAllowedOrigin(origin: string | null, allowed: string): boolean {
+  if (!origin) return false;
+  return allowed
+    .split(",")
+    .map((o) => o.trim())
+    .filter(Boolean)
+    .includes(origin);
+}
+
+// Parse a config var to a finite, non-negative number, falling back to a safe
+// default. A typo'd/unset MONTHLY_CEILING must NOT silently disengage the wallet
+// guard (Number("") === NaN, and `month >= NaN` is always false).
+export function finite(v: string, fallback: number): number {
+  const n = Number(v);
+  return Number.isFinite(n) && n >= 0 ? n : fallback;
+}
+
+export function corsHeaders(origin: string | null, allowed: string): Record<string, string> {
+  // ACAO must echo the single matched request origin, never the whole allowlist.
+  return {
+    "Access-Control-Allow-Origin": isAllowedOrigin(origin, allowed) ? origin! : "",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "content-type",
+  };
+}
+
+// MVP tradeoff: these KV counters are read-then-write (non-atomic), so under a
+// concurrent burst the ceiling can slightly overshoot. The "monthly" window is a
+// rolling ~31-day TTL from first write, not a calendar month. Both are accepted
+// for the MVP; a Durable Object would be the hard-guarantee fix.
+async function readCounters(kv: KVNamespace, ip: string): Promise<Counters> {
+  const [minute, day, month] = await Promise.all([
+    kv.get(`m:${ip}`),
+    kv.get(`d:${ip}`),
+    kv.get("month"),
+  ]);
+  return { minute: Number(minute ?? 0), day: Number(day ?? 0), month: Number(month ?? 0) };
+}
+
+async function bumpCounters(kv: KVNamespace, ip: string, c: Counters): Promise<void> {
+  await Promise.all([
+    kv.put(`m:${ip}`, String(c.minute + 1), { expirationTtl: 60 }),
+    kv.put(`d:${ip}`, String(c.day + 1), { expirationTtl: 86400 }),
+    kv.put("month", String(c.month + 1), { expirationTtl: 2678400 }),
+  ]);
+}
+
+export default {
+  async fetch(req: Request, env: Env): Promise<Response> {
+    const origin = req.headers.get("Origin");
+    const cors = corsHeaders(origin, env.ALLOWED_ORIGIN);
+
+    if (req.method === "OPTIONS") return new Response(null, { headers: cors });
+    if (req.method !== "POST" || !isAllowedOrigin(origin, env.ALLOWED_ORIGIN))
+      return new Response("forbidden", { status: 403, headers: cors });
+
+    const ip = req.headers.get("CF-Connecting-IP") ?? "0.0.0.0";
+
+    // Parse the body defensively: non-JSON input must yield a clean 400 (with CORS),
+    // not an opaque header-less 500. Validate shape BEFORE spending a Turnstile token
+    // or bumping counters on a structurally invalid request.
+    let body: { messages: ChatMessage[]; turnstileToken: string };
+    try {
+      body = (await req.json()) as { messages: ChatMessage[]; turnstileToken: string };
+    } catch {
+      return new Response("bad request", { status: 400, headers: cors });
+    }
+    // Bound the conversation to stop token-amplification abuse: a caller past Turnstile
+    // could otherwise send a long history of large messages, inflating Gemini input tokens
+    // (and burning the free-tier quota) well beyond what MAX_TOKENS — an OUTPUT cap — guards.
+    if (
+      !Array.isArray(body.messages) ||
+      typeof body.turnstileToken !== "string" ||
+      body.messages.length === 0 ||
+      body.messages.length > 20 ||
+      body.messages.some(
+        (m) =>
+          (m.role !== "user" && m.role !== "assistant") ||
+          typeof m.content !== "string" ||
+          m.content.length > 4000,
+      )
+    )
+      return new Response("bad request", { status: 400, headers: cors });
+
+    const ok = await verifyTurnstile(body.turnstileToken, env.TURNSTILE_SECRET_KEY, ip);
+    if (!ok) return new Response("challenge failed", { status: 403, headers: cors });
+
+    const limits: Limits = {
+      perMinute: 10,
+      perDay: 50,
+      monthlyCeiling: finite(env.MONTHLY_CEILING, 5000),
+    };
+    const counters = await readCounters(env.RATE_KV, ip);
+    const verdict = checkLimits(counters, limits);
+    if (!verdict.allowed) {
+      const msg = verdict.reason === "ceiling" ? "twin is resting" : "slow down a moment";
+      return new Response(msg, { status: verdict.status, headers: cors });
+    }
+    await bumpCounters(env.RATE_KV, ip, counters);
+
+    const systemText = buildSystemText(PERSONA, CV_CONTEXT as unknown as string);
+    const upstream = await streamGemini(
+      env.GEMINI_API_KEY,
+      systemText,
+      body.messages,
+      finite(env.MAX_TOKENS, 700),
+    );
+    // On a non-200 from Gemini (429 quota exhausted, 400, 401, 500) the body is a
+    // JSON error object, NOT an SSE stream — mislabeling it as text/event-stream
+    // leaves a browser EventSource with a broken connection. Don't pass the raw
+    // upstream error through (it can leak internal detail); return a generic 502.
+    if (!upstream.ok)
+      return new Response(JSON.stringify({ error: "twin upstream error" }), {
+        status: 502,
+        headers: { ...cors, "content-type": "application/json" },
+      });
+    // Transform Gemini's native SSE back into the client envelope the browser
+    // widget already parses (web/src/lib/twin.ts) — the frontend contract is
+    // unchanged across the provider swap.
+    return new Response(geminiToClientStream(upstream.body!), {
+      status: upstream.status,
+      headers: { ...cors, "content-type": "text/event-stream" },
+    });
+  },
+};

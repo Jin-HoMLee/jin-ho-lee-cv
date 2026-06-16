@@ -1,0 +1,19 @@
+name = "jin-ho-lee-cv-twin"
+main = "src/index.ts"
+compatibility_date = "2026-01-01"
+
+# Per-IP rate-limit + monthly-ceiling counters.
+[[kv_namespaces]]
+binding = "RATE_KV"
+id = "REPLACE_WITH_kv_namespace_id"
+
+# chat-context.md is imported as a text module in src/index.ts.
+[[rules]]
+type = "Text"
+globs = ["**/*.md"]
+
+[vars]
+ALLOWED_ORIGIN = "https://jinholee.is-a.dev"
+MONTHLY_CEILING = "5000"
+MAX_TOKENS = "700"
+# Secrets set via `wrangler secret put`: GEMINI_API_KEY, TURNSTILE_SECRET_KEY

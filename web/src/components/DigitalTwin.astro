@@ -1,0 +1,394 @@
+---
+// Small (256²) source; emitted as a hashed asset (no Sharp transform needed — the
+// project has no image service). Face is framed via the CSS crop on .twin-photo.
+import twinPhoto from "../assets/digital-twin-photo.png";
+
+const endpoint = import.meta.env.PUBLIC_TWIN_ENDPOINT ?? "";
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+const starters = [
+  "What's the splice neoepitope pipeline you built?",
+  "Why the move from academia to industry?",
+  "What's your experience with ML?",
+];
+---
+{endpoint && (
+  <div id="twin-root" data-endpoint={endpoint} data-sitekey={siteKey}>
+    <button
+      id="twin-launch"
+      aria-label="Talk to my digital twin!"
+      aria-controls="twin-panel"
+      aria-expanded="false"
+    ><span class="twin-avatar-wrap twin-avatar-launch" id="twin-launch-avatar"></span><span>Talk to my digital twin!</span></button>
+    <section id="twin-panel" hidden aria-labelledby="twin-title">
+      <header>
+        <div class="twin-head-row">
+          <span class="twin-avatar-wrap twin-avatar-lg" id="twin-header-avatar"></span>
+          <strong id="twin-title">Jin-Ho's digital twin</strong>
+        </div>
+        <p class="twin-preamble">
+          Hi — I'm Jin-Ho's digital twin. Ask me anything about my work and I'll answer
+          from my actual CV. <span>Chats may be reviewed to improve the twin.</span>
+        </p>
+      </header>
+      <div id="twin-log" aria-live="polite" aria-atomic="false"></div>
+      <ul id="twin-starters">{starters.map((q) => <li><button data-q={q}>{q}</button></li>)}</ul>
+      <form id="twin-form">
+        <input id="twin-input" type="text" autocomplete="off" maxlength="2000" placeholder="Ask about my work…" />
+        <button type="submit">Send</button>
+      </form>
+      <div class="cf-turnstile" data-sitekey={siteKey}></div>
+    </section>
+    {/* Digital-twin avatar: face-cropped holographic portrait (twinAvatar above).
+        Rendered once here, then cloned by JS into the header + each assistant reply. */}
+    <template id="twin-avatar-tpl">
+      <span class="twin-photo" style={`background-image:url(${twinPhoto.src})`} aria-hidden="true"></span>
+    </template>
+  </div>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script>
+    import { streamTwin } from "../lib/twin";
+    const root = document.getElementById("twin-root")!;
+    const endpoint = root.dataset.endpoint!;
+    const launch = document.getElementById("twin-launch")!;
+    const panel = document.getElementById("twin-panel")!;
+    const log = document.getElementById("twin-log")!;
+    const form = document.getElementById("twin-form") as HTMLFormElement;
+    const input = document.getElementById("twin-input") as HTMLInputElement;
+    const avatarTpl = document.getElementById("twin-avatar-tpl") as HTMLTemplateElement;
+    const history: { role: "user" | "assistant"; content: string }[] = [];
+    let busy = false; // in-flight guard: ignore Send while a reply is streaming
+
+    document.getElementById("twin-header-avatar")!.append(avatarTpl.content.cloneNode(true));
+    document.getElementById("twin-launch-avatar")!.append(avatarTpl.content.cloneNode(true));
+
+    // Mirror open state to aria-expanded and focus the input so keyboard/SR
+    // users aren't stranded; Escape closes and returns focus to the launcher.
+    function setPanelOpen(open: boolean): void {
+      panel.hidden = !open;
+      launch.setAttribute("aria-expanded", String(open));
+      if (open) input.focus();
+    }
+    launch.addEventListener("click", () => setPanelOpen(panel.hidden));
+    panel.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !panel.hidden) {
+        setPanelOpen(false);
+        launch.focus();
+      }
+    });
+    document.getElementById("twin-starters")!.addEventListener("click", (e) => {
+      const q = (e.target as HTMLElement).dataset.q;
+      if (q) { input.value = q; form.requestSubmit(); }
+    });
+
+    function bubble(role: string, text: string): HTMLElement {
+      const el = document.createElement("div");
+      el.className = `twin-msg twin-${role}`;
+      el.textContent = text;
+      if (role === "assistant") {
+        // Assistant turns render as [avatar][bubble]; the avatar is the twin's mark.
+        const row = document.createElement("div");
+        row.className = "twin-row";
+        const av = document.createElement("span");
+        av.className = "twin-avatar-wrap twin-avatar-sm";
+        av.append(avatarTpl.content.cloneNode(true));
+        row.append(av, el);
+        log.appendChild(row);
+      } else {
+        log.appendChild(el);
+      }
+      log.scrollTop = log.scrollHeight;
+      return el;
+    }
+
+    // Surface a short inline notice (no request fired) — reuses the assistant
+    // bubble styling so it reads as the twin speaking.
+    function notice(text: string): void {
+      bubble("assistant", text);
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (busy) return; // a reply is already streaming — ignore double-sends
+      const q = input.value.trim();
+      if (!q) return;
+
+      // Turnstile is single-use: the Worker re-verifies every request and
+      // Cloudflare rejects an already-redeemed token, so we must mint a fresh
+      // one per turn. If the challenge hasn't been solved yet getResponse()
+      // returns "" — don't fire a guaranteed-403 request; ask the user to retry
+      // once the widget finishes (it auto-executes).
+      // @ts-expect-error — Turnstile global from the injected script.
+      const token = window.turnstile?.getResponse?.() ?? "";
+      if (!token) {
+        notice("One sec — solving a quick anti-spam check, try again.");
+        input.focus();
+        return;
+      }
+
+      busy = true;
+      input.value = "";
+      // Starters are only useful before the conversation begins — hide them once
+      // the first turn is sent so they don't clutter the space above the input.
+      document.getElementById("twin-starters")!.style.display = "none";
+      bubble("user", q);
+      history.push({ role: "user", content: q });
+      // Assistant bubble starts as an animated "typing" indicator; the first text
+      // chunk replaces the dots (out.textContent wipes the child span), so there's
+      // no empty-bubble flash while we wait on the first token.
+      const out = bubble("assistant", "");
+      out.classList.add("twin-typing");
+      out.innerHTML = '<span class="twin-dots" aria-hidden="true"><i></i><i></i><i></i></span>';
+      let acc = "";
+      try {
+        for await (const chunk of streamTwin(endpoint, history, token)) {
+          if (chunk.type === "text") {
+            acc += chunk.text;
+          } else if (chunk.type === "truncated") {
+            acc += " …(trimmed — ask me to go on)";
+          }
+          if (acc) {
+            out.classList.remove("twin-typing");
+            out.textContent = acc;
+          }
+          log.scrollTop = log.scrollHeight;
+        }
+        if (!acc) throw new Error("empty response"); // route to the resting fallback
+        history.push({ role: "assistant", content: acc });
+      } catch {
+        // Mid-stream failure (or empty response): the assistant turn was never
+        // recorded, so pop the orphaned user turn — otherwise the next submit sends
+        // two user turns in a row and the API rejects the non-alternating roles.
+        history.pop();
+        out.classList.remove("twin-typing");
+        out.textContent =
+          "My twin's resting right now — meanwhile, grab my CV PDF or email me from the links above.";
+      } finally {
+        busy = false;
+        // Invalidate the just-used token and re-mint a fresh one for the next
+        // turn (the managed widget auto-executes after reset) — without this the
+        // 2nd message in a conversation reuses a redeemed token and 403s.
+        // @ts-expect-error — Turnstile global from the injected script.
+        window.turnstile?.reset?.();
+      }
+    });
+  </script>
+
+  <style>
+    /* All colors/surfaces/borders pull from the site's theme custom properties
+       (defined in global.css) so the widget tracks dark/light automatically. */
+    #twin-root {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 50;
+      font-size: 0.875rem;
+    }
+
+    #twin-launch {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.875rem;
+      border-radius: 9999px;
+      border: 1px solid var(--surface-border);
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgb(0 0 0 / 0.25);
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    #twin-launch:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    #twin-panel {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 0.5rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      width: min(22rem, calc(100vw - 2rem));
+      max-height: min(32rem, calc(100vh - 6rem));
+      padding: 0.875rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--surface-border);
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+    }
+    #twin-panel[hidden] { display: none; }
+
+    .twin-head-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .twin-avatar-wrap {
+      display: inline-flex;
+      flex: none;
+    }
+    .twin-photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      /* Same treatment as the site's profile picture (ProfileSection.astro):
+         object-cover, centered — applied to the full image, no pre-crop. */
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 0 0 1px var(--surface-border);
+    }
+    .twin-avatar-lg {
+      width: 3rem;
+      height: 3rem;
+    }
+    .twin-avatar-sm {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-top: 0.0625rem;
+    }
+    .twin-avatar-launch {
+      width: 2rem;
+      height: 2rem;
+      margin-left: -0.25rem;
+    }
+
+    #twin-panel header strong {
+      font-size: 0.9375rem;
+      color: var(--text);
+    }
+    .twin-preamble {
+      margin: 0.25rem 0 0;
+      font-size: 0.75rem;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+    .twin-preamble span {
+      /* Real data-review disclosure — must stay legible. --faint on light
+         --surface is ~4.0:1 (under WCAG AA for 0.75rem); --muted passes. */
+      color: var(--muted);
+    }
+
+    #twin-log {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      overflow-y: auto;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+    #twin-log:empty { display: none; }
+
+    .twin-msg {
+      max-width: 85%;
+      padding: 0.5rem 0.625rem;
+      border-radius: 0.625rem;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .twin-user {
+      align-self: flex-end;
+      background: var(--accent);
+      color: var(--accent-contrast);
+    }
+    /* Assistant turn = [avatar][bubble]; the row is the flex child of the log. */
+    .twin-row {
+      display: flex;
+      align-self: flex-start;
+      align-items: flex-start;
+      gap: 0.375rem;
+      max-width: 90%;
+    }
+    .twin-row .twin-assistant {
+      max-width: 100%;
+    }
+    .twin-assistant {
+      align-self: flex-start;
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--surface-border);
+    }
+
+    /* "Thinking" indicator: three dots that bounce while we await the first token. */
+    .twin-dots {
+      display: inline-flex;
+      gap: 0.25rem;
+      align-items: center;
+      padding: 0.125rem 0;
+    }
+    .twin-dots i {
+      width: 0.375rem;
+      height: 0.375rem;
+      border-radius: 50%;
+      background: var(--muted);
+      animation: twin-bounce 1.2s infinite ease-in-out;
+    }
+    .twin-dots i:nth-child(2) { animation-delay: 0.15s; }
+    .twin-dots i:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes twin-bounce {
+      0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+      30% { opacity: 1; transform: translateY(-0.2rem); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .twin-dots i { animation: none; opacity: 0.6; }
+    }
+
+    #twin-starters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    #twin-starters button {
+      padding: 0.3125rem 0.625rem;
+      border-radius: 9999px;
+      border: 1px solid var(--surface-border);
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    #twin-starters button:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    #twin-form {
+      display: flex;
+      gap: 0.5rem;
+    }
+    #twin-input {
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: 0.5rem 0.625rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--surface-border);
+      background: var(--bg);
+      color: var(--text);
+      font: inherit;
+    }
+    #twin-input::placeholder { color: var(--faint); }
+    #twin-input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+    #twin-form button[type="submit"] {
+      padding: 0.5rem 0.875rem;
+      border-radius: 0.5rem;
+      border: none;
+      background: var(--accent);
+      color: var(--accent-contrast);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    #twin-form button[type="submit"]:hover { background: var(--accent-hover); }
+  </style>
+)}
