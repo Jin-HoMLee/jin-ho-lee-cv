@@ -1,5 +1,7 @@
 ---
-import TwinAvatar from "../assets/twin-avatar.svg";
+// Small (256²) source; emitted as a hashed asset (no Sharp transform needed — the
+// project has no image service). Face is framed via the CSS crop on .twin-photo.
+import twinPhoto from "../assets/digital-twin-photo.png";
 
 const endpoint = import.meta.env.PUBLIC_TWIN_ENDPOINT ?? "";
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
@@ -36,10 +38,10 @@ const starters = [
       </form>
       <div class="cf-turnstile" data-sitekey={siteKey}></div>
     </section>
-    {/* Avatar mark lives in ../assets/twin-avatar.svg (imported above). Rendered once
-        here, then cloned by JS into the header + each assistant reply. */}
+    {/* Digital-twin avatar: face-cropped holographic portrait (twinAvatar above).
+        Rendered once here, then cloned by JS into the header + each assistant reply. */}
     <template id="twin-avatar-tpl">
-      <TwinAvatar class="twin-av" aria-hidden="true" focusable="false" />
+      <span class="twin-photo" style={`background-image:url(${twinPhoto.src})`} aria-hidden="true"></span>
     </template>
   </div>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -224,10 +226,15 @@ const starters = [
       display: inline-flex;
       flex: none;
     }
-    .twin-avatar-wrap svg {
-      display: block;
+    .twin-photo {
       width: 100%;
       height: 100%;
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      /* Face-framing crop (whole head, centered) tuned against the source image. */
+      background-size: 175%;
+      background-position: 48% 25%;
+      box-shadow: 0 0 0 1px var(--surface-border);
     }
     .twin-avatar-lg {
       width: 2rem;
