@@ -23,7 +23,8 @@ cap.
 
 1. `cd worker && npm install`
 2. Create a Workers KV namespace and paste the returned id into
-   `wrangler.toml`'s `[[kv_namespaces]] id`:
+   `wrangler.toml`'s `[[kv_namespaces]] id` (this id is not a secret — it is
+   account-scoped and safe to commit):
    ```bash
    npx wrangler kv namespace create RATE_KV
    ```
@@ -52,22 +53,33 @@ just worker-deploy   # bundles a fresh dist/chat-context.md, then `wrangler depl
 Local development:
 
 ```bash
-just worker-dev      # bundles chat-context.md, then `wrangler dev`
+cp worker/.dev.vars.example worker/.dev.vars   # once — adds http://localhost:4321 to the CORS allowlist
+just worker-dev                                # bundles chat-context.md, then `wrangler dev`
 ```
 
 `worker/chat-context.md` is gitignored and regenerated at deploy time — never
 commit it.
 
+`wrangler.toml` holds the **production** config and is committed. Local-only
+overrides go in `worker/.dev.vars` (gitignored); Wrangler reads it during
+`wrangler dev` and overrides the matching `[vars]`. This is why the localhost
+dev origin lives in `.dev.vars`, not in the committed `ALLOWED_ORIGIN` — so the
+deployed config stays clean and there's no file to stash before merges. Copy the
+committed `.dev.vars.example` template to get started.
+
 ## Config vars (`wrangler.toml` `[vars]`)
 
 | Var | Purpose | Default |
 |---|---|---|
-| `ALLOWED_ORIGIN` | The site origin allowed by CORS | — |
+| `ALLOWED_ORIGIN` | The site origin(s) allowed by CORS (comma-separated allowlist) | — |
 | `MONTHLY_CEILING` | Global monthly request cap (wallet guard) | `5000` |
 | `MAX_TOKENS` | Per-answer token cap | `700` |
 
+Production values are committed in `wrangler.toml`. For local `wrangler dev`,
+override any of them in `worker/.dev.vars` (gitignored; see `.dev.vars.example`).
+
 Secrets (set via `wrangler secret put`, never in git): `GEMINI_API_KEY`,
-`TURNSTILE_SECRET_KEY`.
+`TURNSTILE_SECRET_KEY`. These can also be placed in `.dev.vars` for local dev.
 
 ## Known limitations
 

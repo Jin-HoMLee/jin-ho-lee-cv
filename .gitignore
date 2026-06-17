@@ -45,3 +45,6 @@ pdf/.cache/
 worker/node_modules/
 worker/.wrangler/
 worker/chat-context.md
+worker/.dev.vars
+worker/.dev.vars.*
+!worker/.dev.vars.example
