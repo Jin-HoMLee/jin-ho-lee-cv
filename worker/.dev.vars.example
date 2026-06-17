@@ -1,0 +1,14 @@
+# Template for worker/.dev.vars — copy to worker/.dev.vars (gitignored) for local
+# `wrangler dev`. Wrangler reads .dev.vars during local development and overrides
+# the matching [vars] in wrangler.toml.
+#
+#   cp worker/.dev.vars.example worker/.dev.vars
+#
+# Add the local dev server origin to the CORS allowlist so the widget can reach
+# the Worker from `just web-dev` (http://localhost:4321):
+ALLOWED_ORIGIN = "https://jinholee.is-a.dev,http://localhost:4321"
+
+# You can also put real secrets here for local dev (loaded only by `wrangler dev`,
+# never deployed) instead of `wrangler secret put`:
+# GEMINI_API_KEY = "..."
+# TURNSTILE_SECRET_KEY = "..."
