@@ -53,8 +53,8 @@ just worker-deploy   # bundles a fresh dist/chat-context.md, then `wrangler depl
 Local development:
 
 ```bash
-cp .dev.vars.example .dev.vars   # once — adds http://localhost:4321 to the CORS allowlist
-just worker-dev                  # bundles chat-context.md, then `wrangler dev`
+cp worker/.dev.vars.example worker/.dev.vars   # once — adds http://localhost:4321 to the CORS allowlist
+just worker-dev                                # bundles chat-context.md, then `wrangler dev`
 ```
 
 `worker/chat-context.md` is gitignored and regenerated at deploy time — never
