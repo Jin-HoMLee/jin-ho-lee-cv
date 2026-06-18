@@ -66,6 +66,9 @@ export async function streamGemini(
       }),
     });
     if (res.ok || !isRetryable(res.status)) return res;
+    // Retryable failure → try the next model. Drain this error body (small JSON,
+    // never an SSE stream) so the upstream connection isn't held open until GC.
+    res.body?.cancel();
   }
   return res; // every model exhausted — surface the last failure
 }

@@ -106,6 +106,13 @@ describe("streamGemini model cascade", () => {
     expect(calls).toHaveLength(1);
   });
 
+  it("falls through on a transient 500 (completes the retryable-status matrix)", async () => {
+    const { fn, calls } = scriptedFetch([500, 200]);
+    const res = await streamGemini(...args, fn);
+    expect(res.ok).toBe(true);
+    expect(calls.map((c) => modelOf(c.url))).toEqual(["gemini-3.5-flash", "gemini-2.5-flash"]);
+  });
+
   it("sends model-appropriate thinking config (3.x thinkingLevel, 2.5 thinkingBudget)", async () => {
     const { fn, calls } = scriptedFetch([429, 429, 200]);
     await streamGemini(...args, fn);
@@ -132,6 +139,18 @@ describe("generateText", () => {
   it("throws on a non-200 upstream", async () => {
     const fetchImpl = vi.fn(async () => ({ ok: false, status: 429, json: async () => ({}) })) as unknown as typeof fetch;
     await expect(generateText("KEY", "p", fetchImpl)).rejects.toThrow();
+  });
+
+  it("throws after every model is quota-exhausted (tries all three, then gives up)", async () => {
+    const { fn, calls } = scriptedFetch([429, 429, 429]);
+    await expect(generateText("KEY", "p", fn)).rejects.toThrow("upstream 429");
+    expect(calls).toHaveLength(3);
+  });
+
+  it("stops on a non-retryable status (400) without trying lower models", async () => {
+    const { fn, calls } = scriptedFetch([400, 200]);
+    await expect(generateText("KEY", "p", fn)).rejects.toThrow("upstream 400");
+    expect(calls).toHaveLength(1);
   });
 
   it("returns empty string when no candidate text is present", async () => {
