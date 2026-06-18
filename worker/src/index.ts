@@ -1,4 +1,5 @@
 import { streamGemini, geminiToClientStream, type ChatMessage } from "./gemini";
+import { logQuestion } from "./insights";
 import { PERSONA } from "./persona";
 import { buildSystemText } from "./prompt";
 import { checkLimits, type Counters, type Limits } from "./ratelimit";
@@ -69,7 +70,7 @@ async function bumpCounters(kv: KVNamespace, ip: string, c: Counters): Promise<v
 }
 
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
+  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const origin = req.headers.get("Origin");
     const cors = corsHeaders(origin, env.ALLOWED_ORIGIN);
 
@@ -120,6 +121,21 @@ export default {
       return new Response(msg, { status: verdict.status, headers: cors });
     }
     await bumpCounters(env.RATE_KV, ip, counters);
+
+    // Phase 12b: fire-and-forget log of the latest user question, AFTER every guard
+    // (Turnstile + bounds + rate/ceiling) has passed — only real, human, allowed
+    // questions are captured. ctx.waitUntil keeps it off the response path so a D1
+    // error can never block or break the chat stream. Privacy: text/ts/country/
+    // msg_count only — never the IP, never the answer.
+    const latest = body.messages[body.messages.length - 1];
+    ctx.waitUntil(
+      logQuestion(env.INSIGHTS_DB, {
+        text: latest.content,
+        ts: Math.floor(Date.now() / 1000),
+        country: (req as { cf?: { country?: string } }).cf?.country ?? null,
+        msg_count: body.messages.length,
+      }).catch(() => {}),
+    );
 
     const systemText = buildSystemText(PERSONA, CV_CONTEXT as unknown as string);
     const upstream = await streamGemini(
