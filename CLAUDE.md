@@ -32,6 +32,7 @@ Twelve phases (0–11), sequential. Each produces a usable artifact and gets its
 | 10 | Agent interface (MCP server + skill over `content/` + validate) | ✅ Done (merged 2026-06-03, PR #63, commit `fbc18fe`) |
 | 11 | Cover-letter generator (interview + JD → tailored letter, PDF + text) | ✅ Done (merged 2026-06-03, `--no-ff`, PR #66 @claude-approved); personal-voice craft upgrade (anti-slop brief, voice sample, self-critique, jd-gap report, cliché linter) added 2026-06-05 (#74) |
 | 12a | Digital-twin chat MVP (CV-grounded conversational chat: context compiler + Cloudflare Worker + web widget + guardrails) | ✅ Done (merged 2026-06-16, `--no-ff`, PR #83, commit `7b6dfaa`); Gemini free-tier backend |
+| 12b | Digital-twin insights (D1 question log + daily Gemini digest + Cloudflare-Access dashboard) | ✅ Done (pending merge); free-tier D1 + Cron Triggers; verbatim questions, 30-day purge, no IP |
 
 ## Layout
 
@@ -112,6 +113,14 @@ validate + test + lint must all be green before merging anything.
   `PUBLIC_TWIN_ENDPOINT` + `PUBLIC_TURNSTILE_SITE_KEY` — both public values, set as GitHub repo
   *variables* and injected in `pages.yml` (unset → empty → widget renders nothing, the graceful
   default). The Worker deploy itself is still a separate `wrangler` step, never wired into Pages.
+- **Worker now uses D1 + a Cron Trigger.** Phase 12b adds the `INSIGHTS_DB` D1 binding
+  (question log + digests; schema in `worker/schema.sql`, applied via `wrangler d1
+  execute`), a daily `scheduled()` digest cron (`[triggers] crons`), and a private
+  `GET /twin-insights` HTML route gated by Cloudflare Access + a
+  `Cf-Access-Authenticated-User-Email` guard. That route is intentionally excluded
+  from the public site surface (sitemap / llms.txt / CNAME). D1 + Cron are free-tier;
+  the digest reuses the existing `GEMINI_API_KEY`. D1 logging is fire-and-forget via
+  `ctx.waitUntil` — it never blocks the chat stream.
 - **`content/*.yaml` is the source of truth.** Renderers consume; never edit content from inside a renderer.
 - **LangString pattern.** Short user-facing strings use inline `{ en: "...", de: "..." }` maps; long prose lives in per-language files (`profile.en.yaml`). `en` is required; other languages optional until Phase 2.
 - **Cross-references validated.** Every `refs: [L1]` in `experience.yaml` must resolve to a `content/projects/L1.en.yaml` file. Filename and `id:` field must match. Enforced by `scripts/validate.py` and `scripts/content_loader.py`.
