@@ -12,7 +12,7 @@ id = "483f911f06854862be9d992ab99423d8"
 [[d1_databases]]
 binding = "INSIGHTS_DB"
 database_name = "twin-insights"
-database_id = "PLACEHOLDER_RUN_WRANGLER_D1_CREATE"
+database_id = "fa441841-cc5a-4f4e-9bcd-d160bbb8ebb0"
 
 # chat-context.md is imported as a text module in src/index.ts.
 [[rules]]
