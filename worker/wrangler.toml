@@ -27,3 +27,7 @@ ALLOWED_ORIGIN = "https://jinholee.is-a.dev"
 MONTHLY_CEILING = "5000"
 MAX_TOKENS = "700"
 # Secrets set via `wrangler secret put`: GEMINI_API_KEY, TURNSTILE_SECRET_KEY
+
+# Phase 12b digest cron — daily ~06:00 UTC during the pilot (change to weekly later).
+[triggers]
+crons = ["0 6 * * *"]

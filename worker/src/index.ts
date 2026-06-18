@@ -1,4 +1,5 @@
 import { streamGemini, geminiToClientStream, type ChatMessage } from "./gemini";
+import { runDigest } from "./digest";
 import { latestDigest, recentQuestions, logQuestion } from "./insights";
 import { renderDashboard } from "./dashboard";
 import { PERSONA } from "./persona";
@@ -187,5 +188,12 @@ export default {
       status: upstream.status,
       headers: { ...cors, "content-type": "text/event-stream" },
     });
+  },
+
+  // Phase 12b daily digest cron (wired via [triggers] crons in wrangler.toml).
+  // Reuses the existing free-tier GEMINI_API_KEY; skip-on-empty + 30d purge live
+  // in runDigest. waitUntil keeps the worker alive until the digest completes.
+  async scheduled(_event: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
+    ctx.waitUntil(runDigest(env.INSIGHTS_DB, env.GEMINI_API_KEY, Math.floor(Date.now() / 1000)).then(() => {}));
   },
 };

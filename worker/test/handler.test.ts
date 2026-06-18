@@ -1,20 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import worker, { type Env } from "../src/index";
 import { fakeD1 } from "./fakeD1";
+import { fakeKv } from "./fakeKv";
 
 const ALLOWED = "https://jinholee.is-a.dev";
-
-// In-memory KV stub: enough of the KVNamespace surface for read/bump counters.
-// Accepts seed entries so tests can pre-load the rate-limit counters.
-function fakeKv(initial: Record<string, string> = {}) {
-  const store = new Map<string, string>(Object.entries(initial));
-  return {
-    get: vi.fn(async (key: string) => store.get(key) ?? null),
-    put: vi.fn(async (key: string, value: string) => {
-      store.set(key, value);
-    }),
-  } as unknown as KVNamespace;
-}
 
 // ExecutionContext fake: collect the promises passed to waitUntil so tests can
 // await the fire-and-forget logging before asserting on it.
