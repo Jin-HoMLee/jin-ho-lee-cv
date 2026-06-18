@@ -1,8 +1,9 @@
 # Digital-twin chat Worker
 
 The Phase 12a digital-twin chat Worker: a Cloudflare Worker that proxies
-CV-grounded questions to Google Gemini (`gemini-3.5-flash`), holding the Gemini
-API key as a Worker secret. It reads only the generated public
+CV-grounded questions to Google Gemini (a best-first free-tier model cascade —
+see Cost below), holding the Gemini API key as a Worker secret. It reads only the
+generated public
 `dist/chat-context.md` (compiled from `content/` by
 `scripts/render_chat_context.py`) — no PII, nothing from `content.private/`.
 
@@ -13,11 +14,17 @@ browser widget already parses, so the frontend contract is unchanged.
 
 Every Cloudflare service this Worker uses — Workers, KV, Turnstile — is on the
 **free tier** at expected traffic. The inference provider is the **Google Gemini
-free tier** (`gemini-3.5-flash`, ~250 requests/day for Flash) — **no out-of-pocket
-cost** at expected personal-site traffic. When the free quota is exhausted, Gemini
-returns an error and the Worker shows the graceful "twin's resting" fallback. Usage
-stays bounded by `MAX_TOKENS` per answer and the global `MONTHLY_CEILING` request
-cap.
+free tier** — **no out-of-pocket cost** at expected personal-site traffic.
+
+Each Gemini model has its own free-tier **daily** request cap, so `src/gemini.ts`
+uses a best-first **model cascade**: it tries `gemini-3.5-flash` (newest, but only
+**20 requests/day** free), and on a daily-quota `429` (or a transient `503`/`500`)
+falls through to `gemini-2.5-flash` (**250/day**), then `gemini-2.5-flash-lite`
+(**1,000/day**). Visitors get the best model that still has quota, and the twin
+stays reachable on the ~**1,270 combined free requests/day** instead of dying at 20.
+Only when *every* model is exhausted does Gemini's error surface as the graceful
+"twin's resting" fallback. Usage also stays bounded by `MAX_TOKENS` per answer and
+the global `MONTHLY_CEILING` request cap.
 
 ## One-time setup
 

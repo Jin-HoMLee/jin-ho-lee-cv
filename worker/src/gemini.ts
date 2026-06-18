@@ -3,13 +3,40 @@ export interface ChatMessage {
   content: string;
 }
 
-// Free-tier Flash model. Bump here when Google ships a newer default.
-const MODEL = "gemini-3.5-flash";
+// Free-tier model cascade, best-first. Each model has its own free-tier DAILY
+// request cap (gemini-3.5-flash: 20/day, 2.5-flash: 250/day, 2.5-flash-lite:
+// 1000/day — verified against the live API). We try the best model first and fall
+// through to the next when one returns a retryable failure (a daily-quota 429, or
+// a transient 503/500), so the twin stays reachable on the ~1,270 combined free
+// requests/day across the chain instead of dying at 20. Thinking config is
+// model-family-specific: Gemini 3.x Flash takes `thinkingLevel` ("low" keeps the
+// reasoning from eating the visible-answer token budget); the 2.5 models reject
+// `thinkingLevel` (HTTP 400) and take `thinkingBudget: 0` to disable thinking.
+interface ModelConfig {
+  name: string;
+  thinkingConfig: Record<string, unknown>;
+}
+const MODELS: ModelConfig[] = [
+  { name: "gemini-3.5-flash", thinkingConfig: { thinkingLevel: "low" } },
+  { name: "gemini-2.5-flash", thinkingConfig: { thinkingBudget: 0 } },
+  { name: "gemini-2.5-flash-lite", thinkingConfig: { thinkingBudget: 0 } },
+];
 
-// Streams a Gemini 3.5 Flash response (free tier). The API key is a query param
-// (server-side only — never exposed to the browser). Returns the raw upstream SSE
-// Response; the body is transformed back into the client envelope by
-// geminiToClientStream so the browser widget contract stays unchanged.
+// Upstream statuses worth retrying on the NEXT model in the cascade: 429 (daily or
+// per-minute quota exhausted), 503 (model overloaded / "high demand"), 500
+// (transient upstream error). A 400/401/403 is a config/auth bug — the next model
+// would fail identically, so we stop and surface it rather than burn the cascade.
+function isRetryable(status: number): boolean {
+  return status === 429 || status === 500 || status === 503;
+}
+
+// Streams a Gemini Flash response (free tier), cascading down MODELS on a retryable
+// upstream failure. The API key is a query param (server-side only — never exposed
+// to the browser). Returns the first model's ok streaming Response; if a model
+// fails retryably it tries the next, and if all are exhausted it returns the last
+// failed Response (the caller turns any non-ok into a generic 502). The returned
+// SSE body is transformed back into the client envelope by geminiToClientStream so
+// the browser widget contract stays unchanged.
 export async function streamGemini(
   apiKey: string,
   systemText: string,
@@ -21,24 +48,26 @@ export async function streamGemini(
     role: m.role === "assistant" ? "model" : "user",
     parts: [{ text: m.content }],
   }));
-  const url =
-    `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:streamGenerateContent` +
-    `?alt=sse&key=${apiKey}`;
-  return fetchImpl(url, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: systemText }] },
-      contents,
-      // thinkingLevel "low": Gemini 3.x Flash thinks by default and that reasoning
-      // competes with the visible answer for the token budget — short, grounded CV
-      // replies don't need it, and minimizing it stops answers truncating mid-sentence.
-      generationConfig: {
-        maxOutputTokens: maxTokens,
-        thinkingConfig: { thinkingLevel: "low" },
-      },
-    }),
-  });
+  let res!: Response;
+  for (const model of MODELS) {
+    const url =
+      `https://generativelanguage.googleapis.com/v1beta/models/${model.name}:streamGenerateContent` +
+      `?alt=sse&key=${apiKey}`;
+    res = await fetchImpl(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: systemText }] },
+        contents,
+        generationConfig: {
+          maxOutputTokens: maxTokens,
+          thinkingConfig: model.thinkingConfig,
+        },
+      }),
+    });
+    if (res.ok || !isRetryable(res.status)) return res;
+  }
+  return res; // every model exhausted — surface the last failure
 }
 
 // PURE: map a parsed Gemini SSE chunk to zero or more client envelopes — exactly
@@ -63,29 +92,38 @@ export function geminiChunkToEnvelopes(chunk: any): object[] {
 
 // One-shot (non-streaming) completion used by the Phase 12b digest cron. Uses the
 // :generateContent endpoint (not :streamGenerateContent) and returns the joined
-// candidate text. Reuses the same free-tier MODEL + key as the chat path — no new
-// credential or cost. Throws on a non-200 so the cron can skip writing a digest.
+// candidate text. Cascades down the same free-tier MODELS as the chat path (no new
+// credential or cost) so the daily digest still runs when the top model's quota is
+// spent. Throws on a non-retryable error or after every model is exhausted, so the
+// cron can skip writing a digest.
 export async function generateText(
   apiKey: string,
   prompt: string,
   fetchImpl: typeof fetch = fetch,
 ): Promise<string> {
-  const url =
-    `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent` +
-    `?key=${apiKey}`;
-  const res = await fetchImpl(url, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: { thinkingConfig: { thinkingLevel: "low" } },
-    }),
-  });
-  if (!res.ok) throw new Error(`gemini generateText upstream ${res.status}`);
-  const data = (await res.json()) as any;
-  const parts = data?.candidates?.[0]?.content?.parts;
-  if (!Array.isArray(parts)) return "";
-  return parts.map((p: any) => (typeof p?.text === "string" ? p.text : "")).join("");
+  let status = 0;
+  for (const model of MODELS) {
+    const url =
+      `https://generativelanguage.googleapis.com/v1beta/models/${model.name}:generateContent` +
+      `?key=${apiKey}`;
+    const res = await fetchImpl(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: { thinkingConfig: model.thinkingConfig },
+      }),
+    });
+    if (res.ok) {
+      const data = (await res.json()) as any;
+      const parts = data?.candidates?.[0]?.content?.parts;
+      if (!Array.isArray(parts)) return "";
+      return parts.map((p: any) => (typeof p?.text === "string" ? p.text : "")).join("");
+    }
+    status = res.status;
+    if (!isRetryable(status)) break; // config/auth error — next model won't help
+  }
+  throw new Error(`gemini generateText upstream ${status}`);
 }
 
 // Read Gemini's native SSE and re-emit the client envelope SSE. Buffers across

@@ -106,8 +106,12 @@ validate + test + lint must all be green before merging anything.
   component that deploys to Cloudflare (via `just worker-deploy` / `wrangler`), not GitHub
   Pages. The Pages build only needs the generated `dist/chat-context.md`; the Worker is
   deployed separately and holds `GEMINI_API_KEY` as a Worker secret (never in git). Inference
-  uses the Google Gemini free tier (`gemini-3.5-flash`) — no out-of-pocket cost at expected
-  traffic; bounded by `MAX_TOKENS` + `MONTHLY_CEILING`. The Worker transforms Gemini's native
+  uses the Google Gemini free tier via a best-first **model cascade** in `src/gemini.ts`
+  (`gemini-3.5-flash` → `gemini-2.5-flash` → `gemini-2.5-flash-lite`): each model has its own
+  free-tier daily request cap (20 / 250 / 1000), so on a daily-quota 429 (or transient 503/500)
+  the Worker falls through to the next model — keeping the twin reachable on ~1,270 combined
+  free requests/day instead of dying at 20. No out-of-pocket cost at expected traffic; also
+  bounded by `MAX_TOKENS` + `MONTHLY_CEILING`. The Worker transforms Gemini's native
   SSE back into the browser widget's client envelope, so the frontend contract is unchanged.
   The widget only appears on the deployed site when the Pages build receives
   `PUBLIC_TWIN_ENDPOINT` + `PUBLIC_TURNSTILE_SITE_KEY` — both public values, set as GitHub repo
