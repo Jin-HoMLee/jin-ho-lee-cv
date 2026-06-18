@@ -248,3 +248,35 @@ describe("fetch handler", () => {
     expect(calls.find((c) => c.sql.includes("INSERT INTO questions"))).toBeUndefined();
   });
 });
+
+function getInsights(headers: Record<string, string> = {}): Request {
+  return new Request("https://twin.example/twin-insights", { method: "GET", headers });
+}
+
+describe("GET /twin-insights", () => {
+  it("403 when the Cf-Access-Authenticated-User-Email header is absent", async () => {
+    stubFetch({});
+    const res = await worker.fetch(getInsights(), makeEnv(), makeCtx().ctx);
+    expect(res.status).toBe(403);
+  });
+
+  it("200 text/html with the dashboard when the Access header is present", async () => {
+    stubFetch({});
+    const db = fakeD1((sql) => {
+      if (sql.includes("FROM digests")) return { first: { id: 1, ts: 1, markdown: "## T", n_questions: 1 } };
+      if (sql.includes("FROM questions")) return { results: [{ id: 2, ts: 2, text: "hi", country: "DE", msg_count: 1 }] };
+      return {};
+    }).db;
+    const env = makeEnv(fakeKv({ month: "12" }), db);
+    const res = await worker.fetch(
+      getInsights({ "Cf-Access-Authenticated-User-Email": "jin@example.com" }),
+      env,
+      makeCtx().ctx,
+    );
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toContain("text/html");
+    const html = await res.text();
+    expect(html).toContain("Twin insights");
+    expect(html).toContain("12"); // usage counter
+  });
+});

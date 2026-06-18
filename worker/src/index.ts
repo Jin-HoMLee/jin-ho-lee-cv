@@ -1,5 +1,6 @@
 import { streamGemini, geminiToClientStream, type ChatMessage } from "./gemini";
-import { logQuestion } from "./insights";
+import { latestDigest, recentQuestions, logQuestion } from "./insights";
+import { renderDashboard } from "./dashboard";
 import { PERSONA } from "./persona";
 import { buildSystemText } from "./prompt";
 import { checkLimits, type Counters, type Limits } from "./ratelimit";
@@ -75,6 +76,32 @@ export default {
     const cors = corsHeaders(origin, env.ALLOWED_ORIGIN);
 
     if (req.method === "OPTIONS") return new Response(null, { headers: cors });
+
+    // Phase 12b private dashboard. Same-origin top-level navigation (no Origin
+    // allowlist applies here, unlike POST /). Cloudflare Access authenticates at
+    // the edge; this header check is cheap defense-in-depth so the route stays
+    // closed even if the Access policy is misconfigured or removed.
+    const url = new URL(req.url);
+    if (req.method === "GET" && url.pathname === "/twin-insights") {
+      if (!req.headers.get("Cf-Access-Authenticated-User-Email"))
+        return new Response("forbidden", { status: 403 });
+      const monthCount = Number((await env.RATE_KV.get("month")) ?? 0);
+      const [digest, questions] = await Promise.all([
+        latestDigest(env.INSIGHTS_DB),
+        recentQuestions(env.INSIGHTS_DB, 200),
+      ]);
+      const html = renderDashboard({
+        digest,
+        monthCount,
+        ceiling: finite(env.MONTHLY_CEILING, 5000),
+        questions,
+      });
+      return new Response(html, {
+        status: 200,
+        headers: { "content-type": "text/html; charset=utf-8" },
+      });
+    }
+
     if (req.method !== "POST" || !isAllowedOrigin(origin, env.ALLOWED_ORIGIN))
       return new Response("forbidden", { status: 403, headers: cors });
 
