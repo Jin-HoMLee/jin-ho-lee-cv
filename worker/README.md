@@ -41,6 +41,15 @@ cap.
    `PUBLIC_TURNSTILE_SITE_KEY`, and feed its **SECRET** key into the Worker
    secret from step 4. Also set `PUBLIC_TWIN_ENDPOINT` in `web/.env` to the
    deployed Worker URL.
+6. Create the insights D1 database and apply the schema (the `database_id` is
+   account-scoped, not a secret — safe to commit in `wrangler.toml`):
+   ```bash
+   npx wrangler d1 create twin-insights      # paste the id into wrangler.toml
+   npx wrangler d1 execute twin-insights --remote --file=schema.sql
+   ```
+7. In the Cloudflare dashboard, put **Cloudflare Access** (Zero Trust → Access →
+   Applications) in front of the deployed Worker's `/twin-insights` path, with a
+   policy allowing only your Google login. No token or secret goes in git.
 
 ## Deploy
 
@@ -93,5 +102,8 @@ Secrets (set via `wrangler secret put`, never in git): `GEMINI_API_KEY`,
   within the Gemini free-tier per-request limit), the Worker rejects requests with
   an empty history, more than 20 messages, a non-`user`/`assistant` role, or any
   message over 4,000 characters. The widget also caps its input at 2,000 chars.
-- **No operator usage visibility.** Question logging / usage dashboards are
-  deferred to Phase 12b.
+- **Operator dashboard.** `GET /twin-insights` (Phase 12b) shows the latest digest,
+  a rolling-window usage counter, and recent questions. It is gated by Cloudflare
+  Access plus a `Cf-Access-Authenticated-User-Email` header check, and is never part
+  of the public site (absent from sitemap / llms.txt / CNAME). A daily Cron Trigger
+  (`scheduled()`) writes the digest and purges questions older than 30 days.

@@ -1,4 +1,7 @@
 import { streamGemini, geminiToClientStream, type ChatMessage } from "./gemini";
+import { runDigest } from "./digest";
+import { latestDigest, recentQuestions, logQuestion } from "./insights";
+import { renderDashboard } from "./dashboard";
 import { PERSONA } from "./persona";
 import { buildSystemText } from "./prompt";
 import { checkLimits, type Counters, type Limits } from "./ratelimit";
@@ -10,6 +13,7 @@ import CV_CONTEXT from "../chat-context.md";
 
 export interface Env {
   RATE_KV: KVNamespace;
+  INSIGHTS_DB: D1Database;
   GEMINI_API_KEY: string;
   TURNSTILE_SECRET_KEY: string;
   ALLOWED_ORIGIN: string;
@@ -68,11 +72,37 @@ async function bumpCounters(kv: KVNamespace, ip: string, c: Counters): Promise<v
 }
 
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
+  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const origin = req.headers.get("Origin");
     const cors = corsHeaders(origin, env.ALLOWED_ORIGIN);
 
     if (req.method === "OPTIONS") return new Response(null, { headers: cors });
+
+    // Phase 12b private dashboard. Same-origin top-level navigation (no Origin
+    // allowlist applies here, unlike POST /). Cloudflare Access authenticates at
+    // the edge; this header check is cheap defense-in-depth so the route stays
+    // closed even if the Access policy is misconfigured or removed.
+    const url = new URL(req.url);
+    if (req.method === "GET" && url.pathname === "/twin-insights") {
+      if (!req.headers.get("Cf-Access-Authenticated-User-Email"))
+        return new Response("forbidden", { status: 403 });
+      const monthCount = Number((await env.RATE_KV.get("month")) ?? 0);
+      const [digest, questions] = await Promise.all([
+        latestDigest(env.INSIGHTS_DB),
+        recentQuestions(env.INSIGHTS_DB, 200),
+      ]);
+      const html = renderDashboard({
+        digest,
+        monthCount,
+        ceiling: finite(env.MONTHLY_CEILING, 5000),
+        questions,
+      });
+      return new Response(html, {
+        status: 200,
+        headers: { "content-type": "text/html; charset=utf-8" },
+      });
+    }
+
     if (req.method !== "POST" || !isAllowedOrigin(origin, env.ALLOWED_ORIGIN))
       return new Response("forbidden", { status: 403, headers: cors });
 
@@ -120,6 +150,24 @@ export default {
     }
     await bumpCounters(env.RATE_KV, ip, counters);
 
+    // Phase 12b: fire-and-forget log of the latest user question, AFTER every guard
+    // (Turnstile + bounds + rate/ceiling) has passed — only real, human, allowed
+    // questions are captured. Only a user-role final turn is logged; an assistant-role
+    // last message is a valid shape but is not a visitor question. ctx.waitUntil keeps
+    // it off the response path so a D1 error can never block or break the chat stream.
+    // Privacy: text/ts/country/msg_count only — never the IP, never the answer.
+    const latest = body.messages[body.messages.length - 1];
+    if (latest.role === "user") {
+      ctx.waitUntil(
+        logQuestion(env.INSIGHTS_DB, {
+          text: latest.content,
+          ts: Math.floor(Date.now() / 1000),
+          country: (req as { cf?: { country?: string } }).cf?.country ?? null,
+          msg_count: body.messages.length,
+        }).catch(() => {}),
+      );
+    }
+
     const systemText = buildSystemText(PERSONA, CV_CONTEXT as unknown as string);
     const upstream = await streamGemini(
       env.GEMINI_API_KEY,
@@ -143,5 +191,12 @@ export default {
       status: upstream.status,
       headers: { ...cors, "content-type": "text/event-stream" },
     });
+  },
+
+  // Phase 12b daily digest cron (wired via [triggers] crons in wrangler.toml).
+  // Reuses the existing free-tier GEMINI_API_KEY; skip-on-empty + 30d purge live
+  // in runDigest. waitUntil keeps the worker alive until the digest completes.
+  async scheduled(_event: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
+    ctx.waitUntil(runDigest(env.INSIGHTS_DB, env.GEMINI_API_KEY, Math.floor(Date.now() / 1000)).then(() => {}));
   },
 };

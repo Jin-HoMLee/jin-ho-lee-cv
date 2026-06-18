@@ -61,6 +61,33 @@ export function geminiChunkToEnvelopes(chunk: any): object[] {
   return envelopes;
 }
 
+// One-shot (non-streaming) completion used by the Phase 12b digest cron. Uses the
+// :generateContent endpoint (not :streamGenerateContent) and returns the joined
+// candidate text. Reuses the same free-tier MODEL + key as the chat path — no new
+// credential or cost. Throws on a non-200 so the cron can skip writing a digest.
+export async function generateText(
+  apiKey: string,
+  prompt: string,
+  fetchImpl: typeof fetch = fetch,
+): Promise<string> {
+  const url =
+    `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent` +
+    `?key=${apiKey}`;
+  const res = await fetchImpl(url, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: { thinkingConfig: { thinkingLevel: "low" } },
+    }),
+  });
+  if (!res.ok) throw new Error(`gemini generateText upstream ${res.status}`);
+  const data = (await res.json()) as any;
+  const parts = data?.candidates?.[0]?.content?.parts;
+  if (!Array.isArray(parts)) return "";
+  return parts.map((p: any) => (typeof p?.text === "string" ? p.text : "")).join("");
+}
+
 // Read Gemini's native SSE and re-emit the client envelope SSE. Buffers across
 // network chunks, splits on newlines, parses each `data: {json}` line, and
 // enqueues `data: ${envelope}\n\n` for every envelope geminiChunkToEnvelopes
