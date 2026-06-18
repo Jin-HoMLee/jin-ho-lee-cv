@@ -217,6 +217,24 @@ describe("fetch handler", () => {
     expect(insert!.args[3]).toBe(3);
   });
 
+  it("does NOT log when the last message is an assistant turn (not a visitor question)", async () => {
+    stubFetch({ geminiOk: true, geminiStatus: 200 });
+    const { db, calls } = fakeD1();
+    const { ctx, promises } = makeCtx();
+    // Conversation ends with an assistant turn — valid shape, but should not be logged.
+    const body = JSON.stringify({
+      messages: [
+        { role: "user", content: "hi" },
+        { role: "assistant", content: "yo" },
+      ],
+      turnstileToken: "tok",
+    });
+    await worker.fetch(post(ALLOWED, body), makeEnv(fakeKv(), db), ctx);
+    await Promise.all(promises); // flush fire-and-forget logging
+
+    expect(calls.find((c) => c.sql.includes("INSERT INTO questions"))).toBeUndefined();
+  });
+
   it("does NOT log on a rejected request (bad shape → 400)", async () => {
     stubFetch({});
     const { db, calls } = fakeD1();

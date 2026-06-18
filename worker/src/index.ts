@@ -152,18 +152,21 @@ export default {
 
     // Phase 12b: fire-and-forget log of the latest user question, AFTER every guard
     // (Turnstile + bounds + rate/ceiling) has passed — only real, human, allowed
-    // questions are captured. ctx.waitUntil keeps it off the response path so a D1
-    // error can never block or break the chat stream. Privacy: text/ts/country/
-    // msg_count only — never the IP, never the answer.
+    // questions are captured. Only a user-role final turn is logged; an assistant-role
+    // last message is a valid shape but is not a visitor question. ctx.waitUntil keeps
+    // it off the response path so a D1 error can never block or break the chat stream.
+    // Privacy: text/ts/country/msg_count only — never the IP, never the answer.
     const latest = body.messages[body.messages.length - 1];
-    ctx.waitUntil(
-      logQuestion(env.INSIGHTS_DB, {
-        text: latest.content,
-        ts: Math.floor(Date.now() / 1000),
-        country: (req as { cf?: { country?: string } }).cf?.country ?? null,
-        msg_count: body.messages.length,
-      }).catch(() => {}),
-    );
+    if (latest.role === "user") {
+      ctx.waitUntil(
+        logQuestion(env.INSIGHTS_DB, {
+          text: latest.content,
+          ts: Math.floor(Date.now() / 1000),
+          country: (req as { cf?: { country?: string } }).cf?.country ?? null,
+          msg_count: body.messages.length,
+        }).catch(() => {}),
+      );
+    }
 
     const systemText = buildSystemText(PERSONA, CV_CONTEXT as unknown as string);
     const upstream = await streamGemini(

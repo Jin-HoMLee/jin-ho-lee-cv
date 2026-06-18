@@ -15,3 +15,4 @@ CREATE TABLE IF NOT EXISTS digests (
   markdown    TEXT    NOT NULL,         -- LLM-generated themed summary
   n_questions INTEGER NOT NULL          -- how many questions this digest covered
 );
+CREATE INDEX IF NOT EXISTS idx_digests_ts ON digests(ts);

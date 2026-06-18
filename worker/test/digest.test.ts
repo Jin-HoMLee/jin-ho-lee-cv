@@ -59,4 +59,27 @@ describe("runDigest", () => {
     expect(calls.find((c) => c.sql.includes("INSERT INTO digests"))).toBeUndefined();
     expect(calls.find((c) => c.sql.includes("DELETE FROM questions"))).toBeTruthy();
   });
+
+  it("still purges and returns digested=0 when Gemini returns a non-200 (LLM outage)", async () => {
+    // Simulate one new question but a Gemini 429 response.
+    const rows = [{ id: 1, ts: 5, text: "q1", country: "DE", msg_count: 1 }];
+    const { db, calls } = fakeD1(handlerWith(rows));
+    const fetchImpl = vi.fn(async () => ({
+      ok: false,
+      status: 429,
+      json: async () => ({}),
+    })) as unknown as typeof fetch;
+
+    // The throw from generateText must NOT escape runDigest — no unhandled rejection.
+    const result = await runDigest(db, "KEY", NOW, fetchImpl);
+
+    // Digest was NOT written (LLM failed).
+    expect(result.digested).toBe(0);
+    expect(calls.find((c) => c.sql.includes("INSERT INTO digests"))).toBeUndefined();
+
+    // Purge MUST still run — it is a privacy guarantee independent of the LLM.
+    const purge = calls.find((c) => c.sql.includes("DELETE FROM questions"));
+    expect(purge).toBeTruthy();
+    expect(purge!.args).toEqual([NOW - RETENTION_SECONDS]);
+  });
 });
