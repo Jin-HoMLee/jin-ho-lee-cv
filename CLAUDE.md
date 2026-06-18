@@ -32,7 +32,7 @@ Twelve phases (0–11), sequential. Each produces a usable artifact and gets its
 | 10 | Agent interface (MCP server + skill over `content/` + validate) | ✅ Done (merged 2026-06-03, PR #63, commit `fbc18fe`) |
 | 11 | Cover-letter generator (interview + JD → tailored letter, PDF + text) | ✅ Done (merged 2026-06-03, `--no-ff`, PR #66 @claude-approved); personal-voice craft upgrade (anti-slop brief, voice sample, self-critique, jd-gap report, cliché linter) added 2026-06-05 (#74) |
 | 12a | Digital-twin chat MVP (CV-grounded conversational chat: context compiler + Cloudflare Worker + web widget + guardrails) | ✅ Done (merged 2026-06-16, `--no-ff`, PR #83, commit `7b6dfaa`); Gemini free-tier backend |
-| 12b | Digital-twin insights (D1 question log + daily Gemini digest + Cloudflare-Access dashboard) | ✅ Done (pending merge); free-tier D1 + Cron Triggers; verbatim questions, 30-day purge, no IP |
+| 12b | Digital-twin insights (D1 question log + daily Gemini digest + Cloudflare-Access dashboard) | ✅ Done (merged 2026-06-18, `--no-ff`, PR #86, commit `1791691`); free-tier D1 + Cron Triggers; verbatim questions, 30-day purge, no IP. Worker deploy (D1 create + remote schema + Access policy + `just worker-deploy`) is a separate manual step |
 
 ## Layout
 
