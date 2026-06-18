@@ -44,10 +44,14 @@ the global `MONTHLY_CEILING` request cap.
    ```bash
    npx wrangler secret put TURNSTILE_SECRET_KEY
    ```
-5. Create a Cloudflare Turnstile widget. Put its **SITE** key in `web/.env` as
-   `PUBLIC_TURNSTILE_SITE_KEY`, and feed its **SECRET** key into the Worker
-   secret from step 4. Also set `PUBLIC_TWIN_ENDPOINT` in `web/.env` to the
-   deployed Worker URL.
+5. Create a Cloudflare Turnstile widget. Put its **SITE** key (public) in
+   `web/.env.production` as `PUBLIC_TURNSTILE_SITE_KEY` and set
+   `PUBLIC_TWIN_ENDPOINT` there to the deployed Worker URL; feed its **SECRET**
+   key into the Worker secret from step 4. (Local dev uses the committed
+   `web/.env.development`, which points at `just worker-dev` on localhost with
+   Cloudflare's always-pass test site key — Astro loads the right file by mode,
+   so there's nothing to switch. CI injects the same two prod values from GitHub
+   repo *variables*.)
 6. Create the insights D1 database and apply the schema (the `database_id` is
    account-scoped, not a secret — safe to commit in `wrangler.toml`):
    ```bash

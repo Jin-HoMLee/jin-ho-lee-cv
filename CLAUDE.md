@@ -117,6 +117,12 @@ validate + test + lint must all be green before merging anything.
   `PUBLIC_TWIN_ENDPOINT` + `PUBLIC_TURNSTILE_SITE_KEY` — both public values, set as GitHub repo
   *variables* and injected in `pages.yml` (unset → empty → widget renders nothing, the graceful
   default). The Worker deploy itself is still a separate `wrangler` step, never wired into Pages.
+  Locally, **don't hand-swap `web/.env`** — Astro loads env files by mode: committed
+  `web/.env.development` (local Worker `:8787` + always-pass test Turnstile key) is used by
+  `just web-dev`, and committed `web/.env.production` (deployed Worker + real site key) by
+  `just web-build`. Both hold only non-secret `PUBLIC_` values; personal overrides go in a
+  gitignored `web/.env.local` / `web/.env.*.local`. (`worker/.dev.vars` is likewise local-only —
+  `wrangler dev` reads it; prod never does — so it never needs swapping either.)
 - **Worker now uses D1 + a Cron Trigger.** Phase 12b adds the `INSIGHTS_DB` D1 binding
   (question log + digests; schema in `worker/schema.sql`, applied via `wrangler d1
   execute`), a daily `scheduled()` digest cron (`[triggers] crons`), and a private

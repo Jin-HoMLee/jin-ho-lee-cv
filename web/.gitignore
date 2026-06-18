@@ -1,6 +1,10 @@
 node_modules/
 dist/
+# Mode files (.env.development, .env.production) are committed — they hold only
+# PUBLIC_, non-secret values. Ignore the bare .env and any *.local override
+# (where a real secret would ever go).
 .env
+.env*.local
 src/data/*.json
 .astro/
 public/person.jsonld
