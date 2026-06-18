@@ -7,6 +7,13 @@ compatibility_date = "2026-01-01"
 binding = "RATE_KV"
 id = "483f911f06854862be9d992ab99423d8"
 
+# Phase 12b digital-twin insights store. The database_id is account-scoped (not a
+# secret — same reasoning as the KV id) and is filled in from `wrangler d1 create`.
+[[d1_databases]]
+binding = "INSIGHTS_DB"
+database_name = "twin-insights"
+database_id = "PLACEHOLDER_RUN_WRANGLER_D1_CREATE"
+
 # chat-context.md is imported as a text module in src/index.ts.
 [[rules]]
 type = "Text"

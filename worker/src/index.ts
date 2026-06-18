@@ -10,6 +10,7 @@ import CV_CONTEXT from "../chat-context.md";
 
 export interface Env {
   RATE_KV: KVNamespace;
+  INSIGHTS_DB: D1Database;
   GEMINI_API_KEY: string;
   TURNSTILE_SECRET_KEY: string;
   ALLOWED_ORIGIN: string;
