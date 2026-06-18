@@ -27,7 +27,9 @@ export function renderDashboard(data: {
   const digestBlock = digest
     ? `<pre style="white-space:pre-wrap;background:#11151d;border:1px solid #272d39;border-radius:10px;padding:1rem;color:#e8eaed">${escapeHtml(
         digest.markdown,
-      )}</pre><p style="color:#99a0ac;font-size:.85rem">covering ${digest.n_questions} question(s), generated ${fmtTime(
+      )}</pre><p style="color:#99a0ac;font-size:.85rem">covering ${String(
+        digest.n_questions,
+      )} question(s), generated ${fmtTime(
         digest.ts,
       )}</p>`
     : `<p style="color:#99a0ac">No digest yet — the cron will write the first one on its next run.</p>`;

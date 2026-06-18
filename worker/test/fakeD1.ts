@@ -1,5 +1,3 @@
-import { vi } from "vitest";
-
 export interface RecordedStmt {
   sql: string;
   args: unknown[];
@@ -36,5 +34,5 @@ export function fakeD1(handler?: (sql: string, args: unknown[]) => { results?: a
       return stmt as unknown as D1PreparedStatement;
     },
   } as unknown as D1Database;
-  return { db, calls, _vi: vi };
+  return { db, calls };
 }
