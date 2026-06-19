@@ -275,6 +275,8 @@ const starters = [
       window.turnstile?.reset?.();
       if (ok) {
         leadForm.hidden = true;
+        leadForm.reset(); // clear email/name/message/consent so a re-open starts clean
+        leadStatus.textContent = ""; // drop the stale "Sending…"
         notice("Thanks — I've passed your details to Jin-Ho; he'll be in touch. 👋");
       } else {
         leadStatus.textContent = "Hmm, that didn't go through — please try again in a moment.";
