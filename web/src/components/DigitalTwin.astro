@@ -227,7 +227,10 @@ const starters = [
 
     leadToggle.addEventListener("click", () => {
       leadForm.hidden = !leadForm.hidden;
-      if (!leadForm.hidden) leadEmail.focus();
+      if (!leadForm.hidden) {
+        nudgeShown = true;
+        leadEmail.focus();
+      }
     });
     document.getElementById("twin-nudge-open")!.addEventListener("click", showLeadForm);
     document.getElementById("twin-nudge-dismiss")!.addEventListener("click", () => {
@@ -237,6 +240,10 @@ const starters = [
 
     leadForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      if (busy) {
+        leadStatus.textContent = "One sec — finishing a reply, then try again.";
+        return;
+      }
       const email = leadEmail.value.trim();
       if (!email) {
         leadStatus.textContent = "An email is required.";
@@ -259,7 +266,7 @@ const starters = [
           email,
           name: leadName.value.trim(),
           message: leadMessage.value.trim(),
-          consent: true,
+          consent: leadConsent.checked,
           msg_count: history.length,
         },
         token,
@@ -564,7 +571,9 @@ const starters = [
       color: var(--accent-contrast);
       font-weight: 600;
       cursor: pointer;
+      transition: background 0.15s;
     }
+    .twin-lead-form button[type="submit"]:hover { background: var(--accent-hover); }
     .twin-lead-status { margin: 0; font-size: 0.75rem; color: var(--muted); min-height: 1em; }
   </style>
 )}
