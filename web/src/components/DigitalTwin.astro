@@ -285,10 +285,10 @@ const starters = [
       // @ts-expect-error — Turnstile global from the injected script.
       window.turnstile?.reset?.();
       if (ok) {
-        leadForm.hidden = true;
-        leadForm.reset(); // clear email/name/message/consent so a re-open starts clean
-        setLeadStatus(""); // drop the stale "Sending…" and any error state
-        notice("Thanks — I've passed your details to Jin-Ho; he'll be in touch. 👋");
+        // Keep the form open and show a clear success message (abruptly hiding it gave
+        // no "it worked" moment). Clear the fields so the same details can't be re-sent.
+        leadForm.reset();
+        setLeadStatus("✓ Thanks — your details are on their way to Jin-Ho. He'll be in touch!", "success");
       } else {
         setLeadStatus("Hmm, that didn't go through — please try again in a moment.", "error");
       }
@@ -590,6 +590,6 @@ const starters = [
     .twin-lead-form button[type="submit"]:hover { background: var(--accent-hover); }
     .twin-lead-status { margin: 0; font-size: 0.8rem; color: var(--muted); min-height: 1em; }
     .twin-lead-status.is-error { color: var(--danger); font-weight: 600; }
-    .twin-lead-status.is-success { color: var(--accent); font-weight: 600; }
+    .twin-lead-status.is-success { color: var(--success); font-weight: 700; }
   </style>
 )}
