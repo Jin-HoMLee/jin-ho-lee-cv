@@ -31,6 +31,11 @@ describe("validateLead", () => {
     expect(validateLead({ email: "a@b.co", name: "x".repeat(101), consent: true }).ok).toBe(false);
     expect(validateLead({ email: "a@b.co", message: "x".repeat(1001), consent: true }).ok).toBe(false);
   });
+
+  it("trims whitespace-only name/message to null", () => {
+    const r = validateLead({ email: "a@b.co", name: "   ", message: "\t\n", consent: true });
+    expect(r).toEqual({ ok: true, lead: { email: "a@b.co", name: null, message: null } });
+  });
 });
 
 describe("leads data layer", () => {

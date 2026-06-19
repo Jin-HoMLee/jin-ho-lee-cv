@@ -68,4 +68,13 @@ describe("renderDashboard", () => {
     const html = renderDashboard({ ...base, leads: [] });
     expect(html.toLowerCase()).toContain("no leads");
   });
+
+  it("escapes an untrusted email inside the mailto href", () => {
+    const html = renderDashboard({
+      ...base,
+      leads: [{ id: 9, ts: 1, email: '"><script>x</script>', name: null, message: null, country: null, consent: 1, msg_count: null }],
+    });
+    expect(html).not.toContain("<script>x</script>");
+    expect(html).toContain("&lt;script&gt;");
+  });
 });

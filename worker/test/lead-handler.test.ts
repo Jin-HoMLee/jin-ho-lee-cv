@@ -126,4 +126,18 @@ describe("POST /lead", () => {
     expect(res.status).toBe(502);
     expect(res.headers.get("content-type")).toBe("application/json");
   });
+
+  it("coerces a non-number msg_count to null in the stored row", async () => {
+    stubFetch();
+    const { db, calls } = fakeD1();
+    const { ctx, promises } = makeCtx();
+    const body = JSON.stringify({ email: "a@b.co", consent: true, msg_count: "oops", turnstileToken: "tok" });
+    const res = await worker.fetch(postLead(ALLOWED, body), makeEnv(fakeKv(), db), ctx);
+    expect(res.status).toBe(200);
+    await Promise.all(promises);
+    const insert = calls.find((c) => c.sql.includes("INSERT INTO contact_submissions"));
+    expect(insert).toBeTruthy();
+    // args: [ts, email, name, message, country, msg_count] — non-number msg_count → null
+    expect(insert!.args[5]).toBe(null);
+  });
 });
