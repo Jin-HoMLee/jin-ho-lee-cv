@@ -6,7 +6,7 @@ import { PERSONA } from "./persona";
 import { buildSystemText } from "./prompt";
 import { checkLimits, type Counters, type Limits } from "./ratelimit";
 import { verifyTurnstile } from "./turnstile";
-import { validateLead, insertLead } from "./leads";
+import { validateLead, insertLead, recentLeads } from "./leads";
 import { notifyLead } from "./notify";
 
 // chat-context.md is copied into worker/ at deploy time and imported as text.
@@ -91,15 +91,17 @@ export default {
       if (!req.headers.get("Cf-Access-Authenticated-User-Email"))
         return new Response("forbidden", { status: 403 });
       const monthCount = Number((await env.RATE_KV.get("month")) ?? 0);
-      const [digest, questions] = await Promise.all([
+      const [digest, questions, leads] = await Promise.all([
         latestDigest(env.INSIGHTS_DB),
         recentQuestions(env.INSIGHTS_DB, 200),
+        recentLeads(env.INSIGHTS_DB, 200),
       ]);
       const html = renderDashboard({
         digest,
         monthCount,
         ceiling: finite(env.MONTHLY_CEILING, 5000),
         questions,
+        leads,
       });
       return new Response(html, {
         status: 200,
