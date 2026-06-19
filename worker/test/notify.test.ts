@@ -40,4 +40,14 @@ describe("notifyLead", () => {
       notifyLead(lead, { TELEGRAM_BOT_TOKEN: "T", TELEGRAM_CHAT_ID: "42" }, fetchMock as unknown as typeof fetch),
     ).resolves.toBeUndefined();
   });
+
+  it("handles a Telegram API-level error (resp.ok false) without throwing", async () => {
+    // A bad token / chat id returns HTTP 200-or-4xx with {ok:false}; the fetch resolves,
+    // so this is observability only — notifyLead must still resolve, never reject.
+    const fetchMock = vi.fn(async () => ({ ok: false, status: 401 }) as unknown as Response);
+    await expect(
+      notifyLead(lead, { TELEGRAM_BOT_TOKEN: "T", TELEGRAM_CHAT_ID: "42" }, fetchMock as unknown as typeof fetch),
+    ).resolves.toBeUndefined();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
 });

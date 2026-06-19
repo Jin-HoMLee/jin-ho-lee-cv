@@ -40,11 +40,14 @@ export const notifyLead: LeadNotifier = async (lead, env, fetchImpl = fetch) => 
     return;
   }
   try {
-    await fetchImpl(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const resp = await fetchImpl(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ chat_id: chatId, text: formatLead(lead), disable_web_page_preview: true }),
     });
+    // A misconfigured token / chat id returns HTTP 200 with {ok:false}, so the fetch
+    // doesn't throw. Surface it (observability only — the lead is already stored).
+    if (!resp.ok) console.log("notifyLead: Telegram API error", resp.status);
   } catch {
     // Best-effort: the lead is already in D1 and visible on the dashboard.
     console.log("notifyLead: Telegram delivery failed — lead is stored, view it on the dashboard");
