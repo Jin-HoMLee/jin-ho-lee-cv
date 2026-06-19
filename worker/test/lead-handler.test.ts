@@ -127,6 +127,21 @@ describe("POST /lead", () => {
     expect(res.headers.get("content-type")).toBe("application/json");
   });
 
+  it("D1 insert failure → 502 does NOT consume a rate-limit slot", async () => {
+    stubFetch();
+    const db = {
+      prepare() {
+        return { bind: () => ({ run: async () => { throw new Error("d1 down"); } }) };
+      },
+    } as unknown as D1Database;
+    const kv = fakeKv();
+    const res = await worker.fetch(postLead(ALLOWED, validLead), makeEnv(kv, db), makeCtx().ctx);
+    expect(res.status).toBe(502);
+    // The slot is spent only after a successful store — an unstored lead must not
+    // burn one of the visitor's 3 daily attempts.
+    expect(await kv.get("lead:0.0.0.0")).toBeNull();
+  });
+
   it("coerces a non-number msg_count to null in the stored row", async () => {
     stubFetch();
     const { db, calls } = fakeD1();

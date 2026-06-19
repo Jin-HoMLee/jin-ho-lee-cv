@@ -140,7 +140,6 @@ export default {
       const submitted = Number((await env.RATE_KV.get(capKey)) ?? 0);
       if (submitted >= 3)
         return new Response("slow down a moment", { status: 429, headers: cors });
-      await env.RATE_KV.put(capKey, String(submitted + 1), { expirationTtl: 86400 });
 
       const leadCountry = (req as { cf?: { country?: string } }).cf?.country ?? null;
       const leadMsgCount = typeof leadBody.msg_count === "number" ? leadBody.msg_count : null;
@@ -163,6 +162,10 @@ export default {
           headers: { ...cors, "content-type": "application/json" },
         });
       }
+
+      // Spend the rate-limit slot only AFTER a lead is successfully stored — a 502
+      // (unstored lead) must not consume one of the visitor's 3 daily attempts.
+      await env.RATE_KV.put(capKey, String(submitted + 1), { expirationTtl: 86400 });
 
       // Best-effort notification — off the response path so a webhook failure can
       // never break the visitor's 200.
