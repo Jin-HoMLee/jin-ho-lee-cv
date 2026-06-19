@@ -27,10 +27,10 @@ ALLOWED_ORIGIN = "https://jinholee.is-a.dev"
 MONTHLY_CEILING = "5000"
 MAX_TOKENS = "700"
 # Secrets set via `wrangler secret put`: GEMINI_API_KEY, TURNSTILE_SECRET_KEY
-# Phase 12c lead-capture: Telegram chat id for lead notifications (not a secret —
-# chat-scoped). The bot token IS a secret: `wrangler secret put TELEGRAM_BOT_TOKEN`.
-# Both unset → notifyLead no-ops gracefully (leads still store + show on the dashboard).
-TELEGRAM_CHAT_ID = ""
+# Phase 12c lead-capture notifications: BOTH set via `wrangler secret put` so the
+# personal chat id stays out of this public repo — TELEGRAM_BOT_TOKEN +
+# TELEGRAM_CHAT_ID. Either unset → notifyLead no-ops gracefully (leads still store
+# + show on the dashboard).
 
 # Phase 12b digest cron — daily ~06:00 UTC during the pilot (change to weekly later).
 [triggers]

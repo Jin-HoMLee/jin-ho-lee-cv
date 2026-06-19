@@ -68,12 +68,13 @@ The `contact_submissions` table ships in `schema.sql` — re-apply it remotely a
 
     npx wrangler d1 execute twin-insights --remote --file=schema.sql
 
-Set the Telegram notifier (optional — leads still store + show on the dashboard if unset):
+Set the Telegram notifier (optional — leads still store + show on the dashboard if unset).
+Both are set as secrets so the personal chat id stays out of this public repo:
 
     npx wrangler secret put TELEGRAM_BOT_TOKEN     # from @BotFather
-    # set TELEGRAM_CHAT_ID in wrangler.toml [vars] (your chat id from @userinfobot)
+    npx wrangler secret put TELEGRAM_CHAT_ID       # your chat id from @userinfobot
 
-Then `just worker-deploy`. Leads appear in the 📇 Leads section of `/twin-insights`.
+Secrets take effect without a redeploy. Leads appear in the 📇 Leads section of `/twin-insights`.
 
 ## Deploy
 
