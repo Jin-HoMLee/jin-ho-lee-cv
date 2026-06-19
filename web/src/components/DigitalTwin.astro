@@ -36,6 +36,25 @@ const starters = [
         <input id="twin-input" type="text" autocomplete="off" maxlength="2000" placeholder="Ask about my work…" />
         <button type="submit">Send</button>
       </form>
+      <button type="button" id="twin-lead-toggle" class="twin-lead-toggle">📇 Leave your details for Jin-Ho</button>
+      <div id="twin-nudge" class="twin-nudge" hidden>
+        <p>Enjoying the chat? You can leave your details and Jin-Ho will follow up personally.</p>
+        <div class="twin-nudge-actions">
+          <button type="button" id="twin-nudge-open">Leave details</button>
+          <button type="button" id="twin-nudge-dismiss" aria-label="Dismiss">Not now</button>
+        </div>
+      </div>
+      <form id="twin-lead-form" class="twin-lead-form" hidden>
+        <input id="twin-lead-email" type="email" required autocomplete="email" maxlength="254" placeholder="Your email (required)" />
+        <input id="twin-lead-name" type="text" autocomplete="name" maxlength="100" placeholder="Your name (optional)" />
+        <textarea id="twin-lead-message" maxlength="1000" rows="2" placeholder="A short message (optional)"></textarea>
+        <label class="twin-consent">
+          <input id="twin-lead-consent" type="checkbox" />
+          <span>I agree to share these details so Jin-Ho can follow up about opportunities. They're stored securely and kept until I ask for removal.</span>
+        </label>
+        <button type="submit">Send my details</button>
+        <p id="twin-lead-status" class="twin-lead-status" aria-live="polite"></p>
+      </form>
       <div class="cf-turnstile" data-sitekey={siteKey}></div>
     </section>
     {/* Digital-twin avatar: face-cropped holographic portrait (twinAvatar above).
@@ -46,7 +65,7 @@ const starters = [
   </div>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script>
-    import { streamTwin } from "../lib/twin";
+    import { streamTwin, submitLead } from "../lib/twin";
     const root = document.getElementById("twin-root")!;
     const endpoint = root.dataset.endpoint!;
     const launch = document.getElementById("twin-launch")!;
@@ -106,6 +125,29 @@ const starters = [
       bubble("assistant", text);
     }
 
+    // ---- Phase 12c: lead capture state (hoisted — bumped inside the chat handler) ----
+    let assistantReplies = 0; // bumped on each completed assistant turn (see chat handler)
+    let nudgeShown = false; // one-time: never re-show after dismiss/open
+    const NUDGE_AFTER = 3;
+
+    function showLeadForm(): void {
+      const lf = document.getElementById("twin-lead-form") as HTMLFormElement;
+      const nd = document.getElementById("twin-nudge")!;
+      lf.hidden = false;
+      nd.hidden = true;
+      nudgeShown = true;
+      (document.getElementById("twin-lead-email") as HTMLInputElement).focus();
+    }
+    function maybeNudge(): void {
+      const lf = document.getElementById("twin-lead-form") as HTMLFormElement;
+      const nd = document.getElementById("twin-nudge")!;
+      if (nudgeShown || lf.hidden === false) return;
+      if (assistantReplies >= NUDGE_AFTER) {
+        nd.hidden = false;
+        nudgeShown = true;
+      }
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (busy) return; // a reply is already streaming — ignore double-sends
@@ -154,6 +196,8 @@ const starters = [
         }
         if (!acc) throw new Error("empty response"); // route to the resting fallback
         history.push({ role: "assistant", content: acc });
+        assistantReplies += 1;
+        maybeNudge();
       } catch {
         // Mid-stream failure (or empty response): the assistant turn was never
         // recorded, so pop the orphaned user turn — otherwise the next submit sends
@@ -169,6 +213,73 @@ const starters = [
         // 2nd message in a conversation reuses a redeemed token and 403s.
         // @ts-expect-error — Turnstile global from the injected script.
         window.turnstile?.reset?.();
+      }
+    });
+
+    // ---- Phase 12c: lead capture element handles + event wiring ----
+    const leadToggle = document.getElementById("twin-lead-toggle")!;
+    const leadForm = document.getElementById("twin-lead-form") as HTMLFormElement;
+    const leadEmail = document.getElementById("twin-lead-email") as HTMLInputElement;
+    const leadName = document.getElementById("twin-lead-name") as HTMLInputElement;
+    const leadMessage = document.getElementById("twin-lead-message") as HTMLTextAreaElement;
+    const leadConsent = document.getElementById("twin-lead-consent") as HTMLInputElement;
+    const leadStatus = document.getElementById("twin-lead-status")!;
+
+    leadToggle.addEventListener("click", () => {
+      leadForm.hidden = !leadForm.hidden;
+      if (!leadForm.hidden) {
+        nudgeShown = true;
+        leadEmail.focus();
+      }
+    });
+    document.getElementById("twin-nudge-open")!.addEventListener("click", showLeadForm);
+    document.getElementById("twin-nudge-dismiss")!.addEventListener("click", () => {
+      document.getElementById("twin-nudge")!.hidden = true;
+      nudgeShown = true;
+    });
+
+    leadForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (busy) {
+        leadStatus.textContent = "One sec — finishing a reply, then try again.";
+        return;
+      }
+      const email = leadEmail.value.trim();
+      if (!email) {
+        leadStatus.textContent = "An email is required.";
+        return;
+      }
+      if (!leadConsent.checked) {
+        leadStatus.textContent = "Please tick the consent box so I can pass your details on.";
+        return;
+      }
+      // @ts-expect-error — Turnstile global from the injected script.
+      const token = window.turnstile?.getResponse?.() ?? "";
+      if (!token) {
+        leadStatus.textContent = "One sec — finishing a quick anti-spam check, try again.";
+        return;
+      }
+      leadStatus.textContent = "Sending…";
+      const ok = await submitLead(
+        endpoint,
+        {
+          email,
+          name: leadName.value.trim(),
+          message: leadMessage.value.trim(),
+          consent: leadConsent.checked,
+          msg_count: history.length,
+        },
+        token,
+      );
+      // @ts-expect-error — Turnstile global from the injected script.
+      window.turnstile?.reset?.();
+      if (ok) {
+        leadForm.hidden = true;
+        leadForm.reset(); // clear email/name/message/consent so a re-open starts clean
+        leadStatus.textContent = ""; // drop the stale "Sending…"
+        notice("Thanks — I've passed your details to Jin-Ho; he'll be in touch. 👋");
+      } else {
+        leadStatus.textContent = "Hmm, that didn't go through — please try again in a moment.";
       }
     });
   </script>
@@ -390,5 +501,81 @@ const starters = [
       transition: background 0.15s;
     }
     #twin-form button[type="submit"]:hover { background: var(--accent-hover); }
+
+    .twin-lead-toggle {
+      align-self: flex-start;
+      padding: 0.3125rem 0.625rem;
+      border-radius: 9999px;
+      border: 1px solid var(--surface-border);
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .twin-lead-toggle:hover { color: var(--accent); border-color: var(--accent); }
+
+    .twin-nudge {
+      padding: 0.625rem;
+      border-radius: 0.625rem;
+      border: 1px solid var(--accent);
+      background: var(--surface-2);
+      font-size: 0.8125rem;
+    }
+    .twin-nudge[hidden] { display: none; }
+    .twin-nudge p { margin: 0 0 0.5rem; }
+    .twin-nudge-actions { display: flex; gap: 0.5rem; }
+    .twin-nudge-actions button {
+      padding: 0.3125rem 0.625rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--surface-border);
+      background: var(--bg);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    #twin-nudge-open { background: var(--accent); color: var(--accent-contrast); border: none; }
+
+    .twin-lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .twin-lead-form[hidden] { display: none; }
+    .twin-lead-form input,
+    .twin-lead-form textarea {
+      padding: 0.5rem 0.625rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--surface-border);
+      background: var(--bg);
+      color: var(--text);
+      font: inherit;
+      resize: vertical;
+    }
+    .twin-lead-form input::placeholder,
+    .twin-lead-form textarea::placeholder { color: var(--faint); }
+    .twin-consent {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .twin-consent input { margin-top: 0.2rem; flex: none; }
+    .twin-lead-form button[type="submit"] {
+      align-self: flex-start;
+      padding: 0.5rem 0.875rem;
+      border-radius: 0.5rem;
+      border: none;
+      background: var(--accent);
+      color: var(--accent-contrast);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .twin-lead-form button[type="submit"]:hover { background: var(--accent-hover); }
+    .twin-lead-status { margin: 0; font-size: 0.75rem; color: var(--muted); min-height: 1em; }
   </style>
 )}

@@ -62,6 +62,20 @@ the global `MONTHLY_CEILING` request cap.
    Applications) in front of the deployed Worker's `/twin-insights` path, with a
    policy allowing only your Google login. No token or secret goes in git.
 
+### Phase 12c lead-capture deploy
+
+The `contact_submissions` table ships in `schema.sql` — re-apply it remotely after deploy:
+
+    npx wrangler d1 execute twin-insights --remote --file=schema.sql
+
+Set the Telegram notifier (optional — leads still store + show on the dashboard if unset).
+Both are set as secrets so the personal chat id stays out of this public repo:
+
+    npx wrangler secret put TELEGRAM_BOT_TOKEN     # from @BotFather
+    npx wrangler secret put TELEGRAM_CHAT_ID       # your chat id from @userinfobot
+
+Secrets take effect without a redeploy. Leads appear in the 📇 Leads section of `/twin-insights`.
+
 ## Deploy
 
 From the repo root:
