@@ -6,6 +6,8 @@ import { PERSONA } from "./persona";
 import { buildSystemText } from "./prompt";
 import { checkLimits, type Counters, type Limits } from "./ratelimit";
 import { verifyTurnstile } from "./turnstile";
+import { validateLead, insertLead } from "./leads";
+import { notifyLead } from "./notify";
 
 // chat-context.md is copied into worker/ at deploy time and imported as text.
 // @ts-expect-error — bundler text import of the generated context blob.
@@ -19,6 +21,8 @@ export interface Env {
   ALLOWED_ORIGIN: string;
   MONTHLY_CEILING: string;
   MAX_TOKENS: string;
+  TELEGRAM_BOT_TOKEN?: string;
+  TELEGRAM_CHAT_ID?: string;
 }
 
 // ALLOWED_ORIGIN may be a single origin or a comma-separated allowlist (e.g. the
@@ -100,6 +104,83 @@ export default {
       return new Response(html, {
         status: 200,
         headers: { "content-type": "text/html; charset=utf-8" },
+      });
+    }
+
+    // Phase 12c lead-capture. Reuses the same CORS allowlist + Turnstile as chat,
+    // plus a modest per-IP daily submit cap (a public form is a spam target).
+    // Store-before-notify: the lead is written to D1 first (source of truth); the
+    // Telegram push is best-effort via ctx.waitUntil and never blocks the 200.
+    if (req.method === "POST" && url.pathname === "/lead") {
+      if (!isAllowedOrigin(origin, env.ALLOWED_ORIGIN))
+        return new Response("forbidden", { status: 403, headers: cors });
+
+      const leadIp = req.headers.get("CF-Connecting-IP") ?? "0.0.0.0";
+
+      let leadBody: { turnstileToken?: unknown; msg_count?: unknown } & Record<string, unknown>;
+      try {
+        leadBody = (await req.json()) as typeof leadBody;
+      } catch {
+        return new Response("bad request", { status: 400, headers: cors });
+      }
+      if (typeof leadBody.turnstileToken !== "string")
+        return new Response("bad request", { status: 400, headers: cors });
+
+      // Validate shape (incl. consent) before spending the single-use Turnstile token.
+      const parsed = validateLead(leadBody);
+      if (!parsed.ok) return new Response("bad request", { status: 400, headers: cors });
+
+      const okLead = await verifyTurnstile(leadBody.turnstileToken, env.TURNSTILE_SECRET_KEY, leadIp);
+      if (!okLead) return new Response("challenge failed", { status: 403, headers: cors });
+
+      // Per-IP daily submit cap (3/day). Separate key namespace from the chat counters.
+      const capKey = `lead:${leadIp}`;
+      const submitted = Number((await env.RATE_KV.get(capKey)) ?? 0);
+      if (submitted >= 3)
+        return new Response("slow down a moment", { status: 429, headers: cors });
+      await env.RATE_KV.put(capKey, String(submitted + 1), { expirationTtl: 86400 });
+
+      const leadCountry = (req as { cf?: { country?: string } }).cf?.country ?? null;
+      const leadMsgCount = typeof leadBody.msg_count === "number" ? leadBody.msg_count : null;
+      const leadTs = Math.floor(Date.now() / 1000);
+
+      // Store FIRST — the row is the source of truth. On failure, be honest (502);
+      // never claim success on an unstored lead.
+      try {
+        await insertLead(env.INSIGHTS_DB, {
+          ts: leadTs,
+          email: parsed.lead.email,
+          name: parsed.lead.name,
+          message: parsed.lead.message,
+          country: leadCountry,
+          msg_count: leadMsgCount,
+        });
+      } catch {
+        return new Response(JSON.stringify({ error: "could not store lead" }), {
+          status: 502,
+          headers: { ...cors, "content-type": "application/json" },
+        });
+      }
+
+      // Best-effort notification — off the response path so a webhook failure can
+      // never break the visitor's 200.
+      ctx.waitUntil(
+        notifyLead(
+          {
+            email: parsed.lead.email,
+            name: parsed.lead.name,
+            message: parsed.lead.message,
+            country: leadCountry,
+            msg_count: leadMsgCount,
+            ts: leadTs,
+          },
+          env,
+        ).catch(() => {}),
+      );
+
+      return new Response(JSON.stringify({ ok: true }), {
+        status: 200,
+        headers: { ...cors, "content-type": "application/json" },
       });
     }
 
