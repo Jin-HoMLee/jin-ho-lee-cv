@@ -334,6 +334,7 @@ const starters = [
       gap: 0.625rem;
       width: min(22rem, calc(100vw - 2rem));
       max-height: min(32rem, calc(100vh - 6rem));
+      overflow-y: auto; /* scroll the panel when content (e.g. the open lead form) exceeds max-height — else the lower controls spill outside the box */
       padding: 0.875rem;
       border-radius: 0.75rem;
       border: 1px solid var(--surface-border);
