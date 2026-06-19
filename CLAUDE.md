@@ -33,6 +33,7 @@ Twelve phases (0–11), sequential. Each produces a usable artifact and gets its
 | 11 | Cover-letter generator (interview + JD → tailored letter, PDF + text) | ✅ Done (merged 2026-06-03, `--no-ff`, PR #66 @claude-approved); personal-voice craft upgrade (anti-slop brief, voice sample, self-critique, jd-gap report, cliché linter) added 2026-06-05 (#74) |
 | 12a | Digital-twin chat MVP (CV-grounded conversational chat: context compiler + Cloudflare Worker + web widget + guardrails) | ✅ Done (merged 2026-06-16, `--no-ff`, PR #83, commit `7b6dfaa`); Gemini free-tier backend |
 | 12b | Digital-twin insights (D1 question log + daily Gemini digest + Cloudflare-Access dashboard) | ✅ Done (merged 2026-06-18, `--no-ff`, PR #86, commit `1791691`); free-tier D1 + Cron Triggers; verbatim questions, 30-day purge, no IP. Worker deploy (D1 create + remote schema + Access policy + `just worker-deploy`) is a separate manual step |
+| 12c | Digital-twin lead-capture (consented opt-in contact form: persistent affordance + one-time nudge → `contact_submissions` D1 + best-effort Telegram notify + leads on the 12b dashboard) | 🚧 In progress (branch phase-12c-lead-capture); leads KEPT (no TTL — purpose-driven retention, the deliberate flip vs 12b's 30-day questions); Telegram notifier graceful no-op when unconfigured; reuses 12a Turnstile/CORS + a per-IP 3/day submit cap. Worker deploy (remote schema re-apply + `TELEGRAM_BOT_TOKEN` secret) is a separate manual step |
 
 ## Layout
 
@@ -131,6 +132,14 @@ validate + test + lint must all be green before merging anything.
   from the public site surface (sitemap / llms.txt / CNAME). D1 + Cron are free-tier;
   the digest reuses the existing `GEMINI_API_KEY`. D1 logging is fire-and-forget via
   `ctx.waitUntil` — it never blocks the chat stream.
+- **Worker also captures consented leads (Phase 12c).** A `POST /lead` route stores
+  visitor-opted-in contact details in the `contact_submissions` D1 table (KEPT — not
+  auto-purged, unlike the 30-day `questions` log; purpose-driven retention). It reuses
+  the 12a Turnstile + CORS guards plus a per-IP 3/day submit cap, and fires a
+  best-effort Telegram notification via `ctx.waitUntil` (graceful no-op when
+  `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` are unset). Leads surface in the 📇 Leads
+  section of the Access-gated `/twin-insights` dashboard. No PII reaches git (leads
+  live in D1; the route is off the public surface).
 - **`content/*.yaml` is the source of truth.** Renderers consume; never edit content from inside a renderer.
 - **LangString pattern.** Short user-facing strings use inline `{ en: "...", de: "..." }` maps; long prose lives in per-language files (`profile.en.yaml`). `en` is required; other languages optional until Phase 2.
 - **Cross-references validated.** Every `refs: [L1]` in `experience.yaml` must resolve to a `content/projects/L1.en.yaml` file. Filename and `id:` field must match. Enforced by `scripts/validate.py` and `scripts/content_loader.py`.

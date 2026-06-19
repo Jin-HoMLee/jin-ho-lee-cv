@@ -12,3 +12,7 @@ ALLOWED_ORIGIN = "https://jinholee.is-a.dev,http://localhost:4321"
 # never deployed) instead of `wrangler secret put`:
 # GEMINI_API_KEY = "..."
 # TURNSTILE_SECRET_KEY = "..."
+
+# Phase 12c lead-capture notifications (optional locally — unset → notifyLead no-ops):
+# TELEGRAM_BOT_TOKEN = "..."
+# TELEGRAM_CHAT_ID = "..."
