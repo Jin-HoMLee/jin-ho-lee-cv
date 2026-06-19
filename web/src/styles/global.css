@@ -23,6 +23,8 @@
   --accent: #2dd4bf;
   --accent-hover: #5eead4;
   --accent-contrast: #042b25;
+  --danger: #f87171;
+  --success: #4ade80;
 
   /* editor / code syntax (GitHub-dark family) */
   --code-bg: #0d1117;
@@ -59,6 +61,8 @@
   --accent: #0f766e;
   --accent-hover: #115e59;
   --accent-contrast: #ffffff;
+  --danger: #dc2626;
+  --success: #16a34a;
 
   --code-bg: #f6f8fa;
   --code-chrome: #eaeef2;

@@ -44,7 +44,7 @@ const starters = [
           <button type="button" id="twin-nudge-dismiss" aria-label="Dismiss">Not now</button>
         </div>
       </div>
-      <form id="twin-lead-form" class="twin-lead-form" hidden>
+      <form id="twin-lead-form" class="twin-lead-form" hidden novalidate>
         <input id="twin-lead-email" type="email" required autocomplete="email" maxlength="254" placeholder="Your email (required)" />
         <input id="twin-lead-name" type="text" autocomplete="name" maxlength="100" placeholder="Your name (optional)" />
         <textarea id="twin-lead-message" maxlength="1000" rows="2" placeholder="A short message (optional)"></textarea>
@@ -238,28 +238,39 @@ const starters = [
       nudgeShown = true;
     });
 
+    // Single source of truth for form feedback: sets the message and its visual state
+    // ("error" = red/bold, "success" = accent/bold, "" = neutral) so every blocked send
+    // or failure is clearly visible — the form has no native validation (novalidate).
+    function setLeadStatus(text: string, kind: "" | "error" | "success" = ""): void {
+      leadStatus.textContent = text;
+      leadStatus.classList.toggle("is-error", kind === "error");
+      leadStatus.classList.toggle("is-success", kind === "success");
+    }
+
     leadForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (busy) {
-        leadStatus.textContent = "One sec — finishing a reply, then try again.";
+        setLeadStatus("One sec — finishing a reply, then try again.", "error");
         return;
       }
       const email = leadEmail.value.trim();
       if (!email) {
-        leadStatus.textContent = "An email is required.";
+        setLeadStatus("An email is required.", "error");
+        leadEmail.focus();
         return;
       }
       if (!leadConsent.checked) {
-        leadStatus.textContent = "Please tick the consent box so I can pass your details on.";
+        setLeadStatus("Please tick the consent box so I can pass your details on.", "error");
+        leadConsent.focus();
         return;
       }
       // @ts-expect-error — Turnstile global from the injected script.
       const token = window.turnstile?.getResponse?.() ?? "";
       if (!token) {
-        leadStatus.textContent = "One sec — finishing a quick anti-spam check, try again.";
+        setLeadStatus("One sec — finishing a quick anti-spam check, try again.", "error");
         return;
       }
-      leadStatus.textContent = "Sending…";
+      setLeadStatus("Sending…");
       const ok = await submitLead(
         endpoint,
         {
@@ -274,12 +285,12 @@ const starters = [
       // @ts-expect-error — Turnstile global from the injected script.
       window.turnstile?.reset?.();
       if (ok) {
-        leadForm.hidden = true;
-        leadForm.reset(); // clear email/name/message/consent so a re-open starts clean
-        leadStatus.textContent = ""; // drop the stale "Sending…"
-        notice("Thanks — I've passed your details to Jin-Ho; he'll be in touch. 👋");
+        // Keep the form open and show a clear success message (abruptly hiding it gave
+        // no "it worked" moment). Clear the fields so the same details can't be re-sent.
+        leadForm.reset();
+        setLeadStatus("✓ Thanks — your details are on their way to Jin-Ho. He'll be in touch!", "success");
       } else {
-        leadStatus.textContent = "Hmm, that didn't go through — please try again in a moment.";
+        setLeadStatus("Hmm, that didn't go through — please try again in a moment.", "error");
       }
     });
   </script>
@@ -323,6 +334,7 @@ const starters = [
       gap: 0.625rem;
       width: min(22rem, calc(100vw - 2rem));
       max-height: min(32rem, calc(100vh - 6rem));
+      overflow-y: auto; /* scroll the panel when content (e.g. the open lead form) exceeds max-height — else the lower controls spill outside the box */
       padding: 0.875rem;
       border-radius: 0.75rem;
       border: 1px solid var(--surface-border);
@@ -576,6 +588,8 @@ const starters = [
       transition: background 0.15s;
     }
     .twin-lead-form button[type="submit"]:hover { background: var(--accent-hover); }
-    .twin-lead-status { margin: 0; font-size: 0.75rem; color: var(--muted); min-height: 1em; }
+    .twin-lead-status { margin: 0; font-size: 0.8rem; color: var(--muted); min-height: 1em; }
+    .twin-lead-status.is-error { color: var(--danger); font-weight: 600; }
+    .twin-lead-status.is-success { color: var(--success); font-weight: 700; }
   </style>
 )}
