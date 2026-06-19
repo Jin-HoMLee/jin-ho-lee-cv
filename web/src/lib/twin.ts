@@ -57,3 +57,24 @@ export async function* streamTwin(
     clearTimeout(timer);
   }
 }
+
+// Phase 12c: post an opted-in lead to the Worker's /lead route. The endpoint is the
+// twin root URL; /lead is a sibling route. Returns true on a 2xx (the Worker stores
+// the lead before responding), false otherwise — the widget surfaces a retry notice.
+export async function submitLead(
+  endpoint: string,
+  payload: { email: string; name: string; message: string; consent: boolean; msg_count: number },
+  turnstileToken: string,
+): Promise<boolean> {
+  const url = endpoint.replace(/\/+$/, "") + "/lead";
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ ...payload, turnstileToken }),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
