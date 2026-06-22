@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 from dataclasses import dataclass
 from datetime import date
@@ -192,6 +193,34 @@ def _validate_periods(content_dir: Path) -> list[FileError]:
     return errors
 
 
+def validate_master_cv(master_cv_dir: Path, schema_path: Path) -> list[FileError]:
+    """Validate the master-cv overlay if present; graceful skip when absent.
+
+    timeline.yaml → 'timeline' def, inventory.yaml → 'inventory' def. narrative/*.md
+    is free-form and unchecked. Absent dir or absent file ⇒ no error.
+    """
+    if not master_cv_dir.is_dir():
+        return []
+    errors: list[FileError] = []
+    for filename, def_name in (("timeline.yaml", "timeline"), ("inventory.yaml", "inventory")):
+        path = master_cv_dir / filename
+        if not path.exists():
+            continue
+        try:
+            data = _load_yaml(path)
+            validator = _validator_for(def_name, schema_path)
+            schema_errors = sorted(validator.iter_errors(data), key=lambda e: list(e.path))
+            if schema_errors:
+                joined = "; ".join(
+                    f"{'.'.join(str(p) for p in e.path) or '<root>'}: {e.message}"
+                    for e in schema_errors
+                )
+                errors.append(FileError(path, joined))
+        except Exception as e:  # malformed YAML, etc.
+            errors.append(FileError(path, str(e)))
+    return errors
+
+
 def date_warnings(content_dir: Path, *, today: date | None = None) -> list[FileError]:
     """Advisory (non-failing) warnings for implausible period years.
 
@@ -289,6 +318,10 @@ def main() -> int:
         return 2
 
     errors = validate_tree(content_dir, schema_path)
+
+    master_cv_dir = Path(os.environ.get("MASTER_CV_DIR", repo_root / "master-cv"))
+    master_cv_schema = repo_root / "schema" / "master-cv.schema.json"
+    errors.extend(validate_master_cv(master_cv_dir, master_cv_schema))
 
     for warn in date_warnings(content_dir):
         print(f"WARN: {warn}", file=sys.stderr)

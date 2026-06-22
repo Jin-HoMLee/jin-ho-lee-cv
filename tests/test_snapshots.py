@@ -7,6 +7,8 @@ cv-*.txt / content.*.json fails CI. Regenerate intentionally with `just snapshot
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 from syrupy.extensions.single_file import SingleFileSnapshotExtension, WriteMode
 
@@ -16,9 +18,13 @@ from scripts import (
     render_jsonld,
     render_jsonresume,
     render_llms,
+    render_master_cv,
     render_web_data,
 )
 from scripts.render_text import render as render_text
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+EXAMPLE_DIR = REPO_ROOT / "master-cv.example"
 
 
 class _TextSnap(SingleFileSnapshotExtension):
@@ -51,6 +57,24 @@ def test_llms_txt(tmp_path, snapshot):
 
 def test_chat_context_md(tmp_path, snapshot):
     out = tmp_path / "chat-context.md"
+    render_chat_context.main(["--output", str(out)])
+    assert out.read_text(encoding="utf-8") == snapshot.use_extension(_TextSnap)
+
+
+# Both tests below call the same full_profile helper with the same EXAMPLE_DIR overlay
+# and therefore produce byte-identical output. That is intentional — they differ only in
+# output destination/purpose (master-cv.md vs chat-context with overlay). Keep both.
+def test_master_cv_md(tmp_path, snapshot, monkeypatch):
+    monkeypatch.setenv("MASTER_CV_DIR", str(EXAMPLE_DIR))
+    out = tmp_path / "master-cv.md"
+    render_master_cv.main(["--output", str(out)])
+    assert out.read_text(encoding="utf-8") == snapshot.use_extension(_TextSnap)
+
+
+def test_chat_context_with_overlay_md(tmp_path, snapshot, monkeypatch):
+    # Byte-identical to test_master_cv_md — same full_profile call, different destination.
+    monkeypatch.setenv("MASTER_CV_DIR", str(EXAMPLE_DIR))
+    out = tmp_path / "chat-context-overlay.md"
     render_chat_context.main(["--output", str(out)])
     assert out.read_text(encoding="utf-8") == snapshot.use_extension(_TextSnap)
 

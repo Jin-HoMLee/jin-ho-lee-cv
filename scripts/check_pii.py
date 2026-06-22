@@ -37,6 +37,7 @@ PRIVATE_YAML = REPO_ROOT / "content.private" / "private.yaml"
 PII_PATH_ROOTS = (
     "content.private/",
     "applications/",
+    "master-cv/",
     "assets/photo.*",
     "assets/signature.*",
 )

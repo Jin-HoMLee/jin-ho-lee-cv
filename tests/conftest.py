@@ -9,6 +9,7 @@ CONTENT_DIR = REPO_ROOT / "content"
 SCHEMA_PATH = REPO_ROOT / "schema" / "cv.schema.json"
 FIXTURES_DIR = Path(__file__).parent / "fixtures"
 REAL_PRIVATE_YAML = REPO_ROOT / "content.private" / "private.yaml"
+REAL_MASTER_CV = REPO_ROOT / "master-cv"
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -26,6 +27,42 @@ def real_private_yaml_guard():
         raise AssertionError(
             "A test mutated the real content.private/private.yaml during this session. "
             "Tests must only ever write private overlays under tmp_path (issue #77)."
+        )
+
+
+@pytest.fixture(autouse=True)
+def _isolate_master_cv(monkeypatch):
+    """Default every test away from the real (gitignored) master-cv/ overlay.
+
+    No test may read the user's real personal superset. Tests that need a synthetic
+    overlay call monkeypatch.setenv('MASTER_CV_DIR', <fixture>) themselves, which wins
+    over this default (the test's setenv runs after this autouse fixture).
+    """
+    monkeypatch.setenv("MASTER_CV_DIR", str(REPO_ROOT / "master-cv-TEST-SENTINEL-absent"))
+
+
+@pytest.fixture(scope="session", autouse=True)
+def real_master_cv_guard():
+    """Fail the session if any test mutates the real master-cv/ overlay (issue #92).
+
+    Like real_private_yaml_guard: the overlay is user data outside git's protection.
+    """
+
+    def _snapshot():
+        if not REAL_MASTER_CV.is_dir():
+            return None
+        return {
+            str(p.relative_to(REAL_MASTER_CV)): p.read_bytes()
+            for p in sorted(REAL_MASTER_CV.rglob("*"))
+            if p.is_file()
+        }
+
+    before = _snapshot()
+    yield
+    if _snapshot() != before:
+        raise AssertionError(
+            "A test mutated the real master-cv/ overlay. Tests must point MASTER_CV_DIR "
+            "at a fixture under tmp_path or master-cv.example/, never the real dir (issue #92)."
         )
 
 

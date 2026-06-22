@@ -273,3 +273,14 @@ def test_ci_invokes_check_pii():
 def test_pre_commit_hook_invokes_check_pii():
     hook = (REPO_ROOT / ".githooks" / "pre-commit").read_text(encoding="utf-8")
     assert "check_pii" in hook
+
+
+def test_master_cv_path_is_blocked():
+    files = [("master-cv/timeline.yaml", b"id: x")]
+    violations = scan_files(files, set())
+    assert violations and violations[0].path == "master-cv/timeline.yaml"
+
+
+def test_master_cv_example_is_allowed():
+    files = [("master-cv.example/timeline.yaml", b"id: x")]
+    assert scan_files(files, set()) == []

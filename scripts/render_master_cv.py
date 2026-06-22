@@ -1,10 +1,8 @@
-"""Compile the whole public CV into one Markdown context blob for the digital-twin chat.
+"""Compile content/ + the master-cv/ overlay into dist/master-cv.md.
 
-A richer sibling of render_llms.py: where llms.txt is a slim site map, this is the full
-profile + experience + skills + education + project deep-dives + publications that the
-chat Worker injects as a system instruction each request. PII-safe by construction — reads only
-content/ (never content.private/), mirroring agent_core.read_cv. When a master-cv/ overlay
-is present, the full timeline, skill inventory, and personal narrative are appended.
+The single "look up anything about me" artifact: the full union, plainly formatted.
+Shares full_profile with render_chat_context (DRY); when the overlay is absent it
+degrades to the CV-only blob, exactly like the twin context.
 """
 
 from __future__ import annotations
@@ -31,7 +29,7 @@ def render() -> str:
 
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=REPO_ROOT / "dist" / "chat-context.md")
+    parser.add_argument("--output", type=Path, default=REPO_ROOT / "dist" / "master-cv.md")
     args = parser.parse_args(argv)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(render(), encoding="utf-8")
