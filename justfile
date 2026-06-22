@@ -97,6 +97,10 @@ build-llms:
 build-chat-context:
     uv run python -m scripts.render_chat_context
 
+# Compile the full master-CV (content/ + master-cv/ overlay) → dist/master-cv.md (lookup artifact)
+build-master-cv:
+    uv run python -m scripts.render_master_cv
+
 # Run the digital-twin Worker locally (needs `cd worker && npm install` once)
 worker-dev: build-chat-context
     cp dist/chat-context.md worker/chat-context.md

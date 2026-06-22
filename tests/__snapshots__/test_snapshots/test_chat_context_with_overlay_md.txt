@@ -1,0 +1,124 @@
+# Jin-Ho Lee — Bioinformatics · Data Science
+
+> Data scientist with cancer-genomics roots — HLA typing & neoantigen discovery on real-patient data, production ML on GCP, 10+ publications.
+
+## Profile
+
+Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU. A parallel line of experimental-biophysics research produced 10+ peer-reviewed papers — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.
+
+Now applying that rigor in industry: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML; secured third-party funding and supervised 10+ students.
+
+## Skills
+- **Genomics**: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
+- **Immunology**: MHC-I Prediction, HLA Typing, OptiType, MHCflurry, Neoepitopes
+- **Structural Biology**: TCRdock, AlphaFold v2, Mol*
+- **Nanoscopy**: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
+- **Models**: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
+- **Imaging**: Super-Resolution, Confocal, Fluorescence
+- **Assays**: FISH, IF, qPCR, FACS
+- **AI & Vision**: TensorFlow, Keras, LSTMs, OpenCV
+- **Eng & Tools**: Python (Exp), R, SQL, Snakemake, Conda, Docker, Git, dbt
+- **Cloud**: GCP, BigQuery, Vertex AI, Looker
+
+## Experience
+### Consultant, Lead Business Functional Analyst — Cintellic / International Bank (2024-05–2025-07)
+- Scale: Architected the migration of 1,000+ analytical processes to Google Cloud.
+- AI in Production: Developed BigQueryML models for anti-financial crime & KYC.
+- Stakeholder Lead: Bridged technical data engineering with business requirements for high-stakes banking.
+### Data Science Trainee, Associate & Coach — neuefische GmbH (2023-02–2024-04)
+- Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles.
+- ML Development: Independently engineered a Real-Time ASL Recognition prototype using LSTMs, MediaPipe, and TensorFlow.
+### Doctoral & Post-Graduate Researcher — FZ Jülich / KIP / NCT / SNU / DKFZ (2014-04–2022-07)
+- Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer-patient NGS and RNA-Seq splice-junction data; validated SNV calls against gold-standard sequencing in clinical colorectal-cancer cohorts (NCT/DKFZ).
+- Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects — from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin.
+- Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles.
+
+## Education
+- M.Sc. Molecular Biotechnology, Heidelberg University (2019)
+- B.Sc. Molecular Biotechnology, Heidelberg University (2014)
+
+## Selected Projects
+### Splice Neoepitope Pipeline – Reproducible Snakemake Workflow
+Modernised, open-source reimplementation of the 2015 SNU splice-junction–based neoepitope discovery work as a reproducible Snakemake pipeline with optional structural validation.
+- Re-engineered the original SNU pipeline as a fully reproducible Snakemake 8.x workflow with per-rule Conda environments — installable without manual dependency management and portable unchanged across laptop, SLURM cluster, and GCP GPU.
+- Implemented tumor-vs-matched-normal junction filtering against GENCODE annotation, classifying junctions as annotated, normal_shared, or tumor_exclusive.
+- Integrated patient-specific HLA typing (OptiType) and MHC-I peptide presentation prediction (MHCflurry 2.x Class1PresentationPredictor) for end-to-end neoepitope candidate ranking.
+- Added optional TCR-pMHC ternary complex structural validation via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.
+- MIT-licensed, public on GitHub (Jin-HoMLee/splice-neoepitope-pipeline).
+### Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis
+Bioinformatics pipeline for identifying novel immunotherapy targets derived from aberrant alternative splicing in RNA-Seq data.
+- Developed a discovery pipeline to identify tumor-specific splice junctions across large-scale cancer datasets.
+- Mapped the epitope landscape by predicting high-affinity MHC-I binding peptides from non-canonical transcripts.
+- Validated the predictive model by cross-referencing findings with high-impact transcriptomic studies.
+- Evaluated synergistic strategies for co-targeting mutation-derived and splice-derived neoantigens.
+### Personalized Immunotherapy – High-Throughput HLA Typing Pipeline
+Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data.
+- Developed an in silico genotyping pipeline to extract HLA alleles directly from Whole-Exome Sequencing (WXS) data.
+- Implemented predictive modeling using ANNs (NetMHCPan) to screen missense mutations for MHC-I binding affinity.
+- Engineered a consensus methodology integrating multiple HLA typing algorithms to resolve sequence ambiguities and improve diagnostic reliability.
+- Validated the pipeline by analyzing binding specificities across HLA alleles to mitigate genotyping errors in vaccine design.
+
+## Publications
+- Super-Resolution Radiation Biology: From Bio-Dosimetry towards Nano-Studies of DNA Repair Mechanisms, DNA - Damages and Repair Mechanisms (2021)
+- DeGBS 2021 Conference Contribution, Deutsche Gesellschaft für Biologische Strahlenforschung (2021)
+- 3D DNA FISH for analyses of chromatin-nuclear architecture, Epigenetics Methods (2020)
+- Nanostructure of Clustered DNA Damage in Leukocytes after In-Solution Irradiation with the Alpha Emitter Ra-223, Cancers (2019)
+- COMBO-FISH: A versatile tool beyond standard FISH to study chromatin organization by fluorescence light microscopy, OBM Genetics (2019)
+- Challenges and contradictions of metal nano-particle applications for radio-sensitivity enhancement in cancer therapy, International Journal of Molecular Sciences (2019)
+- Mechanisms and Challenges for Understanding Radiation Induced Changes in Chromatin Nanoarchitecture and Repair Complex Formation, ConRad 2019 - Global Conference on Radiation Topics (2019)
+- Recruitment of 53BP1 Proteins for DNA Repair and Persistence of Repair Clusters Differ for Cell Types as Detected by Single Molecule Localization Microscopy, International Journal of Molecular Sciences (2018)
+- Single-molecule localization microscopy as a promising tool for gammaH2AX/53BP1 foci exploration, The European Physical Journal D (2018)
+- Super-Resolution Localization Microscopy of Radiation-Induced Histone H2AX-Phosphorylation in relation to H3K9-Trimethylation in HeLa Cells, Nanoscale (2018)
+- Localization Microscopy Analyses of MRE11 Clusters in 3D-Conserved Cell Nuclei of Different Cell Lines, Cancers (2018)
+- Mechanisms and challenges for understanding radiation induced changes in chromatin nanoarchitecture, Dny radiační ochrany (DRO 2018) (2018)
+- Challenges for Super-Resolution Localization Microscopy and Biomolecular Fluorescent Nano-Probing in Cancer Research, International Journal of Molecular Sciences (2017)
+- Combining Low Temperature Fluorescence DNA-Hybridization, Immunostaining, and Super-Resolution Localization Microscopy for Nano-Structure Analysis of ALU Elements and Their Influence on Chromatin Structure, International Journal of Molecular Sciences (2017)
+- Marketing Automation Tool Selection & Implementation @DeutschlandCard, Essentials of Modern Marketing, Germany Edition (2025)
+
+## Full Timeline (master record)
+### Example Doctoral Researcher — Example Institute of Synthetic Studies (2099-01–2099-06)
+_research · Example City, Exampleland_
+Synthetic placeholder describing example research work.
+Tags: example-domain, synthetic-method
+### Example Data Intern — Example Analytics GmbH (2098-07–2098-09)
+_internship · Example City_
+Synthetic placeholder internship summary.
+Tags: sql, dashboards
+### M.Sc. Example Science — Example University (2095-10–2097-09)
+_education · Example City_
+Synthetic degree record with type-specific field/thesis keys.
+### Example Cloud Certificate — Example Cloud (2099–present)
+_certificate_
+Synthetic in-progress certificate (year-only date).
+### Example Hackathon Winner — Example Hack 2099 (2099-03–present)
+_award_
+Synthetic award record.
+### Example Volunteer Mentor — Example Community (2096–present)
+_volunteering_
+Synthetic ongoing volunteering (null end).
+
+## Full Skill & Domain Inventory (master record)
+- **Programming**: Example-Lang, Pseudocode
+- **Ml Ai**: example-ml-lib, example-nn-framework
+- **Data Eng**: ExampleQuery, example-orchestrator, Docker
+- **Databases**: ExampleDB
+- **Cloud**: Example Cloud
+- **Domains**: Example Domain A, Example Domain B
+- **Industries**: Example Industry
+
+## Personal Narrative (master record)
+
+# Career story (synthetic template)
+
+Replace this with the warm, first-person throughline a CV can't hold: what moved
+you between fields, the motivation behind the pivots, the threads that connect
+otherwise-separate roles. The digital twin reads this verbatim to answer "why"
+questions with your real voice.
+
+This file is committed only as a SYNTHETIC example. Your real version lives in the
+gitignored `master-cv/narrative/` and never enters the repo.
+
+# Personal (synthetic template)
+
+Interests, languages spoken and to what level, anecdotes, the human detail that
+makes a conversation feel like a conversation. SYNTHETIC placeholder text only.
