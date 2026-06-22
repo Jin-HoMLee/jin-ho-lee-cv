@@ -77,26 +77,33 @@ describe("streamGemini model cascade", () => {
     const res = await streamGemini(...args, fn);
     expect(res.ok).toBe(true);
     expect(res.status).toBe(200);
-    expect(calls.map((c) => modelOf(c.url))).toEqual(["gemini-3.5-flash", "gemini-2.5-flash"]);
+    expect(calls.map((c) => modelOf(c.url))).toEqual(["gemini-3.5-flash", "gemini-3.1-flash-lite"]);
   });
 
-  it("falls through twice (429 then 503) down to the lite model", async () => {
+  it("falls through twice (429 then 503) down the cascade", async () => {
     const { fn, calls } = scriptedFetch([429, 503, 200]);
     const res = await streamGemini(...args, fn);
     expect(res.ok).toBe(true);
     expect(calls.map((c) => modelOf(c.url))).toEqual([
       "gemini-3.5-flash",
+      "gemini-3.1-flash-lite",
       "gemini-2.5-flash",
-      "gemini-2.5-flash-lite",
     ]);
   });
 
-  it("returns the last failed response when every model is quota-exhausted", async () => {
-    const { fn, calls } = scriptedFetch([429, 429, 429]);
+  it("walks the full cascade in order when every rung 429s", async () => {
+    const { fn, calls } = scriptedFetch([429, 429, 429, 429, 429, 429]);
     const res = await streamGemini(...args, fn);
     expect(res.ok).toBe(false);
     expect(res.status).toBe(429);
-    expect(calls).toHaveLength(3); // tried all three models
+    expect(calls.map((c) => modelOf(c.url))).toEqual([
+      "gemini-3.5-flash",
+      "gemini-3.1-flash-lite",
+      "gemini-2.5-flash",
+      "gemini-2.5-flash-lite",
+      "gemini-2.0-flash",
+      "gemini-2.0-flash-lite",
+    ]);
   });
 
   it("stops at the first model on a non-retryable status (400) — does not waste lower-tier calls", async () => {
@@ -110,15 +117,19 @@ describe("streamGemini model cascade", () => {
     const { fn, calls } = scriptedFetch([500, 200]);
     const res = await streamGemini(...args, fn);
     expect(res.ok).toBe(true);
-    expect(calls.map((c) => modelOf(c.url))).toEqual(["gemini-3.5-flash", "gemini-2.5-flash"]);
+    expect(calls.map((c) => modelOf(c.url))).toEqual(["gemini-3.5-flash", "gemini-3.1-flash-lite"]);
   });
 
-  it("sends model-appropriate thinking config (3.x thinkingLevel, 2.5 thinkingBudget)", async () => {
-    const { fn, calls } = scriptedFetch([429, 429, 200]);
+  it("sends model-appropriate thinking config (3.x thinkingLevel, 2.5 thinkingBudget, 2.0 omitted)", async () => {
+    // 429 the first five rungs so every family is exercised: 3.x (×2), 2.5 (×2), 2.0.
+    const { fn, calls } = scriptedFetch([429, 429, 429, 429, 429, 200]);
     await streamGemini(...args, fn);
-    expect(calls[0].body.generationConfig.thinkingConfig).toEqual({ thinkingLevel: "low" });
-    expect(calls[1].body.generationConfig.thinkingConfig).toEqual({ thinkingBudget: 0 });
-    expect(calls[2].body.generationConfig.thinkingConfig).toEqual({ thinkingBudget: 0 });
+    const tc = (i: number) => calls[i].body.generationConfig.thinkingConfig;
+    expect(tc(0)).toEqual({ thinkingLevel: "low" }); // gemini-3.5-flash
+    expect(tc(1)).toEqual({ thinkingLevel: "low" }); // gemini-3.1-flash-lite
+    expect(tc(2)).toEqual({ thinkingBudget: 0 }); // gemini-2.5-flash
+    expect(tc(3)).toEqual({ thinkingBudget: 0 }); // gemini-2.5-flash-lite
+    expect(tc(4)).toBeUndefined(); // gemini-2.0-flash — no thinking feature, omitted
   });
 });
 
@@ -141,10 +152,10 @@ describe("generateText", () => {
     await expect(generateText("KEY", "p", fetchImpl)).rejects.toThrow();
   });
 
-  it("throws after every model is quota-exhausted (tries all three, then gives up)", async () => {
-    const { fn, calls } = scriptedFetch([429, 429, 429]);
+  it("throws after every model is quota-exhausted (tries the whole cascade, then gives up)", async () => {
+    const { fn, calls } = scriptedFetch([429, 429, 429, 429, 429, 429]);
     await expect(generateText("KEY", "p", fn)).rejects.toThrow("upstream 429");
-    expect(calls).toHaveLength(3);
+    expect(calls).toHaveLength(6);
   });
 
   it("stops on a non-retryable status (400) without trying lower models", async () => {
@@ -173,6 +184,6 @@ describe("generateText", () => {
     const out = await generateText("KEY", "p", fetchImpl);
     expect(out).toBe("digest");
     expect(urls[0]).toContain("gemini-3.5-flash");
-    expect(urls[1]).toContain("gemini-2.5-flash");
+    expect(urls[1]).toContain("gemini-3.1-flash-lite");
   });
 });
