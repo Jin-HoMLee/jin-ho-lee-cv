@@ -261,8 +261,6 @@ def test_validate_master_cv_catches_bad_type(tmp_path):
     from scripts.validate import validate_master_cv
 
     schema = REPO_ROOT / "schema" / "master-cv.schema.json"
-    (tmp_path / "timeline.yaml").write_text(
-        '- id: x\n  type: not-a-real-type\n', encoding="utf-8"
-    )
+    (tmp_path / "timeline.yaml").write_text("- id: x\n  type: not-a-real-type\n", encoding="utf-8")
     errors = validate_master_cv(tmp_path, schema)
     assert errors and any("timeline.yaml" in str(e) for e in errors)

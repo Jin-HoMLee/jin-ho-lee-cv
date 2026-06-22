@@ -30,9 +30,18 @@ def test_absent_overlay_is_cv_only():
 def test_present_overlay_appends_master_sections():
     content, pubs = _facts()
     mcv = MasterCV(
-        timeline=[{"id": "imp-vienna-2019", "type": "research", "title": "Doctoral Researcher",
-                   "org": "IMP", "start": "2019-08", "end": "2019-10",
-                   "summary": "Structural biology work.", "tags": ["structural biology"]}],
+        timeline=[
+            {
+                "id": "imp-vienna-2019",
+                "type": "research",
+                "title": "Doctoral Researcher",
+                "org": "IMP",
+                "start": "2019-08",
+                "end": "2019-10",
+                "summary": "Structural biology work.",
+                "tags": ["structural biology"],
+            }
+        ],
         inventory={"programming": ["Python", "Perl"]},
         narrative={"career-story": "# Career story\n\nThe throughline."},
     )

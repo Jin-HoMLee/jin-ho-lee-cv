@@ -47,6 +47,7 @@ def real_master_cv_guard():
 
     Like real_private_yaml_guard: the overlay is user data outside git's protection.
     """
+
     def _snapshot():
         if not REAL_MASTER_CV.is_dir():
             return None
