@@ -156,6 +156,13 @@ def test_awards_section_includes_gcp_certification():
     assert "Google Cloud Certified - Associate Cloud Engineer" in out
 
 
+def test_awards_section_includes_hackathon_award():
+    """#93: the 2018 hackathon award is present in Awards & Certifications."""
+    out = render("en")
+    assert "“Most Patient-Centric Solution” Award" in out
+    assert "{Life Science} meets IT Hackathon, Mannheim" in out
+
+
 def test_awards_section_renders_de():
     out = render("de")
     assert "AUSZEICHNUNGEN & ZERTIFIKATE" in out
