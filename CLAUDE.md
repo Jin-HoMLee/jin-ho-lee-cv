@@ -34,6 +34,7 @@ Twelve phases (0–11), sequential. Each produces a usable artifact and gets its
 | 12a | Digital-twin chat MVP (CV-grounded conversational chat: context compiler + Cloudflare Worker + web widget + guardrails) | ✅ Done (merged 2026-06-16, `--no-ff`, PR #83, commit `7b6dfaa`); Gemini free-tier backend |
 | 12b | Digital-twin insights (D1 question log + daily Gemini digest + Cloudflare-Access dashboard) | ✅ Done (merged 2026-06-18, `--no-ff`, PR #86, commit `1791691`); free-tier D1 + Cron Triggers; verbatim questions, 30-day purge, no IP. Worker deploy (D1 create + remote schema + Access policy + `just worker-deploy`) is a separate manual step |
 | 12c | Digital-twin lead-capture (consented opt-in contact form: persistent affordance + one-time nudge → `contact_submissions` D1 + best-effort Telegram notify + leads on the 12b dashboard) | ✅ Done (merged 2026-06-19, `--no-ff`, PR #91, commit `f8d2a10`); leads KEPT (no TTL — purpose-driven retention, the deliberate flip vs 12b's 30-day questions); Telegram notifier graceful no-op when unconfigured; reuses 12a Turnstile/CORS + a per-IP 3/day submit cap. Rate-limit slot spent only after a successful store (a 502 never burns one). Worker deploy (remote schema re-apply + `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` secrets — both kept out of the public repo) is a separate manual step |
+| 13 | `master-cv/` overlay (gitignored life-database superset feeding the twin + a `dist/master-cv.md` lookup export; CV stays sharp) | ✅ Done (merged YYYY-MM-DD, `--no-ff`, PR #NN, commit `xxxxxxx`); overlay gitignored + PII-guarded, graceful-absence proven (CV-only output byte-identical without it), synthetic `master-cv.example/` committed; first ingest + CV-reconcile (#93) are separate manual/follow-up steps |
 
 ## Layout
 
@@ -47,7 +48,9 @@ data/citations.json      generated, committed Crossref citation cache (lockfile)
 schema/cv.schema.json          JSON Schema for content
 schema/application.schema.json schema for cover-letter application.yaml
 schema/profile.schema.json     schema for the evergreen cover-letter profile.yaml
-scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py, render_chat_context.py, fetch_citations.py, citations.py, agent_core.py, mcp_server.py, cover_letter_core.py, letter_text.py, render_letter.py, letter_lint.py, jd_gap.py, check_pii.py
+schema/master-cv.schema.json   overlay validation
+master-cv.example/             committed synthetic overlay template
+scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py, render_chat_context.py, fetch_citations.py, citations.py, agent_core.py, mcp_server.py, cover_letter_core.py, letter_text.py, render_letter.py, letter_lint.py, jd_gap.py, check_pii.py, master_cv_loader.py, render_master_cv.py, profile_union.py
 tests/                    pytest suite
 pdf/                      Typst PDF renderer (Phase 1; incl. templates/cover-letter.typ for the DIN 5008 letter)
 web/                      Astro website (Phase 3)
@@ -74,6 +77,7 @@ just build-jsonld      # → dist/person.jsonld (schema.org)
 just build-text        # → dist/cv-{en,de}.txt
 just build-formats     # all machine formats (resume.json + person.jsonld + plain text + llms.txt)
 just build-chat-context # compile the whole CV into one blob → dist/chat-context.md (digital-twin)
+just build-master-cv      # content/ + master-cv/ overlay → dist/master-cv.md (lookup artifact)
 just worker-dev        # run the digital-twin Worker locally (bundles chat-context.md, wrangler dev)
 just worker-deploy     # deploy the digital-twin Worker to Cloudflare (bundles chat-context.md, wrangler deploy)
 just refresh-citations # fetch Crossref citation counts → data/citations.json (manual, networked)
@@ -163,6 +167,15 @@ validate + test + lint must all be green before merging anything.
   cliché linter prints advisory `WARN:` lines from `render_letter` — both deterministic,
   neither ever blocks. Rendered text never contains the private address; only the gitignored
   PDF does.
+- **`master-cv/` is a gitignored superset overlay (Phase 13).** The unfiltered
+  life-database (`timeline.yaml` + `inventory.yaml` + `narrative/*.md`) feeding the
+  digital twin and the `dist/master-cv.md` lookup export. `content/` is a curated
+  *selection* from it. Never committed (`.gitignore` + `check_pii.py` both block it);
+  only synthetic `master-cv.example/` is committed. Both consumers share
+  `scripts/profile_union.full_profile`; the overlay path resolves from `MASTER_CV_DIR`
+  (default `<repo>/master-cv`, the `CV_PRIVATE_YAML` test-override shape). Absent ⇒
+  CV-only output, byte-identical (graceful-absence proof). No test reads the real
+  overlay — a conftest autouse fixture redirects `MASTER_CV_DIR` to an absent sentinel.
 - **PII guard (block-hard).** `scripts/check_pii.py` is one detection core (`scan_files`,
   pure: path + content bytes in, violations out) behind three surfaces — Claude Code
   PreToolUse(Bash) hook (`.claude/settings.local.json` → `--hook`, denies a `git commit`
@@ -202,6 +215,8 @@ validate + test + lint must all be green before merging anything.
 - `scripts/render_web_data.py` — the closest pattern for a "Python script that emits JSON for a downstream renderer to consume"; mirror this style
 - `docs/superpowers/specs/2026-06-03-phase-11-cover-letter-design.md` — Phase 11 design spec (cover-letter generator)
 - `docs/superpowers/plans/2026-06-03-phase-11-cover-letter.md` — implementation plan for the cover-letter generator (#65)
+- `docs/superpowers/specs/2026-06-20-phase-13-master-cv-overlay-design.md` — Phase 13 design spec (master-cv/ overlay)
+- `docs/superpowers/plans/2026-06-22-phase-13-master-cv-overlay.md` — implementation plan for the master-cv/ overlay (#92)
 
 ## Local-only files (not in git)
 
@@ -209,6 +224,7 @@ validate + test + lint must all be green before merging anything.
 - `content.private/private.yaml` — phone + address. Copy from `content.private.example/private.example.yaml` template.
 - `applications/` — per-application cover-letter material (job descriptions, drafts, rendered letters). Gitignored; mirror the shape in `applications.example/`.
 - `assets/signature.png` — handwritten signature for the cover-letter PDF, included only when present (mirrors the optional `--photo` pattern). Gitignored.
+- `master-cv/` — the unfiltered superset overlay (`timeline.yaml` + `inventory.yaml` + `narrative/*.md`). Gitignored; mirror the shape in `master-cv.example/`.
 
 ## Don't
 
