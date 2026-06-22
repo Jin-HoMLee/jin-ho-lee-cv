@@ -16,8 +16,8 @@ Now applying that rigor in industry: architected the migration of 1,000+ analyti
 - **Models**: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
 - **Imaging**: Super-Resolution, Confocal, Fluorescence
 - **Assays**: FISH, IF, qPCR, FACS
-- **AI & Vision**: TensorFlow, Keras, LSTMs, OpenCV
-- **Eng & Tools**: Python (Exp), R, SQL, Snakemake, Conda, Docker, Git, dbt
+- **AI & ML**: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow, OpenAI API
+- **Eng & Tools**: Python (Exp), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
 - **Cloud**: GCP, BigQuery, Vertex AI, Looker
 
 ## Experience

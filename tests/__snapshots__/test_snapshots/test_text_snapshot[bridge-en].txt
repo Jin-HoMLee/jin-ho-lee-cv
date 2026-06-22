@@ -65,8 +65,10 @@ Personalized Immunotherapy – High-Throughput HLA Typing Pipeline    (2014-04 t
 ================================================================================
 EDUCATION
 ================================================================================
-2019  M.Sc. Molecular Biotechnology - Heidelberg University (Heidelberg, Germany)
+2019  M.Sc. Molecular Biotechnology, Biophysical Chemistry - Heidelberg University (Heidelberg, Germany)
+      Thesis: "Single Molecule Localization Microscopy of Nanoprobes to Study Chromatin Architecture, Function and Dynamics"
 2014  B.Sc. Molecular Biotechnology, Bioinformatics - Heidelberg University (Heidelberg, Germany)
+      Thesis: "HLA Typing from Sequencing Data for Personalized Cancer Immunotherapy"
 
 ================================================================================
 SKILLS
@@ -81,8 +83,8 @@ Biotech Wet-Lab
   Imaging: Super-Resolution, Confocal, Fluorescence
   Assays: FISH, IF, qPCR, FACS
 Data & Engineering
-  AI & Vision: TensorFlow, Keras, LSTMs, OpenCV
-  Eng & Tools: Python (Exp), R, SQL, Snakemake, Conda, Docker, Git, dbt
+  AI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow, OpenAI API
+  Eng & Tools: Python (Exp), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
   Cloud: GCP, BigQuery, Vertex AI, Looker
 
 ================================================================================
@@ -125,8 +127,11 @@ super-resolution DNA-repair imaging.
 Full list & metrics: https://orcid.org/0009-0001-8784-1771
 
 ================================================================================
-AWARDS
+AWARDS & CERTIFICATIONS
 ================================================================================
 2015  DAAD PROMOS Scholarship - DAAD
   Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery.
+2018  “Most Patient-Centric Solution” Award - {Life Science} meets IT Hackathon, Mannheim
 2021  DeGBS Poster Award - Deutsche Gesellschaft für Biologische Strahlenforschung
+2024  Google Cloud Certified - Associate Cloud Engineer - Google Cloud
+  Issued Dec 2024, valid through Dec 2027.

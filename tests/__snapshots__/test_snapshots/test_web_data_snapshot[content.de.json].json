@@ -135,12 +135,15 @@
         "name": "Daten & Engineering",
         "groups": [
           {
-            "label": "KI & Vision",
+            "label": "KI & ML",
             "items": [
               "TensorFlow",
               "Keras",
               "LSTMs",
-              "OpenCV"
+              "OpenCV",
+              "XGBoost",
+              "MLflow",
+              "OpenAI API"
             ]
           },
           {
@@ -149,11 +152,14 @@
               "Python (Exp)",
               "R",
               "SQL",
+              "PostgreSQL",
               "Snakemake",
               "Conda",
               "Docker",
               "Git",
-              "dbt"
+              "dbt",
+              "Pydantic",
+              "Streamlit"
             ]
           },
           {
@@ -172,6 +178,8 @@
   "education": [
     {
       "degree": "M.Sc. Molekulare Biotechnologie",
+      "field": "Biophysikalische Chemie",
+      "thesis": "Single Molecule Localization Microscopy of Nanoprobes to Study Chromatin Architecture, Function and Dynamics",
       "institution": "Heidelberg University",
       "location": "Heidelberg, Germany",
       "year": 2019
@@ -179,6 +187,7 @@
     {
       "degree": "B.Sc. Molekulare Biotechnologie",
       "field": "Bioinformatik",
+      "thesis": "HLA Typing from Sequencing Data for Personalized Cancer Immunotherapy",
       "institution": "Heidelberg University",
       "location": "Heidelberg, Germany",
       "year": 2014
@@ -707,9 +716,20 @@
       "note": "Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung."
     },
     {
+      "title": "Auszeichnung „Most Patient-Centric Solution“",
+      "issuer": "{Life Science} meets IT Hackathon, Mannheim",
+      "year": 2018
+    },
+    {
       "title": "DeGBS-Posterpreis",
       "issuer": "Deutsche Gesellschaft für Biologische Strahlenforschung",
       "year": 2021
+    },
+    {
+      "title": "Google Cloud Certified - Associate Cloud Engineer",
+      "issuer": "Google Cloud",
+      "year": 2024,
+      "note": "Ausgestellt Dez. 2024, gültig bis Dez. 2027."
     }
   ],
   "publications": [
@@ -965,7 +985,7 @@
       "experience": "Berufserfahrung",
       "selected_projects": "Ausgewählte Projekte",
       "education": "Ausbildung",
-      "awards": "Auszeichnungen",
+      "awards": "Auszeichnungen & Zertifikate",
       "publications": "Publikationen",
       "skills": "Kenntnisse",
       "languages": "Sprachen",

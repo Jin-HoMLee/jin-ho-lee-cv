@@ -22,7 +22,7 @@ SECTION_LABELS = {
     "experience": {"en": "EXPERIENCE", "de": "BERUFSERFAHRUNG"},
     "selected_projects": {"en": "SELECTED PROJECTS", "de": "AUSGEWÄHLTE PROJEKTE"},
     "education": {"en": "EDUCATION", "de": "AUSBILDUNG"},
-    "awards": {"en": "AWARDS", "de": "AUSZEICHNUNGEN"},
+    "awards": {"en": "AWARDS & CERTIFICATIONS", "de": "AUSZEICHNUNGEN & ZERTIFIKATE"},
     "skills": {"en": "SKILLS", "de": "KENNTNISSE"},
     "languages": {"en": "LANGUAGES", "de": "SPRACHEN"},
     "volunteer": {"en": "VOLUNTEER", "de": "EHRENAMTLICH"},
@@ -94,6 +94,8 @@ def _education(content: dict) -> str:
     for e in content["education"]:
         major = f", {e['field']}" if e.get("field") else ""
         lines.append(f"{e['year']}  {e['degree']}{major} - {e['institution']} ({e['location']})")
+        if e.get("thesis"):
+            lines.append(f'      Thesis: "{e["thesis"]}"')
     return "\n".join(lines)
 
 

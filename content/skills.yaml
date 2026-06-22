@@ -27,9 +27,9 @@ categories:
       en: "Data & Engineering"
       de: "Daten & Engineering"
     groups:
-      - label: { en: "AI & Vision", de: "KI & Vision" }
-        items: ["TensorFlow", "Keras", "LSTMs", "OpenCV"]
+      - label: { en: "AI & ML", de: "KI & ML" }
+        items: ["TensorFlow", "Keras", "LSTMs", "OpenCV", "XGBoost", "MLflow", "OpenAI API"]
       - label: { en: "Eng & Tools", de: "Eng & Tools" }
-        items: ["Python (Exp)", "R", "SQL", "Snakemake", "Conda", "Docker", "Git", "dbt"]
+        items: ["Python (Exp)", "R", "SQL", "PostgreSQL", "Snakemake", "Conda", "Docker", "Git", "dbt", "Pydantic", "Streamlit"]
       - label: { en: "Cloud", de: "Cloud" }
         items: ["GCP", "BigQuery", "Vertex AI", "Looker"]

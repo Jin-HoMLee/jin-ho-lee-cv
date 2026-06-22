@@ -67,8 +67,10 @@ Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bi
 ================================================================================
 AUSBILDUNG
 ================================================================================
-2019  M.Sc. Molekulare Biotechnologie - Heidelberg University (Heidelberg, Germany)
+2019  M.Sc. Molekulare Biotechnologie, Biophysikalische Chemie - Heidelberg University (Heidelberg, Germany)
+      Thesis: "Single Molecule Localization Microscopy of Nanoprobes to Study Chromatin Architecture, Function and Dynamics"
 2014  B.Sc. Molekulare Biotechnologie, Bioinformatik - Heidelberg University (Heidelberg, Germany)
+      Thesis: "HLA Typing from Sequencing Data for Personalized Cancer Immunotherapy"
 
 ================================================================================
 KENNTNISSE
@@ -83,8 +85,8 @@ Biotech Wet-Lab
   Bildgebung: Super-Resolution, Confocal, Fluorescence
   Assays: FISH, IF, qPCR, FACS
 Daten & Engineering
-  KI & Vision: TensorFlow, Keras, LSTMs, OpenCV
-  Eng & Tools: Python (Exp), R, SQL, Snakemake, Conda, Docker, Git, dbt
+  KI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow, OpenAI API
+  Eng & Tools: Python (Exp), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
   Cloud: GCP, BigQuery, Vertex AI, Looker
 
 ================================================================================
@@ -178,8 +180,11 @@ PUBLIKATIONEN
   Lee, J., Eckhardt, C. - Essentials of Modern Marketing, Germany Edition
 
 ================================================================================
-AUSZEICHNUNGEN
+AUSZEICHNUNGEN & ZERTIFIKATE
 ================================================================================
 2015  DAAD-PROMOS-Stipendium - DAAD
   Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung.
+2018  Auszeichnung „Most Patient-Centric Solution“ - {Life Science} meets IT Hackathon, Mannheim
 2021  DeGBS-Posterpreis - Deutsche Gesellschaft für Biologische Strahlenforschung
+2024  Google Cloud Certified - Associate Cloud Engineer - Google Cloud
+  Ausgestellt Dez. 2024, gültig bis Dez. 2027.

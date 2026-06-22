@@ -130,16 +130,35 @@ def test_education_includes_bsc_major():
     assert "Bioinformatics" in out
 
 
+def test_education_includes_msc_major():
+    out = render("en")
+    assert "Biophysical Chemistry" in out
+
+
+def test_education_renders_thesis_titles():
+    """#93: thesis titles must actually reach the output (not just sit in the schema)."""
+    out = render("en")
+    assert "HLA Typing from Sequencing Data for Personalized Cancer Immunotherapy" in out
+    assert "Single Molecule Localization Microscopy of Nanoprobes" in out
+    assert "Thesis:" in out
+
+
 def test_awards_section_renders():
     out = render("en")
-    assert "AWARDS" in out
+    assert "AWARDS & CERTIFICATIONS" in out
     assert "DAAD PROMOS Scholarship" in out
     assert "DeGBS Poster Award" in out
 
 
+def test_awards_section_includes_gcp_certification():
+    """#93: the completed Google Cloud cert is folded into Awards & Certifications."""
+    out = render("en")
+    assert "Google Cloud Certified - Associate Cloud Engineer" in out
+
+
 def test_awards_section_renders_de():
     out = render("de")
-    assert "AUSZEICHNUNGEN" in out
+    assert "AUSZEICHNUNGEN & ZERTIFIKATE" in out
 
 
 CONTENT_DIR = REPO_ROOT / "content"

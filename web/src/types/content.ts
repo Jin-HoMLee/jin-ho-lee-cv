@@ -42,6 +42,7 @@ export interface Period { start: string; end: string | null }
 export interface Education {
   degree: string;
   field?: string;
+  thesis?: string;
   institution: string;
   location: string;
   year: number;
