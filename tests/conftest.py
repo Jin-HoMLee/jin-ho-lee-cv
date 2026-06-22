@@ -48,7 +48,13 @@ def real_master_cv_guard():
     Like real_private_yaml_guard: the overlay is user data outside git's protection.
     """
     def _snapshot():
-        return sorted(p.name for p in REAL_MASTER_CV.iterdir()) if REAL_MASTER_CV.is_dir() else None
+        if not REAL_MASTER_CV.is_dir():
+            return None
+        return {
+            str(p.relative_to(REAL_MASTER_CV)): p.read_bytes()
+            for p in sorted(REAL_MASTER_CV.rglob("*"))
+            if p.is_file()
+        }
 
     before = _snapshot()
     yield
