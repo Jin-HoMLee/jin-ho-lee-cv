@@ -1,0 +1,9 @@
+# Full skill/tool/domain/industry SUPERSET (a generous reservoir, not the sharp CV).
+# Keys are free-form; values must be string lists. SYNTHETIC data only.
+programming: ["Example-Lang", "Pseudocode"]
+ml_ai: ["example-ml-lib", "example-nn-framework"]
+data_eng: ["ExampleQuery", "example-orchestrator", "Docker"]
+databases: ["ExampleDB"]
+cloud: ["Example Cloud"]
+domains: ["Example Domain A", "Example Domain B"]
+industries: ["Example Industry"]

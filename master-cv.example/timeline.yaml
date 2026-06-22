@@ -1,0 +1,57 @@
+# Synthetic template for the gitignored master-cv/ overlay.
+# Copy this directory to `master-cv/` and replace every value with your real
+# history. `master-cv/` is gitignored; `master-cv.example/` (this dir) is committed
+# and must contain SYNTHETIC data only. Schema: schema/master-cv.schema.json.
+#
+# Flat chronological list. Required per entry: id (kebab-case), type.
+# type ∈ employment|research|internship|education|certificate|award|volunteering
+# dates: "YYYY" or "YYYY-MM" or null (null end ⇒ ongoing). Extra fields allowed.
+- id: example-research-2099
+  type: research
+  title: "Example Doctoral Researcher"
+  org: "Example Institute of Synthetic Studies"
+  location: "Example City, Exampleland"
+  start: "2099-01"
+  end: "2099-06"
+  tags: ["example-domain", "synthetic-method"]
+  summary: "Synthetic placeholder describing example research work."
+- id: example-internship-2098
+  type: internship
+  title: "Example Data Intern"
+  org: "Example Analytics GmbH"
+  location: "Example City"
+  start: "2098-07"
+  end: "2098-09"
+  tags: ["sql", "dashboards"]
+  summary: "Synthetic placeholder internship summary."
+- id: example-msc-2097
+  type: education
+  title: "M.Sc. Example Science"
+  org: "Example University"
+  location: "Example City"
+  start: "2095-10"
+  end: "2097-09"
+  field: "Example Field"
+  thesis: "A Synthetic Thesis Title"
+  summary: "Synthetic degree record with type-specific field/thesis keys."
+- id: example-cert-cloud
+  type: certificate
+  title: "Example Cloud Certificate"
+  org: "Example Cloud"
+  issuer: "Example Cloud"
+  status: "in-progress"
+  start: "2099"
+  summary: "Synthetic in-progress certificate (year-only date)."
+- id: example-award-hack
+  type: award
+  title: "Example Hackathon Winner"
+  org: "Example Hack 2099"
+  start: "2099-03"
+  summary: "Synthetic award record."
+- id: example-volunteering
+  type: volunteering
+  title: "Example Volunteer Mentor"
+  org: "Example Community"
+  start: "2096"
+  end: null
+  summary: "Synthetic ongoing volunteering (null end)."
