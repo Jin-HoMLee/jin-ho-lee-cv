@@ -61,6 +61,9 @@ def test_chat_context_md(tmp_path, snapshot):
     assert out.read_text(encoding="utf-8") == snapshot.use_extension(_TextSnap)
 
 
+# Both tests below call the same full_profile helper with the same EXAMPLE_DIR overlay
+# and therefore produce byte-identical output. That is intentional — they differ only in
+# output destination/purpose (master-cv.md vs chat-context with overlay). Keep both.
 def test_master_cv_md(tmp_path, snapshot, monkeypatch):
     monkeypatch.setenv("MASTER_CV_DIR", str(EXAMPLE_DIR))
     out = tmp_path / "master-cv.md"
@@ -69,6 +72,7 @@ def test_master_cv_md(tmp_path, snapshot, monkeypatch):
 
 
 def test_chat_context_with_overlay_md(tmp_path, snapshot, monkeypatch):
+    # Byte-identical to test_master_cv_md — same full_profile call, different destination.
     monkeypatch.setenv("MASTER_CV_DIR", str(EXAMPLE_DIR))
     out = tmp_path / "chat-context-overlay.md"
     render_chat_context.main(["--output", str(out)])
