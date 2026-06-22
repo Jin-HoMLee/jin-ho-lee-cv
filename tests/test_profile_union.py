@@ -58,3 +58,60 @@ def test_empty_overlay_adds_no_sections():
     content, pubs = _facts()
     mcv = MasterCV(timeline=[], inventory={}, narrative={})
     assert full_profile(content, pubs, mcv) == full_profile(content, pubs, None)
+
+
+def test_timeline_renders_extra_type_specific_fields():
+    """Type-specific extras (thesis, field, issuer, status, …) must reach the
+    output — the schema/example advertise them, so the renderer must not drop them."""
+    content, pubs = _facts()
+    mcv = MasterCV(
+        timeline=[
+            {
+                "id": "msc",
+                "type": "education",
+                "title": "M.Sc. Molecular Biotechnology",
+                "field": "Biophysical Chemistry",
+                "thesis": "A Thesis Title",
+                "summary": "Degree summary.",
+            },
+            {
+                "id": "cert",
+                "type": "certificate",
+                "title": "Cloud Cert",
+                "issuer": "Some Issuer",
+                "status": "in-progress",
+            },
+        ],
+        inventory={},
+        narrative={},
+    )
+    out = full_profile(content, pubs, mcv)
+    assert "Field: Biophysical Chemistry" in out
+    assert "Thesis: A Thesis Title" in out
+    assert "Issuer: Some Issuer" in out
+    assert "Status: in-progress" in out
+
+
+def test_timeline_extra_fields_skip_none_and_collections():
+    """None values and list/dict extras must not produce junk lines (tags render
+    via their own line; id/type are structural, not data lines)."""
+    content, pubs = _facts()
+    mcv = MasterCV(
+        timeline=[
+            {
+                "id": "x",
+                "type": "research",
+                "title": "T",
+                "end": None,
+                "tags": ["a", "b"],
+                "extra_list": ["should", "not", "render", "as", "kv"],
+            }
+        ],
+        inventory={},
+        narrative={},
+    )
+    out = full_profile(content, pubs, mcv)
+    assert "Tags: a, b" in out
+    assert "End:" not in out  # None skipped
+    assert "Extra list:" not in out  # collections skipped
+    assert "Id: x" not in out and "Type: research" not in out  # structural keys

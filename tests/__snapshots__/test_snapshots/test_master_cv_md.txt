@@ -86,9 +86,13 @@ Synthetic placeholder internship summary.
 Tags: sql, dashboards
 ### M.Sc. Example Science — Example University (2095-10–2097-09)
 _education · Example City_
+Field: Example Field
+Thesis: A Synthetic Thesis Title
 Synthetic degree record with type-specific field/thesis keys.
 ### Example Cloud Certificate — Example Cloud (2099–present)
 _certificate_
+Issuer: Example Cloud
+Status: in-progress
 Synthetic in-progress certificate (year-only date).
 ### Example Hackathon Winner — Example Hack 2099 (2099-03–present)
 _award_

@@ -73,6 +73,13 @@ def _publications(pubs: list[Publication]) -> str:
 
 # ---- master-cv overlay sections (appended only when present) ---------------
 
+# Timeline keys rendered by dedicated layout above; every OTHER scalar key is
+# emitted generically so type-specific extras (thesis, field, issuer, status, …)
+# the schema permits never get silently dropped from the twin/export.
+_TIMELINE_STRUCTURAL_KEYS = frozenset(
+    {"id", "type", "title", "org", "location", "start", "end", "tags", "summary"}
+)
+
 
 def _full_timeline(master_cv: MasterCV) -> str:
     lines = ["## Full Timeline (master record)"]
@@ -84,6 +91,12 @@ def _full_timeline(master_cv: MasterCV) -> str:
         lines.append(f"### {title}{org}{dates}")
         loc = f" · {e['location']}" if e.get("location") else ""
         lines.append(f"_{e['type']}{loc}_")
+        for key, value in e.items():
+            if key in _TIMELINE_STRUCTURAL_KEYS or value is None:
+                continue
+            if isinstance(value, (list, dict)):
+                continue  # only scalar extras; tags handled by their own line
+            lines.append(f"{key.replace('_', ' ').capitalize()}: {value}")
         if e.get("summary"):
             lines.append(e["summary"])
         if e.get("tags"):
