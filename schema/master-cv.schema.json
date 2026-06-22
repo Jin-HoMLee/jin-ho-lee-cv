@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Jin-Ho Lee master-CV overlay schema",
+  "$defs": {
+    "DateLoose": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[0-9]{4}(-(0[1-9]|1[0-2]))?$" },
+        { "type": "null" }
+      ],
+      "description": "YYYY or YYYY-MM, or null for undated/ongoing"
+    },
+    "TimelineEntry": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "type": {
+          "type": "string",
+          "enum": ["employment", "research", "internship", "education", "certificate", "award", "volunteering"]
+        },
+        "title": { "type": "string" },
+        "org": { "type": "string" },
+        "location": { "type": "string" },
+        "start": { "$ref": "#/$defs/DateLoose" },
+        "end": { "$ref": "#/$defs/DateLoose" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "summary": { "type": "string" }
+      },
+      "required": ["id", "type"],
+      "additionalProperties": true
+    },
+    "timeline": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/TimelineEntry" }
+    },
+    "inventory": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    }
+  }
+}
