@@ -48,3 +48,6 @@ worker/chat-context.md
 worker/.dev.vars
 worker/.dev.vars.*
 !worker/.dev.vars.example
+
+# Phase 13 — master-cv/ overlay (gitignored superset feeding the twin; example template stays committed)
+master-cv/
