@@ -30,8 +30,16 @@ def test_example_inventory_validates():
 
 def test_example_covers_multiple_entry_types():
     types = {e["type"] for e in _load("timeline.yaml")}
-    # Must exercise the breadth the real overlay carries.
-    assert {"research", "internship", "education", "certificate", "award", "volunteering"} <= types
+    # Must exercise the breadth the real overlay carries (all 7 enum types).
+    assert {
+        "employment",
+        "research",
+        "internship",
+        "education",
+        "certificate",
+        "award",
+        "volunteering",
+    } <= types
 
 
 def test_example_has_narrative_files():

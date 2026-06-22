@@ -6,6 +6,15 @@
 # Flat chronological list. Required per entry: id (kebab-case), type.
 # type ∈ employment|research|internship|education|certificate|award|volunteering
 # dates: "YYYY" or "YYYY-MM" or null (null end ⇒ ongoing). Extra fields allowed.
+- id: example-employment-2099
+  type: employment
+  title: "Example Software Engineer"
+  org: "Example Corp"
+  location: "Example City"
+  start: "2099-07"
+  end: null
+  tags: ["example-stack", "synthetic-role"]
+  summary: "Synthetic ongoing employment placeholder (null end ⇒ current)."
 - id: example-research-2099
   type: research
   title: "Example Doctoral Researcher"

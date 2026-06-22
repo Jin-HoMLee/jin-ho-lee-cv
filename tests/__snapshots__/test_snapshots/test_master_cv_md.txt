@@ -76,6 +76,10 @@ Bioinformatics workflow for identifying patient-specific cancer targets and auto
 - Marketing Automation Tool Selection & Implementation @DeutschlandCard, Essentials of Modern Marketing, Germany Edition (2025)
 
 ## Full Timeline (master record)
+### Example Software Engineer — Example Corp (2099-07–present)
+_employment · Example City_
+Synthetic ongoing employment placeholder (null end ⇒ current).
+Tags: example-stack, synthetic-role
 ### Example Doctoral Researcher — Example Institute of Synthetic Studies (2099-01–2099-06)
 _research · Example City, Exampleland_
 Synthetic placeholder describing example research work.
