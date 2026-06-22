@@ -710,15 +710,10 @@
   },
   "awards": [
     {
-      "title": "DAAD PROMOS Scholarship",
-      "issuer": "DAAD",
-      "year": 2015,
-      "note": "Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery."
-    },
-    {
-      "title": "“Most Patient-Centric Solution” Award",
-      "issuer": "{Life Science} meets IT Hackathon, Mannheim",
-      "year": 2018
+      "title": "Google Cloud Certified - Associate Cloud Engineer",
+      "issuer": "Google Cloud",
+      "year": 2024,
+      "note": "Issued Dec 2024, valid through Dec 2027."
     },
     {
       "title": "DeGBS Poster Award",
@@ -726,10 +721,15 @@
       "year": 2021
     },
     {
-      "title": "Google Cloud Certified - Associate Cloud Engineer",
-      "issuer": "Google Cloud",
-      "year": 2024,
-      "note": "Issued Dec 2024, valid through Dec 2027."
+      "title": "“Most Patient-Centric Solution” Award",
+      "issuer": "{Life Science} meets IT Hackathon, Mannheim",
+      "year": 2018
+    },
+    {
+      "title": "DAAD PROMOS Scholarship",
+      "issuer": "DAAD",
+      "year": 2015,
+      "note": "Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery."
     }
   ],
   "publications": [

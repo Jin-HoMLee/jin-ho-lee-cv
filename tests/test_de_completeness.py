@@ -133,7 +133,7 @@ _INVARIANT_EXACT = frozenset(
         ".projects.C2.role",  # "Lead Business Functional Analyst (Cintellic GmbH)"
         ".projects.D3.role",  # "Data Science Coach (neuefische GmbH)"
         # Certification — official credential name, kept in English in both languages
-        ".awards[3].title",  # "Google Cloud Certified - Associate Cloud Engineer"
+        ".awards[0].title",  # "Google Cloud Certified - Associate Cloud Engineer"
     }
 )
 

@@ -710,15 +710,10 @@
   },
   "awards": [
     {
-      "title": "DAAD-PROMOS-Stipendium",
-      "issuer": "DAAD",
-      "year": 2015,
-      "note": "Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung."
-    },
-    {
-      "title": "Auszeichnung „Most Patient-Centric Solution“",
-      "issuer": "{Life Science} meets IT Hackathon, Mannheim",
-      "year": 2018
+      "title": "Google Cloud Certified - Associate Cloud Engineer",
+      "issuer": "Google Cloud",
+      "year": 2024,
+      "note": "Ausgestellt Dez. 2024, gültig bis Dez. 2027."
     },
     {
       "title": "DeGBS-Posterpreis",
@@ -726,10 +721,15 @@
       "year": 2021
     },
     {
-      "title": "Google Cloud Certified - Associate Cloud Engineer",
-      "issuer": "Google Cloud",
-      "year": 2024,
-      "note": "Ausgestellt Dez. 2024, gültig bis Dez. 2027."
+      "title": "Auszeichnung „Most Patient-Centric Solution“",
+      "issuer": "{Life Science} meets IT Hackathon, Mannheim",
+      "year": 2018
+    },
+    {
+      "title": "DAAD-PROMOS-Stipendium",
+      "issuer": "DAAD",
+      "year": 2015,
+      "note": "Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung."
     }
   ],
   "publications": [

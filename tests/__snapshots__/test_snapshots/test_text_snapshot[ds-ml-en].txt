@@ -122,9 +122,9 @@ Full list & metrics: https://orcid.org/0009-0001-8784-1771
 ================================================================================
 AWARDS & CERTIFICATIONS
 ================================================================================
-2015  DAAD PROMOS Scholarship - DAAD
-  Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery.
-2018  “Most Patient-Centric Solution” Award - {Life Science} meets IT Hackathon, Mannheim
-2021  DeGBS Poster Award - Deutsche Gesellschaft für Biologische Strahlenforschung
 2024  Google Cloud Certified - Associate Cloud Engineer - Google Cloud
   Issued Dec 2024, valid through Dec 2027.
+2021  DeGBS Poster Award - Deutsche Gesellschaft für Biologische Strahlenforschung
+2018  “Most Patient-Centric Solution” Award - {Life Science} meets IT Hackathon, Mannheim
+2015  DAAD PROMOS Scholarship - DAAD
+  Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery.

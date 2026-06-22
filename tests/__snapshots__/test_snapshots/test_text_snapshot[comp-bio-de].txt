@@ -182,9 +182,9 @@ PUBLIKATIONEN
 ================================================================================
 AUSZEICHNUNGEN & ZERTIFIKATE
 ================================================================================
-2015  DAAD-PROMOS-Stipendium - DAAD
-  Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung.
-2018  Auszeichnung „Most Patient-Centric Solution“ - {Life Science} meets IT Hackathon, Mannheim
-2021  DeGBS-Posterpreis - Deutsche Gesellschaft für Biologische Strahlenforschung
 2024  Google Cloud Certified - Associate Cloud Engineer - Google Cloud
   Ausgestellt Dez. 2024, gültig bis Dez. 2027.
+2021  DeGBS-Posterpreis - Deutsche Gesellschaft für Biologische Strahlenforschung
+2018  Auszeichnung „Most Patient-Centric Solution“ - {Life Science} meets IT Hackathon, Mannheim
+2015  DAAD-PROMOS-Stipendium - DAAD
+  Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung.

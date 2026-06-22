@@ -1,17 +1,11 @@
 - title:
-    en: "DAAD PROMOS Scholarship"
-    de: "DAAD-PROMOS-Stipendium"
-  issuer: "DAAD"
-  year: 2015
+    en: "Google Cloud Certified - Associate Cloud Engineer"
+    de: "Google Cloud Certified - Associate Cloud Engineer"
+  issuer: "Google Cloud"
+  year: 2024
   note:
-    en: "Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery."
-    de: "Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung."
-
-- title:
-    en: "“Most Patient-Centric Solution” Award"
-    de: "Auszeichnung „Most Patient-Centric Solution“"
-  issuer: "{Life Science} meets IT Hackathon, Mannheim"
-  year: 2018
+    en: "Issued Dec 2024, valid through Dec 2027."
+    de: "Ausgestellt Dez. 2024, gültig bis Dez. 2027."
 
 - title:
     en: "DeGBS Poster Award"
@@ -20,10 +14,16 @@
   year: 2021
 
 - title:
-    en: "Google Cloud Certified - Associate Cloud Engineer"
-    de: "Google Cloud Certified - Associate Cloud Engineer"
-  issuer: "Google Cloud"
-  year: 2024
+    en: "“Most Patient-Centric Solution” Award"
+    de: "Auszeichnung „Most Patient-Centric Solution“"
+  issuer: "{Life Science} meets IT Hackathon, Mannheim"
+  year: 2018
+
+- title:
+    en: "DAAD PROMOS Scholarship"
+    de: "DAAD-PROMOS-Stipendium"
+  issuer: "DAAD"
+  year: 2015
   note:
-    en: "Issued Dec 2024, valid through Dec 2027."
-    de: "Ausgestellt Dez. 2024, gültig bis Dez. 2027."
+    en: "Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery."
+    de: "Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung."
