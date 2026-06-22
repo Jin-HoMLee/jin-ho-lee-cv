@@ -8,6 +8,7 @@ from scripts.validate import ValidationError, validate_file, validate_tree
 
 
 FIXTURES = Path(__file__).parent / "fixtures" / "invalid_yaml"
+REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
 def test_missing_required_field_fails(schema_path):
@@ -237,3 +238,31 @@ def test_date_warnings_skips_non_yyyymm(tmp_path):
     )
     (tmp_path / "projects").mkdir()
     assert date_warnings(tmp_path, today=date(2026, 6, 1)) == []
+
+
+# --- Phase 13: master-cv overlay validation ---
+
+
+def test_validate_master_cv_absent_is_clean(tmp_path):
+    from scripts.validate import validate_master_cv
+
+    schema = REPO_ROOT / "schema" / "master-cv.schema.json"
+    assert validate_master_cv(tmp_path / "nope", schema) == []
+
+
+def test_validate_master_cv_example_is_clean():
+    from scripts.validate import validate_master_cv
+
+    schema = REPO_ROOT / "schema" / "master-cv.schema.json"
+    assert validate_master_cv(REPO_ROOT / "master-cv.example", schema) == []
+
+
+def test_validate_master_cv_catches_bad_type(tmp_path):
+    from scripts.validate import validate_master_cv
+
+    schema = REPO_ROOT / "schema" / "master-cv.schema.json"
+    (tmp_path / "timeline.yaml").write_text(
+        '- id: x\n  type: not-a-real-type\n', encoding="utf-8"
+    )
+    errors = validate_master_cv(tmp_path, schema)
+    assert errors and any("timeline.yaml" in str(e) for e in errors)
