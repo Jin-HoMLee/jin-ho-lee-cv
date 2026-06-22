@@ -71,7 +71,7 @@
     {
       "institution": "Heidelberg University",
       "studyType": "M.Sc. Molecular Biotechnology",
-      "area": "",
+      "area": "Biophysical Chemistry",
       "startDate": "2019-01-01",
       "endDate": "2019-12-31"
     },
@@ -157,12 +157,15 @@
     },
     {
       "name": "Data & Engineering",
-      "level": "AI & Vision",
+      "level": "AI & ML",
       "keywords": [
         "TensorFlow",
         "Keras",
         "LSTMs",
-        "OpenCV"
+        "OpenCV",
+        "XGBoost",
+        "MLflow",
+        "OpenAI API"
       ]
     },
     {
@@ -172,11 +175,14 @@
         "Python (Exp)",
         "R",
         "SQL",
+        "PostgreSQL",
         "Snakemake",
         "Conda",
         "Docker",
         "Git",
-        "dbt"
+        "dbt",
+        "Pydantic",
+        "Streamlit"
       ]
     },
     {
@@ -276,15 +282,26 @@
   ],
   "awards": [
     {
-      "title": "DAAD PROMOS Scholarship",
-      "date": "2015-01-01",
-      "awarder": "DAAD",
-      "summary": "Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery."
+      "title": "Google Cloud Certified - Associate Cloud Engineer",
+      "date": "2024-01-01",
+      "awarder": "Google Cloud",
+      "summary": "Issued Dec 2024, valid through Dec 2027."
     },
     {
       "title": "DeGBS Poster Award",
       "date": "2021-01-01",
       "awarder": "Deutsche Gesellschaft für Biologische Strahlenforschung"
+    },
+    {
+      "title": "“Most Patient-Centric Solution” Award",
+      "date": "2018-01-01",
+      "awarder": "{Life Science} meets IT Hackathon, Mannheim"
+    },
+    {
+      "title": "DAAD PROMOS Scholarship",
+      "date": "2015-01-01",
+      "awarder": "DAAD",
+      "summary": "Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery."
     }
   ],
   "projects": [

@@ -25,6 +25,10 @@
     }
     linebreak()
     text(size: size-small, fill: muted)[#e.institution · #e.year]
+    if "thesis" in e {
+      linebreak()
+      text(size: size-small, style: "italic", fill: muted)[Thesis: #e.thesis]
+    }
     v(space-paragraph)
   }
 }

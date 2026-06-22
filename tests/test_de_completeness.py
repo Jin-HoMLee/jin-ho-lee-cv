@@ -79,9 +79,11 @@ _INVARIANT_PATH_SUBSTRINGS = (
     ".personal.knowsAbout",
     # Publications — raw BibTeX, language-agnostic
     ".publications",
-    # Education — institution is a proper noun; location is a city/country string
+    # Education — institution is a proper noun; location is a city/country string;
+    # thesis is the verbatim title of a work, kept in its original language
     ".institution",
     ".location",
+    ".thesis",
     # Awards — issuer is an organisation proper noun (e.g. "DAAD")
     ".issuer",
     # Experience — employer proper nouns + structural bullets subtree
@@ -130,6 +132,8 @@ _INVARIANT_EXACT = frozenset(
         ".projects.C1.role",  # "Lead Business Functional Analyst (Cintellic GmbH)"
         ".projects.C2.role",  # "Lead Business Functional Analyst (Cintellic GmbH)"
         ".projects.D3.role",  # "Data Science Coach (neuefische GmbH)"
+        # Certification — official credential name, kept in English in both languages
+        ".awards[0].title",  # "Google Cloud Certified - Associate Cloud Engineer"
     }
 )
 

@@ -17,6 +17,7 @@ const { education, labels } = Astro.props;
       <div>
         <p class="text-sm font-semibold text-[var(--text)]">{ed.degree}</p>
         {ed.field && <p class="text-sm text-[var(--muted)]">{ed.field}</p>}
+        {ed.thesis && <p class="text-xs italic text-[var(--faint)]">Thesis: {ed.thesis}</p>}
         <p class="text-sm text-[var(--muted)]">{ed.institution} · {ed.location}</p>
         <p class="text-xs text-[var(--faint)]">{ed.year}</p>
       </div>

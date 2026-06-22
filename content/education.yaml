@@ -1,6 +1,10 @@
 - degree:
     en: "M.Sc. Molecular Biotechnology"
     de: "M.Sc. Molekulare Biotechnologie"
+  field:
+    en: "Biophysical Chemistry"
+    de: "Biophysikalische Chemie"
+  thesis: "Single Molecule Localization Microscopy of Nanoprobes to Study Chromatin Architecture, Function and Dynamics"
   institution: "Heidelberg University"
   location: "Heidelberg, Germany"
   year: 2019
@@ -11,6 +15,7 @@
   field:
     en: "Bioinformatics"
     de: "Bioinformatik"
+  thesis: "HLA Typing from Sequencing Data for Personalized Cancer Immunotherapy"
   institution: "Heidelberg University"
   location: "Heidelberg, Germany"
   year: 2014
