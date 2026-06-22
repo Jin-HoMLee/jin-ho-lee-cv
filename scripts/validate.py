@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 from dataclasses import dataclass
 from datetime import date
@@ -317,8 +318,6 @@ def main() -> int:
         return 2
 
     errors = validate_tree(content_dir, schema_path)
-
-    import os
 
     master_cv_dir = Path(os.environ.get("MASTER_CV_DIR", repo_root / "master-cv"))
     master_cv_schema = repo_root / "schema" / "master-cv.schema.json"
