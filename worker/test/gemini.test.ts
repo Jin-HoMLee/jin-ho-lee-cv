@@ -186,4 +186,23 @@ describe("generateText", () => {
     expect(urls[0]).toContain("gemini-3.5-flash");
     expect(urls[1]).toContain("gemini-3.1-flash-lite");
   });
+
+  it("omits thinkingConfig for 2.0 models in the generateText path (no stray 400)", async () => {
+    // 429 the first four rungs, then succeed on gemini-2.0-flash (MODELS index 4) —
+    // the rung with no thinking feature. A stray thinkingConfig there would 400
+    // (non-retryable) and break the digest cascade, so assert it is absent.
+    const calls: { body: any }[] = [];
+    let i = 0;
+    const fetchImpl = vi.fn(async (_url: string, init: any) => {
+      calls.push({ body: JSON.parse(init.body) });
+      const ok = i++ === 4;
+      return {
+        ok,
+        status: ok ? 200 : 429,
+        json: async () => ({ candidates: [{ content: { parts: [{ text: "digest" }] } }] }),
+      } as unknown as Response;
+    }) as unknown as typeof fetch;
+    await generateText("KEY", "p", fetchImpl);
+    expect(calls[4].body.generationConfig?.thinkingConfig).toBeUndefined();
+  });
 });
