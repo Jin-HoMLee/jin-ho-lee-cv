@@ -38,7 +38,7 @@
 // Two-column layout in normal document flow so content paginates across pages
 // when it exceeds one page: the breakable main column continues onto page 2,
 // while the sidebar sizes to its content.
-#header(data.personal)
+#header(data.personal, site-label: data.labels.misc.interactive_cv)
 #v(6pt)
 
 #grid(

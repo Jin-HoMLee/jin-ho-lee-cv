@@ -1045,7 +1045,8 @@
       "passive": "passive"
     },
     "misc": {
-      "present": "present"
+      "present": "present",
+      "interactive_cv": "Interactive CV:"
     },
     "publications": {
       "summary": "{peer_reviewed} peer-reviewed publications ({pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author) and {conferences} first-author conference contributions, {span}, in radiation biophysics & super-resolution DNA-repair imaging.",

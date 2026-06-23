@@ -1045,7 +1045,8 @@
       "passive": "passive Kenntnisse"
     },
     "misc": {
-      "present": "heute"
+      "present": "heute",
+      "interactive_cv": "Interaktiver Lebenslauf:"
     },
     "publications": {
       "summary": "{peer_reviewed} begutachtete Publikationen ({pr_first} als Erstautor, {pr_shared} geteilte Erstautorenschaft, {pr_coauthor} als Co-Autor) sowie {conferences} Konferenzbeiträge als Erstautor, {span}, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",

@@ -42,7 +42,7 @@
   }
 }
 
-#let header(personal) = {
+#let header(personal, site-label: none) = {
   grid(
     columns: (1fr, auto),
     column-gutter: 12pt,
@@ -88,14 +88,17 @@
       if "github" in personal.links and personal.links.github != none {
         parts.push(link(personal.links.github)[gh/#_link-handle(personal.links.github)])
       }
-      if "website" in personal.links and personal.links.website != none {
-        // Accent-styled so the live/interactive site stands out in the muted line.
-        parts.push(link(personal.links.website)[
-          #text(fill: accent, weight: 500)[#_site-handle(personal.links.website)]
-        ])
-      }
 
       text(size: size-small, fill: muted)[#parts.join("  ·  ")]
+
+      // Website on its own line below the contact details, rendered only when a
+      // label is supplied (CV path); the formal cover-letter header omits it.
+      if site-label != none and "website" in personal.links and personal.links.website != none {
+        v(3pt)
+        text(size: size-small, fill: muted)[
+          #site-label #link(personal.links.website)[#text(fill: accent, weight: 500)[#_site-handle(personal.links.website)]]
+        ]
+      }
     },
     _photo(),
   )
