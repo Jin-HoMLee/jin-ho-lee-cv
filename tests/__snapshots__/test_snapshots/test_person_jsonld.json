@@ -60,6 +60,10 @@
           "name": "Data Science"
         }
       ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Independent / Self-Directed"
+      },
       "award": [
         "Google Cloud Certified - Associate Cloud Engineer",
         "DeGBS Poster Award",

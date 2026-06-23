@@ -74,9 +74,12 @@ def test_alumni_deduped(doc):
     assert len(names) == len(set(names)), f"duplicate alumniOf: {names}"
 
 
-def test_no_works_for(doc):
-    # Current content has no open-ended role → worksFor omitted (honest, no current employer).
-    assert "worksFor" not in _person_node(doc)
+def test_works_for_reflects_current_role(doc):
+    # The Independent / Self-Directed entry (period.end: null) is the current role,
+    # so the renderer emits it as worksFor.
+    works_for = _person_node(doc).get("worksFor")
+    assert works_for is not None, "expected worksFor for the open-ended current role"
+    assert works_for["name"] == "Independent / Self-Directed"
 
 
 def test_works_for_emitted_when_open_ended():

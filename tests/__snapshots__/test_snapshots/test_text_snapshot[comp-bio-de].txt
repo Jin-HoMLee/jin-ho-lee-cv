@@ -21,6 +21,11 @@ Drittmitteln und Betreuung von 10+ Studierenden.
 ================================================================================
 BERUFSERFAHRUNG
 ================================================================================
+ML/AI-Engineer & Open-Source-Entwickler - Independent / Self-Directed    (2025-08 bis heute)
+  - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
+  - Computer Vision: Training skelettbasierter Action-Recognition-Modelle zur Badminton-Schlagklassifikation aus Videodaten — vollständige Pipeline von der Frame-Annotation über das Training bis zur Evaluation (PyTorch, MediaPipe).
+  - Bioinformatik: Veröffentlichung einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2/OpenFold.
+
 Berater, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 bis 2025-07)
   - Skalierung: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
   - KI in Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC.

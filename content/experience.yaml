@@ -1,3 +1,24 @@
+- id: independent
+  org:
+    name: "Independent / Self-Directed"
+    url: null
+  role:
+    en: "ML/AI Engineer & Open-Source Developer"
+    de: "ML/AI-Engineer & Open-Source-Entwickler"
+  period:
+    start: "2025-08"
+    end: null
+  bullets:
+    - en: "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling."
+      de: "Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code."
+      refs: []
+    - en: "Computer Vision: Trained skeleton-based action-recognition models for badminton stroke classification from video — full pipeline from frame labeling through training to evaluation (PyTorch, MediaPipe)."
+      de: "Computer Vision: Training skelettbasierter Action-Recognition-Modelle zur Badminton-Schlagklassifikation aus Videodaten — vollständige Pipeline von der Frame-Annotation über das Training bis zur Evaluation (PyTorch, MediaPipe)."
+      refs: [D2]
+    - en: "Bioinformatics: Released a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2/OpenFold structural validation."
+      de: "Bioinformatik: Veröffentlichung einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2/OpenFold."
+      refs: [L5]
+
 - id: cintellic
   org:
     name: "Cintellic / International Bank"
