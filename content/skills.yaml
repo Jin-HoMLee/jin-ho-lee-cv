@@ -30,6 +30,6 @@ categories:
       - label: { en: "AI & ML", de: "KI & ML" }
         items: ["TensorFlow", "Keras", "LSTMs", "OpenCV", "XGBoost", "MLflow", "OpenAI API"]
       - label: { en: "Eng & Tools", de: "Eng & Tools" }
-        items: ["Python (Exp)", "R", "SQL", "PostgreSQL", "Snakemake", "Conda", "Docker", "Git", "dbt", "Pydantic", "Streamlit"]
+        items: ["Python (Expert)", "R", "SQL", "PostgreSQL", "Snakemake", "Conda", "Docker", "Git", "dbt", "Pydantic", "Streamlit"]
       - label: { en: "Cloud", de: "Cloud" }
         items: ["GCP", "BigQuery", "Vertex AI", "Looker"]

@@ -84,7 +84,7 @@ Biotech Wet-Lab
   Assays: FISH, IF, qPCR, FACS
 Data & Engineering
   AI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow, OpenAI API
-  Eng & Tools: Python (Exp), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
+  Eng & Tools: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
   Cloud: GCP, BigQuery, Vertex AI, Looker
 
 ================================================================================
