@@ -132,6 +132,12 @@ gitignored `master-cv/narrative/` and never enters the repo.
 
 # How others describe me (synthetic template)
 
+> **Authoring note (delete in the real file):** everything from here down to the end of the
+> "Privacy note" below is guidance for writing the real overlay, not content. In your real
+> `master-cv/narrative/how-others-describe-me.md`, replace this block with a short intro
+> paragraph of your own and keep only the `##` trait sections — filled with real, sanitized
+> testimony in place of the SYNTHETIC placeholders.
+
 Third-party characterizations of you as a colleague — distilled from reference letters,
 an employer reference (e.g. a German Arbeitszeugnis), and peer-feedback rituals (e.g. a
 team "honey shower"). Organize **by trait**, merging what every source says under each,
