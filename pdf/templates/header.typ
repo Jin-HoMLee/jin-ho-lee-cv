@@ -89,7 +89,10 @@
         parts.push(link(personal.links.github)[gh/#_link-handle(personal.links.github)])
       }
       if "website" in personal.links and personal.links.website != none {
-        parts.push(link(personal.links.website)[#_site-handle(personal.links.website)])
+        // Accent-styled so the live/interactive site stands out in the muted line.
+        parts.push(link(personal.links.website)[
+          #text(fill: accent, weight: 500)[#_site-handle(personal.links.website)]
+        ])
       }
 
       text(size: size-small, fill: muted)[#parts.join("  ·  ")]
