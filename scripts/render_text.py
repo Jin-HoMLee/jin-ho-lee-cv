@@ -49,6 +49,9 @@ def _header(content: dict) -> str:
     location = f"{personal['location']['city']}, {personal['location']['country']}"
     links = [personal["email"], SITE_URL]
     links.extend(v for v in (personal.get("links") or {}).values() if v)
+    # The `website` link equals SITE_URL — dedup while preserving order.
+    seen: set[str] = set()
+    links = [x for x in links if not (x in seen or seen.add(x))]
     return f"{name.upper()}\n{personal['headline']} - {location}\n" + " | ".join(links)
 
 
