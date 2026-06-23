@@ -118,7 +118,7 @@ _INVARIANT_PATH_SUBSTRINGS = (
 #   Experience / project .role paths where the English job title IS the German title
 #       (e.g. "Data Science Trainee, Associate & Coach") — English term used in DE.
 #       These are pin-pointed by path so the test still catches regressions on roles
-#       that DO have a German translation (e.g. experience[0].role "Consultant" → "Berater").
+#       that DO have a German translation (e.g. experience[1].role "Consultant" → "Berater").
 _INVARIANT_EXACT = frozenset(
     {
         # Skill category / group labels — English tech terms used verbatim in German
@@ -127,7 +127,7 @@ _INVARIANT_EXACT = frozenset(
         ".skills.categories[2].groups[1].label",  # "Eng & Tools"
         ".skills.categories[2].groups[2].label",  # "Cloud"
         # Experience roles — English job-title strings used verbatim in German
-        ".experience[1].role",  # "Data Science Trainee, Associate & Coach"
+        ".experience[2].role",  # "Data Science Trainee, Associate & Coach"
         # Project roles — English job-title strings used verbatim in German
         ".projects.C1.role",  # "Lead Business Functional Analyst (Cintellic GmbH)"
         ".projects.C2.role",  # "Lead Business Functional Analyst (Cintellic GmbH)"

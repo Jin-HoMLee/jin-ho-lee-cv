@@ -1,6 +1,6 @@
 JIN-HO LEE
 Computational Biology · Cancer Genomics - Mannheim, GER
-jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/in/jin-holee | https://github.com/Jin-HoMLee | https://researchgate.net/profile/Jin-Ho-Lee-8 | https://jinholee.is-a.dev/ | https://orcid.org/0009-0001-8784-1771
+jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/in/jin-holee | https://github.com/Jin-HoMLee | https://researchgate.net/profile/Jin-Ho-Lee-8 | https://orcid.org/0009-0001-8784-1771
 
 ================================================================================
 PROFILE
@@ -20,6 +20,11 @@ students.
 ================================================================================
 EXPERIENCE
 ================================================================================
+ML/AI Engineer & Open-Source Developer - Independent / Self-Directed    (2025-08 to present)
+  - Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.
+  - Computer Vision: Trained skeleton-based action-recognition models for badminton stroke classification from video — full pipeline from frame labeling through training to evaluation (PyTorch, MediaPipe).
+  - Bioinformatics: Released a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2/OpenFold structural validation.
+
 Consultant, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 to 2025-07)
   - Scale: Architected the migration of 1,000+ analytical processes to Google Cloud.
   - AI in Production: Developed BigQueryML models for anti-financial crime & KYC.
@@ -84,7 +89,7 @@ Biotech Wet-Lab
   Assays: FISH, IF, qPCR, FACS
 Data & Engineering
   AI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow, OpenAI API
-  Eng & Tools: Python (Exp), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
+  Eng & Tools: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
   Cloud: GCP, BigQuery, Vertex AI, Looker
 
 ================================================================================
