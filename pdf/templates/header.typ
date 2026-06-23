@@ -19,6 +19,19 @@
   s
 }
 
+#let _site-handle(url) = {
+  // Strip scheme and any trailing slash → bare domain, e.g. "jinholee.is-a.dev".
+  let s = url
+  for prefix in ("https://", "http://") {
+    if s.starts-with(prefix) {
+      s = s.slice(prefix.len())
+      break
+    }
+  }
+  if s.ends-with("/") { s = s.slice(0, s.len() - 1) }
+  s
+}
+
 #let _photo() = {
   // Photo is included when build.py passes --input has-photo=1 (set iff
   // assets/photo.jpg exists). Path is resolved against typst --root (repo root).
@@ -74,6 +87,9 @@
       }
       if "github" in personal.links and personal.links.github != none {
         parts.push(link(personal.links.github)[gh/#_link-handle(personal.links.github)])
+      }
+      if "website" in personal.links and personal.links.website != none {
+        parts.push(link(personal.links.website)[#_site-handle(personal.links.website)])
       }
 
       text(size: size-small, fill: muted)[#parts.join("  ·  ")]
