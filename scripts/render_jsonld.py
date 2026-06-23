@@ -61,8 +61,8 @@ def _has_occupation(content: dict) -> list[dict]:
 def _works_for(content: dict) -> dict | None:
     """Current employer = first experience entry whose period.end is null/absent.
 
-    Returns None today (all roles have dated ends) — so worksFor is omitted — but
-    auto-detects a current role if one is ever added, keeping the renderer correct.
+    Returns that entry's org as worksFor; None when every role has a dated end
+    (then worksFor is omitted). Auto-detects whichever role is currently open.
     """
     for exp in content["experience"]:
         if exp["period"].get("end") in (None, "present"):
