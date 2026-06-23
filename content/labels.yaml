@@ -31,6 +31,7 @@ proficiency:
 
 misc:
   present: { en: "present", de: "heute" }
+  interactive_cv: { en: "Interactive CV:", de: "Interaktiver Lebenslauf:" }
 
 publications:
   summary:
