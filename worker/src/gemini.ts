@@ -3,23 +3,30 @@ export interface ChatMessage {
   content: string;
 }
 
-// Free-tier model cascade, best-first. Each model has its own free-tier DAILY
-// request cap (gemini-3.5-flash: 20/day, 2.5-flash: 250/day, 2.5-flash-lite:
-// 1000/day — verified against the live API). We try the best model first and fall
-// through to the next when one returns a retryable failure (a daily-quota 429, or
-// a transient 503/500), so the twin stays reachable on the ~1,270 combined free
-// requests/day across the chain instead of dying at 20. Thinking config is
-// model-family-specific: Gemini 3.x Flash takes `thinkingLevel` ("low" keeps the
-// reasoning from eating the visible-answer token budget); the 2.5 models reject
-// `thinkingLevel` (HTTP 400) and take `thinkingBudget: 0` to disable thinking.
+// Free-tier model cascade, best-first. Each model carries its OWN free-tier daily
+// request cap, so chaining several multiplies the combined budget and keeps the
+// twin reachable long after the top model's quota is gone. We try the best model
+// first and fall through to the next on a retryable failure (a daily-quota 429, or
+// a transient 503/500). Caps run roughly best≈small, lite/older≈large (e.g.
+// 3.5-flash ~20/day vs 2.5-flash-lite ~1000/day — verified against the live API),
+// so the lower rungs carry the load once the premium quota is spent. Thinking
+// config is model-family-specific: Gemini 3.x Flash takes `thinkingLevel` ("low"
+// keeps the reasoning from eating the visible-answer token budget); the 2.5 models
+// reject `thinkingLevel` (HTTP 400) and take `thinkingBudget: 0` to disable
+// thinking; the 2.0 models have no thinking feature at all, so we omit
+// thinkingConfig entirely — a stray budget there could 400 (non-retryable) and
+// prematurely break the chain.
 interface ModelConfig {
   name: string;
-  thinkingConfig: Record<string, unknown>;
+  thinkingConfig?: Record<string, unknown>;
 }
 const MODELS: ModelConfig[] = [
   { name: "gemini-3.5-flash", thinkingConfig: { thinkingLevel: "low" } },
+  { name: "gemini-3.1-flash-lite", thinkingConfig: { thinkingLevel: "low" } },
   { name: "gemini-2.5-flash", thinkingConfig: { thinkingBudget: 0 } },
   { name: "gemini-2.5-flash-lite", thinkingConfig: { thinkingBudget: 0 } },
+  { name: "gemini-2.0-flash" },
+  { name: "gemini-2.0-flash-lite" },
 ];
 
 // Upstream statuses worth retrying on the NEXT model in the cascade: 429 (daily or
@@ -61,7 +68,9 @@ export async function streamGemini(
         contents,
         generationConfig: {
           maxOutputTokens: maxTokens,
-          thinkingConfig: model.thinkingConfig,
+          // Omitted for models without a thinking feature (the 2.0 family) — a
+          // stray thinkingConfig there can 400 and break the cascade.
+          ...(model.thinkingConfig ? { thinkingConfig: model.thinkingConfig } : {}),
         },
       }),
     });
@@ -114,7 +123,7 @@ export async function generateText(
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         contents: [{ role: "user", parts: [{ text: prompt }] }],
-        generationConfig: { thinkingConfig: model.thinkingConfig },
+        generationConfig: model.thinkingConfig ? { thinkingConfig: model.thinkingConfig } : {},
       }),
     });
     if (res.ok) {

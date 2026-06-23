@@ -112,10 +112,15 @@ validate + test + lint must all be green before merging anything.
   Pages. The Pages build only needs the generated `dist/chat-context.md`; the Worker is
   deployed separately and holds `GEMINI_API_KEY` as a Worker secret (never in git). Inference
   uses the Google Gemini free tier via a best-first **model cascade** in `src/gemini.ts`
-  (`gemini-3.5-flash` → `gemini-2.5-flash` → `gemini-2.5-flash-lite`): each model has its own
-  free-tier daily request cap (20 / 250 / 1000), so on a daily-quota 429 (or transient 503/500)
-  the Worker falls through to the next model — keeping the twin reachable on ~1,270 combined
-  free requests/day instead of dying at 20. No out-of-pocket cost at expected traffic; also
+  (`gemini-3.5-flash` → `gemini-3.1-flash-lite` → `gemini-2.5-flash` → `gemini-2.5-flash-lite`
+  → `gemini-2.0-flash` → `gemini-2.0-flash-lite`): each model has its own free-tier daily
+  request cap, so on a daily-quota 429 (or transient 503/500) the Worker falls through to the
+  next model — chaining six rungs multiplies the combined headroom (well above the old
+  three-model ~1,270/day) and keeps the twin reachable long after the top model's quota is
+  spent instead of dying at ~20. Thinking config is family-specific: the 3.x rungs take
+  `thinkingLevel: "low"`, the 2.5 rungs take `thinkingBudget: 0`, and the 2.0 rungs omit
+  `thinkingConfig` entirely (a stray budget there would 400 non-retryably and break the
+  chain). No out-of-pocket cost at expected traffic; also
   bounded by `MAX_TOKENS` + `MONTHLY_CEILING`. The Worker transforms Gemini's native
   SSE back into the browser widget's client envelope, so the frontend contract is unchanged.
   The widget only appears on the deployed site when the Pages build receives
