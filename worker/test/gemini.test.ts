@@ -176,6 +176,15 @@ describe("streamGemini model cascade", () => {
     expect(calls.map((c) => modelOf(c.url))).toEqual(["gemini-3.5-flash", "gemini-3-flash-preview"]);
   });
 
+  it("falls through on a 404 (a deprecated/removed model — e.g. a retired preview) to the next rung", async () => {
+    // A vanished model returns 404 NOT_FOUND; without treating it as retryable, one
+    // deprecated rung (the cascade includes a -preview) would halt the whole chain.
+    const { fn, calls } = scriptedFetch([404, 200]);
+    const res = await streamGemini(...args, fn);
+    expect(res.ok).toBe(true);
+    expect(calls.map((c) => modelOf(c.url))).toEqual(["gemini-3.5-flash", "gemini-3-flash-preview"]);
+  });
+
   it("sends model-appropriate thinking config across every family (3.x level, 2.5 budget, 2.0/Gemma omitted)", async () => {
     // 429 the first seven rungs so all eight are exercised, succeeding on the Gemma rung.
     const { fn, calls } = scriptedFetch(Array(7).fill(429).concat(200));

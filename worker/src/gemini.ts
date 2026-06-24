@@ -82,10 +82,12 @@ const MODELS: ModelConfig[] = [
 
 // Upstream statuses worth retrying on the NEXT model in the cascade: 429 (daily or
 // per-minute quota exhausted), 503 (model overloaded / "high demand"), 500
-// (transient upstream error). A 400/401/403 is a config/auth bug — the next model
-// would fail identically, so we stop and surface it rather than burn the cascade.
+// (transient upstream error), and 404 (model not found — a deprecated/removed model,
+// which a -preview rung can become; the next rung is a different model so it's worth
+// trying). A 400/401/403 is a request/auth bug — the next model would fail
+// identically, so we stop and surface it rather than burn the cascade.
 function isRetryable(status: number): boolean {
-  return status === 429 || status === 500 || status === 503;
+  return status === 429 || status === 500 || status === 503 || status === 404;
 }
 
 // Streams a Gemini Flash response (free tier), cascading down MODELS on a retryable
