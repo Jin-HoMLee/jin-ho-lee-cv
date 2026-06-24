@@ -127,7 +127,9 @@ validate + test + lint must all be green before merging anything.
   reasoning as `thought: true` parts (uncloseable), so `geminiChunkToEnvelopes`/`generateText`
   filter those out — raw chain-of-thought never reaches the answer. (The dense `gemma-4-31b-it`
   was rejected: it returns `MALFORMED_RESPONSE`/thoughts-only at our token budget; the lighter MoE
-  `gemma-4-26b-a4b-it` answers cleanly — a live-verification catch.) No out-of-pocket cost at expected traffic; also
+  `gemma-4-26b-a4b-it` answers cleanly — a live-verification catch.)
+
+  There is no out-of-pocket cost at expected traffic; usage is also
   bounded by `MAX_TOKENS` + `MONTHLY_CEILING`. The Worker transforms Gemini's native
   SSE back into the browser widget's client envelope, so the frontend contract is unchanged.
   The widget only appears on the deployed site when the Pages build receives
