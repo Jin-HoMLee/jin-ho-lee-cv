@@ -176,12 +176,23 @@ describe("fetch handler", () => {
     expect(hitGemini).toBe(false);
   });
 
-  it("POST when Gemini returns 429 → 502 application/json, not SSE (I1)", async () => {
+  it("POST when Gemini 429s on every rung → 200 SSE 'resting' message, not a hang or 502 (#103)", async () => {
     stubFetch({ geminiOk: false, geminiStatus: 429 });
     const res = await worker.fetch(post(ALLOWED, validBody), makeEnv(), makeCtx().ctx);
-    expect(res.status).toBe(502);
-    expect(res.headers.get("content-type")).toBe("application/json");
-    expect(res.headers.get("content-type")).not.toBe("text/event-stream");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toBe("text/event-stream");
+    const text = await res.text();
+    expect(text).toContain('"type":"content_block_delta"');
+    expect(text).toContain("free-tier limit");
+  });
+
+  it("POST when Gemini fails non-quota (500) on every rung → 200 SSE 'trouble' message (#103)", async () => {
+    stubFetch({ geminiOk: false, geminiStatus: 500 });
+    const res = await worker.fetch(post(ALLOWED, validBody), makeEnv(), makeCtx().ctx);
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toBe("text/event-stream");
+    const text = await res.text();
+    expect(text).toContain("trouble responding");
   });
 
   it("POST happy path → 200 text/event-stream with transformed client envelope", async () => {

@@ -22,9 +22,15 @@ uses a best-first **model cascade**: it tries `gemini-3.5-flash` (newest, but on
 falls through to `gemini-2.5-flash` (**250/day**), then `gemini-2.5-flash-lite`
 (**1,000/day**). Visitors get the best model that still has quota, and the twin
 stays reachable on the ~**1,270 combined free requests/day** instead of dying at 20.
-Only when *every* model is exhausted does Gemini's error surface as the graceful
-"twin's resting" fallback. Usage also stays bounded by `MAX_TOKENS` per answer and
-the global `MONTHLY_CEILING` request cap.
+When *every* model is exhausted (a full-cascade `429`), the Worker fails fast: it
+synthesizes a friendly "twin is resting — today's free-tier limit is reached"
+message in the client envelope and closes the stream cleanly, rather than passing
+the raw upstream error through. A separate idle guard in `geminiToClientStream`
+covers the other failure mode — a `200` streaming response that then stalls
+(sends nothing, never closes) — by emitting a short "had trouble responding"
+message and closing, so the Worker can never sit open until the runtime cancels it
+as "hung" (the ~44s stall fixed in #103). Usage also stays bounded by `MAX_TOKENS`
+per answer and the global `MONTHLY_CEILING` request cap.
 
 ## One-time setup
 
