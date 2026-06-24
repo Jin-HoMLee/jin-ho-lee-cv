@@ -1,4 +1,11 @@
-import { streamGemini, geminiToClientStream, type ChatMessage } from "./gemini";
+import {
+  streamGemini,
+  geminiToClientStream,
+  clientMessageStream,
+  RESTING_MESSAGE,
+  TROUBLE_MESSAGE,
+  type ChatMessage,
+} from "./gemini";
 import { runDigest } from "./digest";
 import { latestDigest, recentQuestions, logQuestion } from "./insights";
 import { renderDashboard } from "./dashboard";
@@ -261,15 +268,22 @@ export default {
       body.messages,
       finite(env.MAX_TOKENS, 700),
     );
-    // On a non-200 from Gemini (429 quota exhausted, 400, 401, 500) the body is a
-    // JSON error object, NOT an SSE stream — mislabeling it as text/event-stream
-    // leaves a browser EventSource with a broken connection. Don't pass the raw
-    // upstream error through (it can leak internal detail); return a generic 502.
-    if (!upstream.ok)
-      return new Response(JSON.stringify({ error: "twin upstream error" }), {
-        status: 502,
-        headers: { ...cors, "content-type": "application/json" },
+    // On a non-200 from Gemini (429 quota exhausted, 400, 401, 500) the upstream body
+    // is a JSON error object, NOT an SSE stream — we never forward it (it can leak
+    // internal detail). Instead synthesize a clean client-envelope stream carrying a
+    // friendly terminal message so the widget shows a sentence and closes, rather
+    // than hanging or surfacing a raw error (#103). streamGemini returns the LAST
+    // rung's failed Response, so status === 429 means the cascade ended on a quota
+    // 429 → the free-tier budget is spent (RESTING_MESSAGE). Any other terminal
+    // status (incl. a cascade that started with 429s but ended on a transient 500)
+    // is treated conservatively as a transient hiccup (TROUBLE_MESSAGE).
+    if (!upstream.ok) {
+      const message = upstream.status === 429 ? RESTING_MESSAGE : TROUBLE_MESSAGE;
+      return new Response(clientMessageStream(message), {
+        status: 200,
+        headers: { ...cors, "content-type": "text/event-stream" },
       });
+    }
     // Transform Gemini's native SSE back into the client envelope the browser
     // widget already parses (web/src/lib/twin.ts) — the frontend contract is
     // unchanged across the provider swap.

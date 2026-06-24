@@ -1,5 +1,37 @@
 import { describe, expect, it, vi } from "vitest";
-import { geminiChunkToEnvelopes, generateText, streamGemini } from "../src/gemini";
+import {
+  geminiChunkToEnvelopes,
+  geminiToClientStream,
+  generateText,
+  streamGemini,
+  RESTING_MESSAGE,
+  TROUBLE_MESSAGE,
+} from "../src/gemini";
+
+// Drain a client-envelope stream to a single decoded string.
+async function readAll(stream: ReadableStream<Uint8Array>): Promise<string> {
+  const reader = stream.getReader();
+  const decoder = new TextDecoder();
+  let out = "";
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    out += decoder.decode(value, { stream: true });
+  }
+  out += decoder.decode(); // flush any multi-byte char split across the final chunk
+  return out;
+}
+
+// An upstream SSE body that emits the given chunks (each enqueued verbatim) then closes.
+function upstreamOf(...chunks: string[]): ReadableStream<Uint8Array> {
+  const encoder = new TextEncoder();
+  return new ReadableStream<Uint8Array>({
+    start(c) {
+      for (const chunk of chunks) c.enqueue(encoder.encode(chunk));
+      c.close();
+    },
+  });
+}
 
 // A fake fetch that returns a scripted status per call (in order), recording the
 // requested URL + parsed body so cascade assertions can inspect which model was
@@ -130,6 +162,37 @@ describe("streamGemini model cascade", () => {
     expect(tc(2)).toEqual({ thinkingBudget: 0 }); // gemini-2.5-flash
     expect(tc(3)).toEqual({ thinkingBudget: 0 }); // gemini-2.5-flash-lite
     expect(tc(4)).toBeUndefined(); // gemini-2.0-flash — no thinking feature, omitted
+  });
+});
+
+describe("geminiToClientStream graceful degradation", () => {
+  const contentChunk = `data: {"candidates":[{"content":{"parts":[{"text":"hello"}]}}]}\n\n`;
+
+  it("passes model content through and appends NO fallback message when the model answered", async () => {
+    const out = await readAll(geminiToClientStream(upstreamOf(contentChunk)));
+    expect(out).toContain('"text":"hello"');
+    expect(out).not.toContain(TROUBLE_MESSAGE);
+  });
+
+  it("emits a friendly fallback when the upstream closes with no content (200-then-error SSE)", async () => {
+    // Gemini's streaming endpoint can return HTTP 200 then deliver a quota/error
+    // chunk that yields zero content envelopes — without a guard the widget gets an
+    // empty assistant bubble. Assert the fallback message is surfaced instead.
+    const errorChunk = `data: {"error":{"code":429,"status":"RESOURCE_EXHAUSTED"}}\n\n`;
+    const out = await readAll(geminiToClientStream(upstreamOf(errorChunk)));
+    expect(out).toContain(TROUBLE_MESSAGE);
+  });
+
+  it("emits a friendly fallback and closes fast when the upstream stalls (never hangs to the runtime cancel)", async () => {
+    // The ~44s hang in #103: a 200 streaming response whose read never resolves.
+    // A short idle guard must close the stream cleanly with a fallback message.
+    const stalling = new ReadableStream<Uint8Array>({
+      pull() {
+        return new Promise<void>(() => {}); // never resolves, never enqueues
+      },
+    });
+    const out = await readAll(geminiToClientStream(stalling, { idleMs: 30 }));
+    expect(out).toContain(TROUBLE_MESSAGE);
   });
 });
 
