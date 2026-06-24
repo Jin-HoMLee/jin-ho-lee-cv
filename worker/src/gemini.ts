@@ -75,9 +75,10 @@ function isRetryable(status: number): boolean {
 // upstream failure. The API key is a query param (server-side only — never exposed
 // to the browser). Returns the first model's ok streaming Response; if a model
 // fails retryably it tries the next, and if all are exhausted it returns the last
-// failed Response (the caller turns any non-ok into a generic 502). The returned
-// SSE body is transformed back into the client envelope by geminiToClientStream so
-// the browser widget contract stays unchanged.
+// failed Response (the caller turns any non-ok into a 200 SSE carrying a friendly
+// terminal message — see index.ts). The returned ok SSE body is transformed back
+// into the client envelope by geminiToClientStream so the browser widget contract
+// stays unchanged.
 export async function streamGemini(
   apiKey: string,
   systemText: string,

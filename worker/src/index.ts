@@ -272,9 +272,11 @@ export default {
     // is a JSON error object, NOT an SSE stream — we never forward it (it can leak
     // internal detail). Instead synthesize a clean client-envelope stream carrying a
     // friendly terminal message so the widget shows a sentence and closes, rather
-    // than hanging or surfacing a raw error (#103). A full-cascade 429 means the
-    // free-tier quota is spent (RESTING_MESSAGE); anything else is treated as a
-    // transient hiccup (TROUBLE_MESSAGE).
+    // than hanging or surfacing a raw error (#103). streamGemini returns the LAST
+    // rung's failed Response, so status === 429 means the cascade ended on a quota
+    // 429 → the free-tier budget is spent (RESTING_MESSAGE). Any other terminal
+    // status (incl. a cascade that started with 429s but ended on a transient 500)
+    // is treated conservatively as a transient hiccup (TROUBLE_MESSAGE).
     if (!upstream.ok) {
       const message = upstream.status === 429 ? RESTING_MESSAGE : TROUBLE_MESSAGE;
       return new Response(clientMessageStream(message), {

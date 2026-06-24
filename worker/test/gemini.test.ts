@@ -18,6 +18,7 @@ async function readAll(stream: ReadableStream<Uint8Array>): Promise<string> {
     if (done) break;
     out += decoder.decode(value, { stream: true });
   }
+  out += decoder.decode(); // flush any multi-byte char split across the final chunk
   return out;
 }
 
