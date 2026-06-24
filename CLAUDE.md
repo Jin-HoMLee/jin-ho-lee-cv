@@ -112,15 +112,22 @@ validate + test + lint must all be green before merging anything.
   Pages. The Pages build only needs the generated `dist/chat-context.md`; the Worker is
   deployed separately and holds `GEMINI_API_KEY` as a Worker secret (never in git). Inference
   uses the Google Gemini free tier via a best-first **model cascade** in `src/gemini.ts`
-  (`gemini-3.5-flash` → `gemini-3.1-flash-lite` → `gemini-2.5-flash` → `gemini-2.5-flash-lite`
-  → `gemini-2.0-flash` → `gemini-2.0-flash-lite`): each model has its own free-tier daily
-  request cap, so on a daily-quota 429 (or transient 503/500) the Worker falls through to the
-  next model — chaining six rungs multiplies the combined headroom (well above the old
-  three-model ~1,270/day) and keeps the twin reachable long after the top model's quota is
-  spent instead of dying at ~20. Thinking config is family-specific: the 3.x rungs take
-  `thinkingLevel: "low"`, the 2.5 rungs take `thinkingBudget: 0`, and the 2.0 rungs omit
-  `thinkingConfig` entirely (a stray budget there would 400 non-retryably and break the
-  chain). No out-of-pocket cost at expected traffic; also
+  (`gemini-3.5-flash` → `gemini-3-flash-preview` → `gemini-3.1-flash-lite` → `gemini-2.5-flash`
+  → `gemini-2.5-flash-lite` → `gemini-2.0-flash` → `gemini-2.0-flash-lite` → `gemma-4-26b-a4b-it`):
+  each model has its own free-tier daily request cap, so on a daily-quota 429 (or transient
+  503/500) the Worker falls through to the next model — chaining eight rungs multiplies the
+  combined headroom and keeps the twin reachable long after the top model's quota is
+  spent instead of dying at ~20. The quota bucket is keyed by the *resolved* model, so `-latest`/
+  `-001`/preview aliases that resolve to an existing rung add nothing; `gemini-3-flash-preview`
+  is a distinct bucket and Gemma draws from a *separate* free-tier pool from the Gemini models —
+  both verified live as real added headroom (#105). Thinking config is family-specific: the 3.x
+  rungs take `thinkingLevel: "low"`, the 2.5 rungs take `thinkingBudget: 0`, and the 2.0 rungs +
+  Gemma omit `thinkingConfig` entirely (any thinkingConfig 400s non-retryably on Gemma, and a
+  stray budget on 2.0 could too, breaking the chain). Gemma still *thinks by default* and streams
+  reasoning as `thought: true` parts (uncloseable), so `geminiChunkToEnvelopes`/`generateText`
+  filter those out — raw chain-of-thought never reaches the answer. (The dense `gemma-4-31b-it`
+  was rejected: it returns `MALFORMED_RESPONSE`/thoughts-only at our token budget; the lighter MoE
+  `gemma-4-26b-a4b-it` answers cleanly — a live-verification catch.) No out-of-pocket cost at expected traffic; also
   bounded by `MAX_TOKENS` + `MONTHLY_CEILING`. The Worker transforms Gemini's native
   SSE back into the browser widget's client envelope, so the frontend contract is unchanged.
   The widget only appears on the deployed site when the Pages build receives

@@ -91,6 +91,28 @@ describe("geminiChunkToEnvelopes", () => {
   it("tolerates an empty/garbage chunk", () => {
     expect(geminiChunkToEnvelopes({})).toEqual([]);
   });
+
+  it("ignores parts flagged as thought so model reasoning never leaks into the answer", () => {
+    // Gemma streams its chain-of-thought as `thought: true` text parts; surfacing them
+    // would dump raw reasoning into the visible reply.
+    const chunk = {
+      candidates: [
+        {
+          content: {
+            parts: [{ text: "let me think...", thought: true }, { text: "the real answer" }],
+          },
+        },
+      ],
+    };
+    expect(geminiChunkToEnvelopes(chunk)).toEqual([
+      { type: "content_block_delta", delta: { text: "the real answer" } },
+    ]);
+  });
+
+  it("yields nothing for a chunk that is only thought parts", () => {
+    const chunk = { candidates: [{ content: { parts: [{ text: "thinking", thought: true }] } }] };
+    expect(geminiChunkToEnvelopes(chunk)).toEqual([]);
+  });
 });
 
 describe("streamGemini model cascade", () => {
@@ -109,7 +131,7 @@ describe("streamGemini model cascade", () => {
     const res = await streamGemini(...args, fn);
     expect(res.ok).toBe(true);
     expect(res.status).toBe(200);
-    expect(calls.map((c) => modelOf(c.url))).toEqual(["gemini-3.5-flash", "gemini-3.1-flash-lite"]);
+    expect(calls.map((c) => modelOf(c.url))).toEqual(["gemini-3.5-flash", "gemini-3-flash-preview"]);
   });
 
   it("falls through twice (429 then 503) down the cascade", async () => {
@@ -118,23 +140,25 @@ describe("streamGemini model cascade", () => {
     expect(res.ok).toBe(true);
     expect(calls.map((c) => modelOf(c.url))).toEqual([
       "gemini-3.5-flash",
+      "gemini-3-flash-preview",
       "gemini-3.1-flash-lite",
-      "gemini-2.5-flash",
     ]);
   });
 
   it("walks the full cascade in order when every rung 429s", async () => {
-    const { fn, calls } = scriptedFetch([429, 429, 429, 429, 429, 429]);
+    const { fn, calls } = scriptedFetch(Array(8).fill(429));
     const res = await streamGemini(...args, fn);
     expect(res.ok).toBe(false);
     expect(res.status).toBe(429);
     expect(calls.map((c) => modelOf(c.url))).toEqual([
       "gemini-3.5-flash",
+      "gemini-3-flash-preview",
       "gemini-3.1-flash-lite",
       "gemini-2.5-flash",
       "gemini-2.5-flash-lite",
       "gemini-2.0-flash",
       "gemini-2.0-flash-lite",
+      "gemma-4-26b-a4b-it",
     ]);
   });
 
@@ -149,19 +173,33 @@ describe("streamGemini model cascade", () => {
     const { fn, calls } = scriptedFetch([500, 200]);
     const res = await streamGemini(...args, fn);
     expect(res.ok).toBe(true);
-    expect(calls.map((c) => modelOf(c.url))).toEqual(["gemini-3.5-flash", "gemini-3.1-flash-lite"]);
+    expect(calls.map((c) => modelOf(c.url))).toEqual(["gemini-3.5-flash", "gemini-3-flash-preview"]);
   });
 
-  it("sends model-appropriate thinking config (3.x thinkingLevel, 2.5 thinkingBudget, 2.0 omitted)", async () => {
-    // 429 the first five rungs so every family is exercised: 3.x (×2), 2.5 (×2), 2.0.
-    const { fn, calls } = scriptedFetch([429, 429, 429, 429, 429, 200]);
+  it("sends model-appropriate thinking config across every family (3.x level, 2.5 budget, 2.0/Gemma omitted)", async () => {
+    // 429 the first seven rungs so all eight are exercised, succeeding on the Gemma rung.
+    const { fn, calls } = scriptedFetch(Array(7).fill(429).concat(200));
     await streamGemini(...args, fn);
     const tc = (i: number) => calls[i].body.generationConfig.thinkingConfig;
     expect(tc(0)).toEqual({ thinkingLevel: "low" }); // gemini-3.5-flash
-    expect(tc(1)).toEqual({ thinkingLevel: "low" }); // gemini-3.1-flash-lite
-    expect(tc(2)).toEqual({ thinkingBudget: 0 }); // gemini-2.5-flash
-    expect(tc(3)).toEqual({ thinkingBudget: 0 }); // gemini-2.5-flash-lite
-    expect(tc(4)).toBeUndefined(); // gemini-2.0-flash — no thinking feature, omitted
+    expect(tc(1)).toEqual({ thinkingLevel: "low" }); // gemini-3-flash-preview
+    expect(tc(2)).toEqual({ thinkingLevel: "low" }); // gemini-3.1-flash-lite
+    expect(tc(3)).toEqual({ thinkingBudget: 0 }); // gemini-2.5-flash
+    expect(tc(4)).toEqual({ thinkingBudget: 0 }); // gemini-2.5-flash-lite
+    expect(tc(5)).toBeUndefined(); // gemini-2.0-flash — no thinking feature
+    expect(tc(6)).toBeUndefined(); // gemini-2.0-flash-lite
+    expect(tc(7)).toBeUndefined(); // gemma-4-26b-a4b-it — thinkingConfig 400s on Gemma
+  });
+
+  it("the Gemma last-resort rung omits thinkingConfig but still sends systemInstruction (Gemma respects it)", async () => {
+    // Succeed only on the 8th rung (Gemma). Gemma 400s on any thinkingConfig but DOES
+    // honour systemInstruction (verified live), so the persona/CV grounding survives.
+    const { fn, calls } = scriptedFetch(Array(7).fill(429).concat(200));
+    await streamGemini(...args, fn);
+    const gemma = calls[7];
+    expect(modelOf(gemma.url)).toBe("gemma-4-26b-a4b-it");
+    expect(gemma.body.generationConfig.thinkingConfig).toBeUndefined();
+    expect(gemma.body.systemInstruction).toEqual({ parts: [{ text: "system" }] });
   });
 });
 
@@ -216,9 +254,9 @@ describe("generateText", () => {
   });
 
   it("throws after every model is quota-exhausted (tries the whole cascade, then gives up)", async () => {
-    const { fn, calls } = scriptedFetch([429, 429, 429, 429, 429, 429]);
+    const { fn, calls } = scriptedFetch(Array(8).fill(429));
     await expect(generateText("KEY", "p", fn)).rejects.toThrow("upstream 429");
-    expect(calls).toHaveLength(6);
+    expect(calls).toHaveLength(8);
   });
 
   it("stops on a non-retryable status (400) without trying lower models", async () => {
@@ -247,18 +285,18 @@ describe("generateText", () => {
     const out = await generateText("KEY", "p", fetchImpl);
     expect(out).toBe("digest");
     expect(urls[0]).toContain("gemini-3.5-flash");
-    expect(urls[1]).toContain("gemini-3.1-flash-lite");
+    expect(urls[1]).toContain("gemini-3-flash-preview");
   });
 
   it("omits thinkingConfig for 2.0 models in the generateText path (no stray 400)", async () => {
-    // 429 the first four rungs, then succeed on gemini-2.0-flash (MODELS index 4) —
-    // the rung with no thinking feature. A stray thinkingConfig there would 400
+    // 429 the first five rungs, then succeed on gemini-2.0-flash (MODELS index 5) —
+    // a rung with no thinking feature. A stray thinkingConfig there would 400
     // (non-retryable) and break the digest cascade, so assert it is absent.
     const calls: { body: any }[] = [];
     let i = 0;
     const fetchImpl = vi.fn(async (_url: string, init: any) => {
       calls.push({ body: JSON.parse(init.body) });
-      const ok = i++ === 4;
+      const ok = i++ === 5;
       return {
         ok,
         status: ok ? 200 : 429,
@@ -266,6 +304,19 @@ describe("generateText", () => {
       } as unknown as Response;
     }) as unknown as typeof fetch;
     await generateText("KEY", "p", fetchImpl);
-    expect(calls[4].body.generationConfig?.thinkingConfig).toBeUndefined();
+    expect(calls[5].body.generationConfig?.thinkingConfig).toBeUndefined();
+  });
+
+  it("excludes thought parts from the joined digest text (Gemma streams reasoning as parts)", async () => {
+    const fetchImpl = vi.fn(async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        candidates: [
+          { content: { parts: [{ text: "reasoning", thought: true }, { text: "themes" }] } },
+        ],
+      }),
+    })) as unknown as typeof fetch;
+    expect(await generateText("KEY", "p", fetchImpl)).toBe("themes");
   });
 });

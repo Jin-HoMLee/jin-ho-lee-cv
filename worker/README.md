@@ -16,12 +16,21 @@ Every Cloudflare service this Worker uses — Workers, KV, Turnstile — is on t
 **free tier** at expected traffic. The inference provider is the **Google Gemini
 free tier** — **no out-of-pocket cost** at expected personal-site traffic.
 
-Each Gemini model has its own free-tier **daily** request cap, so `src/gemini.ts`
-uses a best-first **model cascade**: it tries `gemini-3.5-flash` (newest, but only
-**20 requests/day** free), and on a daily-quota `429` (or a transient `503`/`500`)
-falls through to `gemini-2.5-flash` (**250/day**), then `gemini-2.5-flash-lite`
-(**1,000/day**). Visitors get the best model that still has quota, and the twin
-stays reachable on the ~**1,270 combined free requests/day** instead of dying at 20.
+Each model has its own free-tier **daily** request cap, so `src/gemini.ts` uses a
+best-first **model cascade**: it tries `gemini-3.5-flash` (newest, but a small daily
+cap), and on a daily-quota `429` (or a transient `503`/`500`) falls through the rungs
+`gemini-3-flash-preview` → `gemini-3.1-flash-lite` → `gemini-2.5-flash` →
+`gemini-2.5-flash-lite` → `gemini-2.0-flash` → `gemini-2.0-flash-lite` →
+`gemma-4-26b-a4b-it`. Visitors get the best model that still has quota; chaining eight
+independent daily buckets keeps the twin reachable far longer than any single model.
+The quota bucket is keyed by the *resolved* model, so `-latest`/`-001`/preview aliases
+that resolve to an existing rung add nothing — but `gemini-3-flash-preview` is a
+distinct bucket and the Gemma models draw from a **separate** free-tier pool from the
+Gemini models (both verified live). Gemma has no settable thinking control and streams
+its reasoning as `thought: true` parts, which the SSE transform filters out so raw
+chain-of-thought never reaches the answer (the dense `gemma-4-31b-it` returns
+`MALFORMED_RESPONSE` at our token budget; the lighter MoE `gemma-4-26b-a4b-it` answers
+cleanly, so it's the last-resort rung).
 When *every* model is exhausted (a full-cascade `429`), the Worker fails fast: it
 synthesizes a friendly "twin is resting — today's free-tier limit is reached"
 message in the client envelope and closes the stream cleanly, rather than passing
