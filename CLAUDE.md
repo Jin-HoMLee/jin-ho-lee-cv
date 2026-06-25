@@ -34,7 +34,7 @@ Twelve phases (0–11), sequential. Each produces a usable artifact and gets its
 | 12a | Digital-twin chat MVP (CV-grounded conversational chat: context compiler + Cloudflare Worker + web widget + guardrails) | ✅ Done (merged 2026-06-16, `--no-ff`, PR #83, commit `7b6dfaa`); Gemini free-tier backend |
 | 12b | Digital-twin insights (D1 question log + daily Gemini digest + Cloudflare-Access dashboard) | ✅ Done (merged 2026-06-18, `--no-ff`, PR #86, commit `1791691`); free-tier D1 + Cron Triggers; verbatim questions, 30-day purge, no IP. Worker deploy (D1 create + remote schema + Access policy + `just worker-deploy`) is a separate manual step |
 | 12c | Digital-twin lead-capture (consented opt-in contact form: persistent affordance + one-time nudge → `contact_submissions` D1 + best-effort Telegram notify + leads on the 12b dashboard) | ✅ Done (merged 2026-06-19, `--no-ff`, PR #91, commit `f8d2a10`); leads KEPT (no TTL — purpose-driven retention, the deliberate flip vs 12b's 30-day questions); Telegram notifier graceful no-op when unconfigured; reuses 12a Turnstile/CORS + a per-IP 3/day submit cap. Rate-limit slot spent only after a successful store (a 502 never burns one). Worker deploy (remote schema re-apply + `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` secrets — both kept out of the public repo) is a separate manual step |
-| 13 | `master-cv/` overlay (gitignored life-database superset feeding the twin + a `dist/master-cv.md` lookup export; CV stays sharp) | ✅ Done (merged 2026-06-22, `--no-ff`, PR #94, commit `c46f092`); overlay gitignored + PII-guarded, graceful-absence proven (CV-only output byte-identical without it), synthetic `master-cv.example/` committed; first ingest + CV-reconcile (#93) are separate manual/follow-up steps |
+| 13 | `master-cv/` overlay (gitignored life-database superset feeding the twin + a `dist/master-cv.md` lookup export; CV stays sharp) | ✅ Done (merged 2026-06-22, `--no-ff`, PR #94, commit `c46f092`); overlay gitignored + PII-guarded, graceful-absence proven (CV-only output byte-identical without it), synthetic `master-cv.example/` committed; first ingest + CV-reconcile (#93) are separate manual/follow-up steps · opinions overlay added 2026-06-25 (`master-cv/opinions.md` → `## Opinions & Technical Taste` in the twin context; gated persona rule voices them only when asked) |
 
 ## Layout
 
@@ -182,7 +182,7 @@ validate + test + lint must all be green before merging anything.
   neither ever blocks. Rendered text never contains the private address; only the gitignored
   PDF does.
 - **`master-cv/` is a gitignored superset overlay (Phase 13).** The unfiltered
-  life-database (`timeline.yaml` + `inventory.yaml` + `narrative/*.md`) feeding the
+  life-database (`timeline.yaml` + `inventory.yaml` + `narrative/*.md` + `opinions.md`) feeding the
   digital twin and the `dist/master-cv.md` lookup export. `content/` is a curated
   *selection* from it. Never committed (`.gitignore` + `check_pii.py` both block it);
   only synthetic `master-cv.example/` is committed. Both consumers share
@@ -238,7 +238,7 @@ validate + test + lint must all be green before merging anything.
 - `content.private/private.yaml` — phone + address. Copy from `content.private.example/private.example.yaml` template.
 - `applications/` — per-application cover-letter material (job descriptions, drafts, rendered letters). Gitignored; mirror the shape in `applications.example/`.
 - `assets/signature.png` — handwritten signature for the cover-letter PDF, included only when present (mirrors the optional `--photo` pattern). Gitignored.
-- `master-cv/` — the unfiltered superset overlay (`timeline.yaml` + `inventory.yaml` + `narrative/*.md`). Gitignored; mirror the shape in `master-cv.example/`.
+- `master-cv/` — the unfiltered superset overlay (`timeline.yaml` + `inventory.yaml` + `narrative/*.md` + `opinions.md`). Gitignored; mirror the shape in `master-cv.example/`.
 
 ## Don't
 
