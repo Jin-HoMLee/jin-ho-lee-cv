@@ -115,3 +115,23 @@ def test_timeline_extra_fields_skip_none_and_collections():
     assert "End:" not in out  # None skipped
     assert "Extra list:" not in out  # collections skipped
     assert "Id: x" not in out and "Type: research" not in out  # structural keys
+
+
+def test_present_opinions_appends_section():
+    content, pubs = _facts()
+    mcv = MasterCV(
+        timeline=[],
+        inventory={},
+        narrative={},
+        opinions="# How I think\n\nI value reproducibility above novelty.",
+    )
+    out = full_profile(content, pubs, mcv)
+    assert "## Opinions & Technical Taste (master record)" in out
+    assert "I value reproducibility above novelty." in out
+
+
+def test_absent_opinions_adds_no_section():
+    content, pubs = _facts()
+    mcv = MasterCV(timeline=[], inventory={}, narrative={})  # opinions defaults None
+    out = full_profile(content, pubs, mcv)
+    assert "Opinions & Technical Taste" not in out
