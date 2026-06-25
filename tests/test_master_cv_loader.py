@@ -16,6 +16,7 @@ def _seed(dir_: Path):
     nd = dir_ / "narrative"
     nd.mkdir()
     (nd / "career-story.md").write_text("# Story\n\nbody\n", encoding="utf-8")
+    (dir_ / "opinions.md").write_text("# How I think\n\nI value reproducibility.\n", encoding="utf-8")
 
 
 def test_returns_none_when_dir_absent(tmp_path):
@@ -30,6 +31,8 @@ def test_parses_present_overlay(tmp_path):
     assert mcv.inventory == {"programming": ["Python"]}
     assert "career-story" in mcv.narrative
     assert mcv.narrative["career-story"].startswith("# Story")
+    assert mcv.opinions is not None
+    assert "I value reproducibility." in mcv.opinions
 
 
 def test_resolves_from_env(tmp_path, monkeypatch):
@@ -37,6 +40,12 @@ def test_resolves_from_env(tmp_path, monkeypatch):
     monkeypatch.setenv("MASTER_CV_DIR", str(tmp_path / "mcv"))
     mcv = load_master_cv()
     assert mcv is not None and mcv.timeline[0]["type"] == "research"
+
+
+def test_opinions_none_when_file_absent(tmp_path):
+    (tmp_path / "mcv").mkdir()
+    mcv = load_master_cv(tmp_path / "mcv")
+    assert mcv is not None and mcv.opinions is None
 
 
 def test_present_dir_with_missing_files_is_tolerant(tmp_path):
