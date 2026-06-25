@@ -45,3 +45,7 @@ def test_example_covers_multiple_entry_types():
 def test_example_has_narrative_files():
     stems = {p.stem for p in (EXAMPLE_DIR / "narrative").glob("*.md")}
     assert {"career-story", "personal"} <= stems
+
+
+def test_example_has_opinions_file():
+    assert (EXAMPLE_DIR / "opinions.md").exists()
