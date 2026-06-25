@@ -1,9 +1,9 @@
-# How I think - opinions & technical taste (synthetic template)
+**Synthetic template: how I think (opinions & technical taste).**
 
-> **Authoring note (delete in the real file):** everything from here down to the end of the
-> "Privacy note" below is guidance, not content.
-> In your real `master-cv/opinions.md`, replace this block with a one-line intro of your own
-> and keep only the `##` sections, filled with your real views in place of the SYNTHETIC placeholders.
+> **Authoring note (delete this whole block, including the bold title line above, in your real file):**
+> Everything from the title down to the end of the "Privacy note" below is guidance, not content.
+> In your real `master-cv/opinions.md`, replace all of it with a one-line intro of your own and keep only the `##` sections, filled with your real views in place of the SYNTHETIC placeholders.
+> Do not add a top-level (`#`) heading of your own: the twin already renders a `## Opinions & Technical Taste` heading above this content, so an extra one would nest awkwardly.
 
 These are my durable opinions and technical taste: what I believe about my field and craft, not biography.
 The twin shares them only when someone asks for my view, and always framed as opinion, not fact.
