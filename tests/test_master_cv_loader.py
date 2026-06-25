@@ -16,7 +16,9 @@ def _seed(dir_: Path):
     nd = dir_ / "narrative"
     nd.mkdir()
     (nd / "career-story.md").write_text("# Story\n\nbody\n", encoding="utf-8")
-    (dir_ / "opinions.md").write_text("# How I think\n\nI value reproducibility.\n", encoding="utf-8")
+    (dir_ / "opinions.md").write_text(
+        "# How I think\n\nI value reproducibility.\n", encoding="utf-8"
+    )
 
 
 def test_returns_none_when_dir_absent(tmp_path):

@@ -62,6 +62,4 @@ def load_master_cv(path: Path | None = None) -> MasterCV | None:
     if op.exists():
         opinions = op.read_text(encoding="utf-8")
 
-    return MasterCV(
-        timeline=timeline, inventory=inventory, narrative=narrative, opinions=opinions
-    )
+    return MasterCV(timeline=timeline, inventory=inventory, narrative=narrative, opinions=opinions)
