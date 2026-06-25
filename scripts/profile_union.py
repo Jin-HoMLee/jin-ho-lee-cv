@@ -119,6 +119,10 @@ def _narrative(master_cv: MasterCV) -> str:
     return "\n\n".join(blocks)
 
 
+def _opinions(master_cv: MasterCV) -> str:
+    return "## Opinions & Technical Taste (master record)\n\n" + master_cv.opinions.rstrip()
+
+
 def full_profile(content: dict, pubs: list[Publication], master_cv: MasterCV | None = None) -> str:
     """Full CV (+ master-cv overlay when present) as one Markdown blob, no trailing newline."""
     blocks = [
@@ -137,4 +141,6 @@ def full_profile(content: dict, pubs: list[Publication], master_cv: MasterCV | N
             blocks.append(_full_inventory(master_cv))
         if master_cv.narrative:
             blocks.append(_narrative(master_cv))
+        if master_cv.opinions:
+            blocks.append(_opinions(master_cv))
     return "\n\n".join(blocks)

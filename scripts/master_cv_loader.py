@@ -25,6 +25,7 @@ class MasterCV:
     timeline: list[dict]
     inventory: dict[str, list[str]]
     narrative: dict[str, str]  # filename stem -> markdown text
+    opinions: str | None = None  # raw opinions.md text; None when absent
 
 
 def _resolve_dir(path: Path | None) -> Path:
@@ -56,4 +57,9 @@ def load_master_cv(path: Path | None = None) -> MasterCV | None:
         for md in sorted(nd.glob("*.md")):
             narrative[md.stem] = md.read_text(encoding="utf-8")
 
-    return MasterCV(timeline=timeline, inventory=inventory, narrative=narrative)
+    opinions: str | None = None
+    op = base / "opinions.md"
+    if op.exists():
+        opinions = op.read_text(encoding="utf-8")
+
+    return MasterCV(timeline=timeline, inventory=inventory, narrative=narrative, opinions=opinions)

@@ -30,4 +30,10 @@ describe("guardrail contract", () => {
     expect(messages[0].content).toBe("Does he know Rust?");
     expect(system).not.toMatch(/Rust/);
   });
+
+  it("ships the gated-opinions rule naming the opinions section", () => {
+    const { system } = assembled("anything");
+    expect(system).toMatch(/OPINIONS \(only when asked\)/i);
+    expect(system).toMatch(/Opinions & Technical Taste/);
+  });
 });
