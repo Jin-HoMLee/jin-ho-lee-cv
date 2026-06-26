@@ -158,6 +158,37 @@ def test_selected_projects_map_unknown_id_fails(tmp_path):
     )
 
 
+# --- #99: refs-less bullets must fail validation loudly ---
+
+
+def test_refs_less_bullet_fails(schema_path, tmp_path):
+    """A bullet with only langmap keys (no `refs:`) collapses to a string in every renderer.
+
+    The schema must require `refs:` so such a bullet fails `just validate` loudly at
+    authoring time, instead of latently breaking ~4 renderers at build time (#99).
+    """
+    bad = tmp_path / "experience.yaml"
+    bad.write_text(
+        "- id: x\n  org: { name: O }\n  role: { en: R, de: R }\n"
+        "  period: { start: '2024-05', end: '2025-07' }\n"
+        "  bullets:\n    - { en: 'did a thing', de: 'tat etwas' }\n"
+    )
+    with pytest.raises(ValidationError) as exc:
+        validate_file(bad, schema_def="experience", schema_path=schema_path)
+    assert "refs" in str(exc.value)
+
+
+def test_refs_empty_list_bullet_passes(schema_path, tmp_path):
+    """An explicit `refs: []` is the honest way to author a bullet citing no project."""
+    good = tmp_path / "experience.yaml"
+    good.write_text(
+        "- id: x\n  org: { name: O }\n  role: { en: R, de: R }\n"
+        "  period: { start: '2024-05', end: '2025-07' }\n"
+        "  bullets:\n    - { en: 'did a thing', de: 'tat etwas', refs: [] }\n"
+    )
+    validate_file(good, schema_def="experience", schema_path=schema_path)
+
+
 # --- #42: content-integrity (reversed periods + advisory date warnings) ---
 from datetime import date  # noqa: E402
 
