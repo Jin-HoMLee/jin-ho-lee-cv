@@ -769,7 +769,6 @@
         "TCRdock / AlphaFold v2",
         "bedtools",
         "Google Cloud GPU",
-        "SLURM",
         "Mol*"
       ],
       "creator": {

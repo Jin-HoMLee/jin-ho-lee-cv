@@ -44,7 +44,7 @@ Now applying that rigor in industry: architected the migration of 1,000+ analyti
 ## Selected Projects
 ### Splice Neoepitope Pipeline – Reproducible Snakemake Workflow
 Modernised, open-source reimplementation of the 2015 SNU splice-junction–based neoepitope discovery work as a reproducible Snakemake pipeline with optional structural validation.
-- Re-engineered the original SNU pipeline as a fully reproducible Snakemake 8.x workflow with per-rule Conda environments — installable without manual dependency management and portable unchanged across laptop, SLURM cluster, and GCP GPU.
+- Re-engineered the original SNU pipeline as a fully reproducible Snakemake 8.x workflow with per-rule Conda environments — installable without manual dependency management; run locally and on GCP GPU VMs, and executor-portable to a SLURM cluster by design (per-rule resources + Conda) — a config swap, not a rewrite.
 - Implemented tumor-vs-matched-normal junction filtering against GENCODE annotation, classifying junctions as annotated, normal_shared, or tumor_exclusive.
 - Integrated patient-specific HLA typing (OptiType) and MHC-I peptide presentation prediction (MHCflurry 2.x Class1PresentationPredictor) for end-to-end neoepitope candidate ranking.
 - Added optional TCR-pMHC ternary complex structural validation via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.

@@ -582,11 +582,10 @@
         "TCRdock / AlphaFold v2",
         "bedtools",
         "Google Cloud GPU",
-        "SLURM",
         "Mol*"
       ],
       "contributions": [
-        "Neuentwicklung der ursprünglichen SNU-Pipeline als vollständig reproduzierbarer Snakemake-8.x-Workflow mit Conda-Umgebungen pro Rule — installierbar ohne manuelles Dependency-Management und unverändert lauffähig auf Laptop, SLURM-Cluster und GCP-GPU.",
+        "Neuentwicklung der ursprünglichen SNU-Pipeline als vollständig reproduzierbarer Snakemake-8.x-Workflow mit Conda-Umgebungen pro Rule — installierbar ohne manuelles Dependency-Management; lauffähig lokal und auf GCP-GPU-VMs, und per Design executor-portabel auf einen SLURM-Cluster (Ressourcen pro Rule + Conda) — ein Konfigurations-Swap, kein Rewrite.",
         "Tumor-vs-passendes-Normalgewebe-Junction-Filterung gegen GENCODE-Annotation implementiert; klassifiziert Junctions als annotated, normal_shared oder tumor_exclusive.",
         "Patientenspezifische HLA-Typisierung (OptiType) und MHC-I-Peptidpräsentations-Vorhersage (MHCflurry 2.x Class1PresentationPredictor) integriert für End-to-End-Neoepitop-Kandidatenranking.",
         "Optionale strukturelle Validierung des TCR-pMHC-Ternärkomplexes via TCRdock (AlphaFold-v2-Backend) auf Google Cloud GPU; vorhergesagte Komplexe werden im interaktiven Mol* 3D-Viewer dargestellt.",
@@ -617,11 +616,10 @@
         "TCRdock / AlphaFold v2",
         "bedtools",
         "Google Cloud GPU",
-        "SLURM",
         "Mol*"
       ],
       "contributions": [
-        "Neuentwicklung der ursprünglichen SNU-Pipeline als vollständig reproduzierbarer Snakemake-8.x-Workflow mit Conda-Umgebungen pro Rule — installierbar ohne manuelles Dependency-Management und unverändert lauffähig auf Laptop, SLURM-Cluster und GCP-GPU.",
+        "Neuentwicklung der ursprünglichen SNU-Pipeline als vollständig reproduzierbarer Snakemake-8.x-Workflow mit Conda-Umgebungen pro Rule — installierbar ohne manuelles Dependency-Management; lauffähig lokal und auf GCP-GPU-VMs, und per Design executor-portabel auf einen SLURM-Cluster (Ressourcen pro Rule + Conda) — ein Konfigurations-Swap, kein Rewrite.",
         "Tumor-vs-passendes-Normalgewebe-Junction-Filterung gegen GENCODE-Annotation implementiert; klassifiziert Junctions als annotated, normal_shared oder tumor_exclusive.",
         "Patientenspezifische HLA-Typisierung (OptiType) und MHC-I-Peptidpräsentations-Vorhersage (MHCflurry 2.x Class1PresentationPredictor) integriert für End-to-End-Neoepitop-Kandidatenranking.",
         "Optionale strukturelle Validierung des TCR-pMHC-Ternärkomplexes via TCRdock (AlphaFold-v2-Backend) auf Google Cloud GPU; vorhergesagte Komplexe werden im interaktiven Mol* 3D-Viewer dargestellt.",
