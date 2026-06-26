@@ -208,7 +208,7 @@
                   "items": { "$ref": "#/$defs/ProjectId" }
                 }
               },
-              "required": ["en"],
+              "required": ["en", "refs"],
               "additionalProperties": false
             },
             "minItems": 1
