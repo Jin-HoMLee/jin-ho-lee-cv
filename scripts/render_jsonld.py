@@ -28,7 +28,11 @@ PHOTO_URL = f"{PAGES_BASE_URL}/photo.jpg"
 
 
 def _same_as(personal: dict) -> list[str]:
-    return [v for v in (personal.get("links") or {}).values() if v]
+    # sameAs is for the person's presence on *other* sites (entity disambiguation);
+    # the canonical self-URL is emitted as the Person's `url`, so exclude `website`
+    # here to avoid listing the same URL twice.
+    links = personal.get("links") or {}
+    return [v for k, v in links.items() if v and k != "website"]
 
 
 def _alumni_of(content: dict) -> list[dict]:

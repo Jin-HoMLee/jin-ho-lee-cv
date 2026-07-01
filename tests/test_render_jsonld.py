@@ -112,10 +112,14 @@ def test_sameas_includes_github(doc):
     assert any("github.com" in url for url in _person_node(doc)["sameAs"])
 
 
-def test_orcid_and_website_in_same_as(doc):
-    same_as = _person_node(doc)["sameAs"]
+def test_external_profiles_in_same_as_but_not_canonical_site(doc):
+    # sameAs holds the person's presence on *other* sites (entity disambiguation);
+    # the canonical self-URL is the Person's `url`, so it must not also appear in sameAs.
+    person = _person_node(doc)
+    same_as = person["sameAs"]
     assert "https://orcid.org/0009-0001-8784-1771" in same_as
-    assert "https://jinholee.is-a.dev/" in same_as
+    assert person["url"] == "https://jinholee.is-a.dev/"
+    assert person["url"] not in same_as
 
 
 def test_image_is_absolute_url(doc):
