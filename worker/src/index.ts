@@ -1,11 +1,5 @@
-import {
-  streamGemini,
-  geminiToClientStream,
-  clientMessageStream,
-  RESTING_MESSAGE,
-  TROUBLE_MESSAGE,
-  type ChatMessage,
-} from "./gemini";
+import { streamGemini, geminiToClientStream, type ChatMessage } from "./gemini";
+import { clientMessageStream, RESTING_MESSAGE, TROUBLE_MESSAGE } from "./sse";
 import { runDigest } from "./digest";
 import { latestDigest, recentQuestions, logQuestion } from "./insights";
 import { renderDashboard } from "./dashboard";
