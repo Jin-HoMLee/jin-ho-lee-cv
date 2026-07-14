@@ -31,7 +31,7 @@ const data = contentEn as unknown as ContentData;
     <div data-reveal>
       <ExperienceSection experience={data.experience} projects={data.projects} labels={data.labels} lang="en" />
       <ProjectsSection projects={data.projects} labels={data.labels} lang="en" />
-      <PublicationsList publications={data.publications} aggregate={data.publications_aggregate} orcid={data.personal.links.orcid} lang="en" />
+      <PublicationsList publications={data.publications} aggregate={data.publications_aggregate} orcid={data.personal.links.orcid} scholar={data.personal.links.googlescholar} lang="en" />
       <AwardsSection awards={data.awards} labels={data.labels} />
     </div>
     <aside data-reveal>
