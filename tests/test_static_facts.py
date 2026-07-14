@@ -85,6 +85,14 @@ def test_publication_titles_in_static_html(html_en):
     inspecting the component and grepping the built page before writing this
     assertion. Loading via scripts.bib_loader (not raw BibTeX) means this
     guards the actual LaTeX-cleaning the renderer depends on.
+
+    Note: this is a raw substring check against unescaped titles. A title
+    containing HTML-special characters (e.g. '&') is entity-escaped ('&amp;')
+    in the visible publication list, so such a title would only satisfy this
+    assertion via the inline ScholarlyArticle JSON-LD block (`"name": p.title`
+    in scripts/render_jsonld.py - a legitimate, unescaped crawler surface in
+    its own right), not the visible HTML. Acceptable as shipped; no current
+    publication title hits this case.
     """
     for pub in load_publications(CONTENT_DIR / "publications.bib"):
         assert pub.title in html_en, (
