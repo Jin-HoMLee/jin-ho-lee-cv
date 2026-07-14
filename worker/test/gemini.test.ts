@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { geminiChunkToEnvelopes, generateText, streamGemini } from "../src/gemini";
+import { geminiChunkToEnvelopes, generateText, streamGemini, type ChatMessage } from "../src/gemini";
 
 // A fake fetch that returns a scripted status per call (in order), recording the
 // requested URL + parsed body so cascade assertions can inspect which model was
@@ -84,7 +84,14 @@ describe("geminiChunkToEnvelopes", () => {
 });
 
 describe("streamGemini model cascade", () => {
-  const args = ["KEY", "system", [{ role: "user" as const, content: "hi" }], 700] as const;
+  // A typed mutable tuple (not `as const`) so it spreads into streamGemini's
+  // (string, string, ChatMessage[], number) params under tsc --noEmit (#123).
+  const args: [string, string, ChatMessage[], number] = [
+    "KEY",
+    "system",
+    [{ role: "user", content: "hi" }],
+    700,
+  ];
 
   it("returns the first model's response when it succeeds (no fallback)", async () => {
     const { fn, calls } = scriptedFetch([200]);

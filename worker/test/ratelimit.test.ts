@@ -26,6 +26,8 @@ describe("checkLimits", () => {
 
   it("prioritises the monthly ceiling over per-IP rate", () => {
     const counters: Counters = { minute: 10, day: 50, month: 5000 };
-    expect(checkLimits(counters, LIMITS).reason).toBe("ceiling");
+    // Full-object assertion: narrows the LimitResult union under tsc (#123) and
+    // pins status alongside the reason.
+    expect(checkLimits(counters, LIMITS)).toEqual({ allowed: false, status: 503, reason: "ceiling" });
   });
 });

@@ -97,7 +97,7 @@ describe("generateTextWorkersAI", () => {
     const run = vi.fn(async () => ({ response: "## Themes" }));
     const out = await generateTextWorkersAI({ run }, "prompt");
     expect(out).toBe("## Themes");
-    const [model, options] = run.mock.calls[0] as [string, any];
+    const [model, options] = run.mock.calls[0] as unknown as [string, any];
     expect(model).toBe(WORKERS_AI_MODEL);
     expect(options.messages).toEqual([{ role: "user", content: "prompt" }]);
     expect(options.stream).toBeUndefined();

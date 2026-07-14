@@ -102,7 +102,7 @@ describe("runDigest", () => {
     expect(insert).toBeTruthy();
     expect(insert!.args).toEqual([NOW, "## Fallback theme", 1]);
     // The fallback receives the SAME digest prompt Gemini would have.
-    const [, options] = run.mock.calls[0] as [string, any];
+    const [, options] = run.mock.calls[0] as unknown as [string, any];
     expect(options.messages[0].content).toContain("q1");
   });
 
