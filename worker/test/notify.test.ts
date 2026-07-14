@@ -25,7 +25,7 @@ describe("notifyLead", () => {
     const fetchMock = vi.fn(async () => ({ ok: true }) as unknown as Response);
     await notifyLead(lead, { TELEGRAM_BOT_TOKEN: "T", TELEGRAM_CHAT_ID: "42" }, fetchMock as unknown as typeof fetch);
     expect(fetchMock).toHaveBeenCalledTimes(1);
-    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
     expect(url).toBe("https://api.telegram.org/botT/sendMessage");
     const body = JSON.parse(String(init.body));
     expect(body.chat_id).toBe("42");

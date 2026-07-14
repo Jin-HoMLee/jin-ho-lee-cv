@@ -213,7 +213,7 @@ describe("fetch handler", () => {
     expect(text).toContain('"text":"llama says hi"');
     expect(text).not.toContain("free-tier limit");
     // The persona/CV grounding and the token cap must reach the fallback vendor.
-    const [model, options] = run.mock.calls[0] as [string, any];
+    const [model, options] = run.mock.calls[0] as unknown as [string, any];
     expect(model).toContain("llama");
     expect(options.messages[0].role).toBe("system");
     expect(options.max_tokens).toBe(700);
