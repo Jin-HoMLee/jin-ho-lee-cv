@@ -23,7 +23,7 @@ export interface Env {
   ALLOWED_ORIGIN: string;
   MONTHLY_CEILING: string;
   MAX_TOKENS: string;
-  // Workers AI platform binding (#97) — the cross-vendor fallback rung. Optional:
+  // Workers AI platform binding (#97) - the cross-vendor fallback rung. Optional:
   // absent (tests, a deploy without [ai] in wrangler.toml) means the fall-through
   // is skipped and behavior is identical to the Gemini-only worker.
   AI?: AiBinding;
@@ -294,7 +294,7 @@ export default {
             headers: { ...cors, "content-type": "text/event-stream" },
           });
         } catch {
-          // Workers AI rung failed too (neurons spent, outage) — fall through to
+          // Workers AI rung failed too (neurons spent, outage) - fall through to
           // the terminal message below.
         }
       }
