@@ -89,7 +89,8 @@ The unconditional `purgeOld` stays exactly where it is: the privacy guarantee mu
 ### Config and environment
 
 - `wrangler.toml`: add `[ai]` / `binding = "AI"`. No id, no secret; it is a platform binding.
-- `Env` gains `AI?: Ai` (type from `@cloudflare/workers-types`, already a dependency).
+- `Env` gains `AI?: AiBinding`, a minimal structural interface (`run(model: string, options: Record<string, unknown>): Promise<unknown>`) defined in `workersai.ts`.
+  Deliberately not the `Ai` type from `@cloudflare/workers-types`: that type's model-name union lags the live catalog and would reject newer model ids at compile time.
   Optional typing keeps every absent-binding path (tests, local dev without login, misconfigured deploy) on the graceful skip branch.
 - No change to `web/`, no change to the client envelope, no change to any secret.
 
