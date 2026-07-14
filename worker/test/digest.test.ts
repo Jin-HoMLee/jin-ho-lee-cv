@@ -148,6 +148,28 @@ describe("runDigest", () => {
     expect(purge!.args).toEqual([NOW - RETENTION_SECONDS]);
   });
 
+  it("skips the digest (but still purges) when the FALLBACK answer is empty (#97)", async () => {
+    // generateTextWorkersAI returns "" on an unexpected result shape; the empty-
+    // markdown guard must catch the fallback vendor too, not only Gemini.
+    const rows = [{ id: 1, ts: 5, text: "q1", country: "DE", msg_count: 1 }];
+    const { db, calls } = fakeD1(handlerWith(rows));
+    const fetchImpl = vi.fn(async () => ({
+      ok: false,
+      status: 429,
+      json: async () => ({}),
+    })) as unknown as typeof fetch;
+    const run = vi.fn(async () => ({})); // resolves fine, but carries no response text
+    const ai: AiBinding = { run };
+
+    const result = await runDigest(db, "KEY", NOW, fetchImpl, ai);
+
+    expect(run).toHaveBeenCalled();
+    expect(result.digested).toBe(0);
+    expect(calls.find((c) => c.sql.includes("INSERT INTO digests"))).toBeUndefined();
+    const purge = calls.find((c) => c.sql.includes("DELETE FROM questions"));
+    expect(purge!.args).toEqual([NOW - RETENTION_SECONDS]);
+  });
+
   it("does not touch Workers AI when Gemini succeeds", async () => {
     const rows = [{ id: 1, ts: 5, text: "q1", country: "DE", msg_count: 1 }];
     const { db } = fakeD1(handlerWith(rows));
