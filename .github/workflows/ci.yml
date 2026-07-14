@@ -172,6 +172,51 @@ jobs:
       - name: Run ATS text-layer guard
         run: uv run pytest tests/test_ats_pdf.py -v
 
+  web-guard:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync --all-groups
+
+      - name: Render web JSON
+        run: uv run python -m scripts.render_web_data
+
+      - name: Render JSON-LD into web/public/
+        run: |
+          uv run python -m scripts.render_jsonld
+          mkdir -p web/public
+          cp dist/person.jsonld web/public/person.jsonld
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10
+
+      - name: Install web deps
+        run: pnpm --dir web install --frozen-lockfile
+
+      - name: Build site
+        run: pnpm --dir web build
+
+      - name: Run static-HTML facts + FAQPage guards
+        run: uv run pytest tests/test_static_facts.py tests/test_faq_jsonld.py -v
+
   release:
     needs: [build-pdf, build-formats, ats-guard]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

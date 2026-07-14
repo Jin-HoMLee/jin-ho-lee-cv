@@ -141,6 +141,11 @@ web-build: web-data web-jsonld web-llms
     pnpm --dir web install --frozen-lockfile
     pnpm --dir web build
 
+# Build the site and assert the public CV facts are crawler-readable in static HTML
+web-guard:
+    just web-build
+    uv run pytest tests/test_faq_jsonld.py tests/test_static_facts.py -v
+
 # Remove web build artifacts
 web-clean:
     rm -rf web/dist web/node_modules web/src/data/*.json web/public/person.jsonld web/public/llms.txt
