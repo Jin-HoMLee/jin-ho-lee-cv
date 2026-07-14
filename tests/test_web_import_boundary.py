@@ -24,13 +24,16 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-# The web pipeline: content_loader feeds render_web_data (Astro's content JSON)
-# and render_jsonld (schema.org Person graph) - the two renderers whose output
-# reaches the crawler-facing static site.
+# The web pipeline: content_loader feeds render_web_data (Astro's content JSON),
+# render_jsonld (schema.org Person graph) and render_llms (the /llms.txt site map)
+# - every renderer whose output reaches the crawler-facing static site. llms.txt is
+# an inert AEO lever (no vendor consumes it), but it IS served publicly, so it sits
+# on the same side of the two-tier boundary as the rest.
 WEB_MODULES = [
     "scripts.content_loader",
     "scripts.render_web_data",
     "scripts.render_jsonld",
+    "scripts.render_llms",
 ]
 
 # Modules that know how to read the twin-exclusive master-cv/ overlay. Neither
