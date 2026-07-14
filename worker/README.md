@@ -30,6 +30,9 @@ fails, the Worker falls through to **Cloudflare Workers AI**
 extra secret). The account is on the Workers free plan (10k Neurons/day), so an
 exhausted allowance just fails the rung - there is no billing surface. The digest
 cron gets the same fallback. An absent binding degrades to Gemini-only behavior.
+One known behavior difference: Workers AI's SSE carries no finish reason, so a
+fallback answer cut at `MAX_TOKENS` ends without the truncation signal the widget
+shows on the Gemini path.
 
 The quota bucket is keyed by the *resolved* model, so `-latest`/`-001`/preview aliases
 that resolve to an existing rung add nothing — but `gemini-3-flash-preview` is a

@@ -78,6 +78,7 @@ streamGemini exhausts (non-ok terminal Response)
 The terminal-message mapping stays keyed on the Gemini terminal status, as today:
 a cascade that ended on a quota 429 means the free-tier budget is spent (resting), anything else is treated as transient trouble.
 A Workers AI failure does not change that classification; it only fails to rescue it.
+A THROWN Gemini fetch (DNS failure, connection reset, TLS error - a rejection, not a non-ok Response) is treated the same way: it counts as a non-429 terminal, so the Workers AI rung still fires.
 
 ### Digest data flow (`digest.ts`)
 
@@ -98,6 +99,7 @@ The unconditional `purgeOld` stays exactly where it is: the privacy guarantee mu
 
 | Failure | Behavior |
 |---|---|
+| Gemini fetch rejects (network-level outage) | Same fall-through as a non-ok terminal; message-only console.warn |
 | Gemini cascade exhausts, `AI` absent | Terminal message, byte-identical to today |
 | Gemini cascade exhausts, Workers AI streams | Visitor gets a llama-served answer in the unchanged client envelope |
 | Gemini cascade exhausts, Workers AI throws (neurons spent, outage) | Terminal message keyed on the Gemini terminal status |
