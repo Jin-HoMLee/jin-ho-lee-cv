@@ -62,6 +62,7 @@
           "required": ["city", "country"],
           "additionalProperties": false
         },
+        "availability": { "$ref": "#/$defs/LangString" },
         "links": {
           "type": "object",
           "additionalProperties": {

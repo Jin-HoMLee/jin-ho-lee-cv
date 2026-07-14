@@ -57,3 +57,26 @@ def test_absent_faq_file_is_an_error(tmp_path):
     content.mkdir()
     errors = validate_faq(content, FAQ_SCHEMA)
     assert errors, "faq.yaml is a required content file"
+
+
+def test_availability_is_grounded_in_personal_yaml():
+    """The is-he-available-for-work FAQ answer must trace to a real content/ fact.
+
+    A prior version asserted an availability status with no underlying source
+    in content/ - true today, but silently stale-able. `personal.availability`
+    is now that source of truth; this test proves it exists (bilingual,
+    non-empty) and that the FAQ answer built on top of it is non-empty too.
+    """
+    from ruamel.yaml import YAML
+
+    yaml = YAML(typ="safe")
+    personal = yaml.load((CONTENT_DIR / "personal.yaml").read_text(encoding="utf-8"))
+    availability = personal.get("availability")
+    assert availability is not None, "personal.yaml must carry an availability fact"
+    assert availability["en"].strip(), "personal.availability.en must be non-empty"
+    assert availability["de"].strip(), "personal.availability.de must be non-empty"
+
+    faqs = yaml.load((CONTENT_DIR / "faq.yaml").read_text(encoding="utf-8"))["faqs"]
+    entry = next(f for f in faqs if f["id"] == "is-he-available-for-work")
+    assert entry["answer"]["en"].strip()
+    assert entry["answer"]["de"].strip()

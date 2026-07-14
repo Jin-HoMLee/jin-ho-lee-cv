@@ -8,6 +8,9 @@ email: "jinho.michael.lee@gmail.com"
 location:
   city: "Mannheim"
   country: "GER"
+availability:
+  en: "Open to roles in bioinformatics, computational biology and data science, based in Mannheim, Germany."
+  de: "Offen für Positionen in Bioinformatik, Computational Biology und Data Science, mit Sitz in Mannheim."
 links:
   linkedin: "https://linkedin.com/in/jin-holee"
   github:   "https://github.com/Jin-HoMLee"
