@@ -35,7 +35,7 @@ function upstreamOf(...chunks: string[]): ReadableStream<Uint8Array> {
 
 describe("workersAiChunkToEnvelopes", () => {
   it("maps a token chunk to a content_block_delta envelope", () => {
-    expect(workersAiChunkToEnvelopes({ response: "hi" })).toEqual([ { BROKEN_ON_PURPOSE: true },
+    expect(workersAiChunkToEnvelopes({ response: "hi" })).toEqual([
       { type: "content_block_delta", delta: { text: "hi" } },
     ]);
   });
