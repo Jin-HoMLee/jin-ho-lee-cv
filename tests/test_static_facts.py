@@ -20,6 +20,8 @@ from pathlib import Path
 import pytest
 from ruamel.yaml import YAML
 
+from scripts.bib_loader import load_publications
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
 EXAMPLE_OVERLAY = REPO_ROOT / "master-cv.example"
@@ -76,6 +78,20 @@ def test_selected_project_titles_in_static_html(html_en):
         assert title in html_en, f"project {pid} title {title!r} is not in the raw HTML"
 
 
+def test_publication_titles_in_static_html(html_en):
+    """`PublicationsList.astro` renders every entry into the `data-cv-pub="full"`
+    block (hidden by CSS/JS toggle, not omitted from the markup), so every
+    cleaned title from the real loader must be in the raw HTML - verified by
+    inspecting the component and grepping the built page before writing this
+    assertion. Loading via scripts.bib_loader (not raw BibTeX) means this
+    guards the actual LaTeX-cleaning the renderer depends on.
+    """
+    for pub in load_publications(CONTENT_DIR / "publications.bib"):
+        assert pub.title in html_en, (
+            f"publication {pub.key} title {pub.title!r} is not in the raw HTML"
+        )
+
+
 def test_person_jsonld_is_served_and_parses(html_en):
     """The Person graph must be inline in the page, not fetched at runtime."""
     assert "application/ld+json" in html_en
@@ -88,7 +104,7 @@ def _overlay_sentinels() -> list[str]:
     """Distinctive strings that exist ONLY in the synthetic overlay, never in content/."""
     inventory = yaml.load((EXAMPLE_OVERLAY / "inventory.yaml").read_text(encoding="utf-8"))
     values = [v for values in inventory.values() for v in values]
-    return [v for v in values if v.startswith("Example") or v == "Pseudocode"]
+    return [v for v in values if v.lower().startswith("example") or v.lower() == "pseudocode"]
 
 
 @pytest.mark.parametrize("page", [INDEX_EN, INDEX_DE], ids=["en", "de"])
