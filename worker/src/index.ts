@@ -317,6 +317,10 @@ export default {
   // Reuses the existing free-tier GEMINI_API_KEY; skip-on-empty + 30d purge live
   // in runDigest. waitUntil keeps the worker alive until the digest completes.
   async scheduled(_event: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
-    ctx.waitUntil(runDigest(env.INSIGHTS_DB, env.GEMINI_API_KEY, Math.floor(Date.now() / 1000)).then(() => {}));
+    ctx.waitUntil(
+      runDigest(env.INSIGHTS_DB, env.GEMINI_API_KEY, Math.floor(Date.now() / 1000), fetch, env.AI).then(
+        () => {},
+      ),
+    );
   },
 };

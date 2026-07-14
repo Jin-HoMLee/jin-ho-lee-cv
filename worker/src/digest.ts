@@ -6,6 +6,7 @@ import {
   type QuestionRow,
 } from "./insights";
 import { generateText } from "./gemini";
+import { generateTextWorkersAI, type AiBinding } from "./workersai";
 
 // Raw question rows are ephemeral input to the digest; the digest is the durable
 // artifact. 30-day TTL bounds any leak window and aligns retention with use.
@@ -35,17 +36,27 @@ export async function runDigest(
   apiKey: string,
   now: number,
   fetchImpl: typeof fetch = fetch,
+  ai?: AiBinding,
 ): Promise<{ digested: number }> {
   const since = await lastDigestTs(db);
   const rows = await questionsSince(db, since);
   let digested = 0;
   if (rows.length > 0) {
     try {
-      const markdown = await generateText(apiKey, buildDigestPrompt(rows), fetchImpl);
+      const prompt = buildDigestPrompt(rows);
+      let markdown: string;
+      try {
+        markdown = await generateText(apiKey, prompt, fetchImpl);
+      } catch (err) {
+        // Gemini cascade exhausted - try the cross-vendor Workers AI rung (#97)
+        // before giving up on this round's digest.
+        if (!ai) throw err;
+        markdown = await generateTextWorkersAI(ai, prompt);
+      }
       await insertDigest(db, { ts: now, markdown, n_questions: rows.length });
       digested = rows.length;
     } catch {
-      // Gemini outage (non-200): skip this round's digest but STILL purge below.
+      // Both vendors down: skip this round's digest but STILL purge below.
       // The purge is a privacy guarantee and must not depend on an external service.
     }
   }
