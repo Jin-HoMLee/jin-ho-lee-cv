@@ -99,6 +99,7 @@ just install-hooks     # activate the committed git hooks (run once per clone â€
 **First-clone setup:** run `just install-hooks` once to activate the git pre-commit PII guard.
 
 validate + test + lint must all be green before merging anything.
+The Worker has its own suite: `npm --prefix worker test` (vitest) + `npm --prefix worker run typecheck` (tsc - vitest alone does NOT typecheck); CI runs both in the `worker-test` job (#118).
 
 ## Conventions
 
