@@ -222,9 +222,15 @@ def validate_master_cv(master_cv_dir: Path, schema_path: Path) -> list[FileError
 
 
 def validate_faq(content_dir: Path, schema_path: Path) -> list[FileError]:
-    """Validate content/faq.yaml: schema-valid, bilingual, unique ids.
+    """Validate content/faq.yaml: schema-valid, bilingual, unique ids, no script breakout.
 
     faq.yaml is a REQUIRED content file (Phase 14) - absence is an error, not a skip.
+
+    FAQ text is inlined into a `<script type="application/ld+json">` block on the site,
+    and faq.yaml is agent-editable via agent_core.apply_edit (which gates on validate_tree).
+    A "</script" substring would close that tag early and let the rest parse as markup, so
+    reject it here. FaqSection.astro also escapes "<" at render time; this is the earlier,
+    louder of the two backstops - a bad edit never reaches content/ at all.
     """
     path = content_dir / "faq.yaml"
     if not path.exists():
@@ -246,7 +252,20 @@ def validate_faq(content_dir: Path, schema_path: Path) -> list[FileError]:
     dupes = sorted({i for i in ids if ids.count(i) > 1})
     if dupes:
         return [FileError(path, f"duplicate FAQ id(s): {dupes}")]
-    return []
+
+    errors: list[FileError] = []
+    for entry in data["faqs"]:
+        for field in ("question", "answer"):
+            for lang, text in entry[field].items():
+                if "</script" in text.lower():
+                    errors.append(
+                        FileError(
+                            path,
+                            f"{entry['id']}: {field}.{lang} contains '</script' - it would "
+                            "break out of the FAQPage JSON-LD script tag",
+                        )
+                    )
+    return errors
 
 
 def date_warnings(content_dir: Path, *, today: date | None = None) -> list[FileError]:

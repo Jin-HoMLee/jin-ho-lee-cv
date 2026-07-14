@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import jsonld from "../../public/person.jsonld?raw";
+import personJsonld from "../../public/person.jsonld?raw";
 import type { ContentData, Lang } from "../types/content";
 import { PAGES_BASE_URL } from "../lib/site-config";
 import DigitalTwin from "../components/DigitalTwin.astro";
@@ -29,6 +29,11 @@ const pathWithoutBase = Astro.url.pathname.startsWith(base)
   : Astro.url.pathname;
 const canonicalUrl = `${PAGES_BASE_URL}${pathWithoutBase}`;
 const resolvedOgType = ogType ?? "profile";
+// person.jsonld inlines content-derived strings (publication titles from
+// publications.bib). A "</script>" substring in any of them would close the tag
+// early and let the rest parse as markup, so escape "<" before inlining - same
+// backstop as FaqSection.astro. < is valid JSON and parses back to "<".
+const jsonld = personJsonld.replace(/</g, "\\u003c");
 const gscVerify = import.meta.env.PUBLIC_GSC_VERIFY;
 const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === "true";
 const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;

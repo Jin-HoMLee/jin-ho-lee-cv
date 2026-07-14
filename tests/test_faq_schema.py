@@ -59,6 +59,27 @@ def test_absent_faq_file_is_an_error(tmp_path):
     assert errors, "faq.yaml is a required content file"
 
 
+def test_script_breakout_in_faq_text_fails(tmp_path):
+    """FAQ text is inlined into a JSON-LD <script> block, and faq.yaml is agent-editable.
+
+    A '</script' substring would close the tag early and let the rest parse as
+    markup. validate_faq must reject it, so a bad agent edit never reaches content/.
+    """
+    content = tmp_path / "content"
+    content.mkdir()
+    (content / "faq.yaml").write_text(
+        (FIXTURES / "faq_script_breakout.yaml").read_text(encoding="utf-8"), encoding="utf-8"
+    )
+    errors = validate_faq(content, FAQ_SCHEMA)
+    assert errors, "a '</script' substring in FAQ text must be rejected"
+    assert "</script" in str(errors[0])
+
+
+def test_real_faq_carries_no_script_breakout():
+    """The shipped FAQ is clean - guards the real content, not just the fixture path."""
+    assert validate_faq(CONTENT_DIR, FAQ_SCHEMA) == []
+
+
 def test_availability_is_grounded_in_personal_yaml():
     """The is-he-available-for-work FAQ answer must actually DERIVE from personal.availability.
 

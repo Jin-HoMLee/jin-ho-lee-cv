@@ -1,0 +1,6 @@
+faqs:
+  - id: script-breakout
+    question: { en: "Q?", de: "F?" }
+    answer:
+      en: "A.</script><img src=x onerror=alert(1)>"
+      de: "A."

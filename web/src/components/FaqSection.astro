@@ -19,6 +19,13 @@ const faqPage = {
     acceptedAnswer: { "@type": "Answer", text: entry.answer },
   })),
 };
+
+// JSON.stringify does not escape "</script>", so a FAQ answer containing that
+// substring would close the tag early and let the rest parse as markup. faq.yaml
+// is agent-editable (Phase 10 apply_edit), so escaping "<" is the render-layer
+// backstop behind validate_faq's own rejection of the substring. < is valid
+// JSON and parses back to "<".
+const faqPageJson = JSON.stringify(faqPage).replace(/</g, "\\u003c");
 ---
 <section id="faq" class="py-6" data-faq-section data-reveal>
   <h2 class="eyebrow mb-3">{labels.sections.faq}</h2>
@@ -42,5 +49,5 @@ const faqPage = {
       </details>
     ))}
   </div>
-  <script type="application/ld+json" set:html={JSON.stringify(faqPage)} />
+  <script type="application/ld+json" set:html={faqPageJson} />
 </section>
