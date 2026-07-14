@@ -16,6 +16,7 @@ import VolunteerSection from "../../components/VolunteerSection.astro";
 import AwardsSection from "../../components/AwardsSection.astro";
 import PublicationsList from "../../components/PublicationsList.astro";
 import StatBand from "../../components/StatBand.astro";
+import FaqSection from "../../components/FaqSection.astro";
 
 const data = contentDe as unknown as ContentData;
 ---
@@ -40,4 +41,5 @@ const data = contentDe as unknown as ContentData;
       <VolunteerSection volunteer={data.volunteer} labels={data.labels} />
     </aside>
   </div>
+  <FaqSection faq={data.faq} labels={data.labels} />
 </BaseLayout>
