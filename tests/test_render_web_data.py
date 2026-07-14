@@ -43,6 +43,7 @@ def test_round_trip_structural_keys(rendered):
         "labels",
         "awards",
         "publications_aggregate",
+        "faq",
     }
     assert set(en.keys()) == expected_keys
     assert set(de.keys()) == expected_keys

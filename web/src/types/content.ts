@@ -11,6 +11,8 @@ export interface Links {
   researchgate: string | null;
   website: string | null;
   orcid: string | null;
+  googlescholar?: string | null;
+  wikidata?: string | null;
 }
 export interface HighlightStat {
   value: number;
@@ -24,12 +26,23 @@ export interface Personal {
   location: Location;
   links: Links;
   photo: string;
+  availability?: string;
   highlight_stats?: HighlightStat[];
 }
 
 export interface Profile {
   tagline: string;
+  answer_block?: string;
   paragraphs: string[];
+}
+
+export interface FaqEntry {
+  id: string;
+  question: string;
+  answer: string;
+}
+export interface Faq {
+  faqs: FaqEntry[];
 }
 
 export interface SkillGroup { label: string; items: string[] }
@@ -113,6 +126,7 @@ export interface Labels {
     skills: string;
     languages: string;
     volunteer: string;
+    faq: string;
   };
   months_abbr: string[]; // resolved to the page's language
   proficiency: {
@@ -139,4 +153,5 @@ export interface ContentData {
   publications: Publication[];
   publications_aggregate: { summary: string; pointer: string };
   labels: Labels;
+  faq: Faq;
 }

@@ -106,6 +106,7 @@
       "type": "object",
       "properties": {
         "tagline": { "type": "string" },
+        "answer_block": { "type": "string", "minLength": 1 },
         "paragraphs": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 },

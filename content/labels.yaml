@@ -8,6 +8,7 @@ sections:
   skills:            { en: "Skills",            de: "Kenntnisse" }
   languages:         { en: "Languages",         de: "Sprachen" }
   volunteer:         { en: "Volunteer",         de: "Ehrenamtlich" }
+  faq:               { en: "FAQ",               de: "Häufige Fragen" }
 
 months_abbr:
   - { en: "Jan", de: "Jan" }
