@@ -58,3 +58,7 @@ export async function generateTextWorkersAI(ai: AiBinding, prompt: string): Prom
   })) as { response?: unknown };
   return typeof result?.response === "string" ? result.response : "";
 }
+
+// TEMPORARY bite-proof (never merged): a deliberate type error.
+const BITE_PROOF_TYPE_ERROR: number = "not a number";
+export { BITE_PROOF_TYPE_ERROR };
