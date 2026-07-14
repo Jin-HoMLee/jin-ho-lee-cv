@@ -189,10 +189,20 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-groups
 
+      # MASTER_CV_DIR points at the committed *synthetic* master-cv.example/ overlay
+      # (never the real, gitignored master-cv/) so test_static_facts.py's deep-tier
+      # guard is a real assertion, not a tautology: if these renderers ever start
+      # honouring the overlay, the example's sentinel strings land in content.*.json
+      # -> index.html and the guard goes red. It is a no-op today - the pipeline
+      # doesn't read this var at all - which is exactly the property being proven.
       - name: Render web JSON
+        env:
+          MASTER_CV_DIR: ${{ github.workspace }}/master-cv.example
         run: uv run python -m scripts.render_web_data
 
       - name: Render JSON-LD into web/public/
+        env:
+          MASTER_CV_DIR: ${{ github.workspace }}/master-cv.example
         run: |
           uv run python -m scripts.render_jsonld
           mkdir -p web/public

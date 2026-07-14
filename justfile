@@ -141,9 +141,13 @@ web-build: web-data web-jsonld web-llms
     pnpm --dir web install --frozen-lockfile
     pnpm --dir web build
 
-# Build the site and assert the public CV facts are crawler-readable in static HTML
+# Build the site and assert the public CV facts are crawler-readable in static HTML.
+# MASTER_CV_DIR points at the committed synthetic master-cv.example/ (never the real,
+# gitignored master-cv/) for the render steps, so the deep-tier guard in
+# tests/test_static_facts.py is a real assertion rather than a tautology - see that
+# file's module docstring.
 web-guard:
-    just web-build
+    MASTER_CV_DIR="{{justfile_directory()}}/master-cv.example" just web-build
     test -f web/dist/index.html
     test -f web/dist/de/index.html
     uv run pytest tests/test_faq_jsonld.py tests/test_static_facts.py -v

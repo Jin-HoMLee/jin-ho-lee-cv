@@ -5,9 +5,20 @@ AI crawlers do not execute JavaScript (Vercel/MERJ, 500M fetches). Two propertie
   1. PUBLIC TIER PRESENT  - the core content/ facts are in the raw served HTML.
   2. DEEP TIER ABSENT     - the deliberately twin-exclusive master-cv/ overlay is not.
 
-Property 2 is proven against the synthetic master-cv.example/ overlay: the web
-renderer must ignore MASTER_CV_DIR entirely, so pointing it at the example and
-re-rendering must not put any overlay-only string on the public surface.
+Property 2 is proven DYNAMICALLY against the synthetic master-cv.example/ overlay:
+both the CI `web-guard` job and the `just web-guard` recipe export
+MASTER_CV_DIR=master-cv.example for the render_web_data/render_jsonld steps before
+building web/dist, so if any renderer on the web pipeline ever started honouring
+the overlay, the example's sentinel strings (`Example-Lang`, `ExampleDB`, ...)
+would land in content.*.json and then index.html, and
+test_deep_tier_stays_off_the_public_surface below would go red. Verified live:
+temporarily wiring a sentinel into scripts.render_web_data's output made this
+test fail; reverting made it pass again (see the Phase 14 final-fixes report).
+Outside `web-guard` (e.g. a bare `just web-build` with no MASTER_CV_DIR
+override), this is inert - the renderers never read that env var at all -
+which is exactly what test_web_import_boundary.py proves STATICALLY: the
+web-facing modules (content_loader, render_web_data, render_jsonld) never
+import - even transitively - the master-cv/ overlay loader in the first place.
 
 Skip-guarded locally (needs a web build); the CI `web-guard` job builds web/dist first.
 """
