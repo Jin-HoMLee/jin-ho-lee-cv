@@ -333,6 +333,7 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     errors.extend(_validate_headline_variant_completeness(content_dir))
     errors.extend(_validate_publications(content_dir))
     errors.extend(_validate_periods(content_dir))
+    errors.extend(validate_faq(content_dir, schema_path.parent / "faq.schema.json"))
     return errors
 
 
@@ -351,8 +352,9 @@ def main() -> int:
     master_cv_schema = repo_root / "schema" / "master-cv.schema.json"
     errors.extend(validate_master_cv(master_cv_dir, master_cv_schema))
 
-    faq_schema = repo_root / "schema" / "faq.schema.json"
-    errors.extend(validate_faq(content_dir, faq_schema))
+    # faq.yaml is validated inside validate_tree() now (also gates agent edits
+    # via scripts.agent_core, which calls validate_tree exclusively) - do not
+    # call validate_faq() again here, or a broken faq.yaml would be reported twice.
 
     for warn in date_warnings(content_dir):
         print(f"WARN: {warn}", file=sys.stderr)
