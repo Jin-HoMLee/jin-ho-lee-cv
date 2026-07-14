@@ -114,11 +114,10 @@ describe("runDigest", () => {
       status: 429,
       json: async () => ({}),
     })) as unknown as typeof fetch;
-    const ai: AiBinding = {
-      run: vi.fn(async () => {
-        throw new Error("neurons exhausted");
-      }),
-    };
+    const run = vi.fn(async () => {
+      throw new Error("neurons exhausted");
+    });
+    const ai: AiBinding = { run };
 
     const result = await runDigest(db, "KEY", NOW, fetchImpl, ai);
 
@@ -127,6 +126,9 @@ describe("runDigest", () => {
     // Purge is a privacy guarantee independent of EVERY vendor.
     const purge = calls.find((c) => c.sql.includes("DELETE FROM questions"));
     expect(purge!.args).toEqual([NOW - RETENTION_SECONDS]);
+    // The fallback must have been ATTEMPTED - otherwise this test passes even if
+    // the ai param is silently ignored.
+    expect(run).toHaveBeenCalled();
   });
 
   it("does not touch Workers AI when Gemini succeeds", async () => {
