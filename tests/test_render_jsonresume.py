@@ -158,3 +158,10 @@ def test_work_null_end_omits_enddate():
 def test_work_absent_end_omits_enddate():
     w = _work(_exp({"start": "2014-04"}))[0]
     assert "endDate" not in w
+
+
+def test_google_scholar_profile_has_display_network_name(doc):
+    """The Scholar link must render as a human network name, not the raw key."""
+    networks = {p["network"] for p in doc["basics"]["profiles"]}
+    assert "Google Scholar" in networks
+    assert "Googlescholar" not in networks
