@@ -1,11 +1,6 @@
-import {
-  streamGemini,
-  geminiToClientStream,
-  clientMessageStream,
-  RESTING_MESSAGE,
-  TROUBLE_MESSAGE,
-  type ChatMessage,
-} from "./gemini";
+import { streamGemini, geminiToClientStream, type ChatMessage } from "./gemini";
+import { clientMessageStream, RESTING_MESSAGE, TROUBLE_MESSAGE, sseToClientStream } from "./sse";
+import { streamWorkersAI, workersAiChunkToEnvelopes, type AiBinding } from "./workersai";
 import { runDigest } from "./digest";
 import { latestDigest, recentQuestions, logQuestion } from "./insights";
 import { renderDashboard } from "./dashboard";
@@ -28,6 +23,10 @@ export interface Env {
   ALLOWED_ORIGIN: string;
   MONTHLY_CEILING: string;
   MAX_TOKENS: string;
+  // Workers AI platform binding (#97) - the cross-vendor fallback rung. Optional:
+  // absent (tests, a deploy without [ai] in wrangler.toml) means the fall-through
+  // is skipped and behavior is identical to the Gemini-only worker.
+  AI?: AiBinding;
   TELEGRAM_BOT_TOKEN?: string;
   TELEGRAM_CHAT_ID?: string;
 }
@@ -262,23 +261,57 @@ export default {
     }
 
     const systemText = buildSystemText(PERSONA, CV_CONTEXT as unknown as string);
-    const upstream = await streamGemini(
-      env.GEMINI_API_KEY,
-      systemText,
-      body.messages,
-      finite(env.MAX_TOKENS, 700),
-    );
+    // A Google-wide outage can also surface as a THROWN fetch (DNS failure,
+    // connection reset, TLS error) rather than a non-ok Response - upstream stays
+    // null then, and the fall-through below treats it as a non-429 terminal so the
+    // cross-vendor rung still gets its chance. (The digest path already has this:
+    // runDigest awaits generateText inside its own try.)
+    let upstream: Response | null = null;
+    try {
+      upstream = await streamGemini(
+        env.GEMINI_API_KEY,
+        systemText,
+        body.messages,
+        finite(env.MAX_TOKENS, 700),
+      );
+    } catch (err) {
+      // Message only - never log or forward an upstream body.
+      console.warn("gemini cascade threw", (err as Error)?.message);
+    }
     // On a non-200 from Gemini (429 quota exhausted, 400, 401, 500) the upstream body
     // is a JSON error object, NOT an SSE stream — we never forward it (it can leak
-    // internal detail). Instead synthesize a clean client-envelope stream carrying a
-    // friendly terminal message so the widget shows a sentence and closes, rather
-    // than hanging or surfacing a raw error (#103). streamGemini returns the LAST
-    // rung's failed Response, so status === 429 means the cascade ended on a quota
-    // 429 → the free-tier budget is spent (RESTING_MESSAGE). Any other terminal
-    // status (incl. a cascade that started with 429s but ended on a transient 500)
-    // is treated conservatively as a transient hiccup (TROUBLE_MESSAGE).
-    if (!upstream.ok) {
-      const message = upstream.status === 429 ? RESTING_MESSAGE : TROUBLE_MESSAGE;
+    // internal detail). First try the cross-vendor Workers AI rung (#97): it shares
+    // neither Google's infrastructure nor the API key, so it fires on ANY non-ok
+    // terminal, not just retryables. If it is absent or also fails, synthesize a
+    // clean client-envelope stream carrying a friendly terminal message so the
+    // widget shows a sentence and closes, rather than hanging or surfacing a raw
+    // error (#103). streamGemini returns the LAST rung's failed Response, so
+    // status === 429 means the cascade ended on a quota 429 → the free-tier budget
+    // is spent (RESTING_MESSAGE). Any other terminal status (incl. a cascade that
+    // started with 429s but ended on a transient 500) is treated conservatively as
+    // a transient hiccup (TROUBLE_MESSAGE). A Workers AI failure never changes that
+    // classification; it only fails to rescue it.
+    if (!upstream?.ok) {
+      if (env.AI) {
+        try {
+          const aiStream = await streamWorkersAI(
+            env.AI,
+            systemText,
+            body.messages,
+            finite(env.MAX_TOKENS, 700),
+          );
+          return new Response(sseToClientStream(aiStream, workersAiChunkToEnvelopes), {
+            status: 200,
+            headers: { ...cors, "content-type": "text/event-stream" },
+          });
+        } catch (err) {
+          // Workers AI rung failed too (neurons spent, outage) - fall through to
+          // the terminal message below. Log message-only for wrangler tail
+          // observability; never a body.
+          console.warn("workers-ai rung failed", (err as Error)?.message);
+        }
+      }
+      const message = upstream?.status === 429 ? RESTING_MESSAGE : TROUBLE_MESSAGE;
       return new Response(clientMessageStream(message), {
         status: 200,
         headers: { ...cors, "content-type": "text/event-stream" },
@@ -297,6 +330,10 @@ export default {
   // Reuses the existing free-tier GEMINI_API_KEY; skip-on-empty + 30d purge live
   // in runDigest. waitUntil keeps the worker alive until the digest completes.
   async scheduled(_event: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
-    ctx.waitUntil(runDigest(env.INSIGHTS_DB, env.GEMINI_API_KEY, Math.floor(Date.now() / 1000)).then(() => {}));
+    ctx.waitUntil(
+      runDigest(env.INSIGHTS_DB, env.GEMINI_API_KEY, Math.floor(Date.now() / 1000), fetch, env.AI).then(
+        () => {},
+      ),
+    );
   },
 };

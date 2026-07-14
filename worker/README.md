@@ -23,6 +23,17 @@ cap), and on a daily-quota `429` (or a transient `503`/`500`) falls through the 
 `gemini-2.5-flash-lite` → `gemini-2.0-flash` → `gemini-2.0-flash-lite` →
 `gemma-4-26b-a4b-it`. Visitors get the best model that still has quota; chaining eight
 independent daily buckets keeps the twin reachable far longer than any single model.
+
+Since #97 the chain ends with a **cross-vendor rung**: when every Gemini/Gemma rung
+fails, the Worker falls through to **Cloudflare Workers AI**
+(`@cf/meta/llama-3.3-70b-instruct-fp8-fast` via the `env.AI` platform binding - no
+extra secret). The account is on the Workers free plan (10k Neurons/day), so an
+exhausted allowance just fails the rung - there is no billing surface. The digest
+cron gets the same fallback. An absent binding degrades to Gemini-only behavior.
+One known behavior difference: Workers AI's SSE carries no finish reason, so a
+fallback answer cut at `MAX_TOKENS` ends without the truncation signal the widget
+shows on the Gemini path.
+
 The quota bucket is keyed by the *resolved* model, so `-latest`/`-001`/preview aliases
 that resolve to an existing rung add nothing — but `gemini-3-flash-preview` is a
 distinct bucket and the Gemma models draw from a **separate** free-tier pool from the

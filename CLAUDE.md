@@ -163,6 +163,14 @@ validate + test + lint must all be green before merging anything.
   filter those out — raw chain-of-thought never reaches the answer. (The dense `gemma-4-31b-it`
   was rejected: it returns `MALFORMED_RESPONSE`/thoughts-only at our token budget; the lighter MoE
   `gemma-4-26b-a4b-it` answers cleanly — a live-verification catch.)
+  Since #97 the cascade ends with a **cross-vendor rung**: when every Gemini/Gemma
+  rung fails, the Worker falls through to **Cloudflare Workers AI**
+  (`@cf/meta/llama-3.3-70b-instruct-fp8-fast` via the `env.AI` platform binding in
+  `src/workersai.ts` - no new secret; free plan, so neuron exhaustion just throws
+  and there is no billing surface). It fires on any non-ok Gemini terminal, also
+  backs the digest cron, and an absent binding degrades gracefully to Gemini-only.
+  The vendor-neutral SSE-to-client-envelope transformer lives in `src/sse.ts`;
+  vendor modules supply only a pure chunk-to-envelopes mapper.
 
   There is no out-of-pocket cost at expected traffic; usage is also
   bounded by `MAX_TOKENS` + `MONTHLY_CEILING`. The Worker transforms Gemini's native
