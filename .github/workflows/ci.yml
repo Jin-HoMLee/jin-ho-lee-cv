@@ -214,6 +214,11 @@ jobs:
       - name: Build site
         run: pnpm --dir web build
 
+      - name: Assert the build actually produced index pages
+        run: |
+          test -f web/dist/index.html
+          test -f web/dist/de/index.html
+
       - name: Run static-HTML facts + FAQPage guards
         run: uv run pytest tests/test_static_facts.py tests/test_faq_jsonld.py -v
 

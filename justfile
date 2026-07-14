@@ -144,6 +144,8 @@ web-build: web-data web-jsonld web-llms
 # Build the site and assert the public CV facts are crawler-readable in static HTML
 web-guard:
     just web-build
+    test -f web/dist/index.html
+    test -f web/dist/de/index.html
     uv run pytest tests/test_faq_jsonld.py tests/test_static_facts.py -v
 
 # Remove web build artifacts
