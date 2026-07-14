@@ -261,12 +261,23 @@ export default {
     }
 
     const systemText = buildSystemText(PERSONA, CV_CONTEXT as unknown as string);
-    const upstream = await streamGemini(
-      env.GEMINI_API_KEY,
-      systemText,
-      body.messages,
-      finite(env.MAX_TOKENS, 700),
-    );
+    // A Google-wide outage can also surface as a THROWN fetch (DNS failure,
+    // connection reset, TLS error) rather than a non-ok Response - upstream stays
+    // null then, and the fall-through below treats it as a non-429 terminal so the
+    // cross-vendor rung still gets its chance. (The digest path already has this:
+    // runDigest awaits generateText inside its own try.)
+    let upstream: Response | null = null;
+    try {
+      upstream = await streamGemini(
+        env.GEMINI_API_KEY,
+        systemText,
+        body.messages,
+        finite(env.MAX_TOKENS, 700),
+      );
+    } catch (err) {
+      // Message only - never log or forward an upstream body.
+      console.warn("gemini cascade threw", (err as Error)?.message);
+    }
     // On a non-200 from Gemini (429 quota exhausted, 400, 401, 500) the upstream body
     // is a JSON error object, NOT an SSE stream — we never forward it (it can leak
     // internal detail). First try the cross-vendor Workers AI rung (#97): it shares
@@ -280,7 +291,7 @@ export default {
     // started with 429s but ended on a transient 500) is treated conservatively as
     // a transient hiccup (TROUBLE_MESSAGE). A Workers AI failure never changes that
     // classification; it only fails to rescue it.
-    if (!upstream.ok) {
+    if (!upstream?.ok) {
       if (env.AI) {
         try {
           const aiStream = await streamWorkersAI(
@@ -293,12 +304,14 @@ export default {
             status: 200,
             headers: { ...cors, "content-type": "text/event-stream" },
           });
-        } catch {
+        } catch (err) {
           // Workers AI rung failed too (neurons spent, outage) - fall through to
-          // the terminal message below.
+          // the terminal message below. Log message-only for wrangler tail
+          // observability; never a body.
+          console.warn("workers-ai rung failed", (err as Error)?.message);
         }
       }
-      const message = upstream.status === 429 ? RESTING_MESSAGE : TROUBLE_MESSAGE;
+      const message = upstream?.status === 429 ? RESTING_MESSAGE : TROUBLE_MESSAGE;
       return new Response(clientMessageStream(message), {
         status: 200,
         headers: { ...cors, "content-type": "text/event-stream" },

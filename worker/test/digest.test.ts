@@ -131,6 +131,23 @@ describe("runDigest", () => {
     expect(run).toHaveBeenCalled();
   });
 
+  it("skips the digest (but still purges) when the LLM returns an empty answer", async () => {
+    const rows = [{ id: 1, ts: 5, text: "q1", country: "DE", msg_count: 1 }];
+    const { db, calls } = fakeD1(handlerWith(rows));
+    const fetchImpl = vi.fn(async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    })) as unknown as typeof fetch;
+
+    const result = await runDigest(db, "KEY", NOW, fetchImpl);
+
+    expect(result.digested).toBe(0);
+    expect(calls.find((c) => c.sql.includes("INSERT INTO digests"))).toBeUndefined();
+    const purge = calls.find((c) => c.sql.includes("DELETE FROM questions"));
+    expect(purge!.args).toEqual([NOW - RETENTION_SECONDS]);
+  });
+
   it("does not touch Workers AI when Gemini succeeds", async () => {
     const rows = [{ id: 1, ts: 5, text: "q1", country: "DE", msg_count: 1 }];
     const { db } = fakeD1(handlerWith(rows));

@@ -48,13 +48,15 @@ function stubFetch(opts: {
   turnstileSuccess?: boolean;
   geminiOk?: boolean;
   geminiStatus?: number;
+  geminiThrows?: boolean;
 }) {
-  const { turnstileSuccess = true, geminiOk = true, geminiStatus = 200 } = opts;
+  const { turnstileSuccess = true, geminiOk = true, geminiStatus = 200, geminiThrows = false } = opts;
   const mock = vi.fn(async (url: string) => {
     if (String(url).includes("challenges.cloudflare.com/turnstile")) {
       return { json: async () => ({ success: turnstileSuccess }) } as unknown as Response;
     }
     if (String(url).includes("generativelanguage.googleapis.com")) {
+      if (geminiThrows) throw new Error("connection reset");
       return {
         ok: geminiOk,
         status: geminiStatus,
@@ -244,6 +246,35 @@ describe("fetch handler", () => {
     );
     expect(res.status).toBe(200);
     expect(await res.text()).toContain('"text":"rescued"');
+  });
+
+  it("POST when the Gemini fetch REJECTS (network outage) + AI present → 200 SSE with the Workers AI answer (#97)", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    stubFetch({ geminiThrows: true });
+    const run = vi.fn(async () =>
+      streamOf(`data: {"response":"rescued from outage"}\n\ndata: [DONE]\n\n`),
+    );
+    const res = await worker.fetch(
+      post(ALLOWED, validBody),
+      makeEnv(fakeKv(), fakeD1().db, { run }),
+      makeCtx().ctx,
+    );
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toBe("text/event-stream");
+    expect(res.headers.get("Access-Control-Allow-Origin")).toBe(ALLOWED);
+    const text = await res.text();
+    expect(text).toContain('"text":"rescued from outage"');
+    expect(warn).toHaveBeenCalled();
+  });
+
+  it("POST when the Gemini fetch REJECTS and no AI binding → 200 SSE trouble message, not a 500 (#97)", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    stubFetch({ geminiThrows: true });
+    const res = await worker.fetch(post(ALLOWED, validBody), makeEnv(), makeCtx().ctx);
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("trouble responding");
+    expect(warn).toHaveBeenCalled();
   });
 
   it("POST happy path → 200 text/event-stream with transformed client envelope", async () => {

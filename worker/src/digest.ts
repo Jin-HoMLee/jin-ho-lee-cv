@@ -53,6 +53,10 @@ export async function runDigest(
         if (!ai) throw err;
         markdown = await generateTextWorkersAI(ai, prompt);
       }
+      // An empty answer (either vendor) must not become a stored empty digest -
+      // insertDigest would advance lastDigestTs and permanently exclude these
+      // questions from any future digest round.
+      if (!markdown) throw new Error("empty digest markdown");
       await insertDigest(db, { ts: now, markdown, n_questions: rows.length });
       digested = rows.length;
     } catch {
