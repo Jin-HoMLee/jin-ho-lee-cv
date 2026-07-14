@@ -60,12 +60,15 @@ def test_absent_faq_file_is_an_error(tmp_path):
 
 
 def test_availability_is_grounded_in_personal_yaml():
-    """The is-he-available-for-work FAQ answer must trace to a real content/ fact.
+    """The is-he-available-for-work FAQ answer must actually DERIVE from personal.availability.
 
     A prior version asserted an availability status with no underlying source
     in content/ - true today, but silently stale-able. `personal.availability`
-    is now that source of truth; this test proves it exists (bilingual,
-    non-empty) and that the FAQ answer built on top of it is non-empty too.
+    is now that source of truth. It is not enough for both to merely exist and
+    be non-empty (that proves nothing about their relationship) - this test
+    asserts the FAQ answer contains the availability fact verbatim, per
+    language, so editing personal.yaml's availability without updating the FAQ
+    fails CI instead of quietly shipping a stale claim to answer engines.
     """
     from ruamel.yaml import YAML
 
@@ -78,5 +81,11 @@ def test_availability_is_grounded_in_personal_yaml():
 
     faqs = yaml.load((CONTENT_DIR / "faq.yaml").read_text(encoding="utf-8"))["faqs"]
     entry = next(f for f in faqs if f["id"] == "is-he-available-for-work")
-    assert entry["answer"]["en"].strip()
-    assert entry["answer"]["de"].strip()
+    for lang in ("en", "de"):
+        assert entry["answer"][lang].strip()
+        fact = availability[lang].rstrip(".").lower()
+        answer = entry["answer"][lang].lower()
+        assert fact in answer, (
+            f"FAQ answer ({lang!r}) no longer derives from personal.availability.{lang}: "
+            f"{fact!r} not found in {answer!r}"
+        )
