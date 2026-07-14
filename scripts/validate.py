@@ -221,6 +221,34 @@ def validate_master_cv(master_cv_dir: Path, schema_path: Path) -> list[FileError
     return errors
 
 
+def validate_faq(content_dir: Path, schema_path: Path) -> list[FileError]:
+    """Validate content/faq.yaml: schema-valid, bilingual, unique ids.
+
+    faq.yaml is a REQUIRED content file (Phase 14) - absence is an error, not a skip.
+    """
+    path = content_dir / "faq.yaml"
+    if not path.exists():
+        return [FileError(path, "faq.yaml missing")]
+    try:
+        data = _load_yaml(path)
+        validator = _validator_for("faq", schema_path)
+        schema_errors = sorted(validator.iter_errors(data), key=lambda e: list(e.path))
+        if schema_errors:
+            joined = "; ".join(
+                f"{'.'.join(str(p) for p in e.path) or '<root>'}: {e.message}"
+                for e in schema_errors
+            )
+            return [FileError(path, joined)]
+    except Exception as e:  # malformed YAML
+        return [FileError(path, str(e))]
+
+    ids = [entry["id"] for entry in data["faqs"]]
+    dupes = sorted({i for i in ids if ids.count(i) > 1})
+    if dupes:
+        return [FileError(path, f"duplicate FAQ id(s): {dupes}")]
+    return []
+
+
 def date_warnings(content_dir: Path, *, today: date | None = None) -> list[FileError]:
     """Advisory (non-failing) warnings for implausible period years.
 
@@ -322,6 +350,9 @@ def main() -> int:
     master_cv_dir = Path(os.environ.get("MASTER_CV_DIR", repo_root / "master-cv"))
     master_cv_schema = repo_root / "schema" / "master-cv.schema.json"
     errors.extend(validate_master_cv(master_cv_dir, master_cv_schema))
+
+    faq_schema = repo_root / "schema" / "faq.schema.json"
+    errors.extend(validate_faq(content_dir, faq_schema))
 
     for warn in date_warnings(content_dir):
         print(f"WARN: {warn}", file=sys.stderr)

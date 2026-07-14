@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Jin-Ho Lee CV FAQ schema",
+  "$defs": {
+    "BilingualString": {
+      "type": "object",
+      "properties": {
+        "en": { "type": "string", "minLength": 1 },
+        "de": { "type": "string", "minLength": 1 }
+      },
+      "required": ["en", "de"],
+      "additionalProperties": false
+    },
+    "faq": {
+      "type": "object",
+      "properties": {
+        "faqs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+              "question": { "$ref": "#/$defs/BilingualString" },
+              "answer": { "$ref": "#/$defs/BilingualString" }
+            },
+            "required": ["id", "question", "answer"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["faqs"],
+      "additionalProperties": false
+    }
+  }
+}
