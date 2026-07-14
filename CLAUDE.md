@@ -35,6 +35,7 @@ Twelve phases (0–11), sequential. Each produces a usable artifact and gets its
 | 12b | Digital-twin insights (D1 question log + daily Gemini digest + Cloudflare-Access dashboard) | ✅ Done (merged 2026-06-18, `--no-ff`, PR #86, commit `1791691`); free-tier D1 + Cron Triggers; verbatim questions, 30-day purge, no IP. Worker deploy (D1 create + remote schema + Access policy + `just worker-deploy`) is a separate manual step |
 | 12c | Digital-twin lead-capture (consented opt-in contact form: persistent affordance + one-time nudge → `contact_submissions` D1 + best-effort Telegram notify + leads on the 12b dashboard) | ✅ Done (merged 2026-06-19, `--no-ff`, PR #91, commit `f8d2a10`); leads KEPT (no TTL — purpose-driven retention, the deliberate flip vs 12b's 30-day questions); Telegram notifier graceful no-op when unconfigured; reuses 12a Turnstile/CORS + a per-IP 3/day submit cap. Rate-limit slot spent only after a successful store (a 502 never burns one). Worker deploy (remote schema re-apply + `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` secrets — both kept out of the public repo) is a separate manual step |
 | 13 | `master-cv/` overlay (gitignored life-database superset feeding the twin + a `dist/master-cv.md` lookup export; CV stays sharp) | ✅ Done (merged 2026-06-22, `--no-ff`, PR #94, commit `c46f092`); overlay gitignored + PII-guarded, graceful-absence proven (CV-only output byte-identical without it), synthetic `master-cv.example/` committed; first ingest + CV-reconcile (#93) are separate manual/follow-up steps · opinions overlay added 2026-06-25 (`master-cv/opinions.md` → `## Opinions & Technical Taste` in the twin context; gated persona rule voices them only when asked) |
+| 14 | AEO entity presence (Google Scholar entity anchor · bilingual FAQ + `FAQPage` JSON-LD · front-loaded answer block · static-HTML-facts CI guard) | ✅ Done (merged 2026-07-14, `--no-ff`, PR #115 @claude-reviewed). Google Scholar is wired into `personal.links` - it flows into JSON-LD `sameAs` *and* renders as a visible link beside ORCID under the publications summary. A **Wikidata item is still a human follow-up, not yet created** - see `docs/runbooks/2026-07-wikidata-entity.md`; once it exists, pasting the Q-ID into `personal.links.wikidata` needs no code change (`_same_as` takes every link key but `website`; `_network_for` already maps it). @claude review caught a `</script>` breakout in the inline JSON-LD (faq.yaml is agent-editable via `apply_edit`) - fixed in two layers: `validate_faq` rejects the substring, and both injection points escape `<` |
 
 ## Layout
 
@@ -49,6 +50,7 @@ schema/cv.schema.json          JSON Schema for content
 schema/application.schema.json schema for cover-letter application.yaml
 schema/profile.schema.json     schema for the evergreen cover-letter profile.yaml
 schema/master-cv.schema.json   overlay validation
+schema/faq.schema.json         FAQ validation (bilingual, unique ids)
 master-cv.example/             committed synthetic overlay template
 scripts/                  validate.py, bib_loader.py, publications.py, content_loader.py, langstring.py, config.py, render_web_data.py, render_jsonresume.py, render_jsonld.py, render_text.py, render_llms.py, render_chat_context.py, fetch_citations.py, citations.py, agent_core.py, mcp_server.py, cover_letter_core.py, letter_text.py, render_letter.py, letter_lint.py, jd_gap.py, check_pii.py, master_cv_loader.py, render_master_cv.py, profile_union.py
 tests/                    pytest suite
@@ -60,6 +62,7 @@ worker/                   Cloudflare Worker — digital-twin chat proxy (Phase 1
 .mcp.json                 Claude Code project-scoped MCP server config
 .githooks/pre-commit      committed git PII guard; activate per-clone with `just install-hooks`
 docs/superpowers/         specs and implementation plans for each phase
+docs/runbooks/            operational runbooks (Wikidata entity creation)
 .github/workflows/        ci.yml (validate + PDF + release), pages.yml (web deploy)
 ```
 
@@ -84,6 +87,7 @@ just refresh-citations # fetch Crossref citation counts → data/citations.json 
 just snapshots-update  # regenerate committed renderer golden snapshots (after intentional output changes)
 just web-dev           # Astro dev server (regenerates content JSON + JSON-LD)
 just web-build         # Production build of web/dist
+just web-guard         # build the site + assert the public CV facts are crawler-readable in static HTML
 just mcp-server        # run the CV MCP server (stdio) — point an MCP client at this
 just mcp-dev           # MCP Inspector against the server (needs the mcp dep group)
 just letter <slug>     # render a cover letter → applications/<slug>/cover-letter-*.{pdf,txt}
@@ -106,6 +110,36 @@ validate + test + lint must all be green before merging anything.
 - **Golden snapshots.** Renderer outputs (`resume.json`, `person.jsonld`, `cv-{en,de}.txt`, `llms.txt`, web `content.*.json`) are byte-snapshotted with syrupy under `tests/__snapshots__/`; CI fails on unintended drift. Regenerate intentionally with `just snapshots-update` and eyeball the diff. `scripts/validate.py` also hard-fails reversed periods and advisory-warns implausible dates.
 - **ATS guard.** The built PDF's text layer is CI-verified (`tests/test_ats_pdf.py` via the `ats-guard` job — name/email/headings/umlauts round-trip through `pdftotext`); the `release` job depends on it. Note: Typst letter-spacing makes `pdftotext` emit intra-word spaces in styled headings (e.g. `SELECTED PROJECTS` → `PROJ ECTS`), so the guard asserts only cleanly-extracting headings (`PROFILE`/`SKILLS`/`EDUCATION`/`PUBLICATIONS`) — don't re-add spaced ones. `/llms.txt` (llmstxt.org site map) is generated into `web/public/` for the deployed site (gitignored, like `person.jsonld`).
 - **`llms.txt` is kept but inert as an AEO lever.** A 2026 deep-research pass (Ahrefs 137k-domain study; Otterly 90-day GEO experiment; John Mueller) found no major LLM vendor (OpenAI, Anthropic, Google) consumes external `llms.txt`, and ~97% of files carrying it get zero requests. We keep generating it (cheap, harmless, no downside) but must not treat it as a citation/visibility signal or invest further in it. The real answer-engine levers are entity disambiguation (schema.org `sameAs` → external profiles + a Wikidata item), answer-shaped content, and content freshness - not `llms.txt`.
+- **AEO: the public tier must be crawler-readable; the deep tier must not be (Phase 14).**
+  AI crawlers do not execute JavaScript, so every `content/` fact the CV wants cited has to be
+  in the served HTML. This is guarded on every PR by the `web-guard` CI job, the website's
+  answer to the PDF's `ats-guard`: it builds `web/dist` and then runs both
+  `tests/test_static_facts.py` and `tests/test_faq_jsonld.py` - `web-guard` is what makes those
+  tests actually execute in CI instead of silently skipping (both self-skip locally without a
+  build). `test_static_facts.py` checks name, headline, every employer, every degree, every
+  selected-project title, every publication title (loaded via `scripts.bib_loader`, so it
+  guards the real LaTeX-cleaning), the front-loaded answer block, and the inline Person
+  JSON-LD. The same test also asserts the inverse: no sentinel string from the synthetic
+  `master-cv.example/` overlay may reach the public surface. (The check reads
+  `master-cv.example/` only - it is a proof against the example, not the real gitignored
+  overlay, which no test ever touches.) That exclusivity is deliberate - the overlay is the
+  twin's alone, and being unable to crawl it is a reason to talk to the twin instead.
+  `content/faq.yaml` (bilingual, schema-validated against `schema/faq.schema.json`) drives both
+  the visible FAQ section and the `FAQPage` JSON-LD on the index pages, generated from the same
+  data so they cannot drift; the FAQ section label is `{ en: "FAQ", de: "Häufige Fragen" }` in
+  `content/labels.yaml` (not a literal "FAQ" translation - `tests/test_de_completeness.py`
+  forbids identical EN/DE strings). Every FAQ answer must be grounded in a `content/` fact,
+  never the `master-cv/` overlay: the availability answer, for example, is grounded in a new
+  optional `personal.availability` LangString (`content/personal.yaml`, registered in
+  `schema/cv.schema.json`) added specifically so that answer has a real fact to cite instead of
+  being asserted from nowhere. `profile.{en,de}.yaml` also gained an `answer_block` field, a
+  front-loaded answer-shaped paragraph rendered near the top of the profile section. FAQ and the
+  answer block are web-surface features: they stay out of the PDF, `resume.json`,
+  `person.jsonld`, `cv-*.txt`, and the twin chat context. Entity anchors (`personal.yaml`
+  `links`) flow into JSON-LD `sameAs` automatically - a Google Scholar profile was added this
+  way. A Wikidata item is the strongest remaining anchor but is intentionally not yet created;
+  it is a documented, privacy-bounded human follow-up (`docs/runbooks/2026-07-wikidata-entity.md`)
+  because creating it needs a live human account, not an agent action.
 - **Atomic commits.** One logical change per commit. Plain commit messages — no Claude attribution / co-authored-by trailers unless explicitly requested.
 - **Per-phase branches.** Phase N work happens on `phase-N-<topic>` branch, merged to `main` with `--no-ff` at the end of the phase to preserve the boundary in history.
 - **Deploys outside GitHub Pages.** The digital-twin Worker (`worker/`) is the first repo
@@ -232,6 +266,8 @@ validate + test + lint must all be green before merging anything.
 - `docs/superpowers/plans/2026-06-03-phase-11-cover-letter.md` — implementation plan for the cover-letter generator (#65)
 - `docs/superpowers/specs/2026-06-20-phase-13-master-cv-overlay-design.md` — Phase 13 design spec (master-cv/ overlay)
 - `docs/superpowers/plans/2026-06-22-phase-13-master-cv-overlay.md` — implementation plan for the master-cv/ overlay (#92)
+- `docs/superpowers/specs/2026-07-14-phase-14-aeo-entity-presence-design.md` - Phase 14 design spec (AEO entity presence)
+- `docs/superpowers/plans/2026-07-14-phase-14-aeo-entity-presence.md` - implementation plan for AEO entity presence (#113)
 
 ## Local-only files (not in git)
 

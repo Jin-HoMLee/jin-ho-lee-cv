@@ -10,12 +10,14 @@
       "city": "Mannheim",
       "country": "GER"
     },
+    "availability": "Open to roles in bioinformatics, computational biology and data science, based in Mannheim, Germany.",
     "links": {
       "linkedin": "https://linkedin.com/in/jin-holee",
       "github": "https://github.com/Jin-HoMLee",
       "researchgate": "https://researchgate.net/profile/Jin-Ho-Lee-8",
       "website": "https://jinholee.is-a.dev/",
-      "orcid": "https://orcid.org/0009-0001-8784-1771"
+      "orcid": "https://orcid.org/0009-0001-8784-1771",
+      "googlescholar": "https://scholar.google.com/citations?user=QPyM-WoAAAAJ"
     },
     "photo": "assets/photo.jpg",
     "knowsAbout": [
@@ -49,6 +51,7 @@
     ]
   },
   "profile": {
+    "answer_block": "Jin-Ho Lee is a bioinformatics and data science professional in Mannheim, Germany. He builds in-silico pipelines for HLA typing and neoantigen discovery from cancer-patient NGS and RNA-Seq data, and ships production machine learning on Google Cloud. He holds an M.Sc. from Heidelberg University and has 10+ peer-reviewed publications.",
     "tagline": "Data scientist with cancer-genomics roots — HLA typing & neoantigen discovery on real-patient data, production ML on GCP, 10+ publications.",
     "paragraphs": [
       "Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU. A parallel line of experimental-biophysics research produced 10+ peer-reviewed papers — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
@@ -1020,7 +1023,8 @@
       "publications": "Publications",
       "skills": "Skills",
       "languages": "Languages",
-      "volunteer": "Volunteer"
+      "volunteer": "Volunteer",
+      "faq": "FAQ"
     },
     "months_abbr": [
       "Jan",
@@ -1050,6 +1054,40 @@
       "summary": "{peer_reviewed} peer-reviewed publications ({pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author) and {conferences} first-author conference contributions, {span}, in radiation biophysics & super-resolution DNA-repair imaging.",
       "full_list_pointer": "Full list & metrics:"
     }
+  },
+  "faq": {
+    "faqs": [
+      {
+        "id": "who-is-jin-ho-lee",
+        "question": "Who is Jin-Ho Lee?",
+        "answer": "Jin-Ho Lee is a bioinformatics and data science professional based in Mannheim, Germany. He engineers in-silico pipelines for HLA typing and neoantigen discovery from cancer-patient NGS and RNA-Seq data, and builds production machine learning on Google Cloud. He holds an M.Sc. in Molecular Biotechnology from Heidelberg University and has 10+ peer-reviewed publications."
+      },
+      {
+        "id": "what-is-his-background",
+        "question": "What is Jin-Ho Lee's professional background?",
+        "answer": "Jin-Ho Lee spent eight years in doctoral and post-graduate research across FZ Jülich, KIP, NCT, SNU and DKFZ, working on cancer genomics and super-resolution microscopy. He then moved to industry as a data science coach at neuefische and a consultant and lead business functional analyst for an international bank, and now works independently on ML/AI engineering and open-source tooling."
+      },
+      {
+        "id": "what-are-his-skills",
+        "question": "What technical skills does Jin-Ho Lee have?",
+        "answer": "Jin-Ho Lee works in Python, SQL and R, with machine learning in PyTorch and TensorFlow, bioinformatics pipelines in Snakemake, and cloud data engineering on Google Cloud including BigQuery and BigQueryML. His domain expertise spans cancer genomics, NGS and RNA-Seq analysis, HLA typing, neoantigen discovery, and spatial point-pattern analysis."
+      },
+      {
+        "id": "what-has-he-published",
+        "question": "What has Jin-Ho Lee published?",
+        "answer": "Jin-Ho Lee has 10+ peer-reviewed publications, including first-author and shared-first-author papers, in radiation biophysics and super-resolution imaging of DNA-damage repair and chromatin architecture. The full list with citation counts is available via his ORCID record (0009-0001-8784-1771) and Google Scholar profile."
+      },
+      {
+        "id": "what-does-he-work-on-now",
+        "question": "What is Jin-Ho Lee working on now?",
+        "answer": "Jin-Ho Lee currently works independently on agentic AI systems - LLM agents with tool use, planning, routing, multi-agent orchestration and persistent memory - alongside open-source Claude Code tooling, skeleton-based action recognition in computer vision, and a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2 structural validation."
+      },
+      {
+        "id": "is-he-available-for-work",
+        "question": "Is Jin-Ho Lee available for new opportunities?",
+        "answer": "Jin-Ho Lee's stated availability: open to roles in bioinformatics, computational biology and data science, based in Mannheim, Germany. The fastest way to reach him is the contact form on this site or the digital twin chat, which answers detailed questions about his experience and can pass on a message."
+      }
+    ]
   },
   "publications_aggregate": {
     "summary": "11 peer-reviewed publications (2 first-author, 3 shared-first, 6 co-author) and 3 first-author conference contributions, 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.",

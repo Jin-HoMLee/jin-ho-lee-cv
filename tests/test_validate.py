@@ -65,6 +65,9 @@ def _write_minimal_content_tree(content: Path) -> None:
         "months_abbr: []\n"
         "proficiency: { native: { en: n }, fluent: { en: f }, basic: { en: b }, passive: { en: p } }\n"
     )
+    (content / "faq.yaml").write_text(
+        "faqs:\n  - id: q1\n    question: { en: Q, de: Q }\n    answer: { en: A, de: A }\n"
+    )
 
 
 _SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schema" / "cv.schema.json"

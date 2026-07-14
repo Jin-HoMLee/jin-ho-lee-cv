@@ -172,6 +172,31 @@ def test_apply_edit_refuses_invalid(cv_tree):
     assert (cv_tree / rel).read_text(encoding="utf-8") == current  # byte-identical
 
 
+def test_apply_edit_refuses_broken_faq(cv_tree):
+    """A schema-broken faq.yaml edit (duplicate id) must be rejected, not silently applied.
+
+    Regression guard for #113: validate_tree() used to skip faq.yaml entirely
+    (only scripts.validate.main() called validate_faq), so the MCP server / cv
+    skill - which gate purely on validate_tree via apply_edit - could write a
+    broken FAQ straight into content/.
+    """
+    rel = "faq.yaml"
+    current = (cv_tree / rel).read_text(encoding="utf-8")
+    broken = (
+        "faqs:\n"
+        "  - id: dup-id\n"
+        "    question: { en: Q1, de: Q1 }\n"
+        "    answer: { en: A1, de: A1 }\n"
+        "  - id: dup-id\n"
+        "    question: { en: Q2, de: Q2 }\n"
+        "    answer: { en: A2, de: A2 }\n"
+    )
+    res = agent_core.apply_edit(rel, broken, content_dir=cv_tree)
+    assert res["applied"] is False
+    assert any("duplicate" in e.lower() for e in res["errors"]), res["errors"]
+    assert (cv_tree / rel).read_text(encoding="utf-8") == current  # byte-identical, untouched
+
+
 @pytest.mark.parametrize("bad", ["../content.private/private.yaml", "/abs.yaml", "x.txt"])
 def test_apply_edit_refuses_unsafe_path(cv_tree, bad):
     with pytest.raises(ValueError):

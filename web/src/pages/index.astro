@@ -16,6 +16,7 @@ import VolunteerSection from "../components/VolunteerSection.astro";
 import AwardsSection from "../components/AwardsSection.astro";
 import PublicationsList from "../components/PublicationsList.astro";
 import StatBand from "../components/StatBand.astro";
+import FaqSection from "../components/FaqSection.astro";
 
 const data = contentEn as unknown as ContentData;
 ---
@@ -30,7 +31,7 @@ const data = contentEn as unknown as ContentData;
     <div data-reveal>
       <ExperienceSection experience={data.experience} projects={data.projects} labels={data.labels} lang="en" />
       <ProjectsSection projects={data.projects} labels={data.labels} lang="en" />
-      <PublicationsList publications={data.publications} aggregate={data.publications_aggregate} orcid={data.personal.links.orcid} lang="en" />
+      <PublicationsList publications={data.publications} aggregate={data.publications_aggregate} orcid={data.personal.links.orcid} scholar={data.personal.links.googlescholar} lang="en" />
       <AwardsSection awards={data.awards} labels={data.labels} />
     </div>
     <aside data-reveal>
@@ -40,4 +41,5 @@ const data = contentEn as unknown as ContentData;
       <VolunteerSection volunteer={data.volunteer} labels={data.labels} />
     </aside>
   </div>
+  <FaqSection faq={data.faq} labels={data.labels} />
 </BaseLayout>

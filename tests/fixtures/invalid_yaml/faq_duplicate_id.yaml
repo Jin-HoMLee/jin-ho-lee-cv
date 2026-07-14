@@ -1,0 +1,7 @@
+faqs:
+  - id: what-does-he-do
+    question: { en: "Q1?", de: "F1?" }
+    answer: { en: "A1.", de: "A1." }
+  - id: what-does-he-do
+    question: { en: "Q2?", de: "F2?" }
+    answer: { en: "A2.", de: "A2." }

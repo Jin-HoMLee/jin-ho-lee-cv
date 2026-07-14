@@ -278,3 +278,8 @@ def test_creativework_has_id_and_creator(doc):
     for w in works:
         assert w["@id"] == w["url"]
         assert w["creator"] == {"@id": orcid}
+
+
+def test_google_scholar_in_same_as(doc):
+    person = _person_node(doc)
+    assert "https://scholar.google.com/citations?user=QPyM-WoAAAAJ" in person["sameAs"]

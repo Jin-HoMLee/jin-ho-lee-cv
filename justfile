@@ -141,6 +141,17 @@ web-build: web-data web-jsonld web-llms
     pnpm --dir web install --frozen-lockfile
     pnpm --dir web build
 
+# Build the site and assert the public CV facts are crawler-readable in static HTML.
+# MASTER_CV_DIR points at the committed synthetic master-cv.example/ (never the real,
+# gitignored master-cv/) for the render steps, so the deep-tier guard in
+# tests/test_static_facts.py is a real assertion rather than a tautology - see that
+# file's module docstring.
+web-guard:
+    MASTER_CV_DIR="{{justfile_directory()}}/master-cv.example" just web-build
+    test -f web/dist/index.html
+    test -f web/dist/de/index.html
+    uv run pytest tests/test_faq_jsonld.py tests/test_static_facts.py -v
+
 # Remove web build artifacts
 web-clean:
     rm -rf web/dist web/node_modules web/src/data/*.json web/public/person.jsonld web/public/llms.txt

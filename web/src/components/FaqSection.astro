@@ -1,0 +1,53 @@
+---
+import type { Faq, Labels } from "../types/content";
+
+interface Props {
+  faq: Faq;
+  labels: Labels;
+}
+
+const { faq, labels } = Astro.props;
+
+// FAQPage structured data built from the SAME data the section renders below,
+// so the visible text and the schema can never drift apart.
+const faqPage = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.faqs.map((entry) => ({
+    "@type": "Question",
+    name: entry.question,
+    acceptedAnswer: { "@type": "Answer", text: entry.answer },
+  })),
+};
+
+// JSON.stringify does not escape "</script>", so a FAQ answer containing that
+// substring would close the tag early and let the rest parse as markup. faq.yaml
+// is agent-editable (Phase 10 apply_edit), so escaping "<" is the render-layer
+// backstop behind validate_faq's own rejection of the substring. < is valid
+// JSON and parses back to "<".
+const faqPageJson = JSON.stringify(faqPage).replace(/</g, "\\u003c");
+---
+<section id="faq" class="py-6" data-faq-section data-reveal>
+  <h2 class="eyebrow mb-3">{labels.sections.faq}</h2>
+  <div class="flex flex-col gap-2">
+    {faq.faqs.map((entry) => (
+      <details
+        id={`faq-${entry.id}`}
+        class="group rounded-lg border border-[var(--surface-border)] bg-[var(--surface)] px-4 py-3"
+      >
+        <summary
+          class="cursor-pointer list-none font-medium text-[var(--text)] marker:content-none
+                 flex items-center justify-between gap-3"
+        >
+          <span>{entry.question}</span>
+          <span
+            aria-hidden="true"
+            class="flex-shrink-0 text-[var(--muted)] transition-transform group-open:rotate-45"
+          >+</span>
+        </summary>
+        <p class="mt-3 leading-relaxed text-[var(--muted)]">{entry.answer}</p>
+      </details>
+    ))}
+  </div>
+  <script type="application/ld+json" set:html={faqPageJson} />
+</section>

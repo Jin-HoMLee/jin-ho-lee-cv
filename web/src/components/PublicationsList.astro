@@ -7,10 +7,11 @@ interface Props {
   publications: Publication[];
   aggregate: { summary: string; pointer: string };
   orcid: string | null;
+  scholar?: string | null;
   lang: Lang;
 }
 
-const { publications, aggregate, orcid, lang } = Astro.props;
+const { publications, aggregate, orcid, scholar, lang } = Astro.props;
 const orcidDisplay = orcid ? orcid.replace(/^https?:\/\//, "") : "";
 
 // Compact citation metric — one line instead of a full bar chart. Indicative; counts
@@ -76,15 +77,29 @@ function renderAuthors(authors: string[]): string {
   <!-- Aggregate (bridge / ds-ml) — visible by default; charts above stay for every target. -->
   <div data-cv-pub="aggregate" class="mt-4 text-sm text-[var(--muted)]">
     <p>{aggregate.summary}</p>
-    {orcid && (
+    {(orcid || scholar) && (
       <p class="mt-1 text-xs text-[var(--faint)]">
         {aggregate.pointer}{" "}
-        <a
-          href={orcid}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="underline decoration-dotted underline-offset-2 hover:text-[var(--text)]"
-        >{orcidDisplay}</a>
+        {orcid && (
+          <a
+            href={orcid}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline decoration-dotted underline-offset-2 hover:text-[var(--text)]"
+          >{orcidDisplay}</a>
+        )}
+        {/* The pointer promises "metrics" - Scholar is the profile that actually
+            shows them (citations, h-index), so it belongs on this line. "Google
+            Scholar" is a proper noun: identical in both languages, no langmap. */}
+        {orcid && scholar && <span aria-hidden="true"> · </span>}
+        {scholar && (
+          <a
+            href={scholar}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline decoration-dotted underline-offset-2 hover:text-[var(--text)]"
+          >Google Scholar</a>
+        )}
       </p>
     )}
   </div>

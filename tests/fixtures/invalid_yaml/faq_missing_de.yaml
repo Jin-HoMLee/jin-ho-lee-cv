@@ -1,0 +1,4 @@
+faqs:
+  - id: english-only
+    question: { en: "Q?", de: "F?" }
+    answer: { en: "A." }

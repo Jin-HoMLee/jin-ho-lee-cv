@@ -142,6 +142,9 @@ jobs:
             grep -q 'data-pdf-menu' "$page" || (echo "PDF download menu missing in $page" && exit 1)
             grep -q 'cv-en.pdf' "$page" || (echo "EN PDF link missing in $page" && exit 1)
             grep -q 'cv-de.pdf' "$page" || (echo "DE PDF link missing in $page" && exit 1)
+            grep -q 'data-faq-section' "$page" || (echo "FAQ section missing in $page" && exit 1)
+            grep -q '"@type":"FAQPage"' "$page" || grep -q '"@type": "FAQPage"' "$page" || (echo "FAQPage JSON-LD missing in $page" && exit 1)
+            grep -q 'data-cv-field="answer-block"' "$page" || (echo "Answer block missing in $page" && exit 1)
           done
           # Localized trigger label rendered per locale
           grep -q 'Download PDF' web/dist/index.html || (echo "EN PDF menu trigger label missing" && exit 1)

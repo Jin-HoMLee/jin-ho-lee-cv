@@ -1,0 +1,112 @@
+"""FAQ content must be schema-valid and fully bilingual (Phase 14, issue #113)."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+from scripts.validate import validate_faq
+
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+CONTENT_DIR = REPO_ROOT / "content"
+FAQ_SCHEMA = REPO_ROOT / "schema" / "faq.schema.json"
+FIXTURES = Path(__file__).parent / "fixtures" / "invalid_yaml"
+
+
+def test_real_faq_validates():
+    assert validate_faq(CONTENT_DIR, FAQ_SCHEMA) == []
+
+
+def test_real_faq_is_bilingual_and_nonempty():
+    from ruamel.yaml import YAML
+
+    data = YAML(typ="safe").load((CONTENT_DIR / "faq.yaml").read_text(encoding="utf-8"))
+    faqs = data["faqs"]
+    assert len(faqs) >= 5, "seed the FAQ with at least 5 curated entries"
+    ids = [f["id"] for f in faqs]
+    assert len(ids) == len(set(ids)), "FAQ ids must be unique"
+    for entry in faqs:
+        for field in ("question", "answer"):
+            assert entry[field]["en"].strip(), f"{entry['id']}: empty en {field}"
+            assert entry[field]["de"].strip(), f"{entry['id']}: empty de {field}"
+
+
+def test_duplicate_id_fails(tmp_path):
+    content = tmp_path / "content"
+    content.mkdir()
+    (content / "faq.yaml").write_text(
+        (FIXTURES / "faq_duplicate_id.yaml").read_text(encoding="utf-8"), encoding="utf-8"
+    )
+    errors = validate_faq(content, FAQ_SCHEMA)
+    assert errors, "duplicate FAQ id must be reported"
+    assert "duplicate" in str(errors[0]).lower()
+
+
+def test_missing_de_fails(tmp_path):
+    content = tmp_path / "content"
+    content.mkdir()
+    (content / "faq.yaml").write_text(
+        (FIXTURES / "faq_missing_de.yaml").read_text(encoding="utf-8"), encoding="utf-8"
+    )
+    errors = validate_faq(content, FAQ_SCHEMA)
+    assert errors, "an en-only FAQ entry must be reported (de is required)"
+
+
+def test_absent_faq_file_is_an_error(tmp_path):
+    content = tmp_path / "content"
+    content.mkdir()
+    errors = validate_faq(content, FAQ_SCHEMA)
+    assert errors, "faq.yaml is a required content file"
+
+
+def test_script_breakout_in_faq_text_fails(tmp_path):
+    """FAQ text is inlined into a JSON-LD <script> block, and faq.yaml is agent-editable.
+
+    A '</script' substring would close the tag early and let the rest parse as
+    markup. validate_faq must reject it, so a bad agent edit never reaches content/.
+    """
+    content = tmp_path / "content"
+    content.mkdir()
+    (content / "faq.yaml").write_text(
+        (FIXTURES / "faq_script_breakout.yaml").read_text(encoding="utf-8"), encoding="utf-8"
+    )
+    errors = validate_faq(content, FAQ_SCHEMA)
+    assert errors, "a '</script' substring in FAQ text must be rejected"
+    assert "</script" in str(errors[0])
+
+
+def test_real_faq_carries_no_script_breakout():
+    """The shipped FAQ is clean - guards the real content, not just the fixture path."""
+    assert validate_faq(CONTENT_DIR, FAQ_SCHEMA) == []
+
+
+def test_availability_is_grounded_in_personal_yaml():
+    """The is-he-available-for-work FAQ answer must actually DERIVE from personal.availability.
+
+    A prior version asserted an availability status with no underlying source
+    in content/ - true today, but silently stale-able. `personal.availability`
+    is now that source of truth. It is not enough for both to merely exist and
+    be non-empty (that proves nothing about their relationship) - this test
+    asserts the FAQ answer contains the availability fact verbatim, per
+    language, so editing personal.yaml's availability without updating the FAQ
+    fails CI instead of quietly shipping a stale claim to answer engines.
+    """
+    from ruamel.yaml import YAML
+
+    yaml = YAML(typ="safe")
+    personal = yaml.load((CONTENT_DIR / "personal.yaml").read_text(encoding="utf-8"))
+    availability = personal.get("availability")
+    assert availability is not None, "personal.yaml must carry an availability fact"
+    assert availability["en"].strip(), "personal.availability.en must be non-empty"
+    assert availability["de"].strip(), "personal.availability.de must be non-empty"
+
+    faqs = yaml.load((CONTENT_DIR / "faq.yaml").read_text(encoding="utf-8"))["faqs"]
+    entry = next(f for f in faqs if f["id"] == "is-he-available-for-work")
+    for lang in ("en", "de"):
+        assert entry["answer"][lang].strip()
+        fact = availability[lang].rstrip(".").lower()
+        answer = entry["answer"][lang].lower()
+        assert fact in answer, (
+            f"FAQ answer ({lang!r}) no longer derives from personal.availability.{lang}: "
+            f"{fact!r} not found in {answer!r}"
+        )

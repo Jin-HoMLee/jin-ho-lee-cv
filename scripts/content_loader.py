@@ -104,7 +104,7 @@ def load_content(
 
     Returns a dict with keys: personal, profile, skills, education, experience,
     projects (dict keyed by id), selected_projects (list), languages, volunteer,
-    awards (list of records), publications (list of records), labels.
+    awards (list of records), publications (list of records), labels, faq.
 
     If private_path is provided and the file exists, its contents are merged into
     content["personal"].
@@ -141,5 +141,6 @@ def load_content(
         "awards": _load_yaml(content_dir / "awards.yaml"),
         "publications": load_publications(content_dir / "publications.bib"),
         "labels": _load_yaml(content_dir / "labels.yaml"),
+        "faq": _load_yaml(content_dir / "faq.yaml"),
     }
     return content

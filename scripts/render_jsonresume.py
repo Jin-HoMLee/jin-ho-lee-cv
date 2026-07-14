@@ -34,6 +34,8 @@ def _network_for(key: str) -> str:
         "github": "GitHub",
         "researchgate": "ResearchGate",
         "orcid": "ORCID",
+        "googlescholar": "Google Scholar",
+        "wikidata": "Wikidata",
     }.get(key, key.title())
 
 

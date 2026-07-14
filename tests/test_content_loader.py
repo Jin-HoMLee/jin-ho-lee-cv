@@ -168,3 +168,32 @@ def test_research_genomics_bullet_mentions_variant_calling(content_dir):
     research = next(e for e in content["experience"] if e["id"] == "research")
     first_bullet = research["bullets"][0]["en"]
     assert "SNV" in first_bullet and "colorectal" in first_bullet.lower()
+
+
+def test_faq_is_loaded_and_resolves_to_language(content_dir):
+    from scripts.content_loader import load_content
+    from scripts.langstring import resolve_langstrings
+
+    en = resolve_langstrings(load_content(content_dir, lang="en"), lang="en")
+    de = resolve_langstrings(load_content(content_dir, lang="de"), lang="de")
+
+    en_faqs = en["faq"]["faqs"]
+    de_faqs = de["faq"]["faqs"]
+    assert len(en_faqs) == len(de_faqs) >= 5
+    assert isinstance(en_faqs[0]["question"], str)
+    assert isinstance(en_faqs[0]["answer"], str)
+    # Same ids, in the same order, across languages.
+    assert [f["id"] for f in en_faqs] == [f["id"] for f in de_faqs]
+    # The DE text is genuinely German, not an EN fallback.
+    assert en_faqs[0]["question"] != de_faqs[0]["question"]
+
+
+def test_profile_answer_block_is_a_plain_string(content_dir):
+    from scripts.content_loader import load_content
+
+    for lang in ("en", "de"):
+        profile = load_content(content_dir, lang=lang)["profile"]
+        block = profile["answer_block"]
+        assert isinstance(block, str) and block.strip()
+        words = len(block.split())
+        assert 35 <= words <= 70, f"{lang} answer_block is {words} words; target 40-60"

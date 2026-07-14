@@ -221,6 +221,53 @@ def validate_master_cv(master_cv_dir: Path, schema_path: Path) -> list[FileError
     return errors
 
 
+def validate_faq(content_dir: Path, schema_path: Path) -> list[FileError]:
+    """Validate content/faq.yaml: schema-valid, bilingual, unique ids, no script breakout.
+
+    faq.yaml is a REQUIRED content file (Phase 14) - absence is an error, not a skip.
+
+    FAQ text is inlined into a `<script type="application/ld+json">` block on the site,
+    and faq.yaml is agent-editable via agent_core.apply_edit (which gates on validate_tree).
+    A "</script" substring would close that tag early and let the rest parse as markup, so
+    reject it here. FaqSection.astro also escapes "<" at render time; this is the earlier,
+    louder of the two backstops - a bad edit never reaches content/ at all.
+    """
+    path = content_dir / "faq.yaml"
+    if not path.exists():
+        return [FileError(path, "faq.yaml missing")]
+    try:
+        data = _load_yaml(path)
+        validator = _validator_for("faq", schema_path)
+        schema_errors = sorted(validator.iter_errors(data), key=lambda e: list(e.path))
+        if schema_errors:
+            joined = "; ".join(
+                f"{'.'.join(str(p) for p in e.path) or '<root>'}: {e.message}"
+                for e in schema_errors
+            )
+            return [FileError(path, joined)]
+    except Exception as e:  # malformed YAML
+        return [FileError(path, str(e))]
+
+    ids = [entry["id"] for entry in data["faqs"]]
+    dupes = sorted({i for i in ids if ids.count(i) > 1})
+    if dupes:
+        return [FileError(path, f"duplicate FAQ id(s): {dupes}")]
+
+    errors: list[FileError] = []
+    for entry in data["faqs"]:
+        for field in ("question", "answer"):
+            for lang, text in entry[field].items():
+                if "</script" in text.lower():
+                    errors.append(
+                        FileError(
+                            path,
+                            f"{entry['id']}: {field}.{lang} contains '</script' - it would "
+                            "break out of the FAQPage JSON-LD script tag",
+                        )
+                    )
+    return errors
+
+
 def date_warnings(content_dir: Path, *, today: date | None = None) -> list[FileError]:
     """Advisory (non-failing) warnings for implausible period years.
 
@@ -305,6 +352,7 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
     errors.extend(_validate_headline_variant_completeness(content_dir))
     errors.extend(_validate_publications(content_dir))
     errors.extend(_validate_periods(content_dir))
+    errors.extend(validate_faq(content_dir, schema_path.parent / "faq.schema.json"))
     return errors
 
 
@@ -322,6 +370,10 @@ def main() -> int:
     master_cv_dir = Path(os.environ.get("MASTER_CV_DIR", repo_root / "master-cv"))
     master_cv_schema = repo_root / "schema" / "master-cv.schema.json"
     errors.extend(validate_master_cv(master_cv_dir, master_cv_schema))
+
+    # faq.yaml is validated inside validate_tree() now (also gates agent edits
+    # via scripts.agent_core, which calls validate_tree exclusively) - do not
+    # call validate_faq() again here, or a broken faq.yaml would be reported twice.
 
     for warn in date_warnings(content_dir):
         print(f"WARN: {warn}", file=sys.stderr)
