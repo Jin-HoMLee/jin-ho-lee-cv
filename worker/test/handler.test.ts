@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import worker, { type Env } from "../src/index";
 import { fakeD1 } from "./fakeD1";
 import { fakeKv } from "./fakeKv";
+import type { AiBinding } from "../src/workersai";
 
 const ALLOWED = "https://jinholee.is-a.dev";
 
@@ -18,7 +19,7 @@ function makeCtx() {
   return { ctx, promises };
 }
 
-function makeEnv(kv: KVNamespace = fakeKv(), db: D1Database = fakeD1().db): Env {
+function makeEnv(kv: KVNamespace = fakeKv(), db: D1Database = fakeD1().db, ai?: AiBinding): Env {
   return {
     RATE_KV: kv,
     INSIGHTS_DB: db,
@@ -27,6 +28,7 @@ function makeEnv(kv: KVNamespace = fakeKv(), db: D1Database = fakeD1().db): Env 
     ALLOWED_ORIGIN: ALLOWED,
     MONTHLY_CEILING: "5000",
     MAX_TOKENS: "700",
+    ...(ai ? { AI: ai } : {}),
   };
 }
 
@@ -193,6 +195,55 @@ describe("fetch handler", () => {
     expect(res.headers.get("content-type")).toBe("text/event-stream");
     const text = await res.text();
     expect(text).toContain("trouble responding");
+  });
+
+  it("POST when Gemini exhausts but the AI binding is present → 200 SSE with the Workers AI answer (#97)", async () => {
+    stubFetch({ geminiOk: false, geminiStatus: 429 });
+    const run = vi.fn(async () => streamOf(`data: {"response":"llama says hi"}\n\ndata: [DONE]\n\n`));
+    const res = await worker.fetch(
+      post(ALLOWED, validBody),
+      makeEnv(fakeKv(), fakeD1().db, { run }),
+      makeCtx().ctx,
+    );
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toBe("text/event-stream");
+    const text = await res.text();
+    expect(text).toContain('"text":"llama says hi"');
+    expect(text).not.toContain("free-tier limit");
+    // The persona/CV grounding and the token cap must reach the fallback vendor.
+    const [model, options] = run.mock.calls[0] as [string, any];
+    expect(model).toContain("llama");
+    expect(options.messages[0].role).toBe("system");
+    expect(options.max_tokens).toBe(700);
+  });
+
+  it("POST when Gemini 429s and Workers AI also fails → 200 SSE 'resting' message (#97)", async () => {
+    stubFetch({ geminiOk: false, geminiStatus: 429 });
+    const run = vi.fn(async () => {
+      throw new Error("neurons exhausted");
+    });
+    const res = await worker.fetch(
+      post(ALLOWED, validBody),
+      makeEnv(fakeKv(), fakeD1().db, { run }),
+      makeCtx().ctx,
+    );
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("free-tier limit");
+  });
+
+  it("POST when Gemini fails NON-retryably (400) → Workers AI still rescues (fires on any non-ok terminal, #97)", async () => {
+    // A Gemini-side 400/401 is vendor-specific (request shape, API key); Workers AI
+    // shares neither, so the cross-vendor rung fires on ANY non-ok terminal.
+    stubFetch({ geminiOk: false, geminiStatus: 400 });
+    const run = vi.fn(async () => streamOf(`data: {"response":"rescued"}\n\ndata: [DONE]\n\n`));
+    const res = await worker.fetch(
+      post(ALLOWED, validBody),
+      makeEnv(fakeKv(), fakeD1().db, { run }),
+      makeCtx().ctx,
+    );
+    expect(res.status).toBe(200);
+    expect(await res.text()).toContain('"text":"rescued"');
   });
 
   it("POST happy path → 200 text/event-stream with transformed client envelope", async () => {

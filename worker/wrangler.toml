@@ -14,6 +14,12 @@ binding = "INSIGHTS_DB"
 database_name = "twin-insights"
 database_id = "fa441841-cc5a-4f4e-9bcd-d160bbb8ebb0"
 
+# Workers AI — the cross-vendor fallback rung (#97). A platform binding: no id, no
+# secret. The account is on the Workers free plan, so past the free daily Neuron
+# allowance calls just fail (no billing surface) and the rung degrades gracefully.
+[ai]
+binding = "AI"
+
 # chat-context.md is imported as a text module in src/index.ts.
 [[rules]]
 type = "Text"
