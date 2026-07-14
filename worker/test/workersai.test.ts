@@ -115,3 +115,8 @@ describe("generateTextWorkersAI", () => {
     await expect(generateTextWorkersAI({ run }, "p")).rejects.toThrow("boom");
   });
 });
+
+// TEMPORARY bite-proof (never merged): a type error in a TEST file - the class
+// that previously slipped past both src-only tsc and non-typechecking vitest.
+const BITE_PROOF_TEST_TYPE_ERROR: number = "not a number";
+void BITE_PROOF_TEST_TYPE_ERROR;
