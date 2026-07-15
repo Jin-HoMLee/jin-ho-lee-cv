@@ -349,6 +349,77 @@ describe("fetch handler", () => {
   });
 });
 
+describe("first-response deadline (#119)", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  // Turnstile verifies fine; the Gemini streaming fetch is accepted but NEVER
+  // answers — the half-dead upstream of #119. Without the deadline this hangs the
+  // handler until the runtime's ~44s hung-request cancel.
+  function stubFetchGeminiHangs() {
+    const mock = vi.fn((url: string) => {
+      if (String(url).includes("challenges.cloudflare.com/turnstile")) {
+        return Promise.resolve({ json: async () => ({ success: true }) } as unknown as Response);
+      }
+      if (String(url).includes("generativelanguage.googleapis.com")) {
+        return new Promise<never>(() => {});
+      }
+      throw new Error(`unexpected fetch URL: ${url}`);
+    });
+    vi.stubGlobal("fetch", mock);
+    return mock;
+  }
+
+  it("a hanging Gemini rung-1 no longer blocks the Workers AI rung — rescued at the 20s deadline", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    stubFetchGeminiHangs();
+    const run = vi.fn(async () =>
+      streamOf(`data: {"response":"rescued past the hang"}\n\ndata: [DONE]\n\n`),
+    );
+    const resP = worker.fetch(
+      post(ALLOWED, validBody),
+      makeEnv(fakeKv(), fakeD1().db, { run }),
+      makeCtx().ctx,
+    );
+    await vi.advanceTimersByTimeAsync(20_000); // the Gemini cascade-wide deadline
+    const res = await resP;
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toBe("text/event-stream");
+    expect(await res.text()).toContain('"text":"rescued past the hang"');
+    expect(warn).toHaveBeenCalled();
+  });
+
+  it("a hanging Gemini rung-1 with no AI binding → 200 SSE trouble message, no throw (graceful absence)", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    stubFetchGeminiHangs();
+    const resP = worker.fetch(post(ALLOWED, validBody), makeEnv(), makeCtx().ctx);
+    await vi.advanceTimersByTimeAsync(20_000);
+    const res = await resP;
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toBe("text/event-stream");
+    expect(await res.text()).toContain("trouble responding");
+  });
+
+  it("both vendors hanging → trouble message at 25s total (20s Gemini + 5s Workers AI), under the widget's 30s guard", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    stubFetchGeminiHangs();
+    const run = vi.fn(() => new Promise<never>(() => {}));
+    const resP = worker.fetch(
+      post(ALLOWED, validBody),
+      makeEnv(fakeKv(), fakeD1().db, { run }),
+      makeCtx().ctx,
+    );
+    await vi.advanceTimersByTimeAsync(25_000);
+    const res = await resP;
+    expect(res.status).toBe(200);
+    expect(await res.text()).toContain("trouble responding");
+  });
+});
+
 function getInsights(headers: Record<string, string> = {}): Request {
   return new Request("https://twin.example/twin-insights", { method: "GET", headers });
 }

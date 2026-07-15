@@ -1,5 +1,6 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { sseToClientStream } from "../src/sse";
+import { FirstResponseTimeoutError, WORKERS_AI_FIRST_RESPONSE_DEADLINE_MS } from "../src/deadline";
 import {
   WORKERS_AI_MODEL,
   workersAiChunkToEnvelopes,
@@ -74,6 +75,33 @@ describe("streamWorkersAI", () => {
       }),
     };
     await expect(streamWorkersAI(ai, "s", [], 700)).rejects.toThrow("neurons exhausted");
+  });
+});
+
+describe("streamWorkersAI first-response deadline (#119)", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("rejects with FirstResponseTimeoutError when ai.run never settles (half-dead binding)", async () => {
+    // The #97 rung's phase-1 await gets the SAME treatment as Gemini's: a bounded
+    // wait whose expiry is just another failure the caller turns into the friendly
+    // terminal message — never an indefinite block.
+    const ai: AiBinding = { run: vi.fn(() => new Promise<never>(() => {})) };
+    const p = streamWorkersAI(ai, "s", [], 700);
+    const assertion = expect(p).rejects.toBeInstanceOf(FirstResponseTimeoutError);
+    await vi.advanceTimersByTimeAsync(WORKERS_AI_FIRST_RESPONSE_DEADLINE_MS);
+    await assertion;
+  });
+
+  it("returns the stream and clears the deadline timer when ai.run answers in time", async () => {
+    const stream = upstreamOf("");
+    const ai: AiBinding = { run: vi.fn(async () => stream) };
+    expect(await streamWorkersAI(ai, "s", [], 700)).toBe(stream);
+    expect(vi.getTimerCount()).toBe(0);
   });
 });
 
