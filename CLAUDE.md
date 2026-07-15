@@ -86,6 +86,7 @@ just worker-deploy     # deploy the digital-twin Worker to Cloudflare (bundles c
 just refresh-citations # fetch Crossref citation counts → data/citations.json (manual, networked)
 just snapshots-update  # regenerate committed renderer golden snapshots (after intentional output changes)
 just web-dev           # Astro dev server (regenerates content JSON + JSON-LD)
+just web-test          # web unit tests (vitest - twin widget markdown renderer incl. XSS cases)
 just web-build         # Production build of web/dist
 just web-guard         # build the site + assert the public CV facts are crawler-readable in static HTML
 just mcp-server        # run the CV MCP server (stdio) — point an MCP client at this
@@ -100,6 +101,7 @@ just install-hooks     # activate the committed git hooks (run once per clone �
 
 validate + test + lint must all be green before merging anything.
 The Worker has its own suite: `npm --prefix worker test` (vitest) + `npm --prefix worker run typecheck` (tsc - vitest alone does NOT typecheck); CI runs both in the `worker-test` job (#118).
+The web package too: `pnpm --dir web test` (vitest) covers the twin chat's escape-first markdown renderer (`web/src/lib/markdown.ts`), hostile XSS payloads included; CI runs it in the `web-test` job (#120).
 
 ## Conventions
 

@@ -259,6 +259,32 @@ jobs:
       - name: Run worker tests
         run: npm --prefix worker test
 
+  # The web widget's vitest suite (#120): pure-TS unit tests for the twin chat's
+  # markdown renderer, including the hostile-payload XSS cases. Like worker-test
+  # it deliberately has no `needs: validate` - the suite is self-contained (no
+  # Python, no generated content JSON), so it runs in parallel and a content
+  # error can never mask a renderer result.
+  web-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10
+
+      - name: Install web deps
+        run: pnpm --dir web install --frozen-lockfile
+
+      - name: Run web tests
+        run: pnpm --dir web test
+
   release:
     needs: [build-pdf, build-formats, ats-guard]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

@@ -136,6 +136,11 @@ web-llms:
 web-dev: web-data web-jsonld web-llms
     pnpm --dir web dev
 
+# Run the web unit tests (vitest - twin widget markdown renderer incl. XSS cases)
+web-test:
+    pnpm --dir web install --frozen-lockfile
+    pnpm --dir web test
+
 # Build the static site → web/dist/
 web-build: web-data web-jsonld web-llms
     pnpm --dir web install --frozen-lockfile
