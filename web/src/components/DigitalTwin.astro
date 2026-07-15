@@ -66,6 +66,7 @@ const starters = [
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script>
     import { streamTwin, submitLead } from "../lib/twin";
+    import { renderMarkdown } from "../lib/markdown";
     const root = document.getElementById("twin-root")!;
     const endpoint = root.dataset.endpoint!;
     const launch = document.getElementById("twin-launch")!;
@@ -190,7 +191,12 @@ const starters = [
           }
           if (acc) {
             out.classList.remove("twin-typing");
-            out.textContent = acc;
+            // Models drift into markdown despite the persona's plain-prose rule
+            // (#120). Render the few constructs they emit via the escape-first
+            // whitelist renderer - acc is model output, so it never reaches
+            // innerHTML unescaped. Re-rendering the whole accumulated buffer per
+            // chunk keeps constructs split across SSE chunks correct.
+            out.innerHTML = renderMarkdown(acc);
           }
           log.scrollTop = log.scrollHeight;
         }
@@ -412,6 +418,24 @@ const starters = [
       line-height: 1.45;
       white-space: pre-wrap;
       word-break: break-word;
+    }
+    /* Rendered-markdown children (assistant answers via renderMarkdown). The
+       bubble is pre-wrap, so the <ul> swallows its neighboring newlines in the
+       renderer and gets its spacing from margins here instead. */
+    .twin-msg ul {
+      margin: 0.25rem 0;
+      padding-left: 1.125rem;
+    }
+    .twin-msg li {
+      margin: 0.125rem 0;
+    }
+    .twin-msg code {
+      padding: 0 0.25rem;
+      border-radius: 0.25rem;
+      border: 1px solid var(--surface-border);
+      background: var(--bg);
+      font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.9em;
     }
     .twin-user {
       align-self: flex-end;
