@@ -142,3 +142,28 @@ def test_article_jsonld_is_present_correct_and_escaped(html):
     name = author["name"] if isinstance(author, dict) else author
     assert name == "Jin-Ho Lee"
     assert article["isBasedOn"] == REPO_URL
+
+
+WRITEUP_PATH = "/writeups/splice-neoepitopes/"
+
+
+@pytest.mark.skipif(not INDEX_EN.exists(), reason="needs a built site")
+def test_en_card_links_to_writeup():
+    html = INDEX_EN.read_text(encoding="utf-8")
+    assert WRITEUP_PATH in html
+    assert "Read the write-up" in html
+
+
+@pytest.mark.skipif(not INDEX_DE.exists(), reason="needs a built site")
+def test_de_card_links_to_writeup_in_english():
+    html = INDEX_DE.read_text(encoding="utf-8")
+    assert WRITEUP_PATH in html
+    assert "Read in English" in html
+
+
+@pytest.mark.skipif(not WRITEUP.exists(), reason="needs a built site")
+def test_writeup_is_in_sitemap():
+    sitemaps = list((DIST).glob("sitemap*.xml"))
+    assert sitemaps, "no sitemap emitted by the build"
+    joined = "".join(p.read_text(encoding="utf-8") for p in sitemaps)
+    assert "writeups/splice-neoepitopes" in joined, "write-up route missing from sitemap"
