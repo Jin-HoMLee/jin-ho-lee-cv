@@ -4,6 +4,7 @@ import { OGImageRoute } from "astro-og-canvas";
 import contentEn from "../../data/content.en.json";
 import contentDe from "../../data/content.de.json";
 import type { ContentData, Project, Lang } from "../../types/content";
+import { writeups } from "../../data/writeups";
 
 const en = contentEn as ContentData;
 const de = contentDe as ContentData;
@@ -45,6 +46,18 @@ function projectPage(project: Project, lang: Lang, dataName: string): OgPage {
   };
 }
 
+function writeupPage(w: (typeof writeups)[number], name: string): OgPage {
+  return {
+    kicker: `${name} — Research Write-up`,
+    title: w.title,
+    subtitle: w.summary,
+    meta: [
+      { label: "Status", value: "In progress" },
+      { label: "Language", value: "English" },
+    ],
+  };
+}
+
 const enName = `${en.personal.name.given} ${en.personal.name.family}`;
 const deName = `${de.personal.name.given} ${de.personal.name.family}`;
 
@@ -57,6 +70,9 @@ for (const [id, project] of Object.entries(en.projects)) {
 }
 for (const [id, project] of Object.entries(de.projects)) {
   pages[`projects-${id}-de`] = projectPage(project, "de", deName);
+}
+for (const w of writeups) {
+  pages[w.ogSlug] = writeupPage(w, enName);
 }
 
 export const { getStaticPaths, GET } = await OGImageRoute({

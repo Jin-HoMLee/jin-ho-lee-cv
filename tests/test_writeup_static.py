@@ -9,6 +9,7 @@ server-rendered HTML. Skip-guarded locally (needs a web build); the CI
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
@@ -121,3 +122,23 @@ def test_binding_widget_fallback_is_a_ranked_table(html):
     assert "illustrative" in figure_html.lower()
     for pep in ILLUSTRATIVE_PEPTIDES:
         assert pep in figure_html, f"illustrative peptide {pep!r} missing from raw HTML"
+
+
+def _ldjson_blocks(html: str) -> list[str]:
+    return re.findall(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', html, flags=re.S)
+
+
+def test_article_jsonld_is_present_correct_and_escaped(html):
+    article = None
+    for raw in _ldjson_blocks(html):
+        # Injection points escape '<' to <; a raw '<' means a lost escape.
+        assert "<" not in raw, "inline JSON-LD carries a raw '<' (lost \\u003c escaping)"
+        data = json.loads(raw)
+        if isinstance(data, dict) and data.get("@type") in ("Article", "ScholarlyArticle"):
+            article = data
+    assert article is not None, "no Article/ScholarlyArticle JSON-LD on the write-up"
+    assert article["headline"] == TITLE
+    author = article["author"]
+    name = author["name"] if isinstance(author, dict) else author
+    assert name == "Jin-Ho Lee"
+    assert article["isBasedOn"] == REPO_URL

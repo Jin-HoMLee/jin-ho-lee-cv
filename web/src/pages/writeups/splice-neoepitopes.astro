@@ -7,12 +7,32 @@ import { writeups } from "../../data/writeups";
 import PipelineExplorer from "../../components/writeups/PipelineExplorer.astro";
 import JunctionFilter from "../../components/writeups/JunctionFilter.astro";
 import BindingScoreWidget from "../../components/writeups/BindingScoreWidget.astro";
+import { PAGES_BASE_URL } from "../../lib/site-config";
 
 const data = contentEn as unknown as ContentData;
 const w = writeups.find((x) => x.slug === "splice-neoepitopes")!;
 const disclaimer =
   "This article is a companion to the open-source code and a forthcoming preprint. " +
   "Results are preliminary and in progress; figures marked illustrative are for explanation, not findings.";
+
+const canonical = `${PAGES_BASE_URL}/writeups/${w.slug}/`;
+const articleJsonld = {
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  headline: w.title,
+  description: w.summary,
+  datePublished: w.date,
+  inLanguage: "en",
+  url: canonical,
+  author: {
+    "@type": "Person",
+    name: `${data.personal.name.given} ${data.personal.name.family}`,
+  },
+  isBasedOn: w.repoUrl,
+};
+// Escape '<' before inlining (Phase 14 hardening): a "</script>" substring in
+// any inlined string would close the tag early. '<' is valid JSON.
+const articleJsonldStr = JSON.stringify(articleJsonld).replace(/</g, "\\u003c");
 ---
 <BaseLayout
   lang="en"
@@ -85,5 +105,7 @@ const disclaimer =
       <p>The citable scientific record will be a forthcoming preprint; this article is the amplifier that links to it and to the code.</p>
       <p>Follow the work on GitHub: <a class="text-[var(--w-accent)] underline hover:text-[var(--w-accent-hover)]" href={w.repoUrl}>{w.repoUrl}</a>.</p>
     </section>
+
+    <script type="application/ld+json" set:html={articleJsonldStr}></script>
   </article>
 </BaseLayout>
