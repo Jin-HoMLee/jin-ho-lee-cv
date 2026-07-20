@@ -46,14 +46,21 @@ function projectPage(project: Project, lang: Lang, dataName: string): OgPage {
   };
 }
 
+const WRITEUP_LANG_LABELS: Record<string, string> = { en: "English" };
+const WRITEUP_STATUS_LABELS: Record<string, string> = {
+  "in-progress": "In progress",
+  draft: "Draft",
+  published: "Published",
+};
+
 function writeupPage(w: (typeof writeups)[number], name: string): OgPage {
   return {
     kicker: `${name} - Research Write-up`,
     title: w.title,
     subtitle: w.summary,
     meta: [
-      { label: "Status", value: "In progress" },
-      { label: "Language", value: "English" },
+      { label: "Status", value: WRITEUP_STATUS_LABELS[w.status] ?? w.status },
+      { label: "Language", value: WRITEUP_LANG_LABELS[w.lang] ?? w.lang.toUpperCase() },
     ],
   };
 }
