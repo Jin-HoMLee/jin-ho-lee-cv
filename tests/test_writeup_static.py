@@ -105,7 +105,7 @@ def test_junction_filter_fallback_shows_sets(html):
     assert "312" in figure_html  # illustrative tumor-exclusive after filtering
 
 
-ILLUSTRATIVE_PEPTIDES = ["KLYQVEYAF", "SLLQHLIGL", "RTYGPVFMV"]
+ILLUSTRATIVE_PEPTIDES = ["KLYQVEYAF", "SLLQHLIGL", "RTYGPVFMV", "AEFGQKLTV", "NQFPDVLLM"]
 
 
 def test_binding_widget_fallback_is_a_ranked_table(html):
