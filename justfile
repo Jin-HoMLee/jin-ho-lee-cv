@@ -150,7 +150,7 @@ web-guard:
     MASTER_CV_DIR="{{justfile_directory()}}/master-cv.example" just web-build
     test -f web/dist/index.html
     test -f web/dist/de/index.html
-    uv run pytest tests/test_faq_jsonld.py tests/test_static_facts.py -v
+    uv run pytest tests/test_faq_jsonld.py tests/test_static_facts.py tests/test_writeup_static.py -v
 
 # Remove web build artifacts
 web-clean:

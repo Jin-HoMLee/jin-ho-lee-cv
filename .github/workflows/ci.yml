@@ -230,7 +230,7 @@ jobs:
           test -f web/dist/de/index.html
 
       - name: Run static-HTML facts + FAQPage guards
-        run: uv run pytest tests/test_static_facts.py tests/test_faq_jsonld.py -v
+        run: uv run pytest tests/test_static_facts.py tests/test_faq_jsonld.py tests/test_writeup_static.py -v
 
   # The digital-twin Worker's vitest suite + typecheck (#118). Deliberately has no
   # `needs: validate`: the worker suite is fully self-contained (vitest stubs the
