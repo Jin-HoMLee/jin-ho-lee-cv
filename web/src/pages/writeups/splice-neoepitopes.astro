@@ -4,6 +4,7 @@ import contentEn from "../../data/content.en.json";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import type { ContentData } from "../../types/content";
 import { writeups } from "../../data/writeups";
+import PipelineExplorer from "../../components/writeups/PipelineExplorer.astro";
 
 const data = contentEn as unknown as ContentData;
 const w = writeups.find((x) => x.slug === "splice-neoepitopes")!;
@@ -50,7 +51,7 @@ const disclaimer =
       <h2 class="font-serif-display text-2xl text-[var(--ink)]">The pipeline</h2>
       <p>The whole thing is a directed acyclic graph of Snakemake rules: each box below is a step, each arrow a dependency.</p>
       <p>Click a step to see what it consumes, what it produces, and the tool that does the work.</p>
-      <!-- figure 1: PipelineExplorer -->
+      <PipelineExplorer />
     </section>
 
     <section class="writeup-section">

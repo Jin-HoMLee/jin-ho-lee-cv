@@ -9,6 +9,7 @@ server-rendered HTML. Skip-guarded locally (needs a web build); the CI
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import pytest
@@ -28,6 +29,17 @@ SECTION_HEADINGS = [
     "From junction to neoepitope",
     "Reproducibility",
     "Status and how to follow",
+]
+
+PIPELINE_STEPS = [
+    "RNA-Seq FASTQ",
+    "Alignment (HISAT2 / STAR)",
+    "Junction extraction",
+    "Tumor-vs-normal filtering (GENCODE)",
+    "Translation to 9-mers",
+    "HLA typing (OptiType)",
+    "MHC-I binding (MHCflurry)",
+    "TCR-pMHC structural validation",
 ]
 
 pytestmark = pytest.mark.skipif(
@@ -53,8 +65,18 @@ def test_amplifier_disclaimer_in_static_html(html):
 
 def test_every_section_heading_in_static_html(html):
     for heading in SECTION_HEADINGS:
-        assert heading in html, f"section heading {heading!r} missing from raw HTML"
+        pattern = rf"<h2[^>]*>{re.escape(heading)}</h2>"
+        assert re.search(pattern, html), (
+            f"section heading {heading!r} not found as an <h2> element in raw HTML "
+            f"(a substring match elsewhere in prose does not count)"
+        )
 
 
 def test_repo_linkout_in_static_html(html):
     assert REPO_URL in html
+
+
+def test_pipeline_explorer_fallback_lists_every_step(html):
+    assert 'data-figure="pipeline-explorer"' in html
+    for step in PIPELINE_STEPS:
+        assert step in html, f"pipeline step {step!r} missing from raw HTML (JS-only?)"
