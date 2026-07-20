@@ -1,0 +1,64 @@
+/* Warm-editorial design tokens (Phase 15 pilot seed).
+   Scoped to .writeup so the article can adopt a paper-and-serif surface without
+   touching the site-wide dark-technical tokens in global.css. A future
+   site-wide restyle phase can lift these to :root wholesale. Dark is the
+   default; [data-theme="light"] overrides, matching global.css's mechanism
+   (the inline head script stamps data-theme before first paint). */
+
+@import "@fontsource/fraunces/400.css";
+@import "@fontsource/fraunces/600.css";
+
+.writeup {
+  --paper: #12100e;
+  --paper-raised: #1a1613;
+  --paper-border: #2b2521;
+  --ink: #f3ece2;
+  --ink-muted: #b8ab9a;
+  --ink-faint: #7c7060;
+  --w-accent: #e07a4f;
+  --w-accent-hover: #f0916a;
+  --sidenote: #9a8d7c;
+  --serif-display: "Fraunces", Georgia, "Times New Roman", serif;
+}
+
+:root[data-theme="light"] .writeup {
+  --paper: #faf6ef;
+  --paper-raised: #fffdf9;
+  --paper-border: #e8ddcd;
+  --ink: #2a2420;
+  --ink-muted: #5c5248;
+  --ink-faint: #8a7d6d;
+  --w-accent: #c25a34;
+  --w-accent-hover: #a84a28;
+  --sidenote: #7a6f60;
+}
+
+/* Article surface + reading rhythm. */
+.writeup {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 2rem 1.25rem 4rem;
+  border-radius: 0.5rem;
+}
+
+.font-serif-display {
+  font-family: var(--serif-display);
+  letter-spacing: -0.01em;
+}
+
+.writeup-section {
+  margin-top: 2.5rem;
+}
+.writeup-section > h2 {
+  margin-bottom: 0.75rem;
+}
+.writeup-section p {
+  margin-top: 0.85rem;
+  line-height: 1.7;
+  color: var(--ink-muted);
+  max-width: 40rem;
+}
+.writeup-section p em {
+  color: var(--ink);
+  font-style: italic;
+}
