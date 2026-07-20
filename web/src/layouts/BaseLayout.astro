@@ -8,7 +8,7 @@ import DigitalTwin from "../components/DigitalTwin.astro";
 interface Props {
   lang: Lang;
   data: ContentData;
-  // OG metadata — pages pass these. Homepage and project pages compute their own.
+  // OG metadata - pages pass these. Homepage and project pages compute their own.
   ogSlug?: string;       // e.g. "index-en", "projects-L1-en"
   ogTitle?: string;      // override <title> and og:title
   ogDescription?: string;
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const { lang, data, ogSlug, ogTitle, ogDescription, ogType } = Astro.props;
-const defaultTitle = `${data.personal.name.given} ${data.personal.name.family} — ${
+const defaultTitle = `${data.personal.name.given} ${data.personal.name.family} - ${
   lang === "en" ? "CV" : "Lebenslauf"
 }`;
 const title = ogTitle ?? defaultTitle;
@@ -60,7 +60,7 @@ const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
 
-    <meta property="og:site_name" content={`${data.personal.name.given} ${data.personal.name.family} — ${lang === "en" ? "CV" : "Lebenslauf"}`} />
+    <meta property="og:site_name" content={`${data.personal.name.given} ${data.personal.name.family} - ${lang === "en" ? "CV" : "Lebenslauf"}`} />
     <meta property="og:locale" content={lang === "en" ? "en_US" : "de_DE"} />
     <meta property="og:type" content={resolvedOgType} />
     <meta property="og:title" content={title} />

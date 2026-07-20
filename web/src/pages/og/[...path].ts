@@ -19,7 +19,7 @@ interface OgPage {
 function homepagePage(data: ContentData, lang: Lang): OgPage {
   const name = `${data.personal.name.given} ${data.personal.name.family}`;
   return {
-    kicker: lang === "en" ? `${name} — CV` : `${name} — Lebenslauf`,
+    kicker: lang === "en" ? `${name} - CV` : `${name} - Lebenslauf`,
     title: data.profile.tagline,
     subtitle: data.personal.headline,
     meta: [
@@ -32,7 +32,7 @@ function homepagePage(data: ContentData, lang: Lang): OgPage {
 function projectPage(project: Project, lang: Lang, dataName: string): OgPage {
   const techPreview = project.technologies.slice(0, 3).join(" · ");
   return {
-    kicker: lang === "en" ? `${dataName} — Project Brief` : `${dataName} — Projektkurzbeschreibung`,
+    kicker: lang === "en" ? `${dataName} - Project Brief` : `${dataName} - Projektkurzbeschreibung`,
     title: project.title,
     subtitle: project.role,
     meta: [
