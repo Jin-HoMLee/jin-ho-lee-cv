@@ -5,6 +5,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import type { ContentData } from "../../types/content";
 import { writeups } from "../../data/writeups";
 import PipelineExplorer from "../../components/writeups/PipelineExplorer.astro";
+import JunctionFilter from "../../components/writeups/JunctionFilter.astro";
 
 const data = contentEn as unknown as ContentData;
 const w = writeups.find((x) => x.slug === "splice-neoepitopes")!;
@@ -59,7 +60,7 @@ const disclaimer =
       <p>A splice junction is only interesting if the tumor has it and the patient's matched-normal tissue does not.</p>
       <p>Every observed junction is classified against the GENCODE annotation as <span class="font-mono-plex">annotated</span>, <span class="font-mono-plex">normal_shared</span>, or <span class="font-mono-plex">tumor_exclusive</span>.</p>
       <p>Toggle the matched-normal sample below to watch the tumor-exclusive set shrink to the junctions that survive the comparison.</p>
-      <!-- figure 2: JunctionFilter -->
+      <JunctionFilter />
     </section>
 
     <section class="writeup-section">

@@ -80,3 +80,21 @@ def test_pipeline_explorer_fallback_lists_every_step(html):
     assert 'data-figure="pipeline-explorer"' in html
     for step in PIPELINE_STEPS:
         assert step in html, f"pipeline step {step!r} missing from raw HTML (JS-only?)"
+
+
+def test_junction_filter_fallback_shows_sets(html):
+    assert 'data-figure="junction-filter"' in html
+    # Scope to the figure element itself: unrelated CSS elsewhere on the page
+    # (e.g. "0.3125rem" in the twin-widget styles baked into every page) can
+    # contain "312" as an accidental substring, which would let a whole-page
+    # substring check pass even if this figure's own count were wrong.
+    match = re.search(
+        r'<figure[^>]*data-figure="junction-filter"[^>]*>.*?</figure>', html, re.DOTALL
+    )
+    assert match, "junction-filter figure element not found in raw HTML"
+    figure_html = match.group(0)
+    assert "tumor_exclusive" in figure_html
+    assert "normal_shared" in figure_html
+    # Both raw counts must be present with JS off (illustrative, labelled).
+    assert "1,204" in figure_html  # illustrative tumor junctions
+    assert "312" in figure_html  # illustrative tumor-exclusive after filtering

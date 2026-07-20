@@ -1,0 +1,44 @@
+---
+// Figure 2: tumor-vs-matched-normal junction filtering. Illustrative counts.
+// Fallback (JS off): both sets and both counts are rendered statically.
+// Enhancement: toggling the matched-normal sample recomputes the exclusive set.
+const TUMOR = 1204; // illustrative tumor junctions
+const NORMAL_SHARED = 892; // illustrative overlap with matched-normal
+const EXCLUSIVE = TUMOR - NORMAL_SHARED; // 312
+const fmt = (n: number) => n.toLocaleString("en-US");
+---
+<figure data-figure="junction-filter" class="my-6 rounded-md border border-[var(--paper-border)] bg-[var(--paper-raised)] p-4">
+  <figcaption class="mb-3 font-mono-plex text-xs uppercase tracking-wider text-[var(--ink-faint)]">
+    Figure 2 · Junction-origin filter (illustrative)
+  </figcaption>
+
+  <div class="flex flex-wrap items-center gap-4 text-sm">
+    <div class="rounded border border-[var(--paper-border)] px-3 py-2">
+      <span class="block text-[var(--ink-faint)]">tumor junctions</span>
+      <span class="font-mono-plex text-lg text-[var(--ink)]">{fmt(TUMOR)}</span>
+    </div>
+    <label class="flex items-center gap-2 text-[var(--ink-muted)]">
+      <input type="checkbox" data-normal-toggle checked class="accent-[var(--w-accent)]" />
+      subtract matched-normal (<span class="font-mono-plex">normal_shared</span>)
+    </label>
+    <div class="rounded border border-[var(--w-accent)] px-3 py-2">
+      <span class="block text-[var(--ink-faint)]"><span class="font-mono-plex">tumor_exclusive</span></span>
+      <span data-exclusive-count class="font-mono-plex text-lg text-[var(--w-accent)]">{fmt(EXCLUSIVE)}</span>
+    </div>
+  </div>
+  <p class="mt-2 text-xs text-[var(--ink-faint)]">Counts are illustrative, for explanation only.</p>
+
+  <script is:inline define:vars={{ TUMOR, NORMAL_SHARED, EXCLUSIVE }}>
+    (function () {
+      const root = document.querySelector('[data-figure="junction-filter"]');
+      if (!root) return;
+      const toggle = root.querySelector("[data-normal-toggle]");
+      const out = root.querySelector("[data-exclusive-count]");
+      if (!toggle || !out) return;
+      const fmt = (n) => n.toLocaleString("en-US");
+      toggle.addEventListener("change", () => {
+        out.textContent = fmt(toggle.checked ? EXCLUSIVE : TUMOR);
+      });
+    })();
+  </script>
+</figure>
