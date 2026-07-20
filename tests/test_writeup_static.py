@@ -93,6 +93,11 @@ def test_junction_filter_fallback_shows_sets(html):
     )
     assert match, "junction-filter figure element not found in raw HTML"
     figure_html = match.group(0)
+    # Strip the inline <script> block: its define:vars serialization repeats
+    # TUMOR/NORMAL_SHARED/EXCLUSIVE as literal text, which would let the
+    # assertions below pass via the (JS-only, never executed by a crawler)
+    # script constant even if the crawler-visible fallback markup were wrong.
+    figure_html = re.sub(r"<script.*?</script>", "", figure_html, flags=re.DOTALL)
     assert "tumor_exclusive" in figure_html
     assert "normal_shared" in figure_html
     # Both raw counts must be present with JS off (illustrative, labelled).
