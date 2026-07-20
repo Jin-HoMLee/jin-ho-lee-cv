@@ -103,3 +103,21 @@ def test_junction_filter_fallback_shows_sets(html):
     # Both raw counts must be present with JS off (illustrative, labelled).
     assert "1,204" in figure_html  # illustrative tumor junctions
     assert "312" in figure_html  # illustrative tumor-exclusive after filtering
+
+
+ILLUSTRATIVE_PEPTIDES = ["KLYQVEYAF", "SLLQHLIGL", "RTYGPVFMV"]
+
+
+def test_binding_widget_fallback_is_a_ranked_table(html):
+    assert 'data-figure="binding-score"' in html
+    # Scope to the figure element itself and strip its inline <script>: a
+    # script serializing content as literal text could let the assertions
+    # below pass via JS-only text a crawler never executes, even if the
+    # crawler-visible fallback markup were wrong (see test_junction_filter_
+    # fallback_shows_sets above for the same pattern).
+    match = re.search(r'<figure[^>]*data-figure="binding-score"[^>]*>.*?</figure>', html, re.DOTALL)
+    assert match, "binding-score figure element not found in raw HTML"
+    figure_html = re.sub(r"<script.*?</script>", "", match.group(0), flags=re.DOTALL)
+    assert "illustrative" in figure_html.lower()
+    for pep in ILLUSTRATIVE_PEPTIDES:
+        assert pep in figure_html, f"illustrative peptide {pep!r} missing from raw HTML"

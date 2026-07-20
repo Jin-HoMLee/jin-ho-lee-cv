@@ -6,6 +6,7 @@ import type { ContentData } from "../../types/content";
 import { writeups } from "../../data/writeups";
 import PipelineExplorer from "../../components/writeups/PipelineExplorer.astro";
 import JunctionFilter from "../../components/writeups/JunctionFilter.astro";
+import BindingScoreWidget from "../../components/writeups/BindingScoreWidget.astro";
 
 const data = contentEn as unknown as ContentData;
 const w = writeups.find((x) => x.slug === "splice-neoepitopes")!;
@@ -68,7 +69,7 @@ const disclaimer =
       <p>A surviving junction is transcribed in silico, translated in all frames, and cut into the junction-spanning 9-mers that MHC class I molecules present on the cell surface.</p>
       <p>The patient's own HLA alleles (called from the same RNA-Seq with OptiType) decide which peptides actually get presented; MHCflurry scores how well each one binds.</p>
       <p>The widget below ranks an illustrative set of 9-mers by presentation score to convey what that step produces.</p>
-      <!-- figure 3: BindingScoreWidget -->
+      <BindingScoreWidget />
     </section>
 
     <section class="writeup-section">

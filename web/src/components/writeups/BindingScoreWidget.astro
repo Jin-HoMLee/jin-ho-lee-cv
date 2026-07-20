@@ -1,0 +1,70 @@
+---
+// Figure 3: illustrative MHC-I presentation ranking. NOT real results.
+// Fallback (JS off): a static ranked table. Enhancement: re-sort by score.
+interface Row {
+  peptide: string;
+  allele: string;
+  score: number; // higher = better presentation (illustrative, 0-1)
+}
+const rows: Row[] = [
+  { peptide: "KLYQVEYAF", allele: "HLA-A*24:02", score: 0.94 },
+  { peptide: "SLLQHLIGL", allele: "HLA-A*02:01", score: 0.88 },
+  { peptide: "RTYGPVFMV", allele: "HLA-A*02:01", score: 0.71 },
+  { peptide: "AEFGQKLTV", allele: "HLA-B*07:02", score: 0.63 },
+  { peptide: "NQFPDVLLM", allele: "HLA-B*07:02", score: 0.41 },
+];
+const sorted = [...rows].sort((a, b) => b.score - a.score);
+---
+<figure data-figure="binding-score" class="my-6 rounded-md border border-[var(--paper-border)] bg-[var(--paper-raised)] p-4">
+  <figcaption class="mb-3 font-mono-plex text-xs uppercase tracking-wider text-[var(--ink-faint)]">
+    Figure 3 · MHC-I presentation ranking (illustrative)
+  </figcaption>
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="text-left text-[var(--ink-faint)]">
+        <th class="py-1 font-normal">#</th>
+        <th class="py-1 font-normal">9-mer</th>
+        <th class="py-1 font-normal">HLA allele</th>
+        <th class="py-1 font-normal">
+          <button data-sort-score class="underline decoration-dotted hover:text-[var(--w-accent)]">score ↓</button>
+        </th>
+      </tr>
+    </thead>
+    <tbody data-rows>
+      {sorted.map((r, i) => (
+        <tr class="border-t border-[var(--paper-border)]" data-score={r.score}>
+          <td class="py-1 font-mono-plex text-[var(--ink-faint)]">{i + 1}</td>
+          <td class="py-1 font-mono-plex text-[var(--ink)]">{r.peptide}</td>
+          <td class="py-1 font-mono-plex text-[var(--ink-muted)]">{r.allele}</td>
+          <td class="py-1 font-mono-plex text-[var(--w-accent)]">{r.score.toFixed(2)}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="mt-2 text-xs text-[var(--ink-faint)]">Peptides and scores are illustrative, for explanation only - not findings.</p>
+
+  <script is:inline>
+    (function () {
+      const root = document.querySelector('[data-figure="binding-score"]');
+      if (!root) return;
+      const btn = root.querySelector("[data-sort-score]");
+      const body = root.querySelector("[data-rows]");
+      if (!btn || !body) return;
+      let asc = false;
+      btn.addEventListener("click", () => {
+        asc = !asc;
+        btn.textContent = asc ? "score ↑" : "score ↓";
+        const trs = Array.from(body.querySelectorAll("tr"));
+        trs.sort((a, b) => {
+          const da = parseFloat(a.getAttribute("data-score"));
+          const db = parseFloat(b.getAttribute("data-score"));
+          return asc ? da - db : db - da;
+        });
+        trs.forEach((tr, i) => {
+          tr.querySelector("td").textContent = String(i + 1);
+          body.appendChild(tr);
+        });
+      });
+    })();
+  </script>
+</figure>
