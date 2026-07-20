@@ -48,7 +48,7 @@ function projectPage(project: Project, lang: Lang, dataName: string): OgPage {
 
 function writeupPage(w: (typeof writeups)[number], name: string): OgPage {
   return {
-    kicker: `${name} — Research Write-up`,
+    kicker: `${name} - Research Write-up`,
     title: w.title,
     subtitle: w.summary,
     meta: [
