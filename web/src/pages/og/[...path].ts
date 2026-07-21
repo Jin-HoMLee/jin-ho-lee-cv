@@ -4,6 +4,7 @@ import { OGImageRoute } from "astro-og-canvas";
 import contentEn from "../../data/content.en.json";
 import contentDe from "../../data/content.de.json";
 import type { ContentData, Project, Lang } from "../../types/content";
+import { writeups } from "../../data/writeups";
 
 const en = contentEn as ContentData;
 const de = contentDe as ContentData;
@@ -18,7 +19,7 @@ interface OgPage {
 function homepagePage(data: ContentData, lang: Lang): OgPage {
   const name = `${data.personal.name.given} ${data.personal.name.family}`;
   return {
-    kicker: lang === "en" ? `${name} — CV` : `${name} — Lebenslauf`,
+    kicker: lang === "en" ? `${name} - CV` : `${name} - Lebenslauf`,
     title: data.profile.tagline,
     subtitle: data.personal.headline,
     meta: [
@@ -31,7 +32,7 @@ function homepagePage(data: ContentData, lang: Lang): OgPage {
 function projectPage(project: Project, lang: Lang, dataName: string): OgPage {
   const techPreview = project.technologies.slice(0, 3).join(" · ");
   return {
-    kicker: lang === "en" ? `${dataName} — Project Brief` : `${dataName} — Projektkurzbeschreibung`,
+    kicker: lang === "en" ? `${dataName} - Project Brief` : `${dataName} - Projektkurzbeschreibung`,
     title: project.title,
     subtitle: project.role,
     meta: [
@@ -41,6 +42,25 @@ function projectPage(project: Project, lang: Lang, dataName: string): OgPage {
       },
       { label: lang === "en" ? "Stack" : "Technologien", value: techPreview },
       { label: lang === "en" ? "Project" : "Projekt", value: project.id },
+    ],
+  };
+}
+
+const WRITEUP_LANG_LABELS: Record<string, string> = { en: "English" };
+const WRITEUP_STATUS_LABELS: Record<string, string> = {
+  "in-progress": "In progress",
+  draft: "Draft",
+  published: "Published",
+};
+
+function writeupPage(w: (typeof writeups)[number], name: string): OgPage {
+  return {
+    kicker: `${name} - Research Write-up`,
+    title: w.title,
+    subtitle: w.summary,
+    meta: [
+      { label: "Status", value: WRITEUP_STATUS_LABELS[w.status] ?? w.status },
+      { label: "Language", value: WRITEUP_LANG_LABELS[w.lang] ?? w.lang.toUpperCase() },
     ],
   };
 }
@@ -57,6 +77,9 @@ for (const [id, project] of Object.entries(en.projects)) {
 }
 for (const [id, project] of Object.entries(de.projects)) {
   pages[`projects-${id}-de`] = projectPage(project, "de", deName);
+}
+for (const w of writeups) {
+  pages[w.ogSlug] = writeupPage(w, enName);
 }
 
 export const { getStaticPaths, GET } = await OGImageRoute({

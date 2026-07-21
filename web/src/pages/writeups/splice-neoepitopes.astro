@@ -1,0 +1,120 @@
+---
+import "../../styles/writeup-tokens.css";
+import contentEn from "../../data/content.en.json";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { ContentData } from "../../types/content";
+import { writeups, type Writeup } from "../../data/writeups";
+import PipelineExplorer from "../../components/writeups/PipelineExplorer.astro";
+import JunctionFilter from "../../components/writeups/JunctionFilter.astro";
+import BindingScoreWidget from "../../components/writeups/BindingScoreWidget.astro";
+import ThemeToggle from "../../components/ThemeToggle.astro";
+import { PAGES_BASE_URL } from "../../lib/site-config";
+
+const data = contentEn as unknown as ContentData;
+const w = writeups.find((x) => x.slug === "splice-neoepitopes")!;
+// Badge text derives from the registry status so it can't drift from the OG
+// image's status label (which reads the same field) when this flips to published.
+const statusLabels: Record<Writeup["status"], string> = {
+  draft: "draft",
+  "in-progress": "in progress",
+  published: "published",
+};
+const disclaimer =
+  "This article is a companion to the open-source code and a forthcoming preprint. " +
+  "Results are preliminary and in progress; figures marked illustrative are for explanation, not findings.";
+
+const canonical = `${PAGES_BASE_URL}/writeups/${w.slug}/`;
+const articleJsonld = {
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  headline: w.title,
+  description: w.summary,
+  datePublished: w.date,
+  inLanguage: "en",
+  url: canonical,
+  author: {
+    "@type": "Person",
+    name: `${data.personal.name.given} ${data.personal.name.family}`,
+  },
+  isBasedOn: w.repoUrl,
+};
+// Escape '<' before inlining (Phase 14 hardening): a "</script>" substring in
+// any inlined string would close the tag early. '<' is valid JSON.
+const articleJsonldStr = JSON.stringify(articleJsonld).replace(/</g, "\\u003c");
+---
+<BaseLayout
+  lang="en"
+  data={data}
+  ogSlug={w.ogSlug}
+  ogTitle={`${w.title} - ${data.personal.name.given} ${data.personal.name.family}`}
+  ogDescription={w.summary}
+  ogType="article"
+>
+  <article class="writeup mx-auto max-w-3xl">
+    <nav class="mb-4 flex items-center justify-between text-sm">
+      <a href="/#L5" class="text-[var(--ink-muted)] underline hover:text-[var(--ink)]">← Back to CV</a>
+      <ThemeToggle />
+    </nav>
+
+    <header class="mb-8">
+      <p class="font-mono-plex text-xs uppercase tracking-wider text-[var(--ink-faint)]">Research write-up · {statusLabels[w.status]}</p>
+      <h1 class="mt-2 font-serif-display text-3xl font-semibold text-[var(--ink)] md:text-4xl">{w.title}</h1>
+      <p class="mt-3 text-base text-[var(--ink-muted)]">{w.summary}</p>
+    </header>
+
+    <aside data-writeup-disclaimer class="mb-8 rounded-md border border-[var(--paper-border)] bg-[var(--paper-raised)] px-4 py-3 text-sm text-[var(--ink-muted)]">
+      {disclaimer}
+      <span class="mt-1 block">
+        Code:
+        <a class="text-[var(--w-accent)] underline hover:text-[var(--w-accent-hover)]" href={w.repoUrl}>{w.repoUrl}</a>
+      </span>
+    </aside>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">The question</h2>
+      <p>Tumors do not only mutate their genes; they mis-splice them.</p>
+      <p>When a cancer cell joins two pieces of RNA that a healthy cell never would, the resulting messenger RNA can be translated into a short protein fragment that the immune system has never catalogued as "self."</p>
+      <p>Those fragments - <em>neoepitopes</em> - are candidate flags an immunotherapy could be taught to hunt.</p>
+      <p>This write-up walks through a pipeline that reads raw RNA-Seq data and works out, junction by junction, which of those flags are worth a closer look.</p>
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">The pipeline</h2>
+      <p>The whole thing is a directed acyclic graph of Snakemake rules: each box below is a step, each arrow a dependency.</p>
+      <p>Click a step to see what it consumes, what it produces, and the tool that does the work.</p>
+      <PipelineExplorer />
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">Finding tumor-exclusive junctions</h2>
+      <p>A splice junction is only interesting if the tumor has it and the patient's matched-normal tissue does not.</p>
+      <p>Every observed junction is classified against the GENCODE annotation as <span class="font-mono-plex">annotated</span>, <span class="font-mono-plex">normal_shared</span>, or <span class="font-mono-plex">tumor_exclusive</span>.</p>
+      <p>Toggle the matched-normal sample below to watch the tumor-exclusive set shrink to the junctions that survive the comparison.</p>
+      <JunctionFilter />
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">From junction to neoepitope</h2>
+      <p>A surviving junction is transcribed in silico, translated in all frames, and cut into the junction-spanning 9-mers that MHC class I molecules present on the cell surface.</p>
+      <p>The patient's own HLA alleles (called from the same RNA-Seq with OptiType) decide which peptides actually get presented; MHCflurry scores how well each one binds.</p>
+      <p>The widget below ranks an illustrative set of 9-mers by presentation score to convey what that step produces.</p>
+      <BindingScoreWidget />
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">Reproducibility</h2>
+      <p>The pipeline is a modernized reimplementation of a 2015 splice-junction neoepitope workflow, rebuilt so that a stranger can run it.</p>
+      <p>Every rule carries its own Conda environment; the graph runs locally, on a GCP GPU VM, or on a SLURM cluster with a config swap rather than a rewrite.</p>
+      <p>Nothing here depends on a dependency you have to install by hand.</p>
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">Status and how to follow</h2>
+      <p>Results are still cooking. This page presents the method and the shape of the output, not the final binders.</p>
+      <p>The citable scientific record will be a forthcoming preprint; this article is the amplifier that links to it and to the code.</p>
+      <p>Follow the work on GitHub: <a class="text-[var(--w-accent)] underline hover:text-[var(--w-accent-hover)]" href={w.repoUrl}>{w.repoUrl}</a>.</p>
+    </section>
+
+    <script type="application/ld+json" set:html={articleJsonldStr}></script>
+  </article>
+</BaseLayout>

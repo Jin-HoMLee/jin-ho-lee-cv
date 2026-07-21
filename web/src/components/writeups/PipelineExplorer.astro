@@ -1,0 +1,47 @@
+---
+// Figure 1: the Snakemake DAG. Server-rendered as a full ordered list of steps
+// (crawler fallback), progressively enhanced into a click-to-expand explorer.
+// Self-contained: no external dag.svg dependency.
+interface Step {
+  id: string;
+  label: string;
+  inputs: string;
+  outputs: string;
+  tool: string;
+  optional?: boolean;
+}
+
+const steps: Step[] = [
+  { id: "fastq", label: "RNA-Seq FASTQ", inputs: "Sequencer output", outputs: "Paired-end reads", tool: "-" },
+  { id: "align", label: "Alignment (HISAT2 / STAR)", inputs: "FASTQ + reference genome", outputs: "Aligned BAM + splice junctions", tool: "HISAT2 / STAR" },
+  { id: "junctions", label: "Junction extraction", inputs: "Aligned BAM", outputs: "Observed splice junctions", tool: "regtools / bedtools" },
+  { id: "filter", label: "Tumor-vs-normal filtering (GENCODE)", inputs: "Tumor + matched-normal junctions", outputs: "tumor_exclusive set", tool: "bedtools + GENCODE" },
+  { id: "translate", label: "Translation to 9-mers", inputs: "tumor_exclusive junctions", outputs: "Junction-spanning peptides", tool: "Python 3.11" },
+  { id: "hla", label: "HLA typing (OptiType)", inputs: "RNA-Seq reads", outputs: "Patient HLA-I alleles", tool: "OptiType" },
+  { id: "bind", label: "MHC-I binding (MHCflurry)", inputs: "9-mers + HLA alleles", outputs: "Ranked neoepitope candidates", tool: "MHCflurry 2.x" },
+  { id: "struct", label: "TCR-pMHC structural validation", inputs: "Top candidates", outputs: "Modeled ternary complex", tool: "TCRdock / AlphaFold v2", optional: true },
+];
+---
+<figure data-figure="pipeline-explorer" class="my-6 rounded-md border border-[var(--paper-border)] bg-[var(--paper-raised)] p-4">
+  <figcaption class="mb-3 font-mono-plex text-xs uppercase tracking-wider text-[var(--ink-faint)]">
+    Figure 1 · Pipeline explorer (click a step)
+  </figcaption>
+  <ol class="flex flex-col gap-2">
+    {steps.map((s, i) => (
+      <li>
+        <details class="rounded border border-[var(--paper-border)] px-3 py-2" open={i === 0}>
+          <summary class="cursor-pointer list-none font-medium text-[var(--ink)]">
+            <span class="font-mono-plex text-xs text-[var(--w-accent)]">{String(i + 1).padStart(2, "0")}</span>
+            <span class="ml-2">{s.label}</span>
+            {s.optional && <span class="ml-2 text-xs text-[var(--ink-faint)]">(optional)</span>}
+          </summary>
+          <dl class="mt-2 grid grid-cols-[max-content_1fr] gap-x-3 gap-y-1 text-sm text-[var(--ink-muted)]">
+            <dt class="text-[var(--ink-faint)]">in</dt><dd>{s.inputs}</dd>
+            <dt class="text-[var(--ink-faint)]">out</dt><dd>{s.outputs}</dd>
+            <dt class="text-[var(--ink-faint)]">tool</dt><dd class="font-mono-plex">{s.tool}</dd>
+          </dl>
+        </details>
+      </li>
+    ))}
+  </ol>
+</figure>
