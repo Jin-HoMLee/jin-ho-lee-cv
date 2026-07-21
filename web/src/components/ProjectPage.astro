@@ -1,6 +1,7 @@
 ---
 import type { Project, Labels, Lang } from "../types/content";
 import { formatPeriod } from "../lib/period";
+import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
   project: Project;
@@ -18,8 +19,9 @@ const outcomeLabel = { en: "Outcome", de: "Ergebnis" }[lang];
 const backHref = lang === "en" ? `/#${project.id}` : `/de/#${project.id}`;
 ---
 <article class="mx-auto max-w-3xl">
-  <nav class="mb-4 text-sm">
+  <nav class="mb-4 flex items-center justify-between text-sm">
     <a href={backHref} class="text-[var(--muted)] underline hover:text-[var(--text)]">{backLabel}</a>
+    <ThemeToggle />
   </nav>
 
   <header class="mb-6">
