@@ -3,7 +3,7 @@ import "../../styles/writeup-tokens.css";
 import contentEn from "../../data/content.en.json";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import type { ContentData } from "../../types/content";
-import { writeups } from "../../data/writeups";
+import { writeups, type Writeup } from "../../data/writeups";
 import PipelineExplorer from "../../components/writeups/PipelineExplorer.astro";
 import JunctionFilter from "../../components/writeups/JunctionFilter.astro";
 import BindingScoreWidget from "../../components/writeups/BindingScoreWidget.astro";
@@ -11,6 +11,13 @@ import { PAGES_BASE_URL } from "../../lib/site-config";
 
 const data = contentEn as unknown as ContentData;
 const w = writeups.find((x) => x.slug === "splice-neoepitopes")!;
+// Badge text derives from the registry status so it can't drift from the OG
+// image's status label (which reads the same field) when this flips to published.
+const statusLabels: Record<Writeup["status"], string> = {
+  draft: "draft",
+  "in-progress": "in progress",
+  published: "published",
+};
 const disclaimer =
   "This article is a companion to the open-source code and a forthcoming preprint. " +
   "Results are preliminary and in progress; figures marked illustrative are for explanation, not findings.";
@@ -48,7 +55,7 @@ const articleJsonldStr = JSON.stringify(articleJsonld).replace(/</g, "\\u003c");
     </nav>
 
     <header class="mb-8">
-      <p class="font-mono-plex text-xs uppercase tracking-wider text-[var(--ink-faint)]">Research write-up · in progress</p>
+      <p class="font-mono-plex text-xs uppercase tracking-wider text-[var(--ink-faint)]">Research write-up · {statusLabels[w.status]}</p>
       <h1 class="mt-2 font-serif-display text-3xl font-semibold text-[var(--ink)] md:text-4xl">{w.title}</h1>
       <p class="mt-3 text-base text-[var(--ink-muted)]">{w.summary}</p>
     </header>

@@ -56,16 +56,19 @@ const categoryOrder: Project["category"][] = ["life-science", "data-science", "c
               </p>
             </header>
             <p class="mb-3 text-sm text-[var(--muted)]">{p.summary}</p>
-            {writeupByProjectId(p.id) && (
-              <p class="mb-3">
-                <a
-                  href={`/writeups/${writeupByProjectId(p.id)!.slug}/`}
-                  class="text-xs font-medium text-[var(--accent)] underline hover:text-[var(--text)]"
-                >
-                  {writeupLinkLabel[lang]} →
-                </a>
-              </p>
-            )}
+            {(() => {
+              const writeup = writeupByProjectId(p.id);
+              return writeup && (
+                <p class="mb-3">
+                  <a
+                    href={`/writeups/${writeup.slug}/`}
+                    class="text-xs font-medium text-[var(--accent)] underline hover:text-[var(--text)]"
+                  >
+                    {writeupLinkLabel[lang]} →
+                  </a>
+                </p>
+              );
+            })()}
             <details class="text-sm">
               <summary class="cursor-pointer text-[var(--muted)] hover:text-[var(--text)]">
                 {detailsLabel[lang]}
