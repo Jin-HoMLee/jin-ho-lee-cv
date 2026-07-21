@@ -33,15 +33,24 @@ export function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (ch) => ESCAPES[ch]);
 }
 
-// Inline transforms over already-escaped text. Order matters: code first (so its
-// content is captured whole), then bold before italic (so ** isn't eaten as two
-// italics). Bold/italic require non-space content edges, which keeps free-standing
-// asterisks ("3 * 4") literal - same rule real markdown uses.
+// Inline transforms over already-escaped text. Code spans are pulled out FIRST and
+// parked behind NUL-delimited placeholders so the bold/italic passes can't reach
+// inside them - real markdown treats code-span content as verbatim, so `` `**x**` ``
+// must stay literal, not become <code><strong>x</strong></code>. The placeholder
+// carries no `*`, so emphasis can't match it; NUL never appears in escaped model
+// output, so it can't collide with real text. Bold runs before italic (so ** isn't
+// eaten as two italics); both require non-space content edges, which keeps
+// free-standing asterisks ("3 * 4") literal - same rule real markdown uses.
 function inline(escaped: string): string {
-  return escaped
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
+  const codeSpans: string[] = [];
+  const parked = escaped.replace(/`([^`]+)`/g, (_m, code) => {
+    codeSpans.push(code);
+    return `\x00${codeSpans.length - 1}\x00`;
+  });
+  return parked
     .replace(/\*\*(\S(?:[^*]*\S)?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(\S(?:[^*]*\S)?)\*/g, "<em>$1</em>");
+    .replace(/\*(\S(?:[^*]*\S)?)\*/g, "<em>$1</em>")
+    .replace(/\x00(\d+)\x00/g, (_m, i) => `<code>${codeSpans[Number(i)]}</code>`);
 }
 
 const LIST_ITEM = /^ {0,3}[-*] +(.*)$/;

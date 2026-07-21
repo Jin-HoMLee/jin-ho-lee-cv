@@ -69,6 +69,23 @@ describe("renderMarkdown: supported constructs", () => {
   it("leaves free-standing asterisks (math, footnotes) alone", () => {
     expect(renderMarkdown("3 * 4 * 5")).toBe("3 * 4 * 5");
   });
+
+  it("treats code-span content as verbatim (markers inside backticks stay literal)", () => {
+    expect(renderMarkdown("`**not bold**`")).toBe("<code>**not bold**</code>");
+    expect(renderMarkdown("`*not italic*`")).toBe("<code>*not italic*</code>");
+  });
+
+  it("still renders emphasis and code side by side in one line", () => {
+    expect(renderMarkdown("**bold** then `code` then *italic*")).toBe(
+      "<strong>bold</strong> then <code>code</code> then <em>italic</em>",
+    );
+  });
+
+  it("renders emphasis wrapping a code span (code stays literal inside it)", () => {
+    expect(renderMarkdown("**run `git **push`**")).toBe(
+      "<strong>run <code>git **push</code></strong>",
+    );
+  });
 });
 
 describe("renderMarkdown: streaming fragments", () => {
