@@ -37,6 +37,12 @@
   color: var(--ink);
   padding: 2rem 1.25rem 4rem;
   border-radius: 0.5rem;
+  /* Remap the global-technical tokens that shared components (e.g. ThemeToggle)
+     reference, so anything dropped into the article harmonizes with the warm
+     palette. These derive from the warm vars above, so they follow the theme. */
+  --muted: var(--ink-muted);
+  --surface: var(--paper-raised);
+  --text: var(--ink);
 }
 
 .font-serif-display {

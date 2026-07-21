@@ -7,6 +7,7 @@ import { writeups, type Writeup } from "../../data/writeups";
 import PipelineExplorer from "../../components/writeups/PipelineExplorer.astro";
 import JunctionFilter from "../../components/writeups/JunctionFilter.astro";
 import BindingScoreWidget from "../../components/writeups/BindingScoreWidget.astro";
+import ThemeToggle from "../../components/ThemeToggle.astro";
 import { PAGES_BASE_URL } from "../../lib/site-config";
 
 const data = contentEn as unknown as ContentData;
@@ -50,8 +51,9 @@ const articleJsonldStr = JSON.stringify(articleJsonld).replace(/</g, "\\u003c");
   ogType="article"
 >
   <article class="writeup mx-auto max-w-3xl">
-    <nav class="mb-4 text-sm">
+    <nav class="mb-4 flex items-center justify-between text-sm">
       <a href="/#L5" class="text-[var(--ink-muted)] underline hover:text-[var(--ink)]">← Back to CV</a>
+      <ThemeToggle />
     </nav>
 
     <header class="mb-8">
