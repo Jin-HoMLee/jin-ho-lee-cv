@@ -265,7 +265,10 @@ export default {
     // connection reset, TLS error) rather than a non-ok Response - upstream stays
     // null then, and the fall-through below treats it as a non-429 terminal so the
     // cross-vendor rung still gets its chance. (The digest path already has this:
-    // runDigest awaits generateText inside its own try.)
+    // runDigest awaits generateText inside its own try.) streamGemini also throws
+    // FirstResponseTimeoutError when its cascade-wide first-response deadline
+    // (#119, src/deadline.ts) expires on a half-dead upstream - same handling: the
+    // Workers AI rung below still gets consulted, bounded by its own 5s deadline.
     let upstream: Response | null = null;
     try {
       upstream = await streamGemini(

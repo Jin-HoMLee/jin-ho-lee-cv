@@ -1,3 +1,8 @@
+import {
+  FirstResponseTimeoutError,
+  GEMINI_FIRST_RESPONSE_DEADLINE_MS,
+  raceDeadline,
+} from "./deadline";
 import { sseToClientStream } from "./sse";
 
 export interface ChatMessage {
@@ -66,23 +71,39 @@ function isRetryable(status: number): boolean {
 // terminal message — see index.ts). The returned ok SSE body is transformed back
 // into the client envelope by geminiToClientStream so the browser widget contract
 // stays unchanged.
+//
+// First-response deadline (#119): every rung's `await fetchImpl(...)` shares ONE
+// cascade-wide budget (deadlineMs, default 20s). A half-dead upstream (connection
+// accepted, headers never sent) trips the remaining-budget race and streamGemini
+// REJECTS with FirstResponseTimeoutError - the same thrown-fetch shape a network
+// outage already produces, so the caller's existing catch gives the #97
+// cross-vendor rung its chance instead of blocking until the runtime's ~44s
+// hung-request cancel. Only phase 1 is bounded here; the streaming read is
+// separately guarded by sseToClientStream's 15s idle timer.
 export async function streamGemini(
   apiKey: string,
   systemText: string,
   messages: ChatMessage[],
   maxTokens: number,
   fetchImpl: typeof fetch = fetch,
+  deadlineMs: number = GEMINI_FIRST_RESPONSE_DEADLINE_MS,
 ): Promise<Response> {
   const contents = messages.map((m) => ({
     role: m.role === "assistant" ? "model" : "user",
     parts: [{ text: m.content }],
   }));
+  const deadlineAt = Date.now() + deadlineMs;
   let res!: Response;
   for (const model of MODELS) {
+    // The budget is shared: slow-but-answering rungs consume it too, so phase-1
+    // waiting is bounded at deadlineMs TOTAL, never deadlineMs per rung. Spent
+    // budget means stop consulting rungs - the next vendor is the better bet.
+    const remaining = deadlineAt - Date.now();
+    if (remaining <= 0) throw new FirstResponseTimeoutError("gemini");
     const url =
       `https://generativelanguage.googleapis.com/v1beta/models/${model.name}:streamGenerateContent` +
       `?alt=sse&key=${apiKey}`;
-    res = await fetchImpl(url, {
+    const fetched = fetchImpl(url, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
@@ -96,6 +117,7 @@ export async function streamGemini(
         },
       }),
     });
+    res = await raceDeadline(fetched, remaining, "gemini");
     if (res.ok || !isRetryable(res.status)) return res;
     // Retryable failure → try the next model. Drain this error body (small JSON,
     // never an SSE stream) so the upstream connection isn't held open until GC.

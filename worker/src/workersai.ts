@@ -1,3 +1,4 @@
+import { WORKERS_AI_FIRST_RESPONSE_DEADLINE_MS, raceDeadline } from "./deadline";
 import type { ChatMessage } from "./gemini";
 
 // Cross-vendor fallback rung (#97): Cloudflare Workers AI, reached via the env.AI
@@ -33,20 +34,31 @@ export function workersAiChunkToEnvelopes(chunk: any): object[] {
 // (Workers AI has no separate systemInstruction field); history roles pass through
 // unchanged (same "user"/"assistant" names). Errors (neuron exhaustion, model
 // errors) propagate as thrown exceptions - the caller decides the terminal message.
+//
+// First-response deadline (#119): the `await ai.run(...)` gets the same phase-1
+// treatment as streamGemini's fetches - a bounded wait (default 5s, a RESERVED
+// slice on top of Gemini's 20s budget so this rung always gets a real chance)
+// whose expiry rejects with FirstResponseTimeoutError, which the caller's
+// existing catch turns into the friendly terminal message.
 export async function streamWorkersAI(
   ai: AiBinding,
   systemText: string,
   messages: ChatMessage[],
   maxTokens: number,
+  deadlineMs: number = WORKERS_AI_FIRST_RESPONSE_DEADLINE_MS,
 ): Promise<ReadableStream<Uint8Array>> {
-  const result = await ai.run(WORKERS_AI_MODEL, {
-    messages: [
-      { role: "system", content: systemText },
-      ...messages.map((m) => ({ role: m.role, content: m.content })),
-    ],
-    stream: true,
-    max_tokens: maxTokens,
-  });
+  const result = await raceDeadline(
+    ai.run(WORKERS_AI_MODEL, {
+      messages: [
+        { role: "system", content: systemText },
+        ...messages.map((m) => ({ role: m.role, content: m.content })),
+      ],
+      stream: true,
+      max_tokens: maxTokens,
+    }),
+    deadlineMs,
+    "workers-ai",
+  );
   return result as ReadableStream<Uint8Array>;
 }
 

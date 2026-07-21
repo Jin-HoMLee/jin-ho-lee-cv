@@ -1,5 +1,6 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { geminiChunkToEnvelopes, generateText, streamGemini, type ChatMessage } from "../src/gemini";
+import { FirstResponseTimeoutError } from "../src/deadline";
 
 // A fake fetch that returns a scripted status per call (in order), recording the
 // requested URL + parsed body so cascade assertions can inspect which model was
@@ -184,6 +185,81 @@ describe("streamGemini model cascade", () => {
     expect(modelOf(gemma.url)).toBe("gemma-4-26b-a4b-it");
     expect(gemma.body.generationConfig.thinkingConfig).toBeUndefined();
     expect(gemma.body.systemInstruction).toEqual({ parts: [{ text: "system" }] });
+  });
+});
+
+describe("streamGemini first-response deadline (#119)", () => {
+  const args: [string, string, ChatMessage[], number] = [
+    "KEY",
+    "system",
+    [{ role: "user", content: "hi" }],
+    700,
+  ];
+  // A 429 Response resolving after `ms` fake milliseconds — a slow retryable rung.
+  function slow429(ms: number): Promise<Response> {
+    return new Promise<Response>((resolve) =>
+      setTimeout(() => resolve({ ok: false, status: 429, body: null } as unknown as Response), ms),
+    );
+  }
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("rejects at the 20s cascade-wide deadline when the rung-1 fetch hangs (half-dead upstream)", async () => {
+    // The #119 sharp edge: a vendor that accepts the connection but never sends
+    // response headers. Without a deadline this await blocks until the runtime's
+    // ~44s hung-request cancel, bypassing every other rung AND the #97 vendor.
+    const fn = vi.fn(() => new Promise<never>(() => {})) as unknown as typeof fetch;
+    const p = streamGemini(...args, fn);
+    const assertion = expect(p).rejects.toBeInstanceOf(FirstResponseTimeoutError);
+    await vi.advanceTimersByTimeAsync(20_000);
+    await assertion;
+    expect(fn).toHaveBeenCalledTimes(1); // budget spent — rung 2+ never consulted
+  });
+
+  it("the deadline is shared across rungs: a slow retryable rung leaves only the remainder", async () => {
+    // Rung 1 answers 429 after 15s; rung 2 hangs. The single 20s budget leaves
+    // rung 2 only 5s, so phase-1 waiting is bounded at 20s TOTAL — per-rung timers
+    // would instead stack (8 x 20s) far past the widget's 30s patience.
+    let call = 0;
+    const fn = vi.fn(() => {
+      call++;
+      if (call === 1) return slow429(15_000);
+      return new Promise<never>(() => {});
+    }) as unknown as typeof fetch;
+    const p = streamGemini(...args, fn);
+    const assertion = expect(p).rejects.toBeInstanceOf(FirstResponseTimeoutError);
+    await vi.advanceTimersByTimeAsync(20_000);
+    await assertion;
+    expect(fn).toHaveBeenCalledTimes(2); // rung 3+ never consulted
+  });
+
+  it("stops consulting rungs when a retryable answer lands exactly as the budget hits zero", async () => {
+    const fn = vi.fn(() => slow429(20_000)) as unknown as typeof fetch;
+    const p = streamGemini(...args, fn);
+    const assertion = expect(p).rejects.toBeInstanceOf(FirstResponseTimeoutError);
+    await vi.advanceTimersByTimeAsync(20_000);
+    await assertion;
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  it("a fast ok answer resolves normally and leaves no stray deadline timer", async () => {
+    const fn = vi.fn(async () => ({
+      ok: true,
+      status: 200,
+      body: new ReadableStream({
+        start(c) {
+          c.close();
+        },
+      }),
+    })) as unknown as typeof fetch;
+    const res = await streamGemini(...args, fn);
+    expect(res.ok).toBe(true);
+    expect(vi.getTimerCount()).toBe(0);
   });
 });
 
