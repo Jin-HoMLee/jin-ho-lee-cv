@@ -31,6 +31,12 @@ describe("guardrail contract", () => {
     expect(system).not.toMatch(/Rust/);
   });
 
+  it("ships the plain-prose rule so answers don't arrive as markdown (#120)", () => {
+    const { system } = assembled("anything");
+    expect(system).toMatch(/PLAIN PROSE, NO MARKDOWN/);
+    expect(system).toMatch(/no bullet or numbered lists/i);
+  });
+
   it("ships the gated-opinions rule naming the opinions section", () => {
     const { system } = assembled("anything");
     expect(system).toMatch(/OPINIONS \(only when asked\)/i);
