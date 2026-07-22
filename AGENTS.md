@@ -147,6 +147,7 @@ The web package too: `pnpm --dir web test` (vitest) covers the twin chat's escap
   from Jin-Ho's own account (#116) following the privacy-bounded runbook
   (`docs/runbooks/2026-07-wikidata-entity.md`) and is wired in via `personal.links.wikidata`.
 - **Atomic commits.** One logical change per commit. Plain commit messages — no Claude attribution / co-authored-by trailers unless explicitly requested.
+- **Scoped reuse license.** The standard MIT `LICENSE` supports GitHub detection; `REUSE.toml` is the authoritative file-level map. It covers software, schemas, reusable templates, build configuration, tests, and technical documentation, but overrides personal data, authored prose, likeness assets, derived snapshots, and plans containing embedded article prose with `LicenseRef-All-Rights-Reserved`; preserve that boundary when adding or copying personal material.
 - **Per-phase branches.** Phase N work happens on `phase-N-<topic>` branch, merged to `main` with `--no-ff` at the end of the phase to preserve the boundary in history.
 - **Deploys outside GitHub Pages.** The digital-twin Worker (`worker/`) is the first repo
   component that deploys to Cloudflare (via `just worker-deploy` / `wrangler`), not GitHub

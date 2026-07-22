@@ -17,6 +17,7 @@ This makes a build post the highest expected-ROI item in the report, at zero inf
 - Language: both pieces English (Phase 15 precedent; DE card links out).
 - AI angle: the agent-driven build process gets a dedicated, honest section.
 - Structure: demo-led narrative (approach A) with decision-log framing inside each architecture section.
+- Reuse contract (approved during final prose review): make reuse official in this PR, while stating plainly that the repository is still a working personal CV rather than a polished starter template.
 
 ## Deliverable 1: write-up at `/writeups/ask-my-cv/`
 
@@ -54,6 +55,15 @@ Proposed title: "Ask my CV - building a digital twin of my career from one YAML 
 - Extend the `tests/test_writeup_static.py` pattern to the new page: crawler text, `BlogPosting` JSON-LD, OG tags, sitemap membership, bilingual cross-link.
 - The new checks run in the `web-guard` CI job and must be proven to bite (temporarily break each assertion target once during development, per the guard-tautology lesson).
 
+### Reuse contract
+
+- The repository gains a standard MIT `LICENSE`, kept unmodified for reliable GitHub detection, plus a `REUSE.toml` file-level map and corresponding texts under `LICENSES/`.
+- The file-level map applies MIT to software, schemas, reusable templates, build configuration, tests, and technical documentation, then overrides personal and biographical data, authored write-up and social-post prose, personal image assets, generated snapshots, and plans that embed article prose with `LicenseRef-All-Rights-Reserved`.
+- The README and reuse guide explain that GitHub's MIT label summarizes the open-source portion rather than licensing every file, and anyone adapting the repository must replace the reserved materials.
+- `docs/reuse.md` documents the current fork-and-adapt path, including identity/domain replacement, public-versus-private content, build commands, and the optional digital-twin infrastructure.
+- The README links the reuse guide and describes the repository honestly as a working personal project, not a one-command template.
+- The write-up closes with an explicit "Can I use this for my own CV?" section that links the guide and states both the permission and the present limitations.
+
 ## Deliverable 2: LinkedIn post draft
 
 - ~150-200 words, English, twin-first hook mirroring the write-up's opening; invites one question to the twin; links the write-up.
@@ -75,12 +85,16 @@ Proposed title: "Ask my CV - building a digital twin of my career from one YAML 
 - [ ] Every architecture claim in the article traces to a real file/behavior on main.
 - [ ] The LinkedIn draft exists in both link variants, passes the advisory cliche lint with zero unaddressed hits, and reads in Jin-Ho's voice.
 - [ ] Jin-Ho has approved both texts (he publishes the post himself; publishing is outside this branch).
+- [ ] A reader has explicit permission to reuse the code and templates, can find the current adaptation steps, and is told which personal materials are excluded.
+- [ ] The MIT and reserved sets are machine-readable at file level, including generated or embedded copies of reserved material.
+- [ ] The closing reuse answer and guide link are crawler-readable and guarded by tests that were observed failing before implementation.
 
 ## Out of scope
 
 - German translation of either piece.
 - Site-wide warm-editorial restyle (its own future phase).
 - Any twin/Worker code change.
+- A one-command initializer, generic starter repository, automated rebranding, or full removal of Jin-Ho-specific assumptions.
 - Posting to LinkedIn (human-only step).
 - Post-publish measurement (`/twin-insights` watch + FAQ refresh feed) - stays on issue #140 as follow-up checkboxes.
 

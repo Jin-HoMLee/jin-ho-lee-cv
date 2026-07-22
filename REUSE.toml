@@ -1,0 +1,22 @@
+version = 1
+
+[[annotations]]
+path = "**"
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Jin-Ho Lee"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = [
+    "content/**",
+    "web/src/pages/writeups/**",
+    "docs/build-post/**",
+    "web/public/photo.jpg",
+    "web/src/assets/digital-twin-photo.png",
+    "tests/__snapshots__/**",
+    "docs/superpowers/plans/2026-07-20-phase-15-splice-writeup.md",
+    "docs/superpowers/plans/2026-07-22-build-post.md",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Jin-Ho Lee"
+SPDX-License-Identifier = "LicenseRef-All-Rights-Reserved"

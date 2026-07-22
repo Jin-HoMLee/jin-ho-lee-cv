@@ -11,6 +11,7 @@ const data = contentEn as unknown as ContentData;
 const w = writeups.find((x) => x.slug === "ask-my-cv")!;
 const canonical = `${PAGES_BASE_URL}/writeups/${w.slug}/`;
 const twinUrl = PAGES_BASE_URL + "/";
+const reuseGuideUrl = `${w.repoUrl}/blob/main/docs/reuse.md`;
 
 const articleJsonld = {
   "@context": "https://schema.org",
@@ -97,6 +98,13 @@ const articleJsonldStr = JSON.stringify(articleJsonld).replace(/</g, "\\u003c");
       <p>Nothing, in running costs. Static hosting, a free Worker tier, free model tiers, free CI. The bounded pieces are bounded on purpose.</p>
       <p>The code, every spec, and the full build history: <a class="text-[var(--w-accent)] underline hover:text-[var(--w-accent-hover)]" href={w.repoUrl}>{w.repoUrl}</a>.</p>
       <p>And the twin is still waiting for a question: <a class="text-[var(--w-accent)] underline hover:text-[var(--w-accent-hover)]" href={twinUrl}>ask it something</a>.</p>
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">Can I use this for my own CV?</h2>
+      <p>Yes, with some assembly. The code and reusable templates are MIT-licensed where marked in the file-level license map. My personal CV data, portrait, and article prose are not part of that license, so replace them with your own.</p>
+      <p>This is still my working repository, not a one-command template. The PDF and static site are the easiest starting points. The digital twin is optional and needs your own Cloudflare and model configuration.</p>
+      <p>The <a class="text-[var(--w-accent)] underline hover:text-[var(--w-accent-hover)]" href={reuseGuideUrl}>reuse guide</a> lists the current path and the parts that still need manual replacement.</p>
     </section>
 
     <script type="application/ld+json" set:html={articleJsonldStr}></script>

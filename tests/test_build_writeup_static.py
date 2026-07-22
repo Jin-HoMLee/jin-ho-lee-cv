@@ -22,6 +22,7 @@ INDEX_EN = DIST / "index.html"
 INDEX_DE = DIST / "de" / "index.html"
 
 REPO_URL = "https://github.com/Jin-HoMLee/jin-ho-lee-cv"
+REUSE_GUIDE_URL = f"{REPO_URL}/blob/main/docs/reuse.md"
 TITLE = "Ask my CV"
 SECTION_HEADINGS = [
     "Don't read my CV. Ask it.",
@@ -31,6 +32,7 @@ SECTION_HEADINGS = [
     "Guardrails, and keeping PII out",
     "Built by directing an agent",
     "What it cost, and where to look",
+    "Can I use this for my own CV?",
 ]
 WRITEUP_PATH = "/writeups/ask-my-cv/"
 
@@ -64,6 +66,16 @@ def test_twin_invitation_in_static_html(html):
 
 def test_repo_linkout_in_static_html(html):
     assert REPO_URL in html
+
+
+def test_reuse_guide_linkout_in_static_html(html):
+    assert re.search(
+        rf'<a[^>]+href="{re.escape(REUSE_GUIDE_URL)}"[^>]*>reuse guide</a>',
+        html,
+    )
+    assert "code and reusable templates are MIT-licensed" in html
+    assert "personal CV data, portrait, and article prose are not part of that license" in html
+    assert "not a one-command template" in html
 
 
 def _ldjson_blocks(html: str) -> list[str]:

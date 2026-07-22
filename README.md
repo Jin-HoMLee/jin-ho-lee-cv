@@ -12,6 +12,12 @@ Machine-readable, version-controlled CV. Single source of truth in YAML + BibTeX
 
 See `docs/superpowers/specs/` for the architectural spec and `docs/superpowers/plans/` for active implementation plans.
 
+## Use This for Your Own CV
+
+The software and reusable templates are MIT-licensed where marked in [`REUSE.toml`](REUSE.toml), with Jin-Ho's personal CV data, authored prose, likeness assets, and their generated copies explicitly excluded.
+This is a working personal repository, not a one-command template.
+The [reuse guide](docs/reuse.md) explains the file-level license boundary, the current fork-and-adapt path, and which parts of the digital twin require your own infrastructure.
+
 ## Quickstart
 
 ```bash

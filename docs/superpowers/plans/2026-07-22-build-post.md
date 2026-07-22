@@ -647,9 +647,84 @@ BODY
 
 ---
 
+## Task 9: Post-review reuse contract
+
+**Files:**
+- Create: `LICENSE`
+- Create: `LICENSES/MIT.txt`
+- Create: `LICENSES/LicenseRef-All-Rights-Reserved.txt`
+- Create: `REUSE.toml`
+- Create: `docs/reuse.md`
+- Create: `tests/test_reuse_contract.py`
+- Modify: `README.md`
+- Modify: `web/src/pages/writeups/ask-my-cv.astro`
+- Modify: `tests/test_build_writeup_static.py`
+- Modify: `AGENTS.md`
+- Modify: `docs/superpowers/specs/2026-07-22-build-post-design.md`
+
+**Interfaces:**
+- Consumes: the existing public `content/` data model, private-overlay convention, renderer commands, write-up page, and static-HTML guard.
+- Produces: a scoped MIT permission grant, an honest fork-and-adapt guide, and a crawler-readable final article section linking that guide.
+
+- [ ] **Step 1: Write the failing reuse-contract tests**
+
+Create `tests/test_reuse_contract.py` with assertions that `LICENSE` contains the standard MIT grant, `REUSE.toml` maps reusable files to MIT and every excluded or duplicated personal-content path to `LicenseRef-All-Rights-Reserved`, `README.md` links the guide, and the guide covers `content/`, the private overlay, identity/domain/workflow replacement, build commands, and the optional twin.
+
+Extend `SECTION_HEADINGS` in `tests/test_build_writeup_static.py` with `Can I use this for my own CV?`, then assert the emitted article links to `https://github.com/Jin-HoMLee/jin-ho-lee-cv/blob/main/docs/reuse.md`.
+
+- [ ] **Step 2: Run the tests and observe RED**
+
+Run: `uv run pytest tests/test_reuse_contract.py -q`
+Expected: FAIL because `LICENSE`, `REUSE.toml`, `LICENSES/`, and `docs/reuse.md` do not exist.
+
+Run: `just web-build && uv run pytest tests/test_build_writeup_static.py -q`
+Expected: FAIL because the closing heading and reuse-guide link are absent.
+
+- [ ] **Step 3: Add the scoped license and guide**
+
+Create `LICENSE` with the unmodified MIT text so GitHub and other tooling can detect it reliably.
+Add the MIT and custom all-rights-reserved texts under `LICENSES/`, then create `REUSE.toml` as the authoritative file-level map.
+Apply MIT to software, schemas, reusable templates, build configuration, tests, and technical documentation.
+Override `content/`, `web/src/pages/writeups/`, `docs/build-post/`, `web/public/photo.jpg`, `web/src/assets/digital-twin-photo.png`, `tests/__snapshots__/`, and the two implementation plans containing embedded article prose with `LicenseRef-All-Rights-Reserved`.
+
+Create `docs/reuse.md` with the current manual path: fork or clone, install exact prerequisites, replace public content and excluded prose/assets, change identity/domain/deployment settings including the Pages analytics and GSC configuration, keep PII in the private overlay, run the validation/build commands, and either disable the twin or configure independent Cloudflare and model infrastructure.
+
+Add a short `README.md` section linking the guide and stating that this is not yet a one-command template.
+
+- [ ] **Step 4: Add the closing article answer**
+
+Append a final section headed `Can I use this for my own CV?`.
+State that the code and reusable templates are MIT-licensed, excluded personal materials must be replaced, the PDF and static site are the easiest starting points, and the twin is optional infrastructure.
+Link the current reuse guide.
+
+- [ ] **Step 5: Record the durable license boundary**
+
+Add a concise `AGENTS.md` convention that future changes must preserve the scoped MIT grant and must not move personal data, authored prose, or likeness assets into the licensed set accidentally.
+
+- [ ] **Step 6: Verify GREEN and the complete repository gate**
+
+Run: `uv run pytest tests/test_reuse_contract.py -q`
+Expected: PASS.
+
+Run: `just web-build && uv run pytest tests/test_build_writeup_static.py -q`
+Expected: PASS.
+
+Run: `just validate && just lint && uv run ruff format --check . && just web-build && just web-guard && just test`
+Expected: every command passes without warnings or snapshot drift.
+
+- [ ] **Step 7: Commit and push**
+
+```bash
+git add LICENSE LICENSES REUSE.toml README.md AGENTS.md docs/reuse.md tests/test_reuse_contract.py tests/test_build_writeup_static.py web/src/pages/writeups/ask-my-cv.astro docs/superpowers/specs/2026-07-22-build-post-design.md docs/superpowers/plans/2026-07-22-build-post.md
+git commit -m "docs(#140): make CV code officially reusable"
+git push origin 140-build-post
+```
+
+---
+
 ## Self-Review (completed during planning)
 
-- **Spec coverage:** write-up (Tasks 1-4), grounding rules (article prose grounded inline, Global Constraints), web integration incl. BlogPosting/OG/sitemap/DE surfacing (Tasks 1-4), guard proven-to-bite (Task 5), LinkedIn draft both variants + cliché lint (Task 6), voice/anti-slop (Global Constraints + Task 6), AGENTS.md update (Task 7), green gate (Task 8). The spec's "DE card linking out" is realized as the footer link (there is no project card for a build post) - a deliberate, documented deviation resolved during planning.
+- **Spec coverage:** write-up (Tasks 1-4), grounding rules (article prose grounded inline, Global Constraints), web integration incl. BlogPosting/OG/sitemap/DE surfacing (Tasks 1-4), guard proven-to-bite (Task 5), LinkedIn draft both variants + cliché lint (Task 6), AGENTS.md update (Task 7), green gate (Task 8), and the approved post-review reuse contract (Task 9). The spec's "DE card linking out" is realized as the footer link (there is no project card for a build post) - a deliberate, documented deviation resolved during planning.
 - **Placeholder scan:** none; all prose and code shown in full.
 - **Type consistency:** `kind` added in Task 1 is consumed in Task 2 (OG) and implicitly in Task 3 (page uses `w.slug`/`w.ogSlug`/`w.repoUrl` only); `projectId` optionalization does not break `writeupByProjectId` (build post never matches, correct).
 - **Known fragility flagged:** the apostrophe HTML-entity in the first heading (Task 5 Step 1 note) - verify the emitted entity and adjust the literal.
