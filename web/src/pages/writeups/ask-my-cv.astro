@@ -1,0 +1,104 @@
+---
+import "../../styles/writeup-tokens.css";
+import contentEn from "../../data/content.en.json";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { ContentData } from "../../types/content";
+import { writeups } from "../../data/writeups";
+import ThemeToggle from "../../components/ThemeToggle.astro";
+import { PAGES_BASE_URL } from "../../lib/site-config";
+
+const data = contentEn as unknown as ContentData;
+const w = writeups.find((x) => x.slug === "ask-my-cv")!;
+const canonical = `${PAGES_BASE_URL}/writeups/${w.slug}/`;
+const twinUrl = PAGES_BASE_URL + "/";
+
+const articleJsonld = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: w.title,
+  description: w.summary,
+  datePublished: w.date,
+  inLanguage: "en",
+  url: canonical,
+  author: {
+    "@type": "Person",
+    name: `${data.personal.name.given} ${data.personal.name.family}`,
+  },
+  isBasedOn: w.repoUrl,
+};
+// Escape '<' before inlining (Phase 14 hardening): a "</script>" substring in
+// any inlined string would close the tag early. '<' is valid JSON.
+const articleJsonldStr = JSON.stringify(articleJsonld).replace(/</g, "\\u003c");
+---
+<BaseLayout
+  lang="en"
+  data={data}
+  ogSlug={w.ogSlug}
+  ogTitle={`${w.title} - ${data.personal.name.given} ${data.personal.name.family}`}
+  ogDescription={w.summary}
+  ogType="article"
+>
+  <article class="writeup mx-auto max-w-3xl">
+    <nav class="mb-4 flex items-center justify-between text-sm">
+      <a href="/" class="text-[var(--ink-muted)] underline hover:text-[var(--ink)]">← Back to CV</a>
+      <ThemeToggle />
+    </nav>
+
+    <header class="mb-8">
+      <p class="font-mono-plex text-xs uppercase tracking-wider text-[var(--ink-faint)]">Build write-up</p>
+      <h1 class="mt-2 font-serif-display text-3xl font-semibold text-[var(--ink)] md:text-4xl">{w.title}</h1>
+      <p class="mt-3 text-base text-[var(--ink-muted)]">{w.summary}</p>
+    </header>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">Don't read my CV. Ask it.</h2>
+      <p>There is a chat box on <a class="text-[var(--w-accent)] underline hover:text-[var(--w-accent-hover)]" href={twinUrl}>my CV site</a>. It answers questions about my work in my own grounding, not a generic model's guesses.</p>
+      <p>Try it with something a recruiter would actually ask: "What has Jin-Ho done with RNA-Seq data?" or "Does he have production ML experience, or only research?" or "Summarize his last three years in two sentences."</p>
+      <p>The rest of this post is how that box - and the CV behind it - is built, and why I built it that way.</p>
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">One source of truth, many renderers</h2>
+      <p>The CV is not a document. It is data: a set of YAML files plus a BibTeX bibliography, with a JSON Schema that every field is validated against.</p>
+      <p>Nothing that presents the CV reads from a rendered artifact. The PDF, the website, a JSON Resume export, a schema.org JSON-LD graph, and a plain-text version are all independent scripts that consume the same content. Swap any one of them and the others do not notice.</p>
+      <p>That inversion - content knows nothing about presentation - is the whole design. A new output format is a new consumer, never a new copy of the data. The digital twin is just the sixth consumer.</p>
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">The twin: full context, not retrieval</h2>
+      <p>The obvious way to build a CV chatbot in 2026 is retrieval-augmented generation: chunk the CV, embed it, fetch the top matches per question. I did not do that.</p>
+      <p>A whole CV is small - well under the context window of any current model. So a build step compiles the entire CV into one Markdown blob and the model gets all of it on every question. No retrieval step means no retrieval mistakes: the model never fails to fetch the one bullet that mattered.</p>
+      <p>There is a deliberate asymmetry here. The public site is a sharp, curated selection. The twin reads from a larger, gitignored "master" overlay - a superset life-database that never ships to the public HTML. The twin can therefore answer questions the crawled page cannot, which is exactly the reason to talk to it instead of scraping the site.</p>
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">Running an LLM for free, reliably</h2>
+      <p>The twin runs on a Cloudflare Worker with no paid inference bill. It uses free model tiers, and free tiers have daily request caps.</p>
+      <p>So the Worker does not depend on one model. It cascades: a best-first chain of Gemini and Gemma models, and when every one of those is exhausted or erroring, it falls through to a different vendor entirely (Cloudflare Workers AI). Each rung has its own separate quota, so chaining them multiplies the daily headroom instead of dying when the top model's quota runs out.</p>
+      <p>Getting this right meant learning each family's quirks the hard way - which models need a "thinking" budget set to zero, which reject that setting outright, which stream their reasoning as tokens you have to filter out before the answer reaches the browser. The cascade is boring on purpose: the twin stays reachable.</p>
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">Guardrails, and keeping PII out</h2>
+      <p>A CV site has real private data behind it - a phone number, an address - that must never leak into a public repo or a model's mouth.</p>
+      <p>So the same PII guard runs on three surfaces: a pre-commit hook, an editor-tool hook, and a CI check. All three call one detection core, so there is a single place to be right. Private files live outside git entirely; the guard is the backstop for the day someone runs <span class="font-mono-plex">git add -f</span>.</p>
+      <p>The twin has its own guardrails: a bot-check on the browser, per-visitor rate caps, and persona rules that keep it answering as a grounded CV assistant rather than a general chatbot. Consented contact details a visitor chooses to leave are the one thing kept deliberately, because that is the point of leaving them.</p>
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">Built by directing an agent</h2>
+      <p>I did not hand-write most of this. I directed an AI coding agent through it, in fifteen phases, each one a loop: brainstorm the scope, write a spec, turn the spec into a step-by-step plan, then execute the plan task by task with a fresh agent per task and a review gate between them.</p>
+      <p>Tests came first where it mattered - the schema, the renderers, the guards all have failing tests written before the code. The interesting skill in 2026 is not typing the code. It is decomposing the work so an agent can do it correctly, and knowing what to reject when it comes back wrong.</p>
+      <p>The whole history is public, spec files and all. If you want to see what agent-directed engineering actually looks like as a git log, it is right there.</p>
+    </section>
+
+    <section class="writeup-section">
+      <h2 class="font-serif-display text-2xl text-[var(--ink)]">What it cost, and where to look</h2>
+      <p>Nothing, in running costs. Static hosting, a free Worker tier, free model tiers, free CI. The bounded pieces are bounded on purpose.</p>
+      <p>The code, every spec, and the full build history: <a class="text-[var(--w-accent)] underline hover:text-[var(--w-accent-hover)]" href={w.repoUrl}>{w.repoUrl}</a>.</p>
+      <p>And the twin is still waiting for a question: <a class="text-[var(--w-accent)] underline hover:text-[var(--w-accent-hover)]" href={twinUrl}>ask it something</a>.</p>
+    </section>
+
+    <script type="application/ld+json" set:html={articleJsonldStr}></script>
+  </article>
+</BaseLayout>
