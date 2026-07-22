@@ -53,9 +53,14 @@ const WRITEUP_STATUS_LABELS: Record<string, string> = {
   published: "Published",
 };
 
+const WRITEUP_KIND_LABELS: Record<string, string> = {
+  research: "Research Write-up",
+  build: "Build Write-up",
+};
+
 function writeupPage(w: (typeof writeups)[number], name: string): OgPage {
   return {
-    kicker: `${name} - Research Write-up`,
+    kicker: `${name} - ${WRITEUP_KIND_LABELS[w.kind] ?? "Write-up"}`,
     title: w.title,
     subtitle: w.summary,
     meta: [
