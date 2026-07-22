@@ -11,7 +11,7 @@ Don't read my CV. Ask it.
 
 There's a chat box on my CV site that answers questions about my work - grounded in my actual history, not a model's guesses. Ask it "does he have production ML experience or only research?" and see what comes back.
 
-Under the hood it's the same idea all the way down: my CV isn't a document, it's one YAML source of truth that five renderers read from - PDF, website, JSON Resume, a schema.org graph, plain text. The chat box is just the sixth renderer. It runs on a free Cloudflare Worker with a model cascade so it stays up without an inference bill, and PII guards on three surfaces keep the private data private.
+Under the hood it's the same idea all the way down: my CV isn't a document, it's one YAML source of truth that five renderers read from - PDF, website, JSON Resume, a schema.org graph, plain text. The chat box is just the sixth consumer. It runs on a free Cloudflare Worker with a model cascade so it stays up without an inference bill, and PII guards on three surfaces keep the private data private.
 
 I also didn't hand-write most of it. I directed an AI agent through 15 phases of brainstorm → spec → plan → execute, tests first. The whole history is public, specs and all.
 
@@ -26,7 +26,7 @@ Don't read my CV. Ask it.
 
 There's a chat box on my CV site that answers questions about my work - grounded in my actual history, not a model's guesses. Ask it "does he have production ML experience or only research?" and see what comes back.
 
-Under the hood it's one idea all the way down: my CV isn't a document, it's a single YAML source of truth that five renderers read from - PDF, website, JSON Resume, a schema.org graph, plain text. The chat box is just the sixth renderer. Free Cloudflare Worker, a model cascade so it stays up without an inference bill, PII guards on three surfaces.
+Under the hood it's one idea all the way down: my CV isn't a document, it's a single YAML source of truth that five renderers read from - PDF, website, JSON Resume, a schema.org graph, plain text. The chat box is just the sixth consumer. Free Cloudflare Worker, a model cascade so it stays up without an inference bill, PII guards on three surfaces.
 
 And I didn't hand-write most of it - I directed an AI agent through 15 phases of brainstorm → spec → plan → execute, tests first. The whole build history is public.
 
