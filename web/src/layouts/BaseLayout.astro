@@ -94,7 +94,8 @@ const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;
     <footer class="mx-auto max-w-6xl px-4 py-8 text-xs text-[var(--faint)] md:px-8">
       <p>
         © {new Date().getUTCFullYear()} {data.personal.name.given} {data.personal.name.family} ·
-        <a class="underline hover:text-[var(--text)]" href="https://github.com/Jin-HoMLee/jin-ho-lee-cv">Source on GitHub</a>
+        <a class="underline hover:text-[var(--text)]" href="https://github.com/Jin-HoMLee/jin-ho-lee-cv">Source on GitHub</a> ·
+        <a class="underline hover:text-[var(--text)]" href="/writeups/ask-my-cv/">{lang === "de" ? "Wie diese Seite gebaut wurde (Read in English)" : "How this site was built"}</a>
       </p>
     </footer>
     <script>
