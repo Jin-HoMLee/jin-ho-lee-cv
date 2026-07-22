@@ -38,6 +38,7 @@ PII_PATH_ROOTS = (
     "content.private/",
     "applications/",
     "master-cv/",
+    ".agents/memory/",
     "assets/photo.*",
     "assets/signature.*",
 )

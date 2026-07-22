@@ -27,3 +27,6 @@ pythonpath = ["."]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+# .agents/ carries the vendored claude-personas framework payload (managed by
+# .agents/tools/install.sh, never edited here) - keep it out of lint/format.
+extend-exclude = [".agents"]

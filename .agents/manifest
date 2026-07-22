@@ -1,0 +1,27 @@
+# claude-personas manifest - written by doctor.sh --init embedded
+# Flat key=value, strict (no spaces around =); # comments and blank lines
+# are ignored. See docs/superpowers/specs/
+# 2026-07-04-toolbox-manifest-driven-doctor-design.md for the full key table.
+
+manifest_version=1
+topology=embedded
+memory_layout=flat
+
+# Declare each vendor adapter this instance wires. Remove a line if that
+# vendor is not used here.
+adapter=claude-code
+adapter=codex
+# adapter=opencode
+# adapter=pi    # uncomment together with the pi_extension key below
+
+# Codex SessionStart hook: instance-owned wrapper that injects the memory
+# index via the framework's inject-role-index.sh (see .agents/hooks/).
+codex_hook=.agents/hooks/inject-memory-index.sh
+
+# Optional keys for topology=embedded:
+# claude_hook=.agents/hooks/some-hook.sh   # repeatable; repo-relative script path
+# codex_hook=.agents/hooks/some-hook.sh    # repeatable; repo-relative script path
+# pi_extension=.agents/hooks/lib/pi-inject-memory-index.ts   # repeatable; repo-relative module path
+# skills_mount=true                  # or: false (default)
+framework_source=../claude-personas
+framework_ref=framework/v1.2.0
