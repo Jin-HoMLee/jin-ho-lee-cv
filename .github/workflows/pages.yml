@@ -100,11 +100,16 @@ jobs:
           test -f web/dist/robots.txt
           # llms.txt site map is served at the site root
           test -f web/dist/llms.txt
-          # Sitemap URL count (2 homepages + 10 projects × 2 langs = 22)
+          # Sitemap URL floor: 22 core URLs must always be present
+          # (2 homepages + 10 projects × 2 langs). Write-ups are EN-only and
+          # add URLs on top, so this is a lower bound, not an exact match — an
+          # exact count silently broke every main deploy on legitimate content
+          # additions (this check runs only on main, never on PRs). Per-page
+          # sitemap membership is guarded per-PR by web-guard instead (#144).
           # grep -c counts matching lines; the sitemap is minified to one line,
           # so we use -o | wc -l to count occurrences instead.
           urls=$(grep -o "<url>" web/dist/sitemap-0.xml | wc -l | tr -d ' ')
-          [ "$urls" -eq 22 ] || (echo "sitemap URL count: expected 22, got $urls" && exit 1)
+          [ "$urls" -ge 22 ] || (echo "sitemap URL count below floor: expected >= 22, got $urls" && exit 1)
           # robots.txt references the sitemap
           grep -q "sitemap-index.xml" web/dist/robots.txt
           # Analytics snippet doesn't depend on a repo secret — the flag and
