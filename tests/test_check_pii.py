@@ -284,3 +284,14 @@ def test_master_cv_path_is_blocked():
 def test_master_cv_example_is_allowed():
     files = [("master-cv.example/timeline.yaml", b"id: x")]
     assert scan_files(files, set()) == []
+
+
+def test_agents_memory_path_is_blocked():
+    files = [(".agents/memory/MEMORY.md", b"- [index line](x.md)")]
+    violations = scan_files(files, set())
+    assert violations and violations[0].path == ".agents/memory/MEMORY.md"
+
+
+def test_agents_payload_outside_memory_is_allowed():
+    files = [(".agents/manifest", b"topology=embedded")]
+    assert scan_files(files, set()) == []
