@@ -1,0 +1,12 @@
+# framework-receipt - written by install.sh; landing path<TAB>blob oid. Do not edit.
+.agents/hooks/lib/inject-role-index.sh	291dc7917b903ff9cf656bbf3c4b519f6e107982
+.agents/hooks/lib/inject-subagent-role-pointer.sh	d962aeb10a348fafb26e0dda97f06d0ae29a9acb
+.agents/hooks/lib/pi-inject-memory-index.ts	0281a1da79c5aa9327d30b67f379bdeeb4ee20bd
+.agents/skills/consolidate-memory/SKILL.md	bb742b12753497f656cf31f05eda253402a35f3e
+.agents/skills/load-persona-memory/SKILL.md	9fbd1cf83bf20e2042e344f4148de7fec64b6894
+.agents/tools/consolidate_pass.py	50b933bccb2de3eeb9c35b450b5cb68b0bf8b658
+.agents/tools/doctor.sh	205361081e1fe380adc252a38a660964321c8981
+.agents/tools/init-clone.sh	b2313682fc569736da71945229c35062bac99d9c
+.agents/tools/install.sh	36c744eaeabac4a82f8be3c1bd5f8c3c44352c89
+.agents/tools/list-roles.sh	747b1f80025b6c7d4ffefd630184b7d91f514f09
+.agents/tools/memory_cliff.py	d1d4d333b31b24aaf6300dbe98fc8b6225759a64

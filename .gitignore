@@ -38,6 +38,12 @@ web/.astro/
 !.claude/skills/
 .superpowers/
 
+# claude-personas embedded topology (see .agents/manifest):
+# memory is private (this repo is public); .codex/hooks.json is
+# doctor-generated with per-clone absolute paths
+.agents/memory/
+.codex/
+
 # PDF build cache (JSON intermediate written by pdf/build.py)
 pdf/.cache/
 
