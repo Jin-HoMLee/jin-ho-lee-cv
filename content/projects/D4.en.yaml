@@ -1,0 +1,20 @@
+id: D4
+category: data-science
+open_source: true
+title: "claude-personas – Multi-Persona Framework for Claude Code"
+summary: "Framework for running multiple specialized Claude Code personas in parallel, each with its own isolated, role-specific persistent memory, so a solo developer can cover multiple roles across a project."
+role: "Author and Maintainer (Open Source)"
+period:
+  start: "2026-05"
+  end: null
+technologies:
+  - "Claude Code"
+  - "Shell"
+  - "Python"
+  - "GitHub Actions"
+contributions:
+  - "Designed a persona system (e.g. Developer, PM, Designer, Scientist) so one solo developer can run several specialized Claude Code agents in parallel instead of switching hats manually."
+  - "Built isolated, role-specific persistent memory per persona, so each agent accumulates and reuses its own context across sessions without polluting the others."
+  - "Set up a CI pipeline to keep the framework's own tooling and configuration reliable across changes."
+  - "Public on GitHub (Jin-HoMLee/claude-personas)."
+outcome: "An open-source framework that lets a solo developer parallelize multi-role work by running several specialized, memory-isolated Claude Code personas at once."
