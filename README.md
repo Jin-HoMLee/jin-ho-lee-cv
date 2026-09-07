@@ -43,11 +43,11 @@ Some files referenced from content YAML are not committed to the repo:
 
 ## Building the PDF
 
-Phase 1 produces a one-page English PDF locally. Requirements:
+Phase 1 produces a concise one-to-two-page English PDF locally. Requirements:
 
 - Python 3.12 + `uv` (already needed for Phase 0)
 - Typst CLI: `brew install typst` (macOS) or `cargo install --locked typst-cli`
-- IBM Plex Sans font (recommended): `brew install --cask font-ibm-plex` on macOS. If absent, Typst falls back to a default sans font.
+- IBM Plex Sans font (recommended): `brew install --cask font-ibm-plex-sans` on macOS. If absent, Typst falls back to a default sans font.
 
 ### Commands
 
