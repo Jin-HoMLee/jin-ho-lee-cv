@@ -1186,7 +1186,7 @@
       {
         "id": "what-does-he-work-on-now",
         "question": "What is Jin-Ho Lee working on now?",
-        "answer": "Jin-Ho Lee currently works independently on agentic AI systems - LLM agents with tool use, planning, routing, multi-agent orchestration and persistent memory - alongside open-source Claude Code tooling, skeleton-based action recognition in computer vision, and a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2 structural validation."
+        "answer": "Jin-Ho Lee currently works independently on agentic AI systems - LLM agents with tool use, planning, routing, multi-agent orchestration and persistent memory - alongside open-source Claude Code tooling, a real-time, fully on-device computer-vision Chrome extension for badminton match analysis, and a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2 structural validation."
       },
       {
         "id": "is-he-available-for-work",

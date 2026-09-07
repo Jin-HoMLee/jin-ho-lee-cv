@@ -44,8 +44,8 @@ faqs:
       en: "What is Jin-Ho Lee working on now?"
       de: "Woran arbeitet Jin-Ho Lee derzeit?"
     answer:
-      en: "Jin-Ho Lee currently works independently on agentic AI systems - LLM agents with tool use, planning, routing, multi-agent orchestration and persistent memory - alongside open-source Claude Code tooling, skeleton-based action recognition in computer vision, and a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2 structural validation."
-      de: "Jin-Ho Lee arbeitet derzeit unabhängig an agentischen KI-Systemen - LLM-Agenten mit Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher - sowie an Open-Source-Tooling für Claude Code, skelettbasierter Action Recognition in der Computer Vision und einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2."
+      en: "Jin-Ho Lee currently works independently on agentic AI systems - LLM agents with tool use, planning, routing, multi-agent orchestration and persistent memory - alongside open-source Claude Code tooling, a real-time, fully on-device computer-vision Chrome extension for badminton match analysis, and a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2 structural validation."
+      de: "Jin-Ho Lee arbeitet derzeit unabhängig an agentischen KI-Systemen - LLM-Agenten mit Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher - sowie an Open-Source-Tooling für Claude Code, einer Chrome-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen ausführt, und einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2."
 
   - id: is-he-available-for-work
     question:
