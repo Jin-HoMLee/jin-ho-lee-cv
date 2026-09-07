@@ -126,7 +126,7 @@ def test_load_content_comp_bio_project_order(content_dir):
 
 def test_load_content_ds_ml_project_order(content_dir):
     content = load_content(content_dir, lang="en", target="ds-ml")
-    assert _ids(content["selected_projects"]) == ["C1", "D1", "D2", "D4"]
+    assert _ids(content["selected_projects"]) == ["C1", "D1", "D2", "D4", "D5"]
 
 
 def test_profile_variant_parity_flags_key_mismatch(tmp_path):
