@@ -12,8 +12,8 @@
     - en: "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling."
       de: "Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code."
       refs: [D4]
-    - en: "Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — full PRD-to-CI product discipline; in active development."
-      de: "Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — mit vollständiger Produktentwicklungsdisziplin von PRD bis CI; in aktiver Entwicklung."
+    - en: "Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — a 2026 full rebuild of the badminton video-analysis toolkit first built in 2025 (pose estimation, LSTM shot-prediction modeling); full PRD-to-CI product discipline, in active development."
+      de: "Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — 2026 als vollständiger Neuaufbau des 2025 entwickelten Badminton-Videoanalyse-Toolkits (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle); vollständige Produktentwicklungsdisziplin von PRD bis CI, in aktiver Entwicklung."
       refs: [D2]
     - en: "Bioinformatics: Released a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2/OpenFold structural validation."
       de: "Bioinformatik: Veröffentlichung einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2/OpenFold."

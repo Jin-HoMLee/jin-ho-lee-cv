@@ -28,7 +28,7 @@ Now applying that rigor in industry: architected the migration of 1,000+ analyti
 ## Experience
 ### ML/AI Engineer & Open-Source Developer — Independent / Self-Directed (2025-08–present)
 - Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.
-- Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — full PRD-to-CI product discipline; in active development.
+- Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — a 2026 full rebuild of the badminton video-analysis toolkit first built in 2025 (pose estimation, LSTM shot-prediction modeling); full PRD-to-CI product discipline, in active development.
 - Bioinformatics: Released a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2/OpenFold structural validation.
 ### Consultant, Lead Business Functional Analyst — Cintellic / International Bank (2024-05–2025-07)
 - Scale: Architected the migration of 1,000+ analytical processes to Google Cloud.

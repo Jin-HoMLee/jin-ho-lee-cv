@@ -641,8 +641,8 @@
       "@id": "https://jinholee.is-a.dev/projects/D2/",
       "name": "badminton-vision – Real-Time On-Device Computer Vision for Badminton",
       "url": "https://jinholee.is-a.dev/projects/D2/",
-      "description": "Chrome MV3 extension running real-time computer vision entirely on-device on badminton match footage played on YouTube — under active, ongoing development.",
-      "dateCreated": "2024-01",
+      "description": "Badminton video analysis in two stints: a comprehensive toolkit — pose estimation, LSTM shot-prediction modeling, and a browser extension for manual YouTube labeling — built in mid-to-late 2025; shelved for about ten months; then revived in August 2026 as a full rebuild: badminton-vision, a real-time, fully on-device Chrome MV3 extension running on badminton match footage played on YouTube, under active, ongoing development.",
+      "dateCreated": "2025-06",
       "keywords": [
         "TypeScript",
         "Chrome Extension (Manifest V3)",

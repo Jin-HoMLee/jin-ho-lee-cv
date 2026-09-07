@@ -262,8 +262,8 @@
           ]
         },
         {
-          "en": "Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — full PRD-to-CI product discipline; in active development.",
-          "de": "Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — mit vollständiger Produktentwicklungsdisziplin von PRD bis CI; in aktiver Entwicklung.",
+          "en": "Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — a 2026 full rebuild of the badminton video-analysis toolkit first built in 2025 (pose estimation, LSTM shot-prediction modeling); full PRD-to-CI product discipline, in active development.",
+          "de": "Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — 2026 als vollständiger Neuaufbau des 2025 entwickelten Badminton-Videoanalyse-Toolkits (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle); vollständige Produktentwicklungsdisziplin von PRD bis CI, in aktiver Entwicklung.",
           "refs": [
             "D2"
           ]
@@ -460,10 +460,10 @@
       "category": "data-science",
       "open_source": true,
       "title": "badminton-vision – Echtzeit-Computer-Vision für Badminton, direkt im Browser",
-      "summary": "Chrome-MV3-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen auf YouTube ausführt — aktuell in aktiver Weiterentwicklung.",
+      "summary": "Badminton-Videoanalyse in zwei Etappen: 2025 entstand ein umfassendes Analyse-Toolkit (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle, Browser-Erweiterung zur manuellen Annotation von YouTube-Aufnahmen). Nach einer rund zehnmonatigen Pause folgte im August 2026 der vollständige Neuaufbau: badminton-vision, eine Chrome-MV3-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen auf YouTube ausführt. Das Projekt befindet sich weiterhin in aktiver Entwicklung.",
       "role": "Unabhängiger Entwickler",
       "period": {
-        "start": "2024-01",
+        "start": "2025-06",
         "end": null
       },
       "technologies": [
@@ -476,7 +476,7 @@
       "contributions": [
         "Entwicklung einer Chrome-MV3-Erweiterung, die Pose-, Schläger- und Shuttle-Erkennung auf Badminton-Spielaufnahmen auf YouTube vollständig client-seitig ausführt, ohne Server-Roundtrip.",
         "Implementierung der Standard-Echtzeit-Erkennungspipeline mit TensorFlow.js und ONNX Runtime Web.",
-        "Evaluierung eines experimentellen Zero-Shot-Objektdetektors mit offenem Vokabular (YOLO-World) neben dem ausgelieferten Standard-Detektor.",
+        "Evaluierung eines experimentellen Zero-Shot-Objektdetektors mit offenem Vokabular (YOLO-World) neben dem Standard-Detektor.",
         "Konsequente Produktentwicklungsdisziplin: schriftliches PRD, UX-Wireframing und -Review, automatisierte Testsuite und CI-Pipeline.",
         "Öffentlich auf GitHub (Jin-HoMLee/badminton-vision); weiterhin in aktiver Entwicklung, noch kein fertiges v1."
       ],

@@ -23,7 +23,7 @@ BERUFSERFAHRUNG
 ================================================================================
 ML/AI-Engineer & Open-Source-Entwickler - Independent / Self-Directed    (2025-08 bis heute)
   - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
-  - Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — mit vollständiger Produktentwicklungsdisziplin von PRD bis CI; in aktiver Entwicklung.
+  - Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — 2026 als vollständiger Neuaufbau des 2025 entwickelten Badminton-Videoanalyse-Toolkits (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle); vollständige Produktentwicklungsdisziplin von PRD bis CI, in aktiver Entwicklung.
   - Bioinformatik: Veröffentlichung einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2/OpenFold.
 
 Berater, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 bis 2025-07)

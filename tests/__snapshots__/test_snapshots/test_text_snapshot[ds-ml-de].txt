@@ -19,7 +19,7 @@ BERUFSERFAHRUNG
 ================================================================================
 ML/AI-Engineer & Open-Source-Entwickler - Independent / Self-Directed    (2025-08 bis heute)
   - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
-  - Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — mit vollständiger Produktentwicklungsdisziplin von PRD bis CI; in aktiver Entwicklung.
+  - Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — 2026 als vollständiger Neuaufbau des 2025 entwickelten Badminton-Videoanalyse-Toolkits (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle); vollständige Produktentwicklungsdisziplin von PRD bis CI, in aktiver Entwicklung.
   - Bioinformatik: Veröffentlichung einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2/OpenFold.
 
 Berater, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 bis 2025-07)
@@ -54,11 +54,15 @@ SignMeUp – Echtzeit-Erkennung der American Sign Language (ASL)    (2023-09 bis
   Ergebnis: Lieferung eines funktionsfähigen Prototyps für Echtzeit-Inferenz,
   der unmittelbares Feedback für Lernende der Gebärdensprache ermöglicht.
 
-badminton-vision – Echtzeit-Computer-Vision für Badminton, direkt im Browser    (2024-01 bis heute)
+badminton-vision – Echtzeit-Computer-Vision für Badminton, direkt im Browser    (2025-06 bis heute)
   Unabhängiger Entwickler
-  Chrome-MV3-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig
-  auf Badminton-Spielaufnahmen auf YouTube ausführt — aktuell in aktiver
-  Weiterentwicklung.
+  Badminton-Videoanalyse in zwei Etappen: 2025 entstand ein umfassendes Analyse-
+  Toolkit (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle, Browser-
+  Erweiterung zur manuellen Annotation von YouTube-Aufnahmen). Nach einer rund
+  zehnmonatigen Pause folgte im August 2026 der vollständige Neuaufbau:
+  badminton-vision, eine Chrome-MV3-Erweiterung, die Echtzeit-Computer-Vision
+  vollständig client-seitig auf Badminton-Spielaufnahmen auf YouTube ausführt.
+  Das Projekt befindet sich weiterhin in aktiver Entwicklung.
   Ergebnis: Browserbasierte, geräteseitige Computer-Vision-Erweiterung zur
   Badminton-Spielanalyse, in aktiver, laufender Weiterentwicklung auf dem Weg zu
   einem ersten stabilen Release.
