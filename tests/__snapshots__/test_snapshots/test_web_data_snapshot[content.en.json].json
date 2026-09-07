@@ -536,6 +536,36 @@
       ],
       "outcome": "An open-source framework that lets a solo developer parallelize multi-role work by running several specialized, memory-isolated Claude Code personas at once."
     },
+    "D5": {
+      "id": "D5",
+      "category": "data-science",
+      "open_source": true,
+      "title": "dotfiles – Personalized, Reproducible Nix macOS Setup",
+      "summary": "A personal, one-command reproducible macOS setup built on Nix (nix-darwin + home-manager) — a personalized fork of a shared open-source dotfiles framework, extended with my own packages, tools, and multi-agent AI configuration.",
+      "role": "Maintainer (Personalized Fork, Open Source)",
+      "period": {
+        "start": "2026-07",
+        "end": null
+      },
+      "technologies": [
+        "Nix",
+        "nix-darwin",
+        "home-manager",
+        "Homebrew",
+        "zsh",
+        "Starship",
+        "Neovim",
+        "WezTerm"
+      ],
+      "contributions": [
+        "Forked a shared Nix-based dotfiles framework (kunchenguid/dotfiles) and personalized it into a fully reproducible macOS setup: one command restores system settings, Homebrew apps, and Nix packages.",
+        "Configured shell (zsh/Starship), editor (Neovim), and terminal (WezTerm) as a coherent, version-controlled personal environment.",
+        "Maintained shared agent configuration across multiple AI coding tools (Claude Code, Codex, OpenCode) so tooling stays consistent machine-wide.",
+        "Tracked and merged upstream changes from the original framework while layering on personal packages, tool choices, and settings.",
+        "Public on GitHub (Jin-HoMLee/dotfiles), MIT No Attribution licensed."
+      ],
+      "outcome": "A working, one-command reproducible personal macOS setup — a personalized fork of a shared dotfiles framework, kept current with my own machine, packages, and agent tooling."
+    },
     "L1": {
       "id": "L1",
       "category": "life-science",

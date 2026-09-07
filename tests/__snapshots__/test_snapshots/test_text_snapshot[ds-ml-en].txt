@@ -70,6 +70,16 @@ claude-personas – Multi-Persona Framework for Claude Code    (2026-05 to prese
   multi-role work by running several specialized, memory-isolated Claude Code
   personas at once.
 
+dotfiles – Personalized, Reproducible Nix macOS Setup    (2026-07 to present)
+  Maintainer (Personalized Fork, Open Source)
+  A personal, one-command reproducible macOS setup built on Nix (nix-darwin +
+  home-manager) — a personalized fork of a shared open-source dotfiles
+  framework, extended with my own packages, tools, and multi-agent AI
+  configuration.
+  Outcome: A working, one-command reproducible personal macOS setup — a
+  personalized fork of a shared dotfiles framework, kept current with my own
+  machine, packages, and agent tooling.
+
 ================================================================================
 EDUCATION
 ================================================================================

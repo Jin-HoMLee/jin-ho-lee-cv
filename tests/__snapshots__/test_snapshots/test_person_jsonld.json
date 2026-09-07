@@ -695,6 +695,27 @@
     },
     {
       "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/D5/",
+      "name": "dotfiles – Personalized, Reproducible Nix macOS Setup",
+      "url": "https://jinholee.is-a.dev/projects/D5/",
+      "description": "A personal, one-command reproducible macOS setup built on Nix (nix-darwin + home-manager) — a personalized fork of a shared open-source dotfiles framework, extended with my own packages, tools, and multi-agent AI configuration.",
+      "dateCreated": "2026-07",
+      "keywords": [
+        "Nix",
+        "nix-darwin",
+        "home-manager",
+        "Homebrew",
+        "zsh",
+        "Starship",
+        "Neovim",
+        "WezTerm"
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
+    },
+    {
+      "@type": "CreativeWork",
       "@id": "https://jinholee.is-a.dev/projects/L1/",
       "name": "Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis",
       "url": "https://jinholee.is-a.dev/projects/L1/",

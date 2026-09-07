@@ -505,6 +505,32 @@
       ]
     },
     {
+      "name": "dotfiles – Personalized, Reproducible Nix macOS Setup",
+      "description": "A personal, one-command reproducible macOS setup built on Nix (nix-darwin + home-manager) — a personalized fork of a shared open-source dotfiles framework, extended with my own packages, tools, and multi-agent AI configuration.",
+      "highlights": [
+        "Forked a shared Nix-based dotfiles framework (kunchenguid/dotfiles) and personalized it into a fully reproducible macOS setup: one command restores system settings, Homebrew apps, and Nix packages.",
+        "Configured shell (zsh/Starship), editor (Neovim), and terminal (WezTerm) as a coherent, version-controlled personal environment.",
+        "Maintained shared agent configuration across multiple AI coding tools (Claude Code, Codex, OpenCode) so tooling stays consistent machine-wide.",
+        "Tracked and merged upstream changes from the original framework while layering on personal packages, tool choices, and settings.",
+        "Public on GitHub (Jin-HoMLee/dotfiles), MIT No Attribution licensed."
+      ],
+      "keywords": [
+        "Nix",
+        "nix-darwin",
+        "home-manager",
+        "Homebrew",
+        "zsh",
+        "Starship",
+        "Neovim",
+        "WezTerm"
+      ],
+      "startDate": "2026-07-01",
+      "endDate": "2026-07-01",
+      "roles": [
+        "Maintainer (Personalized Fork, Open Source)"
+      ]
+    },
+    {
       "name": "Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis",
       "description": "Bioinformatics pipeline for identifying novel immunotherapy targets derived from aberrant alternative splicing in RNA-Seq data.",
       "highlights": [

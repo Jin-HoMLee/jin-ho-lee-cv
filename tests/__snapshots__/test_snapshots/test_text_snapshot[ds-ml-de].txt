@@ -73,6 +73,17 @@ claude-personas – Multi-Persona-Framework für Claude Code    (2026-05 bis heu
   Rollen-Arbeit zu parallelisieren, indem mehrere spezialisierte,
   gedächtnisisolierte Claude-Code-Personas gleichzeitig laufen.
 
+dotfiles – Personalisiertes, reproduzierbares Nix-Setup für macOS    (2026-07 bis heute)
+  Maintainer (personalisierter Fork, Open Source)
+  Ein persönliches, mit einem Befehl reproduzierbares macOS-Setup auf Basis von
+  Nix (nix-darwin + home-manager) — ein personalisierter Fork eines gemeinsam
+  genutzten Open-Source-Dotfiles-Frameworks, erweitert um eigene Pakete, Tools
+  und Multi-Agenten-KI-Konfiguration.
+  Ergebnis: Ein funktionierendes, mit einem Befehl reproduzierbares persönliches
+  macOS-Setup — ein personalisierter Fork eines gemeinsam genutzten Dotfiles-
+  Frameworks, aktuell gehalten mit eigener Maschine, eigenen Paketen und
+  Agenten-Tooling.
+
 ================================================================================
 AUSBILDUNG
 ================================================================================

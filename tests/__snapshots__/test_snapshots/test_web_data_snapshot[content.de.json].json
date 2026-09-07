@@ -536,6 +536,36 @@
       ],
       "outcome": "Ein Open-Source-Framework, das einer Einzelperson erlaubt, Multi-Rollen-Arbeit zu parallelisieren, indem mehrere spezialisierte, gedächtnisisolierte Claude-Code-Personas gleichzeitig laufen."
     },
+    "D5": {
+      "id": "D5",
+      "category": "data-science",
+      "open_source": true,
+      "title": "dotfiles – Personalisiertes, reproduzierbares Nix-Setup für macOS",
+      "summary": "Ein persönliches, mit einem Befehl reproduzierbares macOS-Setup auf Basis von Nix (nix-darwin + home-manager) — ein personalisierter Fork eines gemeinsam genutzten Open-Source-Dotfiles-Frameworks, erweitert um eigene Pakete, Tools und Multi-Agenten-KI-Konfiguration.",
+      "role": "Maintainer (personalisierter Fork, Open Source)",
+      "period": {
+        "start": "2026-07",
+        "end": null
+      },
+      "technologies": [
+        "Nix",
+        "nix-darwin",
+        "home-manager",
+        "Homebrew",
+        "zsh",
+        "Starship",
+        "Neovim",
+        "WezTerm"
+      ],
+      "contributions": [
+        "Fork eines gemeinsam genutzten Nix-basierten Dotfiles-Frameworks (kunchenguid/dotfiles) und Personalisierung zu einem vollständig reproduzierbaren macOS-Setup: ein Befehl stellt Systemeinstellungen, Homebrew-Apps und Nix-Pakete wieder her.",
+        "Konfiguration von Shell (zsh/Starship), Editor (Neovim) und Terminal (WezTerm) als kohärente, versionierte persönliche Umgebung.",
+        "Pflege gemeinsamer Agenten-Konfiguration über mehrere KI-Coding-Tools hinweg (Claude Code, Codex, OpenCode), damit das Tooling maschinenweit konsistent bleibt.",
+        "Verfolgung und Einpflegen von Upstream-Änderungen aus dem ursprünglichen Framework bei gleichzeitiger Ergänzung eigener Pakete, Tool-Entscheidungen und Einstellungen.",
+        "Öffentlich auf GitHub (Jin-HoMLee/dotfiles), lizenziert unter MIT No Attribution."
+      ],
+      "outcome": "Ein funktionierendes, mit einem Befehl reproduzierbares persönliches macOS-Setup — ein personalisierter Fork eines gemeinsam genutzten Dotfiles-Frameworks, aktuell gehalten mit eigener Maschine, eigenen Paketen und Agenten-Tooling."
+    },
     "L1": {
       "id": "L1",
       "category": "life-science",
