@@ -639,15 +639,16 @@
     {
       "@type": "CreativeWork",
       "@id": "https://jinholee.is-a.dev/projects/D2/",
-      "name": "Shuttle Insights – AI Badminton Match Analysis",
+      "name": "badminton-vision – Real-Time On-Device Computer Vision for Badminton",
       "url": "https://jinholee.is-a.dev/projects/D2/",
-      "description": "Computer vision system for analyzing badminton gameplay from video recordings.",
+      "description": "Chrome MV3 extension running real-time computer vision entirely on-device on badminton match footage played on YouTube — under active, ongoing development.",
       "dateCreated": "2024-01",
       "keywords": [
-        "Python",
-        "OpenCV",
-        "TensorFlow",
-        "MediaPipe"
+        "TypeScript",
+        "Chrome Extension (Manifest V3)",
+        "TensorFlow.js",
+        "ONNX Runtime Web",
+        "YOLO-World"
       ],
       "creator": {
         "@id": "https://orcid.org/0009-0001-8784-1771"
@@ -670,6 +671,23 @@
         "Docker",
         "dbt",
         "Google Cloud"
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/D4/",
+      "name": "claude-personas – Multi-Persona Framework for Claude Code",
+      "url": "https://jinholee.is-a.dev/projects/D4/",
+      "description": "Framework for running multiple specialized Claude Code personas in parallel, each with its own isolated, role-specific persistent memory, so a solo developer can cover multiple roles across a project.",
+      "dateCreated": "2026-05",
+      "keywords": [
+        "Claude Code",
+        "Shell",
+        "Python",
+        "GitHub Actions"
       ],
       "creator": {
         "@id": "https://orcid.org/0009-0001-8784-1771"

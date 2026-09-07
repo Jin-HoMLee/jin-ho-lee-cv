@@ -22,7 +22,7 @@ EXPERIENCE
 ================================================================================
 ML/AI Engineer & Open-Source Developer - Independent / Self-Directed    (2025-08 to present)
   - Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.
-  - Computer Vision: Trained skeleton-based action-recognition models for badminton stroke classification from video — full pipeline from frame labeling through training to evaluation (PyTorch, MediaPipe).
+  - Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — full PRD-to-CI product discipline; in active development.
   - Bioinformatics: Released a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2/OpenFold structural validation.
 
 Consultant, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 to 2025-07)
@@ -91,6 +91,12 @@ Data & Engineering
   AI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow, OpenAI API
   Eng & Tools: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
   Cloud: GCP, BigQuery, Vertex AI, Looker
+AI Agents & Dev Tooling
+  Reproducible Environment: Nix, nix-darwin, home-manager
+  Terminal & Editor: WezTerm, Neovim
+  Multi-Agent AI Tooling: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
+  On-Device Browser ML: TensorFlow.js, ONNX Runtime Web
+  Browser Extensions: Chrome Extension (Manifest V3)
 
 ================================================================================
 LANGUAGES

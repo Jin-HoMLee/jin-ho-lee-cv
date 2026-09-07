@@ -176,6 +176,50 @@
             ]
           }
         ]
+      },
+      {
+        "name": "AI Agents & Dev Tooling",
+        "groups": [
+          {
+            "label": "Reproducible Environment",
+            "items": [
+              "Nix",
+              "nix-darwin",
+              "home-manager"
+            ]
+          },
+          {
+            "label": "Terminal & Editor",
+            "items": [
+              "WezTerm",
+              "Neovim"
+            ]
+          },
+          {
+            "label": "Multi-Agent AI Tooling",
+            "items": [
+              "Claude Code",
+              "Codex",
+              "OpenCode",
+              "Pi",
+              "Grok",
+              "Cursor"
+            ]
+          },
+          {
+            "label": "On-Device Browser ML",
+            "items": [
+              "TensorFlow.js",
+              "ONNX Runtime Web"
+            ]
+          },
+          {
+            "label": "Browser Extensions",
+            "items": [
+              "Chrome Extension (Manifest V3)"
+            ]
+          }
+        ]
       }
     ]
   },
@@ -213,11 +257,13 @@
         {
           "en": "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.",
           "de": "Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.",
-          "refs": []
+          "refs": [
+            "D4"
+          ]
         },
         {
-          "en": "Computer Vision: Trained skeleton-based action-recognition models for badminton stroke classification from video — full pipeline from frame labeling through training to evaluation (PyTorch, MediaPipe).",
-          "de": "Computer Vision: Training skelettbasierter Action-Recognition-Modelle zur Badminton-Schlagklassifikation aus Videodaten — vollständige Pipeline von der Frame-Annotation über das Training bis zur Evaluation (PyTorch, MediaPipe).",
+          "en": "Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — full PRD-to-CI product discipline; in active development.",
+          "de": "Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — mit vollständiger Produktentwicklungsdisziplin von PRD bis CI; in aktiver Entwicklung.",
           "refs": [
             "D2"
           ]
@@ -412,25 +458,29 @@
     "D2": {
       "id": "D2",
       "category": "data-science",
-      "title": "Shuttle Insights – AI Badminton Match Analysis",
-      "summary": "Computer vision system for analyzing badminton gameplay from video recordings.",
-      "role": "Data Scientist / Developer",
+      "open_source": true,
+      "title": "badminton-vision – Real-Time On-Device Computer Vision for Badminton",
+      "summary": "Chrome MV3 extension running real-time computer vision entirely on-device on badminton match footage played on YouTube — under active, ongoing development.",
+      "role": "Independent Developer",
       "period": {
         "start": "2024-01",
-        "end": "2024-04"
+        "end": null
       },
       "technologies": [
-        "Python",
-        "OpenCV",
-        "TensorFlow",
-        "MediaPipe"
+        "TypeScript",
+        "Chrome Extension (Manifest V3)",
+        "TensorFlow.js",
+        "ONNX Runtime Web",
+        "YOLO-World"
       ],
       "contributions": [
-        "Developed a computer vision pipeline for detecting players and tracking shuttle trajectories.",
-        "Implemented pose estimation models to analyze player movement patterns.",
-        "Extracted gameplay metrics such as rally duration and player positioning."
+        "Built a Chrome MV3 extension that detects pose, racket, and shuttle on badminton match footage played on YouTube, running entirely client-side with no server round-trip.",
+        "Implemented the default real-time detection pipeline with TensorFlow.js and ONNX Runtime Web.",
+        "Evaluated an experimental zero-shot, open-vocabulary object detector (YOLO-World) alongside the shipped default detector.",
+        "Applied full product-development discipline: a written PRD, UX wireframing and review, an automated test suite, and a CI pipeline.",
+        "Public on GitHub (Jin-HoMLee/badminton-vision); still in active development, not yet a finished v1."
       ],
-      "outcome": "Functional prototype capable of generating match statistics and movement analytics."
+      "outcome": "In-browser, on-device computer vision extension for badminton match analysis, under active, ongoing development toward a first stable release."
     },
     "D3": {
       "id": "D3",
@@ -460,6 +510,31 @@
         "Developed and improved training materials."
       ],
       "outcome": "Successfully supported multiple cohorts in developing industry-ready data science skills."
+    },
+    "D4": {
+      "id": "D4",
+      "category": "data-science",
+      "open_source": true,
+      "title": "claude-personas – Multi-Persona Framework for Claude Code",
+      "summary": "Framework for running multiple specialized Claude Code personas in parallel, each with its own isolated, role-specific persistent memory, so a solo developer can cover multiple roles across a project.",
+      "role": "Author and Maintainer (Open Source)",
+      "period": {
+        "start": "2026-05",
+        "end": null
+      },
+      "technologies": [
+        "Claude Code",
+        "Shell",
+        "Python",
+        "GitHub Actions"
+      ],
+      "contributions": [
+        "Designed a persona system (e.g. Developer, PM, Designer, Scientist) so one solo developer can run several specialized Claude Code agents in parallel instead of switching hats manually.",
+        "Built isolated, role-specific persistent memory per persona, so each agent accumulates and reuses its own context across sessions without polluting the others.",
+        "Set up a CI pipeline to keep the framework's own tooling and configuration reliable across changes.",
+        "Public on GitHub (Jin-HoMLee/claude-personas)."
+      ],
+      "outcome": "An open-source framework that lets a solo developer parallelize multi-role work by running several specialized, memory-isolated Claude Code personas at once."
     },
     "L1": {
       "id": "L1",

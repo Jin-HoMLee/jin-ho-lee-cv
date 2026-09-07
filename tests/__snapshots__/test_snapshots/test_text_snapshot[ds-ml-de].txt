@@ -19,7 +19,7 @@ BERUFSERFAHRUNG
 ================================================================================
 ML/AI-Engineer & Open-Source-Entwickler - Independent / Self-Directed    (2025-08 bis heute)
   - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
-  - Computer Vision: Training skelettbasierter Action-Recognition-Modelle zur Badminton-Schlagklassifikation aus Videodaten — vollständige Pipeline von der Frame-Annotation über das Training bis zur Evaluation (PyTorch, MediaPipe).
+  - Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — mit vollständiger Produktentwicklungsdisziplin von PRD bis CI; in aktiver Entwicklung.
   - Bioinformatik: Veröffentlichung einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2/OpenFold.
 
 Berater, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 bis 2025-07)
@@ -54,12 +54,24 @@ SignMeUp – Echtzeit-Erkennung der American Sign Language (ASL)    (2023-09 bis
   Ergebnis: Lieferung eines funktionsfähigen Prototyps für Echtzeit-Inferenz,
   der unmittelbares Feedback für Lernende der Gebärdensprache ermöglicht.
 
-Shuttle Insights – KI-gestützte Badminton-Spielanalyse    (2024-01 bis 2024-04)
-  Data Scientist / Entwickler
-  Computer-Vision-System zur Analyse von Badminton-Gameplay aus
-  Videoaufzeichnungen.
-  Ergebnis: Funktionsfähiger Prototyp, der Match-Statistiken und
-  Bewegungsanalysen generieren kann.
+badminton-vision – Echtzeit-Computer-Vision für Badminton, direkt im Browser    (2024-01 bis heute)
+  Unabhängiger Entwickler
+  Chrome-MV3-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig
+  auf Badminton-Spielaufnahmen auf YouTube ausführt — aktuell in aktiver
+  Weiterentwicklung.
+  Ergebnis: Browserbasierte, geräteseitige Computer-Vision-Erweiterung zur
+  Badminton-Spielanalyse, in aktiver, laufender Weiterentwicklung auf dem Weg zu
+  einem ersten stabilen Release.
+
+claude-personas – Multi-Persona-Framework für Claude Code    (2026-05 bis heute)
+  Autor und Maintainer (Open Source)
+  Framework zum parallelen Betrieb mehrerer spezialisierter Claude-Code-
+  Personas, jede mit eigenem, isoliertem und rollenspezifischem persistentem
+  Gedächtnis, damit eine Einzelperson mehrere Rollen in einem Projekt abdecken
+  kann.
+  Ergebnis: Ein Open-Source-Framework, das einer Einzelperson erlaubt, Multi-
+  Rollen-Arbeit zu parallelisieren, indem mehrere spezialisierte,
+  gedächtnisisolierte Claude-Code-Personas gleichzeitig laufen.
 
 ================================================================================
 AUSBILDUNG
@@ -85,6 +97,12 @@ Daten & Engineering
   KI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow, OpenAI API
   Eng & Tools: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
   Cloud: GCP, BigQuery, Vertex AI, Looker
+KI-Agenten & Dev-Tooling
+  Reproduzierbare Umgebung: Nix, nix-darwin, home-manager
+  Terminal & Editor: WezTerm, Neovim
+  Multi-Agenten-KI-Tooling: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
+  Geräteseitiges Browser-ML: TensorFlow.js, ONNX Runtime Web
+  Browser-Erweiterungen: Chrome Extension (Manifest V3)
 
 ================================================================================
 SPRACHEN
