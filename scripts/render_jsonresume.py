@@ -150,7 +150,11 @@ def _projects(content: dict) -> list[dict]:
                 "highlights": list(proj.get("contributions", [])),
                 "keywords": list(proj.get("technologies", [])),
                 "startDate": _pad_start(proj["period"]["start"]),
-                **({"endDate": _pad_end(proj["period"]["end"])} if proj["period"].get("end") else {}),
+                **(
+                    {"endDate": _pad_end(proj["period"]["end"])}
+                    if proj["period"].get("end")
+                    else {}
+                ),
                 "roles": [proj["role"]],
             }
         )
