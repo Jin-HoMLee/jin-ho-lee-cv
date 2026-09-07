@@ -1176,7 +1176,7 @@
       {
         "id": "what-are-his-skills",
         "question": "What technical skills does Jin-Ho Lee have?",
-        "answer": "Jin-Ho Lee works in Python, SQL and R, with machine learning in PyTorch and TensorFlow, bioinformatics pipelines in Snakemake, and cloud data engineering on Google Cloud including BigQuery and BigQueryML. His domain expertise spans cancer genomics, NGS and RNA-Seq analysis, HLA typing, neoantigen discovery, and spatial point-pattern analysis."
+        "answer": "Jin-Ho Lee works in Python, SQL and R, with machine learning in TensorFlow, bioinformatics pipelines in Snakemake, and cloud data engineering on Google Cloud including BigQuery and BigQueryML. His domain expertise spans cancer genomics, NGS and RNA-Seq analysis, HLA typing, neoantigen discovery, and spatial point-pattern analysis."
       },
       {
         "id": "what-has-he-published",
