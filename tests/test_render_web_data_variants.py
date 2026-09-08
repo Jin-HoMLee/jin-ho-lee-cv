@@ -220,7 +220,9 @@ def test_extract_never_emits_selected_projects():
 
 def _skills(groups):
     """groups: list of (label, items) -> a resolved (post-langstring) skills tree."""
-    return {"categories": [{"name": "Cat", "groups": [{"label": la, "items": it} for la, it in groups]}]}
+    return {
+        "categories": [{"name": "Cat", "groups": [{"label": la, "items": it} for la, it in groups]}]
+    }
 
 
 def test_extract_skills_overrides_identical_returns_empty():

@@ -131,9 +131,7 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
     if v_second is not None and v_second != b_second:
         overrides["second_paragraph"] = v_second
 
-    overrides.update(
-        _extract_skills_overrides(bridge.get("skills", {}), variant.get("skills", {}))
-    )
+    overrides.update(_extract_skills_overrides(bridge.get("skills", {}), variant.get("skills", {})))
 
     return overrides
 

@@ -29,8 +29,11 @@
 - `labels` — UI section labels (LangStrings)
 
 ## Targets
-`bridge` (default), `comp-bio`, `ds-ml` — positioning variants overriding headline /
-tagline / profile paragraphs only.
+`bridge` (default), `comp-bio`, `ds-ml`. Variant data lives as `variants:` blocks in
+`content/` YAML: `personal.variants` overrides the headline, `profile.variants` the
+tagline / lead / second paragraphs, and each `skills` category's `variants` can omit
+whole groups or collapse a group to fewer items (`omit_groups` / `group_items`, matched
+by a group's `label.en`).
 
 ## MCP tools
 | Tool | Hint | Does |

@@ -25,8 +25,10 @@ renderer to change content.
 - **LangStrings**: short strings are inline `{ en: "...", de: "..." }` maps; long prose lives
   in per-language files (`profile.en.yaml`/`profile.de.yaml`,
   `projects/L1.en.yaml`/`projects/L1.de.yaml`). `en` is required.
-- **Variants**: positioning targets `bridge` (default), `comp-bio`, `ds-ml` under a
-  `variants:` key (headline / tagline / paragraphs only).
+- **Variants**: positioning targets `bridge` (default), `comp-bio`, `ds-ml`. `variants:`
+  blocks live on `personal` (headline), `profile` (tagline / lead / second paragraphs),
+  and per `skills` category (`omit_groups` / `group_items`, matched by a group's
+  `label.en`).
 - **Cross-refs**: `experience` bullets carry `refs: [L1, C2]` → `projects/<id>.en.yaml`.
   Every ref must resolve, and every project needs both `.en.yaml` and `.de.yaml`.
 
