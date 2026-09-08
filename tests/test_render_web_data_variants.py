@@ -69,6 +69,16 @@ def test_variants_have_all_positioning_fields(rendered):
             assert all(isinstance(item, str) and item for item in overrides["hero_stack"])
 
 
+def test_ds_ml_hero_stack_uses_ml_engineering_and_cloud_leads(rendered):
+    for lang in ("en", "de"):
+        assert rendered[lang]["variants"]["ds-ml"]["hero_stack"] == [
+            "NGS",
+            "TensorFlow",
+            "Python (Expert)",
+            "GCP",
+        ]
+
+
 def test_variants_carry_resolved_complementary_skills(rendered):
     for lang in ("en", "de"):
         bridge = rendered[lang]["bridge"]["skills"]

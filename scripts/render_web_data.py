@@ -43,7 +43,7 @@ def _to_jsonable(obj: Any) -> Any:
     return obj
 
 
-def _hero_stack(skills: dict) -> list[str]:
+def _hero_stack(skills: dict, *, target: str = "bridge") -> list[str]:
     """Derive the short CodeHero stack from a resolved Skills tree."""
     categories = skills.get("categories") or []
     if not categories:
@@ -55,13 +55,23 @@ def _hero_stack(skills: dict) -> list[str]:
 
     bio_groups = categories[0].get("groups") or []
     bio_lead = first_item(bio_groups[0]) if bio_groups else None
+    lead_category = categories[-1]
+    if target == "ds-ml":
+        lead_category = next(
+            (
+                category
+                for category in categories
+                if category.get("name") in {"Data & Engineering", "Daten & Engineering"}
+            ),
+            lead_category,
+        )
     engineering_leads = [
-        first_item(group) for group in (categories[-1].get("groups") or [])
+        first_item(group) for group in (lead_category.get("groups") or [])
     ]
     return [item for item in [bio_lead, *engineering_leads] if item][:4]
 
 
-def _extract_overrides(bridge: dict, variant: dict) -> dict:
+def _extract_overrides(bridge: dict, variant: dict, *, target: str = "bridge") -> dict:
     """Return the web-rendered positioning fields that differ from bridge.
 
     Reads from the *nested* resolved tree (not top level):
@@ -115,7 +125,7 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
     if variant_skills is not None and variant_skills != bridge_skills:
         overrides["skills"] = variant_skills
         bridge_stack = _hero_stack(bridge_skills or {})
-        variant_stack = _hero_stack(variant_skills)
+        variant_stack = _hero_stack(variant_skills, target=target)
         if variant_stack != bridge_stack:
             overrides["hero_stack"] = variant_stack
 
@@ -190,7 +200,9 @@ def render_web_data(
                 ),
                 lang=lang,
             )
-            variants_dict[target] = _extract_overrides(bridge_resolved, variant_resolved)
+            variants_dict[target] = _extract_overrides(
+                bridge_resolved, variant_resolved, target=target
+            )
         _dump(variants_dict, f"content.{lang}.variants.json")
 
 

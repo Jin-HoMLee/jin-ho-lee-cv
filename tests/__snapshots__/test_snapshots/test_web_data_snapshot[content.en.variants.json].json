@@ -147,8 +147,8 @@
                 "TensorFlow",
                 "Keras",
                 "LSTMs",
-                "XGBoost",
                 "OpenCV",
+                "XGBoost",
                 "MLflow"
               ]
             },
@@ -211,9 +211,9 @@
     },
     "hero_stack": [
       "NGS",
-      "OpenAI API",
-      "Chrome Extension (Manifest V3)",
-      "Claude Code"
+      "TensorFlow",
+      "Python (Expert)",
+      "GCP"
     ]
   }
 }
