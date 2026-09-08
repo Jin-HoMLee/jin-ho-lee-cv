@@ -23,7 +23,7 @@ BERUFSERFAHRUNG
 ================================================================================
 ML/AI-Engineer & Open-Source-Entwickler - Independent / Self-Directed    (2025-08 bis heute)
   - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
-  - Computer Vision: Training skelettbasierter Action-Recognition-Modelle zur Badminton-Schlagklassifikation aus Videodaten — vollständige Pipeline von der Frame-Annotation über das Training bis zur Evaluation (PyTorch, MediaPipe).
+  - Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — 2026 als vollständiger Neuaufbau des 2025 entwickelten Badminton-Videoanalyse-Toolkits (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle); vollständige Produktentwicklungsdisziplin von PRD bis CI, in aktiver Entwicklung.
   - Bioinformatik: Veröffentlichung einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2/OpenFold.
 
 Berater, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 bis 2025-07)
@@ -93,6 +93,12 @@ Daten & Engineering
   KI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow, OpenAI API
   Eng & Tools: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
   Cloud: GCP, BigQuery, Vertex AI, Looker
+KI-Agenten & Dev-Tooling
+  Reproduzierbare Umgebung: Nix, nix-darwin, home-manager
+  Terminal & Editor: WezTerm, Neovim
+  Multi-Agenten-KI-Tooling: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
+  Geräteseitiges Browser-ML: TensorFlow.js, ONNX Runtime Web
+  Browser-Erweiterungen: Chrome Extension (Manifest V3)
 
 ================================================================================
 SPRACHEN

@@ -109,6 +109,13 @@ The web package too: `pnpm --dir web test` (vitest) covers the twin chat's escap
 ## Conventions
 
 - **TDD for non-trivial Python.** Tests first, watch them fail, then implement.
+- **Verify externally-sourced project facts before writing them.** When a `content/projects/*.yaml`
+  entry describes a real GitHub repo, check the repo itself (fork status, actual dependencies,
+  commit history, CI) before writing claims like tech stack or "author and maintainer" - a
+  provided fact sheet can be stale or wrong. Caught in practice: a captain-provided description of
+  a personal `dotfiles` repo as "author and maintainer" turned out to be a fork of someone else's
+  project with only light personalization on top; the CV entry (`D5`) was reworded to say so
+  honestly instead.
 - **Tests never touch `content.private/`.** The real `private.yaml` is PII outside git's
   protection — tests write private overlays only under `tmp_path` (PDF build: via the
   `CV_PRIVATE_YAML` env override). A session-wide autouse guard in `tests/conftest.py`

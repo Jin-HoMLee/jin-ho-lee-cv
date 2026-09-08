@@ -48,7 +48,7 @@
       "startDate": "2025-08-01",
       "highlights": [
         "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.",
-        "Computer Vision: Trained skeleton-based action-recognition models for badminton stroke classification from video — full pipeline from frame labeling through training to evaluation (PyTorch, MediaPipe).",
+        "Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — a 2026 full rebuild of the badminton video-analysis toolkit first built in 2025 (pose estimation, LSTM shot-prediction modeling); full PRD-to-CI product discipline, in active development.",
         "Bioinformatics: Released a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2/OpenFold structural validation."
       ]
     },
@@ -211,6 +211,50 @@
         "BigQuery",
         "Vertex AI",
         "Looker"
+      ]
+    },
+    {
+      "name": "AI Agents & Dev Tooling",
+      "level": "Reproducible Environment",
+      "keywords": [
+        "Nix",
+        "nix-darwin",
+        "home-manager"
+      ]
+    },
+    {
+      "name": "AI Agents & Dev Tooling",
+      "level": "Terminal & Editor",
+      "keywords": [
+        "WezTerm",
+        "Neovim"
+      ]
+    },
+    {
+      "name": "AI Agents & Dev Tooling",
+      "level": "Multi-Agent AI Tooling",
+      "keywords": [
+        "Claude Code",
+        "Codex",
+        "OpenCode",
+        "Pi",
+        "Grok",
+        "Cursor"
+      ]
+    },
+    {
+      "name": "AI Agents & Dev Tooling",
+      "level": "On-Device Browser ML",
+      "keywords": [
+        "TensorFlow.js",
+        "ONNX Runtime Web"
+      ]
+    },
+    {
+      "name": "AI Agents & Dev Tooling",
+      "level": "Browser Extensions",
+      "keywords": [
+        "Chrome Extension (Manifest V3)"
       ]
     }
   ],
@@ -391,23 +435,25 @@
       ]
     },
     {
-      "name": "Shuttle Insights – AI Badminton Match Analysis",
-      "description": "Computer vision system for analyzing badminton gameplay from video recordings.",
+      "name": "badminton-vision – Real-Time On-Device Computer Vision for Badminton",
+      "description": "Badminton video analysis in two stints: a comprehensive toolkit — pose estimation, LSTM shot-prediction modeling, and a browser extension for manual YouTube labeling — built in mid-to-late 2025; shelved for about ten months; then revived in August 2026 as a full rebuild: badminton-vision, a real-time, fully on-device Chrome MV3 extension running on badminton match footage played on YouTube, under active, ongoing development.",
       "highlights": [
-        "Developed a computer vision pipeline for detecting players and tracking shuttle trajectories.",
-        "Implemented pose estimation models to analyze player movement patterns.",
-        "Extracted gameplay metrics such as rally duration and player positioning."
+        "Built a Chrome MV3 extension that detects pose, racket, and shuttle on badminton match footage played on YouTube, running entirely client-side with no server round-trip.",
+        "Implemented the default real-time detection pipeline with TensorFlow.js and ONNX Runtime Web.",
+        "Evaluated an experimental zero-shot, open-vocabulary object detector (YOLO-World) alongside the default detector.",
+        "Applied full product-development discipline: a written PRD, UX wireframing and review, an automated test suite, and a CI pipeline.",
+        "Public on GitHub (Jin-HoMLee/badminton-vision); still in active development, not yet a finished v1."
       ],
       "keywords": [
-        "Python",
-        "OpenCV",
-        "TensorFlow",
-        "MediaPipe"
+        "TypeScript",
+        "Chrome Extension (Manifest V3)",
+        "TensorFlow.js",
+        "ONNX Runtime Web",
+        "YOLO-World"
       ],
-      "startDate": "2024-01-01",
-      "endDate": "2024-04-28",
+      "startDate": "2025-06-01",
       "roles": [
-        "Data Scientist / Developer"
+        "Independent Developer"
       ]
     },
     {
@@ -434,6 +480,51 @@
       "endDate": "2024-04-28",
       "roles": [
         "Data Science Coach (neuefische GmbH)"
+      ]
+    },
+    {
+      "name": "claude-personas – Multi-Persona Framework for Claude Code",
+      "description": "Framework for running multiple specialized Claude Code personas in parallel, each with its own isolated, role-specific persistent memory, so a solo developer can cover multiple roles across a project.",
+      "highlights": [
+        "Designed a persona system (e.g. Developer, PM, Designer, Scientist) so one solo developer can run several specialized Claude Code agents in parallel instead of switching hats manually.",
+        "Built isolated, role-specific persistent memory per persona, so each agent accumulates and reuses its own context across sessions without polluting the others.",
+        "Set up a CI pipeline to keep the framework's own tooling and configuration reliable across changes.",
+        "Public on GitHub (Jin-HoMLee/claude-personas)."
+      ],
+      "keywords": [
+        "Claude Code",
+        "Shell",
+        "Python",
+        "GitHub Actions"
+      ],
+      "startDate": "2026-05-01",
+      "roles": [
+        "Author and Maintainer (Open Source)"
+      ]
+    },
+    {
+      "name": "dotfiles – Personalized, Reproducible Nix macOS Setup",
+      "description": "A personal, one-command reproducible macOS setup built on Nix (nix-darwin + home-manager) — a personalized fork of a shared open-source dotfiles framework, extended with my own packages, tools, and multi-agent AI configuration.",
+      "highlights": [
+        "Forked a shared Nix-based dotfiles framework (kunchenguid/dotfiles) and personalized it into a fully reproducible macOS setup: one command restores system settings, Homebrew apps, and Nix packages.",
+        "Configured shell (zsh/Starship), editor (Neovim), and terminal (WezTerm) as a coherent, version-controlled personal environment.",
+        "Maintained shared agent configuration across multiple AI coding tools (Claude Code, Codex, OpenCode) so tooling stays consistent machine-wide.",
+        "Tracked and merged upstream changes from the original framework while layering on personal packages, tool choices, and settings.",
+        "Public on GitHub (Jin-HoMLee/dotfiles), MIT No Attribution licensed."
+      ],
+      "keywords": [
+        "Nix",
+        "nix-darwin",
+        "home-manager",
+        "Homebrew",
+        "zsh",
+        "Starship",
+        "Neovim",
+        "WezTerm"
+      ],
+      "startDate": "2026-07-01",
+      "roles": [
+        "Maintainer (Personalized Fork, Open Source)"
       ]
     },
     {
@@ -551,7 +642,6 @@
         "Mol*"
       ],
       "startDate": "2026-03-01",
-      "endDate": "2026-03-01",
       "roles": [
         "Author and Maintainer (Open Source)"
       ]

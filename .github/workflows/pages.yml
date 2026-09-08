@@ -46,6 +46,29 @@ jobs:
           mkdir -p web/public
           cp dist/llms.txt web/public/llms.txt
 
+      - name: Read pinned Typst version
+        id: typst-version
+        run: echo "version=$(cat .typstversion)" >> "$GITHUB_OUTPUT"
+
+      - name: Install Typst
+        uses: typst-community/setup-typst@v5
+        with:
+          typst-version: ${{ steps.typst-version.outputs.version }}
+
+      - name: Install IBM Plex Sans font
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-ibm-plex
+          fc-cache -f
+
+      - name: Render PDFs into web/public/
+        run: |
+          uv run python -m pdf.build --lang en
+          uv run python -m pdf.build --lang de
+          mkdir -p web/public
+          cp dist/cv-en.pdf web/public/cv-en.pdf
+          cp dist/cv-de.pdf web/public/cv-de.pdf
+
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
@@ -79,7 +102,7 @@ jobs:
           test -f web/dist/index.html
           test -f web/dist/de/index.html
           # Project pages — L1 is a representative spot-check; if dynamic routes
-          # enumerated 0 projects, all 9 ids would be missing simultaneously.
+          # enumerated 0 projects, every project page id would be missing simultaneously.
           test -f web/dist/projects/L1/index.html
           test -f web/dist/de/projects/L1/index.html
           # OG images — homepage + one project page, both langs
@@ -90,6 +113,16 @@ jobs:
           # OG image size sanity (> 5KB rules out blank/failed renders)
           size=$(stat -c%s web/dist/og/index-en.png 2>/dev/null || stat -f%z web/dist/og/index-en.png)
           [ "$size" -gt 5120 ] || (echo "OG image too small ($size bytes) — generation likely failed" && exit 1)
+          # Downloadable PDFs actually exist as static files (the header PDF menu
+          # only asserted its link *text* below, which is exactly how these files
+          # went missing from a live deploy unnoticed — issue: 404 on /cv-en.pdf).
+          test -f web/dist/cv-en.pdf
+          test -f web/dist/cv-de.pdf
+          # PDF size sanity (> 5KB rules out an empty/failed Typst render)
+          pdf_en_size=$(stat -c%s web/dist/cv-en.pdf 2>/dev/null || stat -f%z web/dist/cv-en.pdf)
+          [ "$pdf_en_size" -gt 5120 ] || (echo "cv-en.pdf too small ($pdf_en_size bytes) — generation likely failed" && exit 1)
+          pdf_de_size=$(stat -c%s web/dist/cv-de.pdf 2>/dev/null || stat -f%z web/dist/cv-de.pdf)
+          [ "$pdf_de_size" -gt 5120 ] || (echo "cv-de.pdf too small ($pdf_de_size bytes) — generation likely failed" && exit 1)
           # OG meta wired into pages
           grep -q 'property="og:image"' web/dist/index.html
           grep -q 'property="og:image"' web/dist/projects/L1/index.html

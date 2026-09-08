@@ -19,7 +19,7 @@ EXPERIENCE
 ================================================================================
 ML/AI Engineer & Open-Source Developer - Independent / Self-Directed    (2025-08 to present)
   - Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.
-  - Computer Vision: Trained skeleton-based action-recognition models for badminton stroke classification from video — full pipeline from frame labeling through training to evaluation (PyTorch, MediaPipe).
+  - Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — a 2026 full rebuild of the badminton video-analysis toolkit first built in 2025 (pose estimation, LSTM shot-prediction modeling); full PRD-to-CI product discipline, in active development.
   - Bioinformatics: Released a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2/OpenFold structural validation.
 
 Consultant, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 to 2025-07)
@@ -54,11 +54,35 @@ SignMeUp – Real-Time American Sign Language (ASL) Recognition    (2023-09 to 2
   Outcome: Delivered a functional prototype for real-time inference, enabling
   instant feedback for sign language learners.
 
-Shuttle Insights – AI Badminton Match Analysis    (2024-01 to 2024-04)
-  Data Scientist / Developer
-  Computer vision system for analyzing badminton gameplay from video recordings.
-  Outcome: Functional prototype capable of generating match statistics and
-  movement analytics.
+badminton-vision – Real-Time On-Device Computer Vision for Badminton    (2025-06 to present)
+  Independent Developer
+  Badminton video analysis in two stints: a comprehensive toolkit — pose
+  estimation, LSTM shot-prediction modeling, and a browser extension for manual
+  YouTube labeling — built in mid-to-late 2025; shelved for about ten months;
+  then revived in August 2026 as a full rebuild: badminton-vision, a real-time,
+  fully on-device Chrome MV3 extension running on badminton match footage played
+  on YouTube, under active, ongoing development.
+  Outcome: In-browser, on-device computer vision extension for badminton match
+  analysis, under active, ongoing development toward a first stable release.
+
+claude-personas – Multi-Persona Framework for Claude Code    (2026-05 to present)
+  Author and Maintainer (Open Source)
+  Framework for running multiple specialized Claude Code personas in parallel,
+  each with its own isolated, role-specific persistent memory, so a solo
+  developer can cover multiple roles across a project.
+  Outcome: An open-source framework that lets a solo developer parallelize
+  multi-role work by running several specialized, memory-isolated Claude Code
+  personas at once.
+
+dotfiles – Personalized, Reproducible Nix macOS Setup    (2026-07 to present)
+  Maintainer (Personalized Fork, Open Source)
+  A personal, one-command reproducible macOS setup built on Nix (nix-darwin +
+  home-manager) — a personalized fork of a shared open-source dotfiles
+  framework, extended with my own packages, tools, and multi-agent AI
+  configuration.
+  Outcome: A working, one-command reproducible personal macOS setup — a
+  personalized fork of a shared dotfiles framework, kept current with my own
+  machine, packages, and agent tooling.
 
 ================================================================================
 EDUCATION
@@ -84,6 +108,12 @@ Data & Engineering
   AI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow, OpenAI API
   Eng & Tools: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
   Cloud: GCP, BigQuery, Vertex AI, Looker
+AI Agents & Dev Tooling
+  Reproducible Environment: Nix, nix-darwin, home-manager
+  Terminal & Editor: WezTerm, Neovim
+  Multi-Agent AI Tooling: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
+  On-Device Browser ML: TensorFlow.js, ONNX Runtime Web
+  Browser Extensions: Chrome Extension (Manifest V3)
 
 ================================================================================
 LANGUAGES

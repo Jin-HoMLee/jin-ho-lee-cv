@@ -639,15 +639,16 @@
     {
       "@type": "CreativeWork",
       "@id": "https://jinholee.is-a.dev/projects/D2/",
-      "name": "Shuttle Insights – AI Badminton Match Analysis",
+      "name": "badminton-vision – Real-Time On-Device Computer Vision for Badminton",
       "url": "https://jinholee.is-a.dev/projects/D2/",
-      "description": "Computer vision system for analyzing badminton gameplay from video recordings.",
-      "dateCreated": "2024-01",
+      "description": "Badminton video analysis in two stints: a comprehensive toolkit — pose estimation, LSTM shot-prediction modeling, and a browser extension for manual YouTube labeling — built in mid-to-late 2025; shelved for about ten months; then revived in August 2026 as a full rebuild: badminton-vision, a real-time, fully on-device Chrome MV3 extension running on badminton match footage played on YouTube, under active, ongoing development.",
+      "dateCreated": "2025-06",
       "keywords": [
-        "Python",
-        "OpenCV",
-        "TensorFlow",
-        "MediaPipe"
+        "TypeScript",
+        "Chrome Extension (Manifest V3)",
+        "TensorFlow.js",
+        "ONNX Runtime Web",
+        "YOLO-World"
       ],
       "creator": {
         "@id": "https://orcid.org/0009-0001-8784-1771"
@@ -670,6 +671,44 @@
         "Docker",
         "dbt",
         "Google Cloud"
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/D4/",
+      "name": "claude-personas – Multi-Persona Framework for Claude Code",
+      "url": "https://jinholee.is-a.dev/projects/D4/",
+      "description": "Framework for running multiple specialized Claude Code personas in parallel, each with its own isolated, role-specific persistent memory, so a solo developer can cover multiple roles across a project.",
+      "dateCreated": "2026-05",
+      "keywords": [
+        "Claude Code",
+        "Shell",
+        "Python",
+        "GitHub Actions"
+      ],
+      "creator": {
+        "@id": "https://orcid.org/0009-0001-8784-1771"
+      }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://jinholee.is-a.dev/projects/D5/",
+      "name": "dotfiles – Personalized, Reproducible Nix macOS Setup",
+      "url": "https://jinholee.is-a.dev/projects/D5/",
+      "description": "A personal, one-command reproducible macOS setup built on Nix (nix-darwin + home-manager) — a personalized fork of a shared open-source dotfiles framework, extended with my own packages, tools, and multi-agent AI configuration.",
+      "dateCreated": "2026-07",
+      "keywords": [
+        "Nix",
+        "nix-darwin",
+        "home-manager",
+        "Homebrew",
+        "zsh",
+        "Starship",
+        "Neovim",
+        "WezTerm"
       ],
       "creator": {
         "@id": "https://orcid.org/0009-0001-8784-1771"

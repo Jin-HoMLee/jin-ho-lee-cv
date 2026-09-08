@@ -126,6 +126,7 @@ _INVARIANT_EXACT = frozenset(
         ".skills.categories[1].groups[2].label",  # "Assays"
         ".skills.categories[2].groups[1].label",  # "Eng & Tools"
         ".skills.categories[2].groups[2].label",  # "Cloud"
+        ".skills.categories[3].groups[1].label",  # "Terminal & Editor"
         # Experience roles — English job-title strings used verbatim in German
         ".experience[2].role",  # "Data Science Trainee, Associate & Coach"
         # Project roles — English job-title strings used verbatim in German

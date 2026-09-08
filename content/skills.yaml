@@ -33,3 +33,18 @@ categories:
         items: ["Python (Expert)", "R", "SQL", "PostgreSQL", "Snakemake", "Conda", "Docker", "Git", "dbt", "Pydantic", "Streamlit"]
       - label: { en: "Cloud", de: "Cloud" }
         items: ["GCP", "BigQuery", "Vertex AI", "Looker"]
+
+  - name:
+      en: "AI Agents & Dev Tooling"
+      de: "KI-Agenten & Dev-Tooling"
+    groups:
+      - label: { en: "Reproducible Environment", de: "Reproduzierbare Umgebung" }
+        items: ["Nix", "nix-darwin", "home-manager"]
+      - label: { en: "Terminal & Editor", de: "Terminal & Editor" }
+        items: ["WezTerm", "Neovim"]
+      - label: { en: "Multi-Agent AI Tooling", de: "Multi-Agenten-KI-Tooling" }
+        items: ["Claude Code", "Codex", "OpenCode", "Pi", "Grok", "Cursor"]
+      - label: { en: "On-Device Browser ML", de: "Geräteseitiges Browser-ML" }
+        items: ["TensorFlow.js", "ONNX Runtime Web"]
+      - label: { en: "Browser Extensions", de: "Browser-Erweiterungen" }
+        items: ["Chrome Extension (Manifest V3)"]

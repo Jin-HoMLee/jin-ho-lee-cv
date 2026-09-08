@@ -1,18 +1,22 @@
 id: D2
 category: data-science
-title: "Shuttle Insights – KI-gestützte Badminton-Spielanalyse"
-summary: "Computer-Vision-System zur Analyse von Badminton-Gameplay aus Videoaufzeichnungen."
-role: "Data Scientist / Entwickler"
+open_source: true
+title: "badminton-vision – Echtzeit-Computer-Vision für Badminton, direkt im Browser"
+summary: "Badminton-Videoanalyse in zwei Etappen: 2025 entstand ein umfassendes Analyse-Toolkit (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle, Browser-Erweiterung zur manuellen Annotation von YouTube-Aufnahmen). Nach einer rund zehnmonatigen Pause folgte im August 2026 der vollständige Neuaufbau: badminton-vision, eine Chrome-MV3-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen auf YouTube ausführt. Das Projekt befindet sich weiterhin in aktiver Entwicklung."
+role: "Unabhängiger Entwickler"
 period:
-  start: "2024-01"
-  end: "2024-04"
+  start: "2025-06"
+  end: null
 technologies:
-  - "Python"
-  - "OpenCV"
-  - "TensorFlow"
-  - "MediaPipe"
+  - "TypeScript"
+  - "Chrome Extension (Manifest V3)"
+  - "TensorFlow.js"
+  - "ONNX Runtime Web"
+  - "YOLO-World"
 contributions:
-  - "Entwicklung einer Computer-Vision-Pipeline zur Erkennung von Spielern und zum Tracking der Shuttle-Flugbahnen."
-  - "Implementierung von Pose-Estimation-Modellen zur Analyse von Bewegungsmustern der Spieler."
-  - "Extraktion von Spielmetriken wie Ballwechseldauer und Spielerpositionierung."
-outcome: "Funktionsfähiger Prototyp, der Match-Statistiken und Bewegungsanalysen generieren kann."
+  - "Entwicklung einer Chrome-MV3-Erweiterung, die Pose-, Schläger- und Shuttle-Erkennung auf Badminton-Spielaufnahmen auf YouTube vollständig client-seitig ausführt, ohne Server-Roundtrip."
+  - "Implementierung der Standard-Echtzeit-Erkennungspipeline mit TensorFlow.js und ONNX Runtime Web."
+  - "Evaluierung eines experimentellen Zero-Shot-Objektdetektors mit offenem Vokabular (YOLO-World) neben dem Standard-Detektor."
+  - "Konsequente Produktentwicklungsdisziplin: schriftliches PRD, UX-Wireframing und -Review, automatisierte Testsuite und CI-Pipeline."
+  - "Öffentlich auf GitHub (Jin-HoMLee/badminton-vision); weiterhin in aktiver Entwicklung, noch kein fertiges v1."
+outcome: "Browserbasierte, geräteseitige Computer-Vision-Erweiterung zur Badminton-Spielanalyse, in aktiver, laufender Weiterentwicklung auf dem Weg zu einem ersten stabilen Release."

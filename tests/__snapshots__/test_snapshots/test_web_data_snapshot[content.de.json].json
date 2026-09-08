@@ -176,6 +176,50 @@
             ]
           }
         ]
+      },
+      {
+        "name": "KI-Agenten & Dev-Tooling",
+        "groups": [
+          {
+            "label": "Reproduzierbare Umgebung",
+            "items": [
+              "Nix",
+              "nix-darwin",
+              "home-manager"
+            ]
+          },
+          {
+            "label": "Terminal & Editor",
+            "items": [
+              "WezTerm",
+              "Neovim"
+            ]
+          },
+          {
+            "label": "Multi-Agenten-KI-Tooling",
+            "items": [
+              "Claude Code",
+              "Codex",
+              "OpenCode",
+              "Pi",
+              "Grok",
+              "Cursor"
+            ]
+          },
+          {
+            "label": "Geräteseitiges Browser-ML",
+            "items": [
+              "TensorFlow.js",
+              "ONNX Runtime Web"
+            ]
+          },
+          {
+            "label": "Browser-Erweiterungen",
+            "items": [
+              "Chrome Extension (Manifest V3)"
+            ]
+          }
+        ]
       }
     ]
   },
@@ -213,11 +257,13 @@
         {
           "en": "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.",
           "de": "Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.",
-          "refs": []
+          "refs": [
+            "D4"
+          ]
         },
         {
-          "en": "Computer Vision: Trained skeleton-based action-recognition models for badminton stroke classification from video — full pipeline from frame labeling through training to evaluation (PyTorch, MediaPipe).",
-          "de": "Computer Vision: Training skelettbasierter Action-Recognition-Modelle zur Badminton-Schlagklassifikation aus Videodaten — vollständige Pipeline von der Frame-Annotation über das Training bis zur Evaluation (PyTorch, MediaPipe).",
+          "en": "Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — a 2026 full rebuild of the badminton video-analysis toolkit first built in 2025 (pose estimation, LSTM shot-prediction modeling); full PRD-to-CI product discipline, in active development.",
+          "de": "Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — 2026 als vollständiger Neuaufbau des 2025 entwickelten Badminton-Videoanalyse-Toolkits (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle); vollständige Produktentwicklungsdisziplin von PRD bis CI, in aktiver Entwicklung.",
           "refs": [
             "D2"
           ]
@@ -412,25 +458,29 @@
     "D2": {
       "id": "D2",
       "category": "data-science",
-      "title": "Shuttle Insights – KI-gestützte Badminton-Spielanalyse",
-      "summary": "Computer-Vision-System zur Analyse von Badminton-Gameplay aus Videoaufzeichnungen.",
-      "role": "Data Scientist / Entwickler",
+      "open_source": true,
+      "title": "badminton-vision – Echtzeit-Computer-Vision für Badminton, direkt im Browser",
+      "summary": "Badminton-Videoanalyse in zwei Etappen: 2025 entstand ein umfassendes Analyse-Toolkit (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle, Browser-Erweiterung zur manuellen Annotation von YouTube-Aufnahmen). Nach einer rund zehnmonatigen Pause folgte im August 2026 der vollständige Neuaufbau: badminton-vision, eine Chrome-MV3-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen auf YouTube ausführt. Das Projekt befindet sich weiterhin in aktiver Entwicklung.",
+      "role": "Unabhängiger Entwickler",
       "period": {
-        "start": "2024-01",
-        "end": "2024-04"
+        "start": "2025-06",
+        "end": null
       },
       "technologies": [
-        "Python",
-        "OpenCV",
-        "TensorFlow",
-        "MediaPipe"
+        "TypeScript",
+        "Chrome Extension (Manifest V3)",
+        "TensorFlow.js",
+        "ONNX Runtime Web",
+        "YOLO-World"
       ],
       "contributions": [
-        "Entwicklung einer Computer-Vision-Pipeline zur Erkennung von Spielern und zum Tracking der Shuttle-Flugbahnen.",
-        "Implementierung von Pose-Estimation-Modellen zur Analyse von Bewegungsmustern der Spieler.",
-        "Extraktion von Spielmetriken wie Ballwechseldauer und Spielerpositionierung."
+        "Entwicklung einer Chrome-MV3-Erweiterung, die Pose-, Schläger- und Shuttle-Erkennung auf Badminton-Spielaufnahmen auf YouTube vollständig client-seitig ausführt, ohne Server-Roundtrip.",
+        "Implementierung der Standard-Echtzeit-Erkennungspipeline mit TensorFlow.js und ONNX Runtime Web.",
+        "Evaluierung eines experimentellen Zero-Shot-Objektdetektors mit offenem Vokabular (YOLO-World) neben dem Standard-Detektor.",
+        "Konsequente Produktentwicklungsdisziplin: schriftliches PRD, UX-Wireframing und -Review, automatisierte Testsuite und CI-Pipeline.",
+        "Öffentlich auf GitHub (Jin-HoMLee/badminton-vision); weiterhin in aktiver Entwicklung, noch kein fertiges v1."
       ],
-      "outcome": "Funktionsfähiger Prototyp, der Match-Statistiken und Bewegungsanalysen generieren kann."
+      "outcome": "Browserbasierte, geräteseitige Computer-Vision-Erweiterung zur Badminton-Spielanalyse, in aktiver, laufender Weiterentwicklung auf dem Weg zu einem ersten stabilen Release."
     },
     "D3": {
       "id": "D3",
@@ -460,6 +510,61 @@
         "Entwicklung und Weiterentwicklung von Schulungsmaterialien."
       ],
       "outcome": "Erfolgreiche Begleitung mehrerer Kohorten beim Aufbau industrietauglicher Data-Science-Kompetenzen."
+    },
+    "D4": {
+      "id": "D4",
+      "category": "data-science",
+      "open_source": true,
+      "title": "claude-personas – Multi-Persona-Framework für Claude Code",
+      "summary": "Framework zum parallelen Betrieb mehrerer spezialisierter Claude-Code-Personas, jede mit eigenem, isoliertem und rollenspezifischem persistentem Gedächtnis, damit eine Einzelperson mehrere Rollen in einem Projekt abdecken kann.",
+      "role": "Autor und Maintainer (Open Source)",
+      "period": {
+        "start": "2026-05",
+        "end": null
+      },
+      "technologies": [
+        "Claude Code",
+        "Shell",
+        "Python",
+        "GitHub Actions"
+      ],
+      "contributions": [
+        "Konzeption eines Persona-Systems (z. B. Developer, PM, Designer, Scientist), damit eine Einzelperson mehrere spezialisierte Claude-Code-Agenten parallel statt durch manuelles Rollenwechseln betreiben kann.",
+        "Entwicklung isolierten, rollenspezifischen persistenten Gedächtnisses pro Persona, sodass jeder Agent eigenen Kontext über Sessions hinweg aufbaut und wiederverwendet, ohne die anderen zu verunreinigen.",
+        "Aufbau einer CI-Pipeline, die das Tooling und die Konfiguration des Frameworks selbst über Änderungen hinweg zuverlässig hält.",
+        "Öffentlich auf GitHub (Jin-HoMLee/claude-personas)."
+      ],
+      "outcome": "Ein Open-Source-Framework, das einer Einzelperson erlaubt, Multi-Rollen-Arbeit zu parallelisieren, indem mehrere spezialisierte, gedächtnisisolierte Claude-Code-Personas gleichzeitig laufen."
+    },
+    "D5": {
+      "id": "D5",
+      "category": "data-science",
+      "open_source": true,
+      "title": "dotfiles – Personalisiertes, reproduzierbares Nix-Setup für macOS",
+      "summary": "Ein persönliches, mit einem Befehl reproduzierbares macOS-Setup auf Basis von Nix (nix-darwin + home-manager) — ein personalisierter Fork eines gemeinsam genutzten Open-Source-Dotfiles-Frameworks, erweitert um eigene Pakete, Tools und Multi-Agenten-KI-Konfiguration.",
+      "role": "Maintainer (personalisierter Fork, Open Source)",
+      "period": {
+        "start": "2026-07",
+        "end": null
+      },
+      "technologies": [
+        "Nix",
+        "nix-darwin",
+        "home-manager",
+        "Homebrew",
+        "zsh",
+        "Starship",
+        "Neovim",
+        "WezTerm"
+      ],
+      "contributions": [
+        "Fork eines gemeinsam genutzten Nix-basierten Dotfiles-Frameworks (kunchenguid/dotfiles) und Personalisierung zu einem vollständig reproduzierbaren macOS-Setup: ein Befehl stellt Systemeinstellungen, Homebrew-Apps und Nix-Pakete wieder her.",
+        "Konfiguration von Shell (zsh/Starship), Editor (Neovim) und Terminal (WezTerm) als kohärente, versionierte persönliche Umgebung.",
+        "Pflege gemeinsamer Agenten-Konfiguration über mehrere KI-Coding-Tools hinweg (Claude Code, Codex, OpenCode), damit das Tooling maschinenweit konsistent bleibt.",
+        "Verfolgung und Einpflegen von Upstream-Änderungen aus dem ursprünglichen Framework bei gleichzeitiger Ergänzung eigener Pakete, Tool-Entscheidungen und Einstellungen.",
+        "Öffentlich auf GitHub (Jin-HoMLee/dotfiles), lizenziert unter MIT No Attribution."
+      ],
+      "outcome": "Ein funktionierendes, mit einem Befehl reproduzierbares persönliches macOS-Setup — ein personalisierter Fork eines gemeinsam genutzten Dotfiles-Frameworks, aktuell gehalten mit eigener Maschine, eigenen Paketen und Agenten-Tooling."
     },
     "L1": {
       "id": "L1",
@@ -1071,7 +1176,7 @@
       {
         "id": "what-are-his-skills",
         "question": "Welche technischen Fähigkeiten hat Jin-Ho Lee?",
-        "answer": "Jin-Ho Lee arbeitet mit Python, SQL und R, mit Machine Learning in PyTorch und TensorFlow, Bioinformatik-Pipelines in Snakemake sowie Cloud Data Engineering auf der Google Cloud inklusive BigQuery und BigQueryML. Seine Fachexpertise umfasst Krebsgenomik, NGS- und RNA-Seq-Analyse, HLA-Typisierung, Neoantigen-Identifizierung und räumliche Punktmusteranalyse."
+        "answer": "Jin-Ho Lee arbeitet mit Python, SQL und R, mit Machine Learning in TensorFlow, Bioinformatik-Pipelines in Snakemake sowie Cloud Data Engineering auf der Google Cloud inklusive BigQuery und BigQueryML. Seine Fachexpertise umfasst Krebsgenomik, NGS- und RNA-Seq-Analyse, HLA-Typisierung, Neoantigen-Identifizierung und räumliche Punktmusteranalyse."
       },
       {
         "id": "what-has-he-published",
@@ -1081,7 +1186,7 @@
       {
         "id": "what-does-he-work-on-now",
         "question": "Woran arbeitet Jin-Ho Lee derzeit?",
-        "answer": "Jin-Ho Lee arbeitet derzeit unabhängig an agentischen KI-Systemen - LLM-Agenten mit Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher - sowie an Open-Source-Tooling für Claude Code, skelettbasierter Action Recognition in der Computer Vision und einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2."
+        "answer": "Jin-Ho Lee arbeitet derzeit unabhängig an agentischen KI-Systemen - LLM-Agenten mit Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher - sowie an Open-Source-Tooling für Claude Code, einer Chrome-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen ausführt, und einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2."
       },
       {
         "id": "is-he-available-for-work",

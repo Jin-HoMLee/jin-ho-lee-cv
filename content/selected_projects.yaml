@@ -3,4 +3,4 @@
 # `bridge` is required and is the fallback for any target without its own key.
 bridge:   [L5, L1, L2]   # genomics-led canonical (unchanged from Phase 8a)
 comp-bio: [L1, L2, L5]   # neoantigen discovery, HLA pipeline, reproducible splice workflow
-ds-ml:    [C1, D1, D2]   # KYC/BigQueryML, real-time ASL ML, badminton AI
+ds-ml:    [C1, D1, D2, D4, D5]   # KYC/BigQueryML, real-time ASL ML, badminton computer vision, multi-agent Claude Code tooling, Nix dev environment
