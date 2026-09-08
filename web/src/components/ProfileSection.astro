@@ -32,11 +32,9 @@ const photoUrl = `${import.meta.env.BASE_URL}photo.jpg`;
       />
     )}
     <div>
-      <!-- Keep the answer-shaped summary in static HTML for AEO/screen readers;
-           the visible profile copy below avoids repeating it. -->
       {profile.answer_block && (
         <p
-          class="sr-only"
+          class="text-base leading-relaxed text-[var(--text)]"
           data-cv-field="answer-block"
         >{profile.answer_block}</p>
       )}
