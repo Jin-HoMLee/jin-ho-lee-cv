@@ -2,7 +2,7 @@
   "comp-bio": {
     "headline": "Computational Biology · Cancer Genomics",
     "tagline": "Bioinformatician with deep roots in cancer genomics — HLA typing & neoantigen discovery from real-patient NGS/RNA-Seq, reproducible Snakemake pipelines, 11 peer-reviewed research publications.",
-    "lead_paragraph": "Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, packaged as reproducible Snakemake workflows, with wet-lab training at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). A parallel line of experimental-biophysics research produced 11 peer-reviewed research papers — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
+    "lead_paragraph": "Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, packaged as reproducible Snakemake workflows, with wet-lab training at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). A parallel line of experimental-biophysics research produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
     "second_paragraph": "Equally at home in production: migrated 1,000+ analytical processes to Google Cloud, built reproducible data pipelines, and mentored 100+ specialists in Python, SQL & ML — while securing third-party funding and supervising 10+ students."
   },
   "ds-ml": {

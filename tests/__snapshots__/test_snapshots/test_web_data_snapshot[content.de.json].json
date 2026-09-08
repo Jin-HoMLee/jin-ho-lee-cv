@@ -1194,21 +1194,12 @@
     "total_records": 15,
     "research_records": 14,
     "peer_reviewed_records": 11,
-    "peer_reviewed_articles": 10,
-    "peer_reviewed_book_chapters": 1,
-    "research_conferences": 3,
     "applied_records": 1,
-    "peer_reviewed_authorship": {
-      "first": 2,
-      "shared_first": 3,
-      "coauthor": 6
-    },
     "all_records_authorship": {
       "first": 6,
       "shared_first": 3,
       "coauthor": 6
-    },
-    "chart_scope": "all-records"
+    }
   },
   "publications_aggregate": {
     "summary": "11 begutachtete Publikationen (10 Artikel + 1 wissenschaftliches Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (14 Forschungseinträge; insgesamt 15 Bibliografie-Datensätze), 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",

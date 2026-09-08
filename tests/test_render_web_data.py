@@ -144,24 +144,19 @@ def test_publications_aggregate_present(rendered):
 
 def test_publication_metrics_are_shared_numeric_facts(rendered):
     en, de = rendered
-    for data in (en, de):
-        metrics = data["publication_metrics"]
-        assert metrics["total_records"] == 15
-        assert metrics["research_records"] == 14
-        assert metrics["peer_reviewed_records"] == 11
-        assert metrics["research_conferences"] == 3
-        assert metrics["applied_records"] == 1
-        assert metrics["chart_scope"] == "all-records"
-        assert metrics["peer_reviewed_authorship"] == {
-            "first": 2,
-            "shared_first": 3,
-            "coauthor": 6,
-        }
-        assert metrics["all_records_authorship"] == {
+    expected = {
+        "total_records": 15,
+        "research_records": 14,
+        "peer_reviewed_records": 11,
+        "applied_records": 1,
+        "all_records_authorship": {
             "first": 6,
             "shared_first": 3,
             "coauthor": 6,
-        }
+        },
+    }
+    for data in (en, de):
+        assert data["publication_metrics"] == expected
 
 
 def test_publication_doi_is_serialized():

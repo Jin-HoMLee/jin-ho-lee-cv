@@ -18,6 +18,10 @@ const totalLabels: Record<Lang, string> = {
   de: "Bibliografie-Datensätze",
 };
 
+export function formatPublicationTotalLabel(lang: Lang): string {
+  return totalLabels[lang];
+}
+
 export function formatPublicationScopeCaption(
   metrics: PublicationMetrics,
   labels: Labels,

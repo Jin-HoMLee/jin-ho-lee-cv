@@ -10,8 +10,8 @@ real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline
 development at the German Cancer Research Center (DKFZ), National Center for
 Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute
 for Physics (KIP), and Seoul National University (SNU). A parallel line of
-experimental-biophysics research produced 11 peer-reviewed research papers —
-first- and shared-first author — in super-resolution microscopy of DNA-damage
+experimental-biophysics research produced 11 peer-reviewed research publications
+— first- and shared-first author — in super-resolution microscopy of DNA-damage
 repair and chromatin.
 
 At Cintellic GmbH, applied that rigor for an international bank: architected the

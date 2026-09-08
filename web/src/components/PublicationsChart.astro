@@ -1,6 +1,6 @@
 ---
 import type { AuthorshipType, Labels, Lang, PublicationMetrics } from "../types/content";
-import { formatPublicationScopeCaption } from "../lib/publicationScope";
+import { formatPublicationScopeCaption, formatPublicationTotalLabel } from "../lib/publicationScope";
 
 interface Props {
   metrics: PublicationMetrics;
@@ -72,7 +72,7 @@ function computeArcs(slices: { key: AuthorshipType; count: number }[], total: nu
 }
 
 const arcs = computeArcs(slices, total);
-const totalLabel = { en: "bibliography records", de: "Bibliografie-Datensätze" }[lang];
+const totalLabel = formatPublicationTotalLabel(lang);
 const scopeCaption = formatPublicationScopeCaption(metrics, contentLabels, lang, "authorship");
 ---
 <figure class="relative my-6 flex flex-wrap items-center gap-6">

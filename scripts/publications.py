@@ -105,21 +105,12 @@ def publication_metrics(pubs: list[Publication]) -> dict[str, object]:
         "total_records": s.total_records,
         "research_records": s.research_records,
         "peer_reviewed_records": s.peer_reviewed,
-        "peer_reviewed_articles": s.peer_reviewed_articles,
-        "peer_reviewed_book_chapters": s.peer_reviewed_book_chapters,
-        "research_conferences": s.research_conferences,
         "applied_records": s.applied_records,
-        "peer_reviewed_authorship": {
-            "first": s.pr_first,
-            "shared_first": s.pr_shared,
-            "coauthor": s.pr_coauthor,
-        },
         "all_records_authorship": {
             "first": s.all_first,
             "shared_first": s.all_shared,
             "coauthor": s.all_coauthor,
         },
-        "chart_scope": "all-records",
     }
 
 

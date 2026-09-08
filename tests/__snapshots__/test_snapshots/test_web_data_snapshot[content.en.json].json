@@ -55,7 +55,7 @@
     "answer_block": "Jin-Ho Lee is a bioinformatics and data science professional in Mannheim, Germany. He builds in-silico pipelines for HLA typing and neoantigen discovery from cancer-patient NGS and RNA-Seq data, and ships production machine learning on Google Cloud. He holds an M.Sc. from Heidelberg University and has 11 peer-reviewed research publications.",
     "tagline": "Data scientist with cancer-genomics roots — HLA typing & neoantigen discovery on real-patient data, production ML on GCP, 11 peer-reviewed research publications.",
     "paragraphs": [
-      "Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). A parallel line of experimental-biophysics research produced 11 peer-reviewed research papers — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
+      "Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). A parallel line of experimental-biophysics research produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
       "At Cintellic GmbH, applied that rigor for an international bank: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML; secured third-party funding and supervised 10+ students."
     ]
   },
@@ -1194,21 +1194,12 @@
     "total_records": 15,
     "research_records": 14,
     "peer_reviewed_records": 11,
-    "peer_reviewed_articles": 10,
-    "peer_reviewed_book_chapters": 1,
-    "research_conferences": 3,
     "applied_records": 1,
-    "peer_reviewed_authorship": {
-      "first": 2,
-      "shared_first": 3,
-      "coauthor": 6
-    },
     "all_records_authorship": {
       "first": 6,
       "shared_first": 3,
       "coauthor": 6
-    },
-    "chart_scope": "all-records"
+    }
   },
   "publications_aggregate": {
     "summary": "11 peer-reviewed publications (10 articles + 1 research book chapter; 2 first-author, 3 shared-first, 6 co-author), 3 first-author research conference contributions, and 1 applied/off-domain record (14 research records; 15 bibliography records total), 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.",

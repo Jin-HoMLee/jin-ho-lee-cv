@@ -99,19 +99,14 @@ def test_live_bib_aggregate_numbers():
     assert format_publication_summary("{span}", pubs) == "2017–2021"
 
 
-def test_live_bib_metrics_object_has_explicit_chart_scope():
+def test_live_bib_metrics_object_contains_web_facts():
     metrics = publication_metrics(load_publications(CONTENT_DIR / "publications.bib"))
     assert metrics == {
         "total_records": 15,
         "research_records": 14,
         "peer_reviewed_records": 11,
-        "peer_reviewed_articles": 10,
-        "peer_reviewed_book_chapters": 1,
-        "research_conferences": 3,
         "applied_records": 1,
-        "peer_reviewed_authorship": {"first": 2, "shared_first": 3, "coauthor": 6},
         "all_records_authorship": {"first": 6, "shared_first": 3, "coauthor": 6},
-        "chart_scope": "all-records",
     }
 
 

@@ -121,21 +121,12 @@ export interface PublicationMetrics {
   total_records: number;
   research_records: number;
   peer_reviewed_records: number;
-  peer_reviewed_articles: number;
-  peer_reviewed_book_chapters: number;
-  research_conferences: number;
   applied_records: number;
-  peer_reviewed_authorship: {
-    first: number;
-    shared_first: number;
-    coauthor: number;
-  };
   all_records_authorship: {
     first: number;
     shared_first: number;
     coauthor: number;
   };
-  chart_scope: "all-records";
 }
 
 export interface Labels {
