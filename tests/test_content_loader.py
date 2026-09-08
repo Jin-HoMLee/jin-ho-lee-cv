@@ -137,15 +137,22 @@ def test_research_entry_start_not_after_earliest_subproject(content_dir):
     assert research["period"]["start"] == "2014-04"
 
 
-def test_skills_additions_present(content_dir):
-    content = load_content(content_dir, private_path=None, lang="en")
+def test_skills_default_is_curated_and_comp_bio_adds_detail(content_dir):
+    bridge = load_content(content_dir, private_path=None, lang="en", target="bridge")
     bioml = next(
-        c for c in content["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML"
+        c for c in bridge["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML"
+    )
+    bridge_groups = {g["label"]["en"]: g["items"] for g in bioml["groups"]}
+    assert "MapSplice" not in bridge_groups["Genomics"]
+    assert "Structural Biology" not in bridge_groups
+
+    comp_bio = load_content(content_dir, private_path=None, lang="en", target="comp-bio")
+    bioml = next(
+        c for c in comp_bio["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML"
     )
     groups = {g["label"]["en"]: g["items"] for g in bioml["groups"]}
     assert "MapSplice" in groups["Genomics"]
     assert "samtools/bcftools" in groups["Genomics"]
-    assert "Structural Biology" in groups
     assert set(groups["Structural Biology"]) == {"TCRdock", "AlphaFold v2", "Mol*"}
 
 

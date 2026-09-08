@@ -145,6 +145,101 @@ def _validate_profile_variant_parity(content_dir: Path) -> list[FileError]:
     return errors
 
 
+def _validate_skills_variant_references(content_dir: Path) -> list[FileError]:
+    """Reject Skills variant references that would silently no-op.
+
+    Group labels are the stable keys used by the resolver. They are scoped to
+    their category, so the same label may legitimately occur in two categories;
+    references and additions are checked against the current category only.
+    """
+    path = content_dir / "skills.yaml"
+    if not path.exists():
+        return []
+    skills = _load_yaml(path)
+    categories = skills.get("categories") if isinstance(skills, dict) else None
+    if not isinstance(categories, list):
+        return []  # schema validation reports malformed structure
+
+    errors: list[FileError] = []
+    for category in categories:
+        if not isinstance(category, dict):
+            continue
+        groups = category.get("groups")
+        if not isinstance(groups, list):
+            continue  # malformed structure; the schema validator reports it
+
+        labels: set[str] = set()
+        for group in groups:
+            if not isinstance(group, dict):
+                continue
+            label_map = group.get("label")
+            label = label_map.get("en") if isinstance(label_map, dict) else None
+            if isinstance(label, str) and label:
+                if label in labels:
+                    errors.append(FileError(path, f"duplicate base Skills group label: {label!r}"))
+                labels.add(label)
+
+        variants = category.get("variants")
+        if not isinstance(variants, dict):
+            continue
+        category_name_map = category.get("name")
+        category_name = (
+            category_name_map.get("en", "?")
+            if isinstance(category_name_map, dict)
+            else "?"
+        )
+        for target, override in variants.items():
+            if not isinstance(override, dict):
+                continue
+            omit_groups = override.get("omit_groups")
+            referenced = (
+                {label for label in omit_groups if isinstance(label, str)}
+                if isinstance(omit_groups, list)
+                else set()
+            )
+            group_items = override.get("group_items")
+            if isinstance(group_items, dict):
+                referenced.update(label for label in group_items if isinstance(label, str))
+            unknown = sorted(label for label in referenced if label not in labels)
+            if unknown:
+                errors.append(
+                    FileError(
+                        path,
+                        f"category {category_name!r} variant {target!r} references "
+                        f"unknown group label(s): {unknown}",
+                    )
+                )
+            additions = override.get("add_groups")
+            if not isinstance(additions, list):
+                continue
+            added_labels: list[str] = []
+            for group in additions:
+                if not isinstance(group, dict):
+                    continue
+                label_map = group.get("label")
+                label = label_map.get("en") if isinstance(label_map, dict) else None
+                if isinstance(label, str) and label:
+                    added_labels.append(label)
+                    if label in labels:
+                        errors.append(
+                            FileError(
+                                path,
+                                f"category {category_name!r} variant {target!r} "
+                                f"adds existing group label {label!r}",
+                            )
+                        )
+            duplicates = sorted({label for label in added_labels if added_labels.count(label) > 1})
+            if duplicates:
+                errors.append(
+                    FileError(
+                        path,
+                        f"category {category_name!r} variant {target!r} adds duplicate "
+                        f"group label(s): {duplicates}",
+                    )
+                )
+    return errors
+
+
 def _validate_headline_variant_completeness(content_dir: Path) -> list[FileError]:
     """Each personal headline variant must define both 'en' and 'de' (parity with
     the bilingual base headline)."""
@@ -350,6 +445,7 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
 
     errors.extend(_validate_profile_variant_parity(content_dir))
     errors.extend(_validate_headline_variant_completeness(content_dir))
+    errors.extend(_validate_skills_variant_references(content_dir))
     errors.extend(_validate_publications(content_dir))
     errors.extend(_validate_periods(content_dir))
     errors.extend(validate_faq(content_dir, schema_path.parent / "faq.schema.json"))

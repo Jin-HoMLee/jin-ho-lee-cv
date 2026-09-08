@@ -108,32 +108,16 @@
         "NGS",
         "RNA-Seq",
         "WES",
-        "SNV Calling",
-        "Splice Analysis",
-        "MapSplice",
-        "HISAT2/STAR",
-        "samtools/bcftools",
-        "bedtools"
+        "SNV Calling"
       ]
     },
     {
       "name": "Bioinformatics & ML",
-      "level": "Immunology",
+      "level": "Immunoinformatics",
       "keywords": [
-        "MHC-I Prediction",
         "HLA Typing",
-        "OptiType",
-        "MHCflurry",
+        "MHC-I Prediction",
         "Neoepitopes"
-      ]
-    },
-    {
-      "name": "Bioinformatics & ML",
-      "level": "Structural Biology",
-      "keywords": [
-        "TCRdock",
-        "AlphaFold v2",
-        "Mol*"
       ]
     },
     {
@@ -178,28 +162,21 @@
       "keywords": [
         "TensorFlow",
         "Keras",
-        "LSTMs",
-        "OpenCV",
         "XGBoost",
-        "MLflow",
-        "OpenAI API"
+        "MLflow"
       ]
     },
     {
       "name": "Data & Engineering",
-      "level": "Eng & Tools",
+      "level": "Engineering & Pipelines",
       "keywords": [
         "Python (Expert)",
         "R",
         "SQL",
-        "PostgreSQL",
         "Snakemake",
         "Conda",
         "Docker",
-        "Git",
-        "dbt",
-        "Pydantic",
-        "Streamlit"
+        "Git"
       ]
     },
     {
@@ -208,50 +185,21 @@
       "keywords": [
         "GCP",
         "BigQuery",
-        "Vertex AI",
-        "Looker"
+        "Vertex AI"
       ]
     },
     {
-      "name": "AI Agents & Dev Tooling",
-      "level": "Reproducible Environment",
+      "name": "AI & Developer Tooling",
+      "level": "Applied AI",
       "keywords": [
-        "Nix",
-        "nix-darwin",
-        "home-manager"
-      ]
-    },
-    {
-      "name": "AI Agents & Dev Tooling",
-      "level": "Terminal & Editor",
-      "keywords": [
-        "WezTerm",
-        "Neovim"
-      ]
-    },
-    {
-      "name": "AI Agents & Dev Tooling",
-      "level": "Multi-Agent AI Tooling",
-      "keywords": [
-        "Claude Code",
-        "Codex",
-        "OpenCode",
-        "Pi",
-        "Grok",
-        "Cursor"
-      ]
-    },
-    {
-      "name": "AI Agents & Dev Tooling",
-      "level": "On-Device Browser ML",
-      "keywords": [
+        "OpenAI API",
         "TensorFlow.js",
         "ONNX Runtime Web"
       ]
     },
     {
-      "name": "AI Agents & Dev Tooling",
-      "level": "Browser Extensions",
+      "name": "AI & Developer Tooling",
+      "level": "Browser Delivery",
       "keywords": [
         "Chrome Extension (Manifest V3)"
       ]

@@ -146,11 +146,52 @@
                     "label": { "$ref": "#/$defs/LangString" },
                     "items": {
                       "type": "array",
-                      "items": { "type": "string" },
+                      "items": { "type": "string", "minLength": 1 },
                       "minItems": 1
                     }
                   },
                   "required": ["label", "items"],
+                  "additionalProperties": false
+                }
+              },
+              "variants": {
+                "type": "object",
+                "propertyNames": { "enum": ["comp-bio", "ds-ml"] },
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "omit": { "type": "boolean" },
+                    "omit_groups": {
+                      "type": "array",
+                      "items": { "type": "string", "minLength": 1 },
+                      "minItems": 1
+                    },
+                    "group_items": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": { "type": "string", "minLength": 1 },
+                        "minItems": 1
+                      }
+                    },
+                    "add_groups": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "label": { "$ref": "#/$defs/LangString" },
+                          "items": {
+                            "type": "array",
+                            "items": { "type": "string", "minLength": 1 },
+                            "minItems": 1
+                          }
+                        },
+                        "required": ["label", "items"],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
                   "additionalProperties": false
                 }
               }

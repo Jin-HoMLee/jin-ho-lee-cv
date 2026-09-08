@@ -9,6 +9,7 @@
 //   tagline  -> ProfileSection    (profile intro lead-in)
 //   lead     -> ProfileSection    (first profile paragraph)
 //   second   -> ProfileSection    (second profile paragraph)
+//   skills   -> SkillsSidebar      (resolved target tree, via event)
 //
 // Pure progressive enhancement: with JS off, the control stays hidden and the
 // page is the complete bridge CV. Variant text is inlined at build time via
@@ -19,13 +20,14 @@
 // other independently-mounted islands — e.g. PdfDownloadMenu.astro's header
 // download links — can follow the selected variant with no shared module and
 // no reload.
-import type { Lang } from "../types/content";
+import type { Lang, Skills } from "../types/content";
 
 interface Variant {
   headline?: string;
   tagline?: string;
   lead_paragraph?: string;
   second_paragraph?: string;
+  skills?: Skills;
 }
 
 interface Props {

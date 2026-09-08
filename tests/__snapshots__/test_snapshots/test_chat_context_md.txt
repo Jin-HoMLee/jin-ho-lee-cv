@@ -9,21 +9,17 @@ Engineered in-silico pipelines for HLA typing and neoantigen discovery from real
 At Cintellic GmbH, applied that rigor for an international bank: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML; secured third-party funding and supervised 10+ students.
 
 ## Skills
-- **Genomics**: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
-- **Immunology**: MHC-I Prediction, HLA Typing, OptiType, MHCflurry, Neoepitopes
-- **Structural Biology**: TCRdock, AlphaFold v2, Mol*
+- **Genomics**: NGS, RNA-Seq, WES, SNV Calling
+- **Immunoinformatics**: HLA Typing, MHC-I Prediction, Neoepitopes
 - **Nanoscopy**: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 - **Models**: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
 - **Imaging**: Super-Resolution, Confocal, Fluorescence
 - **Assays**: FISH, IF, qPCR, FACS
-- **AI & ML**: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow, OpenAI API
-- **Eng & Tools**: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
-- **Cloud**: GCP, BigQuery, Vertex AI, Looker
-- **Reproducible Environment**: Nix, nix-darwin, home-manager
-- **Terminal & Editor**: WezTerm, Neovim
-- **Multi-Agent AI Tooling**: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
-- **On-Device Browser ML**: TensorFlow.js, ONNX Runtime Web
-- **Browser Extensions**: Chrome Extension (Manifest V3)
+- **AI & ML**: TensorFlow, Keras, XGBoost, MLflow
+- **Engineering & Pipelines**: Python (Expert), R, SQL, Snakemake, Conda, Docker, Git
+- **Cloud**: GCP, BigQuery, Vertex AI
+- **Applied AI**: OpenAI API, TensorFlow.js, ONNX Runtime Web
+- **Browser Delivery**: Chrome Extension (Manifest V3)
 
 ## Experience
 ### ML/AI Engineer & Open-Source Developer — Independent / Self-Directed (2025-08–present)

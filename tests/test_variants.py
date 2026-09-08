@@ -5,11 +5,11 @@ from __future__ import annotations
 import pytest
 from ruamel.yaml import YAML
 
-from pdf.build import _parse_args as _pdf_parse_args
-from pdf.build import _pdf_filename
+from pdf.build import _pdf_filename, _parse_args as _pdf_parse_args, prepare_data
 from scripts.content_loader import (
     _resolve_personal_target,
     _resolve_profile_target,
+    _resolve_skills_target,
     _select_project_ids,
     load_content,
 )
@@ -18,6 +18,7 @@ from scripts.render_text import _txt_filename, render
 from scripts.validate import (
     _validate_headline_variant_completeness,
     _validate_profile_variant_parity,
+    _validate_skills_variant_references,
     validate_tree,
 )
 
@@ -99,6 +100,142 @@ def test_load_content_strips_variants_key_from_personal_and_profile(content_dir)
     content = load_content(content_dir, lang="en", target="bridge")
     assert "variants" not in content["personal"]
     assert "variants" not in content["profile"]
+    assert all("variants" not in category for category in content["skills"]["categories"])
+
+
+def _skills_fixture():
+    return {
+        "categories": [
+            {
+                "name": {"en": "Bio"},
+                "groups": [
+                    {"label": {"en": "Core"}, "items": ["a", "b"]},
+                    {"label": {"en": "Optional"}, "items": ["c"]},
+                ],
+                "variants": {
+                    "comp-bio": {
+                        "group_items": {"Core": ["a", "b", "detail"]},
+                        "add_groups": [{"label": {"en": "Specialized"}, "items": ["d"]}],
+                    },
+                    "ds-ml": {"omit_groups": ["Optional"]},
+                },
+            },
+            {
+                "name": {"en": "Other"},
+                "groups": [{"label": {"en": "Shared"}, "items": ["e"]}],
+                "variants": {"comp-bio": {"omit": True}},
+            },
+        ]
+    }
+
+
+def test_resolve_skills_target_adds_and_reduces_data_driven_groups():
+    comp_bio = _resolve_skills_target(_skills_fixture(), "comp-bio")
+    assert [category["name"]["en"] for category in comp_bio["categories"]] == ["Bio"]
+    groups = {group["label"]["en"]: group["items"] for group in comp_bio["categories"][0]["groups"]}
+    assert groups == {"Core": ["a", "b", "detail"], "Optional": ["c"], "Specialized": ["d"]}
+
+    ds_ml = _resolve_skills_target(_skills_fixture(), "ds-ml")
+    assert [group["label"]["en"] for group in ds_ml["categories"][0]["groups"]] == ["Core"]
+    assert ds_ml["categories"][0]["groups"][0]["items"] == ["a", "b"]
+
+
+def test_resolve_skills_target_bridge_strips_variant_instructions():
+    bridge = _resolve_skills_target(_skills_fixture(), "bridge")
+    assert bridge["categories"][0]["groups"][0]["items"] == ["a", "b"]
+    assert len(bridge["categories"]) == 2
+    assert all("variants" not in category for category in bridge["categories"])
+
+
+def test_skills_are_complementary_in_all_rendered_targets(content_dir):
+    resolved = {
+        target: resolve_langstrings(load_content(content_dir, lang="en", target=target), lang="en")[
+            "skills"
+        ]
+        for target in ("bridge", "comp-bio", "ds-ml")
+    }
+
+    def items(target):
+        return {
+            item
+            for category in resolved[target]["categories"]
+            for group in category["groups"]
+            for item in group["items"]
+        }
+
+    assert "TCRdock" not in items("bridge")
+    assert {"MapSplice", "TCRdock", "MHCflurry"} <= items("comp-bio")
+    assert {"LSTMs", "OpenCV", "BigQueryML", "Claude Code"} <= items("ds-ml")
+    assert "TCRdock" not in items("ds-ml")
+    assert "Claude Code" not in items("comp-bio")
+
+
+def test_skills_variant_references_reject_unknown_and_duplicate_groups(tmp_path):
+    _write(
+        tmp_path / "skills.yaml",
+        {
+            "categories": [
+                {
+                    "name": {"en": "Cat"},
+                    "groups": [{"label": {"en": "Real"}, "items": ["x"]}],
+                    "variants": {
+                        "comp-bio": {
+                            "omit_groups": ["Typo"],
+                            "add_groups": [
+                                {"label": {"en": "Real"}, "items": ["y"]},
+                                {"label": {"en": "New"}, "items": ["z"]},
+                                {"label": {"en": "New"}, "items": ["w"]},
+                            ],
+                        }
+                    },
+                }
+            ]
+        },
+    )
+    errors = _validate_skills_variant_references(tmp_path)
+    messages = " ".join(error.message for error in errors)
+    assert "Typo" in messages
+    assert "existing group label" in messages
+    assert "duplicate group label" in messages
+
+
+def test_skills_variant_references_scope_labels_to_their_category(tmp_path):
+    _write(
+        tmp_path / "skills.yaml",
+        {
+            "categories": [
+                {
+                    "name": {"en": "First"},
+                    "groups": [{"label": {"en": "Shared"}, "items": ["x"]}],
+                    "variants": {"comp-bio": {"group_items": {"Shared": ["y"]}}},
+                },
+                {
+                    "name": {"en": "Second"},
+                    "groups": [{"label": {"en": "Shared"}, "items": ["z"]}],
+                    "variants": {"ds-ml": {"omit_groups": ["Shared"]}},
+                },
+            ]
+        },
+    )
+    assert _validate_skills_variant_references(tmp_path) == []
+
+
+def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
+    bridge = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
+    comp_bio = prepare_data(content_dir, private_path=None, lang="de", target="comp-bio")
+    ds_ml = prepare_data(content_dir, private_path=None, lang="en", target="ds-ml")
+
+    def all_items(data):
+        return {
+            item
+            for category in data["skills"]["categories"]
+            for group in category["groups"]
+            for item in group["items"]
+        }
+
+    assert "TCRdock" not in all_items(bridge)
+    assert "TCRdock" in all_items(comp_bio)
+    assert "LSTMs" in all_items(ds_ml)
 
 
 def test_select_project_ids_returns_target_order():

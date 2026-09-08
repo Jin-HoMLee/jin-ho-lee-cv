@@ -51,8 +51,11 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
       tagline          <- profile.tagline         (rendered in the profile intro)
       lead_paragraph   <- profile.paragraphs[0]   (the lead profile paragraph)
       second_paragraph <- profile.paragraphs[1]   (the second profile paragraph)
+      skills            <- skills                  (the fully resolved Skills tree)
 
-    A key is included only when the variant value differs from bridge.
+    A key is included only when the variant value differs from bridge. Skills are
+    emitted as a resolved tree rather than as variant instructions: the browser
+    can swap the complete section without duplicating content-loader logic.
     `selected_projects` is intentionally excluded: the website renders projects
     grouped by category and never consumes it, so emitting it produced a
     payload of the one field the web ignores while dropping the three it shows.
@@ -62,9 +65,9 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
         variant: Fully-resolved variant tree.
 
     Returns:
-        Dict with only the differing text fields; empty dict if none differ.
+        Dict with only the differing web fields; empty dict if none differ.
     """
-    overrides: dict[str, str] = {}
+    overrides: dict[str, Any] = {}
 
     b_headline = bridge.get("personal", {}).get("headline")
     v_headline = variant.get("personal", {}).get("headline")
@@ -87,6 +90,11 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
     v_second = v_paras[1] if len(v_paras) > 1 else None
     if v_second is not None and v_second != b_second:
         overrides["second_paragraph"] = v_second
+
+    bridge_skills = bridge.get("skills")
+    variant_skills = variant.get("skills")
+    if variant_skills is not None and variant_skills != bridge_skills:
+        overrides["skills"] = variant_skills
 
     return overrides
 

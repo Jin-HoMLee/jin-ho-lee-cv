@@ -113,7 +113,7 @@ _INVARIANT_PATH_SUBSTRINGS = (
 # neighbouring translatable fields.
 #
 # Rationale for each entry:
-#   Skill group labels "Assays", "Eng & Tools", "Cloud" — English technical terms
+#   Skill group labels "Assays", "Engineering & Pipelines", "Cloud" — English technical terms
 #       adopted verbatim in German; de: is explicitly provided with the same value.
 #   Experience / project .role paths where the English job title IS the German title
 #       (e.g. "Data Science Trainee, Associate & Coach") — English term used in DE.
@@ -124,9 +124,9 @@ _INVARIANT_EXACT = frozenset(
         # Skill category / group labels — English tech terms used verbatim in German
         ".skills.categories[1].name",  # "Biotech Wet-Lab"
         ".skills.categories[1].groups[2].label",  # "Assays"
-        ".skills.categories[2].groups[1].label",  # "Eng & Tools"
+        ".skills.categories[2].groups[1].label",  # "Engineering & Pipelines"
         ".skills.categories[2].groups[2].label",  # "Cloud"
-        ".skills.categories[3].groups[1].label",  # "Terminal & Editor"
+        # The target-only Agentic Development group is not part of the bridge tree.
         # Experience roles — English job-title strings used verbatim in German
         ".experience[2].role",  # "Data Science Trainee, Associate & Coach"
         # Project roles — English job-title strings used verbatim in German

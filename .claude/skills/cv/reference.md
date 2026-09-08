@@ -29,8 +29,10 @@
 - `labels` — UI section labels (LangStrings)
 
 ## Targets
-`bridge` (default), `comp-bio`, `ds-ml` — positioning variants overriding headline /
-tagline / profile paragraphs only.
+`bridge` (default), `comp-bio`, `ds-ml` — positioning variants resolved centrally by
+`scripts/content_loader.py`. `personal.variants` overrides headlines, `profile.variants`
+overrides tagline / profile paragraphs, and each `skills` category can use `omit`,
+`omit_groups`, `group_items`, and `add_groups` for audience-specific skill trees.
 
 ## MCP tools
 | Tool | Hint | Does |

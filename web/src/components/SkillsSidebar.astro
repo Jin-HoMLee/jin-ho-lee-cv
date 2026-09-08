@@ -1,18 +1,23 @@
 ---
 import type { Skills, Labels } from "../types/content";
 
+interface SkillVariant {
+  skills?: Skills;
+}
+
 interface Props {
   skills: Skills;
   labels: Labels;
+  variants?: Record<string, SkillVariant>;
 }
 
-const { skills, labels } = Astro.props;
+const { skills, labels, variants = {} } = Astro.props;
 ---
-<section id="skills" class="py-6">
+<section id="skills" class="py-6" data-cv-skills>
   <h2 class="eyebrow mb-4">
     {labels.sections.skills}
   </h2>
-  <div class="space-y-5">
+  <div class="space-y-5" data-cv-skills-content>
     {skills.categories.map((cat) => (
       <div>
         <h3 class="mb-2 text-sm font-semibold text-[var(--text)]">{cat.name}</h3>
@@ -32,3 +37,59 @@ const { skills, labels } = Astro.props;
     ))}
   </div>
 </section>
+
+<script is:inline define:vars={{ skills, variants }}>
+  // Skills are resolved in Python and passed as complete target trees. This
+  // small progressive-enhancement renderer only swaps text nodes; it never
+  // interprets HTML from content YAML.
+  const root = document.querySelector("[data-cv-skills]");
+  const content = root?.querySelector("[data-cv-skills-content]");
+  const STORAGE_KEY = "cvTargetPreference";
+  const VALID_TARGETS = new Set(["bridge", "comp-bio", "ds-ml"]);
+
+  function element(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+
+  function renderSkills(data) {
+    if (!content || !data?.categories) return;
+    content.replaceChildren();
+    for (const category of data.categories) {
+      const categoryNode = element("div");
+      categoryNode.appendChild(element("h3", "mb-2 text-sm font-semibold text-[var(--text)]", category.name));
+      const groupsNode = element("div", "space-y-2");
+      for (const group of category.groups) {
+        const groupNode = element("div");
+        groupNode.appendChild(element("p", "text-xs font-medium text-[var(--muted)]", group.label));
+        const itemsNode = element("ul", "mt-1 flex flex-wrap gap-1");
+        for (const item of group.items) {
+          itemsNode.appendChild(element("li", "font-mono-plex rounded bg-[var(--surface)] px-1.5 py-0.5 text-xs text-[var(--muted)]", item));
+        }
+        groupNode.appendChild(itemsNode);
+        groupsNode.appendChild(groupNode);
+      }
+      categoryNode.appendChild(groupsNode);
+      content.appendChild(categoryNode);
+    }
+  }
+
+  function applyTarget(target) {
+    const data = target === "bridge" ? skills : variants[target]?.skills;
+    if (data) renderSkills(data);
+  }
+
+  window.addEventListener("cv-target-change", (event) => {
+    const target = event.detail && event.detail.target;
+    if (target && VALID_TARGETS.has(target)) applyTarget(target);
+  });
+
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved && VALID_TARGETS.has(saved)) applyTarget(saved);
+  } catch {
+    /* storage may be unavailable (private mode); keep the bridge view */
+  }
+</script>

@@ -94,24 +94,16 @@ AUSBILDUNG
 KENNTNISSE
 ================================================================================
 Bioinformatik & ML
-  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
-  Immunologie: MHC-I Prediction, HLA Typing, OptiType, MHCflurry, Neoepitopes
-  Strukturbiologie: TCRdock, AlphaFold v2, Mol*
-  Nanoskopie: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
-Biotech Wet-Lab
-  Modelle: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
-  Bildgebung: Super-Resolution, Confocal, Fluorescence
-  Assays: FISH, IF, qPCR, FACS
+  Genomik: NGS, RNA-Seq, Cancer Genomics
+  Immunoinformatik: HLA Typing, Neoepitopes
 Daten & Engineering
-  KI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow, OpenAI API
-  Eng & Tools: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
-  Cloud: GCP, BigQuery, Vertex AI, Looker
-KI-Agenten & Dev-Tooling
-  Reproduzierbare Umgebung: Nix, nix-darwin, home-manager
-  Terminal & Editor: WezTerm, Neovim
-  Multi-Agenten-KI-Tooling: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
-  Geräteseitiges Browser-ML: TensorFlow.js, ONNX Runtime Web
-  Browser-Erweiterungen: Chrome Extension (Manifest V3)
+  KI & ML: TensorFlow, Keras, LSTMs, XGBoost, OpenCV, MLflow
+  Engineering & Pipelines: Python (Expert), R, SQL, dbt, Pydantic, Streamlit, Docker, Git
+  Cloud: GCP, BigQuery, BigQueryML, Vertex AI, Looker
+KI & Developer-Tooling
+  Angewandte KI: OpenAI API, TensorFlow.js, ONNX Runtime Web
+  Browser-Auslieferung: Chrome Extension (Manifest V3)
+  Agentenbasierte Entwicklung: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
 
 ================================================================================
 SPRACHEN

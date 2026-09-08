@@ -66,6 +66,41 @@ def _resolve_profile_target(profile: dict, target: str) -> dict:
     return result
 
 
+def _resolve_skills_target(skills: dict, target: str) -> dict:
+    """Resolve the data-driven Skills view for ``target`` and strip instructions.
+
+    A category variant can omit the category, omit selected groups, replace a
+    group's item list with a concise or expanded audience-specific list, and/or
+    append new groups. The bridge view keeps the curated baseline unchanged.
+    Group labels are matched by their English label; validation rejects typos and
+    duplicate additions before renderers consume this tree.
+    """
+    result = copy.deepcopy(skills)
+    categories = []
+    for category in result["categories"]:
+        variants = category.pop("variants", {})
+        override = variants.get(target, {}) if target != "bridge" else {}
+        if override.get("omit", False):
+            continue
+
+        omit_groups = set(override.get("omit_groups", []))
+        replacement_items = override.get("group_items", {})
+        groups = []
+        for group in category["groups"]:
+            label_en = group["label"]["en"]
+            if label_en in omit_groups:
+                continue
+            if label_en in replacement_items:
+                group = {**group, "items": copy.deepcopy(replacement_items[label_en])}
+            groups.append(group)
+        groups.extend(copy.deepcopy(override.get("add_groups", [])))
+        if groups:
+            categories.append({**category, "groups": groups})
+
+    result["categories"] = categories
+    return result
+
+
 def _select_project_ids(selected_map: dict, target: str) -> list[str]:
     """Return the project-id order for `target`, falling back to the bridge order."""
     return selected_map.get(target, selected_map["bridge"])
@@ -131,7 +166,7 @@ def load_content(
         "profile": _resolve_profile_target(
             _load_yaml(content_dir / f"profile.{lang}.yaml"), target
         ),
-        "skills": _load_yaml(content_dir / "skills.yaml"),
+        "skills": _resolve_skills_target(_load_yaml(content_dir / "skills.yaml"), target),
         "education": _load_yaml(content_dir / "education.yaml"),
         "experience": _load_yaml(content_dir / "experience.yaml"),
         "projects": projects,
