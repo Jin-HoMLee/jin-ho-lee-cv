@@ -96,3 +96,42 @@ const items = [
     }
   });
 </script>
+
+<script is:inline define:vars={{ base }}>
+  // Follow the on-screen positioning variant (Default / Comp Bio / DS-ML) set
+  // by TargetSwitcher.astro. These are two separate islands with their own
+  // inline scripts, so state is shared two ways rather than through a common
+  // module:
+  //   1. on load, read the same `cvTargetPreference` localStorage key
+  //      TargetSwitcher restores from — gets the initial state right
+  //      regardless of which island's script happens to run first, and
+  //      avoids a flash of the wrong variant's links.
+  //   2. afterwards, listen for the `cv-target-change` CustomEvent
+  //      TargetSwitcher dispatches on every apply() (restore + live clicks)
+  //      to stay in sync with no reload.
+  const STORAGE_KEY = "cvTargetPreference";
+  const VALID_TARGETS = new Set(["bridge", "comp-bio", "ds-ml"]);
+
+  function hrefFor(langCode, target) {
+    return target === "bridge" ? `${base}/cv-${langCode}.pdf` : `${base}/cv-${langCode}-${target}.pdf`;
+  }
+
+  function applyTarget(target) {
+    for (const link of document.querySelectorAll("[data-pdf-menu] a[hreflang]")) {
+      link.href = hrefFor(link.getAttribute("hreflang"), target);
+    }
+  }
+
+  let saved = null;
+  try {
+    saved = localStorage.getItem(STORAGE_KEY);
+  } catch {
+    /* storage may be unavailable (private mode); ignore */
+  }
+  if (saved && VALID_TARGETS.has(saved)) applyTarget(saved);
+
+  window.addEventListener("cv-target-change", (event) => {
+    const target = event.detail && event.detail.target;
+    if (target && VALID_TARGETS.has(target)) applyTarget(target);
+  });
+</script>
