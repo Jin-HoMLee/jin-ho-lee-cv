@@ -28,7 +28,7 @@ renderer to change content.
 - **Variants**: positioning targets `bridge` (default), `comp-bio`, `ds-ml`. `personal.variants`
   overrides headlines, `profile.variants` overrides tagline / profile paragraphs, and each
   `skills` category may declare data-only target operations (`omit`, `omit_groups`,
-  `group_items`, `add_groups`). The `skills` `bridge` operation is a web-only concise
+  `group_items`). The `skills` `bridge` operation is a web-only concise
   projection; non-web bridge renderers retain the canonical baseline. The content loader
   resolves target trees before renderers consume them.
 - **Cross-refs**: `experience` bullets carry `refs: [L1, C2]` → `projects/<id>.en.yaml`.

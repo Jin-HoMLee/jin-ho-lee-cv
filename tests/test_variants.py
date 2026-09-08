@@ -113,10 +113,7 @@ def _skills_fixture():
                     {"label": {"en": "Optional"}, "items": ["c"]},
                 ],
                 "variants": {
-                    "comp-bio": {
-                        "group_items": {"Core": ["a", "b", "detail"]},
-                        "add_groups": [{"label": {"en": "Specialized"}, "items": ["d"]}],
-                    },
+                    "comp-bio": {"group_items": {"Core": ["a", "b", "detail"]}},
                     "ds-ml": {"omit_groups": ["Optional"]},
                 },
             },
@@ -129,11 +126,11 @@ def _skills_fixture():
     }
 
 
-def test_resolve_skills_target_adds_and_reduces_data_driven_groups():
+def test_resolve_skills_target_replaces_and_reduces_data_driven_groups():
     comp_bio = _resolve_skills_target(_skills_fixture(), "comp-bio")
     assert [category["name"]["en"] for category in comp_bio["categories"]] == ["Bio"]
     groups = {group["label"]["en"]: group["items"] for group in comp_bio["categories"][0]["groups"]}
-    assert groups == {"Core": ["a", "b", "detail"], "Optional": ["c"], "Specialized": ["d"]}
+    assert groups == {"Core": ["a", "b", "detail"], "Optional": ["c"]}
 
     ds_ml = _resolve_skills_target(_skills_fixture(), "ds-ml")
     assert [group["label"]["en"] for group in ds_ml["categories"][0]["groups"]] == ["Core"]
@@ -183,22 +180,21 @@ def test_skills_are_complementary_in_web_targets_and_full_in_bridge(content_dir)
     assert "Claude Code" not in items("comp-bio")
 
 
-def test_skills_variant_references_reject_unknown_and_duplicate_groups(tmp_path):
+def test_skills_variant_references_reject_unknown_groups(tmp_path):
     _write(
         tmp_path / "skills.yaml",
         {
             "categories": [
                 {
                     "name": {"en": "Cat"},
-                    "groups": [{"label": {"en": "Real"}, "items": ["x"]}],
+                    "groups": [
+                        {"label": {"en": "Real"}, "items": ["x"]},
+                        {"label": {"en": "Real"}, "items": ["y"]},
+                    ],
                     "variants": {
                         "comp-bio": {
                             "omit_groups": ["Typo"],
-                            "add_groups": [
-                                {"label": {"en": "Real"}, "items": ["y"]},
-                                {"label": {"en": "New"}, "items": ["z"]},
-                                {"label": {"en": "New"}, "items": ["w"]},
-                            ],
+                            "group_items": {"Missing": ["z"]},
                         }
                     },
                 }
@@ -208,8 +204,8 @@ def test_skills_variant_references_reject_unknown_and_duplicate_groups(tmp_path)
     errors = _validate_skills_variant_references(tmp_path)
     messages = " ".join(error.message for error in errors)
     assert "Typo" in messages
-    assert "existing group label" in messages
-    assert "duplicate group label" in messages
+    assert "Missing" in messages
+    assert "duplicate base Skills group label" in messages
 
 
 def test_skills_variant_references_scope_labels_to_their_category(tmp_path):

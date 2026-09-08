@@ -71,11 +71,11 @@ def _resolve_skills_target(
 ) -> dict:
     """Resolve a target Skills view and strip projection instructions.
 
-    A category variant can omit the category, omit selected groups, replace a
-    group's item list with a concise or expanded audience-specific list, and/or
-    append new groups. The ``bridge`` variant is a web-only concise projection;
+    A category variant can omit the category, omit selected groups, or replace a
+    group's item list with a concise or expanded audience-specific list. The
+    ``bridge`` variant is a web-only concise projection;
     the canonical bridge tree is otherwise left intact. Group labels are matched
-    by their English label; validation rejects typos and duplicate additions before
+    by their English label; validation rejects typos and duplicate base labels before
     renderers consume this tree.
     """
     result = copy.deepcopy(skills)
@@ -97,7 +97,6 @@ def _resolve_skills_target(
             if label_en in replacement_items:
                 group = {**group, "items": copy.deepcopy(replacement_items[label_en])}
             groups.append(group)
-        groups.extend(copy.deepcopy(override.get("add_groups", [])))
         if groups:
             categories.append({**category, "groups": groups})
 

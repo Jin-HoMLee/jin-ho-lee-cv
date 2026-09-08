@@ -6,9 +6,9 @@ The website renders four positioning fields that vary per target:
   lead_paragraph   (profile intro)   <- profile.paragraphs[0]
   second_paragraph (profile intro)   <- profile.paragraphs[1]
 
-The variants JSON must carry these four text fields plus a resolved Skills tree
-per target. The site uses the latter to swap the visible Skills section without
-reimplementing the content resolver in the browser. There are no
+The variants JSON must carry these four text fields, a derived CodeHero stack,
+and a resolved Skills tree per target. The site uses the latter to swap the visible
+Skills section without reimplementing the content resolver in the browser. There are no
 `selected_projects` values (the site groups projects by category and never
 consumes selected_projects). These tests assert positioning correctness, not
 merely structural validity.
@@ -24,7 +24,7 @@ from scripts.render_web_data import _extract_overrides, render_web_data
 
 TARGETS = ("comp-bio", "ds-ml")
 TEXT_OVERRIDE_KEYS = {"headline", "tagline", "lead_paragraph", "second_paragraph"}
-OVERRIDE_KEYS = TEXT_OVERRIDE_KEYS | {"skills"}
+OVERRIDE_KEYS = TEXT_OVERRIDE_KEYS | {"hero_stack", "skills"}
 
 
 @pytest.fixture(scope="module")
@@ -65,6 +65,8 @@ def test_variants_have_all_positioning_fields(rendered):
                 assert isinstance(overrides[key], str) and overrides[key].strip(), (
                     f"{lang}/{target}.{key} must be a non-empty string"
                 )
+            assert overrides["hero_stack"]
+            assert all(isinstance(item, str) and item for item in overrides["hero_stack"])
 
 
 def test_variants_carry_resolved_complementary_skills(rendered):
@@ -188,5 +190,7 @@ def test_extract_emits_resolved_skills_tree_without_selected_projects():
     bridge = {**_tree(), "skills": {"categories": [{"groups": [{"label": "A", "items": ["1"]}]}]}}
     skills = {"categories": [{"groups": [{"label": "A", "items": ["1", "detail"]}]}]}
     variant = {**_tree(headline="variant"), "skills": skills, "selected_projects": ["B"]}
-    assert _extract_overrides(bridge, variant)["skills"] == skills
-    assert "selected_projects" not in _extract_overrides(bridge, variant)
+    overrides = _extract_overrides(bridge, variant)
+    assert overrides["skills"] == skills
+    assert "hero_stack" not in overrides
+    assert "selected_projects" not in overrides

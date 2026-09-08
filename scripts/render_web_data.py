@@ -43,6 +43,24 @@ def _to_jsonable(obj: Any) -> Any:
     return obj
 
 
+def _hero_stack(skills: dict) -> list[str]:
+    """Derive the short CodeHero stack from a resolved Skills tree."""
+    categories = skills.get("categories") or []
+    if not categories:
+        return []
+
+    def first_item(group: dict) -> str | None:
+        items = group.get("items") or []
+        return items[0] if items else None
+
+    bio_groups = categories[0].get("groups") or []
+    bio_lead = first_item(bio_groups[0]) if bio_groups else None
+    engineering_leads = [
+        first_item(group) for group in (categories[-1].get("groups") or [])
+    ]
+    return [item for item in [bio_lead, *engineering_leads] if item][:4]
+
+
 def _extract_overrides(bridge: dict, variant: dict) -> dict:
     """Return the web-rendered positioning fields that differ from bridge.
 
@@ -52,10 +70,11 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
       lead_paragraph   <- profile.paragraphs[0]   (the lead profile paragraph)
       second_paragraph <- profile.paragraphs[1]   (the second profile paragraph)
       skills            <- skills                  (the fully resolved Skills tree)
+      hero_stack        <- skills                  (the derived CodeHero stack)
 
     A key is included only when the variant value differs from bridge. Skills are
-    emitted as a resolved tree rather than as variant instructions: the browser
-    can swap the complete section without duplicating content-loader logic.
+    emitted as a resolved tree for SkillsSidebar, while hero_stack is a text-only
+    projection for CodeHero.
     `selected_projects` is intentionally excluded: the website renders projects
     grouped by category and never consumes it, so emitting it produced a
     payload of the one field the web ignores while dropping the three it shows.
@@ -95,6 +114,10 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
     variant_skills = variant.get("skills")
     if variant_skills is not None and variant_skills != bridge_skills:
         overrides["skills"] = variant_skills
+        bridge_stack = _hero_stack(bridge_skills or {})
+        variant_stack = _hero_stack(variant_skills)
+        if variant_stack != bridge_stack:
+            overrides["hero_stack"] = variant_stack
 
     return overrides
 

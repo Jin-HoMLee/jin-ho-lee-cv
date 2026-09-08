@@ -9,7 +9,7 @@
 //   tagline  -> ProfileSection    (profile intro lead-in)
 //   lead     -> ProfileSection    (first profile paragraph)
 //   second   -> ProfileSection    (second profile paragraph)
-//   skills   -> SkillsSidebar      (resolved target tree, via event)
+//   hero_stack -> CodeHero          (derived text, via event)
 //
 // Pure progressive enhancement: with JS off, the control stays hidden and the
 // page is the complete bridge CV. Variant text is inlined at build time via
@@ -20,14 +20,14 @@
 // other independently-mounted islands — e.g. PdfDownloadMenu.astro's header
 // download links — can follow the selected variant with no shared module and
 // no reload.
-import type { Lang, Skills } from "../types/content";
+import type { Lang } from "../types/content";
 
 interface Variant {
   headline?: string;
   tagline?: string;
   lead_paragraph?: string;
   second_paragraph?: string;
-  skills?: Skills;
+  hero_stack?: string[];
 }
 
 interface Props {
@@ -111,7 +111,9 @@ const order = ["bridge", "comp-bio", "ds-ml"] as const;
 
       // Let other independently-mounted islands (e.g. the header PDF download
       // menu) react to the selected variant without a shared module or reload.
-      window.dispatchEvent(new CustomEvent("cv-target-change", { detail: { target } }));
+      window.dispatchEvent(new CustomEvent("cv-target-change", {
+        detail: { target, hero_stack: overrides?.hero_stack },
+      }));
     }
 
     for (const btn of buttons) {

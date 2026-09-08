@@ -104,7 +104,12 @@
           ]
         }
       ]
-    }
+    },
+    "hero_stack": [
+      "NGS",
+      "Python (Expert)",
+      "GCP"
+    ]
   },
   "ds-ml": {
     "headline": "Data Science · Machine Learning",
@@ -203,6 +208,12 @@
           ]
         }
       ]
-    }
+    },
+    "hero_stack": [
+      "NGS",
+      "OpenAI API",
+      "Chrome Extension (Manifest V3)",
+      "Claude Code"
+    ]
   }
 }

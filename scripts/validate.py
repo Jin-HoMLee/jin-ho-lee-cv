@@ -209,34 +209,6 @@ def _validate_skills_variant_references(content_dir: Path) -> list[FileError]:
                         f"unknown group label(s): {unknown}",
                     )
                 )
-            additions = override.get("add_groups")
-            if not isinstance(additions, list):
-                continue
-            added_labels: list[str] = []
-            for group in additions:
-                if not isinstance(group, dict):
-                    continue
-                label_map = group.get("label")
-                label = label_map.get("en") if isinstance(label_map, dict) else None
-                if isinstance(label, str) and label:
-                    added_labels.append(label)
-                    if label in labels:
-                        errors.append(
-                            FileError(
-                                path,
-                                f"category {category_name!r} variant {target!r} "
-                                f"adds existing group label {label!r}",
-                            )
-                        )
-            duplicates = sorted({label for label in added_labels if added_labels.count(label) > 1})
-            if duplicates:
-                errors.append(
-                    FileError(
-                        path,
-                        f"category {category_name!r} variant {target!r} adds duplicate "
-                        f"group label(s): {duplicates}",
-                    )
-                )
     return errors
 
 

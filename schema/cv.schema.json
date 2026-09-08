@@ -173,23 +173,6 @@
                         "items": { "type": "string", "minLength": 1 },
                         "minItems": 1
                       }
-                    },
-                    "add_groups": {
-                      "type": "array",
-                      "minItems": 1,
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "label": { "$ref": "#/$defs/LangString" },
-                          "items": {
-                            "type": "array",
-                            "items": { "type": "string", "minLength": 1 },
-                            "minItems": 1
-                          }
-                        },
-                        "required": ["label", "items"],
-                        "additionalProperties": false
-                      }
                     }
                   },
                   "additionalProperties": false

@@ -135,7 +135,7 @@ const tabs = [
           <div><span class="ck">name</span>: <span class="cs">{name}</span></div>,
           <div><span class="ck">headline</span>: <span class="cs">{personal.headline}</span></div>,
           <div><span class="ck">roots</span>: [{ROOTS.map((r, i) => <Fragment><span class="cs">{r}</span>{i < ROOTS.length - 1 ? ", " : ""}</Fragment>)}]</div>,
-          <div><span class="ck">stack</span>: [{stack.map((s, i) => <Fragment><span class="cs">{s}</span>{i < stack.length - 1 ? ", " : ""}</Fragment>)}]</div>,
+          <div><span class="ck">stack</span>: [<span class="cs" data-cv-hero-stack>{stack.join(", ")}</span>]</div>,
           <div><span class="ck">publications</span>: <span class="cn">{pubCount}</span>&nbsp;&nbsp;<span class="cc">{authorComment}</span></div>,
           <div><span class="ck">tagline</span>: <span class="cp">&gt;-</span></div>,
           <div>&nbsp;&nbsp;<span class="cs" data-type={profile.tagline}>{profile.tagline}</span><span class="cursor" aria-hidden="true">&#x25AE;</span></div>,
@@ -253,6 +253,22 @@ const tabs = [
       tick();
     }
     // reduced-motion: leave the already-rendered full text in place.
+  }
+
+  const stackEl = document.querySelector<HTMLElement>("[data-code-hero] [data-cv-hero-stack]");
+  if (stackEl) {
+    const bridgeStack = stackEl.textContent ?? "";
+    window.addEventListener("cv-target-change", (event) => {
+      const detail = (event as CustomEvent<{ target?: string; hero_stack?: unknown }>).detail;
+      if (detail?.target === "bridge") {
+        stackEl.textContent = bridgeStack;
+        return;
+      }
+      const nextStack = detail?.hero_stack;
+      if (Array.isArray(nextStack) && nextStack.every((item) => typeof item === "string")) {
+        stackEl.textContent = nextStack.join(", ");
+      }
+    });
   }
 
   // ARIA tabs island — click + keyboard, roving tabindex.
