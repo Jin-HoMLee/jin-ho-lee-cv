@@ -230,7 +230,17 @@ The web package too: `pnpm --dir web test` (vitest) covers the twin chat's escap
 - **Cover letters are a read-only CV consumer.** `applications/` is gitignored (this
   repo is public); the generator reads `content/` via `cover_letter_core.cv_facts`
   (PII-safe `agent_core.read_cv`) and writes only under `applications/`. PDFs merge
-  `content.private/` at render time and stay gitignored. Never commit `applications/`.
+  `content.private/` at render time and stay gitignored. Never commit `applications/`
+  to this repo. Separately, `applications/` is also the root of its own private git
+  repository (`git@github.com:Jin-HoMLee/jin-ho-lee-job-applications.git`), nested
+  directly at that path - this repo's own git has no knowledge of it (no submodule, no
+  reference), it's just a gitignored directory as far as this repo is concerned. After
+  creating or editing anything under `applications/` (a job description, a cover
+  letter, interview prep notes, whatever), commit and push it to that nested repo
+  before considering the work finished - it's the durable backup and version history
+  for material this repo itself never tracks. This is a documentation-only convention,
+  not enforced by any hook or script, so it only works if whoever is editing
+  `applications/` actually reads and follows it.
   Core: `scripts/cover_letter_core.py` (+ `letter_text.py`, `render_letter.py`,
   `letter_lint.py`, `jd_gap.py`); skill: `.claude/skills/cover-letter/`. The skill carries
   craft guidance ("How to write the body" + "AI tells & clichés to avoid" in reference.md);
@@ -297,7 +307,7 @@ The web package too: `pnpm --dir web test` (vitest) covers the twin chat's escap
 
 - `assets/photo.jpg` — headshot for the private PDF build, only included when `--photo` is passed. Optional; omit and the PDF renders without a photo. Kept gitignored by convention (PDFs are intentionally photo-less to avoid discrimination per German hiring norms).
 - `content.private/private.yaml` — phone + address. Copy from `content.private.example/private.example.yaml` template.
-- `applications/` — per-application cover-letter material (job descriptions, drafts, rendered letters). Gitignored; mirror the shape in `applications.example/`.
+- `applications/` — per-application cover-letter material (job descriptions, drafts, rendered letters). Gitignored from this repo, but not actually untracked: it's the root of its own private git repo, see "Cover letters are a read-only CV consumer" above. Mirror the shape in `applications.example/`.
 - `assets/signature.png` — handwritten signature for the cover-letter PDF, included only when present (mirrors the optional `--photo` pattern). Gitignored.
 - `master-cv/` — the unfiltered superset overlay (`timeline.yaml` + `inventory.yaml` + `narrative/*.md` + `opinions.md`). Gitignored; mirror the shape in `master-cv.example/`.
 
