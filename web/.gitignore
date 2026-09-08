@@ -9,3 +9,5 @@ src/data/*.json
 .astro/
 public/person.jsonld
 public/llms.txt
+public/cv-en.pdf
+public/cv-de.pdf
