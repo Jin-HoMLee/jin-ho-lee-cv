@@ -1,17 +1,16 @@
 ---
-import type { Personal, Profile, Publication, PublicationMetrics, Skills, Experience, Lang } from "../types/content";
+import type { Personal, Profile, Publication, Skills, Experience, Lang } from "../types/content";
 
 interface Props {
   personal: Personal;
   profile: Profile;
   publications: Publication[];
-  publicationMetrics: PublicationMetrics;
   skills: Skills;
   experience: Experience[];
   lang: Lang;
 }
 
-const { personal, profile, publications, publicationMetrics, skills, experience, lang } = Astro.props;
+const { personal, profile, publications, skills, experience, lang } = Astro.props;
 
 // roots — curated positioning trio (renderer-authored, like OG kickers; NOT in content/)
 const ROOTS = ["cancer-genomics", "HLA-typing", "neoantigens"];
@@ -26,13 +25,11 @@ const engLeads = (skills.categories.at(-1)?.groups ?? []).map((g) => g.items?.[0
 const stack = [bioLead, ...engLeads].filter(Boolean).slice(0, 4);
 
 const name = `${personal.name.given} ${personal.name.family}`;
-const pubCount = publicationMetrics.peer_reviewed_records;
+const pubCount = publications.length;
 const eyebrow = lang === "en"
   ? "// one source of truth — pdf · web · json · jsonld · text"
   : "// eine Quelle — pdf · web · json · jsonld · text";
-const authorComment = lang === "en"
-  ? `# peer-reviewed research; ${publicationMetrics.research_records} research / ${publicationMetrics.applied_records} applied / ${publicationMetrics.total_records} total`
-  : `# begutachtete Forschung; ${publicationMetrics.research_records} Forschung / ${publicationMetrics.applied_records} angewandt / ${publicationMetrics.total_records} gesamt`;
+const authorComment = lang === "en" ? "# first / shared-first author" : "# Erst-/geteilte Erstautorenschaft";
 const ctaLabel = lang === "en" ? "View work →" : "Projekte ansehen →";
 
 // --- experience.yaml panel data: one item per entry, derived from the prop ---

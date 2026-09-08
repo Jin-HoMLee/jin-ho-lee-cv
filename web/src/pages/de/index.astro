@@ -23,7 +23,7 @@ const data = contentDe as unknown as ContentData;
 <BaseLayout lang="de" data={data}>
   <Header slot="header" personal={data.personal} lang="de" />
   <h1 class="sr-only">{data.personal.name.given} {data.personal.name.family}</h1>
-  <CodeHero personal={data.personal} profile={data.profile} publications={data.publications} publicationMetrics={data.publication_metrics} skills={data.skills} experience={data.experience} lang="de" />
+  <CodeHero personal={data.personal} profile={data.profile} publications={data.publications} skills={data.skills} experience={data.experience} lang="de" />
   <StatBand data={data} lang="de" />
   <TargetSwitcher variants={variantsDe} lang="de" />
   <ProfileSection personal={data.personal} profile={data.profile} labels={data.labels} />
@@ -31,7 +31,7 @@ const data = contentDe as unknown as ContentData;
     <div data-reveal>
       <ExperienceSection experience={data.experience} projects={data.projects} labels={data.labels} lang="de" />
       <ProjectsSection projects={data.projects} labels={data.labels} lang="de" />
-      <PublicationsList publications={data.publications} metrics={data.publication_metrics} aggregate={data.publications_aggregate} orcid={data.personal.links.orcid} scholar={data.personal.links.googlescholar} lang="de" />
+      <PublicationsList publications={data.publications} metrics={data.publication_metrics} aggregate={data.publications_aggregate} orcid={data.personal.links.orcid} scholar={data.personal.links.googlescholar} labels={data.labels} lang="de" />
       <AwardsSection awards={data.awards} labels={data.labels} />
     </div>
     <aside data-reveal>

@@ -133,19 +133,25 @@ def _volunteer(content: dict) -> str:
     return "\n".join(out)
 
 
-def _publications(pubs: list[Publication], lang: str = "en") -> str:
+def _publications(
+    pubs: list[Publication],
+    lang: str = "en",
+    publication_labels: dict[str, str] | None = None,
+) -> str:
     out: list[str] = []
+    if publication_labels is None:
+        publication_labels = resolve_langstrings(
+            load_content(CONTENT_DIR, lang=lang)["labels"]["publications"],
+            lang=lang,
+        )
     category_labels = {
-        "research": {"en": "RESEARCH RECORDS", "de": "FORSCHUNGSBEITRÄGE"},
-        "applied": {
-            "en": "APPLIED / OFF-DOMAIN",
-            "de": "ANGEWANDT / AUSSERHALB DES FORSCHUNGSSCHWERPUNKTS",
-        },
+        "research": publication_labels["research_label"].upper(),
+        "applied": publication_labels["applied_label"].upper(),
     }
     previous_category = None
     for p in pubs:
         if p.category != previous_category:
-            out.append(category_labels[p.category][lang])
+            out.append(category_labels[p.category])
             previous_category = p.category
         authors = ", ".join(p.authors)
         venue = f" - {p.venue}" if p.venue else ""
@@ -177,7 +183,7 @@ def render(lang: str, target: str = "bridge") -> str:
     L = SECTION_LABELS
 
     pub_body = (
-        _publications(pubs, lang)
+        _publications(pubs, lang, content["labels"]["publications"])
         if publication_mode(target) == "full"
         else _publications_aggregate(content, pubs)
     )

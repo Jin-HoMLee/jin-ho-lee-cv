@@ -1,5 +1,5 @@
 ---
-import type { Publication, PublicationMetrics, PublicationType, Lang } from "../types/content";
+import type { Labels, Publication, PublicationMetrics, PublicationType, Lang } from "../types/content";
 import PublicationsChart from "./PublicationsChart.astro";
 import PublicationsCumulative from "./PublicationsCumulative.astro";
 
@@ -7,12 +7,13 @@ interface Props {
   publications: Publication[];
   metrics: PublicationMetrics;
   aggregate: { summary: string; pointer: string };
+  labels: Labels;
   orcid: string | null;
   scholar?: string | null;
   lang: Lang;
 }
 
-const { publications, metrics, aggregate, orcid, scholar, lang } = Astro.props;
+const { publications, metrics, aggregate, labels, orcid, scholar, lang } = Astro.props;
 const orcidDisplay = orcid ? orcid.replace(/^https?:\/\//, "") : "";
 
 // Compact citation metric — one line instead of a full bar chart. Indicative; counts
@@ -36,10 +37,10 @@ const typeLabel: Record<PublicationType, { en: string; de: string }> = {
 const typeOrder: PublicationType[] = ["article", "book-chapter", "conference", "book"];
 
 const categories = ["research", "applied"] as const;
-const categoryLabel = {
-  research: { en: "Research records", de: "Forschungsbeiträge" },
-  applied: { en: "Applied / off-domain", de: "Angewandt / außerhalb des Forschungsschwerpunkts" },
-} as const;
+const categoryLabel: Record<typeof categories[number], string> = {
+  research: labels.publications.research_label,
+  applied: labels.publications.applied_label,
+};
 const grouped: Record<typeof categories[number], Record<PublicationType, Publication[]>> = {
   research: { "article": [], "book-chapter": [], "conference": [], "book": [] },
   applied: { "article": [], "book-chapter": [], "conference": [], "book": [] },
@@ -116,7 +117,7 @@ function renderAuthors(authors: string[]): string {
       Object.values(grouped[category]).some((items) => items.length > 0) && (
         <div class="mb-5">
           <h3 class="mb-2 border-b border-[var(--surface-border)] pb-1 text-sm font-semibold text-[var(--text)]">
-            {categoryLabel[category][lang]}
+            {categoryLabel[category]}
           </h3>
           {typeOrder.map((t) => grouped[category][t].length > 0 && (
             <div class="mb-4">

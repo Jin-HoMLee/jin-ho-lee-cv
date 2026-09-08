@@ -156,6 +156,10 @@ export interface Labels {
     basic: string;
     passive: string;
   };
+  publications: {
+    research_label: string;
+    applied_label: string;
+  };
   misc: {
     present: string;
   };
