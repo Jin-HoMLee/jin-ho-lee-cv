@@ -80,7 +80,7 @@ const scopeCaption = formatPublicationScopeCaption(metrics, contentLabels, lang,
     viewBox="-1.1 -1.1 2.2 2.2"
     class="h-32 w-32 shrink-0"
     role="group"
-    aria-label={`All-record authorship breakdown across ${total} ${totalLabel}`}
+    aria-label={scopeCaption}
   >
     {arcs.map((arc) => (
       <path

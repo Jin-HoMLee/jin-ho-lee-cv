@@ -27,8 +27,8 @@ const yearsTile: Tile = {
 const pubsTile: Tile = {
   value: pubs, suffix: "",
   label: lang === "en"
-    ? `peer-reviewed research · ${publicationMetrics.research_records} research / ${publicationMetrics.applied_records} applied`
-    : `begutachtete Forschung · ${publicationMetrics.research_records} Forschung / ${publicationMetrics.applied_records} angewandt`,
+    ? `peer-reviewed research · ${publicationMetrics.research_records} ${data.labels.publications.research_label} / ${publicationMetrics.applied_records} ${data.labels.publications.applied_label}`
+    : `begutachtete Forschung · ${publicationMetrics.research_records} ${data.labels.publications.research_label} / ${publicationMetrics.applied_records} ${data.labels.publications.applied_label}`,
   varName: "--chart-1",
 };
 const citationsTile: Tile = totalCitations > 0
