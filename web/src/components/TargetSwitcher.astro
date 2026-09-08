@@ -112,7 +112,12 @@ const order = ["bridge", "comp-bio", "ds-ml"] as const;
       // Let other independently-mounted islands (e.g. the header PDF download
       // menu) react to the selected variant without a shared module or reload.
       window.dispatchEvent(new CustomEvent("cv-target-change", {
-        detail: { target, hero_stack: overrides?.hero_stack },
+        detail: {
+          target,
+          headline: overrides?.headline,
+          tagline: overrides?.tagline,
+          hero_stack: overrides?.hero_stack,
+        },
       }));
     }
 
