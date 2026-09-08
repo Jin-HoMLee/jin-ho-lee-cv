@@ -91,8 +91,15 @@ Biotech Wet-Lab
   Bildgebung: Super-Resolution, Confocal, Fluorescence
   Assays: FISH, IF, qPCR, FACS
 Daten & Engineering
-  Engineering & Pipelines: Python (Expert), Snakemake, Conda, Docker, Git
-  Cloud: GCP, BigQuery, Vertex AI
+  KI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow
+  Engineering & Pipelines: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
+  Cloud: GCP, BigQuery, Vertex AI, Looker
+KI & Developer-Tooling
+  Angewandte KI: OpenAI API, TensorFlow.js, ONNX Runtime Web
+  Browser-Auslieferung: Chrome Extension (Manifest V3)
+  Reproduzierbare Umgebung: Nix, nix-darwin, home-manager
+  Terminal & Editor: WezTerm, Neovim
+  Agentenbasierte Entwicklung: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
 
 ================================================================================
 SPRACHEN

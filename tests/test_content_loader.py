@@ -137,7 +137,7 @@ def test_research_entry_start_not_after_earliest_subproject(content_dir):
     assert research["period"]["start"] == "2014-04"
 
 
-def test_skills_bridge_is_comprehensive_and_web_bridge_is_curated(content_dir):
+def test_skills_nonweb_targets_are_full_and_web_bridge_is_curated(content_dir):
     bridge = load_content(content_dir, private_path=None, lang="en", target="bridge")
 
     def items(content):
@@ -171,6 +171,10 @@ def test_skills_bridge_is_comprehensive_and_web_bridge_is_curated(content_dir):
     assert "Nix" not in web_items
 
     comp_bio = load_content(content_dir, private_path=None, lang="en", target="comp-bio")
+    ds_ml = load_content(content_dir, private_path=None, lang="en", target="ds-ml")
+    assert items(comp_bio) == items(bridge)
+    assert items(ds_ml) == items(bridge)
+
     bioml = next(
         c for c in comp_bio["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML"
     )

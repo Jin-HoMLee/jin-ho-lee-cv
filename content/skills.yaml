@@ -19,10 +19,6 @@ categories:
         group_items:
           Genomics: ["NGS", "RNA-Seq", "WES", "SNV Calling"]
           Immunoinformatics: ["HLA Typing", "MHC-I Prediction", "Neoepitopes"]
-      comp-bio:
-        group_items:
-          Genomics: ["NGS", "RNA-Seq", "WES", "SNV Calling", "Splice Analysis", "MapSplice", "HISAT2/STAR", "samtools/bcftools", "bedtools"]
-          Immunoinformatics: ["HLA Typing", "MHC-I Prediction", "OptiType", "MHCflurry", "Neoepitopes"]
       ds-ml:
         omit_groups: ["Nanoscopy", "Structural Biology"]
         group_items:
@@ -66,7 +62,6 @@ categories:
           Cloud: ["GCP", "BigQuery", "Vertex AI"]
       ds-ml:
         group_items:
-          "AI & ML": ["TensorFlow", "Keras", "LSTMs", "XGBoost", "OpenCV", "MLflow"]
           "Engineering & Pipelines": ["Python (Expert)", "R", "SQL", "dbt", "Pydantic", "Streamlit", "Docker", "Git"]
           Cloud: ["GCP", "BigQuery", "BigQueryML", "Vertex AI", "Looker"]
 

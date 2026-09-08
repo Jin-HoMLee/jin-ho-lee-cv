@@ -82,7 +82,7 @@ def _resolve_skills_target(
     categories = []
     for category in result["categories"]:
         variants = category.pop("variants", {})
-        apply_variant = web_projection or target != "bridge"
+        apply_variant = web_projection
         override = variants.get(target, {}) if apply_variant else {}
         if override.get("omit", False):
             continue

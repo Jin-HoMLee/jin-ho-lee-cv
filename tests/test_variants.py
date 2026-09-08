@@ -127,12 +127,12 @@ def _skills_fixture():
 
 
 def test_resolve_skills_target_replaces_and_reduces_data_driven_groups():
-    comp_bio = _resolve_skills_target(_skills_fixture(), "comp-bio")
+    comp_bio = _resolve_skills_target(_skills_fixture(), "comp-bio", web_projection=True)
     assert [category["name"]["en"] for category in comp_bio["categories"]] == ["Bio"]
     groups = {group["label"]["en"]: group["items"] for group in comp_bio["categories"][0]["groups"]}
     assert groups == {"Core": ["a", "b", "detail"], "Optional": ["c"]}
 
-    ds_ml = _resolve_skills_target(_skills_fixture(), "ds-ml")
+    ds_ml = _resolve_skills_target(_skills_fixture(), "ds-ml", web_projection=True)
     assert [group["label"]["en"] for group in ds_ml["categories"][0]["groups"]] == ["Core"]
     assert ds_ml["categories"][0]["groups"][0]["items"] == ["a", "b"]
 
