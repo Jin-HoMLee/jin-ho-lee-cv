@@ -55,6 +55,7 @@ class PublicationSummary:
     year_start: int
     year_end: int
 
+
 def publication_summary(pubs: list[Publication]) -> PublicationSummary:
     """Derive the honest, type-segmented aggregate from the BibTeX records.
 

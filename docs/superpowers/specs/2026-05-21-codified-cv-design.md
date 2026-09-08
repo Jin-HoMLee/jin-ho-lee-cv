@@ -144,14 +144,14 @@ address:
 
 ```yaml
 - id: cintellic
-  org: { name: "Cintellic / International Bank", url: null }
+  org: { name: "Cintellic GmbH", url: null }
   role:
     en: "Consultant, Lead Business Functional Analyst"
     de: "Berater, Lead Business Functional Analyst"
   period: { start: "2024-05", end: "2025-07" }
   bullets:
-    - en: "Architecting the migration of 1,000+ analytical processes to Google Cloud."
-      de: "Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud."
+    - en: "Client: International bank - architecting the migration of 1,000+ analytical processes to Google Cloud."
+      de: "Kunde: Internationale Bank - Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud."
       refs: [C2]
     - en: "Developing BigQueryML models for anti-financial crime & KYC."
       de: "Entwicklung von BigQueryML-Modellen für Geldwäschebekämpfung & KYC."

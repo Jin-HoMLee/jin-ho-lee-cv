@@ -115,6 +115,6 @@ const articleJsonldStr = JSON.stringify(articleJsonld).replace(/</g, "\\u003c");
       <p>Follow the work on GitHub: <a class="text-[var(--w-accent)] underline hover:text-[var(--w-accent-hover)]" href={w.repoUrl}>{w.repoUrl}</a>.</p>
     </section>
 
-    <script type="application/ld+json" set:html={articleJsonldStr}></script>
+    <script is:inline type="application/ld+json" set:html={articleJsonldStr}></script>
   </article>
 </BaseLayout>

@@ -76,9 +76,10 @@ const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
-    <script type="application/ld+json" set:html={jsonld}></script>
+    <script is:inline type="application/ld+json" set:html={jsonld}></script>
     {analyticsEnabled && analyticsEndpoint && (
       <script
+        is:inline
         data-goatcounter={analyticsEndpoint}
         async
         src="//gc.zgo.at/count.js"
