@@ -31,8 +31,6 @@ const eyebrow = lang === "en"
   : "// eine Quelle — pdf · web · json · jsonld · text";
 const authorComment = lang === "en" ? "# first / shared-first author" : "# Erst-/geteilte Erstautorenschaft";
 const ctaLabel = lang === "en" ? "View work →" : "Projekte ansehen →";
-const pdfBase = "https://github.com/Jin-HoMLee/jin-ho-lee-cv/releases/latest/download";
-const pdfLabel = lang === "en" ? "download" : "Download";
 
 // --- experience.yaml panel data: one item per entry, derived from the prop ---
 const presentLabel = lang === "en" ? "present" : "heute";
@@ -208,7 +206,6 @@ const tabs = [
 
   <div class="mt-5 flex flex-wrap items-center gap-4">
     <a href="#experience" class="rounded-lg px-4 py-2 text-sm font-semibold text-[var(--accent-contrast)] hover:opacity-90" style="background: var(--accent)">{ctaLabel}</a>
-    <span class="font-mono-plex text-xs text-[var(--faint)]">{pdfLabel} · <a class="underline hover:text-[var(--text)]" href={`${pdfBase}/cv-en.pdf`}>cv-en.pdf</a> / <a class="underline hover:text-[var(--text)]" href={`${pdfBase}/cv-de.pdf`}>cv-de.pdf</a></span>
   </div>
 </section>
 

@@ -13,6 +13,12 @@
 // Pure progressive enhancement: with JS off, the control stays hidden and the
 // page is the complete bridge CV. Variant text is inlined at build time via
 // `define:vars` — no runtime fetch, no served data asset.
+//
+// Every call to apply() (both the initial localStorage restore and a live
+// click) also dispatches a `cv-target-change` CustomEvent on `window`, so
+// other independently-mounted islands — e.g. PdfDownloadMenu.astro's header
+// download links — can follow the selected variant with no shared module and
+// no reload.
 import type { Lang } from "../types/content";
 
 interface Variant {
@@ -100,6 +106,10 @@ const order = ["bridge", "comp-bio", "ds-ml"] as const;
       for (const btn of buttons) {
         btn.setAttribute("aria-pressed", String(btn.dataset.cvTarget === target));
       }
+
+      // Let other independently-mounted islands (e.g. the header PDF download
+      // menu) react to the selected variant without a shared module or reload.
+      window.dispatchEvent(new CustomEvent("cv-target-change", { detail: { target } }));
     }
 
     for (const btn of buttons) {
