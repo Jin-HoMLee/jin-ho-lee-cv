@@ -1,7 +1,7 @@
 """Render bilingual content JSON for the Astro website.
 
-Produces web/src/data/content.{en,de}.json by composing:
-  - scripts.content_loader.load_content (with private_path HARD-CODED to None)
+Produces web/src/data/content.{en,de}.json and content.{en,de}.variants.json by composing:
+  - scripts.content_loader.load_content (private_path HARD-CODED to None; web projection enabled)
   - scripts.langstring.resolve_langstrings (to flatten langmaps to chosen lang)
   - Publication dataclass → dict conversion
   - Path → str conversion
@@ -63,9 +63,7 @@ def _hero_stack(skills: dict) -> list[str]:
         ),
         categories[-1],
     )
-    engineering_leads = [
-        first_item(group) for group in (lead_category.get("groups") or [])
-    ]
+    engineering_leads = [first_item(group) for group in (lead_category.get("groups") or [])]
     return [item for item in [bio_lead, *engineering_leads] if item][:4]
 
 

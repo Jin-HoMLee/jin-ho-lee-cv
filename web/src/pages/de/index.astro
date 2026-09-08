@@ -27,7 +27,7 @@ const switcherVariants = Object.fromEntries(
       tagline: variant.tagline,
       lead_paragraph: variant.lead_paragraph,
       second_paragraph: variant.second_paragraph,
-      hero_stack: variant.hero_stack,
+      hero_stack: "hero_stack" in variant ? variant.hero_stack : undefined,
     },
   ]),
 );

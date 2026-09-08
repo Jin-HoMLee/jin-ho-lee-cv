@@ -3,13 +3,13 @@
 //
 // Lets a visitor re-position the CV for a target audience without a page reload.
 // Bridge is rendered at build time and stays SEO-canonical; this control swaps
-// only the visible text of already-rendered fields, marked in the DOM with
-// `data-cv-field`:
+// the visible text fields marked in the DOM with `data-cv-field`:
 //   headline -> Header.astro      (sticky header)
 //   tagline  -> ProfileSection    (profile intro lead-in)
 //   lead     -> ProfileSection    (first profile paragraph)
 //   second   -> ProfileSection    (second profile paragraph)
-//   hero_stack -> CodeHero          (derived text, via event)
+// CodeHero's derived `hero_stack` uses its own data hooks and follows the same
+// target-change event.
 //
 // Pure progressive enhancement: with JS off, the control stays hidden and the
 // page is the complete bridge CV. Variant text is inlined at build time via

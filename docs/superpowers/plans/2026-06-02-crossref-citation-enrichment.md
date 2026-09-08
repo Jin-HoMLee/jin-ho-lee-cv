@@ -94,7 +94,7 @@ Expected: PASS
 
 Run: `uv run just snapshots-update`
 Then inspect: `git diff tests/__snapshots__/`
-Expected: ONLY `test_web_data_snapshot[content.en.json].json` and `test_web_data_snapshot[content.de.json].json` change, each adding `"citation_count": null` to every publication. The `content.*.variants.json` snapshots do **NOT** change — variant output carries only text overrides (headline/tagline/paragraphs), not publications.
+Expected: ONLY `test_web_data_snapshot[content.en.json].json` and `test_web_data_snapshot[content.de.json].json` change, each adding `"citation_count": null` to every publication. The `content.*.variants.json` snapshots do **NOT** change — variant output carries text overrides, resolved Skills trees, and an optional `hero_stack`, not publications.
 
 - [ ] **Step 6: Verify the whole suite is green**
 

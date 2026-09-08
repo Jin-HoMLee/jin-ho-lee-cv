@@ -1082,8 +1082,9 @@ renderer to change content.
 - **LangStrings**: short strings are inline `{ en: "...", de: "..." }` maps; long prose lives
   in per-language files (`profile.en.yaml`/`profile.de.yaml`,
   `projects/L1.en.yaml`/`projects/L1.de.yaml`). `en` is required.
-- **Variants**: positioning targets `bridge` (default), `comp-bio`, `ds-ml` under a
-  `variants:` key (headline / tagline / paragraphs only).
+- **Variants:** see the authoritative current contract in
+  [`.claude/skills/cv/SKILL.md`](../../.claude/skills/cv/SKILL.md) and
+  [`reference.md`](../../.claude/skills/cv/reference.md).
 - **Cross-refs**: `experience` bullets carry `refs: [L1, C2]` → `projects/<id>.en.yaml`.
   Every ref must resolve, and every project needs both `.en.yaml` and `.de.yaml`.
 
@@ -1143,8 +1144,8 @@ diff + validation), `apply_edit` (validated write), `rerun_renderers`. Launch wi
 - `labels` — UI section labels (LangStrings)
 
 ## Targets
-`bridge` (default), `comp-bio`, `ds-ml` — positioning variants overriding headline /
-tagline / profile paragraphs only.
+See the authoritative target and Skills-projection contract in
+[`.claude/skills/cv/reference.md`](../../.claude/skills/cv/reference.md).
 
 ## MCP tools
 | Tool | Hint | Does |

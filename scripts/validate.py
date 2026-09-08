@@ -184,9 +184,7 @@ def _validate_skills_variant_references(content_dir: Path) -> list[FileError]:
             continue
         category_name_map = category.get("name")
         category_name = (
-            category_name_map.get("en", "?")
-            if isinstance(category_name_map, dict)
-            else "?"
+            category_name_map.get("en", "?") if isinstance(category_name_map, dict) else "?"
         )
         for target, override in variants.items():
             if not isinstance(override, dict):

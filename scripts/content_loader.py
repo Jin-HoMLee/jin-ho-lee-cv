@@ -66,9 +66,7 @@ def _resolve_profile_target(profile: dict, target: str) -> dict:
     return result
 
 
-def _resolve_skills_target(
-    skills: dict, target: str, *, web_projection: bool = False
-) -> dict:
+def _resolve_skills_target(skills: dict, target: str, *, web_projection: bool = False) -> dict:
     """Resolve a target Skills view and strip projection instructions.
 
     A category variant can omit the category, omit selected groups, or replace a
