@@ -137,14 +137,38 @@ def test_research_entry_start_not_after_earliest_subproject(content_dir):
     assert research["period"]["start"] == "2014-04"
 
 
-def test_skills_default_is_curated_and_comp_bio_adds_detail(content_dir):
+def test_skills_bridge_is_comprehensive_and_web_bridge_is_curated(content_dir):
     bridge = load_content(content_dir, private_path=None, lang="en", target="bridge")
-    bioml = next(
-        c for c in bridge["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML"
+
+    def items(content):
+        return {
+            item
+            for category in content["skills"]["categories"]
+            for group in category["groups"]
+            for item in group["items"]
+        }
+
+    assert {
+        "MapSplice",
+        "TCRdock",
+        "PostgreSQL",
+        "Nix",
+        "WezTerm",
+        "Claude Code",
+    } <= items(bridge)
+
+    web_bridge = load_content(
+        content_dir,
+        private_path=None,
+        lang="en",
+        target="bridge",
+        web_projection=True,
     )
-    bridge_groups = {g["label"]["en"]: g["items"] for g in bioml["groups"]}
-    assert "MapSplice" not in bridge_groups["Genomics"]
-    assert "Structural Biology" not in bridge_groups
+    web_items = items(web_bridge)
+    assert "MapSplice" not in web_items
+    assert "TCRdock" not in web_items
+    assert "PostgreSQL" not in web_items
+    assert "Nix" not in web_items
 
     comp_bio = load_content(content_dir, private_path=None, lang="en", target="comp-bio")
     bioml = next(

@@ -147,23 +147,36 @@ def test_resolve_skills_target_bridge_strips_variant_instructions():
     assert all("variants" not in category for category in bridge["categories"])
 
 
-def test_skills_are_complementary_in_all_rendered_targets(content_dir):
-    resolved = {
-        target: resolve_langstrings(load_content(content_dir, lang="en", target=target), lang="en")[
-            "skills"
-        ]
-        for target in ("bridge", "comp-bio", "ds-ml")
+def test_skills_are_complementary_in_web_targets_and_full_in_bridge(content_dir):
+    def resolved(target, web_projection=False):
+        return resolve_langstrings(
+            load_content(
+                content_dir,
+                lang="en",
+                target=target,
+                web_projection=web_projection,
+            ),
+            lang="en",
+        )["skills"]
+
+    trees = {
+        "bridge": resolved("bridge"),
+        "web-bridge": resolved("bridge", web_projection=True),
+        "comp-bio": resolved("comp-bio", web_projection=True),
+        "ds-ml": resolved("ds-ml", web_projection=True),
     }
 
     def items(target):
         return {
             item
-            for category in resolved[target]["categories"]
+            for category in trees[target]["categories"]
             for group in category["groups"]
             for item in group["items"]
         }
 
-    assert "TCRdock" not in items("bridge")
+    assert {"TCRdock", "PostgreSQL", "Nix", "Claude Code"} <= items("bridge")
+    assert "TCRdock" not in items("web-bridge")
+    assert "PostgreSQL" not in items("web-bridge")
     assert {"MapSplice", "TCRdock", "MHCflurry"} <= items("comp-bio")
     assert {"LSTMs", "OpenCV", "BigQueryML", "Claude Code"} <= items("ds-ml")
     assert "TCRdock" not in items("ds-ml")
@@ -233,7 +246,7 @@ def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
             for item in group["items"]
         }
 
-    assert "TCRdock" not in all_items(bridge)
+    assert "TCRdock" in all_items(bridge)
     assert "TCRdock" in all_items(comp_bio)
     assert "LSTMs" in all_items(ds_ml)
 

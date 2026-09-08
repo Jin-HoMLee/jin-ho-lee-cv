@@ -156,7 +156,7 @@
               },
               "variants": {
                 "type": "object",
-                "propertyNames": { "enum": ["comp-bio", "ds-ml"] },
+                "propertyNames": { "enum": ["bridge", "comp-bio", "ds-ml"] },
                 "additionalProperties": {
                   "type": "object",
                   "properties": {

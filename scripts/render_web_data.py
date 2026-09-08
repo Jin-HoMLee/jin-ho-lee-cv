@@ -129,7 +129,13 @@ def render_web_data(
         # Load bridge once: it is both the site's static content and the baseline
         # against which variant overrides are diffed.
         bridge_resolved = resolve_langstrings(
-            load_content(content_dir, private_path=None, lang=lang, target="bridge"),
+            load_content(
+                content_dir,
+                private_path=None,
+                lang=lang,
+                target="bridge",
+                web_projection=True,
+            ),
             lang=lang,
         )
         bridge_resolved["publications"] = enrich_publications(
@@ -152,7 +158,13 @@ def render_web_data(
         variants_dict = {}
         for target in ("comp-bio", "ds-ml"):
             variant_resolved = resolve_langstrings(
-                load_content(content_dir, private_path=None, lang=lang, target=target),
+                load_content(
+                    content_dir,
+                    private_path=None,
+                    lang=lang,
+                    target=target,
+                    web_projection=True,
+                ),
                 lang=lang,
             )
             variants_dict[target] = _extract_overrides(bridge_resolved, variant_resolved)

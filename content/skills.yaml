@@ -1,27 +1,30 @@
-# The bridge/default view is a concise cross-section of the main CV skill areas.
-# Target variants use data-only operations below; scripts/content_loader.py resolves
-# them before any PDF, text, or web renderer sees the tree.
+# Canonical skills baseline. Web data applies category variants to derive the
+# concise bridge and target-specific views; non-web bridge renderers keep this tree.
 categories:
   - name:
       en: "Bioinformatics & ML"
       de: "Bioinformatik & ML"
     groups:
       - label: { en: "Genomics", de: "Genomik" }
-        items: ["NGS", "RNA-Seq", "WES", "SNV Calling"]
+        items: ["NGS", "RNA-Seq", "WES", "SNV Calling", "Splice Analysis", "MapSplice", "HISAT2/STAR", "samtools/bcftools", "bedtools"]
       - label: { en: "Immunoinformatics", de: "Immunoinformatik" }
-        items: ["HLA Typing", "MHC-I Prediction", "Neoepitopes"]
+        items: ["HLA Typing", "MHC-I Prediction", "OptiType", "MHCflurry", "Neoepitopes"]
       - label: { en: "Nanoscopy", de: "Nanoskopie" }
         items: ["Spatial Point-Pattern", "Cluster Analysis (DBSCAN)"]
+      - label: { en: "Structural Biology", de: "Strukturbiologie" }
+        items: ["TCRdock", "AlphaFold v2", "Mol*"]
     variants:
+      bridge:
+        omit_groups: ["Structural Biology"]
+        group_items:
+          Genomics: ["NGS", "RNA-Seq", "WES", "SNV Calling"]
+          Immunoinformatics: ["HLA Typing", "MHC-I Prediction", "Neoepitopes"]
       comp-bio:
         group_items:
           Genomics: ["NGS", "RNA-Seq", "WES", "SNV Calling", "Splice Analysis", "MapSplice", "HISAT2/STAR", "samtools/bcftools", "bedtools"]
           Immunoinformatics: ["HLA Typing", "MHC-I Prediction", "OptiType", "MHCflurry", "Neoepitopes"]
-        add_groups:
-          - label: { en: "Structural Biology", de: "Strukturbiologie" }
-            items: ["TCRdock", "AlphaFold v2", "Mol*"]
       ds-ml:
-        omit_groups: ["Nanoscopy"]
+        omit_groups: ["Nanoscopy", "Structural Biology"]
         group_items:
           Genomics: ["NGS", "RNA-Seq", "Cancer Genomics"]
           Immunoinformatics: ["HLA Typing", "Neoepitopes"]
@@ -45,16 +48,22 @@ categories:
       de: "Daten & Engineering"
     groups:
       - label: { en: "AI & ML", de: "KI & ML" }
-        items: ["TensorFlow", "Keras", "XGBoost", "MLflow"]
+        items: ["TensorFlow", "Keras", "LSTMs", "OpenCV", "XGBoost", "MLflow"]
       - label: { en: "Engineering & Pipelines", de: "Engineering & Pipelines" }
-        items: ["Python (Expert)", "R", "SQL", "Snakemake", "Conda", "Docker", "Git"]
+        items: ["Python (Expert)", "R", "SQL", "PostgreSQL", "Snakemake", "Conda", "Docker", "Git", "dbt", "Pydantic", "Streamlit"]
       - label: { en: "Cloud", de: "Cloud" }
-        items: ["GCP", "BigQuery", "Vertex AI"]
+        items: ["GCP", "BigQuery", "Vertex AI", "Looker"]
     variants:
+      bridge:
+        group_items:
+          "AI & ML": ["TensorFlow", "Keras", "XGBoost", "MLflow"]
+          "Engineering & Pipelines": ["Python (Expert)", "R", "SQL", "Snakemake", "Conda", "Docker", "Git"]
+          Cloud: ["GCP", "BigQuery", "Vertex AI"]
       comp-bio:
         omit_groups: ["AI & ML"]
         group_items:
           "Engineering & Pipelines": ["Python (Expert)", "Snakemake", "Conda", "Docker", "Git"]
+          Cloud: ["GCP", "BigQuery", "Vertex AI"]
       ds-ml:
         group_items:
           "AI & ML": ["TensorFlow", "Keras", "LSTMs", "XGBoost", "OpenCV", "MLflow"]
@@ -69,10 +78,16 @@ categories:
         items: ["OpenAI API", "TensorFlow.js", "ONNX Runtime Web"]
       - label: { en: "Browser Delivery", de: "Browser-Auslieferung" }
         items: ["Chrome Extension (Manifest V3)"]
+      - label: { en: "Reproducible Environment", de: "Reproduzierbare Umgebung" }
+        items: ["Nix", "nix-darwin", "home-manager"]
+      - label: { en: "Terminal & Editor", de: "Terminal & Editor" }
+        items: ["WezTerm", "Neovim"]
+      - label: { en: "Agentic Development", de: "Agentenbasierte Entwicklung" }
+        items: ["Claude Code", "Codex", "OpenCode", "Pi", "Grok", "Cursor"]
     variants:
+      bridge:
+        omit_groups: ["Reproducible Environment", "Terminal & Editor", "Agentic Development"]
       comp-bio:
         omit: true
       ds-ml:
-        add_groups:
-          - label: { en: "Agentic Development", de: "Agentenbasierte Entwicklung" }
-            items: ["Claude Code", "Codex", "OpenCode", "Pi", "Grok", "Cursor"]
+        omit_groups: ["Reproducible Environment", "Terminal & Editor"]

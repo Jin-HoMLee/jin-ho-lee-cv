@@ -83,20 +83,24 @@ AUSBILDUNG
 KENNTNISSE
 ================================================================================
 Bioinformatik & ML
-  Genomik: NGS, RNA-Seq, WES, SNV Calling
-  Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitopes
+  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
+  Immunoinformatik: HLA Typing, MHC-I Prediction, OptiType, MHCflurry, Neoepitopes
   Nanoskopie: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
+  Strukturbiologie: TCRdock, AlphaFold v2, Mol*
 Biotech Wet-Lab
   Modelle: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
   Bildgebung: Super-Resolution, Confocal, Fluorescence
   Assays: FISH, IF, qPCR, FACS
 Daten & Engineering
-  KI & ML: TensorFlow, Keras, XGBoost, MLflow
-  Engineering & Pipelines: Python (Expert), R, SQL, Snakemake, Conda, Docker, Git
-  Cloud: GCP, BigQuery, Vertex AI
+  KI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow
+  Engineering & Pipelines: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
+  Cloud: GCP, BigQuery, Vertex AI, Looker
 KI & Developer-Tooling
   Angewandte KI: OpenAI API, TensorFlow.js, ONNX Runtime Web
   Browser-Auslieferung: Chrome Extension (Manifest V3)
+  Reproduzierbare Umgebung: Nix, nix-darwin, home-manager
+  Terminal & Editor: WezTerm, Neovim
+  Agentenbasierte Entwicklung: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
 
 ================================================================================
 SPRACHEN

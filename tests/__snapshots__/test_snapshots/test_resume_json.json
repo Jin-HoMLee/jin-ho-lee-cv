@@ -108,7 +108,12 @@
         "NGS",
         "RNA-Seq",
         "WES",
-        "SNV Calling"
+        "SNV Calling",
+        "Splice Analysis",
+        "MapSplice",
+        "HISAT2/STAR",
+        "samtools/bcftools",
+        "bedtools"
       ]
     },
     {
@@ -117,6 +122,8 @@
       "keywords": [
         "HLA Typing",
         "MHC-I Prediction",
+        "OptiType",
+        "MHCflurry",
         "Neoepitopes"
       ]
     },
@@ -126,6 +133,15 @@
       "keywords": [
         "Spatial Point-Pattern",
         "Cluster Analysis (DBSCAN)"
+      ]
+    },
+    {
+      "name": "Bioinformatics & ML",
+      "level": "Structural Biology",
+      "keywords": [
+        "TCRdock",
+        "AlphaFold v2",
+        "Mol*"
       ]
     },
     {
@@ -162,6 +178,8 @@
       "keywords": [
         "TensorFlow",
         "Keras",
+        "LSTMs",
+        "OpenCV",
         "XGBoost",
         "MLflow"
       ]
@@ -173,10 +191,14 @@
         "Python (Expert)",
         "R",
         "SQL",
+        "PostgreSQL",
         "Snakemake",
         "Conda",
         "Docker",
-        "Git"
+        "Git",
+        "dbt",
+        "Pydantic",
+        "Streamlit"
       ]
     },
     {
@@ -185,7 +207,8 @@
       "keywords": [
         "GCP",
         "BigQuery",
-        "Vertex AI"
+        "Vertex AI",
+        "Looker"
       ]
     },
     {
@@ -202,6 +225,35 @@
       "level": "Browser Delivery",
       "keywords": [
         "Chrome Extension (Manifest V3)"
+      ]
+    },
+    {
+      "name": "AI & Developer Tooling",
+      "level": "Reproducible Environment",
+      "keywords": [
+        "Nix",
+        "nix-darwin",
+        "home-manager"
+      ]
+    },
+    {
+      "name": "AI & Developer Tooling",
+      "level": "Terminal & Editor",
+      "keywords": [
+        "WezTerm",
+        "Neovim"
+      ]
+    },
+    {
+      "name": "AI & Developer Tooling",
+      "level": "Agentic Development",
+      "keywords": [
+        "Claude Code",
+        "Codex",
+        "OpenCode",
+        "Pi",
+        "Grok",
+        "Cursor"
       ]
     }
   ],

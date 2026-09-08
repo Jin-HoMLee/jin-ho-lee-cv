@@ -66,20 +66,24 @@ def _resolve_profile_target(profile: dict, target: str) -> dict:
     return result
 
 
-def _resolve_skills_target(skills: dict, target: str) -> dict:
-    """Resolve the data-driven Skills view for ``target`` and strip instructions.
+def _resolve_skills_target(
+    skills: dict, target: str, *, web_projection: bool = False
+) -> dict:
+    """Resolve a target Skills view and strip projection instructions.
 
     A category variant can omit the category, omit selected groups, replace a
     group's item list with a concise or expanded audience-specific list, and/or
-    append new groups. The bridge view keeps the curated baseline unchanged.
-    Group labels are matched by their English label; validation rejects typos and
-    duplicate additions before renderers consume this tree.
+    append new groups. The ``bridge`` variant is a web-only concise projection;
+    the canonical bridge tree is otherwise left intact. Group labels are matched
+    by their English label; validation rejects typos and duplicate additions before
+    renderers consume this tree.
     """
     result = copy.deepcopy(skills)
     categories = []
     for category in result["categories"]:
         variants = category.pop("variants", {})
-        override = variants.get(target, {}) if target != "bridge" else {}
+        apply_variant = web_projection or target != "bridge"
+        override = variants.get(target, {}) if apply_variant else {}
         if override.get("omit", False):
             continue
 
@@ -134,6 +138,7 @@ def load_content(
     private_path: Path | None = None,
     lang: str = "en",
     target: str = "bridge",
+    web_projection: bool = False,
 ) -> dict[str, Any]:
     """Load full content tree.
 
@@ -142,7 +147,8 @@ def load_content(
     awards (list of records), publications (list of records), labels, faq.
 
     If private_path is provided and the file exists, its contents are merged into
-    content["personal"].
+    content["personal"]. When web_projection is true, the Skills tree uses the
+    concise web bridge or target-specific projection.
     """
     if target not in TARGETS:
         raise ValueError(f"unknown target {target!r}; expected one of {TARGETS}")
@@ -166,7 +172,11 @@ def load_content(
         "profile": _resolve_profile_target(
             _load_yaml(content_dir / f"profile.{lang}.yaml"), target
         ),
-        "skills": _resolve_skills_target(_load_yaml(content_dir / "skills.yaml"), target),
+        "skills": _resolve_skills_target(
+            _load_yaml(content_dir / "skills.yaml"),
+            target,
+            web_projection=web_projection,
+        ),
         "education": _load_yaml(content_dir / "education.yaml"),
         "experience": _load_yaml(content_dir / "experience.yaml"),
         "projects": projects,

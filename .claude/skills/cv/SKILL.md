@@ -27,9 +27,10 @@ renderer to change content.
   `projects/L1.en.yaml`/`projects/L1.de.yaml`). `en` is required.
 - **Variants**: positioning targets `bridge` (default), `comp-bio`, `ds-ml`. `personal.variants`
   overrides headlines, `profile.variants` overrides tagline / profile paragraphs, and each
-  `skills` category may declare data-only `variants` operations (`omit`, `omit_groups`,
-  `group_items`, `add_groups`). `scripts/content_loader.py` resolves all of them before
-  renderers consume the tree.
+  `skills` category may declare data-only target operations (`omit`, `omit_groups`,
+  `group_items`, `add_groups`). The `skills` `bridge` operation is a web-only concise
+  projection; non-web bridge renderers retain the canonical baseline. The content loader
+  resolves target trees before renderers consume them.
 - **Cross-refs**: `experience` bullets carry `refs: [L1, C2]` → `projects/<id>.en.yaml`.
   Every ref must resolve, and every project needs both `.en.yaml` and `.de.yaml`.
 
