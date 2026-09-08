@@ -67,10 +67,10 @@ function renderAuthors(authors: string[]): string {
   </h2>
   <div class="flex flex-col gap-2 md:flex-row md:items-center md:gap-8">
     <div class="shrink-0">
-      <PublicationsChart metrics={metrics} lang={lang} />
+      <PublicationsChart metrics={metrics} labels={labels} lang={lang} />
     </div>
     <div class="flex-1 min-w-0">
-      <PublicationsCumulative publications={publications} metrics={metrics} lang={lang} />
+      <PublicationsCumulative publications={publications} metrics={metrics} labels={labels} lang={lang} />
     </div>
   </div>
 

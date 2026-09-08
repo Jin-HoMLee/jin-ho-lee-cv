@@ -1,13 +1,15 @@
 ---
-import type { Publication, Lang, PublicationMetrics } from "../types/content";
+import type { Labels, Publication, Lang, PublicationMetrics } from "../types/content";
+import { formatPublicationScopeCaption } from "../lib/publicationScope";
 
 interface Props {
   publications: Publication[];
   metrics: PublicationMetrics;
+  labels: Labels;
   lang: Lang;
 }
 
-const { publications, metrics, lang } = Astro.props;
+const { publications, metrics, labels, lang } = Astro.props;
 
 const yearCounts: Record<number, number> = {};
 for (const p of publications) {
@@ -88,9 +90,7 @@ for (let y = minYear; y <= maxYear; y++) {
 const yTicks = [0, total];
 
 const totalLabel = { en: "bibliography records", de: "Bibliografie-Datensätze" }[lang];
-const scopeCaption = lang === "en"
-  ? `All-record cumulative view · ${metrics.total_records} bibliography records (${metrics.research_records} research + ${metrics.applied_records} applied/off-domain)`
-  : `Kumulative Ansicht aller Einträge · ${metrics.total_records} Bibliografie-Datensätze (${metrics.research_records} Forschung + ${metrics.applied_records} angewandt/themenfremd)`;
+const scopeCaption = formatPublicationScopeCaption(metrics, labels, lang, "cumulative");
 const ariaLabel = lang === "en"
   ? `Cumulative count of ${total} all-record ${totalLabel} from ${minYear} to ${maxYear}`
   : `Kumulative Anzahl von ${total} Bibliografie-Datensätzen von ${minYear} bis ${maxYear}`;
