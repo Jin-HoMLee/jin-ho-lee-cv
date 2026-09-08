@@ -23,6 +23,7 @@ def test_prepare_data_returns_resolved_content(content_dir):
         "languages",
         "volunteer",
         "publications",
+        "publication_metrics",
     ):
         assert key in result
 
@@ -35,6 +36,7 @@ def test_prepare_data_returns_resolved_content(content_dir):
 
     # Experience role langmap was resolved
     assert isinstance(result["experience"][0]["role"], str)
+    assert result["publication_metrics"]["peer_reviewed_records"] == 11
 
 
 def test_prepare_data_includes_phone_when_private_provided(content_dir, tmp_path):

@@ -22,7 +22,7 @@ def test_en_tagline_leads_with_data_science(content_dir):
 def test_en_profile_body_is_two_paragraphs_led_by_differentiator(content_dir):
     paragraphs = load_content(content_dir, lang="en")["profile"]["paragraphs"]
     assert len(paragraphs) == 2
-    assert paragraphs[0].startswith("Data scientist with deep roots in cancer genomics")
+    assert paragraphs[0].startswith("Engineered in-silico pipelines for HLA typing")
     # cloud-migration work is demoted out of the opening paragraph
     assert "Google Cloud" not in paragraphs[0]
     assert "Google Cloud" in paragraphs[1]
@@ -37,7 +37,7 @@ def test_de_tagline_leads_with_data_science(content_dir):
 def test_de_profile_body_is_two_paragraphs_led_by_differentiator(content_dir):
     paragraphs = load_content(content_dir, lang="de")["profile"]["paragraphs"]
     assert len(paragraphs) == 2
-    assert paragraphs[0].startswith("Data Scientist mit tiefen Wurzeln in der Krebsgenomik")
+    assert paragraphs[0].startswith("Entwicklung von In-silico-Pipelines zur HLA-Typisierung")
     assert "Google Cloud" not in paragraphs[0]
     assert "Google Cloud" in paragraphs[1]
 

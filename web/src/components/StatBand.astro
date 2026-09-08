@@ -4,7 +4,8 @@ import type { ContentData, Lang } from "../types/content";
 interface Props { data: ContentData; lang: Lang }
 const { data, lang } = Astro.props;
 
-const pubs = data.publications.length;
+const publicationMetrics = data.publication_metrics;
+const pubs = publicationMetrics.peer_reviewed_records;
 const startYears = data.experience
   .map((e) => parseInt(e.period.start.slice(0, 4), 10))
   .filter((n) => !Number.isNaN(n));
@@ -25,7 +26,9 @@ const yearsTile: Tile = {
 };
 const pubsTile: Tile = {
   value: pubs, suffix: "",
-  label: lang === "en" ? "peer-reviewed publications" : "begutachtete Publikationen",
+  label: lang === "en"
+    ? `peer-reviewed research · ${publicationMetrics.research_records} research / ${publicationMetrics.applied_records} applied`
+    : `begutachtete Forschung · ${publicationMetrics.research_records} Forschung / ${publicationMetrics.applied_records} angewandt`,
   varName: "--chart-1",
 };
 const citationsTile: Tile = totalCitations > 0

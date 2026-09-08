@@ -5,10 +5,9 @@ jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/
 ================================================================================
 PROFIL
 ================================================================================
-Produktionsorientierter Data Scientist, der Machine-Learning-Systeme durchgängig
-entwickelt und ausliefert — und die experimentelle Sorgfalt eines
-Forschungsjahrzehnts in Krebsgenomik und experimenteller Biophysik sowie 10+
-peer-reviewed Publikationen in jedes Modell und jede Pipeline einbringt.
+Entwicklung und Auslieferung von Machine-Learning-Systemen durchgängig — mit der
+experimentellen Sorgfalt eines Forschungsjahrzehnts in Krebsgenomik und
+experimenteller Biophysik in jedem Modell und jeder Pipeline.
 
 In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in
 die Google Cloud, Entwicklung von BigQueryML-Modellen für Geldwäscheprävention &
@@ -19,11 +18,10 @@ BERUFSERFAHRUNG
 ================================================================================
 ML/AI-Engineer & Open-Source-Entwickler - Independent / Self-Directed    (2025-08 bis heute)
   - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
-  - Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — 2026 als vollständiger Neuaufbau des 2025 entwickelten Badminton-Videoanalyse-Toolkits (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle); vollständige Produktentwicklungsdisziplin von PRD bis CI, in aktiver Entwicklung.
-  - Bioinformatik: Veröffentlichung einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2/OpenFold.
+  - Computer Vision: Entwicklung von badminton-vision, einer vollständig client-seitigen Chrome-Erweiterung zur Badminton-Spielanalyse (TensorFlow.js, ONNX Runtime Web).
 
-Berater, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 bis 2025-07)
-  - Skalierung: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
+Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
+  - Kunde: Internationale Bank — Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
   - KI in Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC.
   - Stakeholder Lead: Brückenfunktion zwischen technischem Data Engineering und Fachanforderungen im hochregulierten Bankensektor.
 
@@ -31,7 +29,7 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-0
   - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen.
   - ML-Entwicklung: Eigenständige Entwicklung eines Echtzeit-ASL-Erkennungsprototyps mit LSTMs, MediaPipe und TensorFlow.
 
-Doktorand & Postgraduierter Forscher - FZ Jülich / KIP / NCT / SNU / DKFZ    (2014-04 bis 2022-07)
+Doktorand & Postgraduierter Forscher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
   - Genomik & Immuntherapie: Entwicklung von in-silico-Pipelines zur HLA-Typisierung und Neoantigen-Discovery aus NGS- und RNA-Seq-Splice-Junction-Daten von Krebspatienten; Validierung von SNV-Calls gegen Goldstandard-Sequenzierung in klinischen Kolorektal-Kohorten (NCT/DKFZ).
   - Biophysik & Bildgebung: End-to-End-Leitung von Super-Resolution-Mikroskopie-Projekten — von Wet-Lab-Forschung bis zur räumlichen Punktmuster-Analyse (MATLAB/Python) zur Untersuchung von Chromatin.
   - Neurobiologie: Untersuchung von Strahlungseffekten auf die neuronale Vorläuferdifferenzierung mit 3D-Zellmodellen sowie der Rolle extrazellulärer Vesikel.
@@ -153,9 +151,11 @@ Sport
 ================================================================================
 PUBLIKATIONEN
 ================================================================================
-11 begutachtete Publikationen (2 als Erstautor, 3 geteilte Erstautorenschaft, 6
-als Co-Autor) sowie 3 Konferenzbeiträge als Erstautor, 2017–2021, in
-Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.
+11 begutachtete Publikationen (10 Artikel + 1 wissenschaftliches Buchkapitel; 2
+als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor), 3
+Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder
+Beitrag (14 Forschungseinträge; insgesamt 15 Bibliografie-Datensätze),
+2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.
 Vollständige Liste: https://orcid.org/0009-0001-8784-1771
 
 ================================================================================

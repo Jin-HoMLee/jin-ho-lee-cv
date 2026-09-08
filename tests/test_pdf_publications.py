@@ -28,7 +28,7 @@ def test_prepare_data_bridge_aggregate(content_dir):
     assert result["publications_heading"] == "Publications"
     assert f"{s.peer_reviewed} peer-reviewed publications" in result["publications_summary"]
     assert (
-        f"{s.conferences} first-author conference contributions" in result["publications_summary"]
+        f"{s.conferences} first-author research conference contributions" in result["publications_summary"]
     )
     assert result["publications_pointer"] == "Full list & metrics:"
 

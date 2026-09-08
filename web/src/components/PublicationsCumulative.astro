@@ -1,12 +1,13 @@
 ---
-import type { Publication, Lang } from "../types/content";
+import type { Publication, Lang, PublicationMetrics } from "../types/content";
 
 interface Props {
   publications: Publication[];
+  metrics: PublicationMetrics;
   lang: Lang;
 }
 
-const { publications, lang } = Astro.props;
+const { publications, metrics, lang } = Astro.props;
 
 const yearCounts: Record<number, number> = {};
 for (const p of publications) {
@@ -86,10 +87,13 @@ for (let y = minYear; y <= maxYear; y++) {
 
 const yTicks = [0, total];
 
-const totalLabel = { en: "publications", de: "Publikationen" }[lang];
+const totalLabel = { en: "bibliography records", de: "Bibliografie-Datensätze" }[lang];
+const scopeCaption = lang === "en"
+  ? `All-record cumulative view · ${metrics.total_records} bibliography records (${metrics.research_records} research + ${metrics.applied_records} applied/off-domain)`
+  : `Kumulative Ansicht aller Einträge · ${metrics.total_records} Bibliografie-Datensätze (${metrics.research_records} Forschung + ${metrics.applied_records} angewandt/themenfremd)`;
 const ariaLabel = lang === "en"
-  ? `Cumulative count of ${total} publications from ${minYear} to ${maxYear}`
-  : `Kumulative Anzahl von ${total} Publikationen von ${minYear} bis ${maxYear}`;
+  ? `Cumulative count of ${total} all-record ${totalLabel} from ${minYear} to ${maxYear}`
+  : `Kumulative Anzahl von ${total} Bibliografie-Datensätzen von ${minYear} bis ${maxYear}`;
 const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[lang];
 ---
 <figure class="relative my-6">
@@ -131,7 +135,7 @@ const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[
     ))}
   </svg>
   <figcaption class="mt-1 text-xs text-[var(--faint)]">
-    {captionLabel} · {total} {totalLabel}
+    {captionLabel} · {scopeCaption}
   </figcaption>
   <div
     class="pub-tooltip pointer-events-none absolute hidden rounded px-2 py-1 text-xs shadow-lg"

@@ -1,13 +1,13 @@
 # Jin-Ho Lee — Bioinformatics · Data Science
 
-> Data scientist with cancer-genomics roots — HLA typing & neoantigen discovery on real-patient data, production ML on GCP, 10+ publications.
+> Data scientist with cancer-genomics roots — HLA typing & neoantigen discovery on real-patient data, production ML on GCP, 11 peer-reviewed research publications.
 
-Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU. A parallel line of experimental-biophysics research produced 10+ peer-reviewed papers — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.
+Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). A parallel line of experimental-biophysics research produced 11 peer-reviewed research papers — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.
 
 ## Selected Projects
 - [Splice Neoepitope Pipeline – Reproducible Snakemake Workflow](https://jinholee.is-a.dev/projects/L5/): Modernised, open-source reimplementation of the 2015 SNU splice-junction–based neoepitope discovery work as a reproducible Snakemake pipeline with optional structural validation.
 - [Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis](https://jinholee.is-a.dev/projects/L1/): Bioinformatics pipeline for identifying novel immunotherapy targets derived from aberrant alternative splicing in RNA-Seq data.
-- [Personalized Immunotherapy – High-Throughput HLA Typing Pipeline](https://jinholee.is-a.dev/projects/L2/): Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data.
+- [Personalized Immunotherapy – High-Throughput HLA Typing Pipeline](https://jinholee.is-a.dev/projects/L2/): B.Sc. thesis project: Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data.
 
 ## Publications
 - [Super-Resolution Radiation Biology: From Bio-Dosimetry towards Nano-Studies of DNA Repair Mechanisms](https://doi.org/10.5772/intechopen.95597): DNA - Damages and Repair Mechanisms, 2021

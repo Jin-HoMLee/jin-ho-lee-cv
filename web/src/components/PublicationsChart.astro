@@ -1,12 +1,12 @@
 ---
-import type { Publication, AuthorshipType, Lang } from "../types/content";
+import type { AuthorshipType, Lang, PublicationMetrics } from "../types/content";
 
 interface Props {
-  publications: Publication[];
+  metrics: PublicationMetrics;
   lang: Lang;
 }
 
-const { publications, lang } = Astro.props;
+const { metrics, lang } = Astro.props;
 
 const labels: Record<AuthorshipType, { en: string; de: string }> = {
   first:         { en: "First author",         de: "Erstautor" },
@@ -26,16 +26,22 @@ const colorVars: Record<AuthorshipType, string> = {
 
 const order: AuthorshipType[] = ["first", "shared", "corresponding", "last", "middle"];
 
-const counts: Record<string, number> = {};
-for (const p of publications) {
-  counts[p.authorship] = (counts[p.authorship] ?? 0) + 1;
-}
+// The chart deliberately shows all-record authorship. Read the folded counts
+// from the generated policy object rather than recomputing a second definition of
+// first/shared/co-author in the renderer.
+const counts: Record<AuthorshipType, number> = {
+  first: metrics.all_records_authorship.first,
+  shared: metrics.all_records_authorship.shared_first,
+  corresponding: 0,
+  last: 0,
+  middle: metrics.all_records_authorship.coauthor,
+};
 
 const slices = order
-  .filter((k) => (counts[k] ?? 0) > 0)
+  .filter((k) => counts[k] > 0)
   .map((k) => ({ key: k, count: counts[k] }));
 
-const total = slices.reduce((s, x) => s + x.count, 0);
+const total = metrics.total_records;
 
 const DONUT_INNER = 0.58; // inner radius → donut hole (viewBox radius is 1)
 function computeArcs(slices: { key: AuthorshipType; count: number }[], total: number) {
@@ -64,14 +70,17 @@ function computeArcs(slices: { key: AuthorshipType; count: number }[], total: nu
 }
 
 const arcs = computeArcs(slices, total);
-const totalLabel = { en: "publications", de: "Publikationen" }[lang];
+const totalLabel = { en: "bibliography records", de: "Bibliografie-Datensätze" }[lang];
+const scopeCaption = lang === "en"
+  ? `All-record authorship · ${metrics.total_records} bibliography records (${metrics.research_records} research + ${metrics.applied_records} applied/off-domain)`
+  : `Autorschaft über alle Einträge · ${metrics.total_records} Bibliografie-Datensätze (${metrics.research_records} Forschung + ${metrics.applied_records} angewandt/themenfremd)`;
 ---
-<figure class="relative my-6 flex items-center gap-6">
+<figure class="relative my-6 flex flex-wrap items-center gap-6">
   <svg
     viewBox="-1.1 -1.1 2.2 2.2"
     class="h-32 w-32 shrink-0"
     role="group"
-    aria-label={`Authorship breakdown across ${total} ${totalLabel}`}
+    aria-label={`All-record authorship breakdown across ${total} ${totalLabel}`}
   >
     {arcs.map((arc) => (
       <path
@@ -88,7 +97,7 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
       />
     ))}
   </svg>
-  <ul class="space-y-1 text-sm text-[var(--muted)]">
+  <ul class="space-y-1 text-sm text-[var(--muted)]" aria-label={scopeCaption}>
     {arcs.map((arc) => (
       <li class="flex items-center gap-2">
         <span class="inline-block h-3 w-3 shrink-0" style={`background: var(${arc.varName})`} />
@@ -99,6 +108,7 @@ const totalLabel = { en: "publications", de: "Publikationen" }[lang];
       Σ {total} {totalLabel}
     </li>
   </ul>
+  <figcaption class="basis-full text-xs text-[var(--faint)]">{scopeCaption}</figcaption>
   <div
     class="pub-tooltip pointer-events-none absolute hidden rounded px-2 py-1 text-xs shadow-lg"
     style="background: var(--text); color: var(--bg)"

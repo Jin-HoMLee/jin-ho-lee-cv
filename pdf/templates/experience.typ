@@ -15,23 +15,26 @@
   let txt = b.at(lang)
   let refs = b.at("refs", default: ())
 
-  // Bullet line: dash + text + optional refs at end
-  grid(
-    columns: (8pt, 1fr),
-    gutter: 4pt,
-    text(fill: accent)[•],
-    {
-      txt
-      if refs.len() > 0 {
-        h(4pt)
-        for (i, r) in refs.enumerate() {
-          if i > 0 { h(2pt) }
-          ref-chip(r)
+  // Keep each bullet together; long bullets may move as a unit rather than
+  // leaving a dangling continuation line at the top of the next page.
+  block(breakable: false, {
+    grid(
+      columns: (8pt, 1fr),
+      gutter: 4pt,
+      text(fill: accent)[•],
+      {
+        txt
+        if refs.len() > 0 {
+          h(4pt)
+          for (i, r) in refs.enumerate() {
+            if i > 0 { h(2pt) }
+            ref-chip(r)
+          }
         }
-      }
-    },
-  )
-  v(2pt)
+      },
+    )
+    v(2pt)
+  })
 }
 
 #let experience(entries, labels, lang) = {
@@ -39,18 +42,25 @@
   let months = labels.months_abbr
 
   for entry in entries {
-    // Org + period on one line; role on next
-    grid(
-      columns: (1fr, auto),
-      align: (left, right),
-      text(weight: 600)[#entry.org.name],
-      text(size: size-small, fill: muted)[#_period(entry.period, months, labels.misc.present)],
-    )
-    text(style: "italic", fill: muted)[#entry.role]
-    v(space-paragraph)
+    // The heading and first bullet travel together. Remaining bullets can flow
+    // independently, while _bullet() keeps each bullet itself unbreakable.
+    block(breakable: false, {
+      // Org + period on one line; role on next
+      grid(
+        columns: (1fr, auto),
+        align: (left, right),
+        text(weight: 600)[#entry.org.name],
+        text(size: size-small, fill: muted)[#_period(entry.period, months, labels.misc.present)],
+      )
+      text(style: "italic", fill: muted)[#entry.role]
+      v(space-paragraph)
+      if entry.bullets.len() > 0 {
+        _bullet(entry.bullets.at(0), lang)
+      }
+    })
 
-    for bullet in entry.bullets {
-      _bullet(bullet, lang)
+    for (i, bullet) in entry.bullets.enumerate() {
+      if i > 0 { _bullet(bullet, lang) }
     }
     v(space-section / 2)
   }

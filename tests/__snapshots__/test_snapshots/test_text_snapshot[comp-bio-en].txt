@@ -5,12 +5,14 @@ jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/
 ================================================================================
 PROFILE
 ================================================================================
-Bioinformatician specializing in HLA typing and neoantigen discovery —
-engineering in-silico pipelines from real-patient NGS and RNA-Seq data, packaged
-as reproducible Snakemake workflows, with wet-lab training at DKFZ, NCT, FZ
-Jülich, KIP, and SNU. A parallel line of experimental-biophysics research
-produced 10+ peer-reviewed papers — first- and shared-first author — in super-
-resolution microscopy of DNA-damage repair and chromatin.
+Engineered in-silico pipelines for HLA typing and neoantigen discovery from
+real-patient NGS and RNA-Seq data, packaged as reproducible Snakemake workflows,
+with wet-lab training at the German Cancer Research Center (DKFZ), National
+Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff
+Institute for Physics (KIP), and Seoul National University (SNU). A parallel
+line of experimental-biophysics research produced 11 peer-reviewed research
+papers — first- and shared-first author — in super-resolution microscopy of DNA-
+damage repair and chromatin.
 
 Equally at home in production: migrated 1,000+ analytical processes to Google
 Cloud, built reproducible data pipelines, and mentored 100+ specialists in
@@ -22,11 +24,10 @@ EXPERIENCE
 ================================================================================
 ML/AI Engineer & Open-Source Developer - Independent / Self-Directed    (2025-08 to present)
   - Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.
-  - Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — a 2026 full rebuild of the badminton video-analysis toolkit first built in 2025 (pose estimation, LSTM shot-prediction modeling); full PRD-to-CI product discipline, in active development.
-  - Bioinformatics: Released a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2/OpenFold structural validation.
+  - Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web).
 
-Consultant, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 to 2025-07)
-  - Scale: Architected the migration of 1,000+ analytical processes to Google Cloud.
+Consultant, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 to 2025-07)
+  - Client: International bank — architected the migration of 1,000+ analytical processes to Google Cloud.
   - AI in Production: Developed BigQueryML models for anti-financial crime & KYC.
   - Stakeholder Lead: Bridged technical data engineering with business requirements for high-stakes banking.
 
@@ -34,7 +35,7 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 to 2024-04
   - Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles.
   - ML Development: Independently engineered a Real-Time ASL Recognition prototype using LSTMs, MediaPipe, and TensorFlow.
 
-Doctoral & Post-Graduate Researcher - FZ Jülich / KIP / NCT / SNU / DKFZ    (2014-04 to 2022-07)
+Doctoral & Post-Graduate Researcher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 to 2022-07)
   - Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer-patient NGS and RNA-Seq splice-junction data; validated SNV calls against gold-standard sequencing in clinical colorectal-cancer cohorts (NCT/DKFZ).
   - Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects — from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin.
   - Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles.
@@ -52,8 +53,9 @@ Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis    (2015-08 t
 
 Personalized Immunotherapy – High-Throughput HLA Typing Pipeline    (2014-04 to 2014-05)
   Bioinformatics Bachelor Thesis Student (NCT Heidelberg)
-  Bioinformatics workflow for identifying patient-specific cancer targets and
-  automating HLA genotyping from Next-Generation Sequencing (NGS) data.
+  B.Sc. thesis project: Bioinformatics workflow for identifying patient-specific
+  cancer targets and automating HLA genotyping from Next-Generation Sequencing
+  (NGS) data.
   Outcome: Demonstrated the feasibility of a fully computational approach to
   neoantigen discovery, significantly reducing costs and lead times compared to
   traditional PCR-based clinical assays.
@@ -132,6 +134,8 @@ Sports
 ================================================================================
 PUBLICATIONS
 ================================================================================
+RESEARCH RECORDS
+
 2021  Super-Resolution Radiation Biology: From Bio-Dosimetry towards Nano-Studies of DNA Repair Mechanisms
   Lee, J., Hausmann, M. - DNA - Damages and Repair Mechanisms
   https://doi.org/10.5772/intechopen.95597
@@ -184,6 +188,8 @@ PUBLICATIONS
 2017  Combining Low Temperature Fluorescence DNA-Hybridization, Immunostaining, and Super-Resolution Localization Microscopy for Nano-Structure Analysis of ALU Elements and Their Influence on Chromatin Structure
   Krufczik, M., Sievers, A., Hausmann, A., Lee, J., others - International Journal of Molecular Sciences
   https://doi.org/10.3390/ijms18051005
+
+APPLIED / OFF-DOMAIN
 
 2025  Marketing Automation Tool Selection & Implementation @DeutschlandCard
   Lee, J., Eckhardt, C. - Essentials of Modern Marketing, Germany Edition

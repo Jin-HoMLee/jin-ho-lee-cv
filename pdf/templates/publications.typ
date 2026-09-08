@@ -20,6 +20,18 @@
     // Full verbatim list (comp-bio) — the #43 per-paper rendering.
     let family = data.personal.name.family
     for (i, p) in data.publications.enumerate() {
+      // Keep the applied/off-domain record visually outside the research list.
+      if i == 0 or p.category != data.publications.at(i - 1).category {
+        let category-label = if p.category == "applied" {
+          data.labels.publications.applied_label
+        } else {
+          data.labels.publications.research_label
+        }
+        v(2pt)
+        text(size: size-small, weight: 600, fill: accent)[#category-label]
+        v(1pt)
+      }
+
       // Line 1 — authors · year. The candidate's surname (text before the comma)
       // is bolded; the BibTeX "others" token renders as italic "et al.".
       for (j, a) in p.authors.enumerate() {
@@ -49,7 +61,11 @@
         text(size: size-small, fill: muted)[#p.venue]
       }
 
-      if i + 1 < data.publications.len() { v(space-paragraph) }
+      if i + 1 < data.publications.len() {
+        // The full comp-bio list is intentionally compact so its final page is
+        // not left with avoidable whitespace after the applied record.
+        v(if data.publications_mode == "full" { 1pt } else { space-paragraph })
+      }
     }
   }
 }

@@ -7,11 +7,10 @@ import textwrap
 from pathlib import Path
 
 from scripts.bib_loader import Publication, load_publications
+from scripts.config import PAGES_BASE_URL
 from scripts.content_loader import TARGETS, load_content
 from scripts.langstring import resolve_langstrings
-from scripts.publications import publication_mode, format_publication_summary
-
-from scripts.config import PAGES_BASE_URL
+from scripts.publications import format_publication_summary, publication_mode
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
@@ -134,9 +133,20 @@ def _volunteer(content: dict) -> str:
     return "\n".join(out)
 
 
-def _publications(pubs: list[Publication]) -> str:
+def _publications(pubs: list[Publication], lang: str = "en") -> str:
     out: list[str] = []
+    category_labels = {
+        "research": {"en": "RESEARCH RECORDS", "de": "FORSCHUNGSBEITRÄGE"},
+        "applied": {
+            "en": "APPLIED / OFF-DOMAIN",
+            "de": "ANGEWANDT / AUSSERHALB DES FORSCHUNGSSCHWERPUNKTS",
+        },
+    }
+    previous_category = None
     for p in pubs:
+        if p.category != previous_category:
+            out.append(category_labels[p.category][lang])
+            previous_category = p.category
         authors = ", ".join(p.authors)
         venue = f" - {p.venue}" if p.venue else ""
         block = f"{p.year}  {p.title}\n  {authors}{venue}"
@@ -167,7 +177,7 @@ def render(lang: str, target: str = "bridge") -> str:
     L = SECTION_LABELS
 
     pub_body = (
-        _publications(pubs)
+        _publications(pubs, lang)
         if publication_mode(target) == "full"
         else _publications_aggregate(content, pubs)
     )

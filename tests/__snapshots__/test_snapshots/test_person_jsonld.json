@@ -9,7 +9,7 @@
       "image": "https://jinholee.is-a.dev/photo.jpg",
       "email": "mailto:jinho.michael.lee@gmail.com",
       "jobTitle": "Bioinformatics · Data Science",
-      "description": "Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU. A parallel line of experimental-biophysics research produced 10+ peer-reviewed papers — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
+      "description": "Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). A parallel line of experimental-biophysics research produced 11 peer-reviewed research papers — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Mannheim",
@@ -738,7 +738,7 @@
       "@id": "https://jinholee.is-a.dev/projects/L2/",
       "name": "Personalized Immunotherapy – High-Throughput HLA Typing Pipeline",
       "url": "https://jinholee.is-a.dev/projects/L2/",
-      "description": "Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data.",
+      "description": "B.Sc. thesis project: Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data.",
       "dateCreated": "2014-04",
       "keywords": [
         "Python",

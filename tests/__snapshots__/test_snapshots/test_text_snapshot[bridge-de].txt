@@ -5,29 +5,31 @@ jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/
 ================================================================================
 PROFIL
 ================================================================================
-Data Scientist mit tiefen Wurzeln in der Krebsgenomik. Entwicklung von In-
-silico-Pipelines zur HLA-Typisierung und Neoantigen-Identifizierung aus realen
-Patienten-NGS- und RNA-Seq-Daten, aufbauend auf Wet-Lab-Ausbildung und Pipeline-
-Entwicklung an DKFZ, NCT, FZ Jülich, KIP und SNU. Eine parallele Forschungslinie
-in der experimentellen Biophysik brachte 10+ peer-reviewed Publikationen — als
-Erstautor sowie mit geteilter Erstautorschaft — in der hochauflösenden
-Mikroskopie von DNA-Schadensreparatur und Chromatin hervor.
+Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-
+Identifizierung aus realen Patienten-NGS- und RNA-Seq-Daten, aufbauend auf Wet-
+Lab-Ausbildung und Pipeline-Entwicklung am Deutschen Krebsforschungszentrum
+(DKFZ), am Nationalen Centrum für Tumorerkrankungen (NCT), am Forschungszentrum
+Jülich, am Kirchhoff-Institut für Physik (KIP) und an der Seoul National
+University (SNU). Eine parallele Forschungslinie in der experimentellen
+Biophysik brachte 11 peer-reviewed Forschungspublikationen — als Erstautor sowie
+mit geteilter Erstautorschaft — in der hochauflösenden Mikroskopie von DNA-
+Schadensreparatur und Chromatin hervor.
 
-Diese Sorgfalt nun in der Industrie: Architektur der Migration von 1.000+
-analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen
-für Geldwäscheprävention & KYC sowie Schulung von 100+ Fachkräften in Python,
-SQL & ML; Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden.
+Bei Cintellic GmbH setzte ich diese Sorgfalt für eine internationale Bank ein:
+Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud,
+Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC sowie
+Schulung von 100+ Fachkräften in Python, SQL & ML; Einwerbung von Drittmitteln
+und Betreuung von 10+ Studierenden.
 
 ================================================================================
 BERUFSERFAHRUNG
 ================================================================================
 ML/AI-Engineer & Open-Source-Entwickler - Independent / Self-Directed    (2025-08 bis heute)
   - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
-  - Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — 2026 als vollständiger Neuaufbau des 2025 entwickelten Badminton-Videoanalyse-Toolkits (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle); vollständige Produktentwicklungsdisziplin von PRD bis CI, in aktiver Entwicklung.
-  - Bioinformatik: Veröffentlichung einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2/OpenFold.
+  - Computer Vision: Entwicklung von badminton-vision, einer vollständig client-seitigen Chrome-Erweiterung zur Badminton-Spielanalyse (TensorFlow.js, ONNX Runtime Web).
 
-Berater, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 bis 2025-07)
-  - Skalierung: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
+Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
+  - Kunde: Internationale Bank — Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
   - KI in Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC.
   - Stakeholder Lead: Brückenfunktion zwischen technischem Data Engineering und Fachanforderungen im hochregulierten Bankensektor.
 
@@ -35,7 +37,7 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-0
   - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen.
   - ML-Entwicklung: Eigenständige Entwicklung eines Echtzeit-ASL-Erkennungsprototyps mit LSTMs, MediaPipe und TensorFlow.
 
-Doktorand & Postgraduierter Forscher - FZ Jülich / KIP / NCT / SNU / DKFZ    (2014-04 bis 2022-07)
+Doktorand & Postgraduierter Forscher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
   - Genomik & Immuntherapie: Entwicklung von in-silico-Pipelines zur HLA-Typisierung und Neoantigen-Discovery aus NGS- und RNA-Seq-Splice-Junction-Daten von Krebspatienten; Validierung von SNV-Calls gegen Goldstandard-Sequenzierung in klinischen Kolorektal-Kohorten (NCT/DKFZ).
   - Biophysik & Bildgebung: End-to-End-Leitung von Super-Resolution-Mikroskopie-Projekten — von Wet-Lab-Forschung bis zur räumlichen Punktmuster-Analyse (MATLAB/Python) zur Untersuchung von Chromatin.
   - Neurobiologie: Untersuchung von Strahlungseffekten auf die neuronale Vorläuferdifferenzierung mit 3D-Zellmodellen sowie der Rolle extrazellulärer Vesikel.
@@ -62,9 +64,9 @@ Krebs-Neoantigen-Entdeckung – Transkriptomweite Splice-Analyse    (2015-08 bis
 
 Personalisierte Immuntherapie – Hochdurchsatz-HLA-Typisierungs-Pipeline    (2014-04 bis 2014-05)
   Bioinformatik-Bachelorand (NCT Heidelberg)
-  Bioinformatischer Workflow zur Identifizierung patientenspezifischer Krebs-
-  Targets und Automatisierung der HLA-Genotypisierung aus Next-Generation-
-  Sequencing-Daten (NGS).
+  B.Sc.-Thesisprojekt: Bioinformatischer Workflow zur Identifizierung
+  patientenspezifischer Krebs-Targets und Automatisierung der HLA-
+  Genotypisierung aus Next-Generation-Sequencing-Daten (NGS).
   Ergebnis: Nachgewiesen, dass ein vollständig computergestützter Ansatz zur
   Neoantigen-Entdeckung praktikabel ist und Kosten sowie Vorlaufzeiten gegenüber
   klassischen PCR-basierten klinischen Assays deutlich reduziert.
@@ -134,9 +136,11 @@ Sport
 ================================================================================
 PUBLIKATIONEN
 ================================================================================
-11 begutachtete Publikationen (2 als Erstautor, 3 geteilte Erstautorenschaft, 6
-als Co-Autor) sowie 3 Konferenzbeiträge als Erstautor, 2017–2021, in
-Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.
+11 begutachtete Publikationen (10 Artikel + 1 wissenschaftliches Buchkapitel; 2
+als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor), 3
+Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder
+Beitrag (14 Forschungseinträge; insgesamt 15 Bibliografie-Datensätze),
+2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.
 Vollständige Liste: https://orcid.org/0009-0001-8784-1771
 
 ================================================================================

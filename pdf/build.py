@@ -13,7 +13,11 @@ from typing import Any
 
 from scripts.content_loader import TARGETS, load_content
 from scripts.langstring import resolve_langstrings
-from scripts.publications import format_publication_summary, publication_mode
+from scripts.publications import (
+    format_publication_summary,
+    publication_metrics,
+    publication_mode,
+)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -89,6 +93,7 @@ def prepare_data(
     resolved = resolve_langstrings(raw, lang=lang)
     sections = resolved["labels"]["sections"]
     resolved["publications_heading"] = sections["publications"]
+    resolved["publication_metrics"] = publication_metrics(resolved.get("publications", []))
     mode = publication_mode(target)
     resolved["publications_mode"] = mode
     if mode == "aggregate":

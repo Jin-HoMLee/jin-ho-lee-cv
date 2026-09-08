@@ -9,8 +9,7 @@ import pytest
 
 from scripts.bib_loader import Publication, load_publications
 from scripts.publications import publication_summary
-from scripts.render_web_data import _to_jsonable, render_web_data, OUTPUT_DIR
-
+from scripts.render_web_data import OUTPUT_DIR, _to_jsonable, render_web_data
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
@@ -40,6 +39,7 @@ def test_round_trip_structural_keys(rendered):
         "languages",
         "volunteer",
         "publications",
+        "publication_metrics",
         "labels",
         "awards",
         "publications_aggregate",
@@ -140,6 +140,28 @@ def test_publications_aggregate_present(rendered):
     assert en["publications_aggregate"]["pointer"] == "Full list & metrics:"
     assert "begutachtete Publikationen" in de["publications_aggregate"]["summary"]
     assert de["publications_aggregate"]["pointer"] == "Vollständige Liste:"
+
+
+def test_publication_metrics_are_shared_numeric_facts(rendered):
+    en, de = rendered
+    for data in (en, de):
+        metrics = data["publication_metrics"]
+        assert metrics["total_records"] == 15
+        assert metrics["research_records"] == 14
+        assert metrics["peer_reviewed_records"] == 11
+        assert metrics["research_conferences"] == 3
+        assert metrics["applied_records"] == 1
+        assert metrics["chart_scope"] == "all-records"
+        assert metrics["peer_reviewed_authorship"] == {
+            "first": 2,
+            "shared_first": 3,
+            "coauthor": 6,
+        }
+        assert metrics["all_records_authorship"] == {
+            "first": 6,
+            "shared_first": 3,
+            "coauthor": 6,
+        }
 
 
 def test_publication_doi_is_serialized():
