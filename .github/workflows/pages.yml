@@ -102,7 +102,7 @@ jobs:
           test -f web/dist/index.html
           test -f web/dist/de/index.html
           # Project pages — L1 is a representative spot-check; if dynamic routes
-          # enumerated 0 projects, all 9 ids would be missing simultaneously.
+          # enumerated 0 projects, every project page id would be missing simultaneously.
           test -f web/dist/projects/L1/index.html
           test -f web/dist/de/projects/L1/index.html
           # OG images — homepage + one project page, both langs
