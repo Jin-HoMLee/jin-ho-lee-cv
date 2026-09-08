@@ -20,11 +20,11 @@ import json
 
 import pytest
 
-from scripts.render_web_data import _extract_overrides, render_web_data
+from scripts.render_web_data import _extract_overrides, _hero_stack, render_web_data
 
 TARGETS = ("comp-bio", "ds-ml")
 TEXT_OVERRIDE_KEYS = {"headline", "tagline", "lead_paragraph", "second_paragraph"}
-OVERRIDE_KEYS = TEXT_OVERRIDE_KEYS | {"hero_stack", "skills"}
+BASE_OVERRIDE_KEYS = TEXT_OVERRIDE_KEYS | {"skills"}
 
 
 @pytest.fixture(scope="module")
@@ -58,22 +58,26 @@ def test_variants_have_all_positioning_fields(rendered):
     for lang in ("en", "de"):
         for target in TARGETS:
             overrides = rendered[lang]["variants"][target]
-            assert set(overrides) == OVERRIDE_KEYS, (
-                f"{lang}/{target}: keys {set(overrides)} != {OVERRIDE_KEYS}"
+            expected_keys = BASE_OVERRIDE_KEYS | ({"hero_stack"} if target == "comp-bio" else set())
+            assert set(overrides) == expected_keys, (
+                f"{lang}/{target}: keys {set(overrides)} != {expected_keys}"
             )
             for key in TEXT_OVERRIDE_KEYS:
                 assert isinstance(overrides[key], str) and overrides[key].strip(), (
                     f"{lang}/{target}.{key} must be a non-empty string"
                 )
-            assert overrides["hero_stack"]
-            assert all(isinstance(item, str) and item for item in overrides["hero_stack"])
+            if "hero_stack" in overrides:
+                assert overrides["hero_stack"]
+                assert all(isinstance(item, str) and item for item in overrides["hero_stack"])
 
 
-def test_ds_ml_hero_stack_uses_ml_engineering_and_cloud_leads(rendered):
+def test_hero_stack_uses_data_engineering_leads(rendered):
+    expected = ["NGS", "TensorFlow", "Python (Expert)", "GCP"]
     for lang in ("en", "de"):
-        assert rendered[lang]["variants"]["ds-ml"]["hero_stack"] == [
+        assert _hero_stack(rendered[lang]["bridge"]["skills"]) == expected
+        assert _hero_stack(rendered[lang]["variants"]["ds-ml"]["skills"]) == expected
+        assert rendered[lang]["variants"]["comp-bio"]["hero_stack"] == [
             "NGS",
-            "TensorFlow",
             "Python (Expert)",
             "GCP",
         ]

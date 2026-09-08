@@ -208,12 +208,6 @@
           ]
         }
       ]
-    },
-    "hero_stack": [
-      "NGS",
-      "TensorFlow",
-      "Python (Expert)",
-      "GCP"
-    ]
+    }
   }
 }

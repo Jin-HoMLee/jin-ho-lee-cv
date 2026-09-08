@@ -21,7 +21,10 @@ const ROOTS = ["cancer-genomics", "HLA-typing", "neoantigens"];
 // categories intentionally, so the hero signals bioinformatics → ML → cloud. Still fully
 // derived from skills data; no hardcoded skill values.
 const bioLead = skills.categories[0]?.groups?.[0]?.items?.[0];
-const engLeads = (skills.categories.at(-1)?.groups ?? []).map((g) => g.items?.[0]).filter(Boolean);
+const leadCategory = skills.categories.find((category) =>
+  category.name === "Data & Engineering" || category.name === "Daten & Engineering"
+) ?? skills.categories.at(-1);
+const engLeads = (leadCategory?.groups ?? []).map((g) => g.items?.[0]).filter(Boolean);
 const stack = [bioLead, ...engLeads].filter(Boolean).slice(0, 4);
 
 const name = `${personal.name.given} ${personal.name.family}`;
