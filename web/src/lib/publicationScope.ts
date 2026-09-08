@@ -13,13 +13,16 @@ const prefixes: Record<Lang, Record<PublicationView, string>> = {
   },
 };
 
-const totalLabels: Record<Lang, string> = {
-  en: "bibliography records",
-  de: "Bibliografie-Datensätze",
+const totalLabels: Record<Lang, { nominative: string; dative: string }> = {
+  en: { nominative: "bibliography records", dative: "bibliography records" },
+  de: { nominative: "Bibliografie-Datensätze", dative: "Bibliografie-Datensätzen" },
 };
 
-export function formatPublicationTotalLabel(lang: Lang): string {
-  return totalLabels[lang];
+export function formatPublicationTotalLabel(
+  lang: Lang,
+  grammaticalCase: "nominative" | "dative" = "nominative",
+): string {
+  return totalLabels[lang][grammaticalCase];
 }
 
 export function formatPublicationScopeCaption(
@@ -32,5 +35,5 @@ export function formatPublicationScopeCaption(
     `${metrics.research_records} ${labels.publications.research_label}`,
     `${metrics.applied_records} ${labels.publications.applied_label}`,
   ].join(" + ");
-  return `${prefixes[lang][view]} · ${metrics.total_records} ${totalLabels[lang]} (${breakdown})`;
+  return `${prefixes[lang][view]} · ${metrics.total_records} ${formatPublicationTotalLabel(lang)} (${breakdown})`;
 }

@@ -64,7 +64,7 @@
       if i + 1 < data.publications.len() {
         // The full comp-bio list is intentionally compact so its final page is
         // not left with avoidable whitespace after the applied record.
-        v(if data.publications_mode == "full" { 1pt } else { space-paragraph })
+        v(1pt)
       }
     }
   }

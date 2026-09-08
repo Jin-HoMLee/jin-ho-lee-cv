@@ -90,10 +90,13 @@ for (let y = minYear; y <= maxYear; y++) {
 const yTicks = [0, total];
 
 const totalLabel = formatPublicationTotalLabel(lang);
+const ariaTotalLabel = lang === "de"
+  ? formatPublicationTotalLabel(lang, "dative")
+  : totalLabel;
 const scopeCaption = formatPublicationScopeCaption(metrics, labels, lang, "cumulative");
 const ariaLabel = lang === "en"
   ? `Cumulative count of ${total} all-record ${totalLabel} from ${minYear} to ${maxYear}`
-  : `Kumulative Anzahl von ${total} ${totalLabel} von ${minYear} bis ${maxYear}`;
+  : `Kumulative Anzahl von ${total} ${ariaTotalLabel} von ${minYear} bis ${maxYear}`;
 const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[lang];
 ---
 <figure class="relative my-6">
