@@ -77,8 +77,8 @@ const { skills, labels, variants = {} } = Astro.props;
   }
 
   function applyTarget(target) {
-    const data = target === "bridge" ? skills : variants[target]?.skills;
-    if (data) renderSkills(data);
+    const data = target === "bridge" ? skills : variants[target]?.skills ?? skills;
+    renderSkills(data);
   }
 
   window.addEventListener("cv-target-change", (event) => {

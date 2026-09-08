@@ -31,6 +31,9 @@ const switcherVariants = Object.fromEntries(
     },
   ]),
 );
+const skillVariants = Object.fromEntries(
+  Object.entries(variantsDe).map(([target, variant]) => [target, { skills: variant.skills }]),
+);
 ---
 <BaseLayout lang="de" data={data}>
   <Header slot="header" personal={data.personal} lang="de" />
@@ -47,7 +50,7 @@ const switcherVariants = Object.fromEntries(
       <AwardsSection awards={data.awards} labels={data.labels} />
     </div>
     <aside data-reveal>
-      <SkillsSidebar skills={data.skills} labels={data.labels} variants={variantsDe} />
+      <SkillsSidebar skills={data.skills} labels={data.labels} variants={skillVariants} />
       <EducationSection education={data.education} labels={data.labels} />
       <LanguagesList languages={data.languages} labels={data.labels} />
       <VolunteerSection volunteer={data.volunteer} labels={data.labels} />
