@@ -55,12 +55,6 @@ class PublicationSummary:
     year_start: int
     year_end: int
 
-    @property
-    def research_conferences(self) -> int:
-        """Readable alias for the legacy ``conferences`` field."""
-        return self.conferences
-
-
 def publication_summary(pubs: list[Publication]) -> PublicationSummary:
     """Derive the honest, type-segmented aggregate from the BibTeX records.
 
@@ -94,7 +88,7 @@ def publication_summary(pubs: list[Publication]) -> PublicationSummary:
 
 
 def publication_metrics(pubs: list[Publication]) -> dict[str, object]:
-    """Return the generated numeric object consumed by the website and PDF.
+    """Return the generated numeric object consumed by the website.
 
     Keeping this object next to the BibTeX policy prevents a renderer from parsing
     prose or reimplementing the category arithmetic.  The chart scope is explicit:
@@ -132,7 +126,6 @@ def format_publication_summary(template: str, pubs: list[Publication]) -> str:
         pr_shared=s.pr_shared,
         pr_coauthor=s.pr_coauthor,
         conferences=s.conferences,
-        research_conferences=s.research_conferences,
         applied_records=s.applied_records,
         span=span,
     )

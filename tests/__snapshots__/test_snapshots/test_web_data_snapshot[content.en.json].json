@@ -1150,7 +1150,7 @@
       "interactive_cv": "Interactive CV:"
     },
     "publications": {
-      "summary": "{peer_reviewed} peer-reviewed publications ({peer_reviewed_articles} articles + {peer_reviewed_book_chapters} research book chapter; {pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author), {research_conferences} first-author research conference contributions, and {applied_records} applied/off-domain record ({research_records} research records; {total_records} bibliography records total), {span}, in radiation biophysics & super-resolution DNA-repair imaging.",
+      "summary": "{peer_reviewed} peer-reviewed publications ({peer_reviewed_articles} articles + {peer_reviewed_book_chapters} research book chapter; {pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author), {conferences} first-author research conference contributions, and {applied_records} applied/off-domain record ({research_records} research records; {total_records} bibliography records total), research span {span}, in radiation biophysics & super-resolution DNA-repair imaging.",
       "full_list_pointer": "Full list & metrics:",
       "research_label": "Research records",
       "applied_label": "Applied / off-domain"
@@ -1202,7 +1202,7 @@
     }
   },
   "publications_aggregate": {
-    "summary": "11 peer-reviewed publications (10 articles + 1 research book chapter; 2 first-author, 3 shared-first, 6 co-author), 3 first-author research conference contributions, and 1 applied/off-domain record (14 research records; 15 bibliography records total), 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.",
+    "summary": "11 peer-reviewed publications (10 articles + 1 research book chapter; 2 first-author, 3 shared-first, 6 co-author), 3 first-author research conference contributions, and 1 applied/off-domain record (14 research records; 15 bibliography records total), research span 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.",
     "pointer": "Full list & metrics:"
   }
 }

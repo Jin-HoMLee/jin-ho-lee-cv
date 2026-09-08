@@ -1150,7 +1150,7 @@
       "interactive_cv": "Interaktiver Lebenslauf:"
     },
     "publications": {
-      "summary": "{peer_reviewed} begutachtete Publikationen ({peer_reviewed_articles} Artikel + {peer_reviewed_book_chapters} wissenschaftliches Buchkapitel; {pr_first} als Erstautor, {pr_shared} geteilte Erstautorenschaft, {pr_coauthor} als Co-Autor), {research_conferences} Forschungsbeiträge auf Konferenzen als Erstautor und {applied_records} angewandter/themenfremder Beitrag ({research_records} Forschungseinträge; insgesamt {total_records} Bibliografie-Datensätze), {span}, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
+      "summary": "{peer_reviewed} begutachtete Publikationen ({peer_reviewed_articles} Artikel + {peer_reviewed_book_chapters} wissenschaftliches Buchkapitel; {pr_first} als Erstautor, {pr_shared} geteilte Erstautorenschaft, {pr_coauthor} als Co-Autor), {conferences} Forschungsbeiträge auf Konferenzen als Erstautor und {applied_records} angewandter/themenfremder Beitrag ({research_records} Forschungseinträge; insgesamt {total_records} Bibliografie-Datensätze), Forschungsspanne {span}, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
       "full_list_pointer": "Vollständige Liste:",
       "research_label": "Forschungsbeiträge",
       "applied_label": "Angewandt / außerhalb des Forschungsschwerpunkts"
@@ -1202,7 +1202,7 @@
     }
   },
   "publications_aggregate": {
-    "summary": "11 begutachtete Publikationen (10 Artikel + 1 wissenschaftliches Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (14 Forschungseinträge; insgesamt 15 Bibliografie-Datensätze), 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
+    "summary": "11 begutachtete Publikationen (10 Artikel + 1 wissenschaftliches Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (14 Forschungseinträge; insgesamt 15 Bibliografie-Datensätze), Forschungsspanne 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
     "pointer": "Vollständige Liste:"
   }
 }
