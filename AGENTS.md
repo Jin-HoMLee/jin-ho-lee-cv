@@ -28,7 +28,7 @@ Twelve phases (0–11), sequential. Each produces a usable artifact and gets its
 | 7 | Content audit (bring CV up to date) | ✅ Done (merged 2026-05-29, PR #33, commit `b731222`) |
 | 8a | Sharpen positioning (Bioinformatics · Data Science) | ✅ Done (merged 2026-05-30, PR #36, commit `c3862f5`) |
 | 8b | Targeted CV variants (comp-bio · ds-ml from one source) | ✅ Done (merged 2026-05-30, PR #38, commit `b9f6895`) |
-| 8c | Web target switcher (client-side variant positioning) | ✅ Done (merged 2026-05-31, PR #39, commit `6ced593`) |
+| 8c | Web target switcher (client-side variant positioning) | ✅ Done (merged 2026-05-31, PR #39, commit `6ced593`); Skills gained the same per-target treatment 2026-09-08 — `_resolve_skills_target` in `scripts/content_loader.py` (mirroring `_resolve_profile_target`/`_resolve_personal_target`) lets each `skills.yaml` category declare a `variants` block (`omit_groups` and/or `group_items`, matched by a group's `label.en`); comp-bio drops the personal dev-tooling groups (Reproducible Environment/Terminal & Editor/Multi-Agent AI Tooling), ds-ml drops Structural Biology entirely and collapses Immunology to its non-tool-name items (OptiType/MHCflurry dropped). PDF (`pdf/templates/sidebar.typ`) and plain text needed zero code changes — both already iterate `skills.categories` generically; the web additionally gained `_extract_skills_overrides` in `render_web_data.py` (diffs bridge vs. variant into `skills_hidden_groups`/`skills_group_items`) and a live client-side DOM toggle in `TargetSwitcher.astro` (`data-cv-skill-group`/`data-cv-skill-items` hooks in `SkillsSidebar.astro`), mirroring the existing headline/tagline/publications-depth swap so switching variants updates Skills without a reload. `CodeHero.astro`'s derived `stack` line stays bridge-only/generic by design — it was never wired into the live switcher (its own tagline already isn't either), so it keeps sampling full bridge `skills.categories` regardless of the selected target. |
 | 9 | Web design overhaul (2026 dark-technical: CV-as-code hero, bento stat band, dark/light theme) | ✅ Done (merged 2026-05-31, PR #40, commit `be80dc6`) |
 | 10 | Agent interface (MCP server + skill over `content/` + validate) | ✅ Done (merged 2026-06-03, PR #63, commit `fbc18fe`) |
 | 11 | Cover-letter generator (interview + JD → tailored letter, PDF + text) | ✅ Done (merged 2026-06-03, `--no-ff`, PR #66 @claude-approved); personal-voice craft upgrade (anti-slop brief, voice sample, self-critique, jd-gap report, cliché linter) added 2026-06-05 (#74) |
@@ -318,3 +318,10 @@ The web package too: `pnpm --dir web test` (vitest) covers the twin chat's escap
 - Don't add Claude attribution trailers to commits.
 - Don't restructure existing files without scope being part of the current task.
 - Don't introduce renderers that read content directly from the PDF — content/ is the only source of truth.
+
+## Maintaining this file
+
+Keep this file for knowledge useful to almost every future agent session in this project.
+Do not repeat what the codebase already shows; point to the authoritative file or command instead.
+Prefer rewriting or pruning existing entries over appending new ones.
+When updating this file, preserve this bar for all agents and keep entries concise.

@@ -18,9 +18,9 @@ const { skills, labels } = Astro.props;
         <h3 class="mb-2 text-sm font-semibold text-[var(--text)]">{cat.name}</h3>
         <div class="space-y-2">
           {cat.groups.map((g) => (
-            <div>
+            <div data-cv-skill-group={g.label}>
               <p class="text-xs font-medium text-[var(--muted)]">{g.label}</p>
-              <ul class="mt-1 flex flex-wrap gap-1">
+              <ul class="mt-1 flex flex-wrap gap-1" data-cv-skill-items={g.label}>
                 {g.items.map((item) => (
                   <li class="font-mono-plex rounded bg-[var(--surface)] px-1.5 py-0.5 text-xs text-[var(--muted)]">{item}</li>
                 ))}

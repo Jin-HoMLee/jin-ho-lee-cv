@@ -94,9 +94,6 @@ Daten & Engineering
   Eng & Tools: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
   Cloud: GCP, BigQuery, Vertex AI, Looker
 KI-Agenten & Dev-Tooling
-  Reproduzierbare Umgebung: Nix, nix-darwin, home-manager
-  Terminal & Editor: WezTerm, Neovim
-  Multi-Agenten-KI-Tooling: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
   Geräteseitiges Browser-ML: TensorFlow.js, ONNX Runtime Web
   Browser-Erweiterungen: Chrome Extension (Manifest V3)
 

@@ -101,8 +101,7 @@ KENNTNISSE
 ================================================================================
 Bioinformatik & ML
   Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
-  Immunologie: MHC-I Prediction, HLA Typing, OptiType, MHCflurry, Neoepitopes
-  Strukturbiologie: TCRdock, AlphaFold v2, Mol*
+  Immunologie: MHC-I Prediction, HLA Typing, Neoepitopes
   Nanoskopie: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 Biotech Wet-Lab
   Modelle: Cancer/Tumor, 3D Cell Culture, Neural Progenitors

@@ -9,6 +9,7 @@ from pdf.build import _pdf_filename, _parse_args as _pdf_parse_args
 from scripts.content_loader import (
     _resolve_personal_target,
     _resolve_profile_target,
+    _resolve_skills_target,
     _select_project_ids,
     load_content,
 )
@@ -17,6 +18,7 @@ from scripts.render_text import _txt_filename, render
 from scripts.validate import (
     _validate_headline_variant_completeness,
     _validate_profile_variant_parity,
+    _validate_skills_variant_references,
     validate_tree,
 )
 
@@ -98,6 +100,7 @@ def test_load_content_strips_variants_key_from_personal_and_profile(content_dir)
     content = load_content(content_dir, lang="en", target="bridge")
     assert "variants" not in content["personal"]
     assert "variants" not in content["profile"]
+    assert all("variants" not in cat for cat in content["skills"]["categories"])
 
 
 def test_select_project_ids_returns_target_order():
@@ -108,6 +111,159 @@ def test_select_project_ids_returns_target_order():
 def test_select_project_ids_falls_back_to_bridge_when_target_absent():
     m = {"bridge": ["L5", "L1", "L2"]}  # no ds-ml key
     assert _select_project_ids(m, "ds-ml") == ["L5", "L1", "L2"]
+
+
+def _skills_fixture():
+    return {
+        "categories": [
+            {
+                "name": {"en": "Cat A"},
+                "groups": [
+                    {"label": {"en": "Group 1"}, "items": ["a", "b", "c"]},
+                    {"label": {"en": "Group 2"}, "items": ["d"]},
+                ],
+                "variants": {
+                    "comp-bio": {"omit_groups": ["Group 2"]},
+                    "ds-ml": {"group_items": {"Group 1": ["a"]}},
+                },
+            },
+            {
+                "name": {"en": "Cat B"},
+                "groups": [{"label": {"en": "Group 3"}, "items": ["e"]}],
+            },
+        ]
+    }
+
+
+def test_resolve_skills_target_bridge_is_noop_but_strips_variants():
+    out = _resolve_skills_target(_skills_fixture(), "bridge")
+    assert "variants" not in out["categories"][0]
+    assert [g["label"]["en"] for g in out["categories"][0]["groups"]] == ["Group 1", "Group 2"]
+    assert out["categories"][0]["groups"][0]["items"] == ["a", "b", "c"]
+
+
+def test_resolve_skills_target_omits_group():
+    out = _resolve_skills_target(_skills_fixture(), "comp-bio")
+    labels = [g["label"]["en"] for g in out["categories"][0]["groups"]]
+    assert labels == ["Group 1"]
+
+
+def test_resolve_skills_target_replaces_group_items():
+    out = _resolve_skills_target(_skills_fixture(), "ds-ml")
+    groups = {g["label"]["en"]: g["items"] for g in out["categories"][0]["groups"]}
+    assert groups["Group 1"] == ["a"]
+    assert groups["Group 2"] == ["d"]  # untouched — no override for this group
+
+
+def test_resolve_skills_target_drops_category_left_with_no_groups():
+    skills = {
+        "categories": [
+            {
+                "name": {"en": "Only Group"},
+                "groups": [{"label": {"en": "G"}, "items": ["x"]}],
+                "variants": {"comp-bio": {"omit_groups": ["G"]}},
+            }
+        ]
+    }
+    out = _resolve_skills_target(skills, "comp-bio")
+    assert out["categories"] == []
+
+
+def test_resolve_skills_target_category_without_variants_is_untouched():
+    out = _resolve_skills_target(_skills_fixture(), "comp-bio")
+    assert out["categories"][1] == {
+        "name": {"en": "Cat B"},
+        "groups": [{"label": {"en": "Group 3"}, "items": ["e"]}],
+    }
+
+
+def _group_labels(content, category_name):
+    for cat in content["skills"]["categories"]:
+        if cat["name"] == category_name:
+            return [g["label"] for g in cat["groups"]]
+    raise AssertionError(f"category {category_name!r} not found")
+
+
+def test_load_content_comp_bio_skills_drop_personal_dev_tooling(content_dir):
+    en = resolve_langstrings(load_content(content_dir, lang="en", target="comp-bio"), lang="en")
+    labels = _group_labels(en, "AI Agents & Dev Tooling")
+    for hidden in ("Reproducible Environment", "Terminal & Editor", "Multi-Agent AI Tooling"):
+        assert hidden not in labels
+    # groups showing applied ML/eng skill (not personal machine flavor) stay.
+    assert "On-Device Browser ML" in labels
+    assert "Browser Extensions" in labels
+
+
+def test_load_content_ds_ml_skills_drop_deep_bioinformatics_tool_names(content_dir):
+    en = resolve_langstrings(load_content(content_dir, lang="en", target="ds-ml"), lang="en")
+    labels = _group_labels(en, "Bioinformatics & ML")
+    assert "Structural Biology" not in labels  # TCRdock/AlphaFold v2/Mol* — all tool names
+
+    for cat in en["skills"]["categories"]:
+        if cat["name"] == "Bioinformatics & ML":
+            immunology = next(g for g in cat["groups"] if g["label"] == "Immunology")
+            assert immunology["items"] == ["MHC-I Prediction", "HLA Typing", "Neoepitopes"]
+            assert "OptiType" not in immunology["items"]
+            assert "MHCflurry" not in immunology["items"]
+
+
+def test_load_content_bridge_skills_unchanged(content_dir):
+    """The bridge/default variant must keep showing the complete, current list."""
+    en = resolve_langstrings(load_content(content_dir, lang="en", target="bridge"), lang="en")
+    labels = _group_labels(en, "AI Agents & Dev Tooling")
+    assert labels == [
+        "Reproducible Environment",
+        "Terminal & Editor",
+        "Multi-Agent AI Tooling",
+        "On-Device Browser ML",
+        "Browser Extensions",
+    ]
+    labels = _group_labels(en, "Bioinformatics & ML")
+    assert labels == ["Genomics", "Immunology", "Structural Biology", "Nanoscopy"]
+
+
+def test_skills_variant_references_flags_unknown_group(tmp_path):
+    _write(
+        tmp_path / "skills.yaml",
+        {
+            "categories": [
+                {
+                    "name": {"en": "Cat"},
+                    "groups": [{"label": {"en": "Real Group"}, "items": ["x"]}],
+                    "variants": {"comp-bio": {"omit_groups": ["Typo Group"]}},
+                }
+            ]
+        },
+    )
+    errors = _validate_skills_variant_references(tmp_path)
+    assert errors
+    assert "Typo Group" in str(errors[0])
+
+
+def test_skills_variant_references_passes_for_known_groups(tmp_path):
+    _write(
+        tmp_path / "skills.yaml",
+        {
+            "categories": [
+                {
+                    "name": {"en": "Cat"},
+                    "groups": [
+                        {"label": {"en": "Real Group"}, "items": ["x"]},
+                        {"label": {"en": "Other Group"}, "items": ["y"]},
+                    ],
+                    "variants": {
+                        "comp-bio": {"omit_groups": ["Real Group"]},
+                        "ds-ml": {"group_items": {"Other Group": ["y1"]}},
+                    },
+                }
+            ]
+        },
+    )
+    assert _validate_skills_variant_references(tmp_path) == []
+
+
+def test_skills_variant_references_real_content_is_clean(content_dir):
+    assert _validate_skills_variant_references(content_dir) == []
 
 
 def _ids(projects):

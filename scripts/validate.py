@@ -145,6 +145,50 @@ def _validate_profile_variant_parity(content_dir: Path) -> list[FileError]:
     return errors
 
 
+def _validate_skills_variant_references(content_dir: Path) -> list[FileError]:
+    """Each skills category variant's `omit_groups`/`group_items` keys must
+    reference a group `label.en` that actually exists in that category (a typo
+    would otherwise silently no-op instead of failing)."""
+    path = content_dir / "skills.yaml"
+    if not path.exists():
+        return []
+    skills = _load_yaml(path)
+    categories = skills.get("categories") if isinstance(skills, dict) else None
+    if not isinstance(categories, list):
+        return []  # malformed structure; the schema validator reports it
+    errors: list[FileError] = []
+    for category in categories:
+        if not isinstance(category, dict):
+            continue
+        variants = category.get("variants")
+        if not isinstance(variants, dict):
+            continue
+        groups = category.get("groups") or []
+        labels = {
+            g["label"]["en"]
+            for g in groups
+            if isinstance(g, dict) and isinstance(g.get("label"), dict) and "en" in g["label"]
+        }
+        cat_name = (category.get("name") or {}).get("en", "?")
+        for target, override in variants.items():
+            if not isinstance(override, dict):
+                continue
+            referenced = set(override.get("omit_groups") or [])
+            group_items = override.get("group_items")
+            if isinstance(group_items, dict):
+                referenced |= set(group_items)
+            unknown = sorted(referenced - labels)
+            if unknown:
+                errors.append(
+                    FileError(
+                        path,
+                        f"category {cat_name!r} variant {target!r} references "
+                        f"unknown group label(s): {unknown}",
+                    )
+                )
+    return errors
+
+
 def _validate_headline_variant_completeness(content_dir: Path) -> list[FileError]:
     """Each personal headline variant must define both 'en' and 'de' (parity with
     the bilingual base headline)."""
@@ -350,6 +394,7 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
 
     errors.extend(_validate_profile_variant_parity(content_dir))
     errors.extend(_validate_headline_variant_completeness(content_dir))
+    errors.extend(_validate_skills_variant_references(content_dir))
     errors.extend(_validate_publications(content_dir))
     errors.extend(_validate_periods(content_dir))
     errors.extend(validate_faq(content_dir, schema_path.parent / "faq.schema.json"))

@@ -97,8 +97,7 @@ SKILLS
 ================================================================================
 Bioinformatics & ML
   Genomics: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
-  Immunology: MHC-I Prediction, HLA Typing, OptiType, MHCflurry, Neoepitopes
-  Structural Biology: TCRdock, AlphaFold v2, Mol*
+  Immunology: MHC-I Prediction, HLA Typing, Neoepitopes
   Nanoscopy: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 Biotech Wet-Lab
   Models: Cancer/Tumor, 3D Cell Culture, Neural Progenitors

@@ -10,6 +10,11 @@
 //   lead     -> ProfileSection    (first profile paragraph)
 //   second   -> ProfileSection    (second profile paragraph)
 //
+// Skills adapts too (skills-per-variant): groups marked `data-cv-skill-group`
+// are hidden/shown per `skills_hidden_groups`, and item lists marked
+// `data-cv-skill-items` are swapped per `skills_group_items` — see
+// SkillsSidebar.astro for the markup these hooks target.
+//
 // Pure progressive enhancement: with JS off, the control stays hidden and the
 // page is the complete bridge CV. Variant text is inlined at build time via
 // `define:vars` — no runtime fetch, no served data asset.
@@ -20,6 +25,8 @@ interface Variant {
   tagline?: string;
   lead_paragraph?: string;
   second_paragraph?: string;
+  skills_hidden_groups?: string[];
+  skills_group_items?: Record<string, string[]>;
 }
 
 interface Props {
@@ -81,6 +88,47 @@ const order = ["bridge", "comp-bio", "ds-ml"] as const;
       if (el) bridge[field] = el.textContent;
     }
 
+    // Skills: each group is wrapped in [data-cv-skill-group=<label>] (hidden
+    // outright for a target in skills_hidden_groups) and its <ul> is marked
+    // [data-cv-skill-items=<label>] (rebuilt from skills_group_items when that
+    // target collapses the group to fewer items). Snapshot bridge's own item
+    // lists — including each <li>'s className — so "Default" and any target
+    // without an override restore the full bridge list exactly, without
+    // duplicating SkillsSidebar's item styling here.
+    const skillGroupEls = Array.from(document.querySelectorAll("[data-cv-skill-group]"));
+    const skillItemsEls = Array.from(document.querySelectorAll("[data-cv-skill-items]"));
+    const bridgeItems = {};
+    for (const ul of skillItemsEls) {
+      bridgeItems[ul.dataset.cvSkillItems] = Array.from(ul.children).map((li) => ({
+        text: li.textContent,
+        className: li.className,
+      }));
+    }
+
+    function applySkills(overrides) {
+      const hidden = new Set((overrides && overrides.skills_hidden_groups) || []);
+      for (const el of skillGroupEls) {
+        el.hidden = hidden.has(el.dataset.cvSkillGroup);
+      }
+
+      const groupItems = (overrides && overrides.skills_group_items) || {};
+      for (const ul of skillItemsEls) {
+        const label = ul.dataset.cvSkillItems;
+        const snapshot = bridgeItems[label] || [];
+        const override = groupItems[label];
+        const className = snapshot[0]?.className ?? "";
+        const items = override ? override.map((text) => ({ text, className })) : snapshot;
+        ul.replaceChildren(
+          ...items.map(({ text, className: cls }) => {
+            const li = document.createElement("li");
+            li.className = cls;
+            li.textContent = text;
+            return li;
+          }),
+        );
+      }
+    }
+
     function apply(target) {
       const overrides = target === "bridge" ? null : variants[target];
       for (const [field, jsonKey] of Object.entries(FIELDS)) {
@@ -96,6 +144,8 @@ const order = ["bridge", "comp-bio", "ds-ml"] as const;
       const aggBlock = document.querySelector('[data-cv-pub="aggregate"]');
       if (fullBlock) fullBlock.hidden = !showFull;
       if (aggBlock) aggBlock.hidden = showFull;
+
+      applySkills(overrides);
 
       for (const btn of buttons) {
         btn.setAttribute("aria-pressed", String(btn.dataset.cvTarget === target));

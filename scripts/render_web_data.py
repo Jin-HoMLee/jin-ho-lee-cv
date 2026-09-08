@@ -44,14 +44,56 @@ def _to_jsonable(obj: Any) -> Any:
     return obj
 
 
+def _extract_skills_overrides(bridge_skills: dict, variant_skills: dict) -> dict:
+    """Diff two *resolved* skills trees into hide/collapse instructions.
+
+    Groups present in bridge but absent from the variant are listed (by their
+    already language-resolved label) in `skills_hidden_groups`, in bridge
+    display order — the client hides these `data-cv-skill-group` blocks
+    outright. Groups present in both but with a shorter/different item list
+    are listed in `skills_group_items`, keyed by label, with the variant's
+    item list — the client swaps the rendered item list for exactly these
+    groups. Both keys are included only when non-empty (nothing to hide/swap
+    ⇒ absent, not an empty list/dict).
+    """
+    bridge_groups: dict[str, list[str]] = {
+        g["label"]: g["items"]
+        for cat in bridge_skills.get("categories", [])
+        for g in cat.get("groups", [])
+    }
+    variant_groups: dict[str, list[str]] = {
+        g["label"]: g["items"]
+        for cat in variant_skills.get("categories", [])
+        for g in cat.get("groups", [])
+    }
+
+    hidden = [label for label in bridge_groups if label not in variant_groups]
+    changed_items = {
+        label: items
+        for label, items in variant_groups.items()
+        if label in bridge_groups and items != bridge_groups[label]
+    }
+
+    overrides: dict[str, Any] = {}
+    if hidden:
+        overrides["skills_hidden_groups"] = hidden
+    if changed_items:
+        overrides["skills_group_items"] = changed_items
+    return overrides
+
+
 def _extract_overrides(bridge: dict, variant: dict) -> dict:
     """Return the web-rendered positioning fields that differ from bridge.
 
     Reads from the *nested* resolved tree (not top level):
-      headline         <- personal.headline      (rendered in the sticky header)
-      tagline          <- profile.tagline         (rendered in the profile intro)
-      lead_paragraph   <- profile.paragraphs[0]   (the lead profile paragraph)
-      second_paragraph <- profile.paragraphs[1]   (the second profile paragraph)
+      headline           <- personal.headline      (rendered in the sticky header)
+      tagline            <- profile.tagline         (rendered in the profile intro)
+      lead_paragraph     <- profile.paragraphs[0]   (the lead profile paragraph)
+      second_paragraph   <- profile.paragraphs[1]   (the second profile paragraph)
+      skills_hidden_groups <- skills groups dropped for this target (see
+                              `_extract_skills_overrides`)
+      skills_group_items   <- skills groups collapsed to fewer items for this
+                              target (see `_extract_skills_overrides`)
 
     A key is included only when the variant value differs from bridge.
     `selected_projects` is intentionally excluded: the website renders projects
@@ -63,9 +105,9 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
         variant: Fully-resolved variant tree.
 
     Returns:
-        Dict with only the differing text fields; empty dict if none differ.
+        Dict with only the differing fields; empty dict if none differ.
     """
-    overrides: dict[str, str] = {}
+    overrides: dict[str, Any] = {}
 
     b_headline = bridge.get("personal", {}).get("headline")
     v_headline = variant.get("personal", {}).get("headline")
@@ -88,6 +130,10 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
     v_second = v_paras[1] if len(v_paras) > 1 else None
     if v_second is not None and v_second != b_second:
         overrides["second_paragraph"] = v_second
+
+    overrides.update(
+        _extract_skills_overrides(bridge.get("skills", {}), variant.get("skills", {}))
+    )
 
     return overrides
 

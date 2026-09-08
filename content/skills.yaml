@@ -11,6 +11,14 @@ categories:
         items: ["TCRdock", "AlphaFold v2", "Mol*"]
       - label: { en: "Nanoscopy", de: "Nanoskopie" }
         items: ["Spatial Point-Pattern", "Cluster Analysis (DBSCAN)"]
+    # DS-ML reads bioinformatics tool names (OptiType, MHCflurry, TCRdock, AlphaFold
+    # v2, Mol*) as unrecognizable noise; drop the tool-name-only Structural Biology
+    # group entirely and collapse Immunology to its general, ML-legible terms.
+    variants:
+      ds-ml:
+        omit_groups: ["Structural Biology"]
+        group_items:
+          Immunology: ["MHC-I Prediction", "HLA Typing", "Neoepitopes"]
 
   - name:
       en: "Biotech Wet-Lab"
@@ -48,3 +56,10 @@ categories:
         items: ["TensorFlow.js", "ONNX Runtime Web"]
       - label: { en: "Browser Extensions", de: "Browser-Erweiterungen" }
         items: ["Chrome Extension (Manifest V3)"]
+    # Comp Bio reads personal machine/workflow choices (reproducible env, terminal,
+    # editor, multi-agent AI CLIs) as irrelevant flavor to an academic/research
+    # audience; drop those three groups but keep the ones showing applied ML/eng
+    # skill (browser ML deployment, a shipped extension).
+    variants:
+      comp-bio:
+        omit_groups: ["Reproducible Environment", "Terminal & Editor", "Multi-Agent AI Tooling"]
