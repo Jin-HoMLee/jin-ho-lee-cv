@@ -46,21 +46,17 @@ Geldwäscheprävention – Know-Your-Customer-Plattform (KYC)    (2024-08 bis 20
 
 SignMeUp – Echtzeit-Erkennung der American Sign Language (ASL)    (2023-09 bis 2023-12)
   Projektmanager / Data Scientist (neuefische GmbH)
-  Machine-Learning-Pipeline und Anwendungsprototyp zur Echtzeit-Erkennung von
-  ASL-Gesten, konzipiert für die Integration in eine digitale Lern-App für
-  Gebärdensprache.
+  Entwicklung eines Echtzeit-Prototyps zur ASL-Erkennung: eine durchgängige
+  Machine-Learning-Pipeline, die Hand-Landmarks extrahiert, zeitliche Gesten
+  klassifiziert und Lernenden direktes Feedback gibt.
   Ergebnis: Lieferung eines funktionsfähigen Prototyps für Echtzeit-Inferenz,
   der unmittelbares Feedback für Lernende der Gebärdensprache ermöglicht.
 
 badminton-vision – Echtzeit-Computer-Vision für Badminton, direkt im Browser    (2025-06 bis heute)
   Unabhängiger Entwickler
-  Badminton-Videoanalyse in zwei Etappen: 2025 entstand ein umfassendes Analyse-
-  Toolkit (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle, Browser-
-  Erweiterung zur manuellen Annotation von YouTube-Aufnahmen). Nach einer rund
-  zehnmonatigen Pause folgte im August 2026 der vollständige Neuaufbau:
-  badminton-vision, eine Chrome-MV3-Erweiterung, die Echtzeit-Computer-Vision
-  vollständig client-seitig auf Badminton-Spielaufnahmen auf YouTube ausführt.
-  Das Projekt befindet sich weiterhin in aktiver Entwicklung.
+  Vollständig geräteseitige Chrome-MV3-Erweiterung zur Echtzeit-Analyse von
+  Badmintonspielen mit browserbasierter Pose-, Schläger- und Shuttle-Erkennung;
+  aktiv auf dem Weg zum ersten stabilen Release.
   Ergebnis: Browserbasierte, geräteseitige Computer-Vision-Erweiterung zur
   Badminton-Spielanalyse, in aktiver, laufender Weiterentwicklung auf dem Weg zu
   einem ersten stabilen Release.

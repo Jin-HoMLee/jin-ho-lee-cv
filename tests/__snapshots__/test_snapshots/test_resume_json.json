@@ -411,7 +411,7 @@
     },
     {
       "name": "SignMeUp – Real-Time American Sign Language (ASL) Recognition",
-      "description": "Machine learning pipeline and application prototype for real-time ASL gesture recognition, designed for integration into a digital sign language learning app.",
+      "description": "Built a real-time ASL recognition prototype: an end-to-end machine-learning pipeline that extracts hand landmarks, classifies temporal gestures, and gives sign-language learners immediate feedback.",
       "highlights": [
         "Project Leadership: Defined project scope, managed team communication, and delivered stakeholder presentations.",
         "Model Development: Designed and optimized an LSTM neural network to classify temporal sequences of ASL gestures.",
@@ -435,7 +435,7 @@
     },
     {
       "name": "badminton-vision – Real-Time On-Device Computer Vision for Badminton",
-      "description": "Badminton video analysis in two stints: a comprehensive toolkit — pose estimation, LSTM shot-prediction modeling, and a browser extension for manual YouTube labeling — built in mid-to-late 2025; shelved for about ten months; then revived in August 2026 as a full rebuild: badminton-vision, a real-time, fully on-device Chrome MV3 extension running on badminton match footage played on YouTube, under active, ongoing development.",
+      "description": "Fully on-device Chrome MV3 extension for real-time badminton match analysis, with browser-based pose, racket, and shuttle detection; actively rebuilding toward its first stable release.",
       "highlights": [
         "Built a Chrome MV3 extension that detects pose, racket, and shuttle on badminton match footage played on YouTube, running entirely client-side with no server round-trip.",
         "Implemented the default real-time detection pipeline with TensorFlow.js and ONNX Runtime Web.",
@@ -457,7 +457,7 @@
     },
     {
       "name": "Data Science Bootcamp Program",
-      "description": "Professional training program for transitioning participants into data science careers.",
+      "description": "Coached multiple cohorts through an applied data-science program, combining Python, SQL, machine learning, visualization, and capstone delivery with hands-on technical mentoring.",
       "highlights": [
         "Delivered lectures on Python, machine learning, SQL, and data visualization.",
         "Mentored students throughout the data science lifecycle.",

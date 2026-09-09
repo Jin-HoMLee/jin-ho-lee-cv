@@ -425,7 +425,7 @@
       "id": "D1",
       "category": "data-science",
       "title": "SignMeUp – Echtzeit-Erkennung der American Sign Language (ASL)",
-      "summary": "Machine-Learning-Pipeline und Anwendungsprototyp zur Echtzeit-Erkennung von ASL-Gesten, konzipiert für die Integration in eine digitale Lern-App für Gebärdensprache.",
+      "summary": "Entwicklung eines Echtzeit-Prototyps zur ASL-Erkennung: eine durchgängige Machine-Learning-Pipeline, die Hand-Landmarks extrahiert, zeitliche Gesten klassifiziert und Lernenden direktes Feedback gibt.",
       "role": "Projektmanager / Data Scientist (neuefische GmbH)",
       "period": {
         "start": "2023-09",
@@ -453,7 +453,7 @@
       "category": "data-science",
       "open_source": true,
       "title": "badminton-vision – Echtzeit-Computer-Vision für Badminton, direkt im Browser",
-      "summary": "Badminton-Videoanalyse in zwei Etappen: 2025 entstand ein umfassendes Analyse-Toolkit (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle, Browser-Erweiterung zur manuellen Annotation von YouTube-Aufnahmen). Nach einer rund zehnmonatigen Pause folgte im August 2026 der vollständige Neuaufbau: badminton-vision, eine Chrome-MV3-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen auf YouTube ausführt. Das Projekt befindet sich weiterhin in aktiver Entwicklung.",
+      "summary": "Vollständig geräteseitige Chrome-MV3-Erweiterung zur Echtzeit-Analyse von Badmintonspielen mit browserbasierter Pose-, Schläger- und Shuttle-Erkennung; aktiv auf dem Weg zum ersten stabilen Release.",
       "role": "Unabhängiger Entwickler",
       "period": {
         "start": "2025-06",
@@ -479,7 +479,7 @@
       "id": "D3",
       "category": "data-science",
       "title": "Data-Science-Bootcamp-Programm",
-      "summary": "Professionelles Weiterbildungsprogramm zur Qualifizierung von Teilnehmenden für Data-Science-Karrieren.",
+      "summary": "Begleitung mehrerer Kohorten in einem praxisnahen Data-Science-Programm mit Python, SQL, Machine Learning, Visualisierung und Capstone-Projekten durch technisches Mentoring.",
       "role": "Data Science Coach (neuefische GmbH)",
       "period": {
         "start": "2023-09",
