@@ -79,7 +79,7 @@ categories:
       bridge:
         omit_groups: ["Reproducible Environment", "Terminal & Editor", "Agentic Development"]
       comp-bio:
-        omit: true
+        omit_groups: ["Reproducible Environment", "Terminal & Editor", "Agentic Development"]
       ds-ml:
         omit_groups: ["Reproducible Environment", "Terminal & Editor"]
 

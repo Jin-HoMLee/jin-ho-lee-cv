@@ -252,6 +252,37 @@ def test_skills_are_complementary_in_web_targets_and_full_in_bridge(content_dir)
     assert "Claude Code" not in items("comp-bio")
 
 
+def test_comp_bio_web_keeps_applied_ai_and_browser_delivery(content_dir):
+    expected_labels = {
+        "en": ["Applied AI", "Browser Delivery"],
+        "de": ["Angewandte KI", "Browser-Auslieferung"],
+    }
+
+    for lang in ("en", "de"):
+        skills = resolve_langstrings(
+            load_content(
+                content_dir,
+                lang=lang,
+                target="comp-bio",
+                web_projection=True,
+            ),
+            lang=lang,
+        )["skills"]
+        ai = next(
+            category
+            for category in skills["categories"]
+            if category["name"]
+            == ("AI & Developer Tooling" if lang == "en" else "KI & Developer-Tooling")
+        )
+        assert [group["label"] for group in ai["groups"]] == expected_labels[lang]
+        assert {item for group in ai["groups"] for item in group["items"]} == {
+            "OpenAI API",
+            "TensorFlow.js",
+            "ONNX Runtime Web",
+            "Chrome Extension (Manifest V3)",
+        }
+
+
 def test_skills_variant_references_reject_unknown_groups(tmp_path):
     _write(
         tmp_path / "skills.yaml",

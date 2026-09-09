@@ -102,6 +102,25 @@
               ]
             }
           ]
+        },
+        {
+          "name": "KI & Developer-Tooling",
+          "groups": [
+            {
+              "label": "Angewandte KI",
+              "items": [
+                "OpenAI API",
+                "TensorFlow.js",
+                "ONNX Runtime Web"
+              ]
+            },
+            {
+              "label": "Browser-Auslieferung",
+              "items": [
+                "Chrome Extension (Manifest V3)"
+              ]
+            }
+          ]
         }
       ]
     },
