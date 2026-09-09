@@ -1153,7 +1153,7 @@
       "summary": "{peer_reviewed} begutachtete Publikationen ({peer_reviewed_articles} Artikel + {peer_reviewed_book_chapters} wissenschaftliches Buchkapitel; {pr_first} als Erstautor, {pr_shared} geteilte Erstautorenschaft, {pr_coauthor} als Co-Autor), {conferences} Forschungsbeiträge auf Konferenzen als Erstautor und {applied_records} angewandter/themenfremder Beitrag ({research_records} Forschungseinträge; insgesamt {total_records} Bibliografie-Datensätze), Forschungsspanne {span}, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
       "full_list_pointer": "Vollständige Liste:",
       "research_label": "Forschungsbeiträge",
-      "applied_label": "Angewandt / außerhalb des Forschungsschwerpunkts"
+      "applied_label": "Beitrag aus einem angewandten/themenfremden Bereich"
     }
   },
   "faq": {
