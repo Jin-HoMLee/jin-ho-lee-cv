@@ -166,11 +166,12 @@ applied label.
 
 **`scripts/render_web_data.py`** — inject the target-independent aggregate
 strings and generated `publication_metrics` object into the bridge content JSON.
-The `variants.json` payload is **not** touched: which targets show the full list
-vs. the aggregate is a pure function of the target name, so the client computes
-it (below) rather than carrying a `publications_mode` field. This keeps the
-`variants.json` "exactly four positioning fields" contract (and its regression
-guard `test_render_web_data_variants.py`) intact.
+For this publication-depth feature, the `variants.json` payload is **not** touched:
+which targets show the full list vs. the aggregate is a pure function of the target
+name, so the client computes it (below) rather than carrying a `publications_mode`
+field. At the time of this issue, the payload carried exactly four positioning fields;
+Phase 8c later extended it with resolved Skills trees and an optional `hero_stack` - see
+the [current Phase 8c design contract](2026-05-31-phase-8c-web-variants-design.md).
 
 ```python
 from scripts.publications import format_publication_summary, publication_metrics

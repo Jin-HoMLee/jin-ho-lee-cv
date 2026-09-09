@@ -25,12 +25,8 @@ renderer to change content.
 - **LangStrings**: short strings are inline `{ en: "...", de: "..." }` maps; long prose lives
   in per-language files (`profile.en.yaml`/`profile.de.yaml`,
   `projects/L1.en.yaml`/`projects/L1.de.yaml`). `en` is required.
-- **Variants**: positioning targets `bridge` (default), `comp-bio`, `ds-ml`. `personal.variants`
-  overrides headlines, `profile.variants` overrides tagline / profile paragraphs, and each
-  `skills` declares target category order plus category-level data-only operations (`omit`,
-  `omit_groups`, `group_items`). Category order applies to every renderer; the `skills`
-  `bridge` operation is a web-only concise projection, so non-web bridge renderers retain
-  the canonical baseline. The content loader resolves target trees before renderers consume them.
+- **Variants**: positioning targets `bridge` (default), `comp-bio`, `ds-ml`. See
+  [`reference.md`](reference.md) for the target-resolution and Skills-projection contract.
 - **Cross-refs**: `experience` bullets carry `refs: [L1, C2]` → `projects/<id>.en.yaml`.
   Every ref must resolve, and every project needs both `.en.yaml` and `.de.yaml`.
 

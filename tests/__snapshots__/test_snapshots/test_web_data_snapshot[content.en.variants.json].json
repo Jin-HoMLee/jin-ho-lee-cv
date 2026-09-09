@@ -113,8 +113,8 @@
   },
   "ds-ml": {
     "headline": "Data Science · Machine Learning",
-    "tagline": "Data scientist shipping production ML on GCP, built on a decade in cancer genomics and experimental biophysics with 10+ peer-reviewed publications.",
-    "lead_paragraph": "Production-focused data scientist who builds and ships machine-learning systems end to end — bringing the experimental rigor of a research decade across cancer genomics and experimental biophysics, and 10+ peer-reviewed publications, to every model and pipeline.",
+    "tagline": "Data scientist shipping production ML on GCP, built on a decade in cancer genomics and experimental biophysics with 11 peer-reviewed research publications.",
+    "lead_paragraph": "Builds and ships machine-learning systems end to end, bringing the experimental rigor of a research decade across cancer genomics and experimental biophysics to every model and pipeline.",
     "second_paragraph": "In industry: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML.",
     "skills": {
       "categories": [

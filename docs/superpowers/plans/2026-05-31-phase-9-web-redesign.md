@@ -608,7 +608,7 @@ Then place it directly below the header slot, **above** `TargetSwitcher`:
 ```astro
   <Header slot="header" personal={data.personal} lang="en" />
   <CodeHero personal={data.personal} profile={data.profile} publications={data.publications} skills={data.skills} lang="en" />
-  <TargetSwitcher variants={variantsEn} lang="en" />
+  <TargetSwitcher variants={switcherVariants} lang="en" />
 ```
 
 - [ ] **Step 3: Wire `CodeHero` into the DE homepage**
@@ -732,7 +732,7 @@ Place it directly **below** `CodeHero`, above `TargetSwitcher`:
 ```astro
   <CodeHero personal={data.personal} profile={data.profile} publications={data.publications} skills={data.skills} lang="en" />
   <StatBand data={data} lang="en" />
-  <TargetSwitcher variants={variantsEn} lang="en" />
+  <TargetSwitcher variants={switcherVariants} lang="en" />
 ```
 
 Mirror in `web/src/pages/de/index.astro` with `lang="de"` and that page's data variable.
@@ -961,7 +961,9 @@ In `.github/workflows/pages.yml`, inside the `Smoke-check build outputs` `run: |
           done
 ```
 
-The existing Phase 8c assertions (`data-cv-switcher`, the four `data-cv-field` hooks, the variant-text-inlined and head-leak checks) **stay unchanged** — they confirm the redesign didn't regress the switcher.
+The existing Phase 8c assertions (`data-cv-switcher`, the four `data-cv-field` hooks, the
+variant-text-inlined and head-leak checks) **stay unchanged**. The current complementary-view
+hooks and behavior are owned by the [Phase 8c design spec](../specs/2026-05-31-phase-8c-web-variants-design.md).
 
 - [ ] **Step 2: Verify locally (simulate the smoke-check)**
 
@@ -969,7 +971,7 @@ Run:
 ```bash
 just web-build
 for page in web/dist/index.html web/dist/de/index.html; do
-  for hook in data-theme-toggle data-code-hero data-stat-band data-cv-switcher; do
+  for hook in data-theme-toggle data-code-hero data-stat-band data-cv-switcher data-cv-hero-headline data-cv-hero-tagline data-cv-hero-stack data-cv-skills data-cv-skills-content; do
     grep -q "$hook" "$page" || echo "MISSING $hook in $page"
   done
 done
@@ -1013,7 +1015,8 @@ Run `just web-dev` and confirm:
 - [ ] `prefers-reduced-motion` (DevTools → Rendering → Emulate): no typing, no count-up, no reveal animation; all content shown.
 - [ ] JS disabled: full page renders (hero YAML, stats final numbers, all sections visible).
 - [ ] EN (`/`) and DE (`/de/`) both render; language switch works.
-- [ ] Target switcher still swaps headline/tagline/lead/second; preference persists.
+- [ ] Target switcher still swaps headline/tagline/lead/second, publication depth, CodeHero
+      fields, and the Skills sidebar; preference persists.
 - [ ] Keyboard: toggle, switchers, links reachable with visible focus rings.
 - [ ] Mobile width: single-column reflow is clean.
 
@@ -1044,5 +1047,5 @@ Use `superpowers:finishing-a-development-branch` to open a PR (or `--no-ff` merg
 
 - **Spec coverage:** §3 identity → Tasks 1,4,5; §4 theme system → Tasks 1,2; §5 architecture → Tasks 4,5,6 + page wiring; §6.1 CodeHero (curated roots / derived stack) → Task 4; §6.2 StatBand → Task 5; §6.3 ThemeToggle → Task 2; §7 component restyle → Task 3; §8 fonts+motion → Tasks 1,4,5,6; §9 OG → Task 8; §10 a11y → Tasks 2,4,5,6 (reduced-motion, no-JS, focus) + Task 10 manual; §11 invariants → preserved (Task 3 keeps `data-cv-*`; Task 9 asserts) ; §12 CI → Task 9; §13 tests → Task 10; §15 success criteria → Task 10 acceptance pass.
 - **Placeholder scan:** none — every code step has concrete content; the only "fill in" is the PR#/commit in the CLAUDE.md row (genuinely unknown until merge).
-- **Type/attribute consistency:** hook names are consistent across tasks and CI — `data-theme-toggle` (Task 2/9), `data-code-hero` + `data-type` (Task 4/9), `data-stat-band` + `data-count-to`/`data-suffix` (Task 5/9), `data-reveal` (Tasks 1,4,5,6). Preserved 8c contracts: `data-cv-switcher`, `data-cv-target`, `data-cv-field` (Task 3 keeps them; CodeHero deliberately omits `data-cv-field`).
+- **Type/attribute consistency:** hook names are consistent across tasks and CI — `data-theme-toggle` (Task 2/9), `data-code-hero` + `data-type` (Task 4/9), `data-stat-band` + `data-count-to`/`data-suffix` (Task 5/9), `data-reveal` (Tasks 1,4,5,6). Preserved 8c contracts: `data-cv-switcher`, `data-cv-target`, `data-cv-field`, and the current `data-cv-hero-*` / `data-cv-skills*` hooks (Task 3 keeps them; CodeHero deliberately omits `data-cv-field`; see the [Phase 8c design spec](../specs/2026-05-31-phase-8c-web-variants-design.md)).
 ```

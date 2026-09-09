@@ -93,7 +93,10 @@ New top-to-bottom structure (replaces today's header → TargetSwitcher → Prof
 
 The two-column content grid is **retained** (it already serves scannability) but restyled to tokens. The novelty is the hero + stat band above it and the dark identity throughout.
 
-**Header controls.** The header gains a `ThemeToggle`. The existing `LanguageSwitcher` and PDF links stay. The `TargetSwitcher` may live in the header or remain at the top of the profile — its `[data-cv-field]` hooks (from 8c) decouple it from placement, so this is a low-risk visual choice finalized in implementation. Its swap logic is unchanged.
+**Header controls.** The header gains a `ThemeToggle`. The existing `LanguageSwitcher` and PDF
+links stay. The `TargetSwitcher` may live in the header or remain at the top of the profile. Its
+placement remains decoupled from the current Phase 8c target-switching contract; see the
+[Phase 8c design spec](2026-05-31-phase-8c-web-variants-design.md).
 
 ## 6. New components
 
@@ -166,7 +169,8 @@ Page selection, dimensions (1200×630), per-page content, and the `[...path].ts`
 ## 11. Invariants — what keeps working (regression budget)
 
 - **i18n:** `/` (EN) and `/de/` (DE) render; `LanguageSwitcher` links across; `<html lang>` correct.
-- **Target switcher (8c):** comp-bio/ds-ml/bridge swaps still mutate `[data-cv-field]` text; `localStorage` persistence intact; bridge stays SEO-canonical.
+- **Target switcher (8c):** the current target-switching and complementary-view contract remains
+  intact; see the [Phase 8c design spec](2026-05-31-phase-8c-web-variants-design.md).
 - **SEO/meta:** `<title>`, `<meta description>`, canonical, OG/Twitter tags, JSON-LD `Person`, sitemap URL count, `robots.txt`, GSC verification — all unchanged in value (only OG *image styling* changes, not the tags' presence/targets).
 - **PDF links, project pages, analytics** — unchanged.
 - **Machine formats / PDFs** — entirely untouched (different renderers).
