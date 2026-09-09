@@ -230,6 +230,11 @@ def _validate_skills_category_orders(content_dir: Path) -> list[FileError]:
     ]
     known = set(names)
     errors: list[FileError] = []
+    duplicate_base = sorted({name for name in names if names.count(name) > 1})
+    if duplicate_base:
+        errors.append(
+            FileError(path, f"duplicate base Skills category name(s): {duplicate_base}")
+        )
     for target, override in variants.items():
         if not isinstance(override, dict):
             continue

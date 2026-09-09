@@ -168,6 +168,36 @@ def test_resolve_skills_target_orders_categories_per_target():
     ] == ["AI", "Data", "Bio"]
 
 
+def test_resolve_skills_target_rejects_duplicate_category_names():
+    skills = {
+        "categories": [
+            {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b1"]}]},
+            {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b2"]}]},
+        ],
+        "variants": {"bridge": {"category_order": ["Bio", "Bio"]}},
+    }
+
+    with pytest.raises(ValueError, match="duplicate Skills category name"):
+        _resolve_skills_target(skills, "bridge")
+
+
+def test_skills_category_orders_reject_duplicate_base_category_names(tmp_path):
+    _write(
+        tmp_path / "skills.yaml",
+        {
+            "categories": [
+                {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b1"]}]},
+                {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b2"]}]},
+            ],
+            "variants": {"bridge": {"category_order": ["Bio", "Bio"]}},
+        },
+    )
+
+    errors = _validate_skills_category_orders(tmp_path)
+
+    assert any("duplicate base Skills category name" in error.message for error in errors)
+
+
 def test_skills_category_orders_reject_unknown_duplicate_and_missing_names(tmp_path):
     _write(
         tmp_path / "skills.yaml",

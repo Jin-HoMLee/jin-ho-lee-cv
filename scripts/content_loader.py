@@ -86,6 +86,10 @@ def _resolve_skills_target(skills: dict, target: str, *, web_projection: bool = 
 
     source_categories = result["categories"]
     if category_order:
+        names = [category["name"]["en"] for category in source_categories]
+        duplicates = sorted({name for name in names if names.count(name) > 1})
+        if duplicates:
+            raise ValueError(f"duplicate Skills category name(s): {duplicates}")
         by_name = {category["name"]["en"]: category for category in source_categories}
         ordered_names = set(category_order)
         source_categories = [
