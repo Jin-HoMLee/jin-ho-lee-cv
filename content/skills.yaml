@@ -1,5 +1,6 @@
-# Canonical skills baseline. Web data applies category variants to derive the
-# concise bridge and target-specific views; non-web bridge renderers keep this tree.
+# Canonical skills baseline. Web data and non-bridge targeted PDFs apply category
+# variants to derive concise or target-specific views; the bridge PDF and other non-web
+# renderers keep this tree.
 categories:
   - name:
       en: "Bioinformatics & ML"

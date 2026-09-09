@@ -40,7 +40,7 @@ From the single source, `just`-build a CV positioned for a chosen target:
 
 This section records the Phase 8b positioning model. A target variant in that model overrides
 **only** these four positioning surfaces. Phase 8c later extended the shared content model with
-Skills category ordering and web-only Skills projections; the current contract lives in the
+Skills category ordering and web plus non-bridge targeted-PDF Skills projections; the current contract lives in the
 [Phase 8c design spec](2026-05-31-phase-8c-web-variants-design.md).
 
 | Surface | Source field | Bridge (today) |
@@ -99,7 +99,7 @@ ds-ml:    [C1, D1, D2]      # KYC/BigQueryML, real-time ASL ML, badminton AI  (i
 
 ## 6. Resolution — load-time, one path
 
-For the Phase 8b positioning model, `load_content` ([content_loader.py:49](../../../scripts/content_loader.py)) gains a keyword-only **`target`** parameter (default `"bridge"`, mirroring the existing `lang`) plus a **target-override pass** that runs on the freshly-loaded YAML before the tree is returned. `{en,de}` langmap resolution stays downstream in the renderers exactly as today — `load_content` still returns `headline` as a raw `{en,de}` map; the override pass only swaps *which* map/string is the base. The later Skills-specific resolution is documented in the [Phase 8c design spec](2026-05-31-phase-8c-web-variants-design.md): category order applies to every renderer, while category-local web projections are opt-in.
+For the Phase 8b positioning model, `load_content` ([content_loader.py:49](../../../scripts/content_loader.py)) gains a keyword-only **`target`** parameter (default `"bridge"`, mirroring the existing `lang`) plus a **target-override pass** that runs on the freshly-loaded YAML before the tree is returned. `{en,de}` langmap resolution stays downstream in the renderers exactly as today — `load_content` still returns `headline` as a raw `{en,de}` map; the override pass only swaps *which* map/string is the base. The later Skills-specific resolution is documented in the [Phase 8c design spec](2026-05-31-phase-8c-web-variants-design.md): category order applies to every renderer, while category-local projections are opt-in for web data and non-bridge targeted PDFs.
 
 1. For any object carrying a `variants` map: if `variants[target]` exists, shallow-merge its keys over the base object; then **delete the `variants` key entirely** so it never reaches renderers, the schema-consuming code, or langstring resolution. (A `headline` override is itself an `{en,de}` map and replaces the base map wholesale, still raw for downstream resolution.)
 2. For `profile`: if the chosen variant supplies `lead_paragraph`, set `paragraphs[0]` to it and drop the `lead_paragraph` key.
@@ -158,7 +158,7 @@ Exact strings are set in the implementation plan / during execution, not frozen 
 
 ## 11. Non-goals
 
-- **No content curation.** Experience bullets, skills, education, publications, and ¶2 are shared across all targets. No per-target suppression of experience entries.
+- **No content curation in Phase 8b.** Experience bullets, skills, education, publications, and ¶2 were shared across all targets in the positioning-only implementation. The later Phase 8c Skills contract adds category-local projections for web data and non-bridge targeted PDFs; no per-target suppression of experience entries.
 - **No web changes.** No `web/` file, no `render_web_data.py` change, no switcher — all 8c.
 - **No variant machine formats.** JSON Resume and JSON-LD stay single canonical bridge.
 - **No invented facts or metrics.**
