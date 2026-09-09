@@ -72,8 +72,8 @@ def _resolve_skills_target(skills: dict, target: str, *, web_projection: bool = 
     A root target variant may order categories by their stable English names.
     Category variants can then omit a category, omit selected groups, or replace a
     group's item list with a concise or expanded audience-specific list. Category
-    ordering applies to every renderer; the omit/group projections are web-only so
-    non-web target artifacts retain the comprehensive canonical Skills baseline.
+    ordering applies to every renderer; omit/group projections apply only when
+    projection is enabled so callers that omit it retain the comprehensive baseline.
     """
     result = copy.deepcopy(skills)
     root_variants = result.pop("variants", {})

@@ -85,7 +85,13 @@ def prepare_data(
     derived aggregate summary + ORCID pointer. Injects ``publications_mode`` and,
     for the aggregate, ``publications_summary`` / ``publications_pointer``.
     """
-    raw = load_content(content_dir, private_path=private_path, lang=lang, target=target)
+    raw = load_content(
+        content_dir,
+        private_path=private_path,
+        lang=lang,
+        target=target,
+        web_projection=target != "bridge",
+    )
     resolved = resolve_langstrings(raw, lang=lang)
     sections = resolved["labels"]["sections"]
     resolved["publications_heading"] = sections["publications"]
