@@ -21,7 +21,10 @@ const ROOTS = ["cancer-genomics", "HLA-typing", "neoantigens"];
 // categories intentionally, so the hero signals bioinformatics → ML → cloud. Still fully
 // derived from skills data; no hardcoded skill values.
 const bioLead = skills.categories[0]?.groups?.[0]?.items?.[0];
-const engLeads = (skills.categories.at(-1)?.groups ?? []).map((g) => g.items?.[0]).filter(Boolean);
+const leadCategory = skills.categories.find((category) =>
+  category.name === "Data & Engineering" || category.name === "Daten & Engineering"
+) ?? skills.categories.at(-1);
+const engLeads = (leadCategory?.groups ?? []).map((g) => g.items?.[0]).filter(Boolean);
 const stack = [bioLead, ...engLeads].filter(Boolean).slice(0, 4);
 
 const name = `${personal.name.given} ${personal.name.family}`;
@@ -133,12 +136,12 @@ const tabs = [
         // rows.length, so the numbers can never silently drift from the rendered content.
         const rows = [
           <div><span class="ck">name</span>: <span class="cs">{name}</span></div>,
-          <div><span class="ck">headline</span>: <span class="cs">{personal.headline}</span></div>,
+          <div><span class="ck">headline</span>: <span class="cs" data-cv-hero-headline>{personal.headline}</span></div>,
           <div><span class="ck">roots</span>: [{ROOTS.map((r, i) => <Fragment><span class="cs">{r}</span>{i < ROOTS.length - 1 ? ", " : ""}</Fragment>)}]</div>,
-          <div><span class="ck">stack</span>: [{stack.map((s, i) => <Fragment><span class="cs">{s}</span>{i < stack.length - 1 ? ", " : ""}</Fragment>)}]</div>,
+          <div><span class="ck">stack</span>: [<span class="cs" data-cv-hero-stack>{stack.join(", ")}</span>]</div>,
           <div><span class="ck">publications</span>: <span class="cn">{pubCount}</span>&nbsp;&nbsp;<span class="cc">{authorComment}</span></div>,
           <div><span class="ck">tagline</span>: <span class="cp">&gt;-</span></div>,
-          <div>&nbsp;&nbsp;<span class="cs" data-type={profile.tagline}>{profile.tagline}</span><span class="cursor" aria-hidden="true">&#x25AE;</span></div>,
+          <div>&nbsp;&nbsp;<span class="cs" data-cv-hero-tagline data-type={profile.tagline}>{profile.tagline}</span><span class="cursor" aria-hidden="true">&#x25AE;</span></div>,
           <div>&nbsp;</div>,
         ];
         return (
@@ -239,20 +242,59 @@ const tabs = [
 
 <script>
   // Tagline typing island — types once on load, reduced-motion safe.
-  const el = document.querySelector<HTMLElement>("[data-code-hero] [data-type]");
-  if (el) {
-    const full = el.dataset.type ?? el.textContent ?? "";
+  const taglineEl = document.querySelector<HTMLElement>("[data-code-hero] [data-cv-hero-tagline]");
+  const headlineEl = document.querySelector<HTMLElement>("[data-code-hero] [data-cv-hero-headline]");
+  const stackEl = document.querySelector<HTMLElement>("[data-code-hero] [data-cv-hero-stack]");
+  const bridgeHeadline = headlineEl?.textContent ?? "";
+  const bridgeTagline = taglineEl?.dataset.type ?? taglineEl?.textContent ?? "";
+  const bridgeStack = stackEl?.textContent ?? "";
+  let typingTimer: ReturnType<typeof setTimeout> | undefined;
+
+  if (taglineEl) {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!reduce) {
-      el.textContent = "";
+      taglineEl.textContent = "";
       let i = 0;
       const tick = () => {
-        el.textContent = full.slice(0, ++i);
-        if (i < full.length) setTimeout(tick, 16);
+        taglineEl.textContent = bridgeTagline.slice(0, ++i);
+        if (i < bridgeTagline.length) typingTimer = setTimeout(tick, 16);
       };
       tick();
     }
     // reduced-motion: leave the already-rendered full text in place.
+  }
+
+  if (headlineEl || taglineEl || stackEl) {
+    window.addEventListener("cv-target-change", (event) => {
+      const detail = (event as CustomEvent<{
+        target?: string;
+        headline?: unknown;
+        tagline?: unknown;
+        hero_stack?: unknown;
+      }>).detail;
+      if (!detail?.target) return;
+
+      if (typingTimer !== undefined) {
+        clearTimeout(typingTimer);
+        typingTimer = undefined;
+      }
+
+      const nextHeadline = detail.target === "bridge"
+        ? bridgeHeadline
+        : typeof detail.headline === "string" ? detail.headline : bridgeHeadline;
+      const nextTagline = detail.target === "bridge"
+        ? bridgeTagline
+        : typeof detail.tagline === "string" ? detail.tagline : bridgeTagline;
+      const nextStack = detail.target === "bridge"
+        ? bridgeStack
+        : Array.isArray(detail.hero_stack) && detail.hero_stack.every((item) => typeof item === "string")
+          ? detail.hero_stack.join(", ")
+          : bridgeStack;
+
+      if (headlineEl) headlineEl.textContent = nextHeadline;
+      if (taglineEl) taglineEl.textContent = nextTagline;
+      if (stackEl) stackEl.textContent = nextStack;
+    });
   }
 
   // ARIA tabs island — click + keyboard, roving tabindex.

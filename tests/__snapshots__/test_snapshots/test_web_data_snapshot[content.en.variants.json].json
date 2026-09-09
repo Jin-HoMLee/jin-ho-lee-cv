@@ -3,12 +3,260 @@
     "headline": "Computational Biology · Cancer Genomics",
     "tagline": "Bioinformatician with deep roots in cancer genomics — HLA typing & neoantigen discovery from real-patient NGS/RNA-Seq, reproducible Snakemake pipelines, 11 peer-reviewed research publications.",
     "lead_paragraph": "Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, packaged as reproducible Snakemake workflows, with wet-lab training at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). A parallel line of experimental-biophysics research produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
-    "second_paragraph": "Equally at home in production: migrated 1,000+ analytical processes to Google Cloud, built reproducible data pipelines, and mentored 100+ specialists in Python, SQL & ML — while securing third-party funding and supervising 10+ students."
+    "second_paragraph": "Equally at home in production: migrated 1,000+ analytical processes to Google Cloud, built reproducible data pipelines, and mentored 100+ specialists in Python, SQL & ML — while securing third-party funding and supervising 10+ students.",
+    "skills": {
+      "categories": [
+        {
+          "name": "Bioinformatics & ML",
+          "groups": [
+            {
+              "label": "Genomics",
+              "items": [
+                "NGS",
+                "RNA-Seq",
+                "WES",
+                "SNV Calling",
+                "Splice Analysis",
+                "MapSplice",
+                "HISAT2/STAR",
+                "samtools/bcftools",
+                "bedtools"
+              ]
+            },
+            {
+              "label": "Immunoinformatics",
+              "items": [
+                "HLA Typing",
+                "MHC-I Prediction",
+                "OptiType",
+                "MHCflurry",
+                "Neoepitopes"
+              ]
+            },
+            {
+              "label": "Nanoscopy",
+              "items": [
+                "Spatial Point-Pattern",
+                "Cluster Analysis (DBSCAN)"
+              ]
+            },
+            {
+              "label": "Structural Biology",
+              "items": [
+                "TCRdock",
+                "AlphaFold v2",
+                "Mol*"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Biotech Wet-Lab",
+          "groups": [
+            {
+              "label": "Models",
+              "items": [
+                "Cancer/Tumor",
+                "3D Cell Culture",
+                "Neural Progenitors"
+              ]
+            },
+            {
+              "label": "Imaging",
+              "items": [
+                "Super-Resolution",
+                "Confocal",
+                "Fluorescence"
+              ]
+            },
+            {
+              "label": "Assays",
+              "items": [
+                "FISH",
+                "IF",
+                "qPCR",
+                "FACS"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "AI & Developer Tooling",
+          "groups": [
+            {
+              "label": "Applied AI",
+              "items": [
+                "OpenAI API",
+                "TensorFlow.js",
+                "ONNX Runtime Web"
+              ]
+            },
+            {
+              "label": "Browser Delivery",
+              "items": [
+                "Chrome Extension (Manifest V3)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Data & Engineering",
+          "groups": [
+            {
+              "label": "Engineering & Pipelines",
+              "items": [
+                "Python (Expert)",
+                "Snakemake",
+                "Conda",
+                "Docker",
+                "Git"
+              ]
+            },
+            {
+              "label": "Cloud",
+              "items": [
+                "GCP",
+                "BigQuery",
+                "Vertex AI"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "hero_stack": [
+      "NGS",
+      "Python (Expert)",
+      "GCP"
+    ]
   },
   "ds-ml": {
     "headline": "Data Science · Machine Learning",
     "tagline": "Data scientist shipping production ML on GCP, built on a decade in cancer genomics and experimental biophysics with 11 peer-reviewed research publications.",
     "lead_paragraph": "Builds and ships machine-learning systems end to end, bringing the experimental rigor of a research decade across cancer genomics and experimental biophysics to every model and pipeline.",
-    "second_paragraph": "In industry: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML."
+    "second_paragraph": "In industry: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML.",
+    "skills": {
+      "categories": [
+        {
+          "name": "AI & Developer Tooling",
+          "groups": [
+            {
+              "label": "Applied AI",
+              "items": [
+                "OpenAI API",
+                "TensorFlow.js",
+                "ONNX Runtime Web"
+              ]
+            },
+            {
+              "label": "Browser Delivery",
+              "items": [
+                "Chrome Extension (Manifest V3)"
+              ]
+            },
+            {
+              "label": "Agentic Development",
+              "items": [
+                "Claude Code",
+                "Codex",
+                "OpenCode",
+                "Pi",
+                "Grok",
+                "Cursor"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Data & Engineering",
+          "groups": [
+            {
+              "label": "AI & ML",
+              "items": [
+                "TensorFlow",
+                "Keras",
+                "LSTMs",
+                "OpenCV",
+                "XGBoost",
+                "MLflow"
+              ]
+            },
+            {
+              "label": "Engineering & Pipelines",
+              "items": [
+                "Python (Expert)",
+                "R",
+                "SQL",
+                "dbt",
+                "Pydantic",
+                "Streamlit",
+                "Docker",
+                "Git"
+              ]
+            },
+            {
+              "label": "Cloud",
+              "items": [
+                "GCP",
+                "BigQuery",
+                "BigQueryML",
+                "Vertex AI",
+                "Looker"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Bioinformatics & ML",
+          "groups": [
+            {
+              "label": "Genomics",
+              "items": [
+                "NGS",
+                "RNA-Seq",
+                "Cancer Genomics"
+              ]
+            },
+            {
+              "label": "Immunoinformatics",
+              "items": [
+                "HLA Typing",
+                "Neoepitopes"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Biotech Wet-Lab",
+          "groups": [
+            {
+              "label": "Models",
+              "items": [
+                "Cancer/Tumor",
+                "3D Cell Culture",
+                "Neural Progenitors"
+              ]
+            },
+            {
+              "label": "Imaging",
+              "items": [
+                "Super-Resolution",
+                "Confocal",
+                "Fluorescence"
+              ]
+            },
+            {
+              "label": "Assays",
+              "items": [
+                "FISH",
+                "IF",
+                "qPCR",
+                "FACS"
+              ]
+            }
+          ]
+        }
+      ]
+    }
   }
 }

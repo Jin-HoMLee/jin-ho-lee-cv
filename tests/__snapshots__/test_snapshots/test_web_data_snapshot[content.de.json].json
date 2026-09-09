@@ -70,30 +70,15 @@
               "NGS",
               "RNA-Seq",
               "WES",
-              "SNV Calling",
-              "Splice Analysis",
-              "MapSplice",
-              "HISAT2/STAR",
-              "samtools/bcftools",
-              "bedtools"
+              "SNV Calling"
             ]
           },
           {
-            "label": "Immunologie",
+            "label": "Immunoinformatik",
             "items": [
-              "MHC-I Prediction",
               "HLA Typing",
-              "OptiType",
-              "MHCflurry",
+              "MHC-I Prediction",
               "Neoepitopes"
-            ]
-          },
-          {
-            "label": "Strukturbiologie",
-            "items": [
-              "TCRdock",
-              "AlphaFold v2",
-              "Mol*"
             ]
           },
           {
@@ -101,6 +86,25 @@
             "items": [
               "Spatial Point-Pattern",
               "Cluster Analysis (DBSCAN)"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "KI & Developer-Tooling",
+        "groups": [
+          {
+            "label": "Angewandte KI",
+            "items": [
+              "OpenAI API",
+              "TensorFlow.js",
+              "ONNX Runtime Web"
+            ]
+          },
+          {
+            "label": "Browser-Auslieferung",
+            "items": [
+              "Chrome Extension (Manifest V3)"
             ]
           }
         ]
@@ -143,27 +147,20 @@
             "items": [
               "TensorFlow",
               "Keras",
-              "LSTMs",
-              "OpenCV",
               "XGBoost",
-              "MLflow",
-              "OpenAI API"
+              "MLflow"
             ]
           },
           {
-            "label": "Eng & Tools",
+            "label": "Engineering & Pipelines",
             "items": [
               "Python (Expert)",
               "R",
               "SQL",
-              "PostgreSQL",
               "Snakemake",
               "Conda",
               "Docker",
-              "Git",
-              "dbt",
-              "Pydantic",
-              "Streamlit"
+              "Git"
             ]
           },
           {
@@ -171,52 +168,7 @@
             "items": [
               "GCP",
               "BigQuery",
-              "Vertex AI",
-              "Looker"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "KI-Agenten & Dev-Tooling",
-        "groups": [
-          {
-            "label": "Reproduzierbare Umgebung",
-            "items": [
-              "Nix",
-              "nix-darwin",
-              "home-manager"
-            ]
-          },
-          {
-            "label": "Terminal & Editor",
-            "items": [
-              "WezTerm",
-              "Neovim"
-            ]
-          },
-          {
-            "label": "Multi-Agenten-KI-Tooling",
-            "items": [
-              "Claude Code",
-              "Codex",
-              "OpenCode",
-              "Pi",
-              "Grok",
-              "Cursor"
-            ]
-          },
-          {
-            "label": "Geräteseitiges Browser-ML",
-            "items": [
-              "TensorFlow.js",
-              "ONNX Runtime Web"
-            ]
-          },
-          {
-            "label": "Browser-Erweiterungen",
-            "items": [
-              "Chrome Extension (Manifest V3)"
+              "Vertex AI"
             ]
           }
         ]

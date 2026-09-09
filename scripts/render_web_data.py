@@ -1,7 +1,7 @@
 """Render bilingual content JSON for the Astro website.
 
-Produces web/src/data/content.{en,de}.json by composing:
-  - scripts.content_loader.load_content (with private_path HARD-CODED to None)
+Produces web/src/data/content.{en,de}.json and content.{en,de}.variants.json by composing:
+  - scripts.content_loader.load_content (private_path HARD-CODED to None; web projection enabled)
   - scripts.langstring.resolve_langstrings (to flatten langmaps to chosen lang)
   - Publication dataclass → dict conversion
   - Path → str conversion
@@ -43,6 +43,38 @@ def _to_jsonable(obj: Any) -> Any:
     return obj
 
 
+def _hero_stack(skills: dict) -> list[str]:
+    """Derive the short CodeHero stack from a resolved Skills tree."""
+    categories = skills.get("categories") or []
+    if not categories:
+        return []
+
+    def first_item(group: dict) -> str | None:
+        items = group.get("items") or []
+        return items[0] if items else None
+
+    bio_category = next(
+        (
+            category
+            for category in categories
+            if category.get("name") in {"Bioinformatics & ML", "Bioinformatik & ML"}
+        ),
+        categories[0],
+    )
+    bio_groups = bio_category.get("groups") or []
+    bio_lead = first_item(bio_groups[0]) if bio_groups else None
+    lead_category = next(
+        (
+            category
+            for category in categories
+            if category.get("name") in {"Data & Engineering", "Daten & Engineering"}
+        ),
+        categories[-1],
+    )
+    engineering_leads = [first_item(group) for group in (lead_category.get("groups") or [])]
+    return [item for item in [bio_lead, *engineering_leads] if item][:4]
+
+
 def _extract_overrides(bridge: dict, variant: dict) -> dict:
     """Return the web-rendered positioning fields that differ from bridge.
 
@@ -51,8 +83,12 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
       tagline          <- profile.tagline         (rendered in the profile intro)
       lead_paragraph   <- profile.paragraphs[0]   (the lead profile paragraph)
       second_paragraph <- profile.paragraphs[1]   (the second profile paragraph)
+      skills            <- skills                  (the fully resolved Skills tree)
+      hero_stack        <- skills                  (the derived CodeHero stack)
 
-    A key is included only when the variant value differs from bridge.
+    A key is included only when the variant value differs from bridge. Skills are
+    emitted as a resolved tree for SkillsSidebar, while hero_stack is a text-only
+    projection for CodeHero.
     `selected_projects` is intentionally excluded: the website renders projects
     grouped by category and never consumes it, so emitting it produced a
     payload of the one field the web ignores while dropping the three it shows.
@@ -62,9 +98,9 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
         variant: Fully-resolved variant tree.
 
     Returns:
-        Dict with only the differing text fields; empty dict if none differ.
+        Dict with only the differing web fields; empty dict if none differ.
     """
-    overrides: dict[str, str] = {}
+    overrides: dict[str, Any] = {}
 
     b_headline = bridge.get("personal", {}).get("headline")
     v_headline = variant.get("personal", {}).get("headline")
@@ -87,6 +123,15 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
     v_second = v_paras[1] if len(v_paras) > 1 else None
     if v_second is not None and v_second != b_second:
         overrides["second_paragraph"] = v_second
+
+    bridge_skills = bridge.get("skills")
+    variant_skills = variant.get("skills")
+    if variant_skills is not None and variant_skills != bridge_skills:
+        overrides["skills"] = variant_skills
+        bridge_stack = _hero_stack(bridge_skills or {})
+        variant_stack = _hero_stack(variant_skills)
+        if variant_stack != bridge_stack:
+            overrides["hero_stack"] = variant_stack
 
     return overrides
 
@@ -121,7 +166,13 @@ def render_web_data(
         # Load bridge once: it is both the site's static content and the baseline
         # against which variant overrides are diffed.
         bridge_resolved = resolve_langstrings(
-            load_content(content_dir, private_path=None, lang=lang, target="bridge"),
+            load_content(
+                content_dir,
+                private_path=None,
+                lang=lang,
+                target="bridge",
+                web_projection=True,
+            ),
             lang=lang,
         )
         bridge_resolved["publications"] = enrich_publications(
@@ -144,7 +195,13 @@ def render_web_data(
         variants_dict = {}
         for target in ("comp-bio", "ds-ml"):
             variant_resolved = resolve_langstrings(
-                load_content(content_dir, private_path=None, lang=lang, target=target),
+                load_content(
+                    content_dir,
+                    private_path=None,
+                    lang=lang,
+                    target=target,
+                    web_projection=True,
+                ),
                 lang=lang,
             )
             variants_dict[target] = _extract_overrides(bridge_resolved, variant_resolved)

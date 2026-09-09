@@ -118,13 +118,21 @@
     },
     {
       "name": "Bioinformatics & ML",
-      "level": "Immunology",
+      "level": "Immunoinformatics",
       "keywords": [
-        "MHC-I Prediction",
         "HLA Typing",
+        "MHC-I Prediction",
         "OptiType",
         "MHCflurry",
         "Neoepitopes"
+      ]
+    },
+    {
+      "name": "Bioinformatics & ML",
+      "level": "Nanoscopy",
+      "keywords": [
+        "Spatial Point-Pattern",
+        "Cluster Analysis (DBSCAN)"
       ]
     },
     {
@@ -137,11 +145,48 @@
       ]
     },
     {
-      "name": "Bioinformatics & ML",
-      "level": "Nanoscopy",
+      "name": "AI & Developer Tooling",
+      "level": "Applied AI",
       "keywords": [
-        "Spatial Point-Pattern",
-        "Cluster Analysis (DBSCAN)"
+        "OpenAI API",
+        "TensorFlow.js",
+        "ONNX Runtime Web"
+      ]
+    },
+    {
+      "name": "AI & Developer Tooling",
+      "level": "Browser Delivery",
+      "keywords": [
+        "Chrome Extension (Manifest V3)"
+      ]
+    },
+    {
+      "name": "AI & Developer Tooling",
+      "level": "Reproducible Environment",
+      "keywords": [
+        "Nix",
+        "nix-darwin",
+        "home-manager"
+      ]
+    },
+    {
+      "name": "AI & Developer Tooling",
+      "level": "Terminal & Editor",
+      "keywords": [
+        "WezTerm",
+        "Neovim"
+      ]
+    },
+    {
+      "name": "AI & Developer Tooling",
+      "level": "Agentic Development",
+      "keywords": [
+        "Claude Code",
+        "Codex",
+        "OpenCode",
+        "Pi",
+        "Grok",
+        "Cursor"
       ]
     },
     {
@@ -181,13 +226,12 @@
         "LSTMs",
         "OpenCV",
         "XGBoost",
-        "MLflow",
-        "OpenAI API"
+        "MLflow"
       ]
     },
     {
       "name": "Data & Engineering",
-      "level": "Eng & Tools",
+      "level": "Engineering & Pipelines",
       "keywords": [
         "Python (Expert)",
         "R",
@@ -210,50 +254,6 @@
         "BigQuery",
         "Vertex AI",
         "Looker"
-      ]
-    },
-    {
-      "name": "AI Agents & Dev Tooling",
-      "level": "Reproducible Environment",
-      "keywords": [
-        "Nix",
-        "nix-darwin",
-        "home-manager"
-      ]
-    },
-    {
-      "name": "AI Agents & Dev Tooling",
-      "level": "Terminal & Editor",
-      "keywords": [
-        "WezTerm",
-        "Neovim"
-      ]
-    },
-    {
-      "name": "AI Agents & Dev Tooling",
-      "level": "Multi-Agent AI Tooling",
-      "keywords": [
-        "Claude Code",
-        "Codex",
-        "OpenCode",
-        "Pi",
-        "Grok",
-        "Cursor"
-      ]
-    },
-    {
-      "name": "AI Agents & Dev Tooling",
-      "level": "On-Device Browser ML",
-      "keywords": [
-        "TensorFlow.js",
-        "ONNX Runtime Web"
-      ]
-    },
-    {
-      "name": "AI Agents & Dev Tooling",
-      "level": "Browser Extensions",
-      "keywords": [
-        "Chrome Extension (Manifest V3)"
       ]
     }
   ],

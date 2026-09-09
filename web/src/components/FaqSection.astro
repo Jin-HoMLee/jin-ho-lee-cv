@@ -49,5 +49,5 @@ const faqPageJson = JSON.stringify(faqPage).replace(/</g, "\\u003c");
       </details>
     ))}
   </div>
-  <script type="application/ld+json" set:html={faqPageJson} />
+  <script is:inline type="application/ld+json" set:html={faqPageJson} />
 </section>

@@ -63,7 +63,7 @@ const starters = [
       <span class="twin-photo" style={`background-image:url(${twinPhoto.src})`} aria-hidden="true"></span>
     </template>
   </div>
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script>
     import { streamTwin, submitLead } from "../lib/twin";
     import { renderMarkdown } from "../lib/markdown";

@@ -5,11 +5,11 @@ from __future__ import annotations
 import pytest
 from ruamel.yaml import YAML
 
-from pdf.build import _parse_args as _pdf_parse_args
-from pdf.build import _pdf_filename
+from pdf.build import _pdf_filename, _parse_args as _pdf_parse_args, prepare_data
 from scripts.content_loader import (
     _resolve_personal_target,
     _resolve_profile_target,
+    _resolve_skills_target,
     _select_project_ids,
     load_content,
 )
@@ -18,6 +18,8 @@ from scripts.render_text import _txt_filename, render
 from scripts.validate import (
     _validate_headline_variant_completeness,
     _validate_profile_variant_parity,
+    _validate_skills_category_orders,
+    _validate_skills_variant_references,
     validate_tree,
 )
 
@@ -99,6 +101,258 @@ def test_load_content_strips_variants_key_from_personal_and_profile(content_dir)
     content = load_content(content_dir, lang="en", target="bridge")
     assert "variants" not in content["personal"]
     assert "variants" not in content["profile"]
+    assert all("variants" not in category for category in content["skills"]["categories"])
+
+
+def _skills_fixture():
+    return {
+        "categories": [
+            {
+                "name": {"en": "Bio"},
+                "groups": [
+                    {"label": {"en": "Core"}, "items": ["a", "b"]},
+                    {"label": {"en": "Optional"}, "items": ["c"]},
+                ],
+                "variants": {
+                    "comp-bio": {"group_items": {"Core": ["a", "b", "detail"]}},
+                    "ds-ml": {"omit_groups": ["Optional"]},
+                },
+            },
+            {
+                "name": {"en": "Other"},
+                "groups": [{"label": {"en": "Shared"}, "items": ["e"]}],
+                "variants": {"comp-bio": {"omit": True}},
+            },
+        ]
+    }
+
+
+def test_resolve_skills_target_replaces_and_reduces_data_driven_groups():
+    comp_bio = _resolve_skills_target(_skills_fixture(), "comp-bio", web_projection=True)
+    assert [category["name"]["en"] for category in comp_bio["categories"]] == ["Bio"]
+    groups = {group["label"]["en"]: group["items"] for group in comp_bio["categories"][0]["groups"]}
+    assert groups == {"Core": ["a", "b", "detail"], "Optional": ["c"]}
+
+    ds_ml = _resolve_skills_target(_skills_fixture(), "ds-ml", web_projection=True)
+    assert [group["label"]["en"] for group in ds_ml["categories"][0]["groups"]] == ["Core"]
+    assert ds_ml["categories"][0]["groups"][0]["items"] == ["a", "b"]
+
+
+def test_resolve_skills_target_bridge_strips_variant_instructions():
+    bridge = _resolve_skills_target(_skills_fixture(), "bridge")
+    assert bridge["categories"][0]["groups"][0]["items"] == ["a", "b"]
+    assert len(bridge["categories"]) == 2
+    assert all("variants" not in category for category in bridge["categories"])
+
+
+def test_resolve_skills_target_orders_categories_per_target():
+    skills = {
+        "categories": [
+            {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b"]}]},
+            {"name": {"en": "Data"}, "groups": [{"label": {"en": "G"}, "items": ["d"]}]},
+            {"name": {"en": "AI"}, "groups": [{"label": {"en": "G"}, "items": ["a"]}]},
+        ],
+        "variants": {
+            "bridge": {"category_order": ["Bio", "AI", "Data"]},
+            "comp-bio": {"category_order": ["Bio", "Data", "AI"]},
+            "ds-ml": {"category_order": ["AI", "Data", "Bio"]},
+        },
+    }
+
+    assert [
+        category["name"]["en"]
+        for category in _resolve_skills_target(skills, "bridge")["categories"]
+    ] == ["Bio", "AI", "Data"]
+    assert [
+        category["name"]["en"]
+        for category in _resolve_skills_target(skills, "comp-bio")["categories"]
+    ] == ["Bio", "Data", "AI"]
+    assert [
+        category["name"]["en"]
+        for category in _resolve_skills_target(skills, "ds-ml", web_projection=True)["categories"]
+    ] == ["AI", "Data", "Bio"]
+
+
+def test_resolve_skills_target_rejects_duplicate_category_names():
+    skills = {
+        "categories": [
+            {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b1"]}]},
+            {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b2"]}]},
+        ],
+        "variants": {"bridge": {"category_order": ["Bio", "Bio"]}},
+    }
+
+    with pytest.raises(ValueError, match="duplicate Skills category name"):
+        _resolve_skills_target(skills, "bridge")
+
+
+def test_skills_category_orders_reject_duplicate_base_category_names(tmp_path):
+    _write(
+        tmp_path / "skills.yaml",
+        {
+            "categories": [
+                {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b1"]}]},
+                {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b2"]}]},
+            ],
+            "variants": {"bridge": {"category_order": ["Bio", "Bio"]}},
+        },
+    )
+
+    errors = _validate_skills_category_orders(tmp_path)
+
+    assert any("duplicate base Skills category name" in error.message for error in errors)
+
+
+def test_skills_category_orders_reject_unknown_duplicate_and_missing_names(tmp_path):
+    _write(
+        tmp_path / "skills.yaml",
+        {
+            "categories": [
+                {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b"]}]},
+                {"name": {"en": "Data"}, "groups": [{"label": {"en": "G"}, "items": ["d"]}]},
+            ],
+            "variants": {"bridge": {"category_order": ["Data", "Data", "Typo"]}},
+        },
+    )
+    errors = _validate_skills_category_orders(tmp_path)
+    messages = " ".join(error.message for error in errors)
+    assert "duplicate category name" in messages
+    assert "unknown category name" in messages
+    assert "omits category name" in messages
+
+
+def test_skills_are_complementary_in_web_targets_and_full_in_bridge(content_dir):
+    def resolved(target, web_projection=False):
+        return resolve_langstrings(
+            load_content(
+                content_dir,
+                lang="en",
+                target=target,
+                web_projection=web_projection,
+            ),
+            lang="en",
+        )["skills"]
+
+    trees = {
+        "bridge": resolved("bridge"),
+        "web-bridge": resolved("bridge", web_projection=True),
+        "comp-bio": resolved("comp-bio", web_projection=True),
+        "ds-ml": resolved("ds-ml", web_projection=True),
+    }
+
+    def items(target):
+        return {
+            item
+            for category in trees[target]["categories"]
+            for group in category["groups"]
+            for item in group["items"]
+        }
+
+    assert {"TCRdock", "PostgreSQL", "Nix", "Claude Code"} <= items("bridge")
+    assert "TCRdock" not in items("web-bridge")
+    assert "PostgreSQL" not in items("web-bridge")
+    assert {"MapSplice", "TCRdock", "MHCflurry"} <= items("comp-bio")
+    assert {"LSTMs", "OpenCV", "BigQueryML", "Claude Code"} <= items("ds-ml")
+    assert "TCRdock" not in items("ds-ml")
+    assert "Claude Code" not in items("comp-bio")
+
+
+def test_comp_bio_web_keeps_applied_ai_and_browser_delivery(content_dir):
+    expected_labels = {
+        "en": ["Applied AI", "Browser Delivery"],
+        "de": ["Angewandte KI", "Browser-Auslieferung"],
+    }
+
+    for lang in ("en", "de"):
+        skills = resolve_langstrings(
+            load_content(
+                content_dir,
+                lang=lang,
+                target="comp-bio",
+                web_projection=True,
+            ),
+            lang=lang,
+        )["skills"]
+        ai = next(
+            category
+            for category in skills["categories"]
+            if category["name"]
+            == ("AI & Developer Tooling" if lang == "en" else "KI & Developer-Tooling")
+        )
+        assert [group["label"] for group in ai["groups"]] == expected_labels[lang]
+        assert {item for group in ai["groups"] for item in group["items"]} == {
+            "OpenAI API",
+            "TensorFlow.js",
+            "ONNX Runtime Web",
+            "Chrome Extension (Manifest V3)",
+        }
+
+
+def test_skills_variant_references_reject_unknown_groups(tmp_path):
+    _write(
+        tmp_path / "skills.yaml",
+        {
+            "categories": [
+                {
+                    "name": {"en": "Cat"},
+                    "groups": [
+                        {"label": {"en": "Real"}, "items": ["x"]},
+                        {"label": {"en": "Real"}, "items": ["y"]},
+                    ],
+                    "variants": {
+                        "comp-bio": {
+                            "omit_groups": ["Typo"],
+                            "group_items": {"Missing": ["z"]},
+                        }
+                    },
+                }
+            ]
+        },
+    )
+    errors = _validate_skills_variant_references(tmp_path)
+    messages = " ".join(error.message for error in errors)
+    assert "Typo" in messages
+    assert "Missing" in messages
+    assert "duplicate base Skills group label" in messages
+
+
+def test_skills_variant_references_scope_labels_to_their_category(tmp_path):
+    _write(
+        tmp_path / "skills.yaml",
+        {
+            "categories": [
+                {
+                    "name": {"en": "First"},
+                    "groups": [{"label": {"en": "Shared"}, "items": ["x"]}],
+                    "variants": {"comp-bio": {"group_items": {"Shared": ["y"]}}},
+                },
+                {
+                    "name": {"en": "Second"},
+                    "groups": [{"label": {"en": "Shared"}, "items": ["z"]}],
+                    "variants": {"ds-ml": {"omit_groups": ["Shared"]}},
+                },
+            ]
+        },
+    )
+    assert _validate_skills_variant_references(tmp_path) == []
+
+
+def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
+    bridge = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
+    comp_bio = prepare_data(content_dir, private_path=None, lang="de", target="comp-bio")
+    ds_ml = prepare_data(content_dir, private_path=None, lang="en", target="ds-ml")
+
+    def all_items(data):
+        return {
+            item
+            for category in data["skills"]["categories"]
+            for group in category["groups"]
+            for item in group["items"]
+        }
+
+    assert "TCRdock" in all_items(bridge)
+    assert "TCRdock" in all_items(comp_bio)
+    assert "LSTMs" in all_items(ds_ml)
 
 
 def test_select_project_ids_returns_target_order():

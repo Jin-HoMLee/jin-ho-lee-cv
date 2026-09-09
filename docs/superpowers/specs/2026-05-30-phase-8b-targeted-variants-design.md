@@ -36,9 +36,12 @@ From the single source, `just`-build a CV positioned for a chosen target:
 - Bridge output keeps its **current unsuffixed filenames** (`cv-en.pdf`, `cv-de.pdf`) so nothing 8a/CI shipped is renamed or broken.
 - EN/DE parity maintained for every variant.
 
-## 4. What varies — positioning-only
+## 4. What varies — positioning-only in Phase 8b
 
-A target variant overrides **only** these four positioning surfaces:
+This section records the Phase 8b positioning model. A target variant in that model overrides
+**only** these four positioning surfaces. Phase 8c later extended the shared content model with
+Skills category ordering and web-only Skills projections; the current contract lives in the
+[Phase 8c design spec](2026-05-31-phase-8c-web-variants-design.md).
 
 | Surface | Source field | Bridge (today) |
 |---|---|---|
@@ -96,7 +99,7 @@ ds-ml:    [C1, D1, D2]      # KYC/BigQueryML, real-time ASL ML, badminton AI  (i
 
 ## 6. Resolution — load-time, one path
 
-`load_content` ([content_loader.py:49](../../../scripts/content_loader.py)) gains a keyword-only **`target`** parameter (default `"bridge"`, mirroring the existing `lang`) plus a **target-override pass** that runs on the freshly-loaded YAML before the tree is returned. `{en,de}` langmap resolution stays downstream in the renderers exactly as today — `load_content` still returns `headline` as a raw `{en,de}` map; the override pass only swaps *which* map/string is the base:
+For the Phase 8b positioning model, `load_content` ([content_loader.py:49](../../../scripts/content_loader.py)) gains a keyword-only **`target`** parameter (default `"bridge"`, mirroring the existing `lang`) plus a **target-override pass** that runs on the freshly-loaded YAML before the tree is returned. `{en,de}` langmap resolution stays downstream in the renderers exactly as today — `load_content` still returns `headline` as a raw `{en,de}` map; the override pass only swaps *which* map/string is the base. The later Skills-specific resolution is documented in the [Phase 8c design spec](2026-05-31-phase-8c-web-variants-design.md): category order applies to every renderer, while category-local web projections are opt-in.
 
 1. For any object carrying a `variants` map: if `variants[target]` exists, shallow-merge its keys over the base object; then **delete the `variants` key entirely** so it never reaches renderers, the schema-consuming code, or langstring resolution. (A `headline` override is itself an `{en,de}` map and replaces the base map wholesale, still raw for downstream resolution.)
 2. For `profile`: if the chosen variant supplies `lead_paragraph`, set `paragraphs[0]` to it and drop the `lead_paragraph` key.

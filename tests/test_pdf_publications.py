@@ -92,3 +92,45 @@ def test_pdf_bridge_aggregate_vs_comp_bio_full(repo_root, content_dir):
     assert _norm(middle.title).replace("-", "") not in bridge.replace("-", "")
     # comp-bio → full list: the middle-author paper title present.
     assert _norm(middle.title).replace("-", "") in compbio.replace("-", "")
+
+
+@pytest.mark.skipif(
+    not (_typst_available() and _pdftotext_available()),
+    reason="needs typst + pdftotext (poppler) to extract and assert PDF text",
+)
+def test_pdf_comp_bio_skills_keep_comprehensive_baseline(repo_root):
+    """The rendered Comp Bio PDF keeps the canonical Skills baseline."""
+    expected = {
+        "en": (
+            "Applied AI",
+            "Browser Delivery",
+            "Reproducible Environment",
+            "Terminal & Editor",
+            "Agentic Development",
+        ),
+        "de": (
+            "Angewandte KI",
+            "Browser-Auslieferung",
+            "Reproduzierbare Umgebung",
+            "Terminal & Editor",
+            "Agentenbasierte Entwicklung",
+        ),
+    }
+
+    for lang in ("en", "de"):
+        out = repo_root / "dist" / f"cv-{lang}-comp-bio.pdf"
+        if out.exists():
+            out.unlink()
+        result = subprocess.run(
+            [sys.executable, "-m", "pdf.build", "--lang", lang, "--target", "comp-bio"],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0, f"build failed:\n{result.stderr}"
+        text = subprocess.run(
+            ["pdftotext", str(out), "-"], capture_output=True, text=True, check=True
+        ).stdout
+        normalized = _norm(text)
+        for label in expected[lang]:
+            assert _norm(label) in normalized

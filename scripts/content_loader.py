@@ -66,6 +66,60 @@ def _resolve_profile_target(profile: dict, target: str) -> dict:
     return result
 
 
+def _resolve_skills_target(skills: dict, target: str, *, web_projection: bool = False) -> dict:
+    """Resolve a target Skills view and strip projection instructions.
+
+    A root target variant may order categories by their stable English names.
+    Category variants can then omit a category, omit selected groups, or replace a
+    group's item list with a concise or expanded audience-specific list. Category
+    ordering applies to every renderer; the omit/group projections are web-only so
+    non-web target artifacts retain the comprehensive canonical Skills baseline.
+    """
+    result = copy.deepcopy(skills)
+    root_variants = result.pop("variants", {})
+    root_override = root_variants.get(target, {}) if isinstance(root_variants, dict) else {}
+    category_order = (
+        root_override.get("category_order", []) if isinstance(root_override, dict) else []
+    )
+
+    source_categories = result["categories"]
+    if category_order:
+        names = [category["name"]["en"] for category in source_categories]
+        duplicates = sorted({name for name in names if names.count(name) > 1})
+        if duplicates:
+            raise ValueError(f"duplicate Skills category name(s): {duplicates}")
+        by_name = {category["name"]["en"]: category for category in source_categories}
+        ordered_names = set(category_order)
+        source_categories = [by_name[name] for name in category_order if name in by_name] + [
+            category
+            for category in source_categories
+            if category["name"]["en"] not in ordered_names
+        ]
+
+    categories = []
+    for category in source_categories:
+        variants = category.pop("variants", {})
+        override = variants.get(target, {}) if web_projection else {}
+        if override.get("omit", False):
+            continue
+
+        omit_groups = set(override.get("omit_groups", []))
+        replacement_items = override.get("group_items", {})
+        groups = []
+        for group in category["groups"]:
+            label_en = group["label"]["en"]
+            if label_en in omit_groups:
+                continue
+            if label_en in replacement_items:
+                group = {**group, "items": copy.deepcopy(replacement_items[label_en])}
+            groups.append(group)
+        if groups:
+            categories.append({**category, "groups": groups})
+
+    result["categories"] = categories
+    return result
+
+
 def _select_project_ids(selected_map: dict, target: str) -> list[str]:
     """Return the project-id order for `target`, falling back to the bridge order."""
     return selected_map.get(target, selected_map["bridge"])
@@ -99,6 +153,7 @@ def load_content(
     private_path: Path | None = None,
     lang: str = "en",
     target: str = "bridge",
+    web_projection: bool = False,
 ) -> dict[str, Any]:
     """Load full content tree.
 
@@ -107,7 +162,8 @@ def load_content(
     awards (list of records), publications (list of records), labels, faq.
 
     If private_path is provided and the file exists, its contents are merged into
-    content["personal"].
+    content["personal"]. When web_projection is true, the Skills tree uses the
+    concise web bridge or target-specific projection.
     """
     if target not in TARGETS:
         raise ValueError(f"unknown target {target!r}; expected one of {TARGETS}")
@@ -131,7 +187,11 @@ def load_content(
         "profile": _resolve_profile_target(
             _load_yaml(content_dir / f"profile.{lang}.yaml"), target
         ),
-        "skills": _load_yaml(content_dir / "skills.yaml"),
+        "skills": _resolve_skills_target(
+            _load_yaml(content_dir / "skills.yaml"),
+            target,
+            web_projection=web_projection,
+        ),
         "education": _load_yaml(content_dir / "education.yaml"),
         "experience": _load_yaml(content_dir / "experience.yaml"),
         "projects": projects,

@@ -3,12 +3,260 @@
     "headline": "Computational Biology · Krebsgenomik",
     "tagline": "Bioinformatiker mit tiefen Wurzeln in der Krebsgenomik — HLA-Typisierung & Neoantigen-Identifizierung aus echten Patienten-NGS/RNA-Seq, reproduzierbare Snakemake-Pipelines, 11 peer-reviewed Forschungspublikationen.",
     "lead_paragraph": "Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-Identifizierung aus realen Patienten-NGS- und RNA-Seq-Daten, verpackt als reproduzierbare Snakemake-Workflows, mit Wet-Lab-Ausbildung am Deutschen Krebsforschungszentrum (DKFZ), am Nationalen Centrum für Tumorerkrankungen (NCT), am Forschungszentrum Jülich, am Kirchhoff-Institut für Physik (KIP) und an der Seoul National University (SNU). Eine parallele Forschungslinie in der experimentellen Biophysik brachte 11 peer-reviewed Forschungspublikationen — als Erst- und geteilter Erstautor — in der hochauflösenden Mikroskopie von DNA-Schadensreparatur und Chromatin hervor.",
-    "second_paragraph": "Ebenso zu Hause in der Produktion: Migration von 1.000+ analytischen Prozessen in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Mentoring von 100+ Fachkräften in Python, SQL & ML — bei gleichzeitiger Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden."
+    "second_paragraph": "Ebenso zu Hause in der Produktion: Migration von 1.000+ analytischen Prozessen in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Mentoring von 100+ Fachkräften in Python, SQL & ML — bei gleichzeitiger Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden.",
+    "skills": {
+      "categories": [
+        {
+          "name": "Bioinformatik & ML",
+          "groups": [
+            {
+              "label": "Genomik",
+              "items": [
+                "NGS",
+                "RNA-Seq",
+                "WES",
+                "SNV Calling",
+                "Splice Analysis",
+                "MapSplice",
+                "HISAT2/STAR",
+                "samtools/bcftools",
+                "bedtools"
+              ]
+            },
+            {
+              "label": "Immunoinformatik",
+              "items": [
+                "HLA Typing",
+                "MHC-I Prediction",
+                "OptiType",
+                "MHCflurry",
+                "Neoepitopes"
+              ]
+            },
+            {
+              "label": "Nanoskopie",
+              "items": [
+                "Spatial Point-Pattern",
+                "Cluster Analysis (DBSCAN)"
+              ]
+            },
+            {
+              "label": "Strukturbiologie",
+              "items": [
+                "TCRdock",
+                "AlphaFold v2",
+                "Mol*"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Biotech Wet-Lab",
+          "groups": [
+            {
+              "label": "Modelle",
+              "items": [
+                "Cancer/Tumor",
+                "3D Cell Culture",
+                "Neural Progenitors"
+              ]
+            },
+            {
+              "label": "Bildgebung",
+              "items": [
+                "Super-Resolution",
+                "Confocal",
+                "Fluorescence"
+              ]
+            },
+            {
+              "label": "Assays",
+              "items": [
+                "FISH",
+                "IF",
+                "qPCR",
+                "FACS"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "KI & Developer-Tooling",
+          "groups": [
+            {
+              "label": "Angewandte KI",
+              "items": [
+                "OpenAI API",
+                "TensorFlow.js",
+                "ONNX Runtime Web"
+              ]
+            },
+            {
+              "label": "Browser-Auslieferung",
+              "items": [
+                "Chrome Extension (Manifest V3)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Daten & Engineering",
+          "groups": [
+            {
+              "label": "Engineering & Pipelines",
+              "items": [
+                "Python (Expert)",
+                "Snakemake",
+                "Conda",
+                "Docker",
+                "Git"
+              ]
+            },
+            {
+              "label": "Cloud",
+              "items": [
+                "GCP",
+                "BigQuery",
+                "Vertex AI"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "hero_stack": [
+      "NGS",
+      "Python (Expert)",
+      "GCP"
+    ]
   },
   "ds-ml": {
     "headline": "Data Science · Machine Learning",
     "tagline": "Data Scientist mit Produktiv-ML auf GCP, aufbauend auf einem Jahrzehnt in Krebsgenomik und experimenteller Biophysik mit 11 peer-reviewed Forschungspublikationen.",
     "lead_paragraph": "Entwicklung und Auslieferung von Machine-Learning-Systemen durchgängig — mit der experimentellen Sorgfalt eines Forschungsjahrzehnts in Krebsgenomik und experimenteller Biophysik in jedem Modell und jeder Pipeline.",
-    "second_paragraph": "In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML."
+    "second_paragraph": "In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML.",
+    "skills": {
+      "categories": [
+        {
+          "name": "KI & Developer-Tooling",
+          "groups": [
+            {
+              "label": "Angewandte KI",
+              "items": [
+                "OpenAI API",
+                "TensorFlow.js",
+                "ONNX Runtime Web"
+              ]
+            },
+            {
+              "label": "Browser-Auslieferung",
+              "items": [
+                "Chrome Extension (Manifest V3)"
+              ]
+            },
+            {
+              "label": "Agentenbasierte Entwicklung",
+              "items": [
+                "Claude Code",
+                "Codex",
+                "OpenCode",
+                "Pi",
+                "Grok",
+                "Cursor"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Daten & Engineering",
+          "groups": [
+            {
+              "label": "KI & ML",
+              "items": [
+                "TensorFlow",
+                "Keras",
+                "LSTMs",
+                "OpenCV",
+                "XGBoost",
+                "MLflow"
+              ]
+            },
+            {
+              "label": "Engineering & Pipelines",
+              "items": [
+                "Python (Expert)",
+                "R",
+                "SQL",
+                "dbt",
+                "Pydantic",
+                "Streamlit",
+                "Docker",
+                "Git"
+              ]
+            },
+            {
+              "label": "Cloud",
+              "items": [
+                "GCP",
+                "BigQuery",
+                "BigQueryML",
+                "Vertex AI",
+                "Looker"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Bioinformatik & ML",
+          "groups": [
+            {
+              "label": "Genomik",
+              "items": [
+                "NGS",
+                "RNA-Seq",
+                "Cancer Genomics"
+              ]
+            },
+            {
+              "label": "Immunoinformatik",
+              "items": [
+                "HLA Typing",
+                "Neoepitopes"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Biotech Wet-Lab",
+          "groups": [
+            {
+              "label": "Modelle",
+              "items": [
+                "Cancer/Tumor",
+                "3D Cell Culture",
+                "Neural Progenitors"
+              ]
+            },
+            {
+              "label": "Bildgebung",
+              "items": [
+                "Super-Resolution",
+                "Confocal",
+                "Fluorescence"
+              ]
+            },
+            {
+              "label": "Assays",
+              "items": [
+                "FISH",
+                "IF",
+                "qPCR",
+                "FACS"
+              ]
+            }
+          ]
+        }
+      ]
+    }
   }
 }

@@ -6,10 +6,12 @@ The website renders four positioning fields that vary per target:
   lead_paragraph   (profile intro)   <- profile.paragraphs[0]
   second_paragraph (profile intro)   <- profile.paragraphs[1]
 
-The variants JSON must carry exactly these four text fields per target, with
-no bridge values and no `selected_projects` (the site groups projects by
-category and never consumes selected_projects). These tests assert that
-*positioning correctness*, not merely structural validity.
+The variants JSON must carry these four text fields, a derived CodeHero stack,
+and a resolved Skills tree per target. The site uses the latter to swap the visible
+Skills section without reimplementing the content resolver in the browser. There are no
+`selected_projects` values (the site groups projects by category and never
+consumes selected_projects). These tests assert positioning correctness, not
+merely structural validity.
 """
 
 from __future__ import annotations
@@ -18,10 +20,11 @@ import json
 
 import pytest
 
-from scripts.render_web_data import _extract_overrides, render_web_data
+from scripts.render_web_data import _extract_overrides, _hero_stack, render_web_data
 
 TARGETS = ("comp-bio", "ds-ml")
-OVERRIDE_KEYS = {"headline", "tagline", "lead_paragraph", "second_paragraph"}
+TEXT_OVERRIDE_KEYS = {"headline", "tagline", "lead_paragraph", "second_paragraph"}
+BASE_OVERRIDE_KEYS = TEXT_OVERRIDE_KEYS | {"skills"}
 
 
 @pytest.fixture(scope="module")
@@ -55,13 +58,54 @@ def test_variants_have_all_positioning_fields(rendered):
     for lang in ("en", "de"):
         for target in TARGETS:
             overrides = rendered[lang]["variants"][target]
-            assert set(overrides) == OVERRIDE_KEYS, (
-                f"{lang}/{target}: keys {set(overrides)} != {OVERRIDE_KEYS}"
+            expected_keys = BASE_OVERRIDE_KEYS | ({"hero_stack"} if target == "comp-bio" else set())
+            assert set(overrides) == expected_keys, (
+                f"{lang}/{target}: keys {set(overrides)} != {expected_keys}"
             )
-            for key in OVERRIDE_KEYS:
+            for key in TEXT_OVERRIDE_KEYS:
                 assert isinstance(overrides[key], str) and overrides[key].strip(), (
                     f"{lang}/{target}.{key} must be a non-empty string"
                 )
+            if "hero_stack" in overrides:
+                assert overrides["hero_stack"]
+                assert all(isinstance(item, str) and item for item in overrides["hero_stack"])
+
+
+def test_hero_stack_uses_data_engineering_leads(rendered):
+    expected = ["NGS", "TensorFlow", "Python (Expert)", "GCP"]
+    for lang in ("en", "de"):
+        assert _hero_stack(rendered[lang]["bridge"]["skills"]) == expected
+        assert _hero_stack(rendered[lang]["variants"]["ds-ml"]["skills"]) == expected
+        assert rendered[lang]["variants"]["comp-bio"]["hero_stack"] == [
+            "NGS",
+            "Python (Expert)",
+            "GCP",
+        ]
+
+
+def test_variants_carry_resolved_complementary_skills(rendered):
+    for lang in ("en", "de"):
+        bridge = rendered[lang]["bridge"]["skills"]
+        for target in TARGETS:
+            skills = rendered[lang]["variants"][target]["skills"]
+            assert skills != bridge
+            assert skills["categories"]
+            assert all(category["groups"] for category in skills["categories"])
+
+        def items(skills):
+            return {
+                item
+                for category in skills["categories"]
+                for group in category["groups"]
+                for item in group["items"]
+            }
+
+        comp_bio = rendered[lang]["variants"]["comp-bio"]["skills"]
+        ds_ml = rendered[lang]["variants"]["ds-ml"]["skills"]
+        assert "TCRdock" in items(comp_bio)
+        assert "TCRdock" not in items(ds_ml)
+        assert "LSTMs" in items(ds_ml)
+        assert "Claude Code" in items(ds_ml)
 
 
 def test_variants_no_selected_projects(rendered):
@@ -84,10 +128,12 @@ def test_variants_differ_from_bridge(rendered):
             "second_paragraph": bridge["profile"]["paragraphs"][1],
         }
         for target in TARGETS:
-            for key, value in rendered[lang]["variants"][target].items():
-                assert value != bridge_vals[key], (
+            overrides = rendered[lang]["variants"][target]
+            for key in TEXT_OVERRIDE_KEYS:
+                assert overrides[key] != bridge_vals[key], (
                     f"{lang}/{target}.{key} == bridge value; override is a no-op"
                 )
+            assert overrides["skills"] != bridge["skills"]
 
 
 def test_variants_en_de_parity(rendered):
@@ -151,3 +197,14 @@ def test_extract_never_emits_selected_projects():
     bridge = {**_tree(), "selected_projects": ["A"]}
     variant = {**_tree(), "selected_projects": ["B", "C"]}
     assert _extract_overrides(bridge, variant) == {}
+
+
+def test_extract_emits_resolved_skills_tree_without_selected_projects():
+    """The browser receives resolved skills, not variant instructions."""
+    bridge = {**_tree(), "skills": {"categories": [{"groups": [{"label": "A", "items": ["1"]}]}]}}
+    skills = {"categories": [{"groups": [{"label": "A", "items": ["1", "detail"]}]}]}
+    variant = {**_tree(headline="variant"), "skills": skills, "selected_projects": ["B"]}
+    overrides = _extract_overrides(bridge, variant)
+    assert overrides["skills"] == skills
+    assert "hero_stack" not in overrides
+    assert "selected_projects" not in overrides

@@ -19,13 +19,28 @@ import StatBand from "../components/StatBand.astro";
 import FaqSection from "../components/FaqSection.astro";
 
 const data = contentEn as unknown as ContentData;
+const switcherVariants = Object.fromEntries(
+  Object.entries(variantsEn).map(([target, variant]) => [
+    target,
+    {
+      headline: variant.headline,
+      tagline: variant.tagline,
+      lead_paragraph: variant.lead_paragraph,
+      second_paragraph: variant.second_paragraph,
+      hero_stack: "hero_stack" in variant ? variant.hero_stack : undefined,
+    },
+  ]),
+);
+const skillVariants = Object.fromEntries(
+  Object.entries(variantsEn).map(([target, variant]) => [target, { skills: variant.skills }]),
+);
 ---
 <BaseLayout lang="en" data={data}>
   <Header slot="header" personal={data.personal} lang="en" />
   <h1 class="sr-only">{data.personal.name.given} {data.personal.name.family}</h1>
   <CodeHero personal={data.personal} profile={data.profile} publications={data.publications} skills={data.skills} experience={data.experience} lang="en" />
   <StatBand data={data} lang="en" />
-  <TargetSwitcher variants={variantsEn} lang="en" />
+  <TargetSwitcher variants={switcherVariants} lang="en" />
   <ProfileSection personal={data.personal} profile={data.profile} labels={data.labels} />
   <div class="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr]">
     <div data-reveal>
@@ -35,7 +50,7 @@ const data = contentEn as unknown as ContentData;
       <AwardsSection awards={data.awards} labels={data.labels} />
     </div>
     <aside data-reveal>
-      <SkillsSidebar skills={data.skills} labels={data.labels} />
+      <SkillsSidebar skills={data.skills} labels={data.labels} variants={skillVariants} />
       <EducationSection education={data.education} labels={data.labels} />
       <LanguagesList languages={data.languages} labels={data.labels} />
       <VolunteerSection volunteer={data.volunteer} labels={data.labels} />

@@ -146,11 +146,35 @@
                     "label": { "$ref": "#/$defs/LangString" },
                     "items": {
                       "type": "array",
-                      "items": { "type": "string" },
+                      "items": { "type": "string", "minLength": 1 },
                       "minItems": 1
                     }
                   },
                   "required": ["label", "items"],
+                  "additionalProperties": false
+                }
+              },
+              "variants": {
+                "type": "object",
+                "propertyNames": { "enum": ["bridge", "comp-bio", "ds-ml"] },
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "omit": { "type": "boolean" },
+                    "omit_groups": {
+                      "type": "array",
+                      "items": { "type": "string", "minLength": 1 },
+                      "minItems": 1
+                    },
+                    "group_items": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": { "type": "string", "minLength": 1 },
+                        "minItems": 1
+                      }
+                    }
+                  },
                   "additionalProperties": false
                 }
               }
@@ -159,6 +183,22 @@
             "additionalProperties": false
           },
           "minItems": 1
+        },
+        "variants": {
+          "type": "object",
+          "propertyNames": { "enum": ["bridge", "comp-bio", "ds-ml"] },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "category_order": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1 },
+                "minItems": 1,
+                "uniqueItems": true
+              }
+            },
+            "additionalProperties": false
+          }
         }
       },
       "required": ["categories"],
