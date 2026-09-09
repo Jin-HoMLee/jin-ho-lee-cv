@@ -1,6 +1,6 @@
 # Issue #46 — Variant-aware publication depth (web + plain text + PDF aggregate) — Design
 
-**Status:** Approved design (Option B + scope forks resolved 2026-06-01). Ready for implementation plan.
+**Status:** Approved design (Option B + scope forks resolved 2026-06-01). Implemented in the current change; the source files and labels referenced below own the final behavior.
 
 **Issue:** [#46](https://github.com/Jin-HoMLee/jin-ho-lee-cv/issues/46) — `feat(variants): variant-aware publication depth (Selected vs full)`.
 
