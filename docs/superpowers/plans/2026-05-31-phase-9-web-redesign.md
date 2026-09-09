@@ -21,9 +21,15 @@
 - **Commit** after each task with a plain message (no Claude attribution, per CLAUDE.md).
 - **Do not** touch `content/`, the Python renderers, or the data JSON shape. Do not add a client framework.
 
-### Design note — CodeHero is canonical (does NOT target-switch)
+### Design note — CodeHero uses separate target hooks
 
-The `CodeHero` renders the **bridge/canonical** `headline` + `tagline`. It is *not* wired to the Phase 8c target switcher: thematically the hero shows the *source file* (one canonical identity), while the switcher re-positions the human-readable sections below it. Concretely this also avoids the switcher's `document.querySelector('[data-cv-field=…]')` first-match-only behavior breaking if `headline`/`tagline` hooks were duplicated. **The CodeHero's YAML must NOT carry `data-cv-field` attributes.** (If syncing the hero to the switcher is wanted later, that's a scoped follow-up that converts the switcher to `querySelectorAll`.)
+The original Phase 9 implementation kept `CodeHero` on the bridge/canonical
+`headline` + `tagline`. The later Phase 8c complementary-view follow-up wires those
+fields and the derived stack to the existing `cv-target-change` event, while keeping
+the hero's own `data-cv-hero-*` hooks separate from the switcher's
+`data-cv-field` hooks. See the [Phase 8c design contract](../specs/2026-05-31-phase-8c-web-variants-design.md)
+for the current behavior. **The CodeHero's YAML must not carry `data-cv-field`
+attributes.**
 
 ---
 

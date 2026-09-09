@@ -232,9 +232,7 @@ def _validate_skills_category_orders(content_dir: Path) -> list[FileError]:
     errors: list[FileError] = []
     duplicate_base = sorted({name for name in names if names.count(name) > 1})
     if duplicate_base:
-        errors.append(
-            FileError(path, f"duplicate base Skills category name(s): {duplicate_base}")
-        )
+        errors.append(FileError(path, f"duplicate base Skills category name(s): {duplicate_base}"))
     for target, override in variants.items():
         if not isinstance(override, dict):
             continue
@@ -251,12 +249,12 @@ def _validate_skills_category_orders(content_dir: Path) -> list[FileError]:
             )
         if unknown:
             errors.append(
-                FileError(path, f"variant {target!r} references unknown category name(s): {unknown}")
+                FileError(
+                    path, f"variant {target!r} references unknown category name(s): {unknown}"
+                )
             )
         if missing:
-            errors.append(
-                FileError(path, f"variant {target!r} omits category name(s): {missing}")
-            )
+            errors.append(FileError(path, f"variant {target!r} omits category name(s): {missing}"))
     return errors
 
 

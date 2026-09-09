@@ -190,7 +190,9 @@ def test_skills_nonweb_targets_are_full_and_web_bridge_is_curated(content_dir):
         "Bioinformatics & ML",
         "Biotech Wet-Lab",
     ]
-    assert names(load_content(content_dir, lang="en", target="ds-ml", web_projection=True)) == names(ds_ml)
+    assert names(
+        load_content(content_dir, lang="en", target="ds-ml", web_projection=True)
+    ) == names(ds_ml)
 
     bioml = next(
         c for c in comp_bio["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML"
