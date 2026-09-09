@@ -12,16 +12,13 @@
     - en: "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling."
       de: "Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code."
       refs: [D4]
-    - en: "Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — a 2026 full rebuild of the badminton video-analysis toolkit first built in 2025 (pose estimation, LSTM shot-prediction modeling); full PRD-to-CI product discipline, in active development."
-      de: "Computer Vision: Entwicklung von badminton-vision, einer Chrome-Erweiterung zur Echtzeit-Erkennung von Pose, Schläger und Shuttle direkt im Browser aus Badminton-Spielaufnahmen (TensorFlow.js, ONNX Runtime Web) — 2026 als vollständiger Neuaufbau des 2025 entwickelten Badminton-Videoanalyse-Toolkits (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle); vollständige Produktentwicklungsdisziplin von PRD bis CI, in aktiver Entwicklung."
+    - en: "Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web)."
+      de: "Computer Vision: Entwicklung von badminton-vision, einer vollständig client-seitigen Chrome-Erweiterung zur Badminton-Spielanalyse (TensorFlow.js, ONNX Runtime Web)."
       refs: [D2]
-    - en: "Bioinformatics: Released a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2/OpenFold structural validation."
-      de: "Bioinformatik: Veröffentlichung einer reproduzierbaren Snakemake-Pipeline zur Splice-Neoepitop-Identifizierung mit struktureller Validierung via AlphaFold2/OpenFold."
-      refs: [L5]
 
 - id: cintellic
   org:
-    name: "Cintellic / International Bank"
+    name: "Cintellic GmbH"
     url: null
   role:
     en: "Consultant, Lead Business Functional Analyst"
@@ -30,8 +27,8 @@
     start: "2024-05"
     end: "2025-07"
   bullets:
-    - en: "Scale: Architected the migration of 1,000+ analytical processes to Google Cloud."
-      de: "Skalierung: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud."
+    - en: "Client: International bank — architected the migration of 1,000+ analytical processes to Google Cloud."
+      de: "Kunde: Internationale Bank — Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud."
       refs: [C2]
     - en: "AI in Production: Developed BigQueryML models for anti-financial crime & KYC."
       de: "KI in Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC."
@@ -60,7 +57,7 @@
 
 - id: research
   org:
-    name: "FZ Jülich / KIP / NCT / SNU / DKFZ"
+    name: "Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)"
     url: null
   role:
     en: "Doctoral & Post-Graduate Researcher"

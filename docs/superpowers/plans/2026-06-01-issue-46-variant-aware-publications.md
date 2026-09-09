@@ -2,15 +2,17 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+> **Implementation note:** This file records the original task sequence. The implementation is now present. The [design spec](../specs/2026-06-01-issue-46-variant-aware-publications-design.md) and the source files it names are authoritative for final behavior; embedded snippets and unchecked steps below are historical planning material, not a second source of truth.
+
 **Goal:** Make the publications section vary by positioning target — `comp-bio` keeps the full per-paper list; `bridge`/`ds-ml` show a derived, honest one-line aggregate + ORCID pointer — across the PDF, plain-text, and web renderers (machine formats unchanged).
 
-**Architecture:** A new shared module `scripts/publications.py` owns the policy (`publication_mode`) and the derived aggregate (`publication_summary`, `format_publication_summary`). Counts/span are derived from `bib_loader`; the prose lives in `content/labels.yaml`. PDF/text branch in Python; the web renders both an aggregate block and a `hidden` full block and the client-side switcher toggles them by target name. Supersedes #43's "Selected Publications" subset for the industry variants.
+**Architecture:** The shared module `scripts/publications.py` owns the policy (`publication_mode`) and derived publication figures (`publication_summary`, `publication_metrics`, `format_publication_summary`). Counts/span are derived from `bib_loader`; bilingual scope wording lives in `content/labels.yaml`. PDF/text branch in Python; the web renders all-record charts plus an aggregate/full-list toggle by target, with the StatBand using the peer-reviewed research count. Supersedes #43's "Selected Publications" subset for the industry variants.
 
 **Tech Stack:** Python 3 (pytest, ruff), Typst, Astro/TypeScript. Commands: `just validate`, `just test`, `just lint`, `just web-build`.
 
 **Spec:** `docs/superpowers/specs/2026-06-01-issue-46-variant-aware-publications-design.md`
 
-**Live-data facts (verified against `content/publications.bib`):** 15 entries = 10 journal articles + 2 book chapters (1 research 2021, 1 applied 2025) + 3 conference contributions. Peer-reviewed (research articles+chapters) = **11** → 2 first-author, 3 shared-first, 6 co-author. Conference contributions = **3** (all first-author). Research-body span = **2017–2021**. ORCID = `https://orcid.org/0009-0001-8784-1771` at `personal.links.orcid`.
+**Current data source:** `content/publications.bib` owns the publication inventory; the [design spec](../specs/2026-06-01-issue-46-variant-aware-publications-design.md) documents the current research/applied scopes and derived figures. Do not treat the historical examples below as current content.
 
 ---
 

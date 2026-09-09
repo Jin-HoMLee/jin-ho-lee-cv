@@ -18,8 +18,7 @@ from scripts.bib_loader import Publication
 from scripts.citations import enrich_publications, load_citation_cache
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
-from scripts.publications import format_publication_summary
-
+from scripts.publications import format_publication_summary, publication_metrics
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
@@ -127,6 +126,11 @@ def render_web_data(
         )
         bridge_resolved["publications"] = enrich_publications(
             bridge_resolved["publications"], citations
+        )
+        # Keep numeric publication facts as a generated object next to the prose;
+        # Astro components must not infer scope by parsing the summary sentence.
+        bridge_resolved["publication_metrics"] = publication_metrics(
+            bridge_resolved["publications"]
         )
         pub_labels = bridge_resolved["labels"]["publications"]
         bridge_resolved["publications_aggregate"] = {

@@ -1,7 +1,7 @@
 id: L2
 category: life-science
 title: "Personalized Immunotherapy – High-Throughput HLA Typing Pipeline"
-summary: "Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data."
+summary: "B.Sc. thesis project: Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data."
 role: "Bioinformatics Bachelor Thesis Student (NCT Heidelberg)"
 period:
   start: "2014-04"

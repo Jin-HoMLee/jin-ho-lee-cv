@@ -5,7 +5,7 @@
     "label": "Bioinformatics · Data Science",
     "email": "jinho.michael.lee@gmail.com",
     "url": "https://jinholee.is-a.dev/",
-    "summary": "Data scientist with deep roots in cancer genomics. Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at DKFZ, NCT, FZ Jülich, KIP, and SNU. A parallel line of experimental-biophysics research produced 10+ peer-reviewed papers — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.\n\nNow applying that rigor in industry: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML; secured third-party funding and supervised 10+ students.",
+    "summary": "Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). A parallel line of experimental-biophysics research produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.\n\nAt Cintellic GmbH, applied that rigor for an international bank: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML; secured third-party funding and supervised 10+ students.",
     "location": {
       "city": "Mannheim",
       "countryCode": "GER"
@@ -48,17 +48,16 @@
       "startDate": "2025-08-01",
       "highlights": [
         "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.",
-        "Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — a 2026 full rebuild of the badminton video-analysis toolkit first built in 2025 (pose estimation, LSTM shot-prediction modeling); full PRD-to-CI product discipline, in active development.",
-        "Bioinformatics: Released a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2/OpenFold structural validation."
+        "Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web)."
       ]
     },
     {
-      "name": "Cintellic / International Bank",
+      "name": "Cintellic GmbH",
       "position": "Consultant, Lead Business Functional Analyst",
       "startDate": "2024-05-01",
       "endDate": "2025-07-28",
       "highlights": [
-        "Scale: Architected the migration of 1,000+ analytical processes to Google Cloud.",
+        "Client: International bank — architected the migration of 1,000+ analytical processes to Google Cloud.",
         "AI in Production: Developed BigQueryML models for anti-financial crime & KYC.",
         "Stakeholder Lead: Bridged technical data engineering with business requirements for high-stakes banking."
       ]
@@ -74,7 +73,7 @@
       ]
     },
     {
-      "name": "FZ Jülich / KIP / NCT / SNU / DKFZ",
+      "name": "Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)",
       "position": "Doctoral & Post-Graduate Researcher",
       "startDate": "2014-04-01",
       "endDate": "2022-07-28",
@@ -412,7 +411,7 @@
     },
     {
       "name": "SignMeUp – Real-Time American Sign Language (ASL) Recognition",
-      "description": "Machine learning pipeline and application prototype for real-time ASL gesture recognition, designed for integration into a digital sign language learning app.",
+      "description": "Built a real-time ASL recognition prototype: an end-to-end machine-learning pipeline that extracts hand landmarks, classifies temporal gestures, and gives sign-language learners immediate feedback.",
       "highlights": [
         "Project Leadership: Defined project scope, managed team communication, and delivered stakeholder presentations.",
         "Model Development: Designed and optimized an LSTM neural network to classify temporal sequences of ASL gestures.",
@@ -436,7 +435,7 @@
     },
     {
       "name": "badminton-vision – Real-Time On-Device Computer Vision for Badminton",
-      "description": "Badminton video analysis in two stints: a comprehensive toolkit — pose estimation, LSTM shot-prediction modeling, and a browser extension for manual YouTube labeling — built in mid-to-late 2025; shelved for about ten months; then revived in August 2026 as a full rebuild: badminton-vision, a real-time, fully on-device Chrome MV3 extension running on badminton match footage played on YouTube, under active, ongoing development.",
+      "description": "Fully on-device Chrome MV3 extension for real-time badminton match analysis, with browser-based pose, racket, and shuttle detection; actively rebuilding toward its first stable release.",
       "highlights": [
         "Built a Chrome MV3 extension that detects pose, racket, and shuttle on badminton match footage played on YouTube, running entirely client-side with no server round-trip.",
         "Implemented the default real-time detection pipeline with TensorFlow.js and ONNX Runtime Web.",
@@ -458,7 +457,7 @@
     },
     {
       "name": "Data Science Bootcamp Program",
-      "description": "Professional training program for transitioning participants into data science careers.",
+      "description": "Coached multiple cohorts through an applied data-science program, combining Python, SQL, machine learning, visualization, and capstone delivery with hands-on technical mentoring.",
       "highlights": [
         "Delivered lectures on Python, machine learning, SQL, and data visualization.",
         "Mentored students throughout the data science lifecycle.",
@@ -552,7 +551,7 @@
     },
     {
       "name": "Personalized Immunotherapy – High-Throughput HLA Typing Pipeline",
-      "description": "Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data.",
+      "description": "B.Sc. thesis project: Bioinformatics workflow for identifying patient-specific cancer targets and automating HLA genotyping from Next-Generation Sequencing (NGS) data.",
       "highlights": [
         "Developed an in silico genotyping pipeline to extract HLA alleles directly from Whole-Exome Sequencing (WXS) data.",
         "Implemented predictive modeling using ANNs (NetMHCPan) to screen missense mutations for MHC-I binding affinity.",

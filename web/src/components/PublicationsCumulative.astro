@@ -1,12 +1,15 @@
 ---
-import type { Publication, Lang } from "../types/content";
+import type { Labels, Publication, Lang, PublicationMetrics } from "../types/content";
+import { formatPublicationScopeCaption, formatPublicationTotalLabel } from "../lib/publicationScope";
 
 interface Props {
   publications: Publication[];
+  metrics: PublicationMetrics;
+  labels: Labels;
   lang: Lang;
 }
 
-const { publications, lang } = Astro.props;
+const { publications, metrics, labels, lang } = Astro.props;
 
 const yearCounts: Record<number, number> = {};
 for (const p of publications) {
@@ -86,10 +89,14 @@ for (let y = minYear; y <= maxYear; y++) {
 
 const yTicks = [0, total];
 
-const totalLabel = { en: "publications", de: "Publikationen" }[lang];
+const totalLabel = formatPublicationTotalLabel(lang);
+const ariaTotalLabel = lang === "de"
+  ? formatPublicationTotalLabel(lang, "dative")
+  : totalLabel;
+const scopeCaption = formatPublicationScopeCaption(metrics, labels, lang, "cumulative");
 const ariaLabel = lang === "en"
-  ? `Cumulative count of ${total} publications from ${minYear} to ${maxYear}`
-  : `Kumulative Anzahl von ${total} Publikationen von ${minYear} bis ${maxYear}`;
+  ? `Cumulative count of ${total} all-record ${totalLabel} from ${minYear} to ${maxYear}`
+  : `Kumulative Anzahl von ${total} ${ariaTotalLabel} von ${minYear} bis ${maxYear}`;
 const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[lang];
 ---
 <figure class="relative my-6">
@@ -131,7 +138,7 @@ const captionLabel = { en: "Cumulative over time", de: "Kumulativ über Zeit" }[
     ))}
   </svg>
   <figcaption class="mt-1 text-xs text-[var(--faint)]">
-    {captionLabel} · {total} {totalLabel}
+    {captionLabel} · {scopeCaption}
   </figcaption>
   <div
     class="pub-tooltip pointer-events-none absolute hidden rounded px-2 py-1 text-xs shadow-lg"

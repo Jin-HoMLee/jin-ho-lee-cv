@@ -117,6 +117,18 @@ export interface Publication {
   citation_count: number | null;
 }
 
+export interface PublicationMetrics {
+  total_records: number;
+  research_records: number;
+  peer_reviewed_records: number;
+  applied_records: number;
+  all_records_authorship: {
+    first: number;
+    shared_first: number;
+    coauthor: number;
+  };
+}
+
 export interface Labels {
   sections: {
     profile: string;
@@ -135,6 +147,10 @@ export interface Labels {
     basic: string;
     passive: string;
   };
+  publications: {
+    research_label: string;
+    applied_label: string;
+  };
   misc: {
     present: string;
   };
@@ -151,6 +167,7 @@ export interface ContentData {
   volunteer: Volunteer;
   awards: Award[];
   publications: Publication[];
+  publication_metrics: PublicationMetrics;
   publications_aggregate: { summary: string; pointer: string };
   labels: Labels;
   faq: Faq;

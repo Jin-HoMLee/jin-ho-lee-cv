@@ -5,9 +5,8 @@ jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/
 ================================================================================
 PROFILE
 ================================================================================
-Production-focused data scientist who builds and ships machine-learning systems
-end to end — bringing the experimental rigor of a research decade across cancer
-genomics and experimental biophysics, and 10+ peer-reviewed publications, to
+Builds and ships machine-learning systems end to end, bringing the experimental
+rigor of a research decade across cancer genomics and experimental biophysics to
 every model and pipeline.
 
 In industry: architected the migration of 1,000+ analytical processes to Google
@@ -19,11 +18,10 @@ EXPERIENCE
 ================================================================================
 ML/AI Engineer & Open-Source Developer - Independent / Self-Directed    (2025-08 to present)
   - Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.
-  - Computer Vision: Building badminton-vision, a Chrome extension for real-time, on-device pose/racket/shuttle detection from badminton match footage (TensorFlow.js, ONNX Runtime Web) — a 2026 full rebuild of the badminton video-analysis toolkit first built in 2025 (pose estimation, LSTM shot-prediction modeling); full PRD-to-CI product discipline, in active development.
-  - Bioinformatics: Released a reproducible Snakemake splice-neoepitope discovery pipeline with AlphaFold2/OpenFold structural validation.
+  - Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web).
 
-Consultant, Lead Business Functional Analyst - Cintellic / International Bank    (2024-05 to 2025-07)
-  - Scale: Architected the migration of 1,000+ analytical processes to Google Cloud.
+Consultant, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 to 2025-07)
+  - Client: International bank — architected the migration of 1,000+ analytical processes to Google Cloud.
   - AI in Production: Developed BigQueryML models for anti-financial crime & KYC.
   - Stakeholder Lead: Bridged technical data engineering with business requirements for high-stakes banking.
 
@@ -31,7 +29,7 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 to 2024-04
   - Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles.
   - ML Development: Independently engineered a Real-Time ASL Recognition prototype using LSTMs, MediaPipe, and TensorFlow.
 
-Doctoral & Post-Graduate Researcher - FZ Jülich / KIP / NCT / SNU / DKFZ    (2014-04 to 2022-07)
+Doctoral & Post-Graduate Researcher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 to 2022-07)
   - Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer-patient NGS and RNA-Seq splice-junction data; validated SNV calls against gold-standard sequencing in clinical colorectal-cancer cohorts (NCT/DKFZ).
   - Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects — from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin.
   - Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles.
@@ -48,20 +46,17 @@ Anti-Financial Crime – Know Your Customer (KYC) Platform    (2024-08 to 2025-0
 
 SignMeUp – Real-Time American Sign Language (ASL) Recognition    (2023-09 to 2023-12)
   Project Manager / Data Scientist (neuefische GmbH)
-  Machine learning pipeline and application prototype for real-time ASL gesture
-  recognition, designed for integration into a digital sign language learning
-  app.
+  Built a real-time ASL recognition prototype: an end-to-end machine-learning
+  pipeline that extracts hand landmarks, classifies temporal gestures, and gives
+  sign-language learners immediate feedback.
   Outcome: Delivered a functional prototype for real-time inference, enabling
   instant feedback for sign language learners.
 
 badminton-vision – Real-Time On-Device Computer Vision for Badminton    (2025-06 to present)
   Independent Developer
-  Badminton video analysis in two stints: a comprehensive toolkit — pose
-  estimation, LSTM shot-prediction modeling, and a browser extension for manual
-  YouTube labeling — built in mid-to-late 2025; shelved for about ten months;
-  then revived in August 2026 as a full rebuild: badminton-vision, a real-time,
-  fully on-device Chrome MV3 extension running on badminton match footage played
-  on YouTube, under active, ongoing development.
+  Fully on-device Chrome MV3 extension for real-time badminton match analysis,
+  with browser-based pose, racket, and shuttle detection; actively rebuilding
+  toward its first stable release.
   Outcome: In-browser, on-device computer vision extension for badminton match
   analysis, under active, ongoing development toward a first stable release.
 
@@ -149,8 +144,10 @@ Sports
 ================================================================================
 PUBLICATIONS
 ================================================================================
-11 peer-reviewed publications (2 first-author, 3 shared-first, 6 co-author) and
-3 first-author conference contributions, 2017–2021, in radiation biophysics &
+11 peer-reviewed publications (10 articles + 1 research book chapter; 2 first-
+author, 3 shared-first, 6 co-author), 3 first-author research conference
+contributions, and 1 applied/off-domain record (14 research records; 15
+bibliography records total), research span 2017–2021, in radiation biophysics &
 super-resolution DNA-repair imaging.
 Full list & metrics: https://orcid.org/0009-0001-8784-1771
 

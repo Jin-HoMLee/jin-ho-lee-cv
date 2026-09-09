@@ -1,14 +1,14 @@
 {
   "comp-bio": {
     "headline": "Computational Biology · Krebsgenomik",
-    "tagline": "Bioinformatiker mit tiefen Wurzeln in der Krebsgenomik — HLA-Typisierung & Neoantigen-Identifizierung aus echten Patienten-NGS/RNA-Seq, reproduzierbare Snakemake-Pipelines, 10+ Publikationen.",
-    "lead_paragraph": "Bioinformatiker mit Spezialisierung auf HLA-Typisierung und Neoantigen-Identifizierung — Entwicklung von In-silico-Pipelines aus realen Patienten-NGS- und RNA-Seq-Daten, verpackt als reproduzierbare Snakemake-Workflows, mit Wet-Lab-Ausbildung an DKFZ, NCT, FZ Jülich, KIP und SNU. Eine parallele Forschungslinie in der experimentellen Biophysik brachte 10+ peer-reviewed Publikationen — als Erst- und geteilter Erstautor — in der hochauflösenden Mikroskopie von DNA-Schadensreparatur und Chromatin hervor.",
+    "tagline": "Bioinformatiker mit tiefen Wurzeln in der Krebsgenomik — HLA-Typisierung & Neoantigen-Identifizierung aus echten Patienten-NGS/RNA-Seq, reproduzierbare Snakemake-Pipelines, 11 peer-reviewed Forschungspublikationen.",
+    "lead_paragraph": "Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-Identifizierung aus realen Patienten-NGS- und RNA-Seq-Daten, verpackt als reproduzierbare Snakemake-Workflows, mit Wet-Lab-Ausbildung am Deutschen Krebsforschungszentrum (DKFZ), am Nationalen Centrum für Tumorerkrankungen (NCT), am Forschungszentrum Jülich, am Kirchhoff-Institut für Physik (KIP) und an der Seoul National University (SNU). Eine parallele Forschungslinie in der experimentellen Biophysik brachte 11 peer-reviewed Forschungspublikationen — als Erst- und geteilter Erstautor — in der hochauflösenden Mikroskopie von DNA-Schadensreparatur und Chromatin hervor.",
     "second_paragraph": "Ebenso zu Hause in der Produktion: Migration von 1.000+ analytischen Prozessen in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Mentoring von 100+ Fachkräften in Python, SQL & ML — bei gleichzeitiger Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden."
   },
   "ds-ml": {
     "headline": "Data Science · Machine Learning",
-    "tagline": "Data Scientist mit Produktiv-ML auf GCP, aufbauend auf einem Jahrzehnt in Krebsgenomik und experimenteller Biophysik mit 10+ peer-reviewed Publikationen.",
-    "lead_paragraph": "Produktionsorientierter Data Scientist, der Machine-Learning-Systeme durchgängig entwickelt und ausliefert — und die experimentelle Sorgfalt eines Forschungsjahrzehnts in Krebsgenomik und experimenteller Biophysik sowie 10+ peer-reviewed Publikationen in jedes Modell und jede Pipeline einbringt.",
+    "tagline": "Data Scientist mit Produktiv-ML auf GCP, aufbauend auf einem Jahrzehnt in Krebsgenomik und experimenteller Biophysik mit 11 peer-reviewed Forschungspublikationen.",
+    "lead_paragraph": "Entwicklung und Auslieferung von Machine-Learning-Systemen durchgängig — mit der experimentellen Sorgfalt eines Forschungsjahrzehnts in Krebsgenomik und experimenteller Biophysik in jedem Modell und jeder Pipeline.",
     "second_paragraph": "In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML."
   }
 }

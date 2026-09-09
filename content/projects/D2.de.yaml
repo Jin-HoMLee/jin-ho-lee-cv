@@ -2,7 +2,7 @@ id: D2
 category: data-science
 open_source: true
 title: "badminton-vision – Echtzeit-Computer-Vision für Badminton, direkt im Browser"
-summary: "Badminton-Videoanalyse in zwei Etappen: 2025 entstand ein umfassendes Analyse-Toolkit (Posenschätzung, LSTM-basierte Schlagvorhersage-Modelle, Browser-Erweiterung zur manuellen Annotation von YouTube-Aufnahmen). Nach einer rund zehnmonatigen Pause folgte im August 2026 der vollständige Neuaufbau: badminton-vision, eine Chrome-MV3-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen auf YouTube ausführt. Das Projekt befindet sich weiterhin in aktiver Entwicklung."
+summary: "Vollständig geräteseitige Chrome-MV3-Erweiterung zur Echtzeit-Analyse von Badmintonspielen mit browserbasierter Pose-, Schläger- und Shuttle-Erkennung; aktiv auf dem Weg zum ersten stabilen Release."
 role: "Unabhängiger Entwickler"
 period:
   start: "2025-06"

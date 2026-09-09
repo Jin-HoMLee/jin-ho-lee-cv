@@ -1,7 +1,7 @@
 id: D1
 category: data-science
 title: "SignMeUp – Real-Time American Sign Language (ASL) Recognition"
-summary: "Machine learning pipeline and application prototype for real-time ASL gesture recognition, designed for integration into a digital sign language learning app."
+summary: "Built a real-time ASL recognition prototype: an end-to-end machine-learning pipeline that extracts hand landmarks, classifies temporal gestures, and gives sign-language learners immediate feedback."
 role: "Project Manager / Data Scientist (neuefische GmbH)"
 period:
   start: "2023-09"

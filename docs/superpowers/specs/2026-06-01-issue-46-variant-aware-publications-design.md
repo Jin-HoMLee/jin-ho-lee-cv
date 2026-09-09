@@ -1,6 +1,6 @@
 # Issue #46 — Variant-aware publication depth (web + plain text + PDF aggregate) — Design
 
-**Status:** Approved design (Option B + scope forks resolved 2026-06-01). Ready for implementation plan.
+**Status:** Approved design (Option B + scope forks resolved 2026-06-01). Implemented in the current change; the source files and labels referenced below own the final behavior.
 
 **Issue:** [#46](https://github.com/Jin-HoMLee/jin-ho-lee-cv/issues/46) — `feat(variants): variant-aware publication depth (Selected vs full)`.
 
@@ -12,7 +12,7 @@
 
 ## Motivation
 
-SOTA academia→industry CV guidance is *de-emphasize-but-don't-delete*: an industry reader doesn't want 15 radiation-biophysics papers, but the publication record is still a credibility signal. So industry variants get a compact, ATS-parseable, ORCID-verifiable summary, while the academic variant keeps the full list. The numbers in the summary mirror the website authorship pie (6 first / 3 shared / 6 co-author = 15).
+SOTA academia→industry CV guidance is *de-emphasize-but-don't-delete*: an industry reader doesn't need all 15 bibliography records foregrounded, but the publication record is still a credibility signal. The inventory contains 14 research records plus 1 applied/off-domain record. Industry variants get a compact, ATS-parseable, ORCID-verifiable research summary, while the academic variant keeps the full list. The website authorship pie covers all records (6 first / 3 shared / 6 co-author = 15).
 
 ## Decisions (locked)
 
@@ -20,132 +20,67 @@ SOTA academia→industry CV guidance is *de-emphasize-but-don't-delete*: an indu
 |---|---|---|
 | **PDF** (Typst) | Full verbatim list (unchanged from #43 renderer) | Aggregate line + ORCID pointer. Heading reverts to plain "Publications" / "Publikationen". |
 | **Plain text** | Full verbatim list (current behavior) | Aggregate line + ORCID pointer (full `https://orcid.org/...` URL). |
-| **Web** | Charts + full grouped list | Charts **stay visible** + aggregate line + ORCID pointer; only the verbose per-paper grouped list is hidden. |
+| **Web** | All-record charts + full category-grouped list | All-record charts **stay visible** + research aggregate line + ORCID pointer; only the verbose per-paper category-grouped list is hidden. |
 | **JSON Resume / JSON-LD** | Full 15 structured records | Full 15 structured records — **unchanged**, target-independent (collapsing structured records into prose would be lossy). |
 
-**Web charts rationale:** the authorship pie *is* the 6/3/6 aggregate, visually, and the cumulative chart is the Phase-9 centerpiece — so on the web the charts always show; only the per-paper list is variant-gated.
+**Web charts rationale:** the authorship pie *is* the all-record 6/3/6 aggregate, visually, and the cumulative chart is the Phase-9 centerpiece. Both charts therefore remain visible for every target and their captions explicitly identify the 15 bibliography records as 14 research records plus 1 applied/off-domain record. Only the per-paper list is variant-gated.
 
-**Default (no-JS / bridge) web state:** charts + aggregate visible, full list `hidden`. Structured publication data for crawlers is already covered by the JSON-LD `@graph` (all 15), so hiding the verbose list by default has no SEO cost.
+**Default (no-JS / bridge) web state:** all-record charts + research aggregate visible, full list `hidden`. The StatBand uses the 11 peer-reviewed research-record count. Structured publication data for crawlers is already covered by the JSON-LD `@graph` (all 15), so hiding the verbose list by default has no SEO cost.
 
 ## Aggregate copy (honest, type-segmented — resolved 2026-06-01)
 
-**EN:** `11 peer-reviewed publications (2 first-author, 3 shared-first, 6 co-author) and 3 first-author conference contributions, 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.` + pointer `Full list & metrics: <orcid>`
+The exact bilingual aggregate templates and pointer labels are owned by
+`content/labels.yaml`. They communicate 11 peer-reviewed research publications
+(10 articles plus 1 research book chapter), the 2/3/6 peer-reviewed authorship
+breakdown, 3 research conference contributions, 1 applied/off-domain record, the
+14 research-record subtotal, the 15-record bibliography total, and the research
+span. Renderers consume the resolved labels; they do not own parallel copies of
+this wording.
 
-**DE:** `11 begutachtete Publikationen (2 als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor) sowie 3 Konferenzbeiträge als Erstautor, 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.` + pointer `Vollständige Liste: <orcid>`
-
-All figures are *derived* from `bib_loader` (never hardcoded); only the editorial prose, role wording, domain phrase, the "first-author conference contributions" descriptor, and per-language word order live in `content/labels.yaml`.
+All figures are *derived* from `bib_loader` (never hardcoded); only the editorial
+prose, role wording, domain phrase, the "first-author conference contributions"
+descriptor, and per-language word order live in `content/labels.yaml`.
 
 ### What counts as "peer-reviewed" (verified against the live bib)
 
-The full record is **15** entries: 10 journal articles, 2 book chapters, 3 conference contributions. The aggregate honestly summarizes only the **research** body (14 — the lone 2025 applied marketing book chapter is excluded as off-domain) and distinguishes peer-reviewed from conference work:
+The full record is **15** entries: 10 journal articles, 1 research book chapter,
+1 applied/off-domain book chapter, and 3 conference contributions. The aggregate
+derives its research metrics from the **research** body (14; the lone 2025 applied
+marketing book chapter is excluded from those metrics as off-domain) while
+explicitly disclosing the applied record and all-record total. It distinguishes
+peer-reviewed from conference work:
 
 | Bucket | Rule | Count | first / shared / co-author |
 |---|---|---|---|
 | **Peer-reviewed** | research, `type ∈ {article, book-chapter}` | **11** (10 articles + the 2021 *Super-Resolution Radiation Biology* book chapter) | 2 / 3 / 6 |
 | **Conference contributions** | research, `type == conference` | **3** | 3 / 0 / 0 (all first-author) |
-| *Excluded* | the 2025 applied marketing book chapter (`category: applied`) | 1 | — |
+| **Applied/off-domain** | excluded from research metrics; `category: applied` | **1** | — |
 
-Peer-review is inferred from type: research **articles + book chapters are peer-reviewed**, **conference contributions are not** (per the author, 2026-06-01). The span `2017–2021` is the research-body min/max year. Everything ties out: 11 + 3 = 14 research items; peer-reviewed authorship 2 + 3 + 6 = 11. The descriptor "3 **first-author** conference contributions" is editorial in the label (true for all three current conference entries; a future non-first-author conference entry would be a one-line content edit).
+Peer-review is inferred from type: research **articles + book chapters are peer-reviewed**, **conference contributions are not** (per the author, 2026-06-01). The span `2017–2021` is the research-body min/max year. Everything ties out: 11 + 3 = 14 research items, plus 1 applied record = 15 total; peer-reviewed authorship 2 + 3 + 6 = 11. The descriptor "3 **first-author** conference contributions" is editorial in the label (true for all three current conference entries; a future non-first-author conference entry would be a one-line content edit).
 
 ## Architecture — shared policy module
 
-New file **`scripts/publications.py`** — the single home for variant publication policy + the aggregate, imported by `pdf/build.py`, `scripts/render_web_data.py`, and `scripts/render_text.py`. (Until #46, depth was a PDF-only concern living in `pdf/build.py: select_publications`; now that web + text also vary, the policy is genuinely shared and moves out of the PDF build path. The machine formats deliberately do **not** import it.)
+New file **`scripts/publications.py`** is the single home for variant publication
+policy and derived publication numbers. It is shared by the PDF, website, and
+plain-text renderers; JSON Resume and JSON-LD deliberately continue to emit the
+full structured list without importing this presentation policy.
 
-```python
-"""Variant-aware publication rendering policy + aggregate summary.
-
-Shared by the PDF (pdf/build.py), website (scripts/render_web_data.py) and
-plain-text (scripts/render_text.py) renderers so all three agree on (a) which
-targets show the full per-paper list vs. a one-line aggregate, and (b) the exact
-wording of that aggregate. The machine formats (JSON Resume, JSON-LD) bypass this
-and always emit the full structured list.
-"""
-from __future__ import annotations
-
-from dataclasses import dataclass
-
-from scripts.bib_loader import Publication, authorship_counts
-
-_PEER_REVIEWED_TYPES = ("article", "book-chapter")  # conference contributions are not
-_COAUTHOR = ("middle", "last", "corresponding")      # everything that isn't first/shared
-EN_DASH = "–"
-
-
-def publication_mode(target: str) -> str:
-    """"full" for the academic variant, "aggregate" for everyone else.
-
-    comp-bio foregrounds the verbatim list; bridge/ds-ml collapse it to a derived
-    summary line + ORCID pointer (de-emphasize-don't-delete).
-    """
-    return "full" if target == "comp-bio" else "aggregate"
-
-
-@dataclass(frozen=True)
-class PublicationSummary:
-    peer_reviewed: int   # research articles + book chapters
-    pr_first: int        # …of which first-author
-    pr_shared: int       # …shared-first
-    pr_coauthor: int     # …co-author (middle/last/corresponding)
-    conferences: int     # research conference contributions (all first-author)
-    year_start: int
-    year_end: int
-
-
-def publication_summary(pubs: list[Publication]) -> PublicationSummary:
-    """Derive the honest, type-segmented aggregate from the research publications.
-
-    Only ``category == "research"`` entries are summarized (the lone applied piece
-    is off-domain and excluded). Peer-reviewed = research articles + book chapters;
-    conference contributions are counted separately. ``pr_coauthor`` folds
-    middle/last/corresponding. The span is the research-body min/max year.
-    """
-    research = [p for p in pubs if p.category == "research"]
-    peer = [p for p in research if p.type in _PEER_REVIEWED_TYPES]
-    years = [p.year for p in research] or [p.year for p in pubs]
-    return PublicationSummary(
-        peer_reviewed=len(peer),
-        pr_first=sum(1 for p in peer if p.authorship == "first"),
-        pr_shared=sum(1 for p in peer if p.authorship == "shared"),
-        pr_coauthor=sum(1 for p in peer if p.authorship in _COAUTHOR),
-        conferences=sum(1 for p in research if p.type == "conference"),
-        year_start=min(years),
-        year_end=max(years),
-    )
-
-
-def format_publication_summary(template: str, pubs: list[Publication]) -> str:
-    """Fill a resolved (single-language) label template with derived figures.
-
-    The template owns the prose + per-language word order; only the derived counts
-    and the span are substituted, so nothing is hardcoded.
-    """
-    s = publication_summary(pubs)
-    span = f"{s.year_start}{EN_DASH}{s.year_end}"
-    return template.format(
-        peer_reviewed=s.peer_reviewed, pr_first=s.pr_first, pr_shared=s.pr_shared,
-        pr_coauthor=s.pr_coauthor, conferences=s.conferences, span=span,
-    )
-```
+The module's `PublicationSummary` owns the complete inventory and its scopes:
+`total_records`, `research_records`, `peer_reviewed`, the article and research
+book-chapter split, peer-reviewed authorship counts, conference count,
+`applied_records`, all-record authorship counts, and the research year span.
+`publication_metrics()` serializes the website subset needed by the charts and
+StatBand. `format_publication_summary()` fills the aggregate template owned by
+`content/labels.yaml`.
 
 ## `content/labels.yaml` changes
 
-Remove the now-unused `publications_selected` key (no variant uses a "Selected" heading anymore). Add a `publications` block with the aggregate template + pointer label (both LangStrings; `{…}` are Python `str.format` placeholders, untouched by `resolve_langstrings`):
-
-```yaml
-sections:
-  # … unchanged …
-  publications:          { en: "Publications",          de: "Publikationen" }
-  # publications_selected:  <-- DELETED (obsolete after #46)
-  # …
-
-publications:
-  summary:
-    en: "{peer_reviewed} peer-reviewed publications ({pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author) and {conferences} first-author conference contributions, {span}, in radiation biophysics & super-resolution DNA-repair imaging."
-    de: "{peer_reviewed} begutachtete Publikationen ({pr_first} als Erstautor, {pr_shared} geteilte Erstautorenschaft, {pr_coauthor} als Co-Autor) sowie {conferences} Konferenzbeiträge als Erstautor, {span}, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur."
-  full_list_pointer:
-    en: "Full list & metrics:"
-    de: "Vollständige Liste:"
-```
+Remove the now-unused `publications_selected` key (no variant uses a "Selected"
+heading anymore). The canonical `publications` block in `content/labels.yaml`
+owns the bilingual aggregate template, pointer label, and the resolved
+`research_label` / `applied_label` scope labels. Its `{...}` placeholders are
+filled by `format_publication_summary()` after language resolution. Renderers must
+consume these labels rather than defining parallel English/German copies.
 
 ## PDF renderer
 
@@ -171,7 +106,12 @@ else:
 # resolved["publications"] keeps the full list; the aggregate Typst branch ignores it.
 ```
 
-**`pdf/templates/publications.typ`** — branch on mode; the `else` branch is the #43 per-paper loop verbatim. New signature takes the whole `data` (matching `sidebar(data, …)`'s precedent):
+**`pdf/templates/publications.typ`** — branch on mode. The full branch renders
+the complete per-paper list, grouped under the resolved research/applied scope
+labels; the aggregate branch renders the summary and ORCID pointer. The full list
+uses compact inter-record spacing so the applied record does not leave avoidable
+whitespace. The signature takes the whole `data` (matching `sidebar(data, …)`'s
+precedent):
 
 ```typst
 #import "../styles.typ": *
@@ -210,20 +150,35 @@ def _publications_aggregate(content: dict, pubs: list[Publication]) -> str:
     return f"{_wrap(summary)}\n{pointer} {orcid}"
 
 # in render():
-pub_body = _publications(pubs) if publication_mode(target) == "full" else _publications_aggregate(content, pubs)
+pub_body = (
+    _publications(pubs, lang, content["labels"]["publications"])
+    if publication_mode(target) == "full"
+    else _publications_aggregate(content, pubs)
+)
 # … _section(L["publications"][lang], pub_body) …
 ```
 
 The text `SECTION_LABELS["publications"]` is already plain "PUBLICATIONS"/"PUBLIKATIONEN" — no heading change.
+The full list prefixes each category with the canonical resolved research or
+applied label.
 
 ## Web renderer
 
-**`scripts/render_web_data.py`** — inject the (target-independent) aggregate strings into the bridge content JSON. The `variants.json` payload is **not** touched: which targets show the full list vs. the aggregate is a pure function of the target name, so the client computes it (below) rather than carrying a `publications_mode` field — this keeps the `variants.json` "exactly four positioning fields" contract (and its regression guard `test_render_web_data_variants.py`) intact.
+**`scripts/render_web_data.py`** — inject the target-independent aggregate
+strings and generated `publication_metrics` object into the bridge content JSON.
+The `variants.json` payload is **not** touched: which targets show the full list
+vs. the aggregate is a pure function of the target name, so the client computes
+it (below) rather than carrying a `publications_mode` field. This keeps the
+`variants.json` "exactly four positioning fields" contract (and its regression
+guard `test_render_web_data_variants.py`) intact.
 
 ```python
-from scripts.publications import format_publication_summary
+from scripts.publications import format_publication_summary, publication_metrics
 
 # after building bridge_resolved, before _dump:
+bridge_resolved["publication_metrics"] = publication_metrics(
+    bridge_resolved["publications"]
+)
 pub_labels = bridge_resolved["labels"]["publications"]
 bridge_resolved["publications_aggregate"] = {
     "summary": format_publication_summary(pub_labels["summary"], bridge_resolved["publications"]),
@@ -231,40 +186,29 @@ bridge_resolved["publications_aggregate"] = {
 }
 ```
 
-**`web/src/components/PublicationsList.astro`** — keep the charts always visible; render the aggregate block (visible by default) and wrap the existing grouped list in a `hidden` full block:
+**`web/src/components/PublicationsList.astro`** — keep the all-record charts
+always visible; render the research aggregate block (visible by default) and
+wrap the category-grouped full list in a `hidden` block. The component receives
+the generated metrics and resolved labels so chart and list scope wording has a
+single source.
 
 ```astro
 interface Props {
   publications: Publication[];
+  metrics: PublicationMetrics;
   aggregate: { summary: string; pointer: string };
-  orcid: string;
+  labels: Labels;
+  orcid: string | null;
+  scholar?: string | null;
   lang: Lang;
 }
-const { publications, aggregate, orcid, lang } = Astro.props;
-const orcidDisplay = orcid.replace(/^https?:\/\//, "");
+const { publications, metrics, aggregate, labels, orcid, scholar, lang } = Astro.props;
+const orcidDisplay = orcid ? orcid.replace(/^https?:\/\//, "") : "";
 ```
-```html
-<section id="publications" class="py-6">
-  <h2 class="eyebrow mb-4">{sectionLabel[lang]}</h2>
-  <div class="flex flex-col gap-2 md:flex-row md:items-center md:gap-8">
-    <div class="shrink-0"><PublicationsChart publications={publications} lang={lang} /></div>
-    <div class="flex-1 min-w-0"><PublicationsCumulative publications={publications} lang={lang} /></div>
-  </div>
-
-  <div data-cv-pub="aggregate" class="mt-4 text-sm text-[var(--muted)]">
-    <p>{aggregate.summary}</p>
-    <p class="mt-1 text-xs text-[var(--faint)]">
-      {aggregate.pointer}{" "}
-      <a href={orcid} target="_blank" rel="noopener noreferrer"
-         class="underline decoration-dotted underline-offset-2 hover:text-[var(--text)]">{orcidDisplay}</a>
-    </p>
-  </div>
-
-  <div data-cv-pub="full" hidden class="mt-4">
-    {/* existing typeOrder→grouped per-paper list, unchanged */}
-  </div>
-</section>
-```
+The aggregate block uses `data-cv-pub="aggregate"` and links the available ORCID
+and Google Scholar profiles. The full block uses `data-cv-pub="full"`, remains
+hidden in the bridge default, and contains the category labels from
+`labels.publications` followed by the type-grouped per-paper list.
 
 **`web/src/components/TargetSwitcher.astro`** — toggle the two pre-rendered blocks inside `apply()` based on the target name (charts untouched). The full list shows only for `comp-bio`; the aggregate shows for everyone else, matching the default (bridge) server-rendered state. No `Variant` type change needed.
 
@@ -277,14 +221,23 @@ if (fullBlock) fullBlock.hidden = !showFull;
 if (aggBlock)  aggBlock.hidden  = showFull;
 ```
 
-**`web/src/pages/index.astro` + `web/src/pages/de/index.astro`** — pass the new props:
+**`web/src/pages/index.astro` + `web/src/pages/de/index.astro`** — pass the
+aggregate, generated metrics, resolved labels, and profile links as props:
 ```astro
 <PublicationsList publications={data.publications}
+                  metrics={data.publication_metrics}
                   aggregate={data.publications_aggregate}
-                  orcid={data.personal.links.orcid} lang="en" />
+                  labels={data.labels}
+                  orcid={data.personal.links.orcid}
+                  scholar={data.personal.links.googlescholar} lang="en" />
 ```
 
-**`web/src/types/content.ts`** — add `publications_aggregate: { summary: string; pointer: string }` to `ContentData`. (No `Variant`/`Labels` change needed — the switcher derives depth from the target name, and the web reads the aggregate via `ContentData`, not `labels`.)
+**`web/src/lib/publicationScope.ts`** owns the bilingual chart scope captions and
+total-record labels used by both charts. **`web/src/types/content.ts`** adds
+`publication_metrics` to `ContentData`, and its `Labels.publications` type
+exposes the resolved research/applied scope labels. The aggregate strings remain
+under `ContentData.publications_aggregate`. There is no `Variant` change: the
+switcher still derives depth from the target name.
 
 ## What #46 removes
 
@@ -294,10 +247,10 @@ if (aggBlock)  aggBlock.hidden  = showFull;
 
 ## Testing strategy (TDD)
 
-- **`tests/test_publications.py`** (NEW): `publication_mode` (comp-bio→full, bridge/ds-ml→aggregate); `publication_summary` on synthetic pubs (peer-reviewed = research articles+chapters, conference excluded from peer-reviewed, applied excluded entirely, coauthor folding, research-only span); `format_publication_summary` (placeholder fill, en-dash span); live-bib assertions (`peer_reviewed=11, pr_first=2, pr_shared=3, pr_coauthor=6, conferences=3, span=2017–2021`) — derived, not hardcoded.
+- **`tests/test_publications.py`** (NEW): `publication_mode` (comp-bio→full, bridge/ds-ml→aggregate); `publication_summary` on synthetic pubs (peer-reviewed = research articles+chapters, conference excluded from peer-reviewed, applied excluded entirely, coauthor folding, research-only span); `publication_metrics` (15 total, 14 research, 11 peer-reviewed, 1 applied, and all-record 6/3/6 authorship); `format_publication_summary` (placeholder fill, en-dash span); live-bib assertions (`peer_reviewed=11, pr_first=2, pr_shared=3, pr_coauthor=6, conferences=3, span=2017–2021`) — derived, not hardcoded.
 - **`tests/test_pdf_publications.py`** (REWORK): remove `select_publications` tests; assert `prepare_data` sets `publications_mode`/`publications_summary`/`publications_pointer`/plain `publications_heading` per target and language; PDF-text test — bridge PDF contains aggregate markers (`orcid.org/0009…`, "11 peer-reviewed") and omits a middle-author title; comp-bio PDF contains a middle-author title.
 - **`tests/test_render_text.py`**: comp-bio contains a known paper title; bridge contains the aggregate summary substring + the full ORCID URL and omits the middle-author title.
-- **`tests/test_render_web_data.py`**: `content.{lang}.json` carries `publications_aggregate.summary`/`.pointer` (and `test_round_trip_structural_keys`'s exact key-set adds `publications_aggregate`). `tests/test_render_web_data_variants.py` is **unchanged** — `publications_mode` is not in the variants payload (client derives it from the target).
+- **`tests/test_render_web_data.py`**: `content.{lang}.json` carries `publication_metrics` and `publications_aggregate.summary`/`.pointer` (and the exact top-level key-set includes both). `tests/test_render_web_data_variants.py` is **unchanged** — `publications_mode` is not in the variants payload (client derives it from the target).
 - `just validate && just test && just lint` green; `just web-build` succeeds.
 
 ## Out of scope
@@ -310,17 +263,21 @@ if (aggBlock)  aggBlock.hidden  = showFull;
 
 | File | Change |
 |---|---|
-| `scripts/publications.py` | **NEW** — shared policy + aggregate |
+| `scripts/publications.py` | **NEW** — shared policy, aggregate, and website metrics |
 | `content/labels.yaml` | −`publications_selected`; +`publications` block |
 | `pdf/build.py` | −`select_publications`; branch on `publication_mode` |
 | `pdf/templates/publications.typ` | branch full vs aggregate; `publications(data)` |
 | `pdf/templates/cv.typ` | call `publications(data)` |
 | `scripts/render_text.py` | per-target aggregate branch |
-| `scripts/render_web_data.py` | inject `publications_aggregate` into content JSON |
-| `web/src/components/PublicationsList.astro` | charts always; aggregate + full blocks |
+| `scripts/render_web_data.py` | inject `publication_metrics` and `publications_aggregate` into content JSON |
+| `web/src/components/PublicationsList.astro` | all-record charts; aggregate + category-grouped full blocks |
+| `web/src/components/PublicationsChart.astro` | render all-record authorship metrics and scope caption |
+| `web/src/components/PublicationsCumulative.astro` | render all-record cumulative scope caption |
+| `web/src/components/StatBand.astro` | show the 11 peer-reviewed research-record count |
+| `web/src/lib/publicationScope.ts` | shared bilingual chart scope formatting |
 | `web/src/components/TargetSwitcher.astro` | toggle pub blocks (derive from target) |
 | `web/src/pages/index.astro`, `…/de/index.astro` | pass new props |
-| `web/src/types/content.ts` | `ContentData.publications_aggregate` |
+| `web/src/types/content.ts` | `ContentData.publication_metrics` and `publications_aggregate`; resolved publication labels |
 | `tests/test_publications.py` | **NEW** |
 | `tests/test_pdf_publications.py`, `test_render_text.py`, `test_render_web_data.py` | reworked/extended |
 | `CLAUDE.md` | add `scripts/publications.py` to Layout; confirm phasing table unchanged (maintenance item) |

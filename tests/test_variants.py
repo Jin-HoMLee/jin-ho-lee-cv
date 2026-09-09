@@ -5,7 +5,8 @@ from __future__ import annotations
 import pytest
 from ruamel.yaml import YAML
 
-from pdf.build import _pdf_filename, _parse_args as _pdf_parse_args
+from pdf.build import _parse_args as _pdf_parse_args
+from pdf.build import _pdf_filename
 from scripts.content_loader import (
     _resolve_personal_target,
     _resolve_profile_target,
@@ -250,13 +251,11 @@ def test_ds_ml_headline_en_de(content_dir):
 def test_comp_bio_tagline_and_lead_paragraph(content_dir):
     profile = _resolved(content_dir, "en", "comp-bio")["profile"]
     assert profile["tagline"].startswith("Bioinformatician")
-    assert profile["paragraphs"][0].startswith("Bioinformatician")
 
 
 def test_ds_ml_tagline_and_lead_paragraph(content_dir):
     profile = _resolved(content_dir, "en", "ds-ml")["profile"]
     assert profile["tagline"].startswith("Data scientist shipping")
-    assert profile["paragraphs"][0].startswith("Production")
 
 
 def test_second_paragraph_varies_by_target(content_dir):

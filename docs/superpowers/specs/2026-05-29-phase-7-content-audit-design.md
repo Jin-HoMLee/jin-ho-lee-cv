@@ -56,7 +56,10 @@ All project date edits apply to **both** `.en.yaml` and `.de.yaml` (period field
 | `experience.yaml` `research` start | 2014-06 | **2014-04** | Must not post-date its earliest referenced sub-project (L2 = 2014-04 after the fix above). |
 | `profile.de.yaml` opener | "Aktuelle Industrietätigkeit bei Cintellic …" (asserts current) | past/neutral framing matching the EN opener | User is between roles; EN already neutral. Bring DE to parity, no "current" claim. Keep all other DE claims/journals/counts identical to EN. |
 
-No experience-entry org renaming is required (the "Cintellic / International Bank" label correctly captures the employer-of-record + bank-assignment structure and the ended span).
+The current employer/client attribution is owned by `content/experience.yaml`:
+the entry names Cintellic GmbH as the employer and identifies the international
+bank in its client bullet. This later clarification supersedes the combined label
+used in the original audit discussion.
 
 ## 5. Workstream 2 — Settled additions (content-only)
 
