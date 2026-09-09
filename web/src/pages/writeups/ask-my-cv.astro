@@ -107,6 +107,6 @@ const articleJsonldStr = JSON.stringify(articleJsonld).replace(/</g, "\\u003c");
       <p>The <a class="text-[var(--w-accent)] underline hover:text-[var(--w-accent-hover)]" href={reuseGuideUrl}>reuse guide</a> lists the current path and the parts that still need manual replacement.</p>
     </section>
 
-    <script is:inline type="application/ld+json" set:html={articleJsonldStr}></script>
+    <script type="application/ld+json" set:html={articleJsonldStr}></script>
   </article>
 </BaseLayout>
