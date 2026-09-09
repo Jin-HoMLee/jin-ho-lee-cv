@@ -31,10 +31,11 @@
 ## Targets
 `bridge` (default), `comp-bio`, `ds-ml` — positioning variants resolved centrally by
 `scripts/content_loader.py`. `personal.variants` overrides headlines, `profile.variants`
-overrides tagline / profile paragraphs, and each `skills` category can use `omit`,
-`omit_groups`, and `group_items` for audience-specific skill trees. The
-`skills` `bridge` operation is applied only to the web's concise default projection;
-non-web bridge artifacts retain the canonical Skills baseline.
+overrides tagline / profile paragraphs, and `skills.variants` orders categories per target
+while each category can use `omit`, `omit_groups`, and `group_items` for audience-specific
+skill trees. Category order applies to every renderer; the `skills` `bridge` operations are
+applied only to the web's concise default projection, while non-web artifacts retain the
+canonical Skills baseline.
 
 ## MCP tools
 | Tool | Hint | Does |

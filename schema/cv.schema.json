@@ -183,6 +183,22 @@
             "additionalProperties": false
           },
           "minItems": 1
+        },
+        "variants": {
+          "type": "object",
+          "propertyNames": { "enum": ["bridge", "comp-bio", "ds-ml"] },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "category_order": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1 },
+                "minItems": 1,
+                "uniqueItems": true
+              }
+            },
+            "additionalProperties": false
+          }
         }
       },
       "required": ["categories"],

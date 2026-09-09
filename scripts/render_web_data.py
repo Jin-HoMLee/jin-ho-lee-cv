@@ -53,7 +53,15 @@ def _hero_stack(skills: dict) -> list[str]:
         items = group.get("items") or []
         return items[0] if items else None
 
-    bio_groups = categories[0].get("groups") or []
+    bio_category = next(
+        (
+            category
+            for category in categories
+            if category.get("name") in {"Bioinformatics & ML", "Bioinformatik & ML"}
+        ),
+        categories[0],
+    )
+    bio_groups = bio_category.get("groups") or []
     bio_lead = first_item(bio_groups[0]) if bio_groups else None
     lead_category = next(
         (

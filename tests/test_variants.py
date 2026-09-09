@@ -18,6 +18,7 @@ from scripts.render_text import _txt_filename, render
 from scripts.validate import (
     _validate_headline_variant_completeness,
     _validate_profile_variant_parity,
+    _validate_skills_category_orders,
     _validate_skills_variant_references,
     validate_tree,
 )
@@ -142,6 +143,47 @@ def test_resolve_skills_target_bridge_strips_variant_instructions():
     assert bridge["categories"][0]["groups"][0]["items"] == ["a", "b"]
     assert len(bridge["categories"]) == 2
     assert all("variants" not in category for category in bridge["categories"])
+
+
+def test_resolve_skills_target_orders_categories_per_target():
+    skills = {
+        "categories": [
+            {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b"]}]},
+            {"name": {"en": "Data"}, "groups": [{"label": {"en": "G"}, "items": ["d"]}]},
+            {"name": {"en": "AI"}, "groups": [{"label": {"en": "G"}, "items": ["a"]}]},
+        ],
+        "variants": {
+            "bridge": {"category_order": ["Bio", "AI", "Data"]},
+            "ds-ml": {"category_order": ["AI", "Data", "Bio"]},
+        },
+    }
+
+    assert [
+        category["name"]["en"]
+        for category in _resolve_skills_target(skills, "bridge")["categories"]
+    ] == ["Bio", "AI", "Data"]
+    assert [
+        category["name"]["en"]
+        for category in _resolve_skills_target(skills, "ds-ml", web_projection=True)["categories"]
+    ] == ["AI", "Data", "Bio"]
+
+
+def test_skills_category_orders_reject_unknown_duplicate_and_missing_names(tmp_path):
+    _write(
+        tmp_path / "skills.yaml",
+        {
+            "categories": [
+                {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b"]}]},
+                {"name": {"en": "Data"}, "groups": [{"label": {"en": "G"}, "items": ["d"]}]},
+            ],
+            "variants": {"bridge": {"category_order": ["Data", "Data", "Typo"]}},
+        },
+    )
+    errors = _validate_skills_category_orders(tmp_path)
+    messages = " ".join(error.message for error in errors)
+    assert "duplicate category name" in messages
+    assert "unknown category name" in messages
+    assert "omits category name" in messages
 
 
 def test_skills_are_complementary_in_web_targets_and_full_in_bridge(content_dir):

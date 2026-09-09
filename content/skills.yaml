@@ -35,10 +35,6 @@ categories:
         items: ["Super-Resolution", "Confocal", "Fluorescence"]
       - label: { en: "Assays", de: "Assays" }
         items: ["FISH", "IF", "qPCR", "FACS"]
-    variants:
-      ds-ml:
-        omit: true
-
   - name:
       en: "Data & Engineering"
       de: "Daten & Engineering"
@@ -86,3 +82,17 @@ categories:
         omit: true
       ds-ml:
         omit_groups: ["Reproducible Environment", "Terminal & Editor"]
+
+variants:
+  bridge:
+    category_order:
+      - "Bioinformatics & ML"
+      - "AI & Developer Tooling"
+      - "Biotech Wet-Lab"
+      - "Data & Engineering"
+  ds-ml:
+    category_order:
+      - "AI & Developer Tooling"
+      - "Data & Engineering"
+      - "Bioinformatics & ML"
+      - "Biotech Wet-Lab"

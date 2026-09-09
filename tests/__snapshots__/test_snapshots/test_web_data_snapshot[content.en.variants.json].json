@@ -119,21 +119,31 @@
     "skills": {
       "categories": [
         {
-          "name": "Bioinformatics & ML",
+          "name": "AI & Developer Tooling",
           "groups": [
             {
-              "label": "Genomics",
+              "label": "Applied AI",
               "items": [
-                "NGS",
-                "RNA-Seq",
-                "Cancer Genomics"
+                "OpenAI API",
+                "TensorFlow.js",
+                "ONNX Runtime Web"
               ]
             },
             {
-              "label": "Immunoinformatics",
+              "label": "Browser Delivery",
               "items": [
-                "HLA Typing",
-                "Neoepitopes"
+                "Chrome Extension (Manifest V3)"
+              ]
+            },
+            {
+              "label": "Agentic Development",
+              "items": [
+                "Claude Code",
+                "Codex",
+                "OpenCode",
+                "Pi",
+                "Grok",
+                "Cursor"
               ]
             }
           ]
@@ -178,31 +188,51 @@
           ]
         },
         {
-          "name": "AI & Developer Tooling",
+          "name": "Bioinformatics & ML",
           "groups": [
             {
-              "label": "Applied AI",
+              "label": "Genomics",
               "items": [
-                "OpenAI API",
-                "TensorFlow.js",
-                "ONNX Runtime Web"
+                "NGS",
+                "RNA-Seq",
+                "Cancer Genomics"
               ]
             },
             {
-              "label": "Browser Delivery",
+              "label": "Immunoinformatics",
               "items": [
-                "Chrome Extension (Manifest V3)"
+                "HLA Typing",
+                "Neoepitopes"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Biotech Wet-Lab",
+          "groups": [
+            {
+              "label": "Models",
+              "items": [
+                "Cancer/Tumor",
+                "3D Cell Culture",
+                "Neural Progenitors"
               ]
             },
             {
-              "label": "Agentic Development",
+              "label": "Imaging",
               "items": [
-                "Claude Code",
-                "Codex",
-                "OpenCode",
-                "Pi",
-                "Grok",
-                "Cursor"
+                "Super-Resolution",
+                "Confocal",
+                "Fluorescence"
+              ]
+            },
+            {
+              "label": "Assays",
+              "items": [
+                "FISH",
+                "IF",
+                "qPCR",
+                "FACS"
               ]
             }
           ]

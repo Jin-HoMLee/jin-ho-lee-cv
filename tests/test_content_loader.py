@@ -175,6 +175,23 @@ def test_skills_nonweb_targets_are_full_and_web_bridge_is_curated(content_dir):
     assert items(comp_bio) == items(bridge)
     assert items(ds_ml) == items(bridge)
 
+    def names(content):
+        return [category["name"]["en"] for category in content["skills"]["categories"]]
+
+    assert names(bridge) == [
+        "Bioinformatics & ML",
+        "AI & Developer Tooling",
+        "Biotech Wet-Lab",
+        "Data & Engineering",
+    ]
+    assert names(ds_ml) == [
+        "AI & Developer Tooling",
+        "Data & Engineering",
+        "Bioinformatics & ML",
+        "Biotech Wet-Lab",
+    ]
+    assert names(load_content(content_dir, lang="en", target="ds-ml", web_projection=True)) == names(ds_ml)
+
     bioml = next(
         c for c in comp_bio["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML"
     )

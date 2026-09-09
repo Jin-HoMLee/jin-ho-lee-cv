@@ -91,6 +91,25 @@
         ]
       },
       {
+        "name": "AI & Developer Tooling",
+        "groups": [
+          {
+            "label": "Applied AI",
+            "items": [
+              "OpenAI API",
+              "TensorFlow.js",
+              "ONNX Runtime Web"
+            ]
+          },
+          {
+            "label": "Browser Delivery",
+            "items": [
+              "Chrome Extension (Manifest V3)"
+            ]
+          }
+        ]
+      },
+      {
         "name": "Biotech Wet-Lab",
         "groups": [
           {
@@ -150,25 +169,6 @@
               "GCP",
               "BigQuery",
               "Vertex AI"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "AI & Developer Tooling",
-        "groups": [
-          {
-            "label": "Applied AI",
-            "items": [
-              "OpenAI API",
-              "TensorFlow.js",
-              "ONNX Runtime Web"
-            ]
-          },
-          {
-            "label": "Browser Delivery",
-            "items": [
-              "Chrome Extension (Manifest V3)"
             ]
           }
         ]

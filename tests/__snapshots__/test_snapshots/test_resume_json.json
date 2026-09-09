@@ -145,6 +145,51 @@
       ]
     },
     {
+      "name": "AI & Developer Tooling",
+      "level": "Applied AI",
+      "keywords": [
+        "OpenAI API",
+        "TensorFlow.js",
+        "ONNX Runtime Web"
+      ]
+    },
+    {
+      "name": "AI & Developer Tooling",
+      "level": "Browser Delivery",
+      "keywords": [
+        "Chrome Extension (Manifest V3)"
+      ]
+    },
+    {
+      "name": "AI & Developer Tooling",
+      "level": "Reproducible Environment",
+      "keywords": [
+        "Nix",
+        "nix-darwin",
+        "home-manager"
+      ]
+    },
+    {
+      "name": "AI & Developer Tooling",
+      "level": "Terminal & Editor",
+      "keywords": [
+        "WezTerm",
+        "Neovim"
+      ]
+    },
+    {
+      "name": "AI & Developer Tooling",
+      "level": "Agentic Development",
+      "keywords": [
+        "Claude Code",
+        "Codex",
+        "OpenCode",
+        "Pi",
+        "Grok",
+        "Cursor"
+      ]
+    },
+    {
       "name": "Biotech Wet-Lab",
       "level": "Models",
       "keywords": [
@@ -209,51 +254,6 @@
         "BigQuery",
         "Vertex AI",
         "Looker"
-      ]
-    },
-    {
-      "name": "AI & Developer Tooling",
-      "level": "Applied AI",
-      "keywords": [
-        "OpenAI API",
-        "TensorFlow.js",
-        "ONNX Runtime Web"
-      ]
-    },
-    {
-      "name": "AI & Developer Tooling",
-      "level": "Browser Delivery",
-      "keywords": [
-        "Chrome Extension (Manifest V3)"
-      ]
-    },
-    {
-      "name": "AI & Developer Tooling",
-      "level": "Reproducible Environment",
-      "keywords": [
-        "Nix",
-        "nix-darwin",
-        "home-manager"
-      ]
-    },
-    {
-      "name": "AI & Developer Tooling",
-      "level": "Terminal & Editor",
-      "keywords": [
-        "WezTerm",
-        "Neovim"
-      ]
-    },
-    {
-      "name": "AI & Developer Tooling",
-      "level": "Agentic Development",
-      "keywords": [
-        "Claude Code",
-        "Codex",
-        "OpenCode",
-        "Pi",
-        "Grok",
-        "Cursor"
       ]
     }
   ],

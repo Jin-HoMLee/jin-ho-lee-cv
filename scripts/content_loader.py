@@ -69,19 +69,35 @@ def _resolve_profile_target(profile: dict, target: str) -> dict:
 def _resolve_skills_target(skills: dict, target: str, *, web_projection: bool = False) -> dict:
     """Resolve a target Skills view and strip projection instructions.
 
-    A category variant can omit the category, omit selected groups, or replace a
-    group's item list with a concise or expanded audience-specific list. The
-    ``bridge`` variant is a web-only concise projection;
-    the canonical bridge tree is otherwise left intact. Group labels are matched
-    by their English label; validation rejects typos and duplicate base labels before
-    renderers consume this tree.
+    A root target variant may order categories by their stable English names.
+    Category variants can then omit a category, omit selected groups, or replace a
+    group's item list with a concise or expanded audience-specific list. Category
+    ordering applies to every renderer; the omit/group projections are web-only so
+    non-web target artifacts retain the comprehensive canonical Skills baseline.
     """
     result = copy.deepcopy(skills)
+    root_variants = result.pop("variants", {})
+    root_override = root_variants.get(target, {}) if isinstance(root_variants, dict) else {}
+    category_order = (
+        root_override.get("category_order", [])
+        if isinstance(root_override, dict)
+        else []
+    )
+
+    source_categories = result["categories"]
+    if category_order:
+        by_name = {category["name"]["en"]: category for category in source_categories}
+        ordered_names = set(category_order)
+        source_categories = [
+            by_name[name] for name in category_order if name in by_name
+        ] + [
+            category for category in source_categories if category["name"]["en"] not in ordered_names
+        ]
+
     categories = []
-    for category in result["categories"]:
+    for category in source_categories:
         variants = category.pop("variants", {})
-        apply_variant = web_projection
-        override = variants.get(target, {}) if apply_variant else {}
+        override = variants.get(target, {}) if web_projection else {}
         if override.get("omit", False):
             continue
 
