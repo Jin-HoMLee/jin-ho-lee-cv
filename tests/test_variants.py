@@ -154,6 +154,7 @@ def test_resolve_skills_target_orders_categories_per_target():
         ],
         "variants": {
             "bridge": {"category_order": ["Bio", "AI", "Data"]},
+            "comp-bio": {"category_order": ["Bio", "Data", "AI"]},
             "ds-ml": {"category_order": ["AI", "Data", "Bio"]},
         },
     }
@@ -162,6 +163,10 @@ def test_resolve_skills_target_orders_categories_per_target():
         category["name"]["en"]
         for category in _resolve_skills_target(skills, "bridge")["categories"]
     ] == ["Bio", "AI", "Data"]
+    assert [
+        category["name"]["en"]
+        for category in _resolve_skills_target(skills, "comp-bio")["categories"]
+    ] == ["Bio", "Data", "AI"]
     assert [
         category["name"]["en"]
         for category in _resolve_skills_target(skills, "ds-ml", web_projection=True)["categories"]

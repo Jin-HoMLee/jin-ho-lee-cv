@@ -184,6 +184,12 @@ def test_skills_nonweb_targets_are_full_and_web_bridge_is_curated(content_dir):
         "Biotech Wet-Lab",
         "Data & Engineering",
     ]
+    assert names(comp_bio) == [
+        "Bioinformatics & ML",
+        "Biotech Wet-Lab",
+        "AI & Developer Tooling",
+        "Data & Engineering",
+    ]
     assert names(ds_ml) == [
         "AI & Developer Tooling",
         "Data & Engineering",

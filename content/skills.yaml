@@ -90,6 +90,12 @@ variants:
       - "AI & Developer Tooling"
       - "Biotech Wet-Lab"
       - "Data & Engineering"
+  comp-bio:
+    category_order:
+      - "Bioinformatics & ML"
+      - "Biotech Wet-Lab"
+      - "AI & Developer Tooling"
+      - "Data & Engineering"
   ds-ml:
     category_order:
       - "AI & Developer Tooling"
