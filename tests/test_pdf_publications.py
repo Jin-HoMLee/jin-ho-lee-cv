@@ -98,15 +98,23 @@ def test_pdf_bridge_aggregate_vs_comp_bio_full(repo_root, content_dir):
     not (_typst_available() and _pdftotext_available()),
     reason="needs typst + pdftotext (poppler) to extract and assert PDF text",
 )
-def test_pdf_comp_bio_skills_keep_applied_ai_and_browser_delivery(repo_root):
-    """The rendered Comp Bio PDF keeps applied engineering groups only."""
+def test_pdf_comp_bio_skills_keep_comprehensive_baseline(repo_root):
+    """The rendered Comp Bio PDF keeps the canonical Skills baseline."""
     expected = {
-        "en": ("Applied AI", "Browser Delivery"),
-        "de": ("Angewandte KI", "Browser-Auslieferung"),
-    }
-    omitted = {
-        "en": ("Reproducible Environment", "Terminal & Editor", "Agentic Development"),
-        "de": ("Reproduzierbare Umgebung", "Terminal & Editor", "Agentenbasierte Entwicklung"),
+        "en": (
+            "Applied AI",
+            "Browser Delivery",
+            "Reproducible Environment",
+            "Terminal & Editor",
+            "Agentic Development",
+        ),
+        "de": (
+            "Angewandte KI",
+            "Browser-Auslieferung",
+            "Reproduzierbare Umgebung",
+            "Terminal & Editor",
+            "Agentenbasierte Entwicklung",
+        ),
     }
 
     for lang in ("en", "de"):
@@ -126,5 +134,3 @@ def test_pdf_comp_bio_skills_keep_applied_ai_and_browser_delivery(repo_root):
         normalized = _norm(text)
         for label in expected[lang]:
             assert _norm(label) in normalized
-        for label in omitted[lang]:
-            assert _norm(label) not in normalized

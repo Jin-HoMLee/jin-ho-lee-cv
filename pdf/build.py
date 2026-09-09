@@ -80,20 +80,12 @@ def prepare_data(
 ) -> dict[str, Any]:
     """Load content tree, merge private overlay, resolve langstrings, return flat dict.
 
-    Applies target category order to every PDF and enables the category-local Skills
-    projection for non-bridge targets. It also applies variant-aware publication depth
-    (PDF-only rendering choice - web/text decide independently): comp-bio renders the
-    full verbatim list, bridge/ds-ml a derived aggregate summary + ORCID pointer. Injects
-    ``publications_mode`` and, for the aggregate, ``publications_summary`` /
-    ``publications_pointer``.
+    Applies variant-aware publication depth (PDF-only rendering choice — web/text
+    decide independently): comp-bio renders the full verbatim list, bridge/ds-ml a
+    derived aggregate summary + ORCID pointer. Injects ``publications_mode`` and,
+    for the aggregate, ``publications_summary`` / ``publications_pointer``.
     """
-    raw = load_content(
-        content_dir,
-        private_path=private_path,
-        lang=lang,
-        target=target,
-        web_projection=target != "bridge",
-    )
+    raw = load_content(content_dir, private_path=private_path, lang=lang, target=target)
     resolved = resolve_langstrings(raw, lang=lang)
     sections = resolved["labels"]["sections"]
     resolved["publications_heading"] = sections["publications"]

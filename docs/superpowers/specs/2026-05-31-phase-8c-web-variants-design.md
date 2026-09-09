@@ -14,14 +14,14 @@
 > and the switcher is a **dependency-free vanilla-JS Astro island** whose data is **inlined at
 > build time** (no runtime fetch).
 >
-> **Follow-up revision:** The complementary-view review extended target-specific output beyond
+> **Follow-up revision:** The complementary-view review extended the web projection beyond
 > positioning copy. `content/skills.yaml` remains the single canonical Skills baseline; its root
 > `skills.variants.<target>.category_order` controls category order for every renderer, while
-> `load_content(..., web_projection=True)` applies the category-local `omit`, `omit_groups`, and
-> `group_items` operations for web data and non-bridge targeted PDFs. Other non-web loaders keep
-> the full canonical baseline, including the bridge PDF and plain-text output. The variants
-> payload therefore carries resolved Skills trees for the sidebar and a derived `hero_stack` only
-> when it differs; the switcher still receives only its text fields and stack projection.
+> `load_content(..., web_projection=True)` applies the web-only category-local `omit`,
+> `omit_groups`, and `group_items` operations. Non-web loaders keep the full canonical baseline,
+> including when a target is selected. The variants payload therefore carries resolved Skills
+> trees for the sidebar and a derived `hero_stack` only when it differs; the switcher still
+> receives only its text fields and stack projection.
 
 ## 1. Context — third of a three-part arc
 
@@ -61,10 +61,10 @@ From the bridge website, enable a visitor to **instantly switch between comp-bio
 - **What does *not* vary on the web:** project ordering. The site renders **all** projects grouped by `category` and never consumes `selected_projects`; per-target project featuring is explicitly out of scope for 8c (a possible later "showcase" task). `selected_projects` remains a PDF/plain-text concept only.
 - The **bridge variant remains canonical** for SEO: the SSG-rendered HTML, `<title>`, `<meta description>`, OG/Twitter tags, `<link rel="canonical">`, sitemap, and schema.org `Person` all stay bridge. The switch mutates only **visible body content**, never `<head>` metadata.
 - Variant preference is **persisted** to `localStorage` and auto-applied on return visits.
-- **Skills vary by renderer contract.** Web data and non-bridge targeted PDFs apply the
-  audience-specific category-local projections. The bridge PDF and plain-text, JSON Resume,
-  JSON-LD, llms.txt, and twin renderers retain the full canonical Skills baseline; all
-  target-capable renderers apply target category ordering.
+- **Non-web Skills remain comprehensive.** PDFs and plain-text renderers continue to consume
+  `--target` for their positioning and project output, apply target category ordering, and retain
+  the full canonical Skills baseline; JSON Resume, JSON-LD, llms.txt, and twin renderers remain
+  target-independent.
 - **Sitemap routing stays unchanged:** the existing 22 core URLs remain the floor, with any registered English-only write-ups adding their own URLs; target selection adds no routes.
 
 ## 4. Data shape — resolved web projections
@@ -88,10 +88,9 @@ Each target object may contain these keys when their resolved value differs from
 `hero_stack` is emitted only when it differs from the bridge stack. The `skills` tree is emitted
 when the target projection differs from bridge; it is not a second source of truth, but a build
 output derived from `content/skills.yaml`. The target payload never includes bridge values or
-`selected_projects`. Non-web loaders that call `load_content` without `web_projection=True` use the
-full canonical Skills baseline and target category order. The web renderer and non-bridge targeted
-PDF builds explicitly enable the projection so their resolved trees carry the audience-specific
-category-local operations.
+`selected_projects`. The non-web bridge content and targeted non-web content continue to use the
+full canonical Skills baseline and target category order because they call `load_content` without
+`web_projection=True`.
 
 The page splits each target object into two inline payloads: `TargetSwitcher` receives the four
 text fields plus `hero_stack`, while `SkillsSidebar` receives a skills-only `{ skills }` map. This
@@ -103,7 +102,7 @@ The root `skills.variants.<target>.category_order` list uses stable English cate
 loader puts listed categories first and appends any unlisted categories in canonical order. The
 validator requires each configured order to contain every canonical category exactly once and
 rejects unknown names and duplicate base category names. Category-local `omit`, `omit_groups`,
-and `group_items` operations are opt-in for web data and non-bridge targeted PDF builds.
+and `group_items` operations remain web-only.
 
 ### 4.2 Why this shape
 
@@ -228,10 +227,9 @@ to unknown groups; existing bilingual variant checks remain in force.
 
 The focused tests assert *positioning and projection correctness*, not just structure:
 
-1. **Resolved loader contract:** calls without `web_projection=True` retain the full canonical
-   Skills baseline; web data and non-bridge targeted PDF calls enable it to strip projection
-   instructions and derive the concise bridge or target tree; unknown group references and
-   duplicate labels fail validation.
+1. **Resolved loader contract:** non-web target loads retain the full canonical Skills baseline;
+   `web_projection=True` strips projection instructions and derives the concise bridge or target
+   tree; unknown group references and duplicate labels fail validation.
 2. **Web payload:** both `content.{en,de}.variants.json` files contain `comp-bio` and `ds-ml`,
    all four text overrides, and resolved target Skills trees. `hero_stack` is emitted only when it
    differs from bridge; bridge values and `selected_projects` are not emitted as overrides.
@@ -280,8 +278,7 @@ The original spec's "open questions" are settled:
 3. **UI placement:** the segmented control is rendered after the hero/stat band and before the
    profile; data hooks keep its location independent of the updated surfaces.
 4. **Skills projection:** `content/skills.yaml` is canonical; target category order applies to
-   every renderer, while category-local omit/group projections are enabled for web data and
-   non-bridge targeted PDF rendering.
+   every renderer, while category-local omit/group projections apply only to web-data rendering.
 5. **localStorage:** auto-apply the saved preference on load.
 6. **JS-disabled visitors:** bridge CV renders fully server-side; the switcher is progressive
    enhancement.
@@ -289,8 +286,8 @@ The original spec's "open questions" are settled:
 ## 12. Implementation status
 
 The original Phase 8c switcher is implemented. The complementary-view follow-up extends it with
-web and non-bridge targeted-PDF Skills projections while keeping other non-web artifacts on the
-full canonical baseline. The current implementation is authoritative in `content/skills.yaml`,
+web-only Skills projections and keeps the non-web artifacts on the full canonical baseline. The
+current implementation is authoritative in `content/skills.yaml`,
 `scripts/content_loader.py`, `scripts/render_web_data.py`, `web/src/components/TargetSwitcher.astro`,
 `web/src/components/SkillsSidebar.astro`, and `web/src/components/CodeHero.astro`; this spec records
 the resulting contract rather than a pending task sequence.

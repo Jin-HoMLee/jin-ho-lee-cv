@@ -7,14 +7,12 @@
 ## Status
 
 Phase 8c's client-side switcher is implemented. The complementary-view follow-up kept
-`content/skills.yaml` as the sole Skills source of truth while adding projections for web data
-and non-bridge targeted PDFs:
+`content/skills.yaml` as the sole Skills source of truth while adding web-only projections:
 
 - `load_content(..., web_projection=True)` resolves concise bridge and target-specific Skills
   trees from category-local `omit`, `omit_groups`, and `group_items` operations.
-- Root `skills.variants.<target>.category_order` applies to every renderer. The bridge PDF and
-  non-PDF non-web loaders retain the full canonical Skills baseline; non-bridge targeted PDFs
-  explicitly enable the category-local projection.
+- Root `skills.variants.<target>.category_order` applies to every renderer; non-web loaders retain
+  the full canonical Skills baseline, including for non-bridge targets.
 - `render_web_data.py` emits resolved web target overrides. These include the four text fields,
   target Skills trees, and an optional derived `hero_stack` when it differs from bridge.
 - The page passes a text-only projection plus `hero_stack` to `TargetSwitcher` and a skills-only
@@ -35,9 +33,9 @@ The implementation below is recorded as completed scope rather than a pending ta
   per-target `category_order`, and the `omit`, `omit_groups`, and `group_items` operations.
 - `scripts/validate.py` rejects invalid category orders, duplicate base group labels, and
   category-local references to unknown groups.
-- Targeted non-web outputs apply target category order. Non-bridge targeted PDFs enable the
-  category-local projection; plain-text and other non-web loaders retain the full canonical
-  Skills baseline.
+- Targeted non-web outputs apply target category order and continue to use the full canonical
+  Skills baseline; the web renderer is the only caller that enables the concise category-local
+  projection.
 
 ### Web behavior
 
@@ -72,9 +70,9 @@ web guard and deployment smoke checks.
 
 - `content/skills.yaml` is the canonical Skills baseline; generated JSON and snapshots are not
   hand-edited.
-- Target category ordering applies to every renderer. Category-local Skills projections apply to
-  web data and non-bridge targeted PDFs; the bridge PDF, JSON Resume, plain text, llms.txt, and
-  twin artifacts retain the comprehensive baseline.
+- Target category ordering applies to every renderer. Category-local Skills projections are
+  web-only; PDFs, JSON Resume, plain text, llms.txt, and twin artifacts retain the comprehensive
+  baseline.
 - The bridge remains the no-JavaScript and SEO-canonical web view.
 - There is no runtime variant fetch, client framework, variant route, or second Skills source.
 

@@ -34,9 +34,7 @@
 overrides tagline / profile paragraphs, and `skills.variants` orders categories per target
 while each category can use `omit`, `omit_groups`, and `group_items` for audience-specific
 skill trees. Category order applies to every renderer; category-local Skills operations are
-enabled for web data and non-bridge targeted PDFs. The bridge PDF and other non-web artifacts
-retain the canonical Skills baseline. See the [Phase 8c design spec](../../../docs/superpowers/specs/2026-05-31-phase-8c-web-variants-design.md)
-for the renderer matrix.
+applied only to web projections, while non-web artifacts retain the canonical Skills baseline.
 
 ## MCP tools
 | Tool | Hint | Does |
