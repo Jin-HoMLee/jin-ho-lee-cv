@@ -1,0 +1,95 @@
+"""Renderer-specific PDF projection tests.
+
+The canonical content remains complete; the application PDF deliberately selects
+relevant evidence so each target is concise without changing source claims.
+"""
+
+from pdf.build import prepare_data
+from scripts.content_loader import load_content
+
+
+def _skill_items(data):
+    return {
+        item
+        for category in data["skills"]["categories"]
+        for group in category["groups"]
+        for item in group["items"]
+    }
+
+
+def _entry(data, entry_id):
+    return next(entry for entry in data["experience"] if entry["id"] == entry_id)
+
+
+def test_pdf_projection_does_not_change_canonical_content(content_dir):
+    canonical = load_content(content_dir, lang="en", target="comp-bio")
+    projected = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
+
+    assert len(canonical["publications"]) == 15
+    assert len(projected["publications"]) == 3
+    assert len(_skill_items(canonical)) == 65
+    assert len(_skill_items(projected)) < 65
+    assert all("thesis" in education for education in canonical["education"])
+    assert all("thesis" not in education for education in projected["education"])
+
+
+def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
+    data = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
+
+    assert data["profile"]["paragraphs"] == []
+    assert "11 peer-reviewed" in data["profile"]["tagline"]
+    assert len(_entry(data, "independent")["bullets"]) == 0
+    assert "1,000+" in _entry(data, "cintellic")["bullets"][0]["en"]
+    assert "100+" in _entry(data, "neuefische")["bullets"][0]["en"]
+    assert len(_entry(data, "research")["bullets"]) == 2
+    assert "HLA Typing" in _entry(data, "research")["bullets"][0]["en"]
+
+    skills = _skill_items(data)
+    assert {"RNA-Seq", "HLA Typing", "MHCflurry", "Snakemake", "Docker"} <= skills
+    assert {"OpenAI API", "TensorFlow.js", "Claude Code", "WezTerm"}.isdisjoint(skills)
+
+
+def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
+    expected_bullets = {
+        "bridge": {"independent": 1, "cintellic": 2, "neuefische": 2, "research": 2},
+        "comp-bio": {"independent": 0, "cintellic": 1, "neuefische": 1, "research": 2},
+        "ds-ml": {"independent": 2, "cintellic": 3, "neuefische": 2, "research": 1},
+    }
+    expected_awards = {
+        "bridge": {"Google Cloud Certified - Associate Cloud Engineer", "DAAD PROMOS Scholarship"},
+        "comp-bio": {"DeGBS Poster Award", "DAAD PROMOS Scholarship"},
+        "ds-ml": {
+            "Google Cloud Certified - Associate Cloud Engineer",
+            "“Most Patient-Centric Solution” Award",
+        },
+    }
+
+    for target, bullet_counts in expected_bullets.items():
+        data = prepare_data(content_dir, private_path=None, lang="en", target=target)
+        assert {entry["id"]: len(entry["bullets"]) for entry in data["experience"]} == bullet_counts
+        assert {award["title"] for award in data["awards"]} == expected_awards[target]
+        assert [language["name"] for language in data["languages"]] == [
+            "German",
+            "English",
+            "Korean",
+            "French",
+            "Italian",
+        ]
+        assert data["volunteer"] == {
+            "categories": [
+                {
+                    "name": "Environment",
+                    "entries": ["Foodsharing e.V. (Operations Manager)"],
+                }
+            ]
+        }
+
+
+def test_pdf_project_links_follow_language_routes(content_dir):
+    en = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
+    de = prepare_data(content_dir, private_path=None, lang="de", target="comp-bio")
+
+    assert en["project_links"]["L1"] == "https://jinholee.is-a.dev/projects/L1/"
+    assert de["project_links"]["L1"] == "https://jinholee.is-a.dev/de/projects/L1/"
+    assert en["selected_projects"][0]["web_url"] == en["project_links"]["L1"]
+    assert de["selected_projects"][0]["web_url"] == de["project_links"]["L1"]

@@ -1,7 +1,7 @@
 #import "../styles.typ": *
 
 #let awards(entries, labels) = {
-  section-heading(labels.sections.awards)
+  section-heading(labels.sections.awards, "section-awards")
 
   for entry in entries {
     grid(

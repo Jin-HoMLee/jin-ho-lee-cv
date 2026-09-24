@@ -350,7 +350,8 @@ def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
             for item in group["items"]
         }
 
-    assert "TCRdock" in all_items(bridge)
+    assert "HLA Typing" in all_items(bridge)
+    assert "TCRdock" not in all_items(bridge)  # concise PDF projection
     assert "TCRdock" in all_items(comp_bio)
     assert "LSTMs" in all_items(ds_ml)
 

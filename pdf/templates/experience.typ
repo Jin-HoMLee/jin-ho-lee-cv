@@ -11,7 +11,7 @@
   s + " – " + e
 }
 
-#let _bullet(b, lang) = {
+#let _bullet(b, lang, project-links) = {
   let txt = b.at(lang)
   let refs = b.at("refs", default: ())
 
@@ -28,7 +28,7 @@
           h(4pt)
           for (i, r) in refs.enumerate() {
             if i > 0 { h(2pt) }
-            ref-chip(r)
+            ref-chip(r, url: project-links.at(r, default: none))
           }
         }
       },
@@ -37,8 +37,8 @@
   })
 }
 
-#let experience(entries, labels, lang) = {
-  section-heading(labels.sections.experience)
+#let experience(entries, labels, lang, project-links) = {
+  section-heading(labels.sections.experience, "section-experience")
   let months = labels.months_abbr
 
   for entry in entries {
@@ -55,12 +55,12 @@
       text(style: "italic", fill: muted)[#entry.role]
       v(space-paragraph)
       if entry.bullets.len() > 0 {
-        _bullet(entry.bullets.at(0), lang)
+        _bullet(entry.bullets.at(0), lang, project-links)
       }
     })
 
     for (i, bullet) in entry.bullets.enumerate() {
-      if i > 0 { _bullet(bullet, lang) }
+      if i > 0 { _bullet(bullet, lang, project-links) }
     }
     v(space-section / 2)
   }

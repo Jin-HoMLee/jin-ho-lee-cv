@@ -1,11 +1,12 @@
 #import "../styles.typ": *
 #import "header.typ": header
+#import "navigation.typ": navigation
 #import "profile.typ": profile
 #import "experience.typ": experience
 #import "selected_projects.typ": selected_projects
 #import "publications.typ": publications
 #import "awards.typ": awards
-#import "sidebar.typ": sidebar
+#import "sidebar.typ": skills, education, languages, volunteer
 
 #let data = json("../.cache/data.json")
 #let lang = sys.inputs.at("lang", default: "en")
@@ -13,8 +14,6 @@
 #set page(
   paper: "a4",
   margin: page-margin,
-  // Footer with name + page number, shown only on multi-page output so a
-  // single-page build stays clean.
   footer: context {
     let total = counter(page).final().first()
     if total > 1 {
@@ -28,34 +27,25 @@
     }
   },
 )
-#set text(
-  font: font-family,
-  size: size-body,
-  fill: body-color,
-)
+#set text(font: font-family, size: size-body, fill: body-color)
 #set par(leading: 0.56em)
+#set heading(numbering: none)
 
-// Two-column layout in normal document flow so content paginates across pages
-// when it exceeds one page: the breakable main column continues onto page 2,
-// while the sidebar sizes to its content.
+// Preserve semantic heading nodes for outlines and links while fully controlling
+// their compact visual treatment in section-heading().
+#show heading.where(level: 1): item => item.body
+
+// A restrained single reading stream is intentional: both visual readers and
+// ATS extractors encounter sections in exactly the same order.
 #header(data.personal, site-label: data.labels.misc.interactive_cv)
-#v(6pt)
+#navigation(data.labels)
 
-#grid(
-  columns: sidebar-ratio,
-  gutter: column-gutter,
-  // Sidebar (column 1) gets the colored fill + left accent rule + padding as a
-  // grid cell so the panel spans the page break and bottom-aligns with the main
-  // column. The main column (0) is flush with no inset.
-  fill: (x, _) => if x == 1 { sidebar-bg },
-  stroke: (x, _) => if x == 1 { (left: 3pt + accent) },
-  inset: (x, _) => if x == 1 { 10pt } else { 0pt },
-  block(width: 100%, {
-    profile(data.profile, data.labels)
-    experience(data.experience, data.labels, lang)
-    selected_projects(data.selected_projects, data.labels)
-    publications(data)
-    awards(data.awards, data.labels)
-  }),
-  sidebar(data, data.labels),
-)
+#profile(data.profile, data.labels)
+#skills(data.skills, data.labels)
+#experience(data.experience, data.labels, lang, data.project_links)
+#selected_projects(data.selected_projects, data.labels)
+#education(data.education, data.labels)
+#publications(data)
+#awards(data.awards, data.labels)
+#languages(data.languages, data.labels)
+#volunteer(data.volunteer, data.labels)

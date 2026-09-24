@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from pdf.projection import project_pdf_content
 from scripts.content_loader import TARGETS, load_content
 from scripts.langstring import resolve_langstrings
 from scripts.publications import format_publication_summary, publication_mode
@@ -78,28 +79,54 @@ def prepare_data(
     lang: str,
     target: str = "bridge",
 ) -> dict[str, Any]:
-    """Load content tree, merge private overlay, resolve langstrings, return flat dict.
+    """Load content and return the concise, target-aware application-PDF view.
 
-    Applies variant-aware publication depth (PDF-only rendering choice — web/text
-    decide independently): comp-bio renders the full verbatim list, bridge/ds-ml a
-    derived aggregate summary + ORCID pointer. Injects ``publications_mode`` and,
-    for the aggregate, ``publications_summary`` / ``publications_pointer``.
+    Canonical source records remain untouched. The PDF reuses the concise Skills
+    projection used by the web, then selects relevant experience and secondary
+    detail. Computational Biology renders three representative publications plus
+    derived totals; the other targets render only the derived aggregate.
     """
-    raw = load_content(content_dir, private_path=private_path, lang=lang, target=target)
+    raw = load_content(
+        content_dir,
+        private_path=private_path,
+        lang=lang,
+        target=target,
+        web_projection=True,
+    )
+    raw = project_pdf_content(raw, target=target, lang=lang)
+    all_publications = raw["publications"]
     resolved = resolve_langstrings(raw, lang=lang)
     sections = resolved["labels"]["sections"]
-    resolved["publications_heading"] = sections["publications"]
-    mode = publication_mode(target)
+    pub_labels = resolved["labels"]["publications"]
+
+    mode = "selected" if target == "comp-bio" else publication_mode(target)
     resolved["publications_mode"] = mode
-    if mode == "aggregate":
-        pub_labels = resolved["labels"]["publications"]
-        resolved["publications_summary"] = format_publication_summary(
-            pub_labels["summary"], resolved.get("publications", [])
-        )
-        resolved["publications_pointer"] = pub_labels["full_list_pointer"]
+    resolved["publications_heading"] = (
+        pub_labels["selected_heading"] if mode == "selected" else sections["publications"]
+    )
+    summary_template = (
+        pub_labels["selected_summary"] if mode == "selected" else pub_labels["pdf_summary"]
+    )
+    resolved["publications_summary"] = format_publication_summary(
+        summary_template, all_publications
+    )
+    resolved["publications_pointer"] = pub_labels["full_list_pointer"]
+
+    if mode == "selected":
+        resolved["publications"] = resolved.pop("selected_publications")
     else:
-        resolved["publications_summary"] = None
-        resolved["publications_pointer"] = None
+        resolved.pop("selected_publications", None)
+        resolved["publications"] = []
+
+    links = resolved["personal"]["links"]
+    website = links["website"].rstrip("/")
+    web_path = "/de/#publications" if lang == "de" else "/#publications"
+    link_labels = pub_labels["link_labels"]
+    resolved["publication_links"] = [
+        {"label": link_labels["orcid"], "url": links["orcid"]},
+        {"label": link_labels["google_scholar"], "url": links["googlescholar"]},
+        {"label": link_labels["web_cv"], "url": website + web_path},
+    ]
     return _to_serializable(resolved)
 
 
