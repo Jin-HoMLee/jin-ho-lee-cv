@@ -119,15 +119,16 @@ Environment
   - Österreichisches Waldgarten-Institut
   - Hofwaerts
 Sports
+  - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
+  - Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)
   - UBC Mannheim
   - Sobell Badminton Club
   - ASD Gymnase
-  - BSG Jülich 1963 e.V.
   - WAT Simmering
-  - TSG 1889 Dossenheim e.V.
   - HTV 1846 e.V.
 Interests
   - Badminton
+  - Music
 
 ================================================================================
 PUBLICATIONS
@@ -148,3 +149,5 @@ AWARDS & CERTIFICATIONS
 2018  “Most Patient-Centric Solution” Award - {Life Science} meets IT Hackathon, Mannheim
 2015  DAAD PROMOS Scholarship - DAAD
   Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery.
+2019  Coach C Competitive Sports Badminton - State-approved extra-professional training, Ostfildern-Ruit
+  Nov 2017 – Jan 2019.

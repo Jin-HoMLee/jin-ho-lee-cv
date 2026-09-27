@@ -301,6 +301,14 @@
       "position": "Environment"
     },
     {
+      "organization": "Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)",
+      "position": "Sports"
+    },
+    {
+      "organization": "Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)",
+      "position": "Sports"
+    },
+    {
       "organization": "UBC Mannheim",
       "position": "Sports"
     },
@@ -313,15 +321,7 @@
       "position": "Sports"
     },
     {
-      "organization": "BSG Jülich 1963 e.V.",
-      "position": "Sports"
-    },
-    {
       "organization": "WAT Simmering",
-      "position": "Sports"
-    },
-    {
-      "organization": "TSG 1889 Dossenheim e.V.",
       "position": "Sports"
     },
     {
@@ -330,6 +330,10 @@
     },
     {
       "organization": "Badminton",
+      "position": "Interests"
+    },
+    {
+      "organization": "Music",
       "position": "Interests"
     }
   ],
@@ -355,6 +359,12 @@
       "date": "2015-01-01",
       "awarder": "DAAD",
       "summary": "Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery."
+    },
+    {
+      "title": "Coach C Competitive Sports Badminton",
+      "date": "2019-01-01",
+      "awarder": "State-approved extra-professional training, Ostfildern-Ruit",
+      "summary": "Nov 2017 – Jan 2019."
     }
   ],
   "projects": [

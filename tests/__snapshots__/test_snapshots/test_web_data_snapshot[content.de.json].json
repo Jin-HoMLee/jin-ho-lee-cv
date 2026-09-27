@@ -790,19 +790,20 @@
       {
         "name": "Sport",
         "entries": [
+          "Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)",
+          "Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)",
           "UBC Mannheim",
           "Sobell Badminton Club",
           "ASD Gymnase",
-          "BSG Jülich 1963 e.V.",
           "WAT Simmering",
-          "TSG 1889 Dossenheim e.V.",
           "HTV 1846 e.V."
         ]
       },
       {
         "name": "Interessen",
         "entries": [
-          "Badminton"
+          "Badminton",
+          "Music"
         ]
       }
     ]
@@ -829,6 +830,12 @@
       "issuer": "DAAD",
       "year": 2015,
       "note": "Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung."
+    },
+    {
+      "title": "Trainer-C Leistungssport Badminton",
+      "issuer": "State-approved extra-professional training, Ostfildern-Ruit",
+      "year": 2019,
+      "note": "Nov. 2017 – Jan. 2019."
     }
   ],
   "publications": [

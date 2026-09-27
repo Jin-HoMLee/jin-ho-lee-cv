@@ -82,7 +82,9 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
         }
         assert volunteer["Environment"] == ["Foodsharing e.V. (Operations Manager)"]
         assert "Sobell Badminton Club" in volunteer["Sports"]
-        assert volunteer["Interests"] == ["Badminton"]
+        assert any("Training supervisor" in entry for entry in volunteer["Sports"])
+        assert any("Badminton youth talent group" in entry for entry in volunteer["Sports"])
+        assert volunteer["Interests"] == ["Badminton", "Music"]
 
 
 def test_general_profile_is_broad_and_balanced(content_dir):
