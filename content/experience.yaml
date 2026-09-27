@@ -3,8 +3,8 @@
     name: "Independent / Self-Directed"
     url: null
   role:
-    en: "ML/AI Engineer & Open-Source Developer"
-    de: "ML/AI-Engineer & Open-Source-Entwickler"
+    en: "Independent Bioinformatics & ML/AI Engineer"
+    de: "Unabhängiger Bioinformatik- & ML/AI-Engineer"
   period:
     start: "2025-08"
     end: null
@@ -15,6 +15,9 @@
     - en: "Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web)."
       de: "Computer Vision: Entwicklung von badminton-vision, einer vollständig client-seitigen Chrome-Erweiterung zur Badminton-Spielanalyse (TensorFlow.js, ONNX Runtime Web)."
       refs: [D2]
+    - en: "Bioinformatics: Re-engineered splice-junction neoepitope discovery as a reproducible Snakemake workflow with per-rule Conda environments, run locally and on GCP GPUs."
+      de: "Bioinformatik: Neuimplementierung der Splice-Junction-Neoepitop-Identifizierung als reproduzierbarer Snakemake-Workflow mit Conda-Umgebungen pro Rule, lokal und auf GCP-GPUs ausgeführt."
+      refs: [L5]
 
 - id: cintellic
   org:
@@ -48,8 +51,8 @@
     start: "2023-02"
     end: "2024-04"
   bullets:
-    - en: "Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles."
-      de: "Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen."
+    - en: "Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles; supervised capstone projects and technical presentations."
+      de: "Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten und technischen Präsentationen."
       refs: [D3]
     - en: "ML Development: Independently engineered a Real-Time ASL Recognition prototype using LSTMs, MediaPipe, and TensorFlow."
       de: "ML-Entwicklung: Eigenständige Entwicklung eines Echtzeit-ASL-Erkennungsprototyps mit LSTMs, MediaPipe und TensorFlow."

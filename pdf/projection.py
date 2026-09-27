@@ -20,10 +20,10 @@ _EXPERIENCE_BULLETS = {
         "independent": (0,),
         "cintellic": (0, 1),
         "neuefische": (0, 1),
-        "research": (0, 1),
+        "research": (1, 2),
     },
     "comp-bio": {
-        "independent": (),
+        "independent": (2,),
         "cintellic": (0,),
         "neuefische": (0,),
         "research": (0, 1),
@@ -32,7 +32,7 @@ _EXPERIENCE_BULLETS = {
         "independent": (0, 1),
         "cintellic": (0, 1, 2),
         "neuefische": (0, 1),
-        "research": (0,),
+        "research": (1,),
     },
 }
 
@@ -46,17 +46,6 @@ _AWARD_TITLES = {
         "Google Cloud Certified - Associate Cloud Engineer",
         "“Most Patient-Centric Solution” Award",
     },
-}
-
-_SKILL_CATEGORIES = {
-    "bridge": {
-        "Bioinformatics & ML",
-        "AI & Developer Tooling",
-        "Biotech Wet-Lab",
-        "Data & Engineering",
-    },
-    "comp-bio": {"Bioinformatics & ML", "Biotech Wet-Lab", "Data & Engineering"},
-    "ds-ml": {"AI & Developer Tooling", "Data & Engineering", "Bioinformatics & ML"},
 }
 
 
@@ -80,13 +69,6 @@ def project_pdf_content(content: dict[str, Any], *, target: str, lang: str) -> d
             if index < len(entry["bullets"])
         ]
 
-    allowed_categories = _SKILL_CATEGORIES[target]
-    result["skills"]["categories"] = [
-        category
-        for category in result["skills"]["categories"]
-        if _english(category["name"]) in allowed_categories
-    ]
-
     for education in result["education"]:
         education.pop("thesis", None)
 
@@ -107,6 +89,12 @@ def project_pdf_content(content: dict[str, Any], *, target: str, lang: str) -> d
     result["awards"] = [
         award for award in result["awards"] if _english(award["title"]) in allowed_awards
     ]
+    if target == "bridge":
+        # The scholarship remains visible; its immunotherapy-specific internship
+        # note belongs in the focused biological view rather than the General CV.
+        for award in result["awards"]:
+            if _english(award["title"]) == "DAAD PROMOS Scholarship":
+                award.pop("note", None)
 
     all_publications = result["publications"]
     by_key = {publication.key: publication for publication in all_publications}

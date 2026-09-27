@@ -221,7 +221,7 @@ def test_skills_category_orders_reject_unknown_duplicate_and_missing_names(tmp_p
     assert "omits category name" in messages
 
 
-def test_skills_are_complementary_in_web_targets_and_full_in_bridge(content_dir):
+def test_skills_are_concise_by_target_and_full_in_nonweb_bridge(content_dir):
     def resolved(target, web_projection=False):
         return resolve_langstrings(
             load_content(
@@ -248,21 +248,16 @@ def test_skills_are_complementary_in_web_targets_and_full_in_bridge(content_dir)
             for item in group["items"]
         }
 
-    assert {"TCRdock", "PostgreSQL", "Nix", "Claude Code"} <= items("bridge")
+    assert {"TCRdock", "Nix", "Claude Code", "Snakemake"} <= items("bridge")
     assert "TCRdock" not in items("web-bridge")
-    assert "PostgreSQL" not in items("web-bridge")
-    assert {"MapSplice", "TCRdock", "MHCflurry"} <= items("comp-bio")
+    assert "Nix" not in items("web-bridge")
+    assert {"MapSplice", "TCRdock", "MHCflurry", "Snakemake"} <= items("comp-bio")
     assert {"LSTMs", "OpenCV", "BigQueryML", "Claude Code"} <= items("ds-ml")
     assert "TCRdock" not in items("ds-ml")
     assert "Claude Code" not in items("comp-bio")
 
 
-def test_comp_bio_web_keeps_applied_ai_and_browser_delivery(content_dir):
-    expected_labels = {
-        "en": ["Applied AI", "Browser Delivery"],
-        "de": ["Angewandte KI", "Browser-Auslieferung"],
-    }
-
+def test_comp_bio_web_keeps_only_relevant_modelling_and_toolchain(content_dir):
     for lang in ("en", "de"):
         skills = resolve_langstrings(
             load_content(
@@ -277,14 +272,20 @@ def test_comp_bio_web_keeps_applied_ai_and_browser_delivery(content_dir):
             category
             for category in skills["categories"]
             if category["name"]
-            == ("AI & Developer Tooling" if lang == "en" else "KI & Developer-Tooling")
+            == ("AI/ML & Developer Tools" if lang == "en" else "KI/ML & Entwicklerwerkzeuge")
         )
-        assert [group["label"] for group in ai["groups"]] == expected_labels[lang]
+        assert [group["label"] for group in ai["groups"]] == [
+            "Computational Modelling" if lang == "en" else "Computergestützte Modellierung",
+            "Developer Environments" if lang == "en" else "Entwicklungsumgebungen",
+        ]
         assert {item for group in ai["groups"] for item in group["items"]} == {
-            "OpenAI API",
-            "TensorFlow.js",
-            "ONNX Runtime Web",
-            "Chrome Extension (Manifest V3)",
+            "MHCflurry",
+            "TCRdock",
+            "AlphaFold v2",
+            "Mol*",
+            "Conda",
+            "Docker",
+            "Git",
         }
 
 
@@ -350,7 +351,7 @@ def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
             for item in group["items"]
         }
 
-    assert "HLA Typing" in all_items(bridge)
+    assert "HLA Typing" not in all_items(bridge)
     assert "TCRdock" not in all_items(bridge)  # concise PDF projection
     assert "TCRdock" in all_items(comp_bio)
     assert "LSTMs" in all_items(ds_ml)
@@ -372,7 +373,7 @@ def _ids(projects):
 
 def test_load_content_bridge_project_order(content_dir):
     content = load_content(content_dir, lang="en", target="bridge")
-    assert _ids(content["selected_projects"]) == ["L5", "L1", "L2"]
+    assert _ids(content["selected_projects"]) == ["C1", "D1", "L3"]
 
 
 def test_load_content_comp_bio_project_order(content_dir):
@@ -492,8 +493,8 @@ def _resolved(content_dir, lang, target):
 def test_comp_bio_headline_en_de(content_dir):
     en = _resolved(content_dir, "en", "comp-bio")["personal"]["headline"]
     de = _resolved(content_dir, "de", "comp-bio")["personal"]["headline"]
-    assert en == "Computational Biology · Cancer Genomics"
-    assert de == "Computational Biology · Krebsgenomik"
+    assert en == "Bioinformatics · Cancer Genomics"
+    assert de == "Bioinformatik · Krebsgenomik"
 
 
 def test_ds_ml_headline_en_de(content_dir):
@@ -577,4 +578,4 @@ def test_render_text_threads_target():
     bridge = render("en", "bridge")
     cb = render("en", "comp-bio")
     assert bridge != cb
-    assert "Computational Biology · Cancer Genomics" in cb
+    assert "Bioinformatics · Cancer Genomics" in cb

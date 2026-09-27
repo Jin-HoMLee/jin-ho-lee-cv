@@ -6,7 +6,7 @@ jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/
 PROFIL
 ================================================================================
 Entwicklung und Auslieferung von Machine-Learning-Systemen durchgängig — mit der
-experimentellen Sorgfalt eines Forschungsjahrzehnts in Krebsgenomik und
+experimentellen Sorgfalt eines Forschungsjahrzehnts in Bioinformatik und
 experimenteller Biophysik in jedem Modell und jeder Pipeline.
 
 In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in
@@ -16,9 +16,10 @@ KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML.
 ================================================================================
 BERUFSERFAHRUNG
 ================================================================================
-ML/AI-Engineer & Open-Source-Entwickler - Independent / Self-Directed    (2025-08 bis heute)
+Unabhängiger Bioinformatik- & ML/AI-Engineer - Independent / Self-Directed    (2025-08 bis heute)
   - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
   - Computer Vision: Entwicklung von badminton-vision, einer vollständig client-seitigen Chrome-Erweiterung zur Badminton-Spielanalyse (TensorFlow.js, ONNX Runtime Web).
+  - Bioinformatik: Neuimplementierung der Splice-Junction-Neoepitop-Identifizierung als reproduzierbarer Snakemake-Workflow mit Conda-Umgebungen pro Rule, lokal und auf GCP-GPUs ausgeführt.
 
 Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
   - Kunde: Internationale Bank — Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
@@ -26,7 +27,7 @@ Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-
   - Stakeholder Lead: Brückenfunktion zwischen technischem Data Engineering und Fachanforderungen im hochregulierten Bankensektor.
 
 Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-04)
-  - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen.
+  - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten und technischen Präsentationen.
   - ML-Entwicklung: Eigenständige Entwicklung eines Echtzeit-ASL-Erkennungsprototyps mit LSTMs, MediaPipe und TensorFlow.
 
 Doktorand & Postgraduierter Forscher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
@@ -82,25 +83,24 @@ AUSBILDUNG
 ================================================================================
 KENNTNISSE
 ================================================================================
-KI & Developer-Tooling
-  Angewandte KI: OpenAI API, TensorFlow.js, ONNX Runtime Web
-  Browser-Auslieferung: Chrome Extension (Manifest V3)
-  Reproduzierbare Umgebung: Nix, nix-darwin, home-manager
-  Terminal & Editor: WezTerm, Neovim
-  Agentenbasierte Entwicklung: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
-Daten & Engineering
-  KI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow
-  Engineering & Pipelines: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
-  Cloud: GCP, BigQuery, Vertex AI, Looker
-Bioinformatik & ML
-  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
-  Immunoinformatik: HLA Typing, MHC-I Prediction, OptiType, MHCflurry, Neoepitopes
-  Nanoskopie: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
-  Strukturbiologie: TCRdock, AlphaFold v2, Mol*
-Biotech Wet-Lab
-  Modelle: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
-  Bildgebung: Super-Resolution, Confocal, Fluorescence
-  Assays: FISH, IF, qPCR, FACS
+KI/ML & Entwicklerwerkzeuge
+  Maschinelles Lernen: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
+  Computergestützte Modellierung: MHCflurry, TCRdock, AlphaFold v2, Mol*
+  KI-Agenten: Claude Code, Codex, OpenCode
+  Browser-ML-Auslieferung: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
+  Entwicklungsumgebungen: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
+Daten- & Cloud-Engineering
+  Programmierung & Daten: Python (Expert), R, SQL, dbt
+  Cloud & Analytik: GCP, BigQuery, Looker
+Bioinformatik
+  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
+  Bioinformatik-Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
+  Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitopes
+  Quantitative Biobildgebung: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
+Experimentelle Forschung
+  Modelle: 3D Cell Culture, Neural Progenitors
+  Bildgebung: Super-Resolution, Fluorescence
+  Analysemethoden: FISH, qPCR, FACS
 
 ================================================================================
 SPRACHEN

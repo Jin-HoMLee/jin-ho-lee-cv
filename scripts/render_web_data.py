@@ -43,36 +43,33 @@ def _to_jsonable(obj: Any) -> Any:
     return obj
 
 
+# Canonical hero-stack group labels in both languages, in display order. Each
+# resolves to one leading item from the resolved Skills tree so the CodeHero strip
+# stays stable regardless of category reordering.
+_HERO_GROUPS = (
+    {"Genomics", "Genomik"},
+    {"Machine Learning", "Maschinelles Lernen"},
+    {"Programming & Data", "Programmierung & Daten"},
+    {"Cloud & Analytics", "Cloud & Analytik"},
+)
+
+
 def _hero_stack(skills: dict) -> list[str]:
     """Derive the short CodeHero stack from a resolved Skills tree."""
     categories = skills.get("categories") or []
     if not categories:
         return []
+    groups = [group for category in categories for group in (category.get("groups") or [])]
 
-    def first_item(group: dict) -> str | None:
-        items = group.get("items") or []
-        return items[0] if items else None
-
-    bio_category = next(
-        (
-            category
-            for category in categories
-            if category.get("name") in {"Bioinformatics & ML", "Bioinformatik & ML"}
-        ),
-        categories[0],
-    )
-    bio_groups = bio_category.get("groups") or []
-    bio_lead = first_item(bio_groups[0]) if bio_groups else None
-    lead_category = next(
-        (
-            category
-            for category in categories
-            if category.get("name") in {"Data & Engineering", "Daten & Engineering"}
-        ),
-        categories[-1],
-    )
-    engineering_leads = [first_item(group) for group in (lead_category.get("groups") or [])]
-    return [item for item in [bio_lead, *engineering_leads] if item][:4]
+    stack: list[str] = []
+    for labels in _HERO_GROUPS:
+        for group in groups:
+            if group.get("label") in labels:
+                items = group.get("items") or []
+                if items:
+                    stack.append(items[0])
+                break
+    return stack[:4]
 
 
 def _extract_overrides(bridge: dict, variant: dict) -> dict:

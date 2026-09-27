@@ -151,10 +151,10 @@ def test_skills_nonweb_targets_are_full_and_web_bridge_is_curated(content_dir):
     assert {
         "MapSplice",
         "TCRdock",
-        "PostgreSQL",
         "Nix",
         "WezTerm",
         "Claude Code",
+        "Snakemake",
     } <= items(bridge)
 
     web_bridge = load_content(
@@ -167,7 +167,6 @@ def test_skills_nonweb_targets_are_full_and_web_bridge_is_curated(content_dir):
     web_items = items(web_bridge)
     assert "MapSplice" not in web_items
     assert "TCRdock" not in web_items
-    assert "PostgreSQL" not in web_items
     assert "Nix" not in web_items
 
     comp_bio = load_content(content_dir, private_path=None, lang="en", target="comp-bio")
@@ -179,34 +178,41 @@ def test_skills_nonweb_targets_are_full_and_web_bridge_is_curated(content_dir):
         return [category["name"]["en"] for category in content["skills"]["categories"]]
 
     assert names(bridge) == [
-        "Bioinformatics & ML",
-        "AI & Developer Tooling",
-        "Biotech Wet-Lab",
-        "Data & Engineering",
+        "Bioinformatics",
+        "AI/ML & Developer Tools",
+        "Data & Cloud Engineering",
+        "Experimental Research",
     ]
     assert names(comp_bio) == [
-        "Bioinformatics & ML",
-        "Biotech Wet-Lab",
-        "AI & Developer Tooling",
-        "Data & Engineering",
+        "Bioinformatics",
+        "AI/ML & Developer Tools",
+        "Data & Cloud Engineering",
+        "Experimental Research",
     ]
     assert names(ds_ml) == [
-        "AI & Developer Tooling",
-        "Data & Engineering",
-        "Bioinformatics & ML",
-        "Biotech Wet-Lab",
+        "AI/ML & Developer Tools",
+        "Data & Cloud Engineering",
+        "Bioinformatics",
+        "Experimental Research",
     ]
     assert names(
         load_content(content_dir, lang="en", target="ds-ml", web_projection=True)
     ) == names(ds_ml)
 
-    bioml = next(
-        c for c in comp_bio["skills"]["categories"] if c["name"]["en"] == "Bioinformatics & ML"
+    bioinformatics = next(
+        c for c in comp_bio["skills"]["categories"] if c["name"]["en"] == "Bioinformatics"
     )
-    groups = {g["label"]["en"]: g["items"] for g in bioml["groups"]}
-    assert "MapSplice" in groups["Genomics"]
-    assert "samtools/bcftools" in groups["Genomics"]
-    assert set(groups["Structural Biology"]) == {"TCRdock", "AlphaFold v2", "Mol*"}
+    groups = {g["label"]["en"]: g["items"] for g in bioinformatics["groups"]}
+    assert "MapSplice" in groups["Bioinformatics Workflows"]
+    assert "samtools/bcftools" in groups["Bioinformatics Workflows"]
+
+    all_skill_items = [
+        item
+        for category in bridge["skills"]["categories"]
+        for group in category["groups"]
+        for item in group["items"]
+    ]
+    assert len(all_skill_items) == len(set(all_skill_items))
 
 
 def test_italian_language_present(content_dir):

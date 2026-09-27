@@ -1,5 +1,5 @@
 JIN-HO LEE
-Computational Biology · Krebsgenomik - Mannheim, GER
+Bioinformatik · Krebsgenomik - Mannheim, GER
 jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/in/jin-holee | https://github.com/Jin-HoMLee | https://researchgate.net/profile/Jin-Ho-Lee-8 | https://orcid.org/0009-0001-8784-1771 | https://scholar.google.com/citations?user=QPyM-WoAAAAJ | https://www.wikidata.org/wiki/Q140644861
 
 ================================================================================
@@ -23,9 +23,10 @@ Drittmitteln und Betreuung von 10+ Studierenden.
 ================================================================================
 BERUFSERFAHRUNG
 ================================================================================
-ML/AI-Engineer & Open-Source-Entwickler - Independent / Self-Directed    (2025-08 bis heute)
+Unabhängiger Bioinformatik- & ML/AI-Engineer - Independent / Self-Directed    (2025-08 bis heute)
   - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
   - Computer Vision: Entwicklung von badminton-vision, einer vollständig client-seitigen Chrome-Erweiterung zur Badminton-Spielanalyse (TensorFlow.js, ONNX Runtime Web).
+  - Bioinformatik: Neuimplementierung der Splice-Junction-Neoepitop-Identifizierung als reproduzierbarer Snakemake-Workflow mit Conda-Umgebungen pro Rule, lokal und auf GCP-GPUs ausgeführt.
 
 Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
   - Kunde: Internationale Bank — Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
@@ -33,7 +34,7 @@ Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-
   - Stakeholder Lead: Brückenfunktion zwischen technischem Data Engineering und Fachanforderungen im hochregulierten Bankensektor.
 
 Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-04)
-  - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen.
+  - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten und technischen Präsentationen.
   - ML-Entwicklung: Eigenständige Entwicklung eines Echtzeit-ASL-Erkennungsprototyps mit LSTMs, MediaPipe und TensorFlow.
 
 Doktorand & Postgraduierter Forscher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
@@ -48,9 +49,9 @@ Krebs-Neoantigen-Entdeckung – Transkriptomweite Splice-Analyse    (2015-08 bis
   Bioinformatik-Forschungspraktikant (Seoul National University)
   Bioinformatik-Pipeline zur Identifizierung neuartiger Immuntherapie-Targets
   aus aberrantem alternativem Splicing in RNA-Seq-Daten.
-  Ergebnis: Nachgewiesen, dass alternatives Splicing eine geeignete Quelle für
-  hochaffine Epitope darstellt und die Target-Identifizierung über klassische
-  somatische Mutationen hinaus erweitert.
+  Ergebnis: Unveröffentlichter computergestützter Machbarkeitsnachweis, der
+  vorhergesagte hochaffine MHC-I-bindende Kandidatenpeptide aus Splice-
+  abgeleiteten nicht-kanonischen Transkripten erzeugte.
 
 Personalisierte Immuntherapie – Hochdurchsatz-HLA-Typisierungs-Pipeline    (2014-04 bis 2014-05)
   Bioinformatik-Bachelorand (NCT Heidelberg)
@@ -81,25 +82,24 @@ AUSBILDUNG
 ================================================================================
 KENNTNISSE
 ================================================================================
-Bioinformatik & ML
-  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
-  Immunoinformatik: HLA Typing, MHC-I Prediction, OptiType, MHCflurry, Neoepitopes
-  Nanoskopie: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
-  Strukturbiologie: TCRdock, AlphaFold v2, Mol*
-Biotech Wet-Lab
-  Modelle: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
-  Bildgebung: Super-Resolution, Confocal, Fluorescence
-  Assays: FISH, IF, qPCR, FACS
-KI & Developer-Tooling
-  Angewandte KI: OpenAI API, TensorFlow.js, ONNX Runtime Web
-  Browser-Auslieferung: Chrome Extension (Manifest V3)
-  Reproduzierbare Umgebung: Nix, nix-darwin, home-manager
-  Terminal & Editor: WezTerm, Neovim
-  Agentenbasierte Entwicklung: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
-Daten & Engineering
-  KI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow
-  Engineering & Pipelines: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
-  Cloud: GCP, BigQuery, Vertex AI, Looker
+Bioinformatik
+  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
+  Bioinformatik-Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
+  Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitopes
+  Quantitative Biobildgebung: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
+KI/ML & Entwicklerwerkzeuge
+  Maschinelles Lernen: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
+  Computergestützte Modellierung: MHCflurry, TCRdock, AlphaFold v2, Mol*
+  KI-Agenten: Claude Code, Codex, OpenCode
+  Browser-ML-Auslieferung: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
+  Entwicklungsumgebungen: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
+Daten- & Cloud-Engineering
+  Programmierung & Daten: Python (Expert), R, SQL, dbt
+  Cloud & Analytik: GCP, BigQuery, Looker
+Experimentelle Forschung
+  Modelle: 3D Cell Culture, Neural Progenitors
+  Bildgebung: Super-Resolution, Fluorescence
+  Analysemethoden: FISH, qPCR, FACS
 
 ================================================================================
 SPRACHEN

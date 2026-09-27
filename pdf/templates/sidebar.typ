@@ -1,18 +1,25 @@
 #import "../styles.typ": *
 
+#let _skill-category(category) = block(breakable: false, [
+  #text(weight: 600, size: size-small, fill: accent)[#category.name]
+  #linebreak()
+  #for group in category.groups {
+    text(size: size-small, weight: 500)[#group.label:]
+    h(3pt)
+    text(size: size-small)[#group.items.join(", ")]
+    linebreak()
+  }
+])
+
 #let skills(skills-data, labels) = {
   section-heading(labels.sections.skills, "section-skills")
-  for category in skills-data.categories {
-    text(weight: 600, size: size-small, fill: accent)[#category.name]
-    linebreak()
-    for group in category.groups {
-      text(size: size-small, weight: 500)[#group.label:]
-      h(3pt)
-      text(size: size-small)[#group.items.join(", ")]
-      linebreak()
-    }
-    v(space-paragraph)
-  }
+  // Four restrained text groups use a compact 2x2 matrix. Cells remain in
+  // source order, so both PDF extractors see one deterministic reading stream.
+  grid(
+    columns: (1fr, 1fr),
+    gutter: (column-gutter, space-section),
+    ..skills-data.categories.map(_skill-category),
+  )
 }
 
 #let education(edu, labels) = {
@@ -57,11 +64,21 @@
   }
 }
 
+#let languages-and-volunteer(langs, volunteer-data, labels) = {
+  // These short secondary sections share a row without becoming a sidebar.
+  // Languages precedes Volunteer in source and extraction order.
+  grid(
+    columns: (1fr, 1fr),
+    gutter: column-gutter,
+    block(breakable: false, { languages(langs, labels) }),
+    block(breakable: false, { volunteer(volunteer-data, labels) }),
+  )
+}
+
 // Kept as a compatibility wrapper for templates that want the compact
 // supplementary sections as one stream.
 #let sidebar(data, labels) = {
   skills(data.skills, labels)
   education(data.education, labels)
-  languages(data.languages, labels)
-  volunteer(data.volunteer, labels)
+  languages-and-volunteer(data.languages, data.volunteer, labels)
 }

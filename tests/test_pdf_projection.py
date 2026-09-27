@@ -27,8 +27,7 @@ def test_pdf_projection_does_not_change_canonical_content(content_dir):
 
     assert len(canonical["publications"]) == 15
     assert len(projected["publications"]) == 3
-    assert len(_skill_items(canonical)) == 65
-    assert len(_skill_items(projected)) < 65
+    assert len(_skill_items(canonical)) > len(_skill_items(projected))
     assert all("thesis" in education for education in canonical["education"])
     assert all("thesis" not in education for education in projected["education"])
 
@@ -38,7 +37,8 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
 
     assert data["profile"]["paragraphs"] == []
     assert "11 peer-reviewed" in data["profile"]["tagline"]
-    assert len(_entry(data, "independent")["bullets"]) == 0
+    assert len(_entry(data, "independent")["bullets"]) == 1
+    assert "Snakemake" in _entry(data, "independent")["bullets"][0]["en"]
     assert "1,000+" in _entry(data, "cintellic")["bullets"][0]["en"]
     assert "100+" in _entry(data, "neuefische")["bullets"][0]["en"]
     assert len(_entry(data, "research")["bullets"]) == 2
@@ -46,13 +46,13 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
 
     skills = _skill_items(data)
     assert {"RNA-Seq", "HLA Typing", "MHCflurry", "Snakemake", "Docker"} <= skills
-    assert {"OpenAI API", "TensorFlow.js", "Claude Code", "WezTerm"}.isdisjoint(skills)
+    assert {"TensorFlow.js", "Claude Code", "WezTerm"}.isdisjoint(skills)
 
 
 def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
     expected_bullets = {
         "bridge": {"independent": 1, "cintellic": 2, "neuefische": 2, "research": 2},
-        "comp-bio": {"independent": 0, "cintellic": 1, "neuefische": 1, "research": 2},
+        "comp-bio": {"independent": 1, "cintellic": 1, "neuefische": 1, "research": 2},
         "ds-ml": {"independent": 2, "cintellic": 3, "neuefische": 2, "research": 1},
     }
     expected_awards = {
@@ -83,6 +83,72 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
                 }
             ]
         }
+
+
+def test_general_pdf_is_broad_and_omits_immunotherapy_specificity(content_dir):
+    data = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
+    visible = " ".join(
+        [data["profile"]["tagline"]]
+        + [bullet["en"] for entry in data["experience"] for bullet in entry["bullets"]]
+        + [
+            item
+            for category in data["skills"]["categories"]
+            for group in category["groups"]
+            for item in group["items"]
+        ]
+        + [project["title"] + " " + project["outcome"] for project in data["selected_projects"]]
+        + [
+            " ".join(str(award.get(key, "")) for key in ("title", "issuer", "note"))
+            for award in data["awards"]
+        ]
+    )
+
+    assert "Data scientist with bioinformatics roots" in data["profile"]["tagline"]
+    assert "consult" in data["profile"]["tagline"].lower()
+    assert "100+" in data["profile"]["tagline"]
+    assert {"HLA", "neoantigen", "neoepitope"}.isdisjoint(visible.lower().split())
+    assert all(term not in visible.lower() for term in ("hla", "neoantigen", "neoepitope"))
+    assert [project["id"] for project in data["selected_projects"]] == ["C1", "D1", "L3"]
+    assert "Neural Progenitor Differentiation" in _entry(data, "research")["bullets"][1]["en"]
+
+
+def test_pdf_skills_use_four_non_overlapping_source_backed_groups(content_dir):
+    expected_categories = {
+        "Bioinformatics",
+        "AI/ML & Developer Tools",
+        "Data & Cloud Engineering",
+        "Experimental Research",
+    }
+    for target in ("bridge", "comp-bio", "ds-ml"):
+        data = prepare_data(content_dir, private_path=None, lang="en", target=target)
+        categories = data["skills"]["categories"]
+        assert {category["name"] for category in categories} == expected_categories
+        items = [
+            item
+            for category in categories
+            for group in category["groups"]
+            for item in group["items"]
+        ]
+        assert len(items) == len(set(items)), f"{target} repeats a skill across taxonomy groups"
+        labels = {group["label"] for category in categories for group in category["groups"]}
+        assert "Applied AI" not in labels
+        assert "AI & ML" not in labels
+
+
+def test_source_grounded_role_coaching_and_2015_claims(content_dir):
+    canonical = load_content(content_dir, lang="en", target="bridge")
+    independent = _entry(canonical, "independent")
+    neuefische = _entry(canonical, "neuefische")
+    l1 = canonical["projects"]["L1"]
+
+    assert independent["role"]["en"] == "Independent Bioinformatics & ML/AI Engineer"
+    assert any(
+        "Snakemake" in bullet["en"] and bullet["refs"] == ["L5"]
+        for bullet in independent["bullets"]
+    )
+    assert "capstone" in neuefische["bullets"][0]["en"].lower()
+    assert "unpublished computational proof of concept" in l1["outcome"].lower()
+    assert "validat" not in " ".join(l1["contributions"] + [l1["outcome"]]).lower()
 
 
 def test_pdf_project_links_follow_language_routes(content_dir):

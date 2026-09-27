@@ -141,12 +141,22 @@ def test_pdf_bridge_aggregate_vs_comp_bio_selected(repo_root, content_dir):
 def test_pdf_comp_bio_skills_use_relevant_projection(repo_root):
     """The Comp Bio PDF keeps relevant keywords without printing all 65 skills."""
     expected = {
-        "en": ("Genomics", "Immunoinformatics", "Nanoscopy", "Engineering & Pipelines"),
-        "de": ("Genomik", "Immunoinformatik", "Nanoskopie", "Engineering & Pipelines"),
+        "en": (
+            "Genomics",
+            "Immunoinformatics",
+            "Bioinformatics Workflows",
+            "Computational Modelling",
+        ),
+        "de": (
+            "Genomik",
+            "Immunoinformatik",
+            "Bioinformatik-Workflows",
+            "Computergestützte Modellierung",
+        ),
     }
     omitted = {
-        "en": ("Applied AI", "Browser Delivery", "Agentic Development"),
-        "de": ("Angewandte KI", "Browser-Auslieferung", "Agentenbasierte Entwicklung"),
+        "en": ("AI Agents", "Browser ML Delivery", "Machine Learning"),
+        "de": ("KI-Agenten", "Browser-ML-Auslieferung", "Maschinelles Lernen"),
     }
 
     for lang in ("en", "de"):

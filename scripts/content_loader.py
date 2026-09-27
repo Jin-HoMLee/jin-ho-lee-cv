@@ -72,8 +72,9 @@ def _resolve_skills_target(skills: dict, target: str, *, web_projection: bool = 
     A root target variant may order categories by their stable English names.
     Category variants can then omit a category, omit selected groups, or replace a
     group's item list with a concise or expanded audience-specific list. Category
-    ordering applies to every renderer; the omit/group projections are web-only so
-    non-web target artifacts retain the comprehensive canonical Skills baseline.
+    ordering applies to every renderer; the omit/group projections are concise
+    target views used by both the website and the application PDFs. Renderers that
+    need the comprehensive canonical baseline pass ``web_projection=False``.
     """
     result = copy.deepcopy(skills)
     root_variants = result.pop("variants", {})
@@ -163,7 +164,8 @@ def load_content(
 
     If private_path is provided and the file exists, its contents are merged into
     content["personal"]. When web_projection is true, the Skills tree uses the
-    concise web bridge or target-specific projection.
+    concise target-specific projection (used by the website and application PDFs);
+    the canonical comprehensive baseline is kept otherwise.
     """
     if target not in TARGETS:
         raise ValueError(f"unknown target {target!r}; expected one of {TARGETS}")

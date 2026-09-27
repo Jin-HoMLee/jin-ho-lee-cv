@@ -6,7 +6,7 @@
 #import "selected_projects.typ": selected_projects
 #import "publications.typ": publications
 #import "awards.typ": awards
-#import "sidebar.typ": skills, education, languages, volunteer
+#import "sidebar.typ": skills, education, languages-and-volunteer
 
 #let data = json("../.cache/data.json")
 #let lang = sys.inputs.at("lang", default: "en")
@@ -47,5 +47,4 @@
 #education(data.education, data.labels)
 #publications(data)
 #awards(data.awards, data.labels)
-#languages(data.languages, data.labels)
-#volunteer(data.volunteer, data.labels)
+#languages-and-volunteer(data.languages, data.volunteer, data.labels)
