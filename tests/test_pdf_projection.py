@@ -85,6 +85,9 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
             "Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)",
             "Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)",
         ]
+        assert volunteer["Music"] == [
+            "Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000"
+        ]
         assert "Interests" not in volunteer
 
 

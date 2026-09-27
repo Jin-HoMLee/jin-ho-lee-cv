@@ -78,7 +78,7 @@ def project_pdf_content(content: dict[str, Any], *, target: str, lang: str) -> d
 
     # Keep volunteer + sports + interests in every target. The Environment list
     # stays to its lead entry; the Sports clubs (badminton) render in full.
-    volunteer_keep = {"Environment", "Sports"}
+    volunteer_keep = {"Environment", "Sports", "Music"}
     result["volunteer"] = {
         "categories": [
             {
