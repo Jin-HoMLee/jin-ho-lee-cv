@@ -86,7 +86,9 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
             "Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)",
         ]
         assert volunteer["Music"] == [
-            "Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000"
+            "Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000",
+            "Chorister, Vienna Cathedral Choir (Wiener Domchor)",
+            "Chorister, Capella Palatina",
         ]
         assert "Interests" not in volunteer
 
