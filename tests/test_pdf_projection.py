@@ -81,10 +81,11 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
             category["name"]: category["entries"] for category in data["volunteer"]["categories"]
         }
         assert volunteer["Environment"] == ["Foodsharing e.V. (Operations Manager)"]
-        assert "Sobell Badminton Club" in volunteer["Sports"]
-        assert any("Training supervisor" in entry for entry in volunteer["Sports"])
-        assert any("Badminton youth talent group" in entry for entry in volunteer["Sports"])
-        assert volunteer["Interests"] == ["Badminton", "Music"]
+        assert volunteer["Sports"] == [
+            "Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)",
+            "Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)",
+        ]
+        assert "Interests" not in volunteer
 
 
 def test_general_profile_is_broad_and_balanced(content_dir):

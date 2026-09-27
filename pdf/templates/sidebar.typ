@@ -58,9 +58,13 @@
 #let volunteer(volunteer-data, labels) = {
   section-heading(labels.sections.volunteer, "section-volunteer")
   for category in volunteer-data.categories {
-    text(size: size-small, weight: 600)[#category.name:]
-    h(3pt)
-    text(size: size-small, fill: muted)[#category.entries.join(", ")]
+    text(size: size-small, weight: 600)[#category.name]
+    linebreak()
+    for entry in category.entries {
+      text(size: size-small, fill: muted)[– #entry]
+      linebreak()
+    }
+    v(space-paragraph)
   }
 }
 
