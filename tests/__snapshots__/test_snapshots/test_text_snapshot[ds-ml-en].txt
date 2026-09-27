@@ -84,7 +84,7 @@ SKILLS
 AI/ML & Developer Tools
   Machine Learning: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
   Computational Modelling: MHCflurry, TCRdock, AlphaFold v2, Mol*
-  AI Agents: Claude Code, Codex, OpenCode
+  AI Agents: Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Kimi
   Browser ML Delivery: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
   Developer Environments: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
 Data & Cloud Engineering
@@ -95,10 +95,6 @@ Bioinformatics
   Bioinformatics Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
   Immunoinformatics: HLA Typing, MHC-I Prediction, Neoepitopes
   Quantitative Bioimaging: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
-Experimental Research
-  Models: 3D Cell Culture, Neural Progenitors
-  Imaging: Super-Resolution, Fluorescence
-  Assays: FISH, qPCR, FACS
 
 ================================================================================
 LANGUAGES
@@ -130,6 +126,8 @@ Sports
   - WAT Simmering
   - TSG 1889 Dossenheim e.V.
   - HTV 1846 e.V.
+Interests
+  - Badminton
 
 ================================================================================
 PUBLICATIONS

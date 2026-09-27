@@ -137,7 +137,7 @@ def test_research_entry_start_not_after_earliest_subproject(content_dir):
     assert research["period"]["start"] == "2014-04"
 
 
-def test_skills_nonweb_targets_are_full_and_web_bridge_is_curated(content_dir):
+def test_skills_sections_are_full_and_identical_with_ds_ml_dropping_experimental(content_dir):
     bridge = load_content(content_dir, private_path=None, lang="en", target="bridge")
 
     def items(content):
@@ -155,6 +155,10 @@ def test_skills_nonweb_targets_are_full_and_web_bridge_is_curated(content_dir):
         "WezTerm",
         "Claude Code",
         "Snakemake",
+        "Pi",
+        "Grok",
+        "Cursor",
+        "Kimi",
     } <= items(bridge)
 
     web_bridge = load_content(
@@ -164,15 +168,14 @@ def test_skills_nonweb_targets_are_full_and_web_bridge_is_curated(content_dir):
         target="bridge",
         web_projection=True,
     )
-    web_items = items(web_bridge)
-    assert "MapSplice" not in web_items
-    assert "TCRdock" not in web_items
-    assert "Nix" not in web_items
+    assert items(web_bridge) == items(bridge)
 
     comp_bio = load_content(content_dir, private_path=None, lang="en", target="comp-bio")
-    ds_ml = load_content(content_dir, private_path=None, lang="en", target="ds-ml")
     assert items(comp_bio) == items(bridge)
-    assert items(ds_ml) == items(bridge)
+
+    ds_ml = load_content(content_dir, private_path=None, lang="en", target="ds-ml")
+    assert {"LSTMs", "TCRdock", "Claude Code", "Kimi"} <= items(ds_ml)
+    assert {"FISH", "qPCR", "FACS", "Super-Resolution"}.isdisjoint(items(ds_ml))
 
     def names(content):
         return [category["name"]["en"] for category in content["skills"]["categories"]]
@@ -183,17 +186,11 @@ def test_skills_nonweb_targets_are_full_and_web_bridge_is_curated(content_dir):
         "Data & Cloud Engineering",
         "Experimental Research",
     ]
-    assert names(comp_bio) == [
-        "Bioinformatics",
-        "AI/ML & Developer Tools",
-        "Data & Cloud Engineering",
-        "Experimental Research",
-    ]
+    assert names(comp_bio) == names(bridge)
     assert names(ds_ml) == [
         "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
         "Bioinformatics",
-        "Experimental Research",
     ]
     assert names(
         load_content(content_dir, lang="en", target="ds-ml", web_projection=True)

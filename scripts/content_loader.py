@@ -90,12 +90,9 @@ def _resolve_skills_target(skills: dict, target: str, *, web_projection: bool = 
         if duplicates:
             raise ValueError(f"duplicate Skills category name(s): {duplicates}")
         by_name = {category["name"]["en"]: category for category in source_categories}
-        ordered_names = set(category_order)
-        source_categories = [by_name[name] for name in category_order if name in by_name] + [
-            category
-            for category in source_categories
-            if category["name"]["en"] not in ordered_names
-        ]
+        # category_order is authoritative: it both orders and selects the sections.
+        # A category omitted from the list is dropped for that target.
+        source_categories = [by_name[name] for name in category_order if name in by_name]
 
     categories = []
     for category in source_categories:

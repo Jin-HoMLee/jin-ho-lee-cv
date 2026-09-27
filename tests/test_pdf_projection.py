@@ -27,7 +27,8 @@ def test_pdf_projection_does_not_change_canonical_content(content_dir):
 
     assert len(canonical["publications"]) == 15
     assert len(projected["publications"]) == 3
-    assert len(_skill_items(canonical)) > len(_skill_items(projected))
+    # skills sections are now identical and full in every renderer
+    assert _skill_items(canonical) == _skill_items(projected)
     assert all("thesis" in education for education in canonical["education"])
     assert all("thesis" not in education for education in projected["education"])
 
@@ -46,7 +47,8 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
 
     skills = _skill_items(data)
     assert {"RNA-Seq", "HLA Typing", "MHCflurry", "Snakemake", "Docker"} <= skills
-    assert {"TensorFlow.js", "Claude Code", "WezTerm"}.isdisjoint(skills)
+    # full, identical sections: the general AI/ML + developer tooling is retained too
+    assert {"TensorFlow.js", "Claude Code", "WezTerm", "Kimi"} <= skills
 
 
 def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
@@ -75,27 +77,19 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
             "French",
             "Italian",
         ]
-        assert data["volunteer"] == {
-            "categories": [
-                {
-                    "name": "Environment",
-                    "entries": ["Foodsharing e.V. (Operations Manager)"],
-                }
-            ]
+        volunteer = {
+            category["name"]: category["entries"] for category in data["volunteer"]["categories"]
         }
+        assert volunteer["Environment"] == ["Foodsharing e.V. (Operations Manager)"]
+        assert "Sobell Badminton Club" in volunteer["Sports"]
+        assert volunteer["Interests"] == ["Badminton"]
 
 
-def test_general_pdf_is_broad_and_omits_immunotherapy_specificity(content_dir):
+def test_general_profile_is_broad_and_balanced(content_dir):
     data = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
-    visible = " ".join(
+    narrative = " ".join(
         [data["profile"]["tagline"]]
         + [bullet["en"] for entry in data["experience"] for bullet in entry["bullets"]]
-        + [
-            item
-            for category in data["skills"]["categories"]
-            for group in category["groups"]
-            for item in group["items"]
-        ]
         + [project["title"] + " " + project["outcome"] for project in data["selected_projects"]]
         + [
             " ".join(str(award.get(key, "")) for key in ("title", "issuer", "note"))
@@ -103,26 +97,29 @@ def test_general_pdf_is_broad_and_omits_immunotherapy_specificity(content_dir):
         ]
     )
 
-    assert "Data scientist with bioinformatics roots" in data["profile"]["tagline"]
-    assert "consult" in data["profile"]["tagline"].lower()
-    assert "100+" in data["profile"]["tagline"]
-    assert {"HLA", "neoantigen", "neoepitope"}.isdisjoint(visible.lower().split())
-    assert all(term not in visible.lower() for term in ("hla", "neoantigen", "neoepitope"))
+    tagline = data["profile"]["tagline"].lower()
+    assert "data scientist with bioinformatics roots" in tagline
+    assert "eight years" in tagline
+    assert "11 peer-reviewed" in tagline
+    assert "consult" in tagline
+    assert "100+" in tagline
+    # the profile narrative stays broad; the skill inventory is full and shared
+    assert all(term not in narrative.lower() for term in ("hla", "neoantigen", "neoepitope"))
     assert [project["id"] for project in data["selected_projects"]] == ["C1", "D1", "L3"]
     assert "Neural Progenitor Differentiation" in _entry(data, "research")["bullets"][1]["en"]
 
 
-def test_pdf_skills_use_four_non_overlapping_source_backed_groups(content_dir):
-    expected_categories = {
+def test_pdf_skills_use_non_overlapping_source_backed_groups(content_dir):
+    full = {
         "Bioinformatics",
         "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
         "Experimental Research",
     }
-    for target in ("bridge", "comp-bio", "ds-ml"):
+    for target in ("bridge", "comp-bio"):
         data = prepare_data(content_dir, private_path=None, lang="en", target=target)
         categories = data["skills"]["categories"]
-        assert {category["name"] for category in categories} == expected_categories
+        assert {category["name"] for category in categories} == full
         items = [
             item
             for category in categories
@@ -133,6 +130,18 @@ def test_pdf_skills_use_four_non_overlapping_source_backed_groups(content_dir):
         labels = {group["label"] for category in categories for group in category["groups"]}
         assert "Applied AI" not in labels
         assert "AI & ML" not in labels
+
+    ds = prepare_data(content_dir, private_path=None, lang="en", target="ds-ml")
+    assert {category["name"] for category in ds["skills"]["categories"]} == full - {
+        "Experimental Research"
+    }
+    ds_items = [
+        item
+        for category in ds["skills"]["categories"]
+        for group in category["groups"]
+        for item in group["items"]
+    ]
+    assert len(ds_items) == len(set(ds_items))
 
 
 def test_source_grounded_role_coaching_and_2015_claims(content_dir):

@@ -3,121 +3,7 @@
     "headline": "Bioinformatics · Cancer Genomics",
     "tagline": "Bioinformatician with deep roots in cancer genomics — HLA typing & neoantigen discovery from real-patient NGS/RNA-Seq, reproducible Snakemake pipelines, 11 peer-reviewed research publications.",
     "lead_paragraph": "Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, packaged as reproducible Snakemake workflows, with wet-lab training at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). A parallel line of experimental-biophysics research produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
-    "second_paragraph": "Equally at home in production: migrated 1,000+ analytical processes to Google Cloud, built reproducible data pipelines, and mentored 100+ specialists in Python, SQL & ML — while securing third-party funding and supervising 10+ students.",
-    "skills": {
-      "categories": [
-        {
-          "name": "Bioinformatics",
-          "groups": [
-            {
-              "label": "Genomics",
-              "items": [
-                "NGS",
-                "RNA-Seq",
-                "Splice Analysis"
-              ]
-            },
-            {
-              "label": "Bioinformatics Workflows",
-              "items": [
-                "Snakemake",
-                "MapSplice",
-                "HISAT2/STAR",
-                "bedtools",
-                "OptiType"
-              ]
-            },
-            {
-              "label": "Immunoinformatics",
-              "items": [
-                "HLA Typing",
-                "MHC-I Prediction",
-                "Neoepitopes"
-              ]
-            },
-            {
-              "label": "Quantitative Bioimaging",
-              "items": [
-                "Spatial Point-Pattern",
-                "Cluster Analysis (DBSCAN)"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "AI/ML & Developer Tools",
-          "groups": [
-            {
-              "label": "Computational Modelling",
-              "items": [
-                "MHCflurry",
-                "TCRdock",
-                "AlphaFold v2",
-                "Mol*"
-              ]
-            },
-            {
-              "label": "Developer Environments",
-              "items": [
-                "Conda",
-                "Docker",
-                "Git"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Data & Cloud Engineering",
-          "groups": [
-            {
-              "label": "Programming & Data",
-              "items": [
-                "Python (Expert)",
-                "R"
-              ]
-            },
-            {
-              "label": "Cloud & Analytics",
-              "items": [
-                "GCP"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Experimental Research",
-          "groups": [
-            {
-              "label": "Models",
-              "items": [
-                "3D Cell Culture",
-                "Neural Progenitors"
-              ]
-            },
-            {
-              "label": "Imaging",
-              "items": [
-                "Super-Resolution",
-                "Fluorescence"
-              ]
-            },
-            {
-              "label": "Assays",
-              "items": [
-                "FISH",
-                "qPCR",
-                "FACS"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "hero_stack": [
-      "NGS",
-      "Python (Expert)",
-      "GCP"
-    ]
+    "second_paragraph": "Equally at home in production: migrated 1,000+ analytical processes to Google Cloud, built reproducible data pipelines, and mentored 100+ specialists in Python, SQL & ML — while securing third-party funding and supervising 10+ students."
   },
   "ds-ml": {
     "headline": "Data Science · Machine Learning",
@@ -141,11 +27,24 @@
               ]
             },
             {
+              "label": "Computational Modelling",
+              "items": [
+                "MHCflurry",
+                "TCRdock",
+                "AlphaFold v2",
+                "Mol*"
+              ]
+            },
+            {
               "label": "AI Agents",
               "items": [
                 "Claude Code",
                 "Codex",
-                "OpenCode"
+                "OpenCode",
+                "Pi",
+                "Grok",
+                "Cursor",
+                "Kimi"
               ]
             },
             {
@@ -159,8 +58,14 @@
             {
               "label": "Developer Environments",
               "items": [
+                "Conda",
                 "Docker",
-                "Git"
+                "Git",
+                "Nix",
+                "nix-darwin",
+                "home-manager",
+                "WezTerm",
+                "Neovim"
               ]
             }
           ]
@@ -194,7 +99,29 @@
               "label": "Genomics",
               "items": [
                 "NGS",
-                "RNA-Seq"
+                "RNA-Seq",
+                "WES",
+                "SNV Calling",
+                "Splice Analysis"
+              ]
+            },
+            {
+              "label": "Bioinformatics Workflows",
+              "items": [
+                "Snakemake",
+                "MapSplice",
+                "HISAT2/STAR",
+                "samtools/bcftools",
+                "bedtools",
+                "OptiType"
+              ]
+            },
+            {
+              "label": "Immunoinformatics",
+              "items": [
+                "HLA Typing",
+                "MHC-I Prediction",
+                "Neoepitopes"
               ]
             },
             {
@@ -202,17 +129,6 @@
               "items": [
                 "Spatial Point-Pattern",
                 "Cluster Analysis (DBSCAN)"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Experimental Research",
-          "groups": [
-            {
-              "label": "Imaging",
-              "items": [
-                "Super-Resolution"
               ]
             }
           ]

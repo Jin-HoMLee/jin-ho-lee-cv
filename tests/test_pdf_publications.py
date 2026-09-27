@@ -138,25 +138,25 @@ def test_pdf_bridge_aggregate_vs_comp_bio_selected(repo_root, content_dir):
     not (_typst_available() and _pdftotext_available()),
     reason="needs typst + pdftotext (poppler) to extract and assert PDF text",
 )
-def test_pdf_comp_bio_skills_use_relevant_projection(repo_root):
-    """The Comp Bio PDF keeps relevant keywords without printing all 65 skills."""
+def test_pdf_comp_bio_keeps_full_skills_sections(repo_root):
+    """The Comp Bio PDF keeps the full, identical four skills sections."""
     expected = {
         "en": (
             "Genomics",
             "Immunoinformatics",
             "Bioinformatics Workflows",
-            "Computational Modelling",
+            "Machine Learning",
+            "AI Agents",
+            "Browser ML Delivery",
         ),
         "de": (
             "Genomik",
             "Immunoinformatik",
             "Bioinformatik-Workflows",
-            "Computergestützte Modellierung",
+            "Maschinelles Lernen",
+            "KI-Agenten",
+            "Browser-ML-Auslieferung",
         ),
-    }
-    omitted = {
-        "en": ("AI Agents", "Browser ML Delivery", "Machine Learning"),
-        "de": ("KI-Agenten", "Browser-ML-Auslieferung", "Maschinelles Lernen"),
     }
 
     for lang in ("en", "de"):
@@ -177,5 +177,5 @@ def test_pdf_comp_bio_skills_use_relevant_projection(repo_root):
         normalized = _norm(text)
         for label in expected[lang]:
             assert _norm(label) in normalized
-        for label in omitted[lang]:
-            assert _norm(label) not in normalized
+        for agent in ("Claude Code", "Codex", "OpenCode", "Pi", "Grok", "Cursor", "Kimi"):
+            assert _norm(agent) in normalized

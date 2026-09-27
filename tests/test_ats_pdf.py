@@ -163,11 +163,6 @@ def test_all_variants_are_two_page_flat_text_in_one_order(built_pdf):
         _assert_heading_order(text, headings, extractor)
         for keyword in TARGET_KEYWORDS[target]:
             assert keyword in text, f"{extractor}: missing target keyword {keyword!r}"
-        if target == "bridge":
-            lowered = text.lower()
-            assert "hla" not in lowered
-            assert "neoantigen" not in lowered
-            assert "neoepitope" not in lowered
 
     if lang == "en":
         assert "Jülich" in poppler and "Jülich" in pypdf_text

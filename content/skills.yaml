@@ -1,7 +1,8 @@
-# Canonical, source-backed skills inventory. Target variants select a concise view
-# for the website and application PDFs; non-projected renderers retain this full
-# taxonomy. Each skill appears in one category only so AI/ML and developer tools
-# stay distinct from data/cloud engineering.
+# Canonical, source-backed skills inventory. All four major sections render the
+# same full item lists in every version; a variant may drop a whole section only
+# when it is clearly off-target (e.g. ds-ml drops Experimental Research). Each
+# skill appears in one category only, so AI/ML and developer tools stay distinct
+# from data/cloud engineering.
 categories:
   - name:
       en: "Bioinformatics"
@@ -15,20 +16,6 @@ categories:
         items: ["HLA Typing", "MHC-I Prediction", "Neoepitopes"]
       - label: { en: "Quantitative Bioimaging", de: "Quantitative Biobildgebung" }
         items: ["Spatial Point-Pattern", "Cluster Analysis (DBSCAN)"]
-    variants:
-      bridge:
-        omit_groups: ["Bioinformatics Workflows", "Immunoinformatics"]
-        group_items:
-          Genomics: ["NGS", "RNA-Seq", "WES", "SNV Calling"]
-      comp-bio:
-        group_items:
-          Genomics: ["NGS", "RNA-Seq", "Splice Analysis"]
-          "Bioinformatics Workflows": ["Snakemake", "MapSplice", "HISAT2/STAR", "bedtools", "OptiType"]
-          Immunoinformatics: ["HLA Typing", "MHC-I Prediction", "Neoepitopes"]
-      ds-ml:
-        omit_groups: ["Bioinformatics Workflows", "Immunoinformatics"]
-        group_items:
-          Genomics: ["NGS", "RNA-Seq"]
 
   - name:
       en: "AI/ML & Developer Tools"
@@ -39,28 +26,11 @@ categories:
       - label: { en: "Computational Modelling", de: "Computergestützte Modellierung" }
         items: ["MHCflurry", "TCRdock", "AlphaFold v2", "Mol*"]
       - label: { en: "AI Agents", de: "KI-Agenten" }
-        items: ["Claude Code", "Codex", "OpenCode"]
+        items: ["Claude Code", "Codex", "OpenCode", "Pi", "Grok", "Cursor", "Kimi"]
       - label: { en: "Browser ML Delivery", de: "Browser-ML-Auslieferung" }
         items: ["TensorFlow.js", "ONNX Runtime Web", "Chrome Extension (Manifest V3)"]
       - label: { en: "Developer Environments", de: "Entwicklungsumgebungen" }
         items: ["Conda", "Docker", "Git", "Nix", "nix-darwin", "home-manager", "WezTerm", "Neovim"]
-    variants:
-      bridge:
-        omit_groups: ["Computational Modelling"]
-        group_items:
-          "Machine Learning": ["TensorFlow", "Keras", "MLflow", "BigQueryML"]
-          "AI Agents": ["Claude Code"]
-          "Browser ML Delivery": ["TensorFlow.js", "ONNX Runtime Web"]
-          "Developer Environments": ["Docker", "Git"]
-      comp-bio:
-        omit_groups: ["Machine Learning", "AI Agents", "Browser ML Delivery"]
-        group_items:
-          "Developer Environments": ["Conda", "Docker", "Git"]
-      ds-ml:
-        omit_groups: ["Computational Modelling"]
-        group_items:
-          "AI Agents": ["Claude Code", "Codex", "OpenCode"]
-          "Developer Environments": ["Docker", "Git"]
 
   - name:
       en: "Data & Cloud Engineering"
@@ -70,19 +40,6 @@ categories:
         items: ["Python (Expert)", "R", "SQL", "dbt"]
       - label: { en: "Cloud & Analytics", de: "Cloud & Analytik" }
         items: ["GCP", "BigQuery", "Looker"]
-    variants:
-      bridge:
-        group_items:
-          "Programming & Data": ["Python (Expert)", "R", "SQL"]
-          "Cloud & Analytics": ["GCP", "BigQuery"]
-      comp-bio:
-        group_items:
-          "Programming & Data": ["Python (Expert)", "R"]
-          "Cloud & Analytics": ["GCP"]
-      ds-ml:
-        group_items:
-          "Programming & Data": ["Python (Expert)", "R", "SQL", "dbt"]
-          "Cloud & Analytics": ["GCP", "BigQuery", "Looker"]
 
   - name:
       en: "Experimental Research"
@@ -94,14 +51,6 @@ categories:
         items: ["Super-Resolution", "Fluorescence"]
       - label: { en: "Assays", de: "Analysemethoden" }
         items: ["FISH", "qPCR", "FACS"]
-    variants:
-      bridge:
-        group_items:
-          Imaging: ["Super-Resolution"]
-      ds-ml:
-        omit_groups: ["Models", "Assays"]
-        group_items:
-          Imaging: ["Super-Resolution"]
 
 variants:
   bridge:
@@ -121,4 +70,3 @@ variants:
       - "AI/ML & Developer Tools"
       - "Data & Cloud Engineering"
       - "Bioinformatics"
-      - "Experimental Research"

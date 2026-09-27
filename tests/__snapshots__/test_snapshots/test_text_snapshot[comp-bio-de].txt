@@ -90,7 +90,7 @@ Bioinformatik
 KI/ML & Entwicklerwerkzeuge
   Maschinelles Lernen: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
   Computergestützte Modellierung: MHCflurry, TCRdock, AlphaFold v2, Mol*
-  KI-Agenten: Claude Code, Codex, OpenCode
+  KI-Agenten: Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Kimi
   Browser-ML-Auslieferung: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
   Entwicklungsumgebungen: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
 Daten- & Cloud-Engineering
@@ -131,6 +131,8 @@ Sport
   - WAT Simmering
   - TSG 1889 Dossenheim e.V.
   - HTV 1846 e.V.
+Interessen
+  - Badminton
 
 ================================================================================
 PUBLIKATIONEN

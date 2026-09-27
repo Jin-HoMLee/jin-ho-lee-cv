@@ -170,7 +170,11 @@
       "keywords": [
         "Claude Code",
         "Codex",
-        "OpenCode"
+        "OpenCode",
+        "Pi",
+        "Grok",
+        "Cursor",
+        "Kimi"
       ]
     },
     {
@@ -323,6 +327,10 @@
     {
       "organization": "HTV 1846 e.V.",
       "position": "Sports"
+    },
+    {
+      "organization": "Badminton",
+      "position": "Interests"
     }
   ],
   "awards": [

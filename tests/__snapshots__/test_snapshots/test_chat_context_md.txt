@@ -1,6 +1,6 @@
 # Jin-Ho Lee — Bioinformatics · Data Science
 
-> Data scientist with bioinformatics roots — production ML and cloud consulting on GCP; 1,000+ analytical processes migrated and 100+ specialists coached.
+> Data scientist with bioinformatics roots — eight years of academic research, 11 peer-reviewed publications, production ML and cloud consulting on GCP; 1,000+ analytical processes migrated, 100+ specialists coached.
 
 ## Profile
 
@@ -15,7 +15,7 @@ As a Cintellic consultant for an international bank, architected the migration o
 - **Quantitative Bioimaging**: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 - **Machine Learning**: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
 - **Computational Modelling**: MHCflurry, TCRdock, AlphaFold v2, Mol*
-- **AI Agents**: Claude Code, Codex, OpenCode
+- **AI Agents**: Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Kimi
 - **Browser ML Delivery**: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
 - **Developer Environments**: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
 - **Programming & Data**: Python (Expert), R, SQL, dbt

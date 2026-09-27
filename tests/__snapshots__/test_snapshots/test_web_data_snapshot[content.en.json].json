@@ -52,8 +52,8 @@
     ]
   },
   "profile": {
-    "answer_block": "Jin-Ho Lee is a data scientist with bioinformatics roots based in Mannheim, Germany. He builds production machine-learning and data pipelines, brings Google Cloud consulting experience from international banking, and has coached 100+ specialists in Python, SQL and ML. He holds an M.Sc. from Heidelberg University and has 11 peer-reviewed research publications.",
-    "tagline": "Data scientist with bioinformatics roots — production ML and cloud consulting on GCP; 1,000+ analytical processes migrated and 100+ specialists coached.",
+    "answer_block": "Jin-Ho Lee is a data scientist with bioinformatics roots based in Mannheim, Germany. He spent eight years in academic research across bioinformatics and experimental biophysics with 11 peer-reviewed publications, and now ships production machine-learning and data pipelines, brings Google Cloud consulting experience from international banking, and has coached 100+ specialists in Python, SQL and ML. He holds an M.Sc. from Heidelberg University.",
+    "tagline": "Data scientist with bioinformatics roots — eight years of academic research, 11 peer-reviewed publications, production ML and cloud consulting on GCP; 1,000+ analytical processes migrated, 100+ specialists coached.",
     "paragraphs": [
       "Worked across bioinformatics and experimental biophysics, combining NGS/RNA-Seq pipeline development, quantitative bioimage analysis, and wet-lab research at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). This work produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
       "As a Cintellic consultant for an international bank, architected the migration of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for anti-financial-crime & KYC. Previously at neuefische, coached 100+ specialists in Python, SQL & ML; in research, secured third-party funding and supervised 10+ students."
@@ -70,7 +70,27 @@
               "NGS",
               "RNA-Seq",
               "WES",
-              "SNV Calling"
+              "SNV Calling",
+              "Splice Analysis"
+            ]
+          },
+          {
+            "label": "Bioinformatics Workflows",
+            "items": [
+              "Snakemake",
+              "MapSplice",
+              "HISAT2/STAR",
+              "samtools/bcftools",
+              "bedtools",
+              "OptiType"
+            ]
+          },
+          {
+            "label": "Immunoinformatics",
+            "items": [
+              "HLA Typing",
+              "MHC-I Prediction",
+              "Neoepitopes"
             ]
           },
           {
@@ -90,28 +110,52 @@
             "items": [
               "TensorFlow",
               "Keras",
+              "LSTMs",
+              "OpenCV",
               "MLflow",
               "BigQueryML"
             ]
           },
           {
+            "label": "Computational Modelling",
+            "items": [
+              "MHCflurry",
+              "TCRdock",
+              "AlphaFold v2",
+              "Mol*"
+            ]
+          },
+          {
             "label": "AI Agents",
             "items": [
-              "Claude Code"
+              "Claude Code",
+              "Codex",
+              "OpenCode",
+              "Pi",
+              "Grok",
+              "Cursor",
+              "Kimi"
             ]
           },
           {
             "label": "Browser ML Delivery",
             "items": [
               "TensorFlow.js",
-              "ONNX Runtime Web"
+              "ONNX Runtime Web",
+              "Chrome Extension (Manifest V3)"
             ]
           },
           {
             "label": "Developer Environments",
             "items": [
+              "Conda",
               "Docker",
-              "Git"
+              "Git",
+              "Nix",
+              "nix-darwin",
+              "home-manager",
+              "WezTerm",
+              "Neovim"
             ]
           }
         ]
@@ -124,14 +168,16 @@
             "items": [
               "Python (Expert)",
               "R",
-              "SQL"
+              "SQL",
+              "dbt"
             ]
           },
           {
             "label": "Cloud & Analytics",
             "items": [
               "GCP",
-              "BigQuery"
+              "BigQuery",
+              "Looker"
             ]
           }
         ]
@@ -149,7 +195,8 @@
           {
             "label": "Imaging",
             "items": [
-              "Super-Resolution"
+              "Super-Resolution",
+              "Fluorescence"
             ]
           },
           {
@@ -750,6 +797,12 @@
           "WAT Simmering",
           "TSG 1889 Dossenheim e.V.",
           "HTV 1846 e.V."
+        ]
+      },
+      {
+        "name": "Interests",
+        "entries": [
+          "Badminton"
         ]
       }
     ]

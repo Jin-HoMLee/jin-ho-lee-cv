@@ -76,13 +76,22 @@ def project_pdf_content(content: dict[str, Any], *, target: str, lang: str) -> d
         language for language in result["languages"] if language["proficiency"] != "passive"
     ]
 
-    environment = next(
-        category
-        for category in result["volunteer"]["categories"]
-        if _english(category["name"]) == "Environment"
-    )
+    # Keep volunteer + sports + interests in every target. The Environment list
+    # stays to its lead entry; the Sports clubs (badminton) render in full.
+    volunteer_keep = {"Environment", "Sports", "Interests"}
     result["volunteer"] = {
-        "categories": [{"name": environment["name"], "entries": environment["entries"][:1]}]
+        "categories": [
+            {
+                "name": category["name"],
+                "entries": (
+                    category["entries"][:1]
+                    if _english(category["name"]) == "Environment"
+                    else category["entries"]
+                ),
+            }
+            for category in result["volunteer"]["categories"]
+            if _english(category["name"]) in volunteer_keep
+        ]
     }
 
     allowed_awards = _AWARD_TITLES[target]

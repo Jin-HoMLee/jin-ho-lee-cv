@@ -145,6 +145,19 @@ def test_resolve_skills_target_bridge_strips_variant_instructions():
     assert all("variants" not in category for category in bridge["categories"])
 
 
+def test_resolve_skills_target_drops_omitted_categories():
+    skills = {
+        "categories": [
+            {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b"]}]},
+            {"name": {"en": "Exp"}, "groups": [{"label": {"en": "G"}, "items": ["e"]}]},
+        ],
+        "variants": {"ds-ml": {"category_order": ["Bio"]}},
+    }
+    assert [
+        category["name"]["en"] for category in _resolve_skills_target(skills, "ds-ml")["categories"]
+    ] == ["Bio"]
+
+
 def test_resolve_skills_target_orders_categories_per_target():
     skills = {
         "categories": [
@@ -203,7 +216,7 @@ def test_skills_category_orders_reject_duplicate_base_category_names(tmp_path):
     assert any("duplicate base Skills category name" in error.message for error in errors)
 
 
-def test_skills_category_orders_reject_unknown_duplicate_and_missing_names(tmp_path):
+def test_skills_category_orders_reject_unknown_and_duplicate_names(tmp_path):
     _write(
         tmp_path / "skills.yaml",
         {
@@ -218,10 +231,24 @@ def test_skills_category_orders_reject_unknown_duplicate_and_missing_names(tmp_p
     messages = " ".join(error.message for error in errors)
     assert "duplicate category name" in messages
     assert "unknown category name" in messages
-    assert "omits category name" in messages
+    assert "omits category name" not in messages
 
 
-def test_skills_are_concise_by_target_and_full_in_nonweb_bridge(content_dir):
+def test_skills_category_orders_allow_whole_section_drop(tmp_path):
+    _write(
+        tmp_path / "skills.yaml",
+        {
+            "categories": [
+                {"name": {"en": "Bio"}, "groups": [{"label": {"en": "G"}, "items": ["b"]}]},
+                {"name": {"en": "Exp"}, "groups": [{"label": {"en": "G"}, "items": ["e"]}]},
+            ],
+            "variants": {"ds-ml": {"category_order": ["Bio"]}},
+        },
+    )
+    assert _validate_skills_category_orders(tmp_path) == []
+
+
+def test_skills_sections_identical_and_ds_ml_drops_experimental(content_dir):
     def resolved(target, web_projection=False):
         return resolve_langstrings(
             load_content(
@@ -233,59 +260,102 @@ def test_skills_are_concise_by_target_and_full_in_nonweb_bridge(content_dir):
             lang="en",
         )["skills"]
 
-    trees = {
-        "bridge": resolved("bridge"),
-        "web-bridge": resolved("bridge", web_projection=True),
-        "comp-bio": resolved("comp-bio", web_projection=True),
-        "ds-ml": resolved("ds-ml", web_projection=True),
-    }
+    def names(target, web_projection=False):
+        return [category["name"] for category in resolved(target, web_projection)["categories"]]
 
-    def items(target):
+    def items(target, web_projection=False):
         return {
             item
-            for category in trees[target]["categories"]
+            for category in resolved(target, web_projection)["categories"]
             for group in category["groups"]
             for item in group["items"]
         }
 
-    assert {"TCRdock", "Nix", "Claude Code", "Snakemake"} <= items("bridge")
-    assert "TCRdock" not in items("web-bridge")
-    assert "Nix" not in items("web-bridge")
-    assert {"MapSplice", "TCRdock", "MHCflurry", "Snakemake"} <= items("comp-bio")
-    assert {"LSTMs", "OpenCV", "BigQueryML", "Claude Code"} <= items("ds-ml")
-    assert "TCRdock" not in items("ds-ml")
-    assert "Claude Code" not in items("comp-bio")
+    full_order = [
+        "Bioinformatics",
+        "AI/ML & Developer Tools",
+        "Data & Cloud Engineering",
+        "Experimental Research",
+    ]
+    assert names("bridge") == full_order
+    assert names("comp-bio") == full_order
+    # identical full item lists across bridge and comp-bio, web or not
+    assert items("bridge") == items("bridge", web_projection=True)
+    assert items("comp-bio") == items("bridge")
+    assert items("comp-bio", web_projection=True) == items("bridge")
+    # ds-ml drops only the whole Experimental Research section
+    assert names("ds-ml") == [
+        "AI/ML & Developer Tools",
+        "Data & Cloud Engineering",
+        "Bioinformatics",
+    ]
+    ds = items("ds-ml")
+    assert {
+        "LSTMs",
+        "OpenCV",
+        "BigQueryML",
+        "Claude Code",
+        "TCRdock",
+        "HLA Typing",
+        "Snakemake",
+    } <= ds
+    assert {
+        "FISH",
+        "qPCR",
+        "FACS",
+        "3D Cell Culture",
+        "Super-Resolution",
+        "Neural Progenitors",
+        "Fluorescence",
+    }.isdisjoint(ds)
+    assert {
+        "TCRdock",
+        "Nix",
+        "Claude Code",
+        "Snakemake",
+        "HLA Typing",
+        "MapSplice",
+        "MHCflurry",
+    } <= items("bridge")
 
 
-def test_comp_bio_web_keeps_only_relevant_modelling_and_toolchain(content_dir):
+def test_comp_bio_keeps_full_ai_ml_section_identical_to_bridge(content_dir):
     for lang in ("en", "de"):
-        skills = resolve_langstrings(
-            load_content(
-                content_dir,
-                lang=lang,
-                target="comp-bio",
-                web_projection=True,
-            ),
+        bridge = resolve_langstrings(
+            load_content(content_dir, lang=lang, target="bridge", web_projection=True),
             lang=lang,
         )["skills"]
+        comp = resolve_langstrings(
+            load_content(content_dir, lang=lang, target="comp-bio", web_projection=True),
+            lang=lang,
+        )["skills"]
+        assert comp == bridge
         ai = next(
             category
-            for category in skills["categories"]
+            for category in comp["categories"]
             if category["name"]
             == ("AI/ML & Developer Tools" if lang == "en" else "KI/ML & Entwicklerwerkzeuge")
         )
         assert [group["label"] for group in ai["groups"]] == [
+            "Machine Learning" if lang == "en" else "Maschinelles Lernen",
             "Computational Modelling" if lang == "en" else "Computergestützte Modellierung",
+            "AI Agents" if lang == "en" else "KI-Agenten",
+            "Browser ML Delivery" if lang == "en" else "Browser-ML-Auslieferung",
             "Developer Environments" if lang == "en" else "Entwicklungsumgebungen",
         ]
-        assert {item for group in ai["groups"] for item in group["items"]} == {
-            "MHCflurry",
-            "TCRdock",
-            "AlphaFold v2",
-            "Mol*",
-            "Conda",
-            "Docker",
-            "Git",
+        agents = next(
+            group
+            for group in ai["groups"]
+            if group["label"] == ("AI Agents" if lang == "en" else "KI-Agenten")
+        )
+        assert set(agents["items"]) == {
+            "Claude Code",
+            "Codex",
+            "OpenCode",
+            "Pi",
+            "Grok",
+            "Cursor",
+            "Kimi",
         }
 
 
@@ -340,7 +410,7 @@ def test_skills_variant_references_scope_labels_to_their_category(tmp_path):
 
 def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
     bridge = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
-    comp_bio = prepare_data(content_dir, private_path=None, lang="de", target="comp-bio")
+    comp_bio = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
     ds_ml = prepare_data(content_dir, private_path=None, lang="en", target="ds-ml")
 
     def all_items(data):
@@ -351,10 +421,21 @@ def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
             for item in group["items"]
         }
 
-    assert "HLA Typing" not in all_items(bridge)
-    assert "TCRdock" not in all_items(bridge)  # concise PDF projection
-    assert "TCRdock" in all_items(comp_bio)
-    assert "LSTMs" in all_items(ds_ml)
+    def names(data):
+        return [category["name"] for category in data["skills"]["categories"]]
+
+    # bridge and comp-bio carry the full, identical four sections
+    assert all_items(bridge) == all_items(comp_bio)
+    assert names(bridge) == names(comp_bio)
+    assert {"HLA Typing", "TCRdock", "Claude Code", "Nix", "Snakemake"} <= all_items(bridge)
+    # ds-ml drops Experimental Research only; the other three sections stay full
+    assert names(ds_ml) == [
+        "AI/ML & Developer Tools",
+        "Data & Cloud Engineering",
+        "Bioinformatics",
+    ]
+    assert {"LSTMs", "TCRdock", "Claude Code", "Pi", "Grok", "Cursor", "Kimi"} <= all_items(ds_ml)
+    assert {"FISH", "qPCR", "Super-Resolution"}.isdisjoint(all_items(ds_ml))
 
 
 def test_select_project_ids_returns_target_order():

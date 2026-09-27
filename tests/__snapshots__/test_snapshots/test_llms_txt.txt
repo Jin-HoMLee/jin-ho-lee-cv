@@ -1,6 +1,6 @@
 # Jin-Ho Lee — Bioinformatics · Data Science
 
-> Data scientist with bioinformatics roots — production ML and cloud consulting on GCP; 1,000+ analytical processes migrated and 100+ specialists coached.
+> Data scientist with bioinformatics roots — eight years of academic research, 11 peer-reviewed publications, production ML and cloud consulting on GCP; 1,000+ analytical processes migrated, 100+ specialists coached.
 
 Worked across bioinformatics and experimental biophysics, combining NGS/RNA-Seq pipeline development, quantitative bioimage analysis, and wet-lab research at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). This work produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.
 

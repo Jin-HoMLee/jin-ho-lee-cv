@@ -21,3 +21,7 @@ categories:
       - "WAT Simmering"
       - "TSG 1889 Dossenheim e.V."
       - "HTV 1846 e.V."
+
+  - name: { en: "Interests", de: "Interessen" }
+    entries:
+      - "Badminton"
