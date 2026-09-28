@@ -24,15 +24,18 @@
   // joins Bioinformatics to Experimental Research; the roomier right gap gives
   // AI/ML and Data/Cloud equivalent visual weight and balances column heights.
   let categories = skills-data.categories
+  // bridge + comp-bio: left Bioinformatics above Experimental Research; right
+  // AI/ML above Data/Cloud. ds-ml (three sections): left AI/ML above Data/Cloud,
+  // right Bioinformatics — no blank cells, columns flow independently.
   let left = if categories.len() == 4 {
     (categories.at(0), categories.at(2))
   } else {
-    (categories.at(0),)
+    (categories.at(1), categories.at(2))
   }
   let right = if categories.len() == 4 {
     (categories.at(1), categories.at(3))
   } else {
-    (categories.at(1), categories.at(2))
+    (categories.at(0),)
   }
   grid(
     columns: (1fr, 1fr),

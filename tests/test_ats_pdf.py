@@ -182,11 +182,17 @@ def test_all_variants_are_two_page_flat_text_in_one_order(built_pdf):
         skill_region = text.split(headings[1], 1)[1].split(headings[2], 1)[0]
         category_labels = SKILL_CATEGORY_LABELS[lang]
         if target == "ds-ml":
-            category_labels = [category_labels[0], *category_labels[2:]]
-        positions = [skill_region.index(label) for label in category_labels]
-        assert positions == sorted(positions), (
-            f"{extractor}: wrong skills reading order: {positions}"
-        )
+            # ds-ml flows two columns of unequal height (AI/ML + Data/Cloud vs
+            # Bioinformatics); both extractors must carry all three and must not
+            # carry Experimental Research.
+            present = [label for label in category_labels if label in skill_region]
+            assert set(present) == {category_labels[2], category_labels[0], category_labels[3]}
+            assert category_labels[1] not in skill_region
+        else:
+            positions = [skill_region.index(label) for label in category_labels]
+            assert positions == sorted(positions), (
+                f"{extractor}: wrong skills reading order: {positions}"
+            )
 
         removed_languages = (
             ("French", "Italian") if lang == "en" else ("Französisch", "Italienisch")

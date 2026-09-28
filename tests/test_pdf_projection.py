@@ -21,6 +21,44 @@ def _entry(data, entry_id):
     return next(entry for entry in data["experience"] if entry["id"] == entry_id)
 
 
+def _experience_text(data, lang):
+    return " ".join(bullet[lang] for entry in data["experience"] for bullet in entry["bullets"])
+
+
+def test_experience_coverage_is_identical_across_targets_and_languages(content_dir):
+    """Steer 018: no role, strand, or keyword is dropped for target relevance."""
+    inventory = {
+        "independent": {
+            "en": ("Agentic AI", "Computer Vision", "Bioinformatics"),
+            "de": ("Agenten-KI", "Computer Vision", "Bioinformatik"),
+        },
+        "cintellic": {
+            "en": ("Cloud Migration", "Production ML", "Stakeholder Lead"),
+            "de": ("Cloud-Migration", "Produktions-ML", "Stakeholder Lead"),
+        },
+        "neuefische": {"en": ("Coaching", "ML Development"), "de": ("Coaching", "ML-Entwicklung")},
+        "research": {
+            "en": ("Genomics", "Biophysics", "Neurobiology"),
+            "de": ("Genomik", "Biophysik", "Neurobiologie"),
+        },
+    }
+    for lang in ("en", "de"):
+        for target in ("bridge", "comp-bio", "ds-ml"):
+            data = prepare_data(content_dir, private_path=None, lang=lang, target=target)
+            counts = {entry["id"]: len(entry["bullets"]) for entry in data["experience"]}
+            assert counts == {
+                "independent": 3,
+                "cintellic": 3,
+                "neuefische": 2,
+                "research": 3,
+            }, f"{lang}/{target} dropped experience bullets: {counts}"
+            for entry_id, markers_by_lang in inventory.items():
+                bullets = _entry(data, entry_id)["bullets"]
+                labels = " · ".join(bullet[lang] for bullet in bullets)
+                for marker in markers_by_lang[lang]:
+                    assert marker in labels, f"{lang}/{target} {entry_id} missing {marker!r}"
+
+
 def test_pdf_projection_does_not_change_canonical_content(content_dir):
     canonical = load_content(content_dir, lang="en", target="comp-bio")
     projected = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
@@ -38,11 +76,11 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
 
     assert data["profile"]["paragraphs"] == []
     assert "11 peer-reviewed" in data["profile"]["tagline"]
-    assert len(_entry(data, "independent")["bullets"]) == 1
-    assert "Snakemake" in _entry(data, "independent")["bullets"][0]["en"]
+    assert len(_entry(data, "independent")["bullets"]) == 3
+    assert "Snakemake" in _entry(data, "independent")["bullets"][2]["en"]
     assert "1,000+" in _entry(data, "cintellic")["bullets"][0]["en"]
     assert "100+" in _entry(data, "neuefische")["bullets"][0]["en"]
-    assert len(_entry(data, "research")["bullets"]) == 2
+    assert len(_entry(data, "research")["bullets"]) == 3
     assert "HLA/neoantigen pipelines" in _entry(data, "research")["bullets"][0]["en"]
 
     skills = _skill_items(data)
@@ -53,9 +91,9 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
 
 def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
     expected_bullets = {
-        "bridge": {"independent": 3, "cintellic": 2, "neuefische": 2, "research": 1},
-        "comp-bio": {"independent": 1, "cintellic": 1, "neuefische": 1, "research": 2},
-        "ds-ml": {"independent": 2, "cintellic": 3, "neuefische": 2, "research": 1},
+        "bridge": {"independent": 3, "cintellic": 3, "neuefische": 2, "research": 3},
+        "comp-bio": {"independent": 3, "cintellic": 3, "neuefische": 2, "research": 3},
+        "ds-ml": {"independent": 3, "cintellic": 3, "neuefische": 2, "research": 3},
     }
     expected_awards = {
         "bridge": {"Google Cloud Certified - Associate Cloud Engineer", "DAAD PROMOS Scholarship"},
@@ -114,15 +152,20 @@ def test_general_profile_is_broad_and_balanced(content_dir):
     assert [bullet["refs"] for bullet in _entry(data, "cintellic")["bullets"]] == [
         ["C2"],
         ["C1"],
+        ["C1", "C2"],
     ]
     assert [bullet["refs"] for bullet in _entry(data, "neuefische")["bullets"]] == [
         ["D3"],
         ["D1"],
     ]
+    research = _entry(data, "research")
+    assert [bullet["refs"] for bullet in research["bullets"]] == [
+        ["L1", "L2"],
+        ["L3"],
+        ["L4"],
+    ]
+    assert "neural progenitor differentiation" in research["bullets"][2]["en"].lower()
     assert [project["id"] for project in data["selected_projects"]] == ["C1", "D1", "L3"]
-    assert (
-        "neural progenitor differentiation" in _entry(data, "research")["bullets"][0]["en"].lower()
-    )
 
 
 def test_pdf_skills_use_non_overlapping_source_backed_groups(content_dir):

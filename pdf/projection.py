@@ -15,26 +15,28 @@ REPRESENTATIVE_PUBLICATION_KEYS = (
     "lee2019_combofish",
 )
 
+# Experience is now substantively complete and identical across all targets
+# (steer 018): every role keeps all of its concise one-line bullets so no
+# achievement or keyword is dropped for target-relevance. Only whole-section
+# skills exclusions remain target-specific.
 _EXPERIENCE_BULLETS = {
     "bridge": {
-        # General is the balanced superset: each employed role keeps concise
-        # impact evidence, while Projects carries the fuller proof/outcome.
         "independent": (0, 1, 2),
-        "cintellic": (0, 1),
-        "neuefische": (0, 1),
-        "research": (2,),
-    },
-    "comp-bio": {
-        "independent": (2,),
-        "cintellic": (0,),
-        "neuefische": (0,),
-        "research": (0, 1),
-    },
-    "ds-ml": {
-        "independent": (0, 1),
         "cintellic": (0, 1, 2),
         "neuefische": (0, 1),
-        "research": (1,),
+        "research": (0, 1, 2),
+    },
+    "comp-bio": {
+        "independent": (0, 1, 2),
+        "cintellic": (0, 1, 2),
+        "neuefische": (0, 1),
+        "research": (0, 1, 2),
+    },
+    "ds-ml": {
+        "independent": (0, 1, 2),
+        "cintellic": (0, 1, 2),
+        "neuefische": (0, 1),
+        "research": (0, 1, 2),
     },
 }
 
