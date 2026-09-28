@@ -45,13 +45,15 @@ Doktorand & Postgraduierter Forscher - Forschungszentrum Jülich (FZ Jülich) / 
 ================================================================================
 AUSGEWÄHLTE PROJEKTE
 ================================================================================
-Krebs-Neoantigen-Entdeckung – Transkriptomweite Splice-Analyse    (2015-08 bis 2015-11)
-  Bioinformatik-Forschungspraktikant (Seoul National University)
-  Bioinformatik-Pipeline zur Identifizierung neuartiger Immuntherapie-Targets
-  aus aberrantem alternativem Splicing in RNA-Seq-Daten.
-  Ergebnis: Unveröffentlichter computergestützter Machbarkeitsnachweis, der
-  vorhergesagte hochaffine MHC-I-bindende Kandidatenpeptide aus Splice-
-  abgeleiteten nicht-kanonischen Transkripten erzeugte.
+Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bis heute)
+  Autor und Maintainer (Open Source)
+  Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-
+  of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
+  Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
+  Strukturmodellierung.
+  Ergebnis: Snakemake-Pipeline: End-to-End-Neoepitop-Identifizierung von RNA-
+  Seq-FASTQ bis zur computergestützt modellierten TCR-pMHC-Komplexstruktur —
+  patientenspezifische HLA-Allele, tumor-exklusive Junctions.
 
 Personalisierte Immuntherapie – Hochdurchsatz-HLA-Typisierungs-Pipeline    (2014-04 bis 2014-05)
   Bioinformatik-Bachelorand (NCT Heidelberg)
@@ -62,15 +64,14 @@ Personalisierte Immuntherapie – Hochdurchsatz-HLA-Typisierungs-Pipeline    (20
   Neoantigen-Entdeckung praktikabel ist und Kosten sowie Vorlaufzeiten gegenüber
   klassischen PCR-basierten klinischen Assays deutlich reduziert.
 
-Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bis heute)
-  Autor und Maintainer (Open Source)
-  Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-
-  of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
-  Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
-  Strukturmodellierung.
-  Ergebnis: Snakemake-Pipeline: End-to-End-Neoepitop-Identifizierung von RNA-
-  Seq-FASTQ bis zur computergestützt modellierten TCR-pMHC-Komplexstruktur —
-  patientenspezifische HLA-Allele, tumor-exklusive Junctions.
+Experimentelle Biophysik — Chromatin-Nano-Architektur & DNA-Reparatur    (2017-02 bis 2018-08)
+  Wissenschaftlicher Mitarbeiter / Masterand
+  Fortgeschrittene Forschung mit Super-Resolution-Mikroskopie und
+  computergestützter Analyse zur Untersuchung von DNA-Reparaturmechanismen und
+  Chromatin-Nano-Architektur.
+  Ergebnis: Veröffentlichung der Forschungsergebnisse in mehreren peer-reviewten
+  Fachzeitschriften und Einwerbung von Drittmitteln für weiterführende
+  wissenschaftliche Untersuchungen.
 
 ================================================================================
 AUSBILDUNG

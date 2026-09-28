@@ -97,7 +97,11 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
     }
     expected_awards = {
         "bridge": {"Google Cloud Certified - Associate Cloud Engineer", "DAAD PROMOS Scholarship"},
-        "comp-bio": {"DeGBS Poster Award", "DAAD PROMOS Scholarship"},
+        "comp-bio": {
+            "“Most Patient-Centric Solution” Award",
+            "DeGBS Poster Award",
+            "DAAD PROMOS Scholarship",
+        },
         "ds-ml": {
             "Google Cloud Certified - Associate Cloud Engineer",
             "“Most Patient-Centric Solution” Award",
@@ -273,7 +277,7 @@ def test_pdf_project_links_follow_language_routes(content_dir):
     en = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
     de = prepare_data(content_dir, private_path=None, lang="de", target="comp-bio")
 
-    assert en["project_links"]["L1"] == "https://jinholee.is-a.dev/projects/L1/"
-    assert de["project_links"]["L1"] == "https://jinholee.is-a.dev/de/projects/L1/"
-    assert en["selected_projects"][0]["web_url"] == en["project_links"]["L1"]
-    assert de["selected_projects"][0]["web_url"] == de["project_links"]["L1"]
+    assert en["project_links"]["L5"] == "https://jinholee.is-a.dev/projects/L5/"
+    assert de["project_links"]["L5"] == "https://jinholee.is-a.dev/de/projects/L5/"
+    assert en["selected_projects"][0]["web_url"] == en["project_links"]["L5"]
+    assert de["selected_projects"][0]["web_url"] == de["project_links"]["L5"]

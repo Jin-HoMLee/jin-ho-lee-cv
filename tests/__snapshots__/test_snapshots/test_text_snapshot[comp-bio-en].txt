@@ -44,13 +44,14 @@ Doctoral & Post-Graduate Researcher - Forschungszentrum Jülich (FZ Jülich) / K
 ================================================================================
 SELECTED PROJECTS
 ================================================================================
-Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis    (2015-08 to 2015-11)
-  Bioinformatics Research Intern (Seoul National University)
-  Bioinformatics pipeline for identifying novel immunotherapy targets derived
-  from aberrant alternative splicing in RNA-Seq data.
-  Outcome: Unpublished computational proof of concept that produced predicted
-  high-affinity MHC-I-binding candidate peptides from splice-derived non-
-  canonical transcripts.
+Splice Neoepitope Pipeline – Reproducible Snakemake Workflow    (2026-03 to present)
+  Author and Maintainer (Open Source)
+  Modernised, open-source reimplementation of the 2015 SNU computational proof
+  of concept for predicted splice-junction–derived neoepitope candidates as a
+  reproducible Snakemake pipeline with optional structural modelling.
+  Outcome: Snakemake pipeline: end-to-end neoepitope discovery from RNA-Seq
+  FASTQ to computationally modeled TCR-pMHC complex structure — patient-specific
+  HLA alleles, tumor-exclusive junctions.
 
 Personalized Immunotherapy – High-Throughput HLA Typing Pipeline    (2014-04 to 2014-05)
   Bioinformatics Bachelor Thesis Student (NCT Heidelberg)
@@ -61,14 +62,12 @@ Personalized Immunotherapy – High-Throughput HLA Typing Pipeline    (2014-04 t
   neoantigen discovery, significantly reducing costs and lead times compared to
   traditional PCR-based clinical assays.
 
-Splice Neoepitope Pipeline – Reproducible Snakemake Workflow    (2026-03 to present)
-  Author and Maintainer (Open Source)
-  Modernised, open-source reimplementation of the 2015 SNU computational proof
-  of concept for predicted splice-junction–derived neoepitope candidates as a
-  reproducible Snakemake pipeline with optional structural modelling.
-  Outcome: Snakemake pipeline: end-to-end neoepitope discovery from RNA-Seq
-  FASTQ to computationally modeled TCR-pMHC complex structure — patient-specific
-  HLA alleles, tumor-exclusive junctions.
+Experimental Biophysics — Chromatin Nano-Architecture & DNA Repair    (2017-02 to 2018-08)
+  Graduate Researcher / Master's Candidate
+  Advanced research utilizing super-resolution microscopy and computational
+  analysis to investigate DNA repair mechanisms and chromatin nano-architecture.
+  Outcome: Published research findings in multiple peer-reviewed journals and
+  secured third-party funding for continued scientific investigations.
 
 ================================================================================
 EDUCATION

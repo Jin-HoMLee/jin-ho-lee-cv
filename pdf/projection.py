@@ -20,7 +20,11 @@ _AWARD_TITLES = {
         "Google Cloud Certified - Associate Cloud Engineer",
         "DAAD PROMOS Scholarship",
     },
-    "comp-bio": {"DeGBS Poster Award", "DAAD PROMOS Scholarship"},
+    "comp-bio": {
+        "“Most Patient-Centric Solution” Award",
+        "DeGBS Poster Award",
+        "DAAD PROMOS Scholarship",
+    },
     "ds-ml": {
         "Google Cloud Certified - Associate Cloud Engineer",
         "“Most Patient-Centric Solution” Award",

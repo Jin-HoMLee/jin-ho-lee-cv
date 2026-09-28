@@ -222,7 +222,7 @@ def test_all_variants_have_outline_and_navigation_links(built_pdf):
     prefix = "https://jinholee.is-a.dev/de" if lang == "de" else "https://jinholee.is-a.dev"
     assert f"{prefix}/#publications" in urls
     if target == "comp-bio":
-        assert {f"{prefix}/projects/{pid}/" for pid in ("L1", "L2", "L5")} <= urls
+        assert {f"{prefix}/projects/{pid}/" for pid in ("L5", "L2", "L3")} <= urls
     assert "ORCID" in poppler and "Google Scholar" in poppler
 
 
