@@ -49,18 +49,9 @@ Splice Neoepitope Pipeline – Reproducible Snakemake Workflow    (2026-03 to pr
   Modernised, open-source reimplementation of the 2015 SNU computational proof
   of concept for predicted splice-junction–derived neoepitope candidates as a
   reproducible Snakemake pipeline with optional structural modelling.
-  Outcome: Snakemake pipeline: end-to-end neoepitope discovery from RNA-Seq
-  FASTQ to computationally modeled TCR-pMHC complex structure — patient-specific
-  HLA alleles, tumor-exclusive junctions.
-
-Personalized Immunotherapy – High-Throughput HLA Typing Pipeline    (2014-04 to 2014-05)
-  Bioinformatics Bachelor Thesis Student (NCT Heidelberg)
-  B.Sc. thesis project: Bioinformatics workflow for identifying patient-specific
-  cancer targets and automating HLA genotyping from Next-Generation Sequencing
-  (NGS) data.
-  Outcome: Demonstrated the feasibility of a fully computational approach to
-  neoantigen discovery, significantly reducing costs and lead times compared to
-  traditional PCR-based clinical assays.
+  Outcome: Modern reimplementation of the 2015 SNU splice-neoepitope proof of
+  concept with patient-specific HLA typing, delivered as a reproducible
+  Snakemake pipeline from RNA-Seq FASTQ to modeled TCR-pMHC structure.
 
 Experimental Biophysics — Chromatin Nano-Architecture & DNA Repair    (2017-02 to 2018-08)
   Graduate Researcher / Master's Candidate
@@ -68,6 +59,13 @@ Experimental Biophysics — Chromatin Nano-Architecture & DNA Repair    (2017-02
   analysis to investigate DNA repair mechanisms and chromatin nano-architecture.
   Outcome: Published research findings in multiple peer-reviewed journals and
   secured third-party funding for continued scientific investigations.
+
+Neural Stem Cell Research – Radiation Effects on 3D Differentiation    (2018-09 to 2022-07)
+  Doctoral Researcher (RWTH Aachen, Forschungszentrum Jülich)
+  Scientific research project investigating the impact of ionizing radiation and
+  extracellular vesicles on human neural progenitor cell differentiation.
+  Outcome: Successfully identified new insights into neural radiation responses
+  and presented results at international scientific conferences.
 
 ================================================================================
 EDUCATION

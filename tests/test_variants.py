@@ -439,8 +439,8 @@ def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
 
 
 def test_select_project_ids_returns_target_order():
-    m = {"bridge": ["L5", "L1"], "comp-bio": ["L5", "L2", "L3"]}
-    assert _select_project_ids(m, "comp-bio") == ["L5", "L2", "L3"]
+    m = {"bridge": ["L5", "L1"], "comp-bio": ["L5", "L3", "L4"]}
+    assert _select_project_ids(m, "comp-bio") == ["L5", "L3", "L4"]
 
 
 def test_select_project_ids_falls_back_to_bridge_when_target_absent():
@@ -459,7 +459,7 @@ def test_load_content_bridge_project_order(content_dir):
 
 def test_load_content_comp_bio_project_order(content_dir):
     content = load_content(content_dir, lang="en", target="comp-bio")
-    assert _ids(content["selected_projects"]) == ["L5", "L2", "L3"]
+    assert _ids(content["selected_projects"]) == ["L5", "L3", "L4"]
 
 
 def test_load_content_ds_ml_project_order(content_dir):

@@ -51,18 +51,10 @@ Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bi
   of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
   Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
   Strukturmodellierung.
-  Ergebnis: Snakemake-Pipeline: End-to-End-Neoepitop-Identifizierung von RNA-
-  Seq-FASTQ bis zur computergestützt modellierten TCR-pMHC-Komplexstruktur —
-  patientenspezifische HLA-Allele, tumor-exklusive Junctions.
-
-Personalisierte Immuntherapie – Hochdurchsatz-HLA-Typisierungs-Pipeline    (2014-04 bis 2014-05)
-  Bioinformatik-Bachelorand (NCT Heidelberg)
-  B.Sc.-Thesisprojekt: Bioinformatischer Workflow zur Identifizierung
-  patientenspezifischer Krebs-Targets und Automatisierung der HLA-
-  Genotypisierung aus Next-Generation-Sequencing-Daten (NGS).
-  Ergebnis: Nachgewiesen, dass ein vollständig computergestützter Ansatz zur
-  Neoantigen-Entdeckung praktikabel ist und Kosten sowie Vorlaufzeiten gegenüber
-  klassischen PCR-basierten klinischen Assays deutlich reduziert.
+  Ergebnis: Moderne Neuimplementierung des SNU-Splice-Neoepitop-Proof-of-
+  Concepts von 2015 mit patientenspezifischer HLA-Typisierung als
+  reproduzierbare Snakemake-Pipeline von RNA-Seq-FASTQ bis zur modellierten TCR-
+  pMHC-Struktur.
 
 Experimentelle Biophysik — Chromatin-Nano-Architektur & DNA-Reparatur    (2017-02 bis 2018-08)
   Wissenschaftlicher Mitarbeiter / Masterand
@@ -72,6 +64,15 @@ Experimentelle Biophysik — Chromatin-Nano-Architektur & DNA-Reparatur    (2017
   Ergebnis: Veröffentlichung der Forschungsergebnisse in mehreren peer-reviewten
   Fachzeitschriften und Einwerbung von Drittmitteln für weiterführende
   wissenschaftliche Untersuchungen.
+
+Neurale Stammzellforschung – Strahlungseffekte auf 3D-Differenzierung    (2018-09 bis 2022-07)
+  Promotionsforscher (RWTH Aachen, Forschungszentrum Jülich)
+  Wissenschaftliches Forschungsprojekt zur Untersuchung der Auswirkungen
+  ionisierender Strahlung und extrazellulärer Vesikel auf die Differenzierung
+  humaner neuronaler Vorläuferzellen.
+  Ergebnis: Erfolgreiche Identifizierung neuer Erkenntnisse zu neuronalen
+  Strahlungsantworten sowie Präsentation der Ergebnisse auf internationalen
+  wissenschaftlichen Konferenzen.
 
 ================================================================================
 AUSBILDUNG

@@ -66,9 +66,10 @@ Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bi
   of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
   Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
   Strukturmodellierung.
-  Ergebnis: Snakemake-Pipeline: End-to-End-Neoepitop-Identifizierung von RNA-
-  Seq-FASTQ bis zur computergestützt modellierten TCR-pMHC-Komplexstruktur —
-  patientenspezifische HLA-Allele, tumor-exklusive Junctions.
+  Ergebnis: Moderne Neuimplementierung des SNU-Splice-Neoepitop-Proof-of-
+  Concepts von 2015 mit patientenspezifischer HLA-Typisierung als
+  reproduzierbare Snakemake-Pipeline von RNA-Seq-FASTQ bis zur modellierten TCR-
+  pMHC-Struktur.
 
 ================================================================================
 AUSBILDUNG

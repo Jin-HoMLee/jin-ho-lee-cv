@@ -667,7 +667,7 @@
         "Added optional TCR-pMHC ternary complex structural modelling via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.",
         "MIT-licensed, public on GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
       ],
-      "outcome": "Snakemake pipeline: end-to-end neoepitope discovery from RNA-Seq FASTQ to computationally modeled TCR-pMHC complex structure — patient-specific HLA alleles, tumor-exclusive junctions."
+      "outcome": "Modern reimplementation of the 2015 SNU splice-neoepitope proof of concept with patient-specific HLA typing, delivered as a reproducible Snakemake pipeline from RNA-Seq FASTQ to modeled TCR-pMHC structure."
     }
   },
   "selected_projects": [
@@ -754,7 +754,7 @@
         "Added optional TCR-pMHC ternary complex structural modelling via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.",
         "MIT-licensed, public on GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
       ],
-      "outcome": "Snakemake pipeline: end-to-end neoepitope discovery from RNA-Seq FASTQ to computationally modeled TCR-pMHC complex structure — patient-specific HLA alleles, tumor-exclusive junctions."
+      "outcome": "Modern reimplementation of the 2015 SNU splice-neoepitope proof of concept with patient-specific HLA typing, delivered as a reproducible Snakemake pipeline from RNA-Seq FASTQ to modeled TCR-pMHC structure."
     }
   ],
   "languages": [
