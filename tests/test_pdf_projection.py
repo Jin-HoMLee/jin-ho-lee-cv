@@ -77,7 +77,7 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
     assert data["profile"]["paragraphs"] == []
     assert "11 peer-reviewed" in data["profile"]["tagline"]
     assert len(_entry(data, "independent")["bullets"]) == 3
-    assert "Snakemake" in _entry(data, "independent")["bullets"][2]["en"]
+    assert "Snakemake" in _entry(data, "independent")["bullets"][0]["en"]
     assert "1,000+" in _entry(data, "cintellic")["bullets"][0]["en"]
     assert "100+" in _entry(data, "neuefische")["bullets"][0]["en"]
     assert len(_entry(data, "research")["bullets"]) == 3
@@ -134,6 +134,36 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
         assert "Interests" not in volunteer
 
 
+def test_experience_bullet_order_leads_each_target_focus(content_dir):
+    """Steer 023: identical content, but per-target ordering leads focus."""
+    expected = {
+        "bridge": {
+            "independent": [["D4"], ["D2"], ["L5"]],
+            "cintellic": [["C2"], ["C1"], ["C1", "C2"]],
+            "neuefische": [["D3"], ["D1"]],
+            "research": [["L1", "L2"], ["L3"], ["L4"]],
+        },
+        "comp-bio": {
+            "independent": [["L5"], ["D2"], ["D4"]],
+            "cintellic": [["C2"], ["C1"], ["C1", "C2"]],
+            "neuefische": [["D3"], ["D1"]],
+            "research": [["L1", "L2"], ["L3"], ["L4"]],
+        },
+        "ds-ml": {
+            "independent": [["D4"], ["D2"], ["L5"]],
+            "cintellic": [["C1"], ["C2"], ["C1", "C2"]],
+            "neuefische": [["D1"], ["D3"]],
+            "research": [["L1", "L2"], ["L3"], ["L4"]],
+        },
+    }
+    for target, entries in expected.items():
+        data = prepare_data(content_dir, private_path=None, lang="en", target=target)
+        for entry_id, refs in entries.items():
+            assert [bullet["refs"] for bullet in _entry(data, entry_id)["bullets"]] == refs, (
+                f"{target}/{entry_id} order wrong"
+            )
+
+
 def test_general_profile_is_broad_and_balanced(content_dir):
     data = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
     tagline = data["profile"]["tagline"].lower()
@@ -165,7 +195,7 @@ def test_general_profile_is_broad_and_balanced(content_dir):
         ["L4"],
     ]
     assert "neural progenitor differentiation" in research["bullets"][2]["en"].lower()
-    assert [project["id"] for project in data["selected_projects"]] == ["C1", "D1", "L3"]
+    assert [project["id"] for project in data["selected_projects"]] == ["C1", "D1", "L5"]
 
 
 def test_pdf_skills_use_non_overlapping_source_backed_groups(content_dir):

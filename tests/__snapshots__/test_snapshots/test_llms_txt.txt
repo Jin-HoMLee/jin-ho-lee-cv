@@ -7,7 +7,7 @@ Worked across bioinformatics and experimental biophysics, combining NGS/RNA-Seq 
 ## Selected Projects
 - [Anti-Financial Crime – Know Your Customer (KYC) Platform](https://jinholee.is-a.dev/projects/C1/): Cloud migration and analytics environment development for financial crime detection at a large international bank.
 - [SignMeUp – Real-Time American Sign Language (ASL) Recognition](https://jinholee.is-a.dev/projects/D1/): Built a real-time ASL recognition prototype: an end-to-end machine-learning pipeline that extracts hand landmarks, classifies temporal gestures, and gives sign-language learners immediate feedback.
-- [Experimental Biophysics — Chromatin Nano-Architecture & DNA Repair](https://jinholee.is-a.dev/projects/L3/): Advanced research utilizing super-resolution microscopy and computational analysis to investigate DNA repair mechanisms and chromatin nano-architecture.
+- [Splice Neoepitope Pipeline – Reproducible Snakemake Workflow](https://jinholee.is-a.dev/projects/L5/): Modernised, open-source reimplementation of the 2015 SNU computational proof of concept for predicted splice-junction–derived neoepitope candidates as a reproducible Snakemake pipeline with optional structural modelling.
 
 ## Publications
 - [Super-Resolution Radiation Biology: From Bio-Dosimetry towards Nano-Studies of DNA Repair Mechanisms](https://doi.org/10.5772/intechopen.95597): DNA - Damages and Repair Mechanisms, 2021

@@ -60,14 +60,15 @@ SignMeUp – Echtzeit-Erkennung der American Sign Language (ASL)    (2023-09 bis
   Ergebnis: Lieferung eines funktionsfähigen Prototyps für Echtzeit-Inferenz,
   der unmittelbares Feedback für Lernende der Gebärdensprache ermöglicht.
 
-Experimentelle Biophysik — Chromatin-Nano-Architektur & DNA-Reparatur    (2017-02 bis 2018-08)
-  Wissenschaftlicher Mitarbeiter / Masterand
-  Fortgeschrittene Forschung mit Super-Resolution-Mikroskopie und
-  computergestützter Analyse zur Untersuchung von DNA-Reparaturmechanismen und
-  Chromatin-Nano-Architektur.
-  Ergebnis: Veröffentlichung der Forschungsergebnisse in mehreren peer-reviewten
-  Fachzeitschriften und Einwerbung von Drittmitteln für weiterführende
-  wissenschaftliche Untersuchungen.
+Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bis heute)
+  Autor und Maintainer (Open Source)
+  Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-
+  of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
+  Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
+  Strukturmodellierung.
+  Ergebnis: Snakemake-Pipeline: End-to-End-Neoepitop-Identifizierung von RNA-
+  Seq-FASTQ bis zur computergestützt modellierten TCR-pMHC-Komplexstruktur —
+  patientenspezifische HLA-Allele, tumor-exklusive Junctions.
 
 ================================================================================
 AUSBILDUNG

@@ -15,27 +15,30 @@ REPRESENTATIVE_PUBLICATION_KEYS = (
     "lee2019_combofish",
 )
 
-# Experience is now substantively complete and identical across all targets
-# (steer 018): every role keeps all of its concise one-line bullets so no
-# achievement or keyword is dropped for target-relevance. Only whole-section
-# skills exclusions remain target-specific.
+# Experience content is identical across targets (steer 023); only the ORDER of
+# bullets within each object varies to lead each version's focus. No bullet is
+# dropped, merged, or shortened in this pass.
 _EXPERIENCE_BULLETS = {
     "bridge": {
+        # Balanced superset: canonical order (agentic AI, CV, bioinformatics).
         "independent": (0, 1, 2),
         "cintellic": (0, 1, 2),
         "neuefische": (0, 1),
         "research": (0, 1, 2),
     },
     "comp-bio": {
-        "independent": (0, 1, 2),
+        # Leads bioinformatics: L5 first in independent; genomics already leads research.
+        "independent": (2, 1, 0),
         "cintellic": (0, 1, 2),
         "neuefische": (0, 1),
         "research": (0, 1, 2),
     },
     "ds-ml": {
+        # Leads AI/ML: agentic AI first in independent; production ML and ML
+        # development lead their respective objects.
         "independent": (0, 1, 2),
-        "cintellic": (0, 1, 2),
-        "neuefische": (0, 1),
+        "cintellic": (1, 0, 2),
+        "neuefische": (1, 0),
         "research": (0, 1, 2),
     },
 }

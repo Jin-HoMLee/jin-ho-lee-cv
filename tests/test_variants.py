@@ -454,7 +454,7 @@ def _ids(projects):
 
 def test_load_content_bridge_project_order(content_dir):
     content = load_content(content_dir, lang="en", target="bridge")
-    assert _ids(content["selected_projects"]) == ["C1", "D1", "L3"]
+    assert _ids(content["selected_projects"]) == ["C1", "D1", "L5"]
 
 
 def test_load_content_comp_bio_project_order(content_dir):

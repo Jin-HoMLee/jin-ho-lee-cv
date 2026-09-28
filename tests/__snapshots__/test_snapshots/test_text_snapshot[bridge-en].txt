@@ -59,12 +59,14 @@ SignMeUp – Real-Time American Sign Language (ASL) Recognition    (2023-09 to 2
   Outcome: Delivered a functional prototype for real-time inference, enabling
   instant feedback for sign language learners.
 
-Experimental Biophysics — Chromatin Nano-Architecture & DNA Repair    (2017-02 to 2018-08)
-  Graduate Researcher / Master's Candidate
-  Advanced research utilizing super-resolution microscopy and computational
-  analysis to investigate DNA repair mechanisms and chromatin nano-architecture.
-  Outcome: Published research findings in multiple peer-reviewed journals and
-  secured third-party funding for continued scientific investigations.
+Splice Neoepitope Pipeline – Reproducible Snakemake Workflow    (2026-03 to present)
+  Author and Maintainer (Open Source)
+  Modernised, open-source reimplementation of the 2015 SNU computational proof
+  of concept for predicted splice-junction–derived neoepitope candidates as a
+  reproducible Snakemake pipeline with optional structural modelling.
+  Outcome: Snakemake pipeline: end-to-end neoepitope discovery from RNA-Seq
+  FASTQ to computationally modeled TCR-pMHC complex structure — patient-specific
+  HLA alleles, tumor-exclusive junctions.
 
 ================================================================================
 EDUCATION

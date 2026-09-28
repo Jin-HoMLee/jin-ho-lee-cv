@@ -725,30 +725,36 @@
       "outcome": "Lieferung eines funktionsfähigen Prototyps für Echtzeit-Inferenz, der unmittelbares Feedback für Lernende der Gebärdensprache ermöglicht."
     },
     {
-      "id": "L3",
+      "id": "L5",
       "category": "life-science",
-      "title": "Experimentelle Biophysik — Chromatin-Nano-Architektur & DNA-Reparatur",
-      "summary": "Fortgeschrittene Forschung mit Super-Resolution-Mikroskopie und computergestützter Analyse zur Untersuchung von DNA-Reparaturmechanismen und Chromatin-Nano-Architektur.",
-      "role": "Wissenschaftlicher Mitarbeiter / Masterand",
+      "open_source": true,
+      "title": "Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow",
+      "summary": "Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler Strukturmodellierung.",
+      "role": "Autor und Maintainer (Open Source)",
       "period": {
-        "start": "2017-02",
-        "end": "2018-08"
+        "start": "2026-03",
+        "end": null
       },
       "technologies": [
-        "MATLAB",
-        "Linux",
-        "R",
-        "Python",
-        "COMBO-FISH",
-        "SPDM",
-        "DBSCAN"
+        "Snakemake 8.x",
+        "Conda",
+        "Python 3.11",
+        "HISAT2 / STAR",
+        "OptiType",
+        "MHCflurry 2.x",
+        "TCRdock / AlphaFold v2",
+        "bedtools",
+        "Google Cloud GPU",
+        "Mol*"
       ],
       "contributions": [
-        "Experimentelles Design: Entwicklung und Durchführung von Forschungsprojekten zu DNA-Reparaturwegen und Super-Resolution-Bildgebung von Chromatinstrukturen.",
-        "Datenanalyse & Modellierung: Einsatz von MATLAB, R und Python zur Verarbeitung komplexer Bilddaten und zur quantitativen Analyse nanoskaliger Strukturen.",
-        "Wissenschaftliche Leitung: Steuerung internationaler Forschungskooperationen und Betreuung mehrerer Bachelor- und Masterstudierender über den gesamten Projektverlauf."
+        "Neuentwicklung der ursprünglichen SNU-Pipeline als vollständig reproduzierbarer Snakemake-8.x-Workflow mit Conda-Umgebungen pro Rule — installierbar ohne manuelles Dependency-Management; lauffähig lokal und auf GCP-GPU-VMs, und per Design executor-portabel auf einen SLURM-Cluster (Ressourcen pro Rule + Conda) — ein Konfigurations-Swap, kein Rewrite.",
+        "Tumor-vs-passendes-Normalgewebe-Junction-Filterung gegen GENCODE-Annotation implementiert; klassifiziert Junctions als annotated, normal_shared oder tumor_exclusive.",
+        "Patientenspezifische HLA-Typisierung (OptiType) und MHC-I-Peptidpräsentations-Vorhersage (MHCflurry 2.x Class1PresentationPredictor) integriert für End-to-End-Neoepitop-Kandidatenranking.",
+        "Optionale Strukturmodellierung des TCR-pMHC-Ternärkomplexes via TCRdock (AlphaFold-v2-Backend) auf Google Cloud GPU; vorhergesagte Komplexe werden im interaktiven Mol* 3D-Viewer dargestellt.",
+        "MIT-lizenziert, öffentlich auf GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
       ],
-      "outcome": "Veröffentlichung der Forschungsergebnisse in mehreren peer-reviewten Fachzeitschriften und Einwerbung von Drittmitteln für weiterführende wissenschaftliche Untersuchungen."
+      "outcome": "Snakemake-Pipeline: End-to-End-Neoepitop-Identifizierung von RNA-Seq-FASTQ bis zur computergestützt modellierten TCR-pMHC-Komplexstruktur — patientenspezifische HLA-Allele, tumor-exklusive Junctions."
     }
   ],
   "languages": [
