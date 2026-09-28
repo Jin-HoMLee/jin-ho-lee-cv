@@ -23,9 +23,9 @@ students.
 EXPERIENCE
 ================================================================================
 Independent Bioinformatics & ML/AI Engineer - Independent / Self-Directed    (2025-08 to present)
-  - Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.
+  - Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — while developing open-source Claude Code tooling.
   - Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web).
-  - Bioinformatics: Re-engineered splice-junction neoepitope discovery as a reproducible Snakemake workflow with per-rule Conda environments, run locally and on GCP GPUs.
+  - Bioinformatics: Modernised the 2015 SNU computational proof of concept into a reproducible Snakemake workflow for predicted splice-derived neoepitope candidates, with per-rule Conda environments and local/GCP execution.
 
 Consultant, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 to 2025-07)
   - Client: International bank — architected the migration of 1,000+ analytical processes to Google Cloud.
@@ -88,13 +88,14 @@ AI/ML & Developer Tools
   AI Agents: Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Kimi
   Browser ML Delivery: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
   Developer Environments: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
-Data & Cloud Engineering
-  Programming & Data: Python (Expert), R, SQL, dbt
-  Cloud & Analytics: GCP, BigQuery, Looker
 Experimental Research
   Models: 3D Cell Culture, Neural Progenitors
   Imaging: Super-Resolution, Fluorescence
   Assays: FISH, qPCR, FACS
+  Research Domains: DNA Damage & Repair, Chromatin Architecture, Alu Elements, Extracellular Vesicles
+Data & Cloud Engineering
+  Programming & Data: Python (Expert), R, SQL, dbt
+  Cloud & Analytics: GCP, BigQuery, Looker
 
 ================================================================================
 LANGUAGES
@@ -102,29 +103,27 @@ LANGUAGES
   German: native
   English: fluent
   Korean: native
-  French: basic
-  Italian: basic
   Latin: passive
 
 ================================================================================
 VOLUNTEER
 ================================================================================
+Sports
+  - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
+  - Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)
+Environment
+  - Foodsharing e.V. (Operations Manager)
+  - Österreichisches Waldgarten-Institut
+  - Hofwaerts
+Music
+  - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
+  - Chorister, Vienna Cathedral Choir (Wiener Domchor)
+  - Chorister, Cappella Palatina (Heidelberg)
 Community
   - Jülicher Tafel e.V.
   - In via - Café Gemeinsam
   - Amnesty International
   - Florence-Nightingale-Krankenhaus
-Environment
-  - Foodsharing e.V. (Operations Manager)
-  - Österreichisches Waldgarten-Institut
-  - Hofwaerts
-Sports
-  - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
-  - Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)
-Music
-  - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
-  - Chorister, Vienna Cathedral Choir (Wiener Domchor)
-  - Chorister, Capella Palatina
 
 ================================================================================
 PUBLICATIONS

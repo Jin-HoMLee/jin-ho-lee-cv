@@ -17,9 +17,9 @@ Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached
 EXPERIENCE
 ================================================================================
 Independent Bioinformatics & ML/AI Engineer - Independent / Self-Directed    (2025-08 to present)
-  - Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.
+  - Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — while developing open-source Claude Code tooling.
   - Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web).
-  - Bioinformatics: Re-engineered splice-junction neoepitope discovery as a reproducible Snakemake workflow with per-rule Conda environments, run locally and on GCP GPUs.
+  - Bioinformatics: Modernised the 2015 SNU computational proof of concept into a reproducible Snakemake workflow for predicted splice-derived neoepitope candidates, with per-rule Conda environments and local/GCP execution.
 
 Consultant, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 to 2025-07)
   - Client: International bank — architected the migration of 1,000+ analytical processes to Google Cloud.
@@ -61,15 +61,6 @@ badminton-vision – Real-Time On-Device Computer Vision for Badminton    (2025-
   Outcome: In-browser, on-device computer vision extension for badminton match
   analysis, under active, ongoing development toward a first stable release.
 
-claude-personas – Multi-Persona Framework for Claude Code    (2026-05 to present)
-  Author and Maintainer (Open Source)
-  Framework for running multiple specialized Claude Code personas in parallel,
-  each with its own isolated, role-specific persistent memory, so a solo
-  developer can cover multiple roles across a project.
-  Outcome: An open-source framework that lets a solo developer parallelize
-  multi-role work by running several specialized, memory-isolated Claude Code
-  personas at once.
-
 ================================================================================
 EDUCATION
 ================================================================================
@@ -81,6 +72,11 @@ EDUCATION
 ================================================================================
 SKILLS
 ================================================================================
+Bioinformatics
+  Genomics: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
+  Bioinformatics Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
+  Immunoinformatics: HLA Typing, MHC-I Prediction, Neoepitopes
+  Quantitative Bioimaging: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 AI/ML & Developer Tools
   Machine Learning: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
   Computational Modelling: MHCflurry, TCRdock, AlphaFold v2, Mol*
@@ -90,11 +86,6 @@ AI/ML & Developer Tools
 Data & Cloud Engineering
   Programming & Data: Python (Expert), R, SQL, dbt
   Cloud & Analytics: GCP, BigQuery, Looker
-Bioinformatics
-  Genomics: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
-  Bioinformatics Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
-  Immunoinformatics: HLA Typing, MHC-I Prediction, Neoepitopes
-  Quantitative Bioimaging: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 
 ================================================================================
 LANGUAGES
@@ -102,29 +93,27 @@ LANGUAGES
   German: native
   English: fluent
   Korean: native
-  French: basic
-  Italian: basic
   Latin: passive
 
 ================================================================================
 VOLUNTEER
 ================================================================================
+Sports
+  - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
+  - Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)
+Environment
+  - Foodsharing e.V. (Operations Manager)
+  - Österreichisches Waldgarten-Institut
+  - Hofwaerts
+Music
+  - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
+  - Chorister, Vienna Cathedral Choir (Wiener Domchor)
+  - Chorister, Cappella Palatina (Heidelberg)
 Community
   - Jülicher Tafel e.V.
   - In via - Café Gemeinsam
   - Amnesty International
   - Florence-Nightingale-Krankenhaus
-Environment
-  - Foodsharing e.V. (Operations Manager)
-  - Österreichisches Waldgarten-Institut
-  - Hofwaerts
-Sports
-  - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
-  - Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)
-Music
-  - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
-  - Chorister, Vienna Cathedral Choir (Wiener Domchor)
-  - Chorister, Capella Palatina
 
 ================================================================================
 PUBLICATIONS

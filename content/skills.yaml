@@ -51,22 +51,24 @@ categories:
         items: ["Super-Resolution", "Fluorescence"]
       - label: { en: "Assays", de: "Analysemethoden" }
         items: ["FISH", "qPCR", "FACS"]
+      - label: { en: "Research Domains", de: "Forschungsdomänen" }
+        items: ["DNA Damage & Repair", "Chromatin Architecture", "Alu Elements", "Extracellular Vesicles"]
 
 variants:
   bridge:
     category_order:
       - "Bioinformatics"
       - "AI/ML & Developer Tools"
-      - "Data & Cloud Engineering"
       - "Experimental Research"
+      - "Data & Cloud Engineering"
   comp-bio:
     category_order:
       - "Bioinformatics"
       - "AI/ML & Developer Tools"
-      - "Data & Cloud Engineering"
       - "Experimental Research"
+      - "Data & Cloud Engineering"
   ds-ml:
     category_order:
+      - "Bioinformatics"
       - "AI/ML & Developer Tools"
       - "Data & Cloud Engineering"
-      - "Bioinformatics"

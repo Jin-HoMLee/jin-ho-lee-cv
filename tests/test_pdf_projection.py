@@ -53,7 +53,7 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
 
 def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
     expected_bullets = {
-        "bridge": {"independent": 1, "cintellic": 2, "neuefische": 2, "research": 2},
+        "bridge": {"independent": 3, "cintellic": 1, "neuefische": 1, "research": 1},
         "comp-bio": {"independent": 1, "cintellic": 1, "neuefische": 1, "research": 2},
         "ds-ml": {"independent": 2, "cintellic": 3, "neuefische": 2, "research": 1},
     }
@@ -74,8 +74,11 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
             "German",
             "English",
             "Korean",
-            "French",
-            "Italian",
+        ]
+        assert [category["name"] for category in data["volunteer"]["categories"]] == [
+            "Sports",
+            "Environment",
+            "Music",
         ]
         volunteer = {
             category["name"]: category["entries"] for category in data["volunteer"]["categories"]
@@ -88,33 +91,28 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
         assert volunteer["Music"] == [
             "Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000",
             "Chorister, Vienna Cathedral Choir (Wiener Domchor)",
-            "Chorister, Capella Palatina",
+            "Chorister, Cappella Palatina (Heidelberg)",
         ]
         assert "Interests" not in volunteer
 
 
 def test_general_profile_is_broad_and_balanced(content_dir):
     data = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
-    narrative = " ".join(
-        [data["profile"]["tagline"]]
-        + [bullet["en"] for entry in data["experience"] for bullet in entry["bullets"]]
-        + [project["title"] + " " + project["outcome"] for project in data["selected_projects"]]
-        + [
-            " ".join(str(award.get(key, "")) for key in ("title", "issuer", "note"))
-            for award in data["awards"]
-        ]
-    )
-
     tagline = data["profile"]["tagline"].lower()
     assert "data scientist with bioinformatics roots" in tagline
     assert "eight years" in tagline
     assert "11 peer-reviewed" in tagline
     assert "consult" in tagline
     assert "100+" in tagline
-    # the profile narrative stays broad; the skill inventory is full and shared
-    assert all(term not in narrative.lower() for term in ("hla", "neoantigen", "neoepitope"))
+    # The tagline stays broad while General carries the complete independent-work balance.
+    assert all(term not in tagline for term in ("hla", "neoantigen", "neoepitope"))
+    independent = _entry(data, "independent")
+    assert [bullet["refs"] for bullet in independent["bullets"]] == [["D4"], ["D2"], ["L5"]]
+    assert "badminton-vision" in independent["bullets"][1]["en"]
+    assert "2015 SNU computational proof of concept" in independent["bullets"][2]["en"]
+    assert "predicted splice-derived" in independent["bullets"][2]["en"]
     assert [project["id"] for project in data["selected_projects"]] == ["C1", "D1", "L3"]
-    assert "Neural Progenitor Differentiation" in _entry(data, "research")["bullets"][1]["en"]
+    assert "Neural Progenitor Differentiation" in _entry(data, "research")["bullets"][0]["en"]
 
 
 def test_pdf_skills_use_non_overlapping_source_backed_groups(content_dir):
@@ -128,6 +126,12 @@ def test_pdf_skills_use_non_overlapping_source_backed_groups(content_dir):
         data = prepare_data(content_dir, private_path=None, lang="en", target=target)
         categories = data["skills"]["categories"]
         assert {category["name"] for category in categories} == full
+        assert [category["name"] for category in categories] == [
+            "Bioinformatics",
+            "AI/ML & Developer Tools",
+            "Experimental Research",
+            "Data & Cloud Engineering",
+        ]
         items = [
             item
             for category in categories
@@ -138,6 +142,18 @@ def test_pdf_skills_use_non_overlapping_source_backed_groups(content_dir):
         labels = {group["label"] for category in categories for group in category["groups"]}
         assert "Applied AI" not in labels
         assert "AI & ML" not in labels
+        experimental = next(
+            category for category in categories if category["name"] == "Experimental Research"
+        )
+        domains = next(
+            group for group in experimental["groups"] if group["label"] == "Research Domains"
+        )
+        assert domains["items"] == [
+            "DNA Damage & Repair",
+            "Chromatin Architecture",
+            "Alu Elements",
+            "Extracellular Vesicles",
+        ]
 
     ds = prepare_data(content_dir, private_path=None, lang="en", target="ds-ml")
     assert {category["name"] for category in ds["skills"]["categories"]} == full - {
@@ -157,6 +173,7 @@ def test_source_grounded_role_coaching_and_2015_claims(content_dir):
     independent = _entry(canonical, "independent")
     neuefische = _entry(canonical, "neuefische")
     l1 = canonical["projects"]["L1"]
+    l5 = canonical["projects"]["L5"]
 
     assert independent["role"]["en"] == "Independent Bioinformatics & ML/AI Engineer"
     assert any(
@@ -166,6 +183,7 @@ def test_source_grounded_role_coaching_and_2015_claims(content_dir):
     assert "capstone" in neuefische["bullets"][0]["en"].lower()
     assert "unpublished computational proof of concept" in l1["outcome"].lower()
     assert "validat" not in " ".join(l1["contributions"] + [l1["outcome"]]).lower()
+    assert "validat" not in " ".join([l5["summary"], *l5["contributions"], l5["outcome"]]).lower()
 
 
 def test_pdf_project_links_follow_language_routes(content_dir):

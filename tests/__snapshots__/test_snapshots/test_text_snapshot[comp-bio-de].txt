@@ -24,9 +24,9 @@ Drittmitteln und Betreuung von 10+ Studierenden.
 BERUFSERFAHRUNG
 ================================================================================
 Unabhängiger Bioinformatik- & ML/AI-Engineer - Independent / Self-Directed    (2025-08 bis heute)
-  - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
+  - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — bei gleichzeitiger Entwicklung von Open-Source-Tooling für Claude Code.
   - Computer Vision: Entwicklung von badminton-vision, einer vollständig client-seitigen Chrome-Erweiterung zur Badminton-Spielanalyse (TensorFlow.js, ONNX Runtime Web).
-  - Bioinformatik: Neuimplementierung der Splice-Junction-Neoepitop-Identifizierung als reproduzierbarer Snakemake-Workflow mit Conda-Umgebungen pro Rule, lokal und auf GCP-GPUs ausgeführt.
+  - Bioinformatik: Modernisierung des computergestützten SNU-Proof-of-Concepts von 2015 zu einem reproduzierbaren Snakemake-Workflow für vorhergesagte splice-abgeleitete Neoepitop-Kandidaten, mit Conda-Umgebungen pro Rule und lokaler/GCP-Ausführung.
 
 Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
   - Kunde: Internationale Bank — Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
@@ -64,9 +64,10 @@ Personalisierte Immuntherapie – Hochdurchsatz-HLA-Typisierungs-Pipeline    (20
 
 Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bis heute)
   Autor und Maintainer (Open Source)
-  Modernisierte, Open-Source-Neuimplementierung der SNU-Arbeit von 2015 zur
-  splice-junction-basierten Neoepitop-Identifizierung als reproduzierbare
-  Snakemake-Pipeline mit optionaler struktureller Validierung.
+  Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-
+  of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
+  Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
+  Strukturmodellierung.
   Ergebnis: Snakemake-Pipeline: End-to-End-Neoepitop-Identifizierung von RNA-
   Seq-FASTQ bis zur computergestützt modellierten TCR-pMHC-Komplexstruktur —
   patientenspezifische HLA-Allele, tumor-exklusive Junctions.
@@ -93,13 +94,14 @@ KI/ML & Entwicklerwerkzeuge
   KI-Agenten: Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Kimi
   Browser-ML-Auslieferung: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
   Entwicklungsumgebungen: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
-Daten- & Cloud-Engineering
-  Programmierung & Daten: Python (Expert), R, SQL, dbt
-  Cloud & Analytik: GCP, BigQuery, Looker
 Experimentelle Forschung
   Modelle: 3D Cell Culture, Neural Progenitors
   Bildgebung: Super-Resolution, Fluorescence
   Analysemethoden: FISH, qPCR, FACS
+  Forschungsdomänen: DNA Damage & Repair, Chromatin Architecture, Alu Elements, Extracellular Vesicles
+Daten- & Cloud-Engineering
+  Programmierung & Daten: Python (Expert), R, SQL, dbt
+  Cloud & Analytik: GCP, BigQuery, Looker
 
 ================================================================================
 SPRACHEN
@@ -107,29 +109,27 @@ SPRACHEN
   Deutsch: native
   Englisch: fluent
   Koreanisch: native
-  Französisch: basic
-  Italienisch: basic
   Latein: passive
 
 ================================================================================
 EHRENAMTLICH
 ================================================================================
+Sport
+  - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
+  - Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)
+Umwelt
+  - Foodsharing e.V. (Operations Manager)
+  - Österreichisches Waldgarten-Institut
+  - Hofwaerts
+Musik
+  - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
+  - Chorister, Vienna Cathedral Choir (Wiener Domchor)
+  - Chorister, Cappella Palatina (Heidelberg)
 Soziales
   - Jülicher Tafel e.V.
   - In via - Café Gemeinsam
   - Amnesty International
   - Florence-Nightingale-Krankenhaus
-Umwelt
-  - Foodsharing e.V. (Operations Manager)
-  - Österreichisches Waldgarten-Institut
-  - Hofwaerts
-Sport
-  - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
-  - Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)
-Musik
-  - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
-  - Chorister, Vienna Cathedral Choir (Wiener Domchor)
-  - Chorister, Capella Palatina
 
 ================================================================================
 PUBLIKATIONEN

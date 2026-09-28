@@ -777,7 +777,7 @@
       "@id": "https://jinholee.is-a.dev/projects/L5/",
       "name": "Splice Neoepitope Pipeline – Reproducible Snakemake Workflow",
       "url": "https://jinholee.is-a.dev/projects/L5/",
-      "description": "Modernised, open-source reimplementation of the 2015 SNU splice-junction–based neoepitope discovery work as a reproducible Snakemake pipeline with optional structural validation.",
+      "description": "Modernised, open-source reimplementation of the 2015 SNU computational proof of concept for predicted splice-junction–derived neoepitope candidates as a reproducible Snakemake pipeline with optional structural modelling.",
       "dateCreated": "2026-03",
       "keywords": [
         "Snakemake 8.x",

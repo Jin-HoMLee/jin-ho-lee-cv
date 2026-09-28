@@ -47,9 +47,9 @@
       "position": "Independent Bioinformatics & ML/AI Engineer",
       "startDate": "2025-08-01",
       "highlights": [
-        "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.",
+        "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — while developing open-source Claude Code tooling.",
         "Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web).",
-        "Bioinformatics: Re-engineered splice-junction neoepitope discovery as a reproducible Snakemake workflow with per-rule Conda environments, run locally and on GCP GPUs."
+        "Bioinformatics: Modernised the 2015 SNU computational proof of concept into a reproducible Snakemake workflow for predicted splice-derived neoepitope candidates, with per-rule Conda environments and local/GCP execution."
       ]
     },
     {
@@ -201,25 +201,6 @@
       ]
     },
     {
-      "name": "Data & Cloud Engineering",
-      "level": "Programming & Data",
-      "keywords": [
-        "Python (Expert)",
-        "R",
-        "SQL",
-        "dbt"
-      ]
-    },
-    {
-      "name": "Data & Cloud Engineering",
-      "level": "Cloud & Analytics",
-      "keywords": [
-        "GCP",
-        "BigQuery",
-        "Looker"
-      ]
-    },
-    {
       "name": "Experimental Research",
       "level": "Models",
       "keywords": [
@@ -243,6 +224,35 @@
         "qPCR",
         "FACS"
       ]
+    },
+    {
+      "name": "Experimental Research",
+      "level": "Research Domains",
+      "keywords": [
+        "DNA Damage & Repair",
+        "Chromatin Architecture",
+        "Alu Elements",
+        "Extracellular Vesicles"
+      ]
+    },
+    {
+      "name": "Data & Cloud Engineering",
+      "level": "Programming & Data",
+      "keywords": [
+        "Python (Expert)",
+        "R",
+        "SQL",
+        "dbt"
+      ]
+    },
+    {
+      "name": "Data & Cloud Engineering",
+      "level": "Cloud & Analytics",
+      "keywords": [
+        "GCP",
+        "BigQuery",
+        "Looker"
+      ]
     }
   ],
   "languages": [
@@ -259,19 +269,43 @@
       "fluency": "native"
     },
     {
-      "language": "French",
-      "fluency": "basic"
-    },
-    {
-      "language": "Italian",
-      "fluency": "basic"
-    },
-    {
       "language": "Latin",
       "fluency": "passive"
     }
   ],
   "volunteer": [
+    {
+      "organization": "Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)",
+      "position": "Sports"
+    },
+    {
+      "organization": "Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)",
+      "position": "Sports"
+    },
+    {
+      "organization": "Foodsharing e.V. (Operations Manager)",
+      "position": "Environment"
+    },
+    {
+      "organization": "Österreichisches Waldgarten-Institut",
+      "position": "Environment"
+    },
+    {
+      "organization": "Hofwaerts",
+      "position": "Environment"
+    },
+    {
+      "organization": "Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000",
+      "position": "Music"
+    },
+    {
+      "organization": "Chorister, Vienna Cathedral Choir (Wiener Domchor)",
+      "position": "Music"
+    },
+    {
+      "organization": "Chorister, Cappella Palatina (Heidelberg)",
+      "position": "Music"
+    },
     {
       "organization": "Jülicher Tafel e.V.",
       "position": "Community"
@@ -287,38 +321,6 @@
     {
       "organization": "Florence-Nightingale-Krankenhaus",
       "position": "Community"
-    },
-    {
-      "organization": "Foodsharing e.V. (Operations Manager)",
-      "position": "Environment"
-    },
-    {
-      "organization": "Österreichisches Waldgarten-Institut",
-      "position": "Environment"
-    },
-    {
-      "organization": "Hofwaerts",
-      "position": "Environment"
-    },
-    {
-      "organization": "Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)",
-      "position": "Sports"
-    },
-    {
-      "organization": "Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)",
-      "position": "Sports"
-    },
-    {
-      "organization": "Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000",
-      "position": "Music"
-    },
-    {
-      "organization": "Chorister, Vienna Cathedral Choir (Wiener Domchor)",
-      "position": "Music"
-    },
-    {
-      "organization": "Chorister, Capella Palatina",
-      "position": "Music"
     }
   ],
   "awards": [
@@ -581,12 +583,12 @@
     },
     {
       "name": "Splice Neoepitope Pipeline – Reproducible Snakemake Workflow",
-      "description": "Modernised, open-source reimplementation of the 2015 SNU splice-junction–based neoepitope discovery work as a reproducible Snakemake pipeline with optional structural validation.",
+      "description": "Modernised, open-source reimplementation of the 2015 SNU computational proof of concept for predicted splice-junction–derived neoepitope candidates as a reproducible Snakemake pipeline with optional structural modelling.",
       "highlights": [
         "Re-engineered the original SNU pipeline as a fully reproducible Snakemake 8.x workflow with per-rule Conda environments — installable without manual dependency management; run locally and on GCP GPU VMs, and executor-portable to a SLURM cluster by design (per-rule resources + Conda) — a config swap, not a rewrite.",
         "Implemented tumor-vs-matched-normal junction filtering against GENCODE annotation, classifying junctions as annotated, normal_shared, or tumor_exclusive.",
         "Integrated patient-specific HLA typing (OptiType) and MHC-I peptide presentation prediction (MHCflurry 2.x Class1PresentationPredictor) for end-to-end neoepitope candidate ranking.",
-        "Added optional TCR-pMHC ternary complex structural validation via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.",
+        "Added optional TCR-pMHC ternary complex structural modelling via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.",
         "MIT-licensed, public on GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
       ],
       "keywords": [

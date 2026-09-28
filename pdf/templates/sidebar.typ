@@ -13,12 +13,17 @@
 
 #let skills(skills-data, labels) = {
   section-heading(labels.sections.skills, "section-skills")
-  // Four restrained text groups use a compact 2x2 matrix. Cells remain in
-  // source order, so both PDF extractors see one deterministic reading stream.
+  // Source order is row-major: Bioinformatics / AI-ML on row one,
+  // Experimental / Data-Cloud on row two. When Experimental is omitted, an
+  // empty visual cell keeps Data-Cloud below AI-ML without hiding content.
+  let cells = skills-data.categories.map(_skill-category)
+  if cells.len() == 3 {
+    cells = (cells.at(0), cells.at(1), [], cells.at(2))
+  }
   grid(
     columns: (1fr, 1fr),
     gutter: (column-gutter, space-section),
-    ..skills-data.categories.map(_skill-category),
+    ..cells,
   )
 }
 

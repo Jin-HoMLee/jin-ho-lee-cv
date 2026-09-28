@@ -4,9 +4,5 @@
   proficiency: fluent
 - name: { en: "Korean", de: "Koreanisch" }
   proficiency: native
-- name: { en: "French", de: "Französisch" }
-  proficiency: basic
-- name: { en: "Italian", de: "Italienisch" }
-  proficiency: basic
 - name: { en: "Latin", de: "Latein" }
   proficiency: passive

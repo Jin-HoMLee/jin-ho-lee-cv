@@ -183,14 +183,14 @@ def test_skills_sections_are_full_and_identical_with_ds_ml_dropping_experimental
     assert names(bridge) == [
         "Bioinformatics",
         "AI/ML & Developer Tools",
-        "Data & Cloud Engineering",
         "Experimental Research",
+        "Data & Cloud Engineering",
     ]
     assert names(comp_bio) == names(bridge)
     assert names(ds_ml) == [
+        "Bioinformatics",
         "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
-        "Bioinformatics",
     ]
     assert names(
         load_content(content_dir, lang="en", target="ds-ml", web_projection=True)
@@ -212,10 +212,10 @@ def test_skills_sections_are_full_and_identical_with_ds_ml_dropping_experimental
     assert len(all_skill_items) == len(set(all_skill_items))
 
 
-def test_italian_language_present(content_dir):
+def test_public_languages_omit_french_and_italian(content_dir):
     content = load_content(content_dir, private_path=None, lang="en")
     names = {lang["name"]["en"] for lang in content["languages"]}
-    assert "Italian" in names
+    assert names == {"German", "English", "Korean", "Latin"}
 
 
 def test_awards_loaded(content_dir):

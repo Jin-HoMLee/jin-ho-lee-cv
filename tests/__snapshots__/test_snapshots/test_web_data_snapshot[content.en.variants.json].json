@@ -13,6 +13,47 @@
     "skills": {
       "categories": [
         {
+          "name": "Bioinformatics",
+          "groups": [
+            {
+              "label": "Genomics",
+              "items": [
+                "NGS",
+                "RNA-Seq",
+                "WES",
+                "SNV Calling",
+                "Splice Analysis"
+              ]
+            },
+            {
+              "label": "Bioinformatics Workflows",
+              "items": [
+                "Snakemake",
+                "MapSplice",
+                "HISAT2/STAR",
+                "samtools/bcftools",
+                "bedtools",
+                "OptiType"
+              ]
+            },
+            {
+              "label": "Immunoinformatics",
+              "items": [
+                "HLA Typing",
+                "MHC-I Prediction",
+                "Neoepitopes"
+              ]
+            },
+            {
+              "label": "Quantitative Bioimaging",
+              "items": [
+                "Spatial Point-Pattern",
+                "Cluster Analysis (DBSCAN)"
+              ]
+            }
+          ]
+        },
+        {
           "name": "AI/ML & Developer Tools",
           "groups": [
             {
@@ -88,47 +129,6 @@
                 "GCP",
                 "BigQuery",
                 "Looker"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Bioinformatics",
-          "groups": [
-            {
-              "label": "Genomics",
-              "items": [
-                "NGS",
-                "RNA-Seq",
-                "WES",
-                "SNV Calling",
-                "Splice Analysis"
-              ]
-            },
-            {
-              "label": "Bioinformatics Workflows",
-              "items": [
-                "Snakemake",
-                "MapSplice",
-                "HISAT2/STAR",
-                "samtools/bcftools",
-                "bedtools",
-                "OptiType"
-              ]
-            },
-            {
-              "label": "Immunoinformatics",
-              "items": [
-                "HLA Typing",
-                "MHC-I Prediction",
-                "Neoepitopes"
-              ]
-            },
-            {
-              "label": "Quantitative Bioimaging",
-              "items": [
-                "Spatial Point-Pattern",
-                "Cluster Analysis (DBSCAN)"
               ]
             }
           ]

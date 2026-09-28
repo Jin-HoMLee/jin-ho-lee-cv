@@ -17,9 +17,9 @@ KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML.
 BERUFSERFAHRUNG
 ================================================================================
 Unabhängiger Bioinformatik- & ML/AI-Engineer - Independent / Self-Directed    (2025-08 bis heute)
-  - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
+  - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — bei gleichzeitiger Entwicklung von Open-Source-Tooling für Claude Code.
   - Computer Vision: Entwicklung von badminton-vision, einer vollständig client-seitigen Chrome-Erweiterung zur Badminton-Spielanalyse (TensorFlow.js, ONNX Runtime Web).
-  - Bioinformatik: Neuimplementierung der Splice-Junction-Neoepitop-Identifizierung als reproduzierbarer Snakemake-Workflow mit Conda-Umgebungen pro Rule, lokal und auf GCP-GPUs ausgeführt.
+  - Bioinformatik: Modernisierung des computergestützten SNU-Proof-of-Concepts von 2015 zu einem reproduzierbaren Snakemake-Workflow für vorhergesagte splice-abgeleitete Neoepitop-Kandidaten, mit Conda-Umgebungen pro Rule und lokaler/GCP-Ausführung.
 
 Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
   - Kunde: Internationale Bank — Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
@@ -62,16 +62,6 @@ badminton-vision – Echtzeit-Computer-Vision für Badminton, direkt im Browser 
   Badminton-Spielanalyse, in aktiver, laufender Weiterentwicklung auf dem Weg zu
   einem ersten stabilen Release.
 
-claude-personas – Multi-Persona-Framework für Claude Code    (2026-05 bis heute)
-  Autor und Maintainer (Open Source)
-  Framework zum parallelen Betrieb mehrerer spezialisierter Claude-Code-
-  Personas, jede mit eigenem, isoliertem und rollenspezifischem persistentem
-  Gedächtnis, damit eine Einzelperson mehrere Rollen in einem Projekt abdecken
-  kann.
-  Ergebnis: Ein Open-Source-Framework, das einer Einzelperson erlaubt, Multi-
-  Rollen-Arbeit zu parallelisieren, indem mehrere spezialisierte,
-  gedächtnisisolierte Claude-Code-Personas gleichzeitig laufen.
-
 ================================================================================
 AUSBILDUNG
 ================================================================================
@@ -83,6 +73,11 @@ AUSBILDUNG
 ================================================================================
 KENNTNISSE
 ================================================================================
+Bioinformatik
+  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
+  Bioinformatik-Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
+  Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitopes
+  Quantitative Biobildgebung: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 KI/ML & Entwicklerwerkzeuge
   Maschinelles Lernen: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
   Computergestützte Modellierung: MHCflurry, TCRdock, AlphaFold v2, Mol*
@@ -92,11 +87,6 @@ KI/ML & Entwicklerwerkzeuge
 Daten- & Cloud-Engineering
   Programmierung & Daten: Python (Expert), R, SQL, dbt
   Cloud & Analytik: GCP, BigQuery, Looker
-Bioinformatik
-  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
-  Bioinformatik-Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
-  Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitopes
-  Quantitative Biobildgebung: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 
 ================================================================================
 SPRACHEN
@@ -104,29 +94,27 @@ SPRACHEN
   Deutsch: native
   Englisch: fluent
   Koreanisch: native
-  Französisch: basic
-  Italienisch: basic
   Latein: passive
 
 ================================================================================
 EHRENAMTLICH
 ================================================================================
+Sport
+  - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
+  - Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)
+Umwelt
+  - Foodsharing e.V. (Operations Manager)
+  - Österreichisches Waldgarten-Institut
+  - Hofwaerts
+Musik
+  - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
+  - Chorister, Vienna Cathedral Choir (Wiener Domchor)
+  - Chorister, Cappella Palatina (Heidelberg)
 Soziales
   - Jülicher Tafel e.V.
   - In via - Café Gemeinsam
   - Amnesty International
   - Florence-Nightingale-Krankenhaus
-Umwelt
-  - Foodsharing e.V. (Operations Manager)
-  - Österreichisches Waldgarten-Institut
-  - Hofwaerts
-Sport
-  - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
-  - Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)
-Musik
-  - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
-  - Chorister, Vienna Cathedral Choir (Wiener Domchor)
-  - Chorister, Capella Palatina
 
 ================================================================================
 PUBLIKATIONEN

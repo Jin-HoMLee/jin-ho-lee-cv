@@ -51,6 +51,21 @@ TARGET_KEYWORDS = {
     "ds-ml": ("BigQueryML", "Python", "TensorFlow"),
 }
 
+SKILL_CATEGORY_LABELS = {
+    "en": [
+        "Bioinformatics",
+        "AI/ML & Developer Tools",
+        "Experimental Research",
+        "Data & Cloud Engineering",
+    ],
+    "de": [
+        "Bioinformatik",
+        "KI/ML & Entwicklerwerkzeuge",
+        "Experimentelle Forschung",
+        "Daten- & Cloud-Engineering",
+    ],
+}
+
 
 def _have(tool: str) -> bool:
     return shutil.which(tool) is not None
@@ -163,6 +178,20 @@ def test_all_variants_are_two_page_flat_text_in_one_order(built_pdf):
         _assert_heading_order(text, headings, extractor)
         for keyword in TARGET_KEYWORDS[target]:
             assert keyword in text, f"{extractor}: missing target keyword {keyword!r}"
+
+        skill_region = text.split(headings[1], 1)[1].split(headings[2], 1)[0]
+        category_labels = SKILL_CATEGORY_LABELS[lang]
+        if target == "ds-ml":
+            category_labels = [*category_labels[:2], category_labels[3]]
+        positions = [skill_region.index(label) for label in category_labels]
+        assert positions == sorted(positions), (
+            f"{extractor}: wrong skills reading order: {positions}"
+        )
+
+        removed_languages = (
+            ("French", "Italian") if lang == "en" else ("Französisch", "Italienisch")
+        )
+        assert all(language not in text for language in removed_languages)
 
     if lang == "en":
         assert "Jülich" in poppler and "Jülich" in pypdf_text

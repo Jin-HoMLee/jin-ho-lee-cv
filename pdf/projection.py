@@ -17,10 +17,12 @@ REPRESENTATIVE_PUBLICATION_KEYS = (
 
 _EXPERIENCE_BULLETS = {
     "bridge": {
-        "independent": (0,),
-        "cintellic": (0, 1),
-        "neuefische": (0, 1),
-        "research": (1, 2),
+        # General is the balanced superset for independent work. Employed roles
+        # keep role/impact here; their distinctive methods live in Projects.
+        "independent": (0, 1, 2),
+        "cintellic": (0,),
+        "neuefische": (0,),
+        "research": (2,),
     },
     "comp-bio": {
         "independent": (2,),
@@ -76,8 +78,8 @@ def project_pdf_content(content: dict[str, Any], *, target: str, lang: str) -> d
         language for language in result["languages"] if language["proficiency"] != "passive"
     ]
 
-    # Keep volunteer + sports + interests in every target. The Environment list
-    # stays to its lead entry; the Sports clubs (badminton) render in full.
+    # Keep the concise, role-based volunteer categories in every target. The
+    # Environment list stays to its lead entry; Community remains web-only.
     volunteer_keep = {"Environment", "Sports", "Music"}
     result["volunteer"] = {
         "categories": [

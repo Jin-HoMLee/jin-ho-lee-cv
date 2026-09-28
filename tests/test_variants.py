@@ -274,8 +274,8 @@ def test_skills_sections_identical_and_ds_ml_drops_experimental(content_dir):
     full_order = [
         "Bioinformatics",
         "AI/ML & Developer Tools",
-        "Data & Cloud Engineering",
         "Experimental Research",
+        "Data & Cloud Engineering",
     ]
     assert names("bridge") == full_order
     assert names("comp-bio") == full_order
@@ -285,9 +285,9 @@ def test_skills_sections_identical_and_ds_ml_drops_experimental(content_dir):
     assert items("comp-bio", web_projection=True) == items("bridge")
     # ds-ml drops only the whole Experimental Research section
     assert names("ds-ml") == [
+        "Bioinformatics",
         "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
-        "Bioinformatics",
     ]
     ds = items("ds-ml")
     assert {
@@ -430,9 +430,9 @@ def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
     assert {"HLA Typing", "TCRdock", "Claude Code", "Nix", "Snakemake"} <= all_items(bridge)
     # ds-ml drops Experimental Research only; the other three sections stay full
     assert names(ds_ml) == [
+        "Bioinformatics",
         "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
-        "Bioinformatics",
     ]
     assert {"LSTMs", "TCRdock", "Claude Code", "Pi", "Grok", "Cursor", "Kimi"} <= all_items(ds_ml)
     assert {"FISH", "qPCR", "Super-Resolution"}.isdisjoint(all_items(ds_ml))
@@ -464,7 +464,7 @@ def test_load_content_comp_bio_project_order(content_dir):
 
 def test_load_content_ds_ml_project_order(content_dir):
     content = load_content(content_dir, lang="en", target="ds-ml")
-    assert _ids(content["selected_projects"]) == ["C1", "D1", "D2", "D4"]
+    assert _ids(content["selected_projects"]) == ["C1", "D1", "D2"]
 
 
 def test_profile_variant_parity_flags_key_mismatch(tmp_path):
