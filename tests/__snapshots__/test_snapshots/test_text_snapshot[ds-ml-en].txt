@@ -22,13 +22,13 @@ Independent Bioinformatics & ML/AI Engineer - Independent / Self-Directed    (20
   - Bioinformatics: Rebuilt the 2015 SNU computational prototype in Snakemake to predict splice neoepitope candidates.
 
 Consultant, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 to 2025-07)
-  - Cloud Migration: Architected the move of 1,000+ analytical processes for an international bank to GCP.
   - Production ML: Developed BigQueryML models for anti-financial crime and KYC.
+  - Cloud Migration: Architected the move of 1,000+ analytical processes for an international bank to GCP.
   - Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery.
 
 Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 to 2024-04)
-  - Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.
   - ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow.
+  - Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.
 
 Doctoral & Post-Graduate Researcher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 to 2022-07)
   - Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.

@@ -123,6 +123,43 @@ def _select_project_ids(selected_map: dict, target: str) -> list[str]:
     return selected_map.get(target, selected_map["bridge"])
 
 
+# Experience content is identical across targets; only the ORDER of bullets
+# within each object varies to lead that version's focus (steer 023).
+_EXPERIENCE_BULLET_ORDER = {
+    "bridge": {
+        "independent": (0, 1, 2),
+        "cintellic": (0, 1, 2),
+        "neuefische": (0, 1),
+        "research": (0, 1, 2),
+    },
+    "comp-bio": {
+        "independent": (2, 1, 0),
+        "cintellic": (0, 1, 2),
+        "neuefische": (0, 1),
+        "research": (0, 1, 2),
+    },
+    "ds-ml": {
+        "independent": (0, 1, 2),
+        "cintellic": (1, 0, 2),
+        "neuefische": (1, 0),
+        "research": (0, 1, 2),
+    },
+}
+
+
+def _resolve_experience_target(experience: list[dict], target: str) -> list[dict]:
+    """Reorder each role's bullets to lead `target` focus; content stays identical."""
+    order = _EXPERIENCE_BULLET_ORDER.get(target, _EXPERIENCE_BULLET_ORDER["bridge"])
+    result = copy.deepcopy(experience)
+    for entry in result:
+        indices = order.get(entry["id"])
+        if indices is not None:
+            entry["bullets"] = [
+                entry["bullets"][index] for index in indices if index < len(entry["bullets"])
+            ]
+    return result
+
+
 def _load_yaml(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as f:
         return yaml.load(f)
@@ -192,7 +229,9 @@ def load_content(
             web_projection=web_projection,
         ),
         "education": _load_yaml(content_dir / "education.yaml"),
-        "experience": _load_yaml(content_dir / "experience.yaml"),
+        "experience": _resolve_experience_target(
+            _load_yaml(content_dir / "experience.yaml"), target
+        ),
         "projects": projects,
         "selected_projects": selected_projects,
         "languages": _load_yaml(content_dir / "languages.yaml"),

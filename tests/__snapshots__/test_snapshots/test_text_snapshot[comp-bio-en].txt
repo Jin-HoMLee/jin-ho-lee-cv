@@ -23,9 +23,9 @@ students.
 EXPERIENCE
 ================================================================================
 Independent Bioinformatics & ML/AI Engineer - Independent / Self-Directed    (2025-08 to present)
-  - Agentic AI: Built LLM agent systems with tool use, routing, multi-agent orchestration, and persistent memory.
-  - Computer Vision: Building an on-device Chrome extension for badminton analysis (TensorFlow.js, ONNX Runtime Web).
   - Bioinformatics: Rebuilt the 2015 SNU computational prototype in Snakemake to predict splice neoepitope candidates.
+  - Computer Vision: Building an on-device Chrome extension for badminton analysis (TensorFlow.js, ONNX Runtime Web).
+  - Agentic AI: Built LLM agent systems with tool use, routing, multi-agent orchestration, and persistent memory.
 
 Consultant, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 to 2025-07)
   - Cloud Migration: Architected the move of 1,000+ analytical processes for an international bank to GCP.

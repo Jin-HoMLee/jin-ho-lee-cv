@@ -15,34 +15,6 @@ REPRESENTATIVE_PUBLICATION_KEYS = (
     "lee2019_combofish",
 )
 
-# Experience content is identical across targets (steer 023); only the ORDER of
-# bullets within each object varies to lead each version's focus. No bullet is
-# dropped, merged, or shortened in this pass.
-_EXPERIENCE_BULLETS = {
-    "bridge": {
-        # Balanced superset: canonical order (agentic AI, CV, bioinformatics).
-        "independent": (0, 1, 2),
-        "cintellic": (0, 1, 2),
-        "neuefische": (0, 1),
-        "research": (0, 1, 2),
-    },
-    "comp-bio": {
-        # Leads bioinformatics: L5 first in independent; genomics already leads research.
-        "independent": (2, 1, 0),
-        "cintellic": (0, 1, 2),
-        "neuefische": (0, 1),
-        "research": (0, 1, 2),
-    },
-    "ds-ml": {
-        # Leads AI/ML: agentic AI first in independent; production ML and ML
-        # development lead their respective objects.
-        "independent": (0, 1, 2),
-        "cintellic": (1, 0, 2),
-        "neuefische": (1, 0),
-        "research": (0, 1, 2),
-    },
-}
-
 _AWARD_TITLES = {
     "bridge": {
         "Google Cloud Certified - Associate Cloud Engineer",
@@ -68,13 +40,8 @@ def project_pdf_content(content: dict[str, Any], *, target: str, lang: str) -> d
     # evidence remains visible in Experience, Projects, and Publications.
     result["profile"]["paragraphs"] = []
 
-    bullet_indices = _EXPERIENCE_BULLETS[target]
-    for entry in result["experience"]:
-        entry["bullets"] = [
-            entry["bullets"][index]
-            for index in bullet_indices[entry["id"]]
-            if index < len(entry["bullets"])
-        ]
+    # Experience ordering is resolved in content_loader for every renderer; the
+    # PDF shares that target-ordered, identical-content experience as-is.
 
     for education in result["education"]:
         education.pop("thesis", None)

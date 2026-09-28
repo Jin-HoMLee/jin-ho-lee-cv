@@ -3,7 +3,144 @@
     "headline": "Bioinformatics · Cancer Genomics",
     "tagline": "Bioinformatician with deep roots in cancer genomics — HLA typing & neoantigen discovery from real-patient NGS/RNA-Seq, reproducible Snakemake pipelines, 11 peer-reviewed research publications.",
     "lead_paragraph": "Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, packaged as reproducible Snakemake workflows, with wet-lab training at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). A parallel line of experimental-biophysics research produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
-    "second_paragraph": "Equally at home in production: migrated 1,000+ analytical processes to Google Cloud, built reproducible data pipelines, and mentored 100+ specialists in Python, SQL & ML — while securing third-party funding and supervising 10+ students."
+    "second_paragraph": "Equally at home in production: migrated 1,000+ analytical processes to Google Cloud, built reproducible data pipelines, and mentored 100+ specialists in Python, SQL & ML — while securing third-party funding and supervising 10+ students.",
+    "experience": [
+      {
+        "id": "independent",
+        "org": {
+          "name": "Independent / Self-Directed",
+          "url": null
+        },
+        "role": "Independent Bioinformatics & ML/AI Engineer",
+        "period": {
+          "start": "2025-08",
+          "end": null
+        },
+        "bullets": [
+          {
+            "en": "Bioinformatics: Rebuilt the 2015 SNU computational prototype in Snakemake to predict splice neoepitope candidates.",
+            "de": "Bioinformatik: SNU-Prototyp von 2015 in Snakemake für vorhergesagte Splice-Neoepitop-Kandidaten neu aufgebaut.",
+            "refs": [
+              "L5"
+            ]
+          },
+          {
+            "en": "Computer Vision: Building an on-device Chrome extension for badminton analysis (TensorFlow.js, ONNX Runtime Web).",
+            "de": "Computer Vision: Client-seitige Chrome-Erweiterung zur Badminton-Analyse (TensorFlow.js, ONNX Runtime Web).",
+            "refs": [
+              "D2"
+            ]
+          },
+          {
+            "en": "Agentic AI: Built LLM agent systems with tool use, routing, multi-agent orchestration, and persistent memory.",
+            "de": "Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher.",
+            "refs": [
+              "D4"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cintellic",
+        "org": {
+          "name": "Cintellic GmbH",
+          "url": null
+        },
+        "role": "Consultant, Lead Business Functional Analyst",
+        "period": {
+          "start": "2024-05",
+          "end": "2025-07"
+        },
+        "bullets": [
+          {
+            "en": "Cloud Migration: Architected the move of 1,000+ analytical processes for an international bank to GCP.",
+            "de": "Cloud-Migration: Architektur der GCP-Migration von 1.000+ analytischen Prozessen einer internationalen Bank.",
+            "refs": [
+              "C2"
+            ]
+          },
+          {
+            "en": "Production ML: Developed BigQueryML models for anti-financial crime and KYC.",
+            "de": "Produktions-ML: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
+            "refs": [
+              "C1"
+            ]
+          },
+          {
+            "en": "Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery.",
+            "de": "Stakeholder Lead: Übersetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.",
+            "refs": [
+              "C1",
+              "C2"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "neuefische",
+        "org": {
+          "name": "neuefische GmbH",
+          "url": null
+        },
+        "role": "Data Science Trainee, Associate & Coach",
+        "period": {
+          "start": "2023-02",
+          "end": "2024-04"
+        },
+        "bullets": [
+          {
+            "en": "Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.",
+            "de": "Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.",
+            "refs": [
+              "D3"
+            ]
+          },
+          {
+            "en": "ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow.",
+            "de": "ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt.",
+            "refs": [
+              "D1"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "research",
+        "org": {
+          "name": "Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)",
+          "url": null
+        },
+        "role": "Doctoral & Post-Graduate Researcher",
+        "period": {
+          "start": "2014-04",
+          "end": "2022-07"
+        },
+        "bullets": [
+          {
+            "en": "Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.",
+            "de": "Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung.",
+            "refs": [
+              "L1",
+              "L2"
+            ]
+          },
+          {
+            "en": "Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).",
+            "de": "Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).",
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "en": "Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles.",
+            "de": "Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.",
+            "refs": [
+              "L4"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "ds-ml": {
     "headline": "Data Science · Machine Learning",
@@ -134,6 +271,143 @@
           ]
         }
       ]
-    }
+    },
+    "experience": [
+      {
+        "id": "independent",
+        "org": {
+          "name": "Independent / Self-Directed",
+          "url": null
+        },
+        "role": "Independent Bioinformatics & ML/AI Engineer",
+        "period": {
+          "start": "2025-08",
+          "end": null
+        },
+        "bullets": [
+          {
+            "en": "Agentic AI: Built LLM agent systems with tool use, routing, multi-agent orchestration, and persistent memory.",
+            "de": "Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher.",
+            "refs": [
+              "D4"
+            ]
+          },
+          {
+            "en": "Computer Vision: Building an on-device Chrome extension for badminton analysis (TensorFlow.js, ONNX Runtime Web).",
+            "de": "Computer Vision: Client-seitige Chrome-Erweiterung zur Badminton-Analyse (TensorFlow.js, ONNX Runtime Web).",
+            "refs": [
+              "D2"
+            ]
+          },
+          {
+            "en": "Bioinformatics: Rebuilt the 2015 SNU computational prototype in Snakemake to predict splice neoepitope candidates.",
+            "de": "Bioinformatik: SNU-Prototyp von 2015 in Snakemake für vorhergesagte Splice-Neoepitop-Kandidaten neu aufgebaut.",
+            "refs": [
+              "L5"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cintellic",
+        "org": {
+          "name": "Cintellic GmbH",
+          "url": null
+        },
+        "role": "Consultant, Lead Business Functional Analyst",
+        "period": {
+          "start": "2024-05",
+          "end": "2025-07"
+        },
+        "bullets": [
+          {
+            "en": "Production ML: Developed BigQueryML models for anti-financial crime and KYC.",
+            "de": "Produktions-ML: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
+            "refs": [
+              "C1"
+            ]
+          },
+          {
+            "en": "Cloud Migration: Architected the move of 1,000+ analytical processes for an international bank to GCP.",
+            "de": "Cloud-Migration: Architektur der GCP-Migration von 1.000+ analytischen Prozessen einer internationalen Bank.",
+            "refs": [
+              "C2"
+            ]
+          },
+          {
+            "en": "Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery.",
+            "de": "Stakeholder Lead: Übersetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.",
+            "refs": [
+              "C1",
+              "C2"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "neuefische",
+        "org": {
+          "name": "neuefische GmbH",
+          "url": null
+        },
+        "role": "Data Science Trainee, Associate & Coach",
+        "period": {
+          "start": "2023-02",
+          "end": "2024-04"
+        },
+        "bullets": [
+          {
+            "en": "ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow.",
+            "de": "ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt.",
+            "refs": [
+              "D1"
+            ]
+          },
+          {
+            "en": "Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.",
+            "de": "Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.",
+            "refs": [
+              "D3"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "research",
+        "org": {
+          "name": "Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)",
+          "url": null
+        },
+        "role": "Doctoral & Post-Graduate Researcher",
+        "period": {
+          "start": "2014-04",
+          "end": "2022-07"
+        },
+        "bullets": [
+          {
+            "en": "Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.",
+            "de": "Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung.",
+            "refs": [
+              "L1",
+              "L2"
+            ]
+          },
+          {
+            "en": "Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).",
+            "de": "Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).",
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "en": "Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles.",
+            "de": "Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.",
+            "refs": [
+              "L4"
+            ]
+          }
+        ]
+      }
+    ]
   }
 }

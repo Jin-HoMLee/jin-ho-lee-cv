@@ -55,8 +55,8 @@ def test_variants_have_all_positioning_fields(rendered):
     `selected_projects`, silently dropping every rendered positioning field.
     """
     expected_keys = {
-        "comp-bio": TEXT_OVERRIDE_KEYS,
-        "ds-ml": TEXT_OVERRIDE_KEYS | {"skills"},
+        "comp-bio": TEXT_OVERRIDE_KEYS | {"experience"},
+        "ds-ml": TEXT_OVERRIDE_KEYS | {"skills", "experience"},
     }
     for lang in ("en", "de"):
         for target in TARGETS:

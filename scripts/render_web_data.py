@@ -130,6 +130,14 @@ def _extract_overrides(bridge: dict, variant: dict) -> dict:
         if variant_stack != bridge_stack:
             overrides["hero_stack"] = variant_stack
 
+    # Experience content is identical across targets; only the bullet order per
+    # object changes. Emit the full reordered tree so the client-side switcher
+    # matches the PDF variant ordering.
+    bridge_experience = bridge.get("experience")
+    variant_experience = variant.get("experience")
+    if variant_experience is not None and variant_experience != bridge_experience:
+        overrides["experience"] = variant_experience
+
     return overrides
 
 

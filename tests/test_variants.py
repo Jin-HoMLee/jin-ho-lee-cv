@@ -627,10 +627,24 @@ def test_resolve_profile_target_overrides_both_paragraphs():
 
 
 def test_experience_is_shared_across_targets(content_dir):
+    """Experience content is identical across targets; only bullet order varies."""
     bridge = _resolved(content_dir, "en", "bridge")["experience"]
     cb = _resolved(content_dir, "en", "comp-bio")["experience"]
     ds = _resolved(content_dir, "en", "ds-ml")["experience"]
-    assert bridge == cb == ds
+
+    # Same roles, same order.
+    assert [e["id"] for e in bridge] == [e["id"] for e in cb] == [e["id"] for e in ds]
+
+    # Same bullets per role (as an unordered set); per-target ordering may differ.
+    def bullet_key(bullet):
+        return (bullet["en"], tuple(bullet.get("refs", ())))
+
+    for b_entry, c_entry, d_entry in zip(bridge, cb, ds):
+        assert (
+            {bullet_key(b) for b in b_entry["bullets"]}
+            == {bullet_key(b) for b in c_entry["bullets"]}
+            == {bullet_key(b) for b in d_entry["bullets"]}
+        ), f"{b_entry['id']} bullets differ"
 
 
 def test_pdf_filename_bridge_is_unsuffixed():

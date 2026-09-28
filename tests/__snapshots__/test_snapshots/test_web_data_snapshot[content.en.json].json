@@ -1123,7 +1123,7 @@
     },
     "misc": {
       "present": "present",
-      "interactive_cv": "Interactive CV:"
+      "interactive_cv": "Online CV:"
     },
     "publications": {
       "summary": "{peer_reviewed} peer-reviewed publications ({peer_reviewed_articles} articles + {peer_reviewed_book_chapters} research book chapter; {pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author), {conferences} first-author research conference contributions, and {applied_records} applied/off-domain record ({research_records} research records; {total_records} bibliography records total), research span {span}, in radiation biophysics & super-resolution DNA-repair imaging.",

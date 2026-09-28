@@ -34,6 +34,12 @@ const switcherVariants = Object.fromEntries(
 const skillVariants = Object.fromEntries(
   Object.entries(variantsEn).map(([target, variant]) => [target, { skills: variant.skills }]),
 );
+const experienceVariants = Object.fromEntries(
+  Object.entries(variantsEn).map(([target, variant]) => [
+    target,
+    { order: variant.experience ? variant.experience.map((e) => e.id) : undefined },
+  ]),
+);
 ---
 <BaseLayout lang="en" data={data}>
   <Header slot="header" personal={data.personal} lang="en" />
@@ -44,7 +50,7 @@ const skillVariants = Object.fromEntries(
   <ProfileSection personal={data.personal} profile={data.profile} labels={data.labels} />
   <div class="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr]">
     <div data-reveal>
-      <ExperienceSection experience={data.experience} projects={data.projects} labels={data.labels} lang="en" />
+      <ExperienceSection experience={data.experience} projects={data.projects} labels={data.labels} lang="en" variants={experienceVariants} />
       <ProjectsSection projects={data.projects} labels={data.labels} lang="en" />
       <PublicationsList publications={data.publications} metrics={data.publication_metrics} aggregate={data.publications_aggregate} orcid={data.personal.links.orcid} scholar={data.personal.links.googlescholar} labels={data.labels} lang="en" />
       <AwardsSection awards={data.awards} labels={data.labels} />
