@@ -5,71 +5,71 @@ jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/
 ================================================================================
 PROFIL
 ================================================================================
-Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-
-Identifizierung aus realen Patienten-NGS- und RNA-Seq-Daten, aufbauend auf Wet-
-Lab-Ausbildung und Pipeline-Entwicklung am Deutschen Krebsforschungszentrum
-(DKFZ), am Nationalen Centrum für Tumorerkrankungen (NCT), am Forschungszentrum
-Jülich, am Kirchhoff-Institut für Physik (KIP) und an der Seoul National
-University (SNU). Eine parallele Forschungslinie in der experimentellen
-Biophysik brachte 11 peer-reviewed Forschungspublikationen — als Erstautor sowie
-mit geteilter Erstautorschaft — in der hochauflösenden Mikroskopie von DNA-
-Schadensreparatur und Chromatin hervor.
+Arbeit in Bioinformatik und experimenteller Biophysik, mit Entwicklung von
+NGS/RNA-Seq-Pipelines, quantitativer Biobildanalyse und Wet-Lab-Forschung am
+Deutschen Krebsforschungszentrum (DKFZ), am Nationalen Centrum für
+Tumorerkrankungen (NCT), am Forschungszentrum Jülich, am Kirchhoff-Institut für
+Physik (KIP) und an der Seoul National University (SNU). Daraus entstanden 11
+peer-reviewed Forschungspublikationen — als Erstautor sowie mit geteilter
+Erstautorschaft — in der hochauflösenden Mikroskopie von DNA-Schadensreparatur
+und Chromatin.
 
-Bei Cintellic GmbH setzte ich diese Sorgfalt für eine internationale Bank ein:
-Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud,
-Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC sowie
-Schulung von 100+ Fachkräften in Python, SQL & ML; Einwerbung von Drittmitteln
-und Betreuung von 10+ Studierenden.
+Als Cintellic-Berater für eine internationale Bank Architektur der Migration von
+1.000+ analytischen Prozessen in die Google Cloud und Entwicklung von
+BigQueryML-Modellen für Geldwäscheprävention & KYC. Zuvor bei neuefische
+Coaching von 100+ Fachkräften in Python, SQL & ML; in der Forschung Einwerbung
+von Drittmitteln und Betreuung von 10+ Studierenden.
 
 ================================================================================
 BERUFSERFAHRUNG
 ================================================================================
-ML/AI-Engineer & Open-Source-Entwickler - Independent / Self-Directed    (2025-08 bis heute)
-  - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code.
-  - Computer Vision: Entwicklung von badminton-vision, einer vollständig client-seitigen Chrome-Erweiterung zur Badminton-Spielanalyse (TensorFlow.js, ONNX Runtime Web).
+Unabhängiger Bioinformatik- & ML/AI-Engineer - Independent / Self-Directed    (2025-08 bis heute)
+  - Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher.
+  - Computer Vision: Client-seitige Chrome-Erweiterung zur Badminton-Analyse (TensorFlow.js, ONNX Runtime Web).
+  - Bioinformatik: SNU-Prototyp von 2015 in Snakemake für vorhergesagte Splice-Neoepitop-Kandidaten neu aufgebaut.
 
 Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
-  - Kunde: Internationale Bank — Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
-  - KI in Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC.
-  - Stakeholder Lead: Brückenfunktion zwischen technischem Data Engineering und Fachanforderungen im hochregulierten Bankensektor.
+  - Cloud-Migration: Architektur der GCP-Migration von 1.000+ analytischen Prozessen einer internationalen Bank.
+  - Produktions-ML: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.
+  - Stakeholder Lead: Übersetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.
 
 Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-04)
-  - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen.
-  - ML-Entwicklung: Eigenständige Entwicklung eines Echtzeit-ASL-Erkennungsprototyps mit LSTMs, MediaPipe und TensorFlow.
+  - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.
+  - ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt.
 
 Doktorand & Postgraduierter Forscher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
-  - Genomik & Immuntherapie: Entwicklung von in-silico-Pipelines zur HLA-Typisierung und Neoantigen-Discovery aus NGS- und RNA-Seq-Splice-Junction-Daten von Krebspatienten; Validierung von SNV-Calls gegen Goldstandard-Sequenzierung in klinischen Kolorektal-Kohorten (NCT/DKFZ).
-  - Biophysik & Bildgebung: End-to-End-Leitung von Super-Resolution-Mikroskopie-Projekten — von Wet-Lab-Forschung bis zur räumlichen Punktmuster-Analyse (MATLAB/Python) zur Untersuchung von Chromatin.
-  - Neurobiologie: Untersuchung von Strahlungseffekten auf die neuronale Vorläuferdifferenzierung mit 3D-Zellmodellen sowie der Rolle extrazellulärer Vesikel.
+  - Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung.
+  - Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).
+  - Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.
 
 ================================================================================
 AUSGEWÄHLTE PROJEKTE
 ================================================================================
+Geldwäscheprävention – Know-Your-Customer-Plattform (KYC)    (2024-08 bis 2025-07)
+  Lead Business Functional Analyst (Cintellic GmbH)
+  Cloud-Migration und Entwicklung einer Analyse-Umgebung zur Erkennung von
+  Finanzkriminalität bei einer großen internationalen Bank.
+  Ergebnis: Ermöglichung der Überführung bestehender Reporting-Prozesse in eine
+  skalierbare cloudbasierte Analyse-Umgebung.
+
+SignMeUp – Echtzeit-Erkennung der American Sign Language (ASL)    (2023-09 bis 2023-12)
+  Projektmanager / Data Scientist (neuefische GmbH)
+  Entwicklung eines Echtzeit-Prototyps zur ASL-Erkennung: eine durchgängige
+  Machine-Learning-Pipeline, die Hand-Landmarks extrahiert, zeitliche Gesten
+  klassifiziert und Lernenden direktes Feedback gibt.
+  Ergebnis: Lieferung eines funktionsfähigen Prototyps für Echtzeit-Inferenz,
+  der unmittelbares Feedback für Lernende der Gebärdensprache ermöglicht.
+
 Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bis heute)
   Autor und Maintainer (Open Source)
-  Modernisierte, Open-Source-Neuimplementierung der SNU-Arbeit von 2015 zur
-  splice-junction-basierten Neoepitop-Identifizierung als reproduzierbare
-  Snakemake-Pipeline mit optionaler struktureller Validierung.
-  Ergebnis: Snakemake-Pipeline: End-to-End-Neoepitop-Identifizierung von RNA-
-  Seq-FASTQ bis zur computergestützt modellierten TCR-pMHC-Komplexstruktur —
-  patientenspezifische HLA-Allele, tumor-exklusive Junctions.
-
-Krebs-Neoantigen-Entdeckung – Transkriptomweite Splice-Analyse    (2015-08 bis 2015-11)
-  Bioinformatik-Forschungspraktikant (Seoul National University)
-  Bioinformatik-Pipeline zur Identifizierung neuartiger Immuntherapie-Targets
-  aus aberrantem alternativem Splicing in RNA-Seq-Daten.
-  Ergebnis: Nachgewiesen, dass alternatives Splicing eine geeignete Quelle für
-  hochaffine Epitope darstellt und die Target-Identifizierung über klassische
-  somatische Mutationen hinaus erweitert.
-
-Personalisierte Immuntherapie – Hochdurchsatz-HLA-Typisierungs-Pipeline    (2014-04 bis 2014-05)
-  Bioinformatik-Bachelorand (NCT Heidelberg)
-  B.Sc.-Thesisprojekt: Bioinformatischer Workflow zur Identifizierung
-  patientenspezifischer Krebs-Targets und Automatisierung der HLA-
-  Genotypisierung aus Next-Generation-Sequencing-Daten (NGS).
-  Ergebnis: Nachgewiesen, dass ein vollständig computergestützter Ansatz zur
-  Neoantigen-Entdeckung praktikabel ist und Kosten sowie Vorlaufzeiten gegenüber
-  klassischen PCR-basierten klinischen Assays deutlich reduziert.
+  Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-
+  of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
+  Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
+  Strukturmodellierung.
+  Ergebnis: Moderne Neuimplementierung des SNU-Splice-Neoepitop-Proof-of-
+  Concepts von 2015 mit patientenspezifischer HLA-Typisierung als
+  reproduzierbare Snakemake-Pipeline von RNA-Seq-FASTQ bis zur modellierten TCR-
+  pMHC-Struktur.
 
 ================================================================================
 AUSBILDUNG
@@ -82,25 +82,25 @@ AUSBILDUNG
 ================================================================================
 KENNTNISSE
 ================================================================================
-Bioinformatik & ML
-  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
-  Immunoinformatik: HLA Typing, MHC-I Prediction, OptiType, MHCflurry, Neoepitopes
-  Nanoskopie: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
-  Strukturbiologie: TCRdock, AlphaFold v2, Mol*
-KI & Developer-Tooling
-  Angewandte KI: OpenAI API, TensorFlow.js, ONNX Runtime Web
-  Browser-Auslieferung: Chrome Extension (Manifest V3)
-  Reproduzierbare Umgebung: Nix, nix-darwin, home-manager
-  Terminal & Editor: WezTerm, Neovim
-  Agentenbasierte Entwicklung: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
-Biotech Wet-Lab
-  Modelle: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
-  Bildgebung: Super-Resolution, Confocal, Fluorescence
-  Assays: FISH, IF, qPCR, FACS
-Daten & Engineering
-  KI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow
-  Engineering & Pipelines: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
-  Cloud: GCP, BigQuery, Vertex AI, Looker
+Bioinformatik
+  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
+  Bioinformatik-Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
+  Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitopes
+  Quantitative Biobildgebung: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
+KI/ML & Entwicklerwerkzeuge
+  Maschinelles Lernen: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
+  Computergestützte Modellierung: MHCflurry, TCRdock, AlphaFold v2, Mol*
+  KI-Agenten: Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Kimi
+  Browser-ML-Auslieferung: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
+  Entwicklungsumgebungen: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
+Experimentelle Forschung
+  Modelle: 3D Cell Culture, Neural Progenitors
+  Bildgebung: Super-Resolution, Fluorescence
+  Analysemethoden: FISH, qPCR, FACS
+  Forschungsdomänen: DNA Damage & Repair, Chromatin Architecture, Alu Elements, Extracellular Vesicles
+Daten- & Cloud-Engineering
+  Programmierung & Daten: Python (Expert), R, SQL, dbt
+  Cloud & Analytik: GCP, BigQuery, Looker
 
 ================================================================================
 SPRACHEN
@@ -108,30 +108,27 @@ SPRACHEN
   Deutsch: native
   Englisch: fluent
   Koreanisch: native
-  Französisch: basic
-  Italienisch: basic
   Latein: passive
 
 ================================================================================
 EHRENAMTLICH
 ================================================================================
+Sport
+  - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
+  - Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)
+Umwelt
+  - Foodsharing e.V. (Operations Manager)
+  - Österreichisches Waldgarten-Institut
+  - Hofwaerts
+Musik
+  - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
+  - Chorister, Vienna Cathedral Choir (Wiener Domchor)
+  - Chorister, Cappella Palatina (Heidelberg)
 Soziales
   - Jülicher Tafel e.V.
   - In via - Café Gemeinsam
   - Amnesty International
   - Florence-Nightingale-Krankenhaus
-Umwelt
-  - Foodsharing e.V. (Operations Manager)
-  - Österreichisches Waldgarten-Institut
-  - Hofwaerts
-Sport
-  - UBC Mannheim
-  - Sobell Badminton Club
-  - ASD Gymnase
-  - BSG Jülich 1963 e.V.
-  - WAT Simmering
-  - TSG 1889 Dossenheim e.V.
-  - HTV 1846 e.V.
 
 ================================================================================
 PUBLIKATIONEN
@@ -153,3 +150,5 @@ AUSZEICHNUNGEN & ZERTIFIKATE
 2018  Auszeichnung „Most Patient-Centric Solution“ - {Life Science} meets IT Hackathon, Mannheim
 2015  DAAD-PROMOS-Stipendium - DAAD
   Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung.
+2019  Trainer-C Leistungssport Badminton - State-approved extra-professional training, Ostfildern-Ruit
+  Nov. 2017 – Jan. 2019.

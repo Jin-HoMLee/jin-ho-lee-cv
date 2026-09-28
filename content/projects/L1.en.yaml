@@ -16,6 +16,6 @@ technologies:
 contributions:
   - "Developed a discovery pipeline to identify tumor-specific splice junctions across large-scale cancer datasets."
   - "Mapped the epitope landscape by predicting high-affinity MHC-I binding peptides from non-canonical transcripts."
-  - "Validated the predictive model by cross-referencing findings with high-impact transcriptomic studies."
+  - "Cross-referenced predicted candidates with published transcriptomic studies."
   - "Evaluated synergistic strategies for co-targeting mutation-derived and splice-derived neoantigens."
-outcome: "Demonstrated that alternative splicing is a viable source for high-affinity epitopes, expanding target discovery beyond traditional somatic mutations."
+outcome: "Unpublished computational proof of concept that produced predicted high-affinity MHC-I-binding candidate peptides from splice-derived non-canonical transcripts."

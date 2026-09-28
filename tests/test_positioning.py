@@ -13,9 +13,10 @@ from scripts.content_loader import load_content
 def test_en_tagline_leads_with_data_science(content_dir):
     profile = load_content(content_dir, lang="en")["profile"]
     assert profile["tagline"].startswith("Data scientist")
-    assert "cancer-genomics" in profile["tagline"]
-    assert "production ML on GCP" in profile["tagline"]
-    # the old genomics-only framing is gone
+    assert "bioinformatics roots" in profile["tagline"]
+    assert "GCP" in profile["tagline"]
+    # the General CV is broad — cancer-genomics specificity lives in comp-bio
+    assert "cancer-genomics" not in profile["tagline"]
     assert "Bioinformatics Engineer specializing" not in profile["tagline"]
 
 
@@ -30,7 +31,8 @@ def test_en_profile_body_is_two_paragraphs_led_by_differentiator(content_dir):
 def test_de_tagline_leads_with_data_science(content_dir):
     profile = load_content(content_dir, lang="de")["profile"]
     assert profile["tagline"].startswith("Data Scientist")
-    assert "Krebsgenomik" in profile["tagline"]
+    assert "Bioinformatik" in profile["tagline"]
+    assert "Krebsgenomik" not in profile["tagline"]
 
 
 def test_de_profile_body_is_two_paragraphs_led_by_differentiator(content_dir):

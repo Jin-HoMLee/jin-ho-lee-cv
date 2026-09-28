@@ -5,7 +5,7 @@
     "label": "Bioinformatics · Data Science",
     "email": "jinho.michael.lee@gmail.com",
     "url": "https://jinholee.is-a.dev/",
-    "summary": "Engineered in-silico pipelines for HLA typing and neoantigen discovery from real-patient NGS and RNA-Seq data, grounded in wet-lab training and pipeline development at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). A parallel line of experimental-biophysics research produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.\n\nAt Cintellic GmbH, applied that rigor for an international bank: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached 100+ specialists in Python, SQL & ML; secured third-party funding and supervised 10+ students.",
+    "summary": "Worked across bioinformatics and experimental biophysics, combining NGS/RNA-Seq pipeline development, quantitative bioimage analysis, and wet-lab research at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). This work produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.\n\nAs a Cintellic consultant for an international bank, architected the migration of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for anti-financial-crime & KYC. Previously at neuefische, coached 100+ specialists in Python, SQL & ML; in research, secured third-party funding and supervised 10+ students.",
     "location": {
       "city": "Mannheim",
       "countryCode": "GER"
@@ -44,11 +44,12 @@
   "work": [
     {
       "name": "Independent / Self-Directed",
-      "position": "ML/AI Engineer & Open-Source Developer",
+      "position": "Independent Bioinformatics & ML/AI Engineer",
       "startDate": "2025-08-01",
       "highlights": [
-        "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.",
-        "Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web)."
+        "Agentic AI: Built LLM agent systems with tool use, routing, multi-agent orchestration, and persistent memory.",
+        "Computer Vision: Building an on-device Chrome extension for badminton analysis (TensorFlow.js, ONNX Runtime Web).",
+        "Bioinformatics: Rebuilt the 2015 SNU computational prototype in Snakemake to predict splice neoepitope candidates."
       ]
     },
     {
@@ -57,9 +58,9 @@
       "startDate": "2024-05-01",
       "endDate": "2025-07-28",
       "highlights": [
-        "Client: International bank — architected the migration of 1,000+ analytical processes to Google Cloud.",
-        "AI in Production: Developed BigQueryML models for anti-financial crime & KYC.",
-        "Stakeholder Lead: Bridged technical data engineering with business requirements for high-stakes banking."
+        "Cloud Migration: Architected the move of 1,000+ analytical processes for an international bank to GCP.",
+        "Production ML: Developed BigQueryML models for anti-financial crime and KYC.",
+        "Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery."
       ]
     },
     {
@@ -68,8 +69,8 @@
       "startDate": "2023-02-01",
       "endDate": "2024-04-28",
       "highlights": [
-        "Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles.",
-        "ML Development: Independently engineered a Real-Time ASL Recognition prototype using LSTMs, MediaPipe, and TensorFlow."
+        "Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.",
+        "ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow."
       ]
     },
     {
@@ -78,9 +79,9 @@
       "startDate": "2014-04-01",
       "endDate": "2022-07-28",
       "highlights": [
-        "Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer-patient NGS and RNA-Seq splice-junction data; validated SNV calls against gold-standard sequencing in clinical colorectal-cancer cohorts (NCT/DKFZ).",
-        "Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects — from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin.",
-        "Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles."
+        "Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.",
+        "Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).",
+        "Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles."
       ]
     }
   ],
@@ -102,157 +103,154 @@
   ],
   "skills": [
     {
-      "name": "Bioinformatics & ML",
+      "name": "Bioinformatics",
       "level": "Genomics",
       "keywords": [
         "NGS",
         "RNA-Seq",
         "WES",
         "SNV Calling",
-        "Splice Analysis",
-        "MapSplice",
-        "HISAT2/STAR",
-        "samtools/bcftools",
-        "bedtools"
+        "Splice Analysis"
       ]
     },
     {
-      "name": "Bioinformatics & ML",
+      "name": "Bioinformatics",
+      "level": "Bioinformatics Workflows",
+      "keywords": [
+        "Snakemake",
+        "MapSplice",
+        "HISAT2/STAR",
+        "samtools/bcftools",
+        "bedtools",
+        "OptiType"
+      ]
+    },
+    {
+      "name": "Bioinformatics",
       "level": "Immunoinformatics",
       "keywords": [
         "HLA Typing",
         "MHC-I Prediction",
-        "OptiType",
-        "MHCflurry",
         "Neoepitopes"
       ]
     },
     {
-      "name": "Bioinformatics & ML",
-      "level": "Nanoscopy",
+      "name": "Bioinformatics",
+      "level": "Quantitative Bioimaging",
       "keywords": [
         "Spatial Point-Pattern",
         "Cluster Analysis (DBSCAN)"
       ]
     },
     {
-      "name": "Bioinformatics & ML",
-      "level": "Structural Biology",
+      "name": "AI/ML & Developer Tools",
+      "level": "Machine Learning",
       "keywords": [
+        "TensorFlow",
+        "Keras",
+        "LSTMs",
+        "OpenCV",
+        "MLflow",
+        "BigQueryML"
+      ]
+    },
+    {
+      "name": "AI/ML & Developer Tools",
+      "level": "Computational Modelling",
+      "keywords": [
+        "MHCflurry",
         "TCRdock",
         "AlphaFold v2",
         "Mol*"
       ]
     },
     {
-      "name": "AI & Developer Tooling",
-      "level": "Applied AI",
-      "keywords": [
-        "OpenAI API",
-        "TensorFlow.js",
-        "ONNX Runtime Web"
-      ]
-    },
-    {
-      "name": "AI & Developer Tooling",
-      "level": "Browser Delivery",
-      "keywords": [
-        "Chrome Extension (Manifest V3)"
-      ]
-    },
-    {
-      "name": "AI & Developer Tooling",
-      "level": "Reproducible Environment",
-      "keywords": [
-        "Nix",
-        "nix-darwin",
-        "home-manager"
-      ]
-    },
-    {
-      "name": "AI & Developer Tooling",
-      "level": "Terminal & Editor",
-      "keywords": [
-        "WezTerm",
-        "Neovim"
-      ]
-    },
-    {
-      "name": "AI & Developer Tooling",
-      "level": "Agentic Development",
+      "name": "AI/ML & Developer Tools",
+      "level": "AI Agents",
       "keywords": [
         "Claude Code",
         "Codex",
         "OpenCode",
         "Pi",
         "Grok",
-        "Cursor"
+        "Cursor",
+        "Kimi"
       ]
     },
     {
-      "name": "Biotech Wet-Lab",
+      "name": "AI/ML & Developer Tools",
+      "level": "Browser ML Delivery",
+      "keywords": [
+        "TensorFlow.js",
+        "ONNX Runtime Web",
+        "Chrome Extension (Manifest V3)"
+      ]
+    },
+    {
+      "name": "AI/ML & Developer Tools",
+      "level": "Developer Environments",
+      "keywords": [
+        "Conda",
+        "Docker",
+        "Git",
+        "Nix",
+        "nix-darwin",
+        "home-manager",
+        "WezTerm",
+        "Neovim"
+      ]
+    },
+    {
+      "name": "Experimental Research",
       "level": "Models",
       "keywords": [
-        "Cancer/Tumor",
         "3D Cell Culture",
         "Neural Progenitors"
       ]
     },
     {
-      "name": "Biotech Wet-Lab",
+      "name": "Experimental Research",
       "level": "Imaging",
       "keywords": [
         "Super-Resolution",
-        "Confocal",
         "Fluorescence"
       ]
     },
     {
-      "name": "Biotech Wet-Lab",
+      "name": "Experimental Research",
       "level": "Assays",
       "keywords": [
         "FISH",
-        "IF",
         "qPCR",
         "FACS"
       ]
     },
     {
-      "name": "Data & Engineering",
-      "level": "AI & ML",
+      "name": "Experimental Research",
+      "level": "Research Domains",
       "keywords": [
-        "TensorFlow",
-        "Keras",
-        "LSTMs",
-        "OpenCV",
-        "XGBoost",
-        "MLflow"
+        "DNA Damage & Repair",
+        "Chromatin Architecture",
+        "Alu Elements",
+        "Extracellular Vesicles"
       ]
     },
     {
-      "name": "Data & Engineering",
-      "level": "Engineering & Pipelines",
+      "name": "Data & Cloud Engineering",
+      "level": "Programming & Data",
       "keywords": [
         "Python (Expert)",
         "R",
         "SQL",
-        "PostgreSQL",
-        "Snakemake",
-        "Conda",
-        "Docker",
-        "Git",
-        "dbt",
-        "Pydantic",
-        "Streamlit"
+        "dbt"
       ]
     },
     {
-      "name": "Data & Engineering",
-      "level": "Cloud",
+      "name": "Data & Cloud Engineering",
+      "level": "Cloud & Analytics",
       "keywords": [
         "GCP",
         "BigQuery",
-        "Vertex AI",
         "Looker"
       ]
     }
@@ -271,19 +269,43 @@
       "fluency": "native"
     },
     {
-      "language": "French",
-      "fluency": "basic"
-    },
-    {
-      "language": "Italian",
-      "fluency": "basic"
-    },
-    {
       "language": "Latin",
       "fluency": "passive"
     }
   ],
   "volunteer": [
+    {
+      "organization": "Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)",
+      "position": "Sports"
+    },
+    {
+      "organization": "Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)",
+      "position": "Sports"
+    },
+    {
+      "organization": "Foodsharing e.V. (Operations Manager)",
+      "position": "Environment"
+    },
+    {
+      "organization": "Österreichisches Waldgarten-Institut",
+      "position": "Environment"
+    },
+    {
+      "organization": "Hofwaerts",
+      "position": "Environment"
+    },
+    {
+      "organization": "Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000",
+      "position": "Music"
+    },
+    {
+      "organization": "Chorister, Vienna Cathedral Choir (Wiener Domchor)",
+      "position": "Music"
+    },
+    {
+      "organization": "Chorister, Cappella Palatina (Heidelberg)",
+      "position": "Music"
+    },
     {
       "organization": "Jülicher Tafel e.V.",
       "position": "Community"
@@ -299,46 +321,6 @@
     {
       "organization": "Florence-Nightingale-Krankenhaus",
       "position": "Community"
-    },
-    {
-      "organization": "Foodsharing e.V. (Operations Manager)",
-      "position": "Environment"
-    },
-    {
-      "organization": "Österreichisches Waldgarten-Institut",
-      "position": "Environment"
-    },
-    {
-      "organization": "Hofwaerts",
-      "position": "Environment"
-    },
-    {
-      "organization": "UBC Mannheim",
-      "position": "Sports"
-    },
-    {
-      "organization": "Sobell Badminton Club",
-      "position": "Sports"
-    },
-    {
-      "organization": "ASD Gymnase",
-      "position": "Sports"
-    },
-    {
-      "organization": "BSG Jülich 1963 e.V.",
-      "position": "Sports"
-    },
-    {
-      "organization": "WAT Simmering",
-      "position": "Sports"
-    },
-    {
-      "organization": "TSG 1889 Dossenheim e.V.",
-      "position": "Sports"
-    },
-    {
-      "organization": "HTV 1846 e.V.",
-      "position": "Sports"
     }
   ],
   "awards": [
@@ -363,6 +345,12 @@
       "date": "2015-01-01",
       "awarder": "DAAD",
       "summary": "Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery."
+    },
+    {
+      "title": "Coach C Competitive Sports Badminton",
+      "date": "2019-01-01",
+      "awarder": "State-approved extra-professional training, Ostfildern-Ruit",
+      "summary": "Nov 2017 – Jan 2019."
     }
   ],
   "projects": [
@@ -507,7 +495,7 @@
       "highlights": [
         "Developed a discovery pipeline to identify tumor-specific splice junctions across large-scale cancer datasets.",
         "Mapped the epitope landscape by predicting high-affinity MHC-I binding peptides from non-canonical transcripts.",
-        "Validated the predictive model by cross-referencing findings with high-impact transcriptomic studies.",
+        "Cross-referenced predicted candidates with published transcriptomic studies.",
         "Evaluated synergistic strategies for co-targeting mutation-derived and splice-derived neoantigens."
       ],
       "keywords": [
@@ -595,12 +583,12 @@
     },
     {
       "name": "Splice Neoepitope Pipeline – Reproducible Snakemake Workflow",
-      "description": "Modernised, open-source reimplementation of the 2015 SNU splice-junction–based neoepitope discovery work as a reproducible Snakemake pipeline with optional structural validation.",
+      "description": "Modernised, open-source reimplementation of the 2015 SNU computational proof of concept for predicted splice-junction–derived neoepitope candidates as a reproducible Snakemake pipeline with optional structural modelling.",
       "highlights": [
         "Re-engineered the original SNU pipeline as a fully reproducible Snakemake 8.x workflow with per-rule Conda environments — installable without manual dependency management; run locally and on GCP GPU VMs, and executor-portable to a SLURM cluster by design (per-rule resources + Conda) — a config swap, not a rewrite.",
         "Implemented tumor-vs-matched-normal junction filtering against GENCODE annotation, classifying junctions as annotated, normal_shared, or tumor_exclusive.",
         "Integrated patient-specific HLA typing (OptiType) and MHC-I peptide presentation prediction (MHCflurry 2.x Class1PresentationPredictor) for end-to-end neoepitope candidate ranking.",
-        "Added optional TCR-pMHC ternary complex structural validation via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.",
+        "Added optional TCR-pMHC ternary complex structural modelling via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.",
         "MIT-licensed, public on GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
       ],
       "keywords": [

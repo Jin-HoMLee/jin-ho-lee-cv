@@ -1,6 +1,6 @@
 # Featured-project order per positioning target.
 # Each ID must resolve to content/projects/<id>.{en,de}.yaml.
 # `bridge` is required and is the fallback for any target without its own key.
-bridge:   [L5, L1, L2]   # genomics-led canonical (unchanged from Phase 8a)
-comp-bio: [L1, L2, L5]   # neoantigen discovery, HLA pipeline, reproducible splice workflow
-ds-ml:    [C1, D1, D2, D4]   # KYC/BigQueryML, real-time ASL ML, badminton computer vision, multi-agent Claude Code tooling
+bridge:   [C1, D1, L5]   # production ML, shipped ML prototype, flagship open-source bioinformatics
+comp-bio: [L5, L3, L4]   # splice-neoepitope arc (L1+L2 folded into L5), biophysics, neural stem-cell research
+ds-ml:    [C1, D1, D2]   # KYC/BigQueryML, real-time ASL ML, badminton computer vision

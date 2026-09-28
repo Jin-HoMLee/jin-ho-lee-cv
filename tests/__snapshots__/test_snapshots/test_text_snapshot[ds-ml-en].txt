@@ -6,7 +6,7 @@ jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/
 PROFILE
 ================================================================================
 Builds and ships machine-learning systems end to end, bringing the experimental
-rigor of a research decade across cancer genomics and experimental biophysics to
+rigor of a research decade across bioinformatics and experimental biophysics to
 every model and pipeline.
 
 In industry: architected the migration of 1,000+ analytical processes to Google
@@ -16,23 +16,24 @@ Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached
 ================================================================================
 EXPERIENCE
 ================================================================================
-ML/AI Engineer & Open-Source Developer - Independent / Self-Directed    (2025-08 to present)
-  - Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling.
-  - Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web).
+Independent Bioinformatics & ML/AI Engineer - Independent / Self-Directed    (2025-08 to present)
+  - Agentic AI: Built LLM agent systems with tool use, routing, multi-agent orchestration, and persistent memory.
+  - Computer Vision: Building an on-device Chrome extension for badminton analysis (TensorFlow.js, ONNX Runtime Web).
+  - Bioinformatics: Rebuilt the 2015 SNU computational prototype in Snakemake to predict splice neoepitope candidates.
 
 Consultant, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 to 2025-07)
-  - Client: International bank — architected the migration of 1,000+ analytical processes to Google Cloud.
-  - AI in Production: Developed BigQueryML models for anti-financial crime & KYC.
-  - Stakeholder Lead: Bridged technical data engineering with business requirements for high-stakes banking.
+  - Production ML: Developed BigQueryML models for anti-financial crime and KYC.
+  - Cloud Migration: Architected the move of 1,000+ analytical processes for an international bank to GCP.
+  - Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery.
 
 Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 to 2024-04)
-  - Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles.
-  - ML Development: Independently engineered a Real-Time ASL Recognition prototype using LSTMs, MediaPipe, and TensorFlow.
+  - ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow.
+  - Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.
 
 Doctoral & Post-Graduate Researcher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 to 2022-07)
-  - Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer-patient NGS and RNA-Seq splice-junction data; validated SNV calls against gold-standard sequencing in clinical colorectal-cancer cohorts (NCT/DKFZ).
-  - Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects — from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin.
-  - Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles.
+  - Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.
+  - Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).
+  - Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles.
 
 ================================================================================
 SELECTED PROJECTS
@@ -60,15 +61,6 @@ badminton-vision – Real-Time On-Device Computer Vision for Badminton    (2025-
   Outcome: In-browser, on-device computer vision extension for badminton match
   analysis, under active, ongoing development toward a first stable release.
 
-claude-personas – Multi-Persona Framework for Claude Code    (2026-05 to present)
-  Author and Maintainer (Open Source)
-  Framework for running multiple specialized Claude Code personas in parallel,
-  each with its own isolated, role-specific persistent memory, so a solo
-  developer can cover multiple roles across a project.
-  Outcome: An open-source framework that lets a solo developer parallelize
-  multi-role work by running several specialized, memory-isolated Claude Code
-  personas at once.
-
 ================================================================================
 EDUCATION
 ================================================================================
@@ -80,25 +72,20 @@ EDUCATION
 ================================================================================
 SKILLS
 ================================================================================
-AI & Developer Tooling
-  Applied AI: OpenAI API, TensorFlow.js, ONNX Runtime Web
-  Browser Delivery: Chrome Extension (Manifest V3)
-  Reproducible Environment: Nix, nix-darwin, home-manager
-  Terminal & Editor: WezTerm, Neovim
-  Agentic Development: Claude Code, Codex, OpenCode, Pi, Grok, Cursor
-Data & Engineering
-  AI & ML: TensorFlow, Keras, LSTMs, OpenCV, XGBoost, MLflow
-  Engineering & Pipelines: Python (Expert), R, SQL, PostgreSQL, Snakemake, Conda, Docker, Git, dbt, Pydantic, Streamlit
-  Cloud: GCP, BigQuery, Vertex AI, Looker
-Bioinformatics & ML
-  Genomics: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools
-  Immunoinformatics: HLA Typing, MHC-I Prediction, OptiType, MHCflurry, Neoepitopes
-  Nanoscopy: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
-  Structural Biology: TCRdock, AlphaFold v2, Mol*
-Biotech Wet-Lab
-  Models: Cancer/Tumor, 3D Cell Culture, Neural Progenitors
-  Imaging: Super-Resolution, Confocal, Fluorescence
-  Assays: FISH, IF, qPCR, FACS
+Bioinformatics
+  Genomics: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
+  Bioinformatics Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
+  Immunoinformatics: HLA Typing, MHC-I Prediction, Neoepitopes
+  Quantitative Bioimaging: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
+AI/ML & Developer Tools
+  Machine Learning: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
+  Computational Modelling: MHCflurry, TCRdock, AlphaFold v2, Mol*
+  AI Agents: Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Kimi
+  Browser ML Delivery: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
+  Developer Environments: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
+Data & Cloud Engineering
+  Programming & Data: Python (Expert), R, SQL, dbt
+  Cloud & Analytics: GCP, BigQuery, Looker
 
 ================================================================================
 LANGUAGES
@@ -106,30 +93,27 @@ LANGUAGES
   German: native
   English: fluent
   Korean: native
-  French: basic
-  Italian: basic
   Latin: passive
 
 ================================================================================
 VOLUNTEER
 ================================================================================
+Sports
+  - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
+  - Coach, Badminton youth talent group & 2nd-grade elementary school, TSG 1889 Dossenheim e.V. (2017–2018)
+Environment
+  - Foodsharing e.V. (Operations Manager)
+  - Österreichisches Waldgarten-Institut
+  - Hofwaerts
+Music
+  - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
+  - Chorister, Vienna Cathedral Choir (Wiener Domchor)
+  - Chorister, Cappella Palatina (Heidelberg)
 Community
   - Jülicher Tafel e.V.
   - In via - Café Gemeinsam
   - Amnesty International
   - Florence-Nightingale-Krankenhaus
-Environment
-  - Foodsharing e.V. (Operations Manager)
-  - Österreichisches Waldgarten-Institut
-  - Hofwaerts
-Sports
-  - UBC Mannheim
-  - Sobell Badminton Club
-  - ASD Gymnase
-  - BSG Jülich 1963 e.V.
-  - WAT Simmering
-  - TSG 1889 Dossenheim e.V.
-  - HTV 1846 e.V.
 
 ================================================================================
 PUBLICATIONS
@@ -150,3 +134,5 @@ AWARDS & CERTIFICATIONS
 2018  “Most Patient-Centric Solution” Award - {Life Science} meets IT Hackathon, Mannheim
 2015  DAAD PROMOS Scholarship - DAAD
   Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery.
+2019  Coach C Competitive Sports Badminton - State-approved extra-professional training, Ostfildern-Ruit
+  Nov 2017 – Jan 2019.

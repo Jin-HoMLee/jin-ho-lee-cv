@@ -15,6 +15,7 @@ dev = [
     "pytest-cov>=5.0",
     "ruff>=0.7",
     "syrupy>=5.3.1",
+    "pypdf>=6.0",
 ]
 mcp = [
     "mcp[cli]>=1.12",

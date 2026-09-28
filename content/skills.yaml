@@ -1,104 +1,74 @@
-# Canonical skills baseline. Web data applies category variants to derive the
-# concise bridge and target-specific views; all non-web renderers keep this baseline.
+# Canonical, source-backed skills inventory. All four major sections render the
+# same full item lists in every version; a variant may drop a whole section only
+# when it is clearly off-target (e.g. ds-ml drops Experimental Research). Each
+# skill appears in one category only, so AI/ML and developer tools stay distinct
+# from data/cloud engineering.
 categories:
   - name:
-      en: "Bioinformatics & ML"
-      de: "Bioinformatik & ML"
+      en: "Bioinformatics"
+      de: "Bioinformatik"
     groups:
       - label: { en: "Genomics", de: "Genomik" }
-        items: ["NGS", "RNA-Seq", "WES", "SNV Calling", "Splice Analysis", "MapSplice", "HISAT2/STAR", "samtools/bcftools", "bedtools"]
+        items: ["NGS", "RNA-Seq", "WES", "SNV Calling", "Splice Analysis"]
+      - label: { en: "Bioinformatics Workflows", de: "Bioinformatik-Workflows" }
+        items: ["Snakemake", "MapSplice", "HISAT2/STAR", "samtools/bcftools", "bedtools", "OptiType"]
       - label: { en: "Immunoinformatics", de: "Immunoinformatik" }
-        items: ["HLA Typing", "MHC-I Prediction", "OptiType", "MHCflurry", "Neoepitopes"]
-      - label: { en: "Nanoscopy", de: "Nanoskopie" }
+        items: ["HLA Typing", "MHC-I Prediction", "Neoepitopes"]
+      - label: { en: "Quantitative Bioimaging", de: "Quantitative Biobildgebung" }
         items: ["Spatial Point-Pattern", "Cluster Analysis (DBSCAN)"]
-      - label: { en: "Structural Biology", de: "Strukturbiologie" }
-        items: ["TCRdock", "AlphaFold v2", "Mol*"]
-    variants:
-      bridge:
-        omit_groups: ["Structural Biology"]
-        group_items:
-          Genomics: ["NGS", "RNA-Seq", "WES", "SNV Calling"]
-          Immunoinformatics: ["HLA Typing", "MHC-I Prediction", "Neoepitopes"]
-      ds-ml:
-        omit_groups: ["Nanoscopy", "Structural Biology"]
-        group_items:
-          Genomics: ["NGS", "RNA-Seq", "Cancer Genomics"]
-          Immunoinformatics: ["HLA Typing", "Neoepitopes"]
 
   - name:
-      en: "Biotech Wet-Lab"
-      de: "Biotech Wet-Lab"
+      en: "AI/ML & Developer Tools"
+      de: "KI/ML & Entwicklerwerkzeuge"
+    groups:
+      - label: { en: "Machine Learning", de: "Maschinelles Lernen" }
+        items: ["TensorFlow", "Keras", "LSTMs", "OpenCV", "MLflow", "BigQueryML"]
+      - label: { en: "Computational Modelling", de: "Computergestützte Modellierung" }
+        items: ["MHCflurry", "TCRdock", "AlphaFold v2", "Mol*"]
+      - label: { en: "AI Agents", de: "KI-Agenten" }
+        items: ["Claude Code", "Codex", "OpenCode", "Pi", "Grok", "Cursor", "Kimi"]
+      - label: { en: "Browser ML Delivery", de: "Browser-ML-Auslieferung" }
+        items: ["TensorFlow.js", "ONNX Runtime Web", "Chrome Extension (Manifest V3)"]
+      - label: { en: "Developer Environments", de: "Entwicklungsumgebungen" }
+        items: ["Conda", "Docker", "Git", "Nix", "nix-darwin", "home-manager", "WezTerm", "Neovim"]
+
+  - name:
+      en: "Data & Cloud Engineering"
+      de: "Daten- & Cloud-Engineering"
+    groups:
+      - label: { en: "Programming & Data", de: "Programmierung & Daten" }
+        items: ["Python (Expert)", "R", "SQL", "dbt"]
+      - label: { en: "Cloud & Analytics", de: "Cloud & Analytik" }
+        items: ["GCP", "BigQuery", "Looker"]
+
+  - name:
+      en: "Experimental Research"
+      de: "Experimentelle Forschung"
     groups:
       - label: { en: "Models", de: "Modelle" }
-        items: ["Cancer/Tumor", "3D Cell Culture", "Neural Progenitors"]
+        items: ["3D Cell Culture", "Neural Progenitors"]
       - label: { en: "Imaging", de: "Bildgebung" }
-        items: ["Super-Resolution", "Confocal", "Fluorescence"]
-      - label: { en: "Assays", de: "Assays" }
-        items: ["FISH", "IF", "qPCR", "FACS"]
-  - name:
-      en: "Data & Engineering"
-      de: "Daten & Engineering"
-    groups:
-      - label: { en: "AI & ML", de: "KI & ML" }
-        items: ["TensorFlow", "Keras", "LSTMs", "OpenCV", "XGBoost", "MLflow"]
-      - label: { en: "Engineering & Pipelines", de: "Engineering & Pipelines" }
-        items: ["Python (Expert)", "R", "SQL", "PostgreSQL", "Snakemake", "Conda", "Docker", "Git", "dbt", "Pydantic", "Streamlit"]
-      - label: { en: "Cloud", de: "Cloud" }
-        items: ["GCP", "BigQuery", "Vertex AI", "Looker"]
-    variants:
-      bridge:
-        group_items:
-          "AI & ML": ["TensorFlow", "Keras", "XGBoost", "MLflow"]
-          "Engineering & Pipelines": ["Python (Expert)", "R", "SQL", "Snakemake", "Conda", "Docker", "Git"]
-          Cloud: ["GCP", "BigQuery", "Vertex AI"]
-      comp-bio:
-        omit_groups: ["AI & ML"]
-        group_items:
-          "Engineering & Pipelines": ["Python (Expert)", "Snakemake", "Conda", "Docker", "Git"]
-          Cloud: ["GCP", "BigQuery", "Vertex AI"]
-      ds-ml:
-        group_items:
-          "Engineering & Pipelines": ["Python (Expert)", "R", "SQL", "dbt", "Pydantic", "Streamlit", "Docker", "Git"]
-          Cloud: ["GCP", "BigQuery", "BigQueryML", "Vertex AI", "Looker"]
-
-  - name:
-      en: "AI & Developer Tooling"
-      de: "KI & Developer-Tooling"
-    groups:
-      - label: { en: "Applied AI", de: "Angewandte KI" }
-        items: ["OpenAI API", "TensorFlow.js", "ONNX Runtime Web"]
-      - label: { en: "Browser Delivery", de: "Browser-Auslieferung" }
-        items: ["Chrome Extension (Manifest V3)"]
-      - label: { en: "Reproducible Environment", de: "Reproduzierbare Umgebung" }
-        items: ["Nix", "nix-darwin", "home-manager"]
-      - label: { en: "Terminal & Editor", de: "Terminal & Editor" }
-        items: ["WezTerm", "Neovim"]
-      - label: { en: "Agentic Development", de: "Agentenbasierte Entwicklung" }
-        items: ["Claude Code", "Codex", "OpenCode", "Pi", "Grok", "Cursor"]
-    variants:
-      bridge:
-        omit_groups: ["Reproducible Environment", "Terminal & Editor", "Agentic Development"]
-      comp-bio:
-        omit_groups: ["Reproducible Environment", "Terminal & Editor", "Agentic Development"]
-      ds-ml:
-        omit_groups: ["Reproducible Environment", "Terminal & Editor"]
+        items: ["Super-Resolution", "Fluorescence"]
+      - label: { en: "Assays", de: "Analysemethoden" }
+        items: ["FISH", "qPCR", "FACS"]
+      - label: { en: "Research Domains", de: "Forschungsdomänen" }
+        items: ["DNA Damage & Repair", "Chromatin Architecture", "Alu Elements", "Extracellular Vesicles"]
 
 variants:
   bridge:
     category_order:
-      - "Bioinformatics & ML"
-      - "AI & Developer Tooling"
-      - "Biotech Wet-Lab"
-      - "Data & Engineering"
+      - "Bioinformatics"
+      - "AI/ML & Developer Tools"
+      - "Experimental Research"
+      - "Data & Cloud Engineering"
   comp-bio:
     category_order:
-      - "Bioinformatics & ML"
-      - "Biotech Wet-Lab"
-      - "AI & Developer Tooling"
-      - "Data & Engineering"
+      - "Bioinformatics"
+      - "AI/ML & Developer Tools"
+      - "Experimental Research"
+      - "Data & Cloud Engineering"
   ds-ml:
     category_order:
-      - "AI & Developer Tooling"
-      - "Data & Engineering"
-      - "Bioinformatics & ML"
-      - "Biotech Wet-Lab"
+      - "Bioinformatics"
+      - "AI/ML & Developer Tools"
+      - "Data & Cloud Engineering"

@@ -6,9 +6,9 @@ The website renders four positioning fields that vary per target:
   lead_paragraph   (profile intro)   <- profile.paragraphs[0]
   second_paragraph (profile intro)   <- profile.paragraphs[1]
 
-The variants JSON must carry these four text fields, a derived CodeHero stack,
-and a resolved Skills tree per target. The site uses the latter to swap the visible
-Skills section without reimplementing the content resolver in the browser. There are no
+The variants JSON must carry these four text fields. Skills are shared and full
+across bridge and comp-bio (identical), so only ds-ml — which drops the whole
+Experimental Research section — emits a `skills` override. There are no
 `selected_projects` values (the site groups projects by category and never
 consumes selected_projects). These tests assert positioning correctness, not
 merely structural validity.
@@ -24,7 +24,6 @@ from scripts.render_web_data import _extract_overrides, _hero_stack, render_web_
 
 TARGETS = ("comp-bio", "ds-ml")
 TEXT_OVERRIDE_KEYS = {"headline", "tagline", "lead_paragraph", "second_paragraph"}
-BASE_OVERRIDE_KEYS = TEXT_OVERRIDE_KEYS | {"skills"}
 
 
 @pytest.fixture(scope="module")
@@ -55,20 +54,20 @@ def test_variants_have_all_positioning_fields(rendered):
     Regression guard: the original extractor read top-level keys and emitted only
     `selected_projects`, silently dropping every rendered positioning field.
     """
+    expected_keys = {
+        "comp-bio": TEXT_OVERRIDE_KEYS | {"experience"},
+        "ds-ml": TEXT_OVERRIDE_KEYS | {"skills", "experience"},
+    }
     for lang in ("en", "de"):
         for target in TARGETS:
             overrides = rendered[lang]["variants"][target]
-            expected_keys = BASE_OVERRIDE_KEYS | ({"hero_stack"} if target == "comp-bio" else set())
-            assert set(overrides) == expected_keys, (
-                f"{lang}/{target}: keys {set(overrides)} != {expected_keys}"
+            assert set(overrides) == expected_keys[target], (
+                f"{lang}/{target}: keys {set(overrides)} != {expected_keys[target]}"
             )
             for key in TEXT_OVERRIDE_KEYS:
                 assert isinstance(overrides[key], str) and overrides[key].strip(), (
                     f"{lang}/{target}.{key} must be a non-empty string"
                 )
-            if "hero_stack" in overrides:
-                assert overrides["hero_stack"]
-                assert all(isinstance(item, str) and item for item in overrides["hero_stack"])
 
 
 def test_hero_stack_uses_data_engineering_leads(rendered):
@@ -76,21 +75,17 @@ def test_hero_stack_uses_data_engineering_leads(rendered):
     for lang in ("en", "de"):
         assert _hero_stack(rendered[lang]["bridge"]["skills"]) == expected
         assert _hero_stack(rendered[lang]["variants"]["ds-ml"]["skills"]) == expected
-        assert rendered[lang]["variants"]["comp-bio"]["hero_stack"] == [
-            "NGS",
-            "Python (Expert)",
-            "GCP",
-        ]
 
 
-def test_variants_carry_resolved_complementary_skills(rendered):
+def test_variants_carry_resolved_skills(rendered):
     for lang in ("en", "de"):
         bridge = rendered[lang]["bridge"]["skills"]
-        for target in TARGETS:
-            skills = rendered[lang]["variants"][target]["skills"]
-            assert skills != bridge
-            assert skills["categories"]
-            assert all(category["groups"] for category in skills["categories"])
+        # comp-bio shares the full bridge skills tree (no override emitted)
+        assert "skills" not in rendered[lang]["variants"]["comp-bio"]
+        ds_ml = rendered[lang]["variants"]["ds-ml"]["skills"]
+        assert ds_ml != bridge
+        assert ds_ml["categories"]
+        assert all(category["groups"] for category in ds_ml["categories"])
 
         def items(skills):
             return {
@@ -100,12 +95,8 @@ def test_variants_carry_resolved_complementary_skills(rendered):
                 for item in group["items"]
             }
 
-        comp_bio = rendered[lang]["variants"]["comp-bio"]["skills"]
-        ds_ml = rendered[lang]["variants"]["ds-ml"]["skills"]
-        assert "TCRdock" in items(comp_bio)
-        assert "TCRdock" not in items(ds_ml)
-        assert "LSTMs" in items(ds_ml)
-        assert "Claude Code" in items(ds_ml)
+        assert {"LSTMs", "Claude Code", "TCRdock", "Kimi"} <= items(ds_ml)
+        assert {"FISH", "qPCR", "Super-Resolution"}.isdisjoint(items(ds_ml))
 
 
 def test_variants_no_selected_projects(rendered):
@@ -133,7 +124,9 @@ def test_variants_differ_from_bridge(rendered):
                 assert overrides[key] != bridge_vals[key], (
                     f"{lang}/{target}.{key} == bridge value; override is a no-op"
                 )
-            assert overrides["skills"] != bridge["skills"]
+        # only ds-ml carries a skills override; comp-bio shares the full tree
+        assert rendered[lang]["variants"]["ds-ml"]["skills"] != bridge["skills"]
+        assert "skills" not in rendered[lang]["variants"]["comp-bio"]
 
 
 def test_variants_en_de_parity(rendered):

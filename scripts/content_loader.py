@@ -72,8 +72,9 @@ def _resolve_skills_target(skills: dict, target: str, *, web_projection: bool = 
     A root target variant may order categories by their stable English names.
     Category variants can then omit a category, omit selected groups, or replace a
     group's item list with a concise or expanded audience-specific list. Category
-    ordering applies to every renderer; the omit/group projections are web-only so
-    non-web target artifacts retain the comprehensive canonical Skills baseline.
+    ordering applies to every renderer; the omit/group projections are concise
+    target views used by both the website and the application PDFs. Renderers that
+    need the comprehensive canonical baseline pass ``web_projection=False``.
     """
     result = copy.deepcopy(skills)
     root_variants = result.pop("variants", {})
@@ -89,12 +90,9 @@ def _resolve_skills_target(skills: dict, target: str, *, web_projection: bool = 
         if duplicates:
             raise ValueError(f"duplicate Skills category name(s): {duplicates}")
         by_name = {category["name"]["en"]: category for category in source_categories}
-        ordered_names = set(category_order)
-        source_categories = [by_name[name] for name in category_order if name in by_name] + [
-            category
-            for category in source_categories
-            if category["name"]["en"] not in ordered_names
-        ]
+        # category_order is authoritative: it both orders and selects the sections.
+        # A category omitted from the list is dropped for that target.
+        source_categories = [by_name[name] for name in category_order if name in by_name]
 
     categories = []
     for category in source_categories:
@@ -123,6 +121,43 @@ def _resolve_skills_target(skills: dict, target: str, *, web_projection: bool = 
 def _select_project_ids(selected_map: dict, target: str) -> list[str]:
     """Return the project-id order for `target`, falling back to the bridge order."""
     return selected_map.get(target, selected_map["bridge"])
+
+
+# Experience content is identical across targets; only the ORDER of bullets
+# within each object varies to lead that version's focus (steer 023).
+_EXPERIENCE_BULLET_ORDER = {
+    "bridge": {
+        "independent": (0, 1, 2),
+        "cintellic": (0, 1, 2),
+        "neuefische": (0, 1),
+        "research": (0, 1, 2),
+    },
+    "comp-bio": {
+        "independent": (2, 1, 0),
+        "cintellic": (0, 1, 2),
+        "neuefische": (0, 1),
+        "research": (0, 1, 2),
+    },
+    "ds-ml": {
+        "independent": (0, 1, 2),
+        "cintellic": (1, 0, 2),
+        "neuefische": (1, 0),
+        "research": (0, 1, 2),
+    },
+}
+
+
+def _resolve_experience_target(experience: list[dict], target: str) -> list[dict]:
+    """Reorder each role's bullets to lead `target` focus; content stays identical."""
+    order = _EXPERIENCE_BULLET_ORDER.get(target, _EXPERIENCE_BULLET_ORDER["bridge"])
+    result = copy.deepcopy(experience)
+    for entry in result:
+        indices = order.get(entry["id"])
+        if indices is not None:
+            entry["bullets"] = [
+                entry["bullets"][index] for index in indices if index < len(entry["bullets"])
+            ]
+    return result
 
 
 def _load_yaml(path: Path) -> Any:
@@ -163,7 +198,8 @@ def load_content(
 
     If private_path is provided and the file exists, its contents are merged into
     content["personal"]. When web_projection is true, the Skills tree uses the
-    concise web bridge or target-specific projection.
+    concise target-specific projection (used by the website and application PDFs);
+    the canonical comprehensive baseline is kept otherwise.
     """
     if target not in TARGETS:
         raise ValueError(f"unknown target {target!r}; expected one of {TARGETS}")
@@ -193,7 +229,9 @@ def load_content(
             web_projection=web_projection,
         ),
         "education": _load_yaml(content_dir / "education.yaml"),
-        "experience": _load_yaml(content_dir / "experience.yaml"),
+        "experience": _resolve_experience_target(
+            _load_yaml(content_dir / "experience.yaml"), target
+        ),
         "projects": projects,
         "selected_projects": selected_projects,
         "languages": _load_yaml(content_dir / "languages.yaml"),

@@ -211,7 +211,11 @@ def _validate_skills_variant_references(content_dir: Path) -> list[FileError]:
 
 
 def _validate_skills_category_orders(content_dir: Path) -> list[FileError]:
-    """Reject Skills category orders with unknown, duplicate, or missing names."""
+    """Reject Skills category orders with unknown or duplicate names.
+
+    Omitting a category name is intentional: it drops that whole section for the
+    target (e.g. ds-ml drops Experimental Research).
+    """
     path = content_dir / "skills.yaml"
     if not path.exists():
         return []
@@ -242,7 +246,6 @@ def _validate_skills_category_orders(content_dir: Path) -> list[FileError]:
         names_in_order = [name for name in order if isinstance(name, str)]
         duplicate = sorted({name for name in names_in_order if names_in_order.count(name) > 1})
         unknown = sorted(name for name in names_in_order if name not in known)
-        missing = sorted(known - set(names_in_order))
         if duplicate:
             errors.append(
                 FileError(path, f"variant {target!r} has duplicate category name(s): {duplicate}")
@@ -253,8 +256,6 @@ def _validate_skills_category_orders(content_dir: Path) -> list[FileError]:
                     path, f"variant {target!r} references unknown category name(s): {unknown}"
                 )
             )
-        if missing:
-            errors.append(FileError(path, f"variant {target!r} omits category name(s): {missing}"))
     return errors
 
 

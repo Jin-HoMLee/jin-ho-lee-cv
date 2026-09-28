@@ -52,8 +52,8 @@ highlight_stats:
 variants:
   comp-bio:
     headline:
-      en: "Computational Biology · Cancer Genomics"
-      de: "Computational Biology · Krebsgenomik"
+      en: "Bioinformatics · Cancer Genomics"
+      de: "Bioinformatik · Krebsgenomik"
   ds-ml:
     headline:
       en: "Data Science · Machine Learning"

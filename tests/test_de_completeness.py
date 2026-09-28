@@ -113,25 +113,17 @@ _INVARIANT_PATH_SUBSTRINGS = (
 # neighbouring translatable fields.
 #
 # Rationale for each entry:
-#   Skill category / group labels "Biotech Wet-Lab", "Assays", "Engineering & Pipelines",
-#       "Cloud", "Terminal & Editor" adopted verbatim in German; de: is explicitly provided
-#       with the same value.
 #   Experience / project .role paths where the English job title IS the German title
 #       (e.g. "Data Science Trainee, Associate & Coach") — English term used in DE.
 #       These are pin-pointed by path so the test still catches regressions on roles
 #       that DO have a German translation (e.g. experience[1].role "Consultant" → "Berater").
 _INVARIANT_EXACT = frozenset(
     {
-        # Skill category / group labels — English tech terms used verbatim in German
-        ".skills.categories[2].name",  # "Biotech Wet-Lab"
-        ".skills.categories[2].groups[2].label",  # "Assays"
-        ".skills.categories[3].groups[1].label",  # "Engineering & Pipelines"
-        ".skills.categories[3].groups[2].label",  # "Cloud"
-        ".skills.categories[1].groups[3].label",  # "Terminal & Editor"
         # Experience roles — English job-title strings used verbatim in German
         ".experience[2].role",  # "Data Science Trainee, Associate & Coach"
         # Project roles — English job-title strings used verbatim in German
         ".projects.C1.role",  # "Lead Business Functional Analyst (Cintellic GmbH)"
+        ".selected_projects[0].role",  # C1 is first in the bridge project selection
         ".projects.C2.role",  # "Lead Business Functional Analyst (Cintellic GmbH)"
         ".projects.D3.role",  # "Data Science Coach (neuefische GmbH)"
         # Certification — official credential name, kept in English in both languages

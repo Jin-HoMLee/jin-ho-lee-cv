@@ -3,18 +3,21 @@
     name: "Independent / Self-Directed"
     url: null
   role:
-    en: "ML/AI Engineer & Open-Source Developer"
-    de: "ML/AI-Engineer & Open-Source-Entwickler"
+    en: "Independent Bioinformatics & ML/AI Engineer"
+    de: "Unabhängiger Bioinformatik- & ML/AI-Engineer"
   period:
     start: "2025-08"
     end: null
   bullets:
-    - en: "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — and shipped open-source Claude Code tooling."
-      de: "Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — sowie Veröffentlichung von Open-Source-Tooling für Claude Code."
+    - en: "Agentic AI: Built LLM agent systems with tool use, routing, multi-agent orchestration, and persistent memory."
+      de: "Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher."
       refs: [D4]
-    - en: "Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web)."
-      de: "Computer Vision: Entwicklung von badminton-vision, einer vollständig client-seitigen Chrome-Erweiterung zur Badminton-Spielanalyse (TensorFlow.js, ONNX Runtime Web)."
+    - en: "Computer Vision: Building an on-device Chrome extension for badminton analysis (TensorFlow.js, ONNX Runtime Web)."
+      de: "Computer Vision: Client-seitige Chrome-Erweiterung zur Badminton-Analyse (TensorFlow.js, ONNX Runtime Web)."
       refs: [D2]
+    - en: "Bioinformatics: Rebuilt the 2015 SNU computational prototype in Snakemake to predict splice neoepitope candidates."
+      de: "Bioinformatik: SNU-Prototyp von 2015 in Snakemake für vorhergesagte Splice-Neoepitop-Kandidaten neu aufgebaut."
+      refs: [L5]
 
 - id: cintellic
   org:
@@ -27,14 +30,14 @@
     start: "2024-05"
     end: "2025-07"
   bullets:
-    - en: "Client: International bank — architected the migration of 1,000+ analytical processes to Google Cloud."
-      de: "Kunde: Internationale Bank — Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud."
+    - en: "Cloud Migration: Architected the move of 1,000+ analytical processes for an international bank to GCP."
+      de: "Cloud-Migration: Architektur der GCP-Migration von 1.000+ analytischen Prozessen einer internationalen Bank."
       refs: [C2]
-    - en: "AI in Production: Developed BigQueryML models for anti-financial crime & KYC."
-      de: "KI in Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC."
+    - en: "Production ML: Developed BigQueryML models for anti-financial crime and KYC."
+      de: "Produktions-ML: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC."
       refs: [C1]
-    - en: "Stakeholder Lead: Bridged technical data engineering with business requirements for high-stakes banking."
-      de: "Stakeholder Lead: Brückenfunktion zwischen technischem Data Engineering und Fachanforderungen im hochregulierten Bankensektor."
+    - en: "Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery."
+      de: "Stakeholder Lead: Übersetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen."
       refs: [C1, C2]
 
 - id: neuefische
@@ -48,11 +51,11 @@
     start: "2023-02"
     end: "2024-04"
   bullets:
-    - en: "Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles."
-      de: "Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen."
+    - en: "Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects."
+      de: "Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten."
       refs: [D3]
-    - en: "ML Development: Independently engineered a Real-Time ASL Recognition prototype using LSTMs, MediaPipe, and TensorFlow."
-      de: "ML-Entwicklung: Eigenständige Entwicklung eines Echtzeit-ASL-Erkennungsprototyps mit LSTMs, MediaPipe und TensorFlow."
+    - en: "ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow."
+      de: "ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt."
       refs: [D1]
 
 - id: research
@@ -66,12 +69,12 @@
     start: "2014-04"
     end: "2022-07"
   bullets:
-    - en: "Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer-patient NGS and RNA-Seq splice-junction data; validated SNV calls against gold-standard sequencing in clinical colorectal-cancer cohorts (NCT/DKFZ)."
-      de: "Genomik & Immuntherapie: Entwicklung von in-silico-Pipelines zur HLA-Typisierung und Neoantigen-Discovery aus NGS- und RNA-Seq-Splice-Junction-Daten von Krebspatienten; Validierung von SNV-Calls gegen Goldstandard-Sequenzierung in klinischen Kolorektal-Kohorten (NCT/DKFZ)."
+    - en: "Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing."
+      de: "Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung."
       refs: [L1, L2]
-    - en: "Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects — from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin."
-      de: "Biophysik & Bildgebung: End-to-End-Leitung von Super-Resolution-Mikroskopie-Projekten — von Wet-Lab-Forschung bis zur räumlichen Punktmuster-Analyse (MATLAB/Python) zur Untersuchung von Chromatin."
+    - en: "Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python)."
+      de: "Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python)."
       refs: [L3]
-    - en: "Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles."
-      de: "Neurobiologie: Untersuchung von Strahlungseffekten auf die neuronale Vorläuferdifferenzierung mit 3D-Zellmodellen sowie der Rolle extrazellulärer Vesikel."
+    - en: "Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles."
+      de: "Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht."
       refs: [L4]

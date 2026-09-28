@@ -7,15 +7,16 @@ interface Props {
   projects: Record<string, Project>;
   labels: Labels;
   lang: Lang;
+  variants?: Record<string, { order?: string[] }>;
 }
 
-const { experience, labels, lang } = Astro.props;
+const { experience, labels, lang, variants = {} } = Astro.props;
 ---
-<section id="experience" class="py-6">
+<section id="experience" class="py-6" data-cv-experience>
   <h2 class="eyebrow mb-4">
     {labels.sections.experience}
   </h2>
-  <div class="space-y-6">
+  <div class="space-y-6" data-cv-experience-list>
     {experience.map((exp) => (
       <article id={`exp-${exp.id}`} class="border-l-2 border-[var(--accent)] pl-4">
         <header class="mb-2 flex flex-wrap items-baseline justify-between gap-2">
@@ -49,3 +50,36 @@ const { experience, labels, lang } = Astro.props;
     ))}
   </div>
 </section>
+<script is:inline define:vars={{ experience, variants }}>
+  // Experience content is identical across targets; only the bullet order within
+  // each object changes. Reorder the already-rendered article blocks to match the
+  // active target (bridge is the canonical order), mirroring the PDF variant order.
+  const root = document.querySelector("[data-cv-experience]");
+  const list = root?.querySelector("[data-cv-experience-list]");
+  if (!root || !list) return;
+
+  const VALID_TARGETS = new Set(["comp-bio", "ds-ml"]);
+  const canonicalOrder = experience.map((e) => e.id);
+
+  function orderFor(target) {
+    const order = variants[target]?.order;
+    return Array.isArray(order) && order.length ? order : canonicalOrder;
+  }
+
+  function apply(target) {
+    const order = orderFor(target);
+    const articles = Array.from(list.querySelectorAll("article"));
+    const byId = new Map(articles.map((article) => [article.id.replace("exp-", ""), article]));
+    const fragment = document.createDocumentFragment();
+    for (const id of order) {
+      const article = byId.get(id);
+      if (article) fragment.appendChild(article);
+    }
+    list.appendChild(fragment);
+  }
+
+  window.addEventListener("cv-target-change", (event) => {
+    const target = event.detail && event.detail.target;
+    if (target && (target === "bridge" || VALID_TARGETS.has(target))) apply(target);
+  });
+</script>

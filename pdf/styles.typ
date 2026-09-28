@@ -22,24 +22,28 @@
 
 #let page-margin = 14mm
 
-// Section heading: uppercase (upper()), letterspaced, accent color.
-#let section-heading(title) = {
-  v(space-section)
-  text(
+// Semantic section heading. Typst uses these heading nodes to generate the PDF
+// outline; visible tracking is deliberately zero so ATS extractors see whole words.
+#let section-heading(title, destination) = [
+  #v(space-section)
+  #heading(level: 1, outlined: true, bookmarked: true)[#text(
     size: size-section,
     weight: 600,
     fill: accent,
-    tracking: 1pt,
-  )[#upper(title)]
-  v(space-paragraph)
-}
-
-// Inline reference chip e.g. "L1" appended to an experience bullet.
-#let ref-chip(id) = box(
-  fill: accent.lighten(85%),
-  inset: (x: 3pt, y: 1pt),
-  outset: (y: 1pt),
-  radius: 2pt,
-)[
-  #text(size: 7pt, weight: 600, fill: accent, tracking: 0.5pt)[#upper(id)]
+  )[#upper(title)]]#label(destination)
+  #v(space-paragraph)
 ]
+
+// Inline project reference. Its visible text is complete without the link;
+// the annotation only adds a route to the corresponding web detail page.
+#let ref-chip(id, url: none) = {
+  let chip = box(
+    fill: accent.lighten(85%),
+    inset: (x: 3pt, y: 1pt),
+    outset: (y: 1pt),
+    radius: 2pt,
+  )[
+    #text(size: 7pt, weight: 600, fill: accent)[#upper(id)]
+  ]
+  if url == none { chip } else { link(url, chip) }
+}

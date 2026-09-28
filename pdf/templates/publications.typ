@@ -1,71 +1,56 @@
 #import "../styles.typ": *
 
-// Publications section. Reads everything from the prepared `data` object
-// (mirrors `sidebar(data, …)`). `data.publications_mode` is "full" (comp-bio →
-// verbatim per-paper list) or "aggregate" (bridge / ds-ml → one-line summary +
-// ORCID pointer). Depth is resolved in pdf/build.py.
-#let publications(data) = {
-  section-heading(data.publications_heading)
-
-  if data.publications_mode == "aggregate" {
-    // Derived summary sentence (counts + span filled in Python) + ORCID pointer.
-    [#data.publications_summary]
-    let orcid = data.personal.links.orcid
-    if orcid != none {
-      linebreak()
-      let shown = orcid.replace("https://", "").replace("http://", "")
-      text(size: size-small, fill: muted)[#data.publications_pointer #link(orcid)[#text(fill: accent)[#shown]]]
+#let _publication-links(data) = {
+  text(size: size-small, fill: muted)[
+    #data.publications_pointer
+    #h(3pt)
+    #for (i, item) in data.publication_links.enumerate() {
+      if i > 0 { [ · ] }
+      link(item.url)[#text(fill: accent)[#item.label]]
     }
-  } else {
-    // Full verbatim list (comp-bio) — the #43 per-paper rendering.
+  ]
+}
+
+// Application-PDF publication projection. Computational Biology shows three
+// representative research records; other targets show only the derived total.
+// The complete canonical bibliography remains available through all three links.
+#let publications(data) = {
+  section-heading(data.publications_heading, "section-publications")
+
+  [#data.publications_summary]
+  v(space-paragraph)
+
+  if data.publications_mode == "selected" {
     let family = data.personal.name.family
     for (i, p) in data.publications.enumerate() {
-      // Keep the applied/off-domain record visually outside the research list.
-      if i == 0 or p.category != data.publications.at(i - 1).category {
-        let category-label = if p.category == "applied" {
-          data.labels.publications.applied_label
-        } else {
-          data.labels.publications.research_label
+      block(breakable: false, {
+        for (j, author) in p.authors.enumerate() {
+          if j > 0 { [, ] }
+          if author == "others" {
+            emph[et al.]
+          } else if author.starts-with(family + ",") {
+            text(weight: 600)[#author]
+          } else {
+            author
+          }
         }
-        v(2pt)
-        text(size: size-small, weight: 600, fill: accent)[#category-label]
-        v(1pt)
-      }
-
-      // Line 1 — authors · year. The candidate's surname (text before the comma)
-      // is bolded; the BibTeX "others" token renders as italic "et al.".
-      for (j, a) in p.authors.enumerate() {
-        if j > 0 { ", " }
-        if a == "others" {
-          emph[et al.]
-        } else if a.starts-with(family + ",") {
-          text(weight: 600)[#a]
-        } else {
-          a
-        }
-      }
-      if p.authors.len() > 0 { [ · ] }
-      [#str(p.year)]
-      linebreak()
-
-      // Line 2 — title. DOI link in accent colour when present; plain otherwise.
-      if p.doi != none {
-        link("https://doi.org/" + p.doi)[#text(fill: accent)[#p.title]]
-      } else {
-        p.title
-      }
-
-      // Line 3 — venue (muted, small), when present.
-      if p.venue != none {
+        if p.authors.len() > 0 { [ · ] }
+        [#str(p.year)]
         linebreak()
-        text(size: size-small, fill: muted)[#p.venue]
-      }
-
-      if i + 1 < data.publications.len() {
-        // The full comp-bio list is intentionally compact so its final page is
-        // not left with avoidable whitespace after the applied record.
-        v(1pt)
-      }
+        if p.doi != none {
+          link("https://doi.org/" + p.doi)[#text(fill: accent)[#p.title]]
+        } else {
+          p.title
+        }
+        if p.venue != none {
+          [ · ]
+          text(size: size-small, fill: muted)[#p.venue]
+        }
+      })
+      if i + 1 < data.publications.len() { v(space-paragraph) }
     }
+    v(space-paragraph)
   }
+
+  _publication-links(data)
 }
