@@ -11,19 +11,34 @@
   }
 ])
 
+#let _skill-column(categories, gap) = block(breakable: false, {
+  for (i, category) in categories.enumerate() {
+    if i > 0 { v(gap) }
+    _skill-category(category)
+  }
+})
+
 #let skills(skills-data, labels) = {
   section-heading(labels.sections.skills, "section-skills")
-  // Source order is row-major: Bioinformatics / AI-ML on row one,
-  // Experimental / Data-Cloud on row two. When Experimental is omitted, an
-  // empty visual cell keeps Data-Cloud below AI-ML without hiding content.
-  let cells = skills-data.categories.map(_skill-category)
-  if cells.len() == 3 {
-    cells = (cells.at(0), cells.at(1), [], cells.at(2))
+  // Two independent text columns, not row-aligned cells. The compact left gap
+  // joins Bioinformatics to Experimental Research; the roomier right gap gives
+  // AI/ML and Data/Cloud equivalent visual weight and balances column heights.
+  let categories = skills-data.categories
+  let left = if categories.len() == 4 {
+    (categories.at(0), categories.at(2))
+  } else {
+    (categories.at(0),)
+  }
+  let right = if categories.len() == 4 {
+    (categories.at(1), categories.at(3))
+  } else {
+    (categories.at(1), categories.at(2))
   }
   grid(
     columns: (1fr, 1fr),
-    gutter: (column-gutter, space-section),
-    ..cells,
+    gutter: column-gutter,
+    _skill-column(left, space-paragraph),
+    _skill-column(right, space-section + 3pt),
   )
 }
 

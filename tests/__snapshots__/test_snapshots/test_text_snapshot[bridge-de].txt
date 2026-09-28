@@ -24,23 +24,23 @@ von Drittmitteln und Betreuung von 10+ Studierenden.
 BERUFSERFAHRUNG
 ================================================================================
 Unabhängiger Bioinformatik- & ML/AI-Engineer - Independent / Self-Directed    (2025-08 bis heute)
-  - Agenten-KI: Entwicklung von End-to-End-LLM-Agentensystemen — Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistenter Speicher — bei gleichzeitiger Entwicklung von Open-Source-Tooling für Claude Code.
-  - Computer Vision: Entwicklung von badminton-vision, einer vollständig client-seitigen Chrome-Erweiterung zur Badminton-Spielanalyse (TensorFlow.js, ONNX Runtime Web).
-  - Bioinformatik: Modernisierung des computergestützten SNU-Proof-of-Concepts von 2015 zu einem reproduzierbaren Snakemake-Workflow für vorhergesagte splice-abgeleitete Neoepitop-Kandidaten, mit Conda-Umgebungen pro Rule und lokaler/GCP-Ausführung.
+  - Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher.
+  - Computer Vision: Client-seitige Chrome-Erweiterung zur Badminton-Analyse (TensorFlow.js, ONNX Runtime Web).
+  - Bioinformatik: SNU-Prototyp von 2015 in Snakemake für vorhergesagte Splice-Neoepitop-Kandidaten neu aufgebaut.
 
 Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
-  - Kunde: Internationale Bank — Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud.
-  - KI in Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC.
-  - Stakeholder Lead: Brückenfunktion zwischen technischem Data Engineering und Fachanforderungen im hochregulierten Bankensektor.
+  - Cloud-Migration: Architektur der GCP-Migration von 1.000+ analytischen Prozessen einer internationalen Bank.
+  - Produktions-ML: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.
+  - Stakeholder Lead: Übersetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.
 
 Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-04)
-  - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten und technischen Präsentationen.
-  - ML-Entwicklung: Eigenständige Entwicklung eines Echtzeit-ASL-Erkennungsprototyps mit LSTMs, MediaPipe und TensorFlow.
+  - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.
+  - ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt.
 
 Doktorand & Postgraduierter Forscher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
-  - Genomik & Immuntherapie: Entwicklung von in-silico-Pipelines zur HLA-Typisierung und Neoantigen-Discovery aus NGS- und RNA-Seq-Splice-Junction-Daten von Krebspatienten; Validierung von SNV-Calls gegen Goldstandard-Sequenzierung in klinischen Kolorektal-Kohorten (NCT/DKFZ).
-  - Biophysik & Bildgebung: End-to-End-Leitung von Super-Resolution-Mikroskopie-Projekten — von Wet-Lab-Forschung bis zur räumlichen Punktmuster-Analyse (MATLAB/Python) zur Untersuchung von Chromatin.
-  - Neurobiologie: Untersuchung von Strahlungseffekten auf die neuronale Vorläuferdifferenzierung mit 3D-Zellmodellen sowie der Rolle extrazellulärer Vesikel.
+  - Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung.
+  - Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).
+  - Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.
 
 ================================================================================
 AUSGEWÄHLTE PROJEKTE

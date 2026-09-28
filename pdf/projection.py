@@ -17,11 +17,11 @@ REPRESENTATIVE_PUBLICATION_KEYS = (
 
 _EXPERIENCE_BULLETS = {
     "bridge": {
-        # General is the balanced superset for independent work. Employed roles
-        # keep role/impact here; their distinctive methods live in Projects.
+        # General is the balanced superset: each employed role keeps concise
+        # impact evidence, while Projects carries the fuller proof/outcome.
         "independent": (0, 1, 2),
-        "cintellic": (0,),
-        "neuefische": (0,),
+        "cintellic": (0, 1),
+        "neuefische": (0, 1),
         "research": (2,),
     },
     "comp-bio": {

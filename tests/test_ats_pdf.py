@@ -54,14 +54,14 @@ TARGET_KEYWORDS = {
 SKILL_CATEGORY_LABELS = {
     "en": [
         "Bioinformatics",
-        "AI/ML & Developer Tools",
         "Experimental Research",
+        "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
     ],
     "de": [
         "Bioinformatik",
-        "KI/ML & Entwicklerwerkzeuge",
         "Experimentelle Forschung",
+        "KI/ML & Entwicklerwerkzeuge",
         "Daten- & Cloud-Engineering",
     ],
 }
@@ -182,7 +182,7 @@ def test_all_variants_are_two_page_flat_text_in_one_order(built_pdf):
         skill_region = text.split(headings[1], 1)[1].split(headings[2], 1)[0]
         category_labels = SKILL_CATEGORY_LABELS[lang]
         if target == "ds-ml":
-            category_labels = [*category_labels[:2], category_labels[3]]
+            category_labels = [category_labels[0], *category_labels[2:]]
         positions = [skill_region.index(label) for label in category_labels]
         assert positions == sorted(positions), (
             f"{extractor}: wrong skills reading order: {positions}"

@@ -43,7 +43,7 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
     assert "1,000+" in _entry(data, "cintellic")["bullets"][0]["en"]
     assert "100+" in _entry(data, "neuefische")["bullets"][0]["en"]
     assert len(_entry(data, "research")["bullets"]) == 2
-    assert "HLA Typing" in _entry(data, "research")["bullets"][0]["en"]
+    assert "HLA/neoantigen pipelines" in _entry(data, "research")["bullets"][0]["en"]
 
     skills = _skill_items(data)
     assert {"RNA-Seq", "HLA Typing", "MHCflurry", "Snakemake", "Docker"} <= skills
@@ -53,7 +53,7 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
 
 def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
     expected_bullets = {
-        "bridge": {"independent": 3, "cintellic": 1, "neuefische": 1, "research": 1},
+        "bridge": {"independent": 3, "cintellic": 2, "neuefische": 2, "research": 1},
         "comp-bio": {"independent": 1, "cintellic": 1, "neuefische": 1, "research": 2},
         "ds-ml": {"independent": 2, "cintellic": 3, "neuefische": 2, "research": 1},
     }
@@ -108,11 +108,21 @@ def test_general_profile_is_broad_and_balanced(content_dir):
     assert all(term not in tagline for term in ("hla", "neoantigen", "neoepitope"))
     independent = _entry(data, "independent")
     assert [bullet["refs"] for bullet in independent["bullets"]] == [["D4"], ["D2"], ["L5"]]
-    assert "badminton-vision" in independent["bullets"][1]["en"]
-    assert "2015 SNU computational proof of concept" in independent["bullets"][2]["en"]
-    assert "predicted splice-derived" in independent["bullets"][2]["en"]
+    assert "on-device Chrome extension" in independent["bullets"][1]["en"]
+    assert "2015 SNU computational prototype" in independent["bullets"][2]["en"]
+    assert "predict splice neoepitope candidates" in independent["bullets"][2]["en"]
+    assert [bullet["refs"] for bullet in _entry(data, "cintellic")["bullets"]] == [
+        ["C2"],
+        ["C1"],
+    ]
+    assert [bullet["refs"] for bullet in _entry(data, "neuefische")["bullets"]] == [
+        ["D3"],
+        ["D1"],
+    ]
     assert [project["id"] for project in data["selected_projects"]] == ["C1", "D1", "L3"]
-    assert "Neural Progenitor Differentiation" in _entry(data, "research")["bullets"][0]["en"]
+    assert (
+        "neural progenitor differentiation" in _entry(data, "research")["bullets"][0]["en"].lower()
+    )
 
 
 def test_pdf_skills_use_non_overlapping_source_backed_groups(content_dir):

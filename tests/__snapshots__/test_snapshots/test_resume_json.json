@@ -47,9 +47,9 @@
       "position": "Independent Bioinformatics & ML/AI Engineer",
       "startDate": "2025-08-01",
       "highlights": [
-        "Agentic AI: Built end-to-end LLM agent systems — tool use, planning, routing, multi-agent orchestration, and persistent memory — while developing open-source Claude Code tooling.",
-        "Computer Vision: Building badminton-vision, a fully on-device Chrome extension for badminton match analysis (TensorFlow.js, ONNX Runtime Web).",
-        "Bioinformatics: Modernised the 2015 SNU computational proof of concept into a reproducible Snakemake workflow for predicted splice-derived neoepitope candidates, with per-rule Conda environments and local/GCP execution."
+        "Agentic AI: Built LLM agent systems with tool use, routing, multi-agent orchestration, and persistent memory.",
+        "Computer Vision: Building an on-device Chrome extension for badminton analysis (TensorFlow.js, ONNX Runtime Web).",
+        "Bioinformatics: Rebuilt the 2015 SNU computational prototype in Snakemake to predict splice neoepitope candidates."
       ]
     },
     {
@@ -58,9 +58,9 @@
       "startDate": "2024-05-01",
       "endDate": "2025-07-28",
       "highlights": [
-        "Client: International bank — architected the migration of 1,000+ analytical processes to Google Cloud.",
-        "AI in Production: Developed BigQueryML models for anti-financial crime & KYC.",
-        "Stakeholder Lead: Bridged technical data engineering with business requirements for high-stakes banking."
+        "Cloud Migration: Architected the move of 1,000+ analytical processes for an international bank to GCP.",
+        "Production ML: Developed BigQueryML models for anti-financial crime and KYC.",
+        "Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery."
       ]
     },
     {
@@ -69,8 +69,8 @@
       "startDate": "2023-02-01",
       "endDate": "2024-04-28",
       "highlights": [
-        "Coaching: Instructed 100+ specialists in Python, SQL, and ML lifecycles; supervised capstone projects and technical presentations.",
-        "ML Development: Independently engineered a Real-Time ASL Recognition prototype using LSTMs, MediaPipe, and TensorFlow."
+        "Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.",
+        "ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow."
       ]
     },
     {
@@ -79,9 +79,9 @@
       "startDate": "2014-04-01",
       "endDate": "2022-07-28",
       "highlights": [
-        "Genomics & Immunotherapy: Engineered in silico pipelines for HLA Typing and Neoantigen Discovery from cancer-patient NGS and RNA-Seq splice-junction data; validated SNV calls against gold-standard sequencing in clinical colorectal-cancer cohorts (NCT/DKFZ).",
-        "Biophysics & Imaging: Managed end-to-end Super-Resolution Microscopy projects — from wet-lab research to spatial point-pattern data analysis (MATLAB/Python) for studying chromatin.",
-        "Neurobiology: Investigated radiation effects on Neural Progenitor Differentiation using 3D cell models and the role of extracellular vesicles."
+        "Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.",
+        "Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).",
+        "Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles."
       ]
     }
   ],
