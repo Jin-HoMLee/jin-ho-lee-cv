@@ -271,23 +271,28 @@ def test_skills_sections_identical_and_ds_ml_drops_experimental(content_dir):
             for item in group["items"]
         }
 
-    full_order = [
-        "Bioinformatics",
+    assert names("bridge") == [
         "AI/ML & Developer Tools",
+        "Bioinformatics",
+        "Data & Cloud Engineering",
         "Experimental Research",
+    ]
+    assert names("comp-bio") == [
+        "Bioinformatics",
+        "Experimental Research",
+        "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
     ]
-    assert names("bridge") == full_order
-    assert names("comp-bio") == full_order
     # identical full item lists across bridge and comp-bio, web or not
+    # (section order differs per target; membership does not)
     assert items("bridge") == items("bridge", web_projection=True)
     assert items("comp-bio") == items("bridge")
     assert items("comp-bio", web_projection=True) == items("bridge")
     # ds-ml drops only the whole Experimental Research section
     assert names("ds-ml") == [
-        "Bioinformatics",
         "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
+        "Bioinformatics",
     ]
     ds = items("ds-ml")
     assert {
@@ -329,7 +334,18 @@ def test_comp_bio_keeps_full_ai_ml_section_identical_to_bridge(content_dir):
             load_content(content_dir, lang=lang, target="comp-bio", web_projection=True),
             lang=lang,
         )["skills"]
-        assert comp == bridge
+
+        # same skill items; category order is target-specific (bridge != comp-bio)
+        def items(skills):
+            return {
+                item
+                for category in skills["categories"]
+                for group in category["groups"]
+                for item in group["items"]
+            }
+
+        assert items(comp) == items(bridge)
+        assert [c["name"] for c in comp["categories"]] != [c["name"] for c in bridge["categories"]]
         ai = next(
             category
             for category in comp["categories"]
@@ -424,15 +440,26 @@ def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
     def names(data):
         return [category["name"] for category in data["skills"]["categories"]]
 
-    # bridge and comp-bio carry the full, identical four sections
+    # bridge and comp-bio carry the same four sections (order differs per target)
     assert all_items(bridge) == all_items(comp_bio)
-    assert names(bridge) == names(comp_bio)
+    assert names(bridge) == [
+        "AI/ML & Developer Tools",
+        "Bioinformatics",
+        "Data & Cloud Engineering",
+        "Experimental Research",
+    ]
+    assert names(comp_bio) == [
+        "Bioinformatics",
+        "Experimental Research",
+        "AI/ML & Developer Tools",
+        "Data & Cloud Engineering",
+    ]
     assert {"HLA Typing", "TCRdock", "Claude Code", "Nix", "Snakemake"} <= all_items(bridge)
     # ds-ml drops Experimental Research only; the other three sections stay full
     assert names(ds_ml) == [
-        "Bioinformatics",
         "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
+        "Bioinformatics",
     ]
     assert {"LSTMs", "TCRdock", "Claude Code", "Pi", "Grok", "Cursor", "Kimi"} <= all_items(ds_ml)
     assert {"FISH", "qPCR", "Super-Resolution"}.isdisjoint(all_items(ds_ml))

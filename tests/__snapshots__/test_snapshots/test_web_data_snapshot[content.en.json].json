@@ -62,47 +62,6 @@
   "skills": {
     "categories": [
       {
-        "name": "Bioinformatics",
-        "groups": [
-          {
-            "label": "Genomics",
-            "items": [
-              "NGS",
-              "RNA-Seq",
-              "WES",
-              "SNV Calling",
-              "Splice Analysis"
-            ]
-          },
-          {
-            "label": "Bioinformatics Workflows",
-            "items": [
-              "Snakemake",
-              "MapSplice",
-              "HISAT2/STAR",
-              "samtools/bcftools",
-              "bedtools",
-              "OptiType"
-            ]
-          },
-          {
-            "label": "Immunoinformatics",
-            "items": [
-              "HLA Typing",
-              "MHC-I Prediction",
-              "Neoepitopes"
-            ]
-          },
-          {
-            "label": "Quantitative Bioimaging",
-            "items": [
-              "Spatial Point-Pattern",
-              "Cluster Analysis (DBSCAN)"
-            ]
-          }
-        ]
-      },
-      {
         "name": "AI/ML & Developer Tools",
         "groups": [
           {
@@ -161,6 +120,69 @@
         ]
       },
       {
+        "name": "Bioinformatics",
+        "groups": [
+          {
+            "label": "Genomics",
+            "items": [
+              "NGS",
+              "RNA-Seq",
+              "WES",
+              "SNV Calling",
+              "Splice Analysis"
+            ]
+          },
+          {
+            "label": "Bioinformatics Workflows",
+            "items": [
+              "Snakemake",
+              "MapSplice",
+              "HISAT2/STAR",
+              "samtools/bcftools",
+              "bedtools",
+              "OptiType"
+            ]
+          },
+          {
+            "label": "Immunoinformatics",
+            "items": [
+              "HLA Typing",
+              "MHC-I Prediction",
+              "Neoepitopes"
+            ]
+          },
+          {
+            "label": "Quantitative Bioimaging",
+            "items": [
+              "Spatial Point-Pattern",
+              "Cluster Analysis (DBSCAN)"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Data & Cloud Engineering",
+        "groups": [
+          {
+            "label": "Programming & Data",
+            "items": [
+              "Python (Expert)",
+              "R",
+              "SQL",
+              "dbt"
+            ]
+          },
+          {
+            "label": "Cloud & Analytics",
+            "items": [
+              "GCP",
+              "BigQuery",
+              "Looker"
+            ]
+          }
+        ]
+      },
+      {
         "name": "Experimental Research",
         "groups": [
           {
@@ -192,28 +214,6 @@
               "Chromatin Architecture",
               "Alu Elements",
               "Extracellular Vesicles"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "Data & Cloud Engineering",
-        "groups": [
-          {
-            "label": "Programming & Data",
-            "items": [
-              "Python (Expert)",
-              "R",
-              "SQL",
-              "dbt"
-            ]
-          },
-          {
-            "label": "Cloud & Analytics",
-            "items": [
-              "GCP",
-              "BigQuery",
-              "Looker"
             ]
           }
         ]

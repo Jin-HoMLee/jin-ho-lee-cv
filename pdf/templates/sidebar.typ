@@ -20,23 +20,14 @@
 
 #let skills(skills-data, labels) = {
   section-heading(labels.sections.skills, "section-skills")
-  // Two independent text columns, not row-aligned cells. The compact left gap
-  // joins Bioinformatics to Experimental Research; the roomier right gap gives
-  // AI/ML and Data/Cloud equivalent visual weight and balances column heights.
+  // Two independent text columns, not row-aligned cells. Categories flow in
+  // category_order: left column takes the first half, right the rest, so a
+  // column-then-column text extract matches the target order (web stays
+  // aligned via the same category_order source).
   let categories = skills-data.categories
-  // bridge + comp-bio: left Bioinformatics above Experimental Research; right
-  // AI/ML above Data/Cloud. ds-ml (three sections): left AI/ML above Data/Cloud,
-  // right Bioinformatics — no blank cells, columns flow independently.
-  let left = if categories.len() == 4 {
-    (categories.at(0), categories.at(2))
-  } else {
-    (categories.at(1), categories.at(2))
-  }
-  let right = if categories.len() == 4 {
-    (categories.at(1), categories.at(3))
-  } else {
-    (categories.at(0),)
-  }
+  let split = calc.ceil(categories.len() / 2)
+  let left = categories.slice(0, split)
+  let right = categories.slice(split)
   grid(
     columns: (1fr, 1fr),
     gutter: column-gutter,

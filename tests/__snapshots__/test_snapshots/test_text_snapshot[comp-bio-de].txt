@@ -90,17 +90,17 @@ Bioinformatik
   Bioinformatik-Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
   Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitopes
   Quantitative Biobildgebung: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
+Experimentelle Forschung
+  Modelle: 3D Cell Culture, Neural Progenitors
+  Bildgebung: Super-Resolution, Fluorescence
+  Analysemethoden: FISH, qPCR, FACS
+  Forschungsdomänen: DNA Damage & Repair, Chromatin Architecture, Alu Elements, Extracellular Vesicles
 KI/ML & Entwicklerwerkzeuge
   Maschinelles Lernen: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
   Computergestützte Modellierung: MHCflurry, TCRdock, AlphaFold v2, Mol*
   KI-Agenten: Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Kimi
   Browser-ML-Auslieferung: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
   Entwicklungsumgebungen: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
-Experimentelle Forschung
-  Modelle: 3D Cell Culture, Neural Progenitors
-  Bildgebung: Super-Resolution, Fluorescence
-  Analysemethoden: FISH, qPCR, FACS
-  Forschungsdomänen: DNA Damage & Repair, Chromatin Architecture, Alu Elements, Extracellular Vesicles
 Daten- & Cloud-Engineering
   Programmierung & Daten: Python (Expert), R, SQL, dbt
   Cloud & Analytik: GCP, BigQuery, Looker

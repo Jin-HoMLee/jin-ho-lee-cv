@@ -9,21 +9,21 @@ Worked across bioinformatics and experimental biophysics, combining NGS/RNA-Seq 
 As a Cintellic consultant for an international bank, architected the migration of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for anti-financial-crime & KYC. Previously at neuefische, coached 100+ specialists in Python, SQL & ML; in research, secured third-party funding and supervised 10+ students.
 
 ## Skills
-- **Genomics**: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
-- **Bioinformatics Workflows**: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
-- **Immunoinformatics**: HLA Typing, MHC-I Prediction, Neoepitopes
-- **Quantitative Bioimaging**: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 - **Machine Learning**: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
 - **Computational Modelling**: MHCflurry, TCRdock, AlphaFold v2, Mol*
 - **AI Agents**: Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Kimi
 - **Browser ML Delivery**: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
 - **Developer Environments**: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
+- **Genomics**: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
+- **Bioinformatics Workflows**: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
+- **Immunoinformatics**: HLA Typing, MHC-I Prediction, Neoepitopes
+- **Quantitative Bioimaging**: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
+- **Programming & Data**: Python (Expert), R, SQL, dbt
+- **Cloud & Analytics**: GCP, BigQuery, Looker
 - **Models**: 3D Cell Culture, Neural Progenitors
 - **Imaging**: Super-Resolution, Fluorescence
 - **Assays**: FISH, qPCR, FACS
 - **Research Domains**: DNA Damage & Repair, Chromatin Architecture, Alu Elements, Extracellular Vesicles
-- **Programming & Data**: Python (Expert), R, SQL, dbt
-- **Cloud & Analytics**: GCP, BigQuery, Looker
 
 ## Experience
 ### Independent Bioinformatics & ML/AI Engineer — Independent / Self-Directed (2025-08–present)

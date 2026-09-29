@@ -209,16 +209,25 @@ def test_pdf_skills_use_non_overlapping_source_backed_groups(content_dir):
         "Data & Cloud Engineering",
         "Experimental Research",
     }
+    expected_order = {
+        "bridge": [
+            "AI/ML & Developer Tools",
+            "Bioinformatics",
+            "Data & Cloud Engineering",
+            "Experimental Research",
+        ],
+        "comp-bio": [
+            "Bioinformatics",
+            "Experimental Research",
+            "AI/ML & Developer Tools",
+            "Data & Cloud Engineering",
+        ],
+    }
     for target in ("bridge", "comp-bio"):
         data = prepare_data(content_dir, private_path=None, lang="en", target=target)
         categories = data["skills"]["categories"]
         assert {category["name"] for category in categories} == full
-        assert [category["name"] for category in categories] == [
-            "Bioinformatics",
-            "AI/ML & Developer Tools",
-            "Experimental Research",
-            "Data & Cloud Engineering",
-        ]
+        assert [category["name"] for category in categories] == expected_order[target]
         items = [
             item
             for category in categories
