@@ -1146,7 +1146,7 @@
     "publications": {
       "summary": "{peer_reviewed} peer-reviewed publications ({peer_reviewed_articles} articles + {peer_reviewed_book_chapters} research book chapter; {pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author), {conferences} first-author research conference contributions, and {applied_records} applied/off-domain record ({research_records} research records; {total_records} bibliography records total), research span {span}, in radiation biophysics & super-resolution DNA-repair imaging.",
       "pdf_summary": "{peer_reviewed} peer-reviewed research publications ({total_records} bibliography records total; {pr_first} first-author, {pr_shared} shared-first).",
-      "selected_summary": "3 selected of {peer_reviewed} peer-reviewed research publications ({total_records} bibliography records total).",
+      "selected_summary": "4 selected of {peer_reviewed} peer-reviewed research publications ({total_records} bibliography records total).",
       "selected_heading": "Selected Publications",
       "full_list_pointer": "Full list & metrics:",
       "link_labels": {

@@ -109,6 +109,10 @@ def test_bilingual_parity(rendered):
 def test_publications_shape(rendered):
     """Each publication has the required fields with allowed enum values."""
     en, _ = rendered
+    combo_fish = next(
+        p for p in en["publications"] if p["key"] == "hausmann2020_combofish_repetitive"
+    )
+    assert "COMBinatorial Oligonucleotide FISH" in combo_fish["title"]
     allowed_types = {"article", "book-chapter", "conference", "book"}
     allowed_authorship = {"first", "shared", "middle", "last", "corresponding"}
 

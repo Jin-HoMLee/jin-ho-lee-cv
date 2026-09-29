@@ -42,8 +42,8 @@ publications:
     en: "{peer_reviewed} peer-reviewed research publications ({total_records} bibliography records total; {pr_first} first-author, {pr_shared} shared-first)."
     de: "{peer_reviewed} begutachtete Forschungspublikationen (insgesamt {total_records} Bibliografie-Datensätze; {pr_first} als Erstautor, {pr_shared} mit geteilter Erstautorschaft)."
   selected_summary:
-    en: "3 selected of {peer_reviewed} peer-reviewed research publications ({total_records} bibliography records total)."
-    de: "3 ausgewählte von {peer_reviewed} begutachteten Forschungspublikationen (insgesamt {total_records} Bibliografie-Datensätze)."
+    en: "4 selected of {peer_reviewed} peer-reviewed research publications ({total_records} bibliography records total)."
+    de: "4 ausgewählte von {peer_reviewed} begutachteten Forschungspublikationen (insgesamt {total_records} Bibliografie-Datensätze)."
   selected_heading:
     en: "Selected Publications"
     de: "Ausgewählte Publikationen"
