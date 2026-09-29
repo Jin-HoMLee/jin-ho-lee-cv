@@ -122,6 +122,50 @@
     },
     {
       "@type": "ScholarlyArticle",
+      "@id": "https://doi.org/10.1007/978-1-0716-0763-3_6",
+      "name": "COMBinatorial Oligonucleotide FISH (COMBO-FISH) with Uniquely Binding Repetitive DNA Probes",
+      "datePublished": "2020",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Hausmann, M."
+        },
+        {
+          "@id": "https://orcid.org/0009-0001-8784-1771"
+        },
+        {
+          "@type": "Person",
+          "name": "Sievers, A."
+        },
+        {
+          "@type": "Person",
+          "name": "Krufczik, M."
+        },
+        {
+          "@type": "Person",
+          "name": "Hildenbrand, G."
+        }
+      ],
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "The Nucleus"
+      },
+      "sameAs": [
+        "https://doi.org/10.1007/978-1-0716-0763-3_6"
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "DOI",
+        "value": "10.1007/978-1-0716-0763-3_6"
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/CiteAction",
+        "userInteractionCount": 10
+      }
+    },
+    {
+      "@type": "ScholarlyArticle",
       "@id": "https://doi.org/10.1016/b978-0-12-819414-0.00020-3",
       "name": "3D DNA FISH for analyses of chromatin-nuclear architecture",
       "datePublished": "2020",
@@ -277,7 +321,7 @@
       "interactionStatistic": {
         "@type": "InteractionCounter",
         "interactionType": "https://schema.org/CiteAction",
-        "userInteractionCount": 43
+        "userInteractionCount": 46
       }
     },
     {
@@ -408,7 +452,7 @@
       "interactionStatistic": {
         "@type": "InteractionCounter",
         "interactionType": "https://schema.org/CiteAction",
-        "userInteractionCount": 59
+        "userInteractionCount": 61
       }
     },
     {
@@ -559,7 +603,7 @@
       "interactionStatistic": {
         "@type": "InteractionCounter",
         "interactionType": "https://schema.org/CiteAction",
-        "userInteractionCount": 35
+        "userInteractionCount": 36
       }
     },
     {

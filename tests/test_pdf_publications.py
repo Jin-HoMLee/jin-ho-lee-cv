@@ -15,7 +15,7 @@ def test_prepare_data_comp_bio_selected_publications(content_dir):
     all_pubs = load_publications(content_dir / "publications.bib")
     result = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
 
-    assert len(all_pubs) == 15  # the canonical bibliography remains complete
+    assert len(all_pubs) == 16  # the canonical bibliography remains complete
     assert result["publications_mode"] == "selected"
     assert [p["key"] for p in result["publications"]] == [
         "lee2021superres_dna_repair",
@@ -23,8 +23,8 @@ def test_prepare_data_comp_bio_selected_publications(content_dir):
         "lee2019_combofish",
     ]
     assert result["publications_heading"] == "Selected Publications"
-    assert "3 selected of 11 peer-reviewed research publications" in result["publications_summary"]
-    assert "15 bibliography records total" in result["publications_summary"]
+    assert "3 selected of 12 peer-reviewed research publications" in result["publications_summary"]
+    assert "16 bibliography records total" in result["publications_summary"]
     assert result["publications_pointer"] == "Full list & metrics:"
     assert [link["label"] for link in result["publication_links"]] == [
         "ORCID",
@@ -71,10 +71,10 @@ def test_prepare_data_comp_bio_de_selected_summary_localized(content_dir):
     result = prepare_data(content_dir, private_path=None, lang="de", target="comp-bio")
     assert result["publications_heading"] == "Ausgewählte Publikationen"
     assert (
-        "3 ausgewählte von 11 begutachteten Forschungspublikationen"
+        "3 ausgewählte von 12 begutachteten Forschungspublikationen"
         in result["publications_summary"]
     )
-    assert "insgesamt 15 Bibliografie-Datensätze" in result["publications_summary"]
+    assert "insgesamt 16 Bibliografie-Datensätze" in result["publications_summary"]
     assert [link["label"] for link in result["publication_links"]] == [
         "ORCID",
         "Google Scholar",
@@ -130,8 +130,8 @@ def test_pdf_bridge_aggregate_vs_comp_bio_selected(repo_root, content_dir):
     # comp-bio → three representative records, not the complete bibliography.
     assert _norm(selected_title).replace("-", "") in compbio.replace("-", "")
     assert _norm(omitted_title).replace("-", "") not in compbio.replace("-", "")
-    assert "3 selected of 11 peer-reviewed" in compbio
-    assert "15 bibliography records total" in compbio
+    assert "3 selected of 12 peer-reviewed" in compbio
+    assert "16 bibliography records total" in compbio
 
 
 @pytest.mark.skipif(

@@ -70,6 +70,7 @@ Modernised, open-source reimplementation of the 2015 SNU computational proof of 
 ## Publications
 - Super-Resolution Radiation Biology: From Bio-Dosimetry towards Nano-Studies of DNA Repair Mechanisms, DNA - Damages and Repair Mechanisms (2021)
 - DeGBS 2021 Conference Contribution, Deutsche Gesellschaft für Biologische Strahlenforschung (2021)
+- COMBinatorial Oligonucleotide FISH (COMBO-FISH) with Uniquely Binding Repetitive DNA Probes, The Nucleus (2020)
 - 3D DNA FISH for analyses of chromatin-nuclear architecture, Epigenetics Methods (2020)
 - Nanostructure of Clustered DNA Damage in Leukocytes after In-Solution Irradiation with the Alpha Emitter Ra-223, Cancers (2019)
 - COMBO-FISH: A versatile tool beyond standard FISH to study chromatin organization by fluorescence light microscopy, OBM Genetics (2019)

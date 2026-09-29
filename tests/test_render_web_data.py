@@ -145,14 +145,14 @@ def test_publications_aggregate_present(rendered):
 def test_publication_metrics_are_shared_numeric_facts(rendered):
     en, de = rendered
     expected = {
-        "total_records": 15,
-        "research_records": 14,
-        "peer_reviewed_records": 11,
+        "total_records": 16,
+        "research_records": 15,
+        "peer_reviewed_records": 12,
         "applied_records": 1,
         "all_records_authorship": {
             "first": 6,
             "shared_first": 3,
-            "coauthor": 6,
+            "coauthor": 7,
         },
     }
     for data in (en, de):

@@ -138,6 +138,10 @@ RESEARCH RECORDS
 2021  DeGBS 2021 Conference Contribution
   Lee, J. - Deutsche Gesellschaft für Biologische Strahlenforschung
 
+2020  COMBinatorial Oligonucleotide FISH (COMBO-FISH) with Uniquely Binding Repetitive DNA Probes
+  Hausmann, M., Lee, J., Sievers, A., Krufczik, M., Hildenbrand, G. - The Nucleus
+  https://doi.org/10.1007/978-1-0716-0763-3_6
+
 2020  3D DNA FISH for analyses of chromatin-nuclear architecture
   Hausmann, M., Lee, J., others - Epigenetics Methods
   https://doi.org/10.1016/b978-0-12-819414-0.00020-3

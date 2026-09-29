@@ -872,6 +872,24 @@
       "citation_count": null
     },
     {
+      "key": "hausmann2020_combofish_repetitive",
+      "title": "COMBinatorial Oligonucleotide FISH (COMBO-FISH) with Uniquely Binding Repetitive DNA Probes",
+      "year": 2020,
+      "type": "book-chapter",
+      "authorship": "middle",
+      "authors": [
+        "Hausmann, M.",
+        "Lee, J.",
+        "Sievers, A.",
+        "Krufczik, M.",
+        "Hildenbrand, G."
+      ],
+      "venue": "The Nucleus",
+      "doi": "10.1007/978-1-0716-0763-3_6",
+      "category": "research",
+      "citation_count": 10
+    },
+    {
       "key": "hausmann2020_3d_dna_fish",
       "title": "3D DNA FISH for analyses of chromatin-nuclear architecture",
       "year": 2020,
@@ -937,7 +955,7 @@
       "venue": "International Journal of Molecular Sciences",
       "doi": "10.3390/ijms20030588",
       "category": "research",
-      "citation_count": 43
+      "citation_count": 46
     },
     {
       "key": "lee2019_conrad",
@@ -1001,7 +1019,7 @@
       "venue": "Nanoscale",
       "doi": "10.1039/c7nr08145f",
       "category": "research",
-      "citation_count": 59
+      "citation_count": 61
     },
     {
       "key": "eryilmaz2018_mre11",
@@ -1070,7 +1088,7 @@
       "venue": "International Journal of Molecular Sciences",
       "doi": "10.3390/ijms18051005",
       "category": "research",
-      "citation_count": 35
+      "citation_count": 36
     },
     {
       "key": "lee2025_marketing_automation",
@@ -1175,18 +1193,18 @@
     ]
   },
   "publication_metrics": {
-    "total_records": 15,
-    "research_records": 14,
-    "peer_reviewed_records": 11,
+    "total_records": 16,
+    "research_records": 15,
+    "peer_reviewed_records": 12,
     "applied_records": 1,
     "all_records_authorship": {
       "first": 6,
       "shared_first": 3,
-      "coauthor": 6
+      "coauthor": 7
     }
   },
   "publications_aggregate": {
-    "summary": "11 peer-reviewed publications (10 articles + 1 research book chapter; 2 first-author, 3 shared-first, 6 co-author), 3 first-author research conference contributions, and 1 applied/off-domain record (14 research records; 15 bibliography records total), research span 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.",
+    "summary": "12 peer-reviewed publications (10 articles + 2 research book chapter; 2 first-author, 3 shared-first, 7 co-author), 3 first-author research conference contributions, and 1 applied/off-domain record (15 research records; 16 bibliography records total), research span 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.",
     "pointer": "Full list & metrics:"
   }
 }
