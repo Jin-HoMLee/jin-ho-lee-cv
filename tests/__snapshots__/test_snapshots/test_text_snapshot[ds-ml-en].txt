@@ -84,7 +84,7 @@ Data & Cloud Engineering
 Bioinformatics
   Genomics: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
   Bioinformatics Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
-  Immunoinformatics: HLA Typing, MHC-I Prediction, Neoepitopes
+  Immunoinformatics: HLA Typing, MHC-I Prediction, Neoepitope Candidate Prediction
   Quantitative Bioimaging: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 
 ================================================================================

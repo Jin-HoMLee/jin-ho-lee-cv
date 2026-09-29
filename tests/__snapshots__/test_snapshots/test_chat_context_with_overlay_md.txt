@@ -4,7 +4,7 @@
 
 ## Profile
 
-Worked across bioinformatics and experimental biophysics, combining NGS/RNA-Seq pipeline development, quantitative bioimage analysis, and wet-lab research at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). This work produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.
+Worked across bioinformatics and experimental biophysics: unpublished NGS/RNA-Seq genomics project work (HLA typing and splice-derived neoepitope candidate pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National University (SNU), plus quantitative bioimage analysis and wet-lab research at the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich), and Kirchhoff Institute for Physics (KIP). The experimental imaging / DNA-repair / chromatin / radiation-biology line produced 11 peer-reviewed research publications — first- and shared-first author — not genomics papers.
 
 As a Cintellic consultant for an international bank, architected the migration of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for anti-financial-crime & KYC. Previously at neuefische, coached 100+ specialists in Python, SQL & ML; in research, secured third-party funding and supervised 10+ students.
 
@@ -16,7 +16,7 @@ As a Cintellic consultant for an international bank, architected the migration o
 - **Developer Environments**: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
 - **Genomics**: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
 - **Bioinformatics Workflows**: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
-- **Immunoinformatics**: HLA Typing, MHC-I Prediction, Neoepitopes
+- **Immunoinformatics**: HLA Typing, MHC-I Prediction, Neoepitope Candidate Prediction
 - **Quantitative Bioimaging**: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 - **Programming & Data**: Python (Expert), R, SQL, dbt
 - **Cloud & Analytics**: GCP, BigQuery, Looker
@@ -62,7 +62,7 @@ Built a real-time ASL recognition prototype: an end-to-end machine-learning pipe
 ### Splice Neoepitope Pipeline – Reproducible Snakemake Workflow
 Modernised, open-source reimplementation of the 2015 SNU computational proof of concept for predicted splice-junction–derived neoepitope candidates as a reproducible Snakemake pipeline with optional structural modelling.
 - Re-engineered the original SNU pipeline as a fully reproducible Snakemake 8.x workflow with per-rule Conda environments — installable without manual dependency management; run locally and on GCP GPU VMs, and executor-portable to a SLURM cluster by design (per-rule resources + Conda) — a config swap, not a rewrite.
-- Implemented tumor-vs-matched-normal junction filtering against GENCODE annotation, classifying junctions as annotated, normal_shared, or tumor_exclusive.
+- Implemented tumor-vs-matched-normal junction filtering against GENCODE annotation, assigning computational junction classes (annotated, normal_shared, tumor_exclusive) without experimental tumor-specificity proof.
 - Integrated patient-specific HLA typing (OptiType) and MHC-I peptide presentation prediction (MHCflurry 2.x Class1PresentationPredictor) for end-to-end neoepitope candidate ranking.
 - Added optional TCR-pMHC ternary complex structural modelling via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.
 - MIT-licensed, public on GitHub (Jin-HoMLee/splice-neoepitope-pipeline).

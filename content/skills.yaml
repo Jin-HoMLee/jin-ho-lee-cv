@@ -13,7 +13,7 @@ categories:
       - label: { en: "Bioinformatics Workflows", de: "Bioinformatik-Workflows" }
         items: ["Snakemake", "MapSplice", "HISAT2/STAR", "samtools/bcftools", "bedtools", "OptiType"]
       - label: { en: "Immunoinformatics", de: "Immunoinformatik" }
-        items: ["HLA Typing", "MHC-I Prediction", "Neoepitopes"]
+        items: ["HLA Typing", "MHC-I Prediction", "Neoepitope Candidate Prediction"]
       - label: { en: "Quantitative Bioimaging", de: "Quantitative Biobildgebung" }
         items: ["Spatial Point-Pattern", "Cluster Analysis (DBSCAN)"]
 

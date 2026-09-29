@@ -9,7 +9,7 @@
       "image": "https://jinholee.is-a.dev/photo.jpg",
       "email": "mailto:jinho.michael.lee@gmail.com",
       "jobTitle": "Bioinformatics · Data Science",
-      "description": "Worked across bioinformatics and experimental biophysics, combining NGS/RNA-Seq pipeline development, quantitative bioimage analysis, and wet-lab research at the German Cancer Research Center (DKFZ), National Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff Institute for Physics (KIP), and Seoul National University (SNU). This work produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin.",
+      "description": "Worked across bioinformatics and experimental biophysics: unpublished NGS/RNA-Seq genomics project work (HLA typing and splice-derived neoepitope candidate pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National University (SNU), plus quantitative bioimage analysis and wet-lab research at the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich), and Kirchhoff Institute for Physics (KIP). The experimental imaging / DNA-repair / chromatin / radiation-biology line produced 11 peer-reviewed research publications — first- and shared-first author — not genomics papers.",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Mannheim",
@@ -743,7 +743,7 @@
       "@id": "https://jinholee.is-a.dev/projects/L1/",
       "name": "Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis",
       "url": "https://jinholee.is-a.dev/projects/L1/",
-      "description": "Bioinformatics pipeline for identifying novel immunotherapy targets derived from aberrant alternative splicing in RNA-Seq data.",
+      "description": "Unpublished computational pipeline predicting splice-junction–derived neoepitope candidate peptides from RNA-Seq data.",
       "dateCreated": "2015-08",
       "keywords": [
         "Python",
