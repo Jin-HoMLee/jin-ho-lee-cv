@@ -51,19 +51,52 @@ TARGET_KEYWORDS = {
     "ds-ml": ("BigQueryML", "Python", "TensorFlow"),
 }
 
+# Expected PDF reading order (left column top→bottom, then right) must match
+# content/skills.yaml category_order per target.
 SKILL_CATEGORY_LABELS = {
-    "en": [
-        "Bioinformatics",
-        "Experimental Research",
-        "AI/ML & Developer Tools",
-        "Data & Cloud Engineering",
-    ],
-    "de": [
-        "Bioinformatik",
-        "Experimentelle Forschung",
-        "KI/ML & Entwicklerwerkzeuge",
-        "Daten- & Cloud-Engineering",
-    ],
+    "en": {
+        "bridge": [
+            "AI/ML & Developer Tools",
+            "Bioinformatics",
+            "Data & Cloud Engineering",
+            "Experimental Research",
+        ],
+        "comp-bio": [
+            "Bioinformatics",
+            "Experimental Research",
+            "AI/ML & Developer Tools",
+            "Data & Cloud Engineering",
+        ],
+        "ds-ml": [
+            "AI/ML & Developer Tools",
+            "Data & Cloud Engineering",
+            "Bioinformatics",
+        ],
+    },
+    "de": {
+        "bridge": [
+            "KI/ML & Entwicklerwerkzeuge",
+            "Bioinformatik",
+            "Daten- & Cloud-Engineering",
+            "Experimentelle Forschung",
+        ],
+        "comp-bio": [
+            "Bioinformatik",
+            "Experimentelle Forschung",
+            "KI/ML & Entwicklerwerkzeuge",
+            "Daten- & Cloud-Engineering",
+        ],
+        "ds-ml": [
+            "KI/ML & Entwicklerwerkzeuge",
+            "Daten- & Cloud-Engineering",
+            "Bioinformatik",
+        ],
+    },
+}
+
+EXPERIMENTAL_LABEL = {
+    "en": "Experimental Research",
+    "de": "Experimentelle Forschung",
 }
 
 
@@ -180,14 +213,15 @@ def test_all_variants_are_two_page_flat_text_in_one_order(built_pdf):
             assert keyword in text, f"{extractor}: missing target keyword {keyword!r}"
 
         skill_region = text.split(headings[1], 1)[1].split(headings[2], 1)[0]
-        category_labels = SKILL_CATEGORY_LABELS[lang]
+        category_labels = SKILL_CATEGORY_LABELS[lang][target]
+        present = [label for label in category_labels if label in skill_region]
+        assert set(present) == set(category_labels), (
+            f"{extractor}: skills membership {present} != {category_labels}"
+        )
         if target == "ds-ml":
-            # ds-ml flows two columns of unequal height (AI/ML + Data/Cloud vs
-            # Bioinformatics); both extractors must carry all three and must not
-            # carry Experimental Research.
-            present = [label for label in category_labels if label in skill_region]
-            assert set(present) == {category_labels[2], category_labels[0], category_labels[3]}
-            assert category_labels[1] not in skill_region
+            # Unequal two-column height (AI/ML + Data/Cloud vs Bioinformatics)
+            # makes extractor reading order non-linear; membership is the guard.
+            assert EXPERIMENTAL_LABEL[lang] not in skill_region
         else:
             positions = [skill_region.index(label) for label in category_labels]
             assert positions == sorted(positions), (
