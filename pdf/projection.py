@@ -11,6 +11,7 @@ from typing import Any
 
 REPRESENTATIVE_PUBLICATION_KEYS = (
     "lee2021superres_dna_repair",
+    "hausmann2020_combofish_repetitive",
     "hausmann2020_3d_dna_fish",
     "lee2019_combofish",
 )

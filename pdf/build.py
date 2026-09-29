@@ -83,7 +83,7 @@ def prepare_data(
 
     Canonical source records remain untouched. The PDF reuses the concise Skills
     projection used by the web, then selects relevant experience and secondary
-    detail. Computational Biology renders three representative publications plus
+    detail. Computational Biology renders four representative publications plus
     derived totals; the other targets render only the derived aggregate.
     """
     raw = load_content(
