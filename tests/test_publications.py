@@ -86,15 +86,15 @@ def test_live_bib_aggregate_numbers():
         s.conferences,
         s.applied_records,
     ) == (
+        16,
         15,
-        14,
-        11,
+        12,
         3,
         1,
     )
-    assert (s.peer_reviewed_articles, s.peer_reviewed_book_chapters) == (10, 1)
-    assert (s.pr_first, s.pr_shared, s.pr_coauthor) == (2, 3, 6)
-    assert (s.all_first, s.all_shared, s.all_coauthor) == (6, 3, 6)
+    assert (s.peer_reviewed_articles, s.peer_reviewed_book_chapters) == (10, 2)
+    assert (s.pr_first, s.pr_shared, s.pr_coauthor) == (2, 3, 7)
+    assert (s.all_first, s.all_shared, s.all_coauthor) == (6, 3, 7)
     assert (s.year_start, s.year_end) == (2017, 2021)
     assert format_publication_summary("{span}", pubs) == "2017–2021"
 
@@ -102,11 +102,11 @@ def test_live_bib_aggregate_numbers():
 def test_live_bib_metrics_object_contains_web_facts():
     metrics = publication_metrics(load_publications(CONTENT_DIR / "publications.bib"))
     assert metrics == {
-        "total_records": 15,
-        "research_records": 14,
-        "peer_reviewed_records": 11,
+        "total_records": 16,
+        "research_records": 15,
+        "peer_reviewed_records": 12,
         "applied_records": 1,
-        "all_records_authorship": {"first": 6, "shared_first": 3, "coauthor": 6},
+        "all_records_authorship": {"first": 6, "shared_first": 3, "coauthor": 7},
     }
 
 

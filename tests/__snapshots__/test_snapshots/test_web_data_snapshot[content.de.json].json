@@ -872,6 +872,24 @@
       "citation_count": null
     },
     {
+      "key": "hausmann2020_combofish_repetitive",
+      "title": "COMBinatorial Oligonucleotide FISH (COMBO-FISH) with Uniquely Binding Repetitive DNA Probes",
+      "year": 2020,
+      "type": "book-chapter",
+      "authorship": "middle",
+      "authors": [
+        "Hausmann, M.",
+        "Lee, J.",
+        "Sievers, A.",
+        "Krufczik, M.",
+        "Hildenbrand, G."
+      ],
+      "venue": "The Nucleus",
+      "doi": "10.1007/978-1-0716-0763-3_6",
+      "category": "research",
+      "citation_count": 10
+    },
+    {
       "key": "hausmann2020_3d_dna_fish",
       "title": "3D DNA FISH for analyses of chromatin-nuclear architecture",
       "year": 2020,
@@ -937,7 +955,7 @@
       "venue": "International Journal of Molecular Sciences",
       "doi": "10.3390/ijms20030588",
       "category": "research",
-      "citation_count": 43
+      "citation_count": 46
     },
     {
       "key": "lee2019_conrad",
@@ -1001,7 +1019,7 @@
       "venue": "Nanoscale",
       "doi": "10.1039/c7nr08145f",
       "category": "research",
-      "citation_count": 59
+      "citation_count": 61
     },
     {
       "key": "eryilmaz2018_mre11",
@@ -1070,7 +1088,7 @@
       "venue": "International Journal of Molecular Sciences",
       "doi": "10.3390/ijms18051005",
       "category": "research",
-      "citation_count": 35
+      "citation_count": 36
     },
     {
       "key": "lee2025_marketing_automation",
@@ -1175,18 +1193,18 @@
     ]
   },
   "publication_metrics": {
-    "total_records": 15,
-    "research_records": 14,
-    "peer_reviewed_records": 11,
+    "total_records": 16,
+    "research_records": 15,
+    "peer_reviewed_records": 12,
     "applied_records": 1,
     "all_records_authorship": {
       "first": 6,
       "shared_first": 3,
-      "coauthor": 6
+      "coauthor": 7
     }
   },
   "publications_aggregate": {
-    "summary": "11 begutachtete Publikationen (10 Artikel + 1 wissenschaftliches Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (14 Forschungseinträge; insgesamt 15 Bibliografie-Datensätze), Forschungsspanne 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
+    "summary": "12 begutachtete Publikationen (10 Artikel + 2 wissenschaftliches Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 7 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (15 Forschungseinträge; insgesamt 16 Bibliografie-Datensätze), Forschungsspanne 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
     "pointer": "Vollständige Liste:"
   }
 }

@@ -63,7 +63,7 @@ def test_pdf_projection_does_not_change_canonical_content(content_dir):
     canonical = load_content(content_dir, lang="en", target="comp-bio")
     projected = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
 
-    assert len(canonical["publications"]) == 15
+    assert len(canonical["publications"]) == 16
     assert len(projected["publications"]) == 3
     # skills sections are now identical and full in every renderer
     assert _skill_items(canonical) == _skill_items(projected)
