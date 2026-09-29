@@ -5,14 +5,12 @@ jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/
 ================================================================================
 PROFILE
 ================================================================================
-Engineered in-silico pipelines for HLA typing and neoantigen discovery from
-real-patient NGS and RNA-Seq data, packaged as reproducible Snakemake workflows,
-with wet-lab training at the German Cancer Research Center (DKFZ), National
-Center for Tumor Diseases (NCT), Forschungszentrum Jülich (FZ Jülich), Kirchhoff
-Institute for Physics (KIP), and Seoul National University (SNU). A parallel
-line of experimental-biophysics research produced 11 peer-reviewed research
-publications — first- and shared-first author — in super-resolution microscopy
-of DNA-damage repair and chromatin.
+Engineered in-silico pipelines for HLA typing and neoantigen candidate discovery
+from real-patient NGS and RNA-Seq data at NCT and SNU (unpublished computational
+project work), later packaged as reproducible Snakemake workflows. A parallel
+experimental-biophysics line at DKFZ, FZ Jülich, and KIP produced 11 peer-
+reviewed research publications — first- and shared-first author — in super-
+resolution microscopy of DNA-damage repair and chromatin, not genomics.
 
 Equally at home in production: migrated 1,000+ analytical processes to Google
 Cloud, built reproducible data pipelines, and mentored 100+ specialists in
@@ -49,9 +47,10 @@ Splice Neoepitope Pipeline – Reproducible Snakemake Workflow    (2026-03 to pr
   Modernised, open-source reimplementation of the 2015 SNU computational proof
   of concept for predicted splice-junction–derived neoepitope candidates as a
   reproducible Snakemake pipeline with optional structural modelling.
-  Outcome: Modern reimplementation of the 2015 SNU splice-neoepitope proof of
-  concept with patient-specific HLA typing, delivered as a reproducible
-  Snakemake pipeline from RNA-Seq FASTQ to modeled TCR-pMHC structure.
+  Outcome: Modern reimplementation of the 2015 SNU computational proof of
+  concept as a reproducible Snakemake pipeline for junction classification,
+  neoepitope candidate ranking, and optional TCR-pMHC structural modelling —
+  computational outputs only, not therapeutic claims.
 
 Experimental Biophysics — Chromatin Nano-Architecture & DNA Repair    (2017-02 to 2018-08)
   Graduate Researcher / Master's Candidate
@@ -81,7 +80,7 @@ SKILLS
 Bioinformatics
   Genomics: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
   Bioinformatics Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
-  Immunoinformatics: HLA Typing, MHC-I Prediction, Neoepitopes
+  Immunoinformatics: HLA Typing, MHC-I Prediction, Neoepitope Candidate Prediction
   Quantitative Bioimaging: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 Experimental Research
   Models: 3D Cell Culture, Neural Progenitors

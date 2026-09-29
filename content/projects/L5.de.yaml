@@ -20,8 +20,8 @@ technologies:
   - "Mol*"
 contributions:
   - "Neuentwicklung der ursprünglichen SNU-Pipeline als vollständig reproduzierbarer Snakemake-8.x-Workflow mit Conda-Umgebungen pro Rule — installierbar ohne manuelles Dependency-Management; lauffähig lokal und auf GCP-GPU-VMs, und per Design executor-portabel auf einen SLURM-Cluster (Ressourcen pro Rule + Conda) — ein Konfigurations-Swap, kein Rewrite."
-  - "Tumor-vs-passendes-Normalgewebe-Junction-Filterung gegen GENCODE-Annotation implementiert; klassifiziert Junctions als annotated, normal_shared oder tumor_exclusive."
+  - "Tumor-vs-passendes-Normalgewebe-Junction-Filterung gegen GENCODE-Annotation implementiert; weist computergestützte Junction-Klassen zu (annotated, normal_shared, tumor_exclusive) ohne experimentellen Nachweis tumorspezifischer Expression."
   - "Patientenspezifische HLA-Typisierung (OptiType) und MHC-I-Peptidpräsentations-Vorhersage (MHCflurry 2.x Class1PresentationPredictor) integriert für End-to-End-Neoepitop-Kandidatenranking."
   - "Optionale Strukturmodellierung des TCR-pMHC-Ternärkomplexes via TCRdock (AlphaFold-v2-Backend) auf Google Cloud GPU; vorhergesagte Komplexe werden im interaktiven Mol* 3D-Viewer dargestellt."
   - "MIT-lizenziert, öffentlich auf GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
-outcome: "Moderne Neuimplementierung des SNU-Splice-Neoepitop-Proof-of-Concepts von 2015 mit patientenspezifischer HLA-Typisierung als reproduzierbare Snakemake-Pipeline von RNA-Seq-FASTQ bis zur modellierten TCR-pMHC-Struktur."
+outcome: "Moderne Neuimplementierung des computergestützten SNU-Proof-of-Concepts von 2015 als reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur computergestützte Ausgaben, keine therapeutischen Ansprüche."

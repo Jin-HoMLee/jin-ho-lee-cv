@@ -5,14 +5,16 @@ jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/
 ================================================================================
 PROFIL
 ================================================================================
-Arbeit in Bioinformatik und experimenteller Biophysik, mit Entwicklung von
-NGS/RNA-Seq-Pipelines, quantitativer Biobildanalyse und Wet-Lab-Forschung am
-Deutschen Krebsforschungszentrum (DKFZ), am Nationalen Centrum für
-Tumorerkrankungen (NCT), am Forschungszentrum Jülich, am Kirchhoff-Institut für
-Physik (KIP) und an der Seoul National University (SNU). Daraus entstanden 11
-peer-reviewed Forschungspublikationen — als Erstautor sowie mit geteilter
-Erstautorschaft — in der hochauflösenden Mikroskopie von DNA-Schadensreparatur
-und Chromatin.
+Arbeit in Bioinformatik und experimenteller Biophysik: unveröffentlichte
+NGS/RNA-Seq-Genomik-Projektarbeit (HLA-Typisierung und Pipelines für splice-
+abgeleitete Neoepitop-Kandidaten) am Nationalen Centrum für Tumorerkrankungen
+(NCT) und an der Seoul National University (SNU), plus quantitative
+Biobildanalyse und Wet-Lab-Forschung am Deutschen Krebsforschungszentrum (DKFZ),
+am Forschungszentrum Jülich und am Kirchhoff-Institut für Physik (KIP). Die
+experimentelle Linie zu Bildgebung / DNA-Reparatur / Chromatin /
+Strahlenbiologie brachte 11 peer-reviewed Forschungspublikationen — als
+Erstautor sowie mit geteilter Erstautorschaft — hervor, keine Genomik-
+Publikationen.
 
 Als Cintellic-Berater für eine internationale Bank Architektur der Migration von
 1.000+ analytischen Prozessen in die Google Cloud und Entwicklung von
@@ -66,10 +68,11 @@ Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bi
   of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
   Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
   Strukturmodellierung.
-  Ergebnis: Moderne Neuimplementierung des SNU-Splice-Neoepitop-Proof-of-
-  Concepts von 2015 mit patientenspezifischer HLA-Typisierung als
-  reproduzierbare Snakemake-Pipeline von RNA-Seq-FASTQ bis zur modellierten TCR-
-  pMHC-Struktur.
+  Ergebnis: Moderne Neuimplementierung des computergestützten SNU-Proof-of-
+  Concepts von 2015 als reproduzierbare Snakemake-Pipeline für Junction-
+  Klassifikation, Neoepitop-Kandidatenranking und optionale TCR-pMHC-
+  Strukturmodellierung — nur computergestützte Ausgaben, keine therapeutischen
+  Ansprüche.
 
 ================================================================================
 AUSBILDUNG
@@ -91,7 +94,7 @@ KI/ML & Entwicklerwerkzeuge
 Bioinformatik
   Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
   Bioinformatik-Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
-  Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitopes
+  Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitope Candidate Prediction
   Quantitative Biobildgebung: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 Daten- & Cloud-Engineering
   Programmierung & Daten: Python (Expert), R, SQL, dbt

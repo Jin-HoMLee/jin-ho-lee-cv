@@ -16,6 +16,6 @@ technologies:
 contributions:
   - "Entwicklung einer in silico Genotypisierungs-Pipeline zur direkten Extraktion von HLA-Allelen aus Whole-Exome-Sequencing-Daten (WXS)."
   - "Implementierung prädiktiver Modellierung mittels ANNs (NetMHCPan) zum Screening von Missense-Mutationen auf MHC-I-Bindungsaffinität."
-  - "Konzeption einer Konsens-Methodik zur Integration mehrerer HLA-Typisierungs-Algorithmen zur Auflösung von Sequenz-Ambiguitäten und Steigerung der diagnostischen Zuverlässigkeit."
-  - "Validierung der Pipeline durch Analyse der Bindungsspezifitäten über HLA-Allele hinweg zur Reduzierung von Typisierungsfehlern im Impfstoffdesign."
-outcome: "Nachgewiesen, dass ein vollständig computergestützter Ansatz zur Neoantigen-Entdeckung praktikabel ist und Kosten sowie Vorlaufzeiten gegenüber klassischen PCR-basierten klinischen Assays deutlich reduziert."
+  - "Konzeption einer Konsens-Methodik zur Integration mehrerer HLA-Typisierungs-Algorithmen zur Auflösung von Sequenz-Ambiguitäten und Verbesserung der Call-Konsistenz."
+  - "Computergestützte Prüfung der Pipeline durch Vergleich von Bindungsspezifitäts-Vorhersagen über HLA-Allele hinweg, um inkonsistente Allel-Calls zu markieren."
+outcome: "Nachgewiesen, dass ein computergestützter HLA-Typisierungs- und Neoantigen-Kandidaten-Workflow aus NGS-Daten machbar ist — kein Ersatz für klinische Assays."
