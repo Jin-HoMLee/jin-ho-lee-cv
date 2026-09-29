@@ -57,18 +57,18 @@ categories:
 variants:
   bridge:
     category_order:
-      - "Bioinformatics"
       - "AI/ML & Developer Tools"
-      - "Experimental Research"
+      - "Bioinformatics"
       - "Data & Cloud Engineering"
+      - "Experimental Research"
   comp-bio:
     category_order:
       - "Bioinformatics"
-      - "AI/ML & Developer Tools"
       - "Experimental Research"
+      - "AI/ML & Developer Tools"
       - "Data & Cloud Engineering"
   ds-ml:
     category_order:
-      - "Bioinformatics"
       - "AI/ML & Developer Tools"
       - "Data & Cloud Engineering"
+      - "Bioinformatics"

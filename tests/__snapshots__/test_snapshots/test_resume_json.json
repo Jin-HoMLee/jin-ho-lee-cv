@@ -103,46 +103,6 @@
   ],
   "skills": [
     {
-      "name": "Bioinformatics",
-      "level": "Genomics",
-      "keywords": [
-        "NGS",
-        "RNA-Seq",
-        "WES",
-        "SNV Calling",
-        "Splice Analysis"
-      ]
-    },
-    {
-      "name": "Bioinformatics",
-      "level": "Bioinformatics Workflows",
-      "keywords": [
-        "Snakemake",
-        "MapSplice",
-        "HISAT2/STAR",
-        "samtools/bcftools",
-        "bedtools",
-        "OptiType"
-      ]
-    },
-    {
-      "name": "Bioinformatics",
-      "level": "Immunoinformatics",
-      "keywords": [
-        "HLA Typing",
-        "MHC-I Prediction",
-        "Neoepitopes"
-      ]
-    },
-    {
-      "name": "Bioinformatics",
-      "level": "Quantitative Bioimaging",
-      "keywords": [
-        "Spatial Point-Pattern",
-        "Cluster Analysis (DBSCAN)"
-      ]
-    },
-    {
       "name": "AI/ML & Developer Tools",
       "level": "Machine Learning",
       "keywords": [
@@ -201,6 +161,65 @@
       ]
     },
     {
+      "name": "Bioinformatics",
+      "level": "Genomics",
+      "keywords": [
+        "NGS",
+        "RNA-Seq",
+        "WES",
+        "SNV Calling",
+        "Splice Analysis"
+      ]
+    },
+    {
+      "name": "Bioinformatics",
+      "level": "Bioinformatics Workflows",
+      "keywords": [
+        "Snakemake",
+        "MapSplice",
+        "HISAT2/STAR",
+        "samtools/bcftools",
+        "bedtools",
+        "OptiType"
+      ]
+    },
+    {
+      "name": "Bioinformatics",
+      "level": "Immunoinformatics",
+      "keywords": [
+        "HLA Typing",
+        "MHC-I Prediction",
+        "Neoepitopes"
+      ]
+    },
+    {
+      "name": "Bioinformatics",
+      "level": "Quantitative Bioimaging",
+      "keywords": [
+        "Spatial Point-Pattern",
+        "Cluster Analysis (DBSCAN)"
+      ]
+    },
+    {
+      "name": "Data & Cloud Engineering",
+      "level": "Programming & Data",
+      "keywords": [
+        "Python (Expert)",
+        "R",
+        "SQL",
+        "dbt"
+      ]
+    },
+    {
+      "name": "Data & Cloud Engineering",
+      "level": "Cloud & Analytics",
+      "keywords": [
+        "GCP",
+        "BigQuery",
+        "Looker"
+      ]
+    },
+    {
       "name": "Experimental Research",
       "level": "Models",
       "keywords": [
@@ -233,25 +252,6 @@
         "Chromatin Architecture",
         "Alu Elements",
         "Extracellular Vesicles"
-      ]
-    },
-    {
-      "name": "Data & Cloud Engineering",
-      "level": "Programming & Data",
-      "keywords": [
-        "Python (Expert)",
-        "R",
-        "SQL",
-        "dbt"
-      ]
-    },
-    {
-      "name": "Data & Cloud Engineering",
-      "level": "Cloud & Analytics",
-      "keywords": [
-        "GCP",
-        "BigQuery",
-        "Looker"
       ]
     }
   ],

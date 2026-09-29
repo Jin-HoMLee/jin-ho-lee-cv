@@ -73,11 +73,6 @@ AUSBILDUNG
 ================================================================================
 KENNTNISSE
 ================================================================================
-Bioinformatik
-  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
-  Bioinformatik-Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
-  Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitopes
-  Quantitative Biobildgebung: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 KI/ML & Entwicklerwerkzeuge
   Maschinelles Lernen: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
   Computergestützte Modellierung: MHCflurry, TCRdock, AlphaFold v2, Mol*
@@ -87,6 +82,11 @@ KI/ML & Entwicklerwerkzeuge
 Daten- & Cloud-Engineering
   Programmierung & Daten: Python (Expert), R, SQL, dbt
   Cloud & Analytik: GCP, BigQuery, Looker
+Bioinformatik
+  Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
+  Bioinformatik-Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
+  Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitopes
+  Quantitative Biobildgebung: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 
 ================================================================================
 SPRACHEN

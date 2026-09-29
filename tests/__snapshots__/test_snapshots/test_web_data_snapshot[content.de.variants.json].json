@@ -4,6 +4,167 @@
     "tagline": "Bioinformatiker mit tiefen Wurzeln in der Krebsgenomik — HLA-Typisierung & Neoantigen-Identifizierung aus echten Patienten-NGS/RNA-Seq, reproduzierbare Snakemake-Pipelines, 11 peer-reviewed Forschungspublikationen.",
     "lead_paragraph": "Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-Identifizierung aus realen Patienten-NGS- und RNA-Seq-Daten, verpackt als reproduzierbare Snakemake-Workflows, mit Wet-Lab-Ausbildung am Deutschen Krebsforschungszentrum (DKFZ), am Nationalen Centrum für Tumorerkrankungen (NCT), am Forschungszentrum Jülich, am Kirchhoff-Institut für Physik (KIP) und an der Seoul National University (SNU). Eine parallele Forschungslinie in der experimentellen Biophysik brachte 11 peer-reviewed Forschungspublikationen — als Erst- und geteilter Erstautor — in der hochauflösenden Mikroskopie von DNA-Schadensreparatur und Chromatin hervor.",
     "second_paragraph": "Ebenso zu Hause in der Produktion: Migration von 1.000+ analytischen Prozessen in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Mentoring von 100+ Fachkräften in Python, SQL & ML — bei gleichzeitiger Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden.",
+    "skills": {
+      "categories": [
+        {
+          "name": "Bioinformatik",
+          "groups": [
+            {
+              "label": "Genomik",
+              "items": [
+                "NGS",
+                "RNA-Seq",
+                "WES",
+                "SNV Calling",
+                "Splice Analysis"
+              ]
+            },
+            {
+              "label": "Bioinformatik-Workflows",
+              "items": [
+                "Snakemake",
+                "MapSplice",
+                "HISAT2/STAR",
+                "samtools/bcftools",
+                "bedtools",
+                "OptiType"
+              ]
+            },
+            {
+              "label": "Immunoinformatik",
+              "items": [
+                "HLA Typing",
+                "MHC-I Prediction",
+                "Neoepitopes"
+              ]
+            },
+            {
+              "label": "Quantitative Biobildgebung",
+              "items": [
+                "Spatial Point-Pattern",
+                "Cluster Analysis (DBSCAN)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Experimentelle Forschung",
+          "groups": [
+            {
+              "label": "Modelle",
+              "items": [
+                "3D Cell Culture",
+                "Neural Progenitors"
+              ]
+            },
+            {
+              "label": "Bildgebung",
+              "items": [
+                "Super-Resolution",
+                "Fluorescence"
+              ]
+            },
+            {
+              "label": "Analysemethoden",
+              "items": [
+                "FISH",
+                "qPCR",
+                "FACS"
+              ]
+            },
+            {
+              "label": "Forschungsdomänen",
+              "items": [
+                "DNA Damage & Repair",
+                "Chromatin Architecture",
+                "Alu Elements",
+                "Extracellular Vesicles"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "KI/ML & Entwicklerwerkzeuge",
+          "groups": [
+            {
+              "label": "Maschinelles Lernen",
+              "items": [
+                "TensorFlow",
+                "Keras",
+                "LSTMs",
+                "OpenCV",
+                "MLflow",
+                "BigQueryML"
+              ]
+            },
+            {
+              "label": "Computergestützte Modellierung",
+              "items": [
+                "MHCflurry",
+                "TCRdock",
+                "AlphaFold v2",
+                "Mol*"
+              ]
+            },
+            {
+              "label": "KI-Agenten",
+              "items": [
+                "Claude Code",
+                "Codex",
+                "OpenCode",
+                "Pi",
+                "Grok",
+                "Cursor",
+                "Kimi"
+              ]
+            },
+            {
+              "label": "Browser-ML-Auslieferung",
+              "items": [
+                "TensorFlow.js",
+                "ONNX Runtime Web",
+                "Chrome Extension (Manifest V3)"
+              ]
+            },
+            {
+              "label": "Entwicklungsumgebungen",
+              "items": [
+                "Conda",
+                "Docker",
+                "Git",
+                "Nix",
+                "nix-darwin",
+                "home-manager",
+                "WezTerm",
+                "Neovim"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Daten- & Cloud-Engineering",
+          "groups": [
+            {
+              "label": "Programmierung & Daten",
+              "items": [
+                "Python (Expert)",
+                "R",
+                "SQL",
+                "dbt"
+              ]
+            },
+            {
+              "label": "Cloud & Analytik",
+              "items": [
+                "GCP",
+                "BigQuery",
+                "Looker"
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "experience": [
       {
         "id": "independent",
@@ -150,47 +311,6 @@
     "skills": {
       "categories": [
         {
-          "name": "Bioinformatik",
-          "groups": [
-            {
-              "label": "Genomik",
-              "items": [
-                "NGS",
-                "RNA-Seq",
-                "WES",
-                "SNV Calling",
-                "Splice Analysis"
-              ]
-            },
-            {
-              "label": "Bioinformatik-Workflows",
-              "items": [
-                "Snakemake",
-                "MapSplice",
-                "HISAT2/STAR",
-                "samtools/bcftools",
-                "bedtools",
-                "OptiType"
-              ]
-            },
-            {
-              "label": "Immunoinformatik",
-              "items": [
-                "HLA Typing",
-                "MHC-I Prediction",
-                "Neoepitopes"
-              ]
-            },
-            {
-              "label": "Quantitative Biobildgebung",
-              "items": [
-                "Spatial Point-Pattern",
-                "Cluster Analysis (DBSCAN)"
-              ]
-            }
-          ]
-        },
-        {
           "name": "KI/ML & Entwicklerwerkzeuge",
           "groups": [
             {
@@ -266,6 +386,47 @@
                 "GCP",
                 "BigQuery",
                 "Looker"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Bioinformatik",
+          "groups": [
+            {
+              "label": "Genomik",
+              "items": [
+                "NGS",
+                "RNA-Seq",
+                "WES",
+                "SNV Calling",
+                "Splice Analysis"
+              ]
+            },
+            {
+              "label": "Bioinformatik-Workflows",
+              "items": [
+                "Snakemake",
+                "MapSplice",
+                "HISAT2/STAR",
+                "samtools/bcftools",
+                "bedtools",
+                "OptiType"
+              ]
+            },
+            {
+              "label": "Immunoinformatik",
+              "items": [
+                "HLA Typing",
+                "MHC-I Prediction",
+                "Neoepitopes"
+              ]
+            },
+            {
+              "label": "Quantitative Biobildgebung",
+              "items": [
+                "Spatial Point-Pattern",
+                "Cluster Analysis (DBSCAN)"
               ]
             }
           ]

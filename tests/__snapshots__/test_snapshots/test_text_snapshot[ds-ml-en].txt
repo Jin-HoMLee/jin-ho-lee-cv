@@ -72,11 +72,6 @@ EDUCATION
 ================================================================================
 SKILLS
 ================================================================================
-Bioinformatics
-  Genomics: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
-  Bioinformatics Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
-  Immunoinformatics: HLA Typing, MHC-I Prediction, Neoepitopes
-  Quantitative Bioimaging: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 AI/ML & Developer Tools
   Machine Learning: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
   Computational Modelling: MHCflurry, TCRdock, AlphaFold v2, Mol*
@@ -86,6 +81,11 @@ AI/ML & Developer Tools
 Data & Cloud Engineering
   Programming & Data: Python (Expert), R, SQL, dbt
   Cloud & Analytics: GCP, BigQuery, Looker
+Bioinformatics
+  Genomics: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
+  Bioinformatics Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
+  Immunoinformatics: HLA Typing, MHC-I Prediction, Neoepitopes
+  Quantitative Bioimaging: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
 
 ================================================================================
 LANGUAGES

@@ -181,16 +181,21 @@ def test_skills_sections_are_full_and_identical_with_ds_ml_dropping_experimental
         return [category["name"]["en"] for category in content["skills"]["categories"]]
 
     assert names(bridge) == [
-        "Bioinformatics",
         "AI/ML & Developer Tools",
+        "Bioinformatics",
+        "Data & Cloud Engineering",
         "Experimental Research",
+    ]
+    assert names(comp_bio) == [
+        "Bioinformatics",
+        "Experimental Research",
+        "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
     ]
-    assert names(comp_bio) == names(bridge)
     assert names(ds_ml) == [
-        "Bioinformatics",
         "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
+        "Bioinformatics",
     ]
     assert names(
         load_content(content_dir, lang="en", target="ds-ml", web_projection=True)
