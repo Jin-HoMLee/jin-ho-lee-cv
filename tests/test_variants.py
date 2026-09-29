@@ -334,6 +334,7 @@ def test_comp_bio_keeps_full_ai_ml_section_identical_to_bridge(content_dir):
             load_content(content_dir, lang=lang, target="comp-bio", web_projection=True),
             lang=lang,
         )["skills"]
+
         # same skill items; category order is target-specific (bridge != comp-bio)
         def items(skills):
             return {
