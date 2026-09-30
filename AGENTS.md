@@ -241,6 +241,20 @@ The web package too: `pnpm --dir web test` (vitest) covers the twin chat's escap
   for material this repo itself never tracks. This is a documentation-only convention,
   not enforced by any hook or script, so it only works if whoever is editing
   `applications/` actually reads and follows it.
+
+  **Ownership (§4.1).** One contract, three homes:
+
+  | Artifact | Home |
+  |---|---|
+  | `content/**` facts & honesty wording · variant definitions / PDF templates · public site, twin, JSON-LD, llms.txt · `master-cv/` overlay · `content.private/` letterhead · cover-letter renderer code + CV schemas | **CV repo** (this one) |
+  | Job-ad freeze, research/fit/positioning · priorities + dashboard + Access deploy · interview prep / offline portal answers · motivation `draft.md` + final letter PDFs · submission checklists / receipts · market / platform strategy · evergreen apps `profile.yaml` | **private apps repo** |
+  | Tailored-CV PDF bytes attached to a package · the CV SHA + variant attached · letter PDF hash + draft revision · export / honesty-gate blocker | **`attachment-manifest.yaml`** per package (apps-owned handoff; records hashes and pointers only, never duplicates CV content) |
+
+  **Env contract.** The apps root resolves from `APPLICATIONS_DIR` (absolute path to the
+  apps repo); unset, it falls back to `$CV_ROOT/applications`, where `CV_ROOT` is the CV
+  checkout root (this repo's own directory when unset). So `just letter <slug>` and
+  `just jd-gap <slug>` run against a standalone apps checkout with `APPLICATIONS_DIR=…`
+  and against the nested `applications/` with no env at all.
   Core: `scripts/cover_letter_core.py` (+ `letter_text.py`, `render_letter.py`,
   `letter_lint.py`, `jd_gap.py`); skill: `.claude/skills/cover-letter/`. The skill carries
   craft guidance ("How to write the body" + "AI tells & clichés to avoid" in reference.md);
