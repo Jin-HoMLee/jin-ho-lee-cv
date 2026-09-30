@@ -60,6 +60,45 @@ def test_sanitize_slug():
         clc._sanitize_slug("///")
 
 
+# --- applications-root resolution (Stage 1 env contract) ------------------------
+
+
+def test_apps_dir_env_override(monkeypatch, tmp_path: Path):
+    target = tmp_path / "job-applications"
+    monkeypatch.setenv("APPLICATIONS_DIR", str(target))
+    assert clc._resolve_apps_dir() == target
+
+
+def test_apps_dir_explicit_arg_beats_env(monkeypatch, tmp_path: Path):
+    monkeypatch.setenv("APPLICATIONS_DIR", str(tmp_path / "env"))
+    explicit = tmp_path / "explicit"
+    assert clc._resolve_apps_dir(explicit) == explicit
+
+
+def test_apps_dir_falls_back_to_cv_root_applications(monkeypatch, tmp_path: Path):
+    monkeypatch.delenv("APPLICATIONS_DIR", raising=False)
+    cv_root = tmp_path / "cv-checkout"
+    monkeypatch.setenv("CV_ROOT", str(cv_root))
+    assert clc._resolve_apps_dir() == cv_root / "applications"
+
+
+def test_apps_dir_default_is_repo_applications(monkeypatch):
+    monkeypatch.delenv("APPLICATIONS_DIR", raising=False)
+    monkeypatch.delenv("CV_ROOT", raising=False)
+    assert clc._resolve_apps_dir() == REPO_ROOT / "applications"
+
+
+def test_default_entry_point_honors_env_override(monkeypatch, tmp_path: Path):
+    """A defaulted call (no apps_dir arg) writes into the APPLICATIONS_DIR root."""
+    target = tmp_path / "job-applications"
+    target.mkdir()
+    monkeypatch.setenv("APPLICATIONS_DIR", str(target))
+    data = {"motivation": {"en": "x"}, "availability": "now"}
+    clc.write_profile(data)
+    assert (target / "profile.yaml").exists()
+    assert clc.read_profile() == data
+
+
 def test_profile_roundtrip(apps):
     assert clc.read_profile(apps_dir=apps) == {}
     data = {"motivation": {"en": "x"}, "availability": "now"}
