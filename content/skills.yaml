@@ -64,9 +64,9 @@ variants:
   comp-bio:
     category_order:
       - "Bioinformatics"
-      - "Experimental Research"
       - "AI/ML & Developer Tools"
       - "Data & Cloud Engineering"
+      - "Experimental Research"
   ds-ml:
     category_order:
       - "AI/ML & Developer Tools"

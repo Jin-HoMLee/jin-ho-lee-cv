@@ -75,7 +75,7 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
     data = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
 
     assert data["profile"]["paragraphs"] == []
-    assert "11 peer-reviewed" in data["profile"]["tagline"]
+    assert "eleven peer-reviewed" in data["profile"]["tagline"]
     assert len(_entry(data, "independent")["bullets"]) == 3
     assert "Snakemake" in _entry(data, "independent")["bullets"][0]["en"]
     assert "1,000+" in _entry(data, "cintellic")["bullets"][0]["en"]
@@ -218,9 +218,9 @@ def test_pdf_skills_use_non_overlapping_source_backed_groups(content_dir):
         ],
         "comp-bio": [
             "Bioinformatics",
-            "Experimental Research",
             "AI/ML & Developer Tools",
             "Data & Cloud Engineering",
+            "Experimental Research",
         ],
     }
     for target in ("bridge", "comp-bio"):

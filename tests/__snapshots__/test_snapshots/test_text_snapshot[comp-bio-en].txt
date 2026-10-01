@@ -82,11 +82,6 @@ Bioinformatics
   Bioinformatics Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
   Immunoinformatics: HLA Typing, MHC-I Prediction, Neoepitope Candidate Prediction
   Quantitative Bioimaging: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
-Experimental Research
-  Models: 3D Cell Culture, Neural Progenitors
-  Imaging: Super-Resolution, Fluorescence
-  Assays: FISH, qPCR, FACS
-  Research Domains: DNA Damage & Repair, Chromatin Architecture, Alu Elements, Extracellular Vesicles
 AI/ML & Developer Tools
   Machine Learning: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
   Computational Modelling: MHCflurry, TCRdock, AlphaFold v2, Mol*
@@ -96,6 +91,11 @@ AI/ML & Developer Tools
 Data & Cloud Engineering
   Programming & Data: Python (Expert), R, SQL, dbt
   Cloud & Analytics: GCP, BigQuery, Looker
+Experimental Research
+  Models: 3D Cell Culture, Neural Progenitors
+  Imaging: Super-Resolution, Fluorescence
+  Assays: FISH, qPCR, FACS
+  Research Domains: DNA Damage & Repair, Chromatin Architecture, Alu Elements, Extracellular Vesicles
 
 ================================================================================
 LANGUAGES

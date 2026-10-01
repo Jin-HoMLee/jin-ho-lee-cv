@@ -188,9 +188,9 @@ def test_skills_sections_are_full_and_identical_with_ds_ml_dropping_experimental
     ]
     assert names(comp_bio) == [
         "Bioinformatics",
-        "Experimental Research",
         "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
+        "Experimental Research",
     ]
     assert names(ds_ml) == [
         "AI/ML & Developer Tools",
