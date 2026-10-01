@@ -89,6 +89,11 @@ letter slug:
 jd-gap slug:
     uv run python -m scripts.jd_gap "{{slug}}"
 
+# Build the tailored CV PDF for an application package + write attachment-manifest.yaml
+# (Stage 3 paired-repos handoff: resolves the package via APPLICATIONS_DIR / CV_ROOT).
+export-application-cv slug:
+    uv run python -m scripts.export_application "{{slug}}"
+
 # Render the llms.txt site map (llmstxt.org) → dist/llms.txt
 build-llms:
     uv run python -m scripts.render_llms
