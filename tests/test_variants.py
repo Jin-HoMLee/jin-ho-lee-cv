@@ -279,9 +279,9 @@ def test_skills_sections_identical_and_ds_ml_drops_experimental(content_dir):
     ]
     assert names("comp-bio") == [
         "Bioinformatics",
-        "Experimental Research",
         "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
+        "Experimental Research",
     ]
     # identical full item lists across bridge and comp-bio, web or not
     # (section order differs per target; membership does not)
@@ -450,9 +450,9 @@ def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
     ]
     assert names(comp_bio) == [
         "Bioinformatics",
-        "Experimental Research",
         "AI/ML & Developer Tools",
         "Data & Cloud Engineering",
+        "Experimental Research",
     ]
     assert {"HLA Typing", "TCRdock", "Claude Code", "Nix", "Snakemake"} <= all_items(bridge)
     # ds-ml drops Experimental Research only; the other three sections stay full

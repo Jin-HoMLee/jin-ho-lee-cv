@@ -48,42 +48,6 @@
           ]
         },
         {
-          "name": "Experimentelle Forschung",
-          "groups": [
-            {
-              "label": "Modelle",
-              "items": [
-                "3D Cell Culture",
-                "Neural Progenitors"
-              ]
-            },
-            {
-              "label": "Bildgebung",
-              "items": [
-                "Super-Resolution",
-                "Fluorescence"
-              ]
-            },
-            {
-              "label": "Analysemethoden",
-              "items": [
-                "FISH",
-                "qPCR",
-                "FACS"
-              ]
-            },
-            {
-              "label": "Forschungsdomänen",
-              "items": [
-                "DNA Damage & Repair",
-                "Chromatin Architecture",
-                "Alu Elements",
-                "Extracellular Vesicles"
-              ]
-            }
-          ]
-        },
-        {
           "name": "KI/ML & Entwicklerwerkzeuge",
           "groups": [
             {
@@ -159,6 +123,42 @@
                 "GCP",
                 "BigQuery",
                 "Looker"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Experimentelle Forschung",
+          "groups": [
+            {
+              "label": "Modelle",
+              "items": [
+                "3D Cell Culture",
+                "Neural Progenitors"
+              ]
+            },
+            {
+              "label": "Bildgebung",
+              "items": [
+                "Super-Resolution",
+                "Fluorescence"
+              ]
+            },
+            {
+              "label": "Analysemethoden",
+              "items": [
+                "FISH",
+                "qPCR",
+                "FACS"
+              ]
+            },
+            {
+              "label": "Forschungsdomänen",
+              "items": [
+                "DNA Damage & Repair",
+                "Chromatin Architecture",
+                "Alu Elements",
+                "Extracellular Vesicles"
               ]
             }
           ]

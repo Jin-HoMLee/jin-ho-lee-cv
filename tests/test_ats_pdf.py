@@ -47,7 +47,7 @@ SECTION_LABELS = {
 
 TARGET_KEYWORDS = {
     "bridge": ("GCP", "100+", "Python"),
-    "comp-bio": ("HLA", "Snakemake", "MHCflurry", "11"),
+    "comp-bio": ("HLA", "Snakemake", "MHCflurry", "100+"),
     "ds-ml": ("BigQueryML", "Python", "TensorFlow"),
 }
 
@@ -63,9 +63,9 @@ SKILL_CATEGORY_LABELS = {
         ],
         "comp-bio": [
             "Bioinformatics",
-            "Experimental Research",
             "AI/ML & Developer Tools",
             "Data & Cloud Engineering",
+            "Experimental Research",
         ],
         "ds-ml": [
             "AI/ML & Developer Tools",
@@ -82,9 +82,9 @@ SKILL_CATEGORY_LABELS = {
         ],
         "comp-bio": [
             "Bioinformatik",
-            "Experimentelle Forschung",
             "KI/ML & Entwicklerwerkzeuge",
             "Daten- & Cloud-Engineering",
+            "Experimentelle Forschung",
         ],
         "ds-ml": [
             "KI/ML & Entwicklerwerkzeuge",

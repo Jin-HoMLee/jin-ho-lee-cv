@@ -24,4 +24,4 @@ contributions:
   - "Patientenspezifische HLA-Typisierung (OptiType) und MHC-I-Peptidpräsentations-Vorhersage (MHCflurry 2.x Class1PresentationPredictor) integriert für End-to-End-Neoepitop-Kandidatenranking."
   - "Optionale Strukturmodellierung des TCR-pMHC-Ternärkomplexes via TCRdock (AlphaFold-v2-Backend) auf Google Cloud GPU; vorhergesagte Komplexe werden im interaktiven Mol* 3D-Viewer dargestellt."
   - "MIT-lizenziert, öffentlich auf GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
-outcome: "Moderne Neuimplementierung des computergestützten SNU-Proof-of-Concepts von 2015 als reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur computergestützte Ausgaben, keine therapeutischen Ansprüche."
+outcome: "Moderne Neuimplementierung des SNU-Proof-of-Concepts von 2015 als reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur computergestützte Ausgaben, keine therapeutischen Ansprüche."

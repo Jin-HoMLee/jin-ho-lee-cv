@@ -1,7 +1,7 @@
 {
   "comp-bio": {
     "headline": "Bioinformatics · Cancer Genomics",
-    "tagline": "Bioinformatician with deep roots in cancer genomics — HLA typing & neoantigen candidate pipelines from real-patient NGS/RNA-Seq, reproducible Snakemake workflows, plus 11 peer-reviewed imaging / DNA-repair / chromatin / radiation-biology publications.",
+    "tagline": "Bioinformatician with deep roots in cancer genomics: production Python, SQL, and GCP engineering alongside cancer-genomics pipelines from real-patient NGS/RNA-Seq, plus eight years of academic research with eleven peer-reviewed publications in imaging, DNA repair, chromatin, and radiation biology. M.Sc. Molecular Biotechnology; builds reproducible Snakemake workflows.",
     "lead_paragraph": "Engineered in-silico pipelines for HLA typing and neoantigen candidate discovery from real-patient NGS and RNA-Seq data at NCT and SNU (unpublished computational project work), later packaged as reproducible Snakemake workflows. A parallel experimental-biophysics line at DKFZ, FZ Jülich, and KIP produced 11 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin, not genomics.",
     "second_paragraph": "Equally at home in production: migrated 1,000+ analytical processes to Google Cloud, built reproducible data pipelines, and mentored 100+ specialists in Python, SQL & ML — while securing third-party funding and supervising 10+ students.",
     "skills": {
@@ -43,42 +43,6 @@
               "items": [
                 "Spatial Point-Pattern",
                 "Cluster Analysis (DBSCAN)"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Experimental Research",
-          "groups": [
-            {
-              "label": "Models",
-              "items": [
-                "3D Cell Culture",
-                "Neural Progenitors"
-              ]
-            },
-            {
-              "label": "Imaging",
-              "items": [
-                "Super-Resolution",
-                "Fluorescence"
-              ]
-            },
-            {
-              "label": "Assays",
-              "items": [
-                "FISH",
-                "qPCR",
-                "FACS"
-              ]
-            },
-            {
-              "label": "Research Domains",
-              "items": [
-                "DNA Damage & Repair",
-                "Chromatin Architecture",
-                "Alu Elements",
-                "Extracellular Vesicles"
               ]
             }
           ]
@@ -159,6 +123,42 @@
                 "GCP",
                 "BigQuery",
                 "Looker"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Experimental Research",
+          "groups": [
+            {
+              "label": "Models",
+              "items": [
+                "3D Cell Culture",
+                "Neural Progenitors"
+              ]
+            },
+            {
+              "label": "Imaging",
+              "items": [
+                "Super-Resolution",
+                "Fluorescence"
+              ]
+            },
+            {
+              "label": "Assays",
+              "items": [
+                "FISH",
+                "qPCR",
+                "FACS"
+              ]
+            },
+            {
+              "label": "Research Domains",
+              "items": [
+                "DNA Damage & Repair",
+                "Chromatin Architecture",
+                "Alu Elements",
+                "Extracellular Vesicles"
               ]
             }
           ]

@@ -50,11 +50,10 @@ Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bi
   of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
   Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
   Strukturmodellierung.
-  Ergebnis: Moderne Neuimplementierung des computergestützten SNU-Proof-of-
-  Concepts von 2015 als reproduzierbare Snakemake-Pipeline für Junction-
-  Klassifikation, Neoepitop-Kandidatenranking und optionale TCR-pMHC-
-  Strukturmodellierung — nur computergestützte Ausgaben, keine therapeutischen
-  Ansprüche.
+  Ergebnis: Moderne Neuimplementierung des SNU-Proof-of-Concepts von 2015 als
+  reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-
+  Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur
+  computergestützte Ausgaben, keine therapeutischen Ansprüche.
 
 Experimentelle Biophysik — Chromatin-Nano-Architektur & DNA-Reparatur    (2017-02 bis 2018-08)
   Wissenschaftlicher Mitarbeiter / Masterand
@@ -71,8 +70,7 @@ Neurale Stammzellforschung – Strahlungseffekte auf 3D-Differenzierung    (2018
   ionisierender Strahlung und extrazellulärer Vesikel auf die Differenzierung
   humaner neuronaler Vorläuferzellen.
   Ergebnis: Erfolgreiche Identifizierung neuer Erkenntnisse zu neuronalen
-  Strahlungsantworten sowie Präsentation der Ergebnisse auf internationalen
-  wissenschaftlichen Konferenzen.
+  Strahlungsantworten sowie Präsentation auf internationalen Konferenzen.
 
 ================================================================================
 AUSBILDUNG
@@ -90,11 +88,6 @@ Bioinformatik
   Bioinformatik-Workflows: Snakemake, MapSplice, HISAT2/STAR, samtools/bcftools, bedtools, OptiType
   Immunoinformatik: HLA Typing, MHC-I Prediction, Neoepitope Candidate Prediction
   Quantitative Biobildgebung: Spatial Point-Pattern, Cluster Analysis (DBSCAN)
-Experimentelle Forschung
-  Modelle: 3D Cell Culture, Neural Progenitors
-  Bildgebung: Super-Resolution, Fluorescence
-  Analysemethoden: FISH, qPCR, FACS
-  Forschungsdomänen: DNA Damage & Repair, Chromatin Architecture, Alu Elements, Extracellular Vesicles
 KI/ML & Entwicklerwerkzeuge
   Maschinelles Lernen: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
   Computergestützte Modellierung: MHCflurry, TCRdock, AlphaFold v2, Mol*
@@ -104,6 +97,11 @@ KI/ML & Entwicklerwerkzeuge
 Daten- & Cloud-Engineering
   Programmierung & Daten: Python (Expert), R, SQL, dbt
   Cloud & Analytik: GCP, BigQuery, Looker
+Experimentelle Forschung
+  Modelle: 3D Cell Culture, Neural Progenitors
+  Bildgebung: Super-Resolution, Fluorescence
+  Analysemethoden: FISH, qPCR, FACS
+  Forschungsdomänen: DNA Damage & Repair, Chromatin Architecture, Alu Elements, Extracellular Vesicles
 
 ================================================================================
 SPRACHEN
@@ -208,6 +206,6 @@ AUSZEICHNUNGEN & ZERTIFIKATE
 2021  DeGBS-Posterpreis - Deutsche Gesellschaft für Biologische Strahlenforschung
 2018  Auszeichnung „Most Patient-Centric Solution“ - {Life Science} meets IT Hackathon, Mannheim
 2015  DAAD-PROMOS-Stipendium - DAAD
-  Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung.
+  Förderung des SNU-Forschungspraktikums (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung.
 2019  Trainer-C Leistungssport Badminton - State-approved extra-professional training, Ostfildern-Ruit
   Nov. 2017 – Jan. 2019.

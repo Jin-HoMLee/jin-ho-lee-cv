@@ -635,7 +635,7 @@
         "Führung & Mentoring: Betreuung und Anleitung von Studierenden, wissenschaftlichem Nachwuchs und technischem Personal in komplexen Laborabläufen.",
         "Wissenschaftliche Kommunikation: Einwerbung von Drittmitteln, Aufbau von Forschungskooperationen und Publikation der Ergebnisse in peer-reviewten Fachzeitschriften."
       ],
-      "outcome": "Erfolgreiche Identifizierung neuer Erkenntnisse zu neuronalen Strahlungsantworten sowie Präsentation der Ergebnisse auf internationalen wissenschaftlichen Konferenzen."
+      "outcome": "Erfolgreiche Identifizierung neuer Erkenntnisse zu neuronalen Strahlungsantworten sowie Präsentation auf internationalen Konferenzen."
     },
     "L5": {
       "id": "L5",
@@ -667,7 +667,7 @@
         "Optionale Strukturmodellierung des TCR-pMHC-Ternärkomplexes via TCRdock (AlphaFold-v2-Backend) auf Google Cloud GPU; vorhergesagte Komplexe werden im interaktiven Mol* 3D-Viewer dargestellt.",
         "MIT-lizenziert, öffentlich auf GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
       ],
-      "outcome": "Moderne Neuimplementierung des computergestützten SNU-Proof-of-Concepts von 2015 als reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur computergestützte Ausgaben, keine therapeutischen Ansprüche."
+      "outcome": "Moderne Neuimplementierung des SNU-Proof-of-Concepts von 2015 als reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur computergestützte Ausgaben, keine therapeutischen Ansprüche."
     }
   },
   "selected_projects": [
@@ -754,7 +754,7 @@
         "Optionale Strukturmodellierung des TCR-pMHC-Ternärkomplexes via TCRdock (AlphaFold-v2-Backend) auf Google Cloud GPU; vorhergesagte Komplexe werden im interaktiven Mol* 3D-Viewer dargestellt.",
         "MIT-lizenziert, öffentlich auf GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
       ],
-      "outcome": "Moderne Neuimplementierung des computergestützten SNU-Proof-of-Concepts von 2015 als reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur computergestützte Ausgaben, keine therapeutischen Ansprüche."
+      "outcome": "Moderne Neuimplementierung des SNU-Proof-of-Concepts von 2015 als reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur computergestützte Ausgaben, keine therapeutischen Ansprüche."
     }
   ],
   "languages": [
@@ -832,7 +832,7 @@
       "title": "DAAD-PROMOS-Stipendium",
       "issuer": "DAAD",
       "year": 2015,
-      "note": "Förderung des Forschungspraktikums an der Seoul National University (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung."
+      "note": "Förderung des SNU-Forschungspraktikums (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung."
     },
     {
       "title": "Trainer-C Leistungssport Badminton",
