@@ -121,7 +121,6 @@ def test_create_and_read_application(apps):
             "language": "de",
             "date": "2026-06-03",
             "subject": "Bewerbung",
-            "status": "draft",
         },
         apps_dir=apps,
     )
@@ -140,7 +139,6 @@ def test_create_application_refuses_collision(apps):
         "language": "de",
         "date": "2026-06-03",
         "subject": "Bewerbung",
-        "status": "draft",
     }
     clc.create_application("acme-bio-2026-06", job_text="x", meta=meta, apps_dir=apps)
     with pytest.raises(FileExistsError):
@@ -158,7 +156,6 @@ def test_list_applications_sorted(apps):
                 "language": "en",
                 "date": "2026-06-03",
                 "subject": "S",
-                "status": "draft",
             },
             apps_dir=apps,
         )
@@ -178,7 +175,6 @@ def _make_app(apps: Path, slug: str = "acme-bio-2026-06", **overrides) -> str:
         "language": "de",
         "date": "2026-06-03",
         "subject": "Bewerbung",
-        "status": "draft",
     }
     meta.update(overrides)
     return clc.create_application(slug, job_text="x", meta=meta, apps_dir=apps)
@@ -223,6 +219,31 @@ def test_validate_application_clean(apps):
     res = clc.validate_application(slug, apps_dir=apps)
     assert res["valid"] is True
     assert res["errors"] == []
+
+
+def test_validate_application_tolerates_apps_owned_campaign_fields(apps):
+    """Stage 2: campaign status is apps-owned — the CV validator must not reject it."""
+    slug = _make_app(apps)
+    data = clc.read_application(slug, apps_dir=apps)["application"]
+    data["status"] = "sent"
+    data["status_note"] = "recruiter call booked"
+    data["next_action"] = "follow up 2026-06-20"
+    clc._write_yaml(f"{slug}/application.yaml", data, apps_dir=apps)
+    clc.save_draft(slug, "body\n", apps_dir=apps)
+    res = clc.validate_application(slug, apps_dir=apps)
+    assert res["valid"] is True, res["errors"]
+
+
+def test_render_letter_accepts_apps_owned_status(apps):
+    """`just letter` must keep working on modern packages whose status is apps-owned."""
+    slug = _make_app(apps, language="en", subject="Application: Bioinformatician")
+    data = clc.read_application(slug, apps_dir=apps)["application"]
+    data["status"] = "interview"
+    data["status_note"] = "2nd round scheduled"
+    clc._write_yaml(f"{slug}/application.yaml", data, apps_dir=apps)
+    clc.save_draft(slug, "A paragraph.\n", apps_dir=apps)
+    res = clc.render_letter(slug, fmt="text", apps_dir=apps)
+    assert res["ok"] is True, res["errors"]
 
 
 def test_validate_application_missing_required_field(apps):

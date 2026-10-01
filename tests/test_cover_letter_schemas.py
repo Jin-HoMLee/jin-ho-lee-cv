@@ -38,6 +38,30 @@ def test_example_application_validates():
     )
 
 
+def test_application_schema_omits_campaign_status():
+    """Stage 2: the CV schema owns the letter contract only — campaign status left it."""
+    schema = _load_schema("application.schema.json")
+    assert "status" not in schema.get("properties", {})
+    assert "status" not in schema.get("required", [])
+    assert set(schema["required"]) == {"company", "role", "language", "date", "subject"}
+
+
+def test_application_schema_tolerates_apps_owned_fields():
+    """Unknown fields (apps-owned status/status_note) must not fail CV validation."""
+    schema = _load_schema("application.schema.json")
+    data = {
+        "company": "Acme",
+        "role": "Bioinformatiker",
+        "language": "de",
+        "date": "2026-06-03",
+        "subject": "Bewerbung",
+        "status": "sent",
+        "status_note": "follow up next week",
+    }
+    validator = Draft202012Validator(schema)
+    assert validator.is_valid(data), list(validator.iter_errors(data))
+
+
 def test_example_profile_validates():
     schema = _load_schema("profile.schema.json")
     data = _load_yaml(EXAMPLE_DIR / "profile.example.yaml")

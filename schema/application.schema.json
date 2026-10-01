@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Cover-letter application metadata",
+  "description": "CV-owned letter contract only. Campaign status (e.g. status/status_note/next_action) is owned by the applications repo and deliberately not validated here, so unknown fields are tolerated.",
   "type": "object",
   "properties": {
     "company": { "type": "string", "minLength": 1 },
@@ -31,9 +32,7 @@
     },
     "subject": { "type": "string", "minLength": 1 },
     "source": { "type": "string" },
-    "url": { "type": "string" },
-    "status": { "type": "string", "enum": ["draft", "sent", "interview", "rejected", "offer"] }
+    "url": { "type": "string" }
   },
-  "required": ["company", "role", "language", "date", "subject", "status"],
-  "additionalProperties": false
+  "required": ["company", "role", "language", "date", "subject"]
 }
