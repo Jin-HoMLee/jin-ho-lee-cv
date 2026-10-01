@@ -41,7 +41,6 @@ def test_cover_letter_pdf_compiles(apps):
                 "address": {"street": "Musterstr. 1", "postal_code": "68159", "city": "Mannheim"},
             },
             "subject": "Bewerbung als Bioinformatician",
-            "status": "draft",
         },
         apps_dir=apps,
     )
@@ -65,7 +64,6 @@ def test_cover_letter_pdf_compiles_minimal_recipient(apps):
             "date": "2026-06-03",
             "recipient": {"name": "Dr. Schmidt"},
             "subject": "Application: Bioinformatician",
-            "status": "draft",
         },
         apps_dir=apps,
     )
@@ -86,7 +84,6 @@ def test_cover_letter_pdf_compiles_with_body_markup(apps):
             "language": "en",
             "date": "2026-06-03",
             "subject": "Application: Bioinformatician",
-            "status": "draft",
         },
         apps_dir=apps,
     )
@@ -116,7 +113,6 @@ def test_cover_letter_pdf_compiles_no_recipient(apps):
             "language": "en",
             "date": "2026-06-03",
             "subject": "Application: Bioinformatician",
-            "status": "draft",
         },
         apps_dir=apps,
     )

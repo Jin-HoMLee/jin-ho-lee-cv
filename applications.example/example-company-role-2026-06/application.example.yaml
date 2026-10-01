@@ -12,4 +12,5 @@ recipient:
 subject: "Bewerbung als Bioinformatician"
 source: "LinkedIn"
 url: "https://example.com/jobs/123"
-status: "draft"
+# Campaign status (status/status_note/next_action/…) is owned by the applications
+# repo, not the CV. The CV letter validator tolerates those extra fields.

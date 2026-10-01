@@ -28,7 +28,7 @@ Copy shapes from the committed `applications.example/` folder.
 | `subject` | Betreff / subject line (bold in the PDF). |
 | `source` | Where the job was found (e.g. LinkedIn). |
 | `url` | Job posting URL. |
-| `status` | `draft` / `sent` / `interview` / `rejected` / `offer`. |
+| `status` / `status_note` | Campaign status — **owned by the applications repo**, not the letter contract. The CV validator tolerates these fields but never reads or validates them. |
 
 ## `profile.yaml` fields (evergreen)
 | Field | Meaning |
