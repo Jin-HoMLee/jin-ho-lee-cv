@@ -205,6 +205,8 @@ def main(argv: list[str] | None = None) -> int:
             photo_input,
             "--input",
             f"lang={args.lang}",
+            "--input",
+            f"target={args.target}",
             str(template),
             str(out_path),
         ],
