@@ -33,7 +33,7 @@
         }
       },
     )
-    v(2pt)
+    v(space-bullet)
   })
 }
 

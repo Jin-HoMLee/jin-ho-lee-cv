@@ -28,7 +28,7 @@
   },
 )
 #set text(font: font-family, size: size-body, fill: body-color)
-#set par(leading: 0.56em)
+#set par(leading: base-leading)
 #set heading(numbering: none)
 
 // Preserve semantic heading nodes for outlines and links while fully controlling

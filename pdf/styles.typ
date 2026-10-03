@@ -8,14 +8,25 @@
 
 #let font-family = "IBM Plex Sans"
 
+// The computational-biology variant carries a denser first-page information
+// block (profile + skills) and needs the complete Experience section to finish
+// before the page break, so Selected Projects opens page two. A modest,
+// variant-scoped compaction of leading and block spacing buys that room while
+// keeping the type hierarchy and every line of content unchanged. Other
+// variants keep the original, roomier tokens.
+#let pdf-target = sys.inputs.at("target", default: "bridge")
+#let compact-layout = pdf-target == "comp-bio"
+
 #let size-body = 9pt
 #let size-small = 7.5pt
 #let size-section = 10pt
 #let size-name = 18pt
 #let size-headline = 10pt
 
-#let space-section = 5pt
-#let space-paragraph = 2pt
+#let space-section = if compact-layout { 3pt } else { 5pt }
+#let space-paragraph = if compact-layout { 1pt } else { 2pt }
+#let space-bullet = if compact-layout { 1pt } else { 2pt }
+#let base-leading = if compact-layout { 0.50em } else { 0.56em }
 
 #let sidebar-ratio = (1fr, 0.5fr)  // main : sidebar  ≈ 66 : 34
 #let column-gutter = 12pt

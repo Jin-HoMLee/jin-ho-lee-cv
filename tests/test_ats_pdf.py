@@ -240,6 +240,43 @@ def test_all_variants_are_two_page_flat_text_in_one_order(built_pdf):
         assert any(ch in pypdf_text for ch in "äöüßÄÖÜ")
 
 
+def _page_text(pdf: Path, page: int) -> list[str]:
+    """Non-empty, stripped lines of a single PDF page via Poppler."""
+    text = subprocess.run(
+        ["pdftotext", "-f", str(page), "-l", str(page), "-layout", str(pdf), "-"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+    return [line.strip() for line in text.splitlines() if line.strip()]
+
+
+def test_comp_bio_experience_completes_page_one(built_pdf):
+    """The comp-bio variant must break the page after the complete Experience
+    section: page 1 ends once Experience is done and page 2 opens directly with
+    Selected Projects, in every language.
+
+    This is a deliberate comp-bio-only layout promise (captain request); the
+    bridge and ds-ml variants keep their natural flow. If an experience bullet
+    ever spills onto page 2, that page's first line is the stray bullet rather
+    than the Selected Projects heading, so the assertion below catches it.
+    """
+    lang, target, out, _, _, _ = built_pdf
+    if target != "comp-bio":
+        pytest.skip("page-1 Experience boundary is a comp-bio-only promise")
+
+    labels = SECTION_LABELS[lang]
+    page1 = _page_text(out, 1)
+    page2 = _page_text(out, 2)
+
+    assert labels["experience"] in page1
+    assert labels["projects"] not in page1, "Selected Projects leaked onto page 1"
+    assert page2[0] == labels["projects"], (
+        f"{lang}/comp-bio page 2 starts with {page2[0]!r}, not {labels['projects']!r} "
+        "- an Experience bullet spilled past page 1"
+    )
+
+
 def test_all_variants_have_outline_and_navigation_links(built_pdf):
     lang, target, _, reader, poppler, _ = built_pdf
     headings = _expected_headings(lang, target)
