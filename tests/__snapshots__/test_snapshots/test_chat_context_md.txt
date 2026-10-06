@@ -37,7 +37,7 @@ As a Cintellic consultant for an international bank, architected the migration o
 ### Data Science Trainee, Associate & Coach — neuefische GmbH (2023-02–2024-04)
 - Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.
 - ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow.
-### Doctoral & Post-Graduate Researcher (doctorate not awarded) — Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ) (2014-04–2022-07)
+### Doctoral & Post-Graduate Researcher (doctorate not awarded) — Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ) / Institute of Molecular Pathology (IMP), Vienna BioCenter (2014-04–2022-07)
 - Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).
 - Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).
 - Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles.

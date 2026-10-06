@@ -33,6 +33,8 @@ _AWARD_TITLES = {
     "comp-bio": {
         "“Most Patient-Centric Solution” Award",
         "DeGBS Poster Award",
+        "Selected for admission — Vienna BioCenter PhD Programme",
+        "Genetic manipulation of mammalian cells by lentiviral vectors",
         "DAAD PROMOS Scholarship",
     },
     "ds-ml": {
@@ -110,6 +112,14 @@ def project_pdf_content(content: dict[str, Any], *, target: str, lang: str) -> d
     result["awards"] = [
         award for award in result["awards"] if _english(award["title"]) in allowed_awards
     ]
+    if target == "comp-bio":
+        # Keep the focused application PDF compact; the canonical award notes
+        # remain available to web and machine-readable renderers.
+        for award in result["awards"]:
+            if _english(award["title"]) == (
+                "Genetic manipulation of mammalian cells by lentiviral vectors"
+            ):
+                award.pop("note", None)
     if target == "bridge":
         # The scholarship remains visible; its immunotherapy-specific internship
         # note belongs in the focused biological view rather than the General CV.

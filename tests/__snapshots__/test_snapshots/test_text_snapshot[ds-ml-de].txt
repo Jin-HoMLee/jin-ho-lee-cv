@@ -30,7 +30,7 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-0
   - ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt.
   - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.
 
-Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen) - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
+Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen) - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ) / Institute of Molecular Pathology (IMP), Vienna BioCenter    (2014-04 bis 2022-07)
   - Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).
   - Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).
   - Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.
@@ -133,6 +133,10 @@ AUSZEICHNUNGEN & ZERTIFIKATE
 2024  Google Cloud Certified - Associate Cloud Engineer - Google Cloud
   Ausgestellt Dez. 2024, gültig bis Dez. 2027.
 2021  DeGBS-Posterpreis - Deutsche Gesellschaft für Biologische Strahlenforschung
+2019  Für die Aufnahme ausgewählt — Vienna BioCenter PhD Programme - Vienna BioCenter PhD Programme
+  Nach der Vorauswahl eingeladen; an der Sommerauswahl 2019 (30. Juni–4. Juli) teilgenommen und eine IMP-Position im Plaschka-Labor angenommen (Vertrag vom 16. Juli 2019).
+2019  Genetische Manipulation von Säugerzellen durch lentivirale Vektoren - Max Perutz Labs, Vienna BioCenter (6–13 September 2019)
+  Praktischer Graduiertenkurs, 6.–13. September 2019.
 2018  Auszeichnung „Most Patient-Centric Solution“ - {Life Science} meets IT Hackathon, Mannheim
 2015  DAAD-PROMOS-Stipendium - DAAD
   Förderung des SNU-Forschungspraktikums (Bio & Health Informatics Lab) zur Splice-Junction-Neoantigen-Identifizierung.

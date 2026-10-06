@@ -616,7 +616,8 @@ def test_ds_ml_headline_en_de(content_dir):
 def test_comp_bio_tagline_and_lead_paragraph(content_dir):
     profile = _resolved(content_dir, "en", "comp-bio")["profile"]
     assert profile["tagline"].startswith("Computational scientist and bioinformatician")
-    assert "doctorate not awarded" in profile["tagline"]
+    assert profile["tagline"].endswith("radiation-biology research track.")
+    assert "doctorate not awarded" not in profile["tagline"]
 
 
 def test_ds_ml_tagline_and_lead_paragraph(content_dir):
