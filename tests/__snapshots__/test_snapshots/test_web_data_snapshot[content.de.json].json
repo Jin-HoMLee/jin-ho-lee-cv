@@ -52,10 +52,10 @@
     ]
   },
   "profile": {
-    "answer_block": "Jin-Ho Lee ist Data Scientist mit Wurzeln in der Bioinformatik und lebt in Mannheim. Er forschte acht Jahre akademisch in Bioinformatik und experimenteller Biophysik mit 11 peer-reviewed Forschungspublikationen, entwickelt heute produktive Machine-Learning- und Datenpipelines, bringt Google-Cloud-Beratungserfahrung aus dem internationalen Bankenumfeld mit und hat 100+ Fachkräfte in Python, SQL und ML geschult. Er hat einen M.Sc. der Universität Heidelberg.",
-    "tagline": "Data Scientist mit Wurzeln in der Bioinformatik — acht Jahre akademische Forschung, 11 peer-reviewed Publikationen, Produktiv-ML und Cloud-Beratung auf GCP; Migration von 1.000+ analytischen Prozessen und Coaching von 100+ Fachkräften.",
+    "answer_block": "Jin-Ho Lee ist Data Scientist mit Wurzeln in der Bioinformatik und lebt in Mannheim. Er forschte acht Jahre akademisch in Bioinformatik und experimenteller Biophysik mit 12 peer-reviewed Forschungspublikationen, entwickelt heute produktive Machine-Learning- und Datenpipelines, bringt Google-Cloud-Beratungserfahrung aus dem internationalen Bankenumfeld mit und hat 100+ Fachkräfte in Python, SQL und ML geschult. Er hat einen M.Sc. der Universität Heidelberg.",
+    "tagline": "Data Scientist mit Wurzeln in der Bioinformatik — acht Jahre akademische Forschung, 12 peer-reviewed Publikationen, Produktiv-ML und Cloud-Beratung auf GCP; Migration von 1.000+ analytischen Prozessen und Coaching von 100+ Fachkräften.",
     "paragraphs": [
-      "Arbeit in Bioinformatik und experimenteller Biophysik: unveröffentlichte NGS/RNA-Seq-Genomik-Projektarbeit (HLA-Typisierung und Pipelines für splice-abgeleitete Neoepitop-Kandidaten) am Nationalen Centrum für Tumorerkrankungen (NCT) und an der Seoul National University (SNU), plus quantitative Biobildanalyse und Wet-Lab-Forschung am Deutschen Krebsforschungszentrum (DKFZ), am Forschungszentrum Jülich und am Kirchhoff-Institut für Physik (KIP). Die experimentelle Linie zu Bildgebung / DNA-Reparatur / Chromatin / Strahlenbiologie brachte 11 peer-reviewed Forschungspublikationen — als Erstautor sowie mit geteilter Erstautorschaft — hervor, keine Genomik-Publikationen.",
+      "Arbeit in Bioinformatik und experimenteller Biophysik: unveröffentlichte NGS/RNA-Seq-Genomik-Projektarbeit (HLA-Typisierung und Pipelines für splice-abgeleitete Neoepitop-Kandidaten) am Nationalen Centrum für Tumorerkrankungen (NCT) und an der Seoul National University (SNU), plus quantitative Biobildanalyse und Wet-Lab-Forschung am Deutschen Krebsforschungszentrum (DKFZ), am Forschungszentrum Jülich und am Kirchhoff-Institut für Physik (KIP). Die experimentelle Linie zu Bildgebung / DNA-Reparatur / Chromatin / Strahlenbiologie brachte 12 peer-reviewed Forschungspublikationen — als Erstautor sowie mit geteilter Erstautorschaft — hervor, keine Genomik-Publikationen.",
       "Als Cintellic-Berater für eine internationale Bank Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud und Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC. Zuvor bei neuefische Coaching von 100+ Fachkräften in Python, SQL & ML; in der Forschung Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden."
     ]
   },
@@ -1178,7 +1178,7 @@
       {
         "id": "what-has-he-published",
         "question": "Was hat Jin-Ho Lee publiziert?",
-        "answer": "Jin-Ho Lee hat 11 peer-reviewed Forschungspublikationen (10 Artikel und 1 wissenschaftliches Buchkapitel), darunter Arbeiten als Erstautor und mit geteilter Erstautorschaft, in der Strahlenbiophysik und der hochauflösenden Bildgebung von DNA-Schadensreparatur und Chromatin-Architektur. Die vollständige Liste mit Zitationszahlen ist über seinen ORCID-Eintrag (0009-0001-8784-1771) und sein Google-Scholar-Profil verfügbar."
+        "answer": "Jin-Ho Lee hat 12 peer-reviewed Forschungspublikationen (10 Artikel und 2 wissenschaftliche Buchkapitel), darunter Arbeiten als Erstautor und mit geteilter Erstautorschaft (2 Erst / 3 geteilte Erst / 7 Co-Autor), in der Strahlenbiophysik und der hochauflösenden Bildgebung von DNA-Schadensreparatur und Chromatin-Architektur. Die vollständige Liste mit Zitationszahlen ist über seinen ORCID-Eintrag (0009-0001-8784-1771) und sein Google-Scholar-Profil verfügbar."
       },
       {
         "id": "what-does-he-work-on-now",
@@ -1195,7 +1195,7 @@
   "publication_metrics": {
     "total_records": 16,
     "research_records": 15,
-    "peer_reviewed_records": 11,
+    "peer_reviewed_records": 12,
     "applied_records": 1,
     "all_records_authorship": {
       "first": 6,
@@ -1204,7 +1204,7 @@
     }
   },
   "publications_aggregate": {
-    "summary": "11 begutachtete Publikationen (10 Artikel + 1 wissenschaftliches Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (15 Forschungseinträge; insgesamt 16 Bibliografie-Datensätze), Forschungsspanne 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
+    "summary": "12 begutachtete Publikationen (10 Artikel + 2 wissenschaftliches Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 7 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (15 Forschungseinträge; insgesamt 16 Bibliografie-Datensätze), Forschungsspanne 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
     "pointer": "Vollständige Liste:"
   }
 }

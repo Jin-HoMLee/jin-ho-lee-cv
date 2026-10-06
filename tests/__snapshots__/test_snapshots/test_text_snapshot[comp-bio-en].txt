@@ -8,7 +8,7 @@ PROFILE
 Engineered in-silico pipelines for HLA typing and neoantigen candidate discovery
 from real-patient NGS and RNA-Seq data at NCT and SNU (unpublished computational
 project work), later packaged as reproducible Snakemake workflows. A parallel
-experimental-biophysics line at DKFZ, FZ Jülich, and KIP produced 11 peer-
+experimental-biophysics line at DKFZ, FZ Jülich, and KIP produced 12 peer-
 reviewed research publications — first- and shared-first author — in super-
 resolution microscopy of DNA-damage repair and chromatin, not genomics.
 

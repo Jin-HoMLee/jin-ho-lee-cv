@@ -1,8 +1,8 @@
 # Jin-Ho Lee — Bioinformatics · Data Science
 
-> Data scientist with bioinformatics roots — eight years of academic research, 11 peer-reviewed publications, production ML and cloud consulting on GCP; 1,000+ analytical processes migrated, 100+ specialists coached.
+> Data scientist with bioinformatics roots — eight years of academic research, 12 peer-reviewed publications, production ML and cloud consulting on GCP; 1,000+ analytical processes migrated, 100+ specialists coached.
 
-Worked across bioinformatics and experimental biophysics: unpublished NGS/RNA-Seq genomics project work (HLA typing and splice-derived neoepitope candidate pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National University (SNU), plus quantitative bioimage analysis and wet-lab research at the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich), and Kirchhoff Institute for Physics (KIP). The experimental imaging / DNA-repair / chromatin / radiation-biology line produced 11 peer-reviewed research publications — first- and shared-first author — not genomics papers.
+Worked across bioinformatics and experimental biophysics: unpublished NGS/RNA-Seq genomics project work (HLA typing and splice-derived neoepitope candidate pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National University (SNU), plus quantitative bioimage analysis and wet-lab research at the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich), and Kirchhoff Institute for Physics (KIP). The experimental imaging / DNA-repair / chromatin / radiation-biology line produced 12 peer-reviewed research publications — first- and shared-first author — not genomics papers.
 
 ## Selected Projects
 - [Anti-Financial Crime – Know Your Customer (KYC) Platform](https://jinholee.is-a.dev/projects/C1/): Cloud migration and analytics environment development for financial crime detection at a large international bank.

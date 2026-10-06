@@ -36,7 +36,7 @@ misc:
 
 publications:
   summary:
-    en: "{peer_reviewed} peer-reviewed publications ({peer_reviewed_articles} articles + {peer_reviewed_book_chapters} research book chapter; {pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author), {conferences} first-author research conference contributions, and {applied_records} applied/off-domain record ({research_records} research records; {total_records} bibliography records total), research span {span}, in radiation biophysics & super-resolution DNA-repair imaging."
+    en: "{peer_reviewed} peer-reviewed publications ({peer_reviewed_articles} articles + {peer_reviewed_book_chapters} research book chapters; {pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author), {conferences} first-author research conference contributions, and {applied_records} applied/off-domain record ({research_records} research records; {total_records} bibliography records total), research span {span}, in radiation biophysics & super-resolution DNA-repair imaging."
     de: "{peer_reviewed} begutachtete Publikationen ({peer_reviewed_articles} Artikel + {peer_reviewed_book_chapters} wissenschaftliches Buchkapitel; {pr_first} als Erstautor, {pr_shared} geteilte Erstautorenschaft, {pr_coauthor} als Co-Autor), {conferences} Forschungsbeiträge auf Konferenzen als Erstautor und {applied_records} angewandter/themenfremder Beitrag ({research_records} Forschungseinträge; insgesamt {total_records} Bibliografie-Datensätze), Forschungsspanne {span}, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur."
   pdf_summary:
     en: "{peer_reviewed} peer-reviewed research publications ({total_records} bibliography records total; {pr_first} first-author, {pr_shared} shared-first)."
