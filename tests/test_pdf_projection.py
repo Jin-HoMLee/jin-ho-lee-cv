@@ -185,7 +185,7 @@ def test_general_profile_is_broad_and_balanced(content_dir):
     tagline = data["profile"]["tagline"].lower()
     assert "data scientist with bioinformatics roots" in tagline
     assert "eight years" in tagline
-    assert "11 peer-reviewed" in tagline
+    assert "12 peer-reviewed" in tagline
     assert "consult" in tagline
     assert "100+" in tagline
     # The tagline stays broad while General carries the complete independent-work balance.
@@ -327,7 +327,7 @@ def test_comp_bio_pdf_honesty_boundaries_for_application_export(content_dir):
     assert "Unpublished" in data["selected_projects"][1]["outcome"]
     assert "not claimed as already run on SLURM" in data["selected_projects"][0]["outcome"]
     assert all(bullet.get("refs") != ["D4"] for bullet in independent["bullets"])
-    assert "4 selected of 11 peer-reviewed" in data["publications_summary"]
+    assert "4 selected of 12 peer-reviewed" in data["publications_summary"]
     assert "long-read" not in tagline.lower()
     assert "proteomic" not in tagline.lower()
     assert "mass spectrometry" not in tagline.lower()

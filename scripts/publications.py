@@ -22,11 +22,11 @@ EN_DASH = "–"
 def _counts_as_peer_reviewed(pub: Publication) -> bool:
     """Research articles and book chapters count unless the record opts out.
 
-    The established peer-reviewed total is 11 (10 articles + the 2021
-    Super-Resolution Radiation Biology chapter). Methods-protocol chapters can
-    remain in the bibliography with ``peer_reviewed = {false}`` so they do not
-    inflate that total. The unpublished 2015 computational genomics proof of
-    concept is not a bibliography record and is therefore already excluded.
+    The established peer-reviewed total is 12 (10 articles + 2 research book
+    chapters: 2021 Super-Resolution + 2020 COMBO-FISH). The COMBO-FISH chapter
+    (middle authorship) now counts; no peer_reviewed=false opt-out remains.
+    The unpublished 2015 computational genomics proof of concept is not a
+    bibliography record and is therefore already excluded.
     """
     if pub.category != "research" or pub.type not in _PEER_REVIEWED_TYPES:
         return False

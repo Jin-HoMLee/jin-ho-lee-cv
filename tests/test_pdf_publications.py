@@ -24,7 +24,7 @@ def test_prepare_data_comp_bio_selected_publications(content_dir):
         "lee2019_combofish",
     ]
     assert result["publications_heading"] == "Selected Publications"
-    assert "4 selected of 11 peer-reviewed research publications" in result["publications_summary"]
+    assert "4 selected of 12 peer-reviewed research publications" in result["publications_summary"]
     assert "16 bibliography records total" in result["publications_summary"]
     assert result["publications_pointer"] == "Full list & metrics:"
     assert [link["label"] for link in result["publication_links"]] == [
@@ -72,7 +72,7 @@ def test_prepare_data_comp_bio_de_selected_summary_localized(content_dir):
     result = prepare_data(content_dir, private_path=None, lang="de", target="comp-bio")
     assert result["publications_heading"] == "Ausgewählte Publikationen"
     assert (
-        "4 ausgewählte von 11 begutachteten Forschungspublikationen"
+        "4 ausgewählte von 12 begutachteten Forschungspublikationen"
         in result["publications_summary"]
     )
     assert "insgesamt 16 Bibliografie-Datensätze" in result["publications_summary"]
@@ -133,7 +133,7 @@ def test_pdf_bridge_aggregate_vs_comp_bio_selected(repo_root, content_dir):
     assert _norm(selected_title).replace("-", "") in compbio.replace("-", "")
     assert _norm(cancers_title).replace("-", "") in compbio.replace("-", "")
     assert _norm(omitted_title).replace("-", "") not in compbio.replace("-", "")
-    assert "4 selected of 11 peer-reviewed" in compbio
+    assert "4 selected of 12 peer-reviewed" in compbio
     assert "16 bibliography records total" in compbio
 
 
