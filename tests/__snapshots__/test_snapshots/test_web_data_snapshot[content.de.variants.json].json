@@ -1,7 +1,7 @@
 {
   "comp-bio": {
     "headline": "Bioinformatik · Krebsgenomik",
-    "tagline": "Bioinformatiker mit tiefen Wurzeln in der Krebsgenomik — HLA-Typisierung & Neoantigen-Kandidatenpipelines aus echten Patienten-NGS/RNA-Seq, reproduzierbare Snakemake-Workflows, plus 11 peer-reviewed Publikationen zu Bildgebung / DNA-Reparatur / Chromatin / Strahlenbiologie.",
+    "tagline": "Computational Scientist und Bioinformatiker (M.Sc. Molekulare Biotechnologie) mit praktischer NGS-Arbeit zu HLA-Typisierung und vorhergesagten splice-abgeleiteten MHC-I-Neoepitop-Kandidaten sowie produktivem Python-/Cloud-Data-Engineering. Pflegt eine öffentliche Snakemake-Pipeline von RNA-Seq bis gerankten Neoepitop-Kandidaten. Elf peer-reviewed Publikationen aus einer getrennten Forschungslinie zu Bildgebung, DNA-Reparatur, Chromatin und Strahlenbiologie. Doktoratsforschung am FZ Jülich durchgeführt (Promotion nicht abgeschlossen).",
     "lead_paragraph": "Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-Kandidatenidentifizierung aus realen Patienten-NGS- und RNA-Seq-Daten am NCT und an der SNU (unveröffentlichte computergestützte Projektarbeit), später als reproduzierbare Snakemake-Workflows paketiert. Eine parallele experimentelle Biophysik-Linie am DKFZ, FZ Jülich und KIP brachte 11 peer-reviewed Forschungspublikationen — als Erst- und geteilter Erstautor — in der hochauflösenden Mikroskopie von DNA-Schadensreparatur und Chromatin hervor, keine Genomik-Publikationen.",
     "second_paragraph": "Ebenso zu Hause in der Produktion: Migration von 1.000+ analytischen Prozessen in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Mentoring von 100+ Fachkräften in Python, SQL & ML — bei gleichzeitiger Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden.",
     "skills": {
@@ -271,15 +271,15 @@
           "name": "Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)",
           "url": null
         },
-        "role": "Doktorand & Postgraduierter Forscher",
+        "role": "Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen)",
         "period": {
           "start": "2014-04",
           "end": "2022-07"
         },
         "bullets": [
           {
-            "en": "Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.",
-            "de": "Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung.",
+            "en": "Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).",
+            "de": "Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).",
             "refs": [
               "L1",
               "L2"
@@ -539,15 +539,15 @@
           "name": "Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)",
           "url": null
         },
-        "role": "Doktorand & Postgraduierter Forscher",
+        "role": "Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen)",
         "period": {
           "start": "2014-04",
           "end": "2022-07"
         },
         "bullets": [
           {
-            "en": "Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.",
-            "de": "Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung.",
+            "en": "Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).",
+            "de": "Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).",
             "refs": [
               "L1",
               "L2"

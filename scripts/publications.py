@@ -15,7 +15,25 @@ from scripts.bib_loader import Publication
 
 _PEER_REVIEWED_TYPES = ("article", "book-chapter")  # conference contributions are not
 _COAUTHOR = ("middle", "last", "corresponding")  # everything that isn't first/shared
+_PEER_REVIEWED_FALSE = {"false", "no", "0"}
 EN_DASH = "–"
+
+
+def _counts_as_peer_reviewed(pub: Publication) -> bool:
+    """Research articles and book chapters count unless the record opts out.
+
+    The established peer-reviewed total is 11 (10 articles + the 2021
+    Super-Resolution Radiation Biology chapter). Methods-protocol chapters can
+    remain in the bibliography with ``peer_reviewed = {false}`` so they do not
+    inflate that total. The unpublished 2015 computational genomics proof of
+    concept is not a bibliography record and is therefore already excluded.
+    """
+    if pub.category != "research" or pub.type not in _PEER_REVIEWED_TYPES:
+        return False
+    flag = pub.raw.get("peer_reviewed")
+    if flag is None:
+        return True
+    return str(flag).strip().lower() not in _PEER_REVIEWED_FALSE
 
 
 def publication_mode(target: str) -> str:
@@ -59,15 +77,16 @@ class PublicationSummary:
 def publication_summary(pubs: list[Publication]) -> PublicationSummary:
     """Derive the honest, type-segmented aggregate from the BibTeX records.
 
-    Peer-reviewed = research articles + research book chapters; conference
-    contributions and the applied/off-domain record are counted separately.
-    ``pr_coauthor`` and ``all_coauthor`` fold middle/last/corresponding authorship.
-    The span is the research-body min/max year.
+    Peer-reviewed = research articles + research book chapters that do not opt
+    out via ``peer_reviewed = {false}``; conference contributions and the
+    applied/off-domain record are counted separately. ``pr_coauthor`` and
+    ``all_coauthor`` fold middle/last/corresponding authorship. The span is the
+    research-body min/max year.
     """
     if not pubs:
         raise ValueError("publication_summary() requires at least one publication")
     research = [p for p in pubs if p.category == "research"]
-    peer = [p for p in research if p.type in _PEER_REVIEWED_TYPES]
+    peer = [p for p in research if _counts_as_peer_reviewed(p)]
     years = [p.year for p in research] or [p.year for p in pubs]
     return PublicationSummary(
         total_records=len(pubs),

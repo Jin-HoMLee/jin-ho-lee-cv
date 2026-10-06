@@ -39,8 +39,8 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-0
   - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.
   - ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt.
 
-Doktorand & Postgraduierter Forscher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
-  - Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung.
+Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen) - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
+  - Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).
   - Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).
   - Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.
 
@@ -68,10 +68,13 @@ Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bi
   of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
   Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
   Strukturmodellierung.
-  Ergebnis: Moderne Neuimplementierung des SNU-Proof-of-Concepts von 2015 als
-  reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-
-  Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur
-  computergestützte Ausgaben, keine therapeutischen Ansprüche.
+  Ergebnis: Open-Source-Snakemake-8-Workflow (MIT): RNA-Seq → Junction-Klassen
+  gegen matched normal + GENCODE → OptiType-HLA → MHCflurry-MHC-I-
+  Kandidatenranking; optionale TCR-pMHC-Modellierung. Lokal und auf GCP
+  gelaufen; per Design SLURM-portabel (kein Anspruch, bereits auf SLURM gelaufen
+  zu sein). Moderne Neuimplementierung der computergestützten Idee von 2015 —
+  neue Methoden sind Arbeit von 2026. Nur computergestützte Ausgaben, keine
+  therapeutischen Ansprüche.
 
 ================================================================================
 AUSBILDUNG
@@ -135,8 +138,8 @@ Soziales
 ================================================================================
 PUBLIKATIONEN
 ================================================================================
-12 begutachtete Publikationen (10 Artikel + 2 wissenschaftliches Buchkapitel; 2
-als Erstautor, 3 geteilte Erstautorenschaft, 7 als Co-Autor), 3
+11 begutachtete Publikationen (10 Artikel + 1 wissenschaftliches Buchkapitel; 2
+als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor), 3
 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder
 Beitrag (15 Forschungseinträge; insgesamt 16 Bibliografie-Datensätze),
 Forschungsspanne 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung

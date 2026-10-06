@@ -18,4 +18,4 @@ contributions:
   - "Implementierung prädiktiver Modellierung mittels ANNs (NetMHCPan) zum Screening von Missense-Mutationen auf MHC-I-Bindungsaffinität."
   - "Konzeption einer Konsens-Methodik zur Integration mehrerer HLA-Typisierungs-Algorithmen zur Auflösung von Sequenz-Ambiguitäten und Verbesserung der Call-Konsistenz."
   - "Computergestützte Prüfung der Pipeline durch Vergleich von Bindungsspezifitäts-Vorhersagen über HLA-Allele hinweg, um inkonsistente Allel-Calls zu markieren."
-outcome: "Nachgewiesen, dass ein computergestützter HLA-Typisierungs- und Neoantigen-Kandidaten-Workflow aus NGS-Daten machbar ist — kein Ersatz für klinische Assays."
+outcome: "B.Sc.-Thesis, NCT Heidelberg: In-silico-HLA-Typisierung aus WES/NGS und ANN-basierte MHC-I-Bindungsscreens für Missense-Mutationskandidaten. Unveröffentlicht."

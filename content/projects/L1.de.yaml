@@ -14,9 +14,9 @@ technologies:
   - "TCGA Datasets"
   - "MHC-I Prediction Tools"
 contributions:
-  - "Entwicklung einer Discovery-Pipeline zur Identifizierung vorhergesagter junction-abgeleiteter Kandidatenklassen in großen Krebs-RNA-Seq-Datensätzen."
-  - "Vorhersage hochaffiner MHC-I-bindender Kandidatenpeptide aus nicht-kanonischen junction-abgeleiteten Sequenzen."
-  - "Abgleich vorhergesagter Kandidaten mit publizierten transkriptomischen Studien."
+  - "Entwicklung einer Discovery-Pipeline zur Identifizierung neuer Splice-Junctions in TCGA-Kohorten (BRCA/LUAD/LAML-RNA-Seq)."
+  - "Vorhersage HLA-A*02:01-bindender Kandidaten-9-mere aus der Drei-Rahmen-Translation kurzer Junction-Contigs."
+  - "Abgleich der Kandidaten-Junctions mit publizierten Transkript-/Isoform-Berichten."
   - "Vergleich computergestützter mutations- und splice-abgeleiteter Neoepitop-Kandidatenmengen (kein experimenteller Co-Targeting-Anspruch)."
-outcome: "Unveröffentlichter computergestützter Machbarkeitsnachweis, der vorhergesagte Kandidatenpeptide ausschließlich aus RNA-Seq-Splice-Junction-Daten erzeugte — ohne nasslaborische oder klinische Bestätigung."
+outcome: "SNU-Praktikum 2015: unveröffentlichter computergestützter Machbarkeitsnachweis — neue Splice-Junctions in TCGA-BRCA/LUAD/LAML-RNA-Seq, Drei-Rahmen-Translation kurzer Junction-Contigs, von NetMHCpan vorhergesagte HLA-A*02:01-Kandidaten-9-mere. Keine experimentelle Validierung, klinische Nutzung, Publikation oder Patent."
 

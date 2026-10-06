@@ -30,8 +30,8 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 to 2024-04
   - ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow.
   - Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.
 
-Doctoral & Post-Graduate Researcher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 to 2022-07)
-  - Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.
+Doctoral & Post-Graduate Researcher (doctorate not awarded) - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 to 2022-07)
+  - Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).
   - Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).
   - Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles.
 
@@ -118,8 +118,8 @@ Community
 ================================================================================
 PUBLICATIONS
 ================================================================================
-12 peer-reviewed publications (10 articles + 2 research book chapter; 2 first-
-author, 3 shared-first, 7 co-author), 3 first-author research conference
+11 peer-reviewed publications (10 articles + 1 research book chapter; 2 first-
+author, 3 shared-first, 6 co-author), 3 first-author research conference
 contributions, and 1 applied/off-domain record (15 research records; 16
 bibliography records total), research span 2017–2021, in radiation biophysics &
 super-resolution DNA-repair imaging.

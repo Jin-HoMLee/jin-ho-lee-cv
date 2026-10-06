@@ -19,12 +19,12 @@ def test_prepare_data_comp_bio_selected_publications(content_dir):
     assert result["publications_mode"] == "selected"
     assert [p["key"] for p in result["publications"]] == [
         "lee2021superres_dna_repair",
-        "hausmann2020_combofish_repetitive",
         "hausmann2020_3d_dna_fish",
+        "scherthan2019_ra223",
         "lee2019_combofish",
     ]
     assert result["publications_heading"] == "Selected Publications"
-    assert "4 selected of 12 peer-reviewed research publications" in result["publications_summary"]
+    assert "4 selected of 11 peer-reviewed research publications" in result["publications_summary"]
     assert "16 bibliography records total" in result["publications_summary"]
     assert result["publications_pointer"] == "Full list & metrics:"
     assert [link["label"] for link in result["publication_links"]] == [
@@ -72,7 +72,7 @@ def test_prepare_data_comp_bio_de_selected_summary_localized(content_dir):
     result = prepare_data(content_dir, private_path=None, lang="de", target="comp-bio")
     assert result["publications_heading"] == "Ausgewählte Publikationen"
     assert (
-        "4 ausgewählte von 12 begutachteten Forschungspublikationen"
+        "4 ausgewählte von 11 begutachteten Forschungspublikationen"
         in result["publications_summary"]
     )
     assert "insgesamt 16 Bibliografie-Datensätze" in result["publications_summary"]
@@ -102,7 +102,7 @@ def _norm(s):
 def test_pdf_bridge_aggregate_vs_comp_bio_selected(repo_root, content_dir):
     pubs = load_publications(content_dir / "publications.bib")
     selected_title = next(p.title for p in pubs if p.key == "lee2019_combofish")
-    chapter_title = next(p.title for p in pubs if p.key == "hausmann2020_combofish_repetitive")
+    cancers_title = next(p.title for p in pubs if p.key == "scherthan2019_ra223")
     omitted_title = next(p.title for p in pubs if p.key == "pagacova2019_metalnp")
 
     def build(target, name):
@@ -131,9 +131,9 @@ def test_pdf_bridge_aggregate_vs_comp_bio_selected(repo_root, content_dir):
     assert _norm(selected_title).replace("-", "") not in bridge.replace("-", "")
     # comp-bio → four representative records, not the complete bibliography.
     assert _norm(selected_title).replace("-", "") in compbio.replace("-", "")
-    assert _norm(chapter_title).replace("-", "") in compbio.replace("-", "")
+    assert _norm(cancers_title).replace("-", "") in compbio.replace("-", "")
     assert _norm(omitted_title).replace("-", "") not in compbio.replace("-", "")
-    assert "4 selected of 12 peer-reviewed" in compbio
+    assert "4 selected of 11 peer-reviewed" in compbio
     assert "16 bibliography records total" in compbio
 
 
@@ -142,14 +142,13 @@ def test_pdf_bridge_aggregate_vs_comp_bio_selected(repo_root, content_dir):
     reason="needs typst + pdftotext (poppler) to extract and assert PDF text",
 )
 def test_pdf_comp_bio_keeps_full_skills_sections(repo_root):
-    """The Comp Bio PDF keeps the full, identical four skills sections."""
+    """The Comp Bio PDF keeps the four skills sections minus dropped agent tooling."""
     expected = {
         "en": (
             "Genomics",
             "Immunoinformatics",
             "Bioinformatics Workflows",
             "Machine Learning",
-            "AI Agents",
             "Browser ML Delivery",
         ),
         "de": (
@@ -157,7 +156,6 @@ def test_pdf_comp_bio_keeps_full_skills_sections(repo_root):
             "Immunoinformatik",
             "Bioinformatik-Workflows",
             "Maschinelles Lernen",
-            "KI-Agenten",
             "Browser-ML-Auslieferung",
         ),
     }
@@ -180,5 +178,7 @@ def test_pdf_comp_bio_keeps_full_skills_sections(repo_root):
         normalized = _norm(text)
         for label in expected[lang]:
             assert _norm(label) in normalized
-        for agent in ("Claude Code", "Codex", "OpenCode", "Pi", "Grok", "Cursor", "Kimi"):
-            assert _norm(agent) in normalized
+        for agent in ("Claude Code", "Codex", "OpenCode", "Grok", "Cursor", "Kimi"):
+            assert _norm(agent) not in normalized
+        assert "ai agents" not in normalized
+        assert "ki-agenten" not in normalized

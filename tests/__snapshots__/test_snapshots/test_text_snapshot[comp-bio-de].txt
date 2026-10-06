@@ -36,8 +36,8 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-0
   - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.
   - ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt.
 
-Doktorand & Postgraduierter Forscher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
-  - Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung.
+Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen) - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
+  - Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).
   - Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).
   - Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.
 
@@ -50,27 +50,32 @@ Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bi
   of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
   Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
   Strukturmodellierung.
-  Ergebnis: Moderne Neuimplementierung des SNU-Proof-of-Concepts von 2015 als
-  reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-
-  Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur
-  computergestützte Ausgaben, keine therapeutischen Ansprüche.
+  Ergebnis: Open-Source-Snakemake-8-Workflow (MIT): RNA-Seq → Junction-Klassen
+  gegen matched normal + GENCODE → OptiType-HLA → MHCflurry-MHC-I-
+  Kandidatenranking; optionale TCR-pMHC-Modellierung. Lokal und auf GCP
+  gelaufen; per Design SLURM-portabel (kein Anspruch, bereits auf SLURM gelaufen
+  zu sein). Moderne Neuimplementierung der computergestützten Idee von 2015 —
+  neue Methoden sind Arbeit von 2026. Nur computergestützte Ausgaben, keine
+  therapeutischen Ansprüche.
 
-Experimentelle Biophysik — Chromatin-Nano-Architektur & DNA-Reparatur    (2017-02 bis 2018-08)
-  Wissenschaftlicher Mitarbeiter / Masterand
-  Fortgeschrittene Forschung mit Super-Resolution-Mikroskopie und
-  computergestützter Analyse zur Untersuchung von DNA-Reparaturmechanismen und
-  Chromatin-Nano-Architektur.
-  Ergebnis: Veröffentlichung der Forschungsergebnisse in mehreren peer-reviewten
-  Fachzeitschriften und Einwerbung von Drittmitteln für weiterführende
-  wissenschaftliche Untersuchungen.
+Personalisierte Immuntherapie – Hochdurchsatz-HLA-Typisierungs-Pipeline    (2014-04 bis 2014-05)
+  Bioinformatik-Bachelorand (NCT Heidelberg)
+  B.Sc.-Thesisprojekt: Bioinformatischer Workflow zur Identifizierung
+  patientenspezifischer Krebs-Targets und Automatisierung der HLA-
+  Genotypisierung aus Next-Generation-Sequencing-Daten (NGS).
+  Ergebnis: B.Sc.-Thesis, NCT Heidelberg: In-silico-HLA-Typisierung aus WES/NGS
+  und ANN-basierte MHC-I-Bindungsscreens für Missense-Mutationskandidaten.
+  Unveröffentlicht.
 
-Neurale Stammzellforschung – Strahlungseffekte auf 3D-Differenzierung    (2018-09 bis 2022-07)
-  Promotionsforscher (RWTH Aachen, Forschungszentrum Jülich)
-  Wissenschaftliches Forschungsprojekt zur Untersuchung der Auswirkungen
-  ionisierender Strahlung und extrazellulärer Vesikel auf die Differenzierung
-  humaner neuronaler Vorläuferzellen.
-  Ergebnis: Erfolgreiche Identifizierung neuer Erkenntnisse zu neuronalen
-  Strahlungsantworten sowie Präsentation auf internationalen Konferenzen.
+Krebs-Neoantigen-Entdeckung – Transkriptomweite Splice-Analyse    (2015-08 bis 2015-11)
+  Bioinformatik-Forschungspraktikant (Seoul National University)
+  Unveröffentlichte computergestützte Pipeline zur Vorhersage splice-junction-
+  abgeleiteter Neoepitop-Kandidatenpeptide aus RNA-Seq-Daten.
+  Ergebnis: SNU-Praktikum 2015: unveröffentlichter computergestützter
+  Machbarkeitsnachweis — neue Splice-Junctions in TCGA-BRCA/LUAD/LAML-RNA-Seq,
+  Drei-Rahmen-Translation kurzer Junction-Contigs, von NetMHCpan vorhergesagte
+  HLA-A*02:01-Kandidaten-9-mere. Keine experimentelle Validierung, klinische
+  Nutzung, Publikation oder Patent.
 
 ================================================================================
 AUSBILDUNG
