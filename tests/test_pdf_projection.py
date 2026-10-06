@@ -83,7 +83,7 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
     data = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
 
     assert data["profile"]["paragraphs"] == []
-    assert "Eleven peer-reviewed" in data["profile"]["tagline"]
+    assert "Twelve peer-reviewed" in data["profile"]["tagline"]
     assert "doctorate not awarded" in data["profile"]["tagline"]
     assert "M.Sc." in data["profile"]["tagline"]
     assert len(_entry(data, "independent")["bullets"]) == 2
