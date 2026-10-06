@@ -18,4 +18,4 @@ contributions:
   - "Implemented predictive modeling using ANNs (NetMHCPan) to screen missense mutations for MHC-I binding affinity."
   - "Engineered a consensus methodology integrating multiple HLA typing algorithms to resolve sequence ambiguities and improve call consistency."
   - "Checked the pipeline computationally by comparing binding-specificity predictions across HLA alleles to flag inconsistent allele calls."
-outcome: "Demonstrated computational feasibility of an HLA typing and neoantigen candidate workflow from NGS data — not a clinical-assay replacement."
+outcome: "B.Sc. thesis, NCT Heidelberg: in-silico HLA typing from WES/NGS and ANN-based MHC-I binding screens for missense-mutation candidates. Unpublished."

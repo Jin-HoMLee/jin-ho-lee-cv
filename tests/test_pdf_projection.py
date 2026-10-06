@@ -45,9 +45,10 @@ def test_experience_coverage_is_identical_across_targets_and_languages(content_d
     for lang in ("en", "de"):
         for target in ("bridge", "comp-bio", "ds-ml"):
             data = prepare_data(content_dir, private_path=None, lang=lang, target=target)
+            independent_n = 2 if target == "comp-bio" else 3
             counts = {entry["id"]: len(entry["bullets"]) for entry in data["experience"]}
             assert counts == {
-                "independent": 3,
+                "independent": independent_n,
                 "cintellic": 3,
                 "neuefische": 2,
                 "research": 3,
@@ -55,7 +56,12 @@ def test_experience_coverage_is_identical_across_targets_and_languages(content_d
             for entry_id, markers_by_lang in inventory.items():
                 bullets = _entry(data, entry_id)["bullets"]
                 labels = " · ".join(bullet[lang] for bullet in bullets)
-                for marker in markers_by_lang[lang]:
+                markers = markers_by_lang[lang]
+                if target == "comp-bio" and entry_id == "independent":
+                    markers = tuple(
+                        marker for marker in markers if marker not in ("Agentic AI", "Agenten-KI")
+                    )
+                for marker in markers:
                     assert marker in labels, f"{lang}/{target} {entry_id} missing {marker!r}"
 
 
@@ -65,8 +71,10 @@ def test_pdf_projection_does_not_change_canonical_content(content_dir):
 
     assert len(canonical["publications"]) == 16
     assert len(projected["publications"]) == 4
-    # skills sections are now identical and full in every renderer
-    assert _skill_items(canonical) == _skill_items(projected)
+    # Comp-bio PDFs omit dropped agent-persona tooling; other groups stay identical.
+    pdf_omitted = {"Claude Code", "Codex", "OpenCode", "Pi", "Grok", "Cursor", "Kimi"}
+    assert _skill_items(projected).isdisjoint(pdf_omitted)
+    assert _skill_items(canonical) - pdf_omitted == _skill_items(projected)
     assert all("thesis" in education for education in canonical["education"])
     assert all("thesis" not in education for education in projected["education"])
 
@@ -75,24 +83,28 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
     data = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
 
     assert data["profile"]["paragraphs"] == []
-    assert "eleven peer-reviewed" in data["profile"]["tagline"]
-    assert len(_entry(data, "independent")["bullets"]) == 3
+    assert "Eleven peer-reviewed" in data["profile"]["tagline"]
+    assert "doctorate not awarded" in data["profile"]["tagline"]
+    assert "M.Sc." in data["profile"]["tagline"]
+    assert len(_entry(data, "independent")["bullets"]) == 2
     assert "Snakemake" in _entry(data, "independent")["bullets"][0]["en"]
     assert "1,000+" in _entry(data, "cintellic")["bullets"][0]["en"]
     assert "100+" in _entry(data, "neuefische")["bullets"][0]["en"]
     assert len(_entry(data, "research")["bullets"]) == 3
-    assert "HLA/neoantigen pipelines" in _entry(data, "research")["bullets"][0]["en"]
+    assert "NCT/DKFZ" in _entry(data, "research")["bullets"][0]["en"]
+    assert "not SNU splice-candidate validation" in _entry(data, "research")["bullets"][0]["en"]
+    assert "doctorate not awarded" in _entry(data, "research")["role"]
 
     skills = _skill_items(data)
     assert {"RNA-Seq", "HLA Typing", "MHCflurry", "Snakemake", "Docker"} <= skills
-    # full, identical sections: the general AI/ML + developer tooling is retained too
-    assert {"TensorFlow.js", "Claude Code", "WezTerm", "Kimi"} <= skills
+    assert {"TensorFlow.js", "WezTerm"} <= skills
+    assert {"Claude Code", "Codex", "OpenCode", "Grok", "Cursor", "Kimi"}.isdisjoint(skills)
 
 
 def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
     expected_bullets = {
         "bridge": {"independent": 3, "cintellic": 3, "neuefische": 2, "research": 3},
-        "comp-bio": {"independent": 3, "cintellic": 3, "neuefische": 2, "research": 3},
+        "comp-bio": {"independent": 2, "cintellic": 3, "neuefische": 2, "research": 3},
         "ds-ml": {"independent": 3, "cintellic": 3, "neuefische": 2, "research": 3},
     }
     expected_awards = {
@@ -148,7 +160,7 @@ def test_experience_bullet_order_leads_each_target_focus(content_dir):
             "research": [["L1", "L2"], ["L3"], ["L4"]],
         },
         "comp-bio": {
-            "independent": [["L5"], ["D2"], ["D4"]],
+            "independent": [["L5"], ["D2"]],
             "cintellic": [["C2"], ["C1"], ["C1", "C2"]],
             "neuefische": [["D3"], ["D1"]],
             "research": [["L1", "L2"], ["L3"], ["L4"]],
@@ -278,7 +290,10 @@ def test_source_grounded_role_coaching_and_2015_claims(content_dir):
     )
     assert "capstone" in neuefische["bullets"][0]["en"].lower()
     assert "unpublished computational proof of concept" in l1["outcome"].lower()
-    assert "validat" not in " ".join(l1["contributions"] + [l1["outcome"]]).lower()
+    l1_text = " ".join(l1["contributions"] + [l1["outcome"]]).lower()
+    assert "validated neoantigen" not in l1_text
+    assert "tumor-specific" not in l1_text
+    assert "no experimental validation" in l1["outcome"].lower()
     assert "validat" not in " ".join([l5["summary"], *l5["contributions"], l5["outcome"]]).lower()
 
 
@@ -290,3 +305,31 @@ def test_pdf_project_links_follow_language_routes(content_dir):
     assert de["project_links"]["L5"] == "https://jinholee.is-a.dev/de/projects/L5/"
     assert en["selected_projects"][0]["web_url"] == en["project_links"]["L5"]
     assert de["selected_projects"][0]["web_url"] == de["project_links"]["L5"]
+
+
+def test_comp_bio_pdf_honesty_boundaries_for_application_export(content_dir):
+    data = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
+    research = _entry(data, "research")
+    independent = _entry(data, "independent")
+    genomics = research["bullets"][0]["en"]
+    tagline = data["profile"]["tagline"]
+
+    assert research["role"] == "Doctoral & Post-Graduate Researcher (doctorate not awarded)"
+    assert "PhD" not in research["role"]
+    assert "Dr." not in research["role"]
+    assert "M.Sc." in tagline
+    assert "doctorate not awarded" in tagline
+    assert "NCT/DKFZ" in genomics
+    assert "not SNU splice-candidate validation" in genomics
+    assert [project["id"] for project in data["selected_projects"]] == ["L5", "L2", "L1"]
+    assert "unpublished" in data["selected_projects"][2]["outcome"].lower()
+    assert "patent" in data["selected_projects"][2]["outcome"].lower()
+    assert "Unpublished" in data["selected_projects"][1]["outcome"]
+    assert "not claimed as already run on SLURM" in data["selected_projects"][0]["outcome"]
+    assert all(bullet.get("refs") != ["D4"] for bullet in independent["bullets"])
+    assert "4 selected of 11 peer-reviewed" in data["publications_summary"]
+    assert "long-read" not in tagline.lower()
+    assert "proteomic" not in tagline.lower()
+    assert "mass spectrometry" not in tagline.lower()
+    assert "multi-omics" not in tagline.lower()
+    assert "multiomics" not in tagline.lower()

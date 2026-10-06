@@ -11,10 +11,19 @@ from typing import Any
 
 REPRESENTATIVE_PUBLICATION_KEYS = (
     "lee2021superres_dna_repair",
-    "hausmann2020_combofish_repetitive",
     "hausmann2020_3d_dna_fish",
+    "scherthan2019_ra223",
     "lee2019_combofish",
 )
+
+# Comp-bio application PDFs omit dropped agent-persona/tooling claims. Other
+# renderers keep the canonical Skills/Experience trees.
+_PDF_OMIT_SKILL_GROUPS = {
+    "comp-bio": {"AI Agents"},
+}
+_PDF_OMIT_EXPERIENCE_REF_SETS = {
+    "comp-bio": {frozenset({"D4"})},
+}
 
 _AWARD_TITLES = {
     "bridge": {
@@ -37,6 +46,28 @@ def _english(value: str | dict[str, str]) -> str:
     return value["en"] if isinstance(value, dict) else value
 
 
+def _omit_pdf_skill_groups(skills: dict[str, Any], *, target: str) -> None:
+    omit = _PDF_OMIT_SKILL_GROUPS.get(target)
+    if not omit:
+        return
+    for category in skills.get("categories", []):
+        category["groups"] = [
+            group for group in category["groups"] if _english(group["label"]) not in omit
+        ]
+
+
+def _omit_pdf_experience_bullets(experience: list[dict[str, Any]], *, target: str) -> None:
+    omit_refs = _PDF_OMIT_EXPERIENCE_REF_SETS.get(target)
+    if not omit_refs:
+        return
+    for entry in experience:
+        entry["bullets"] = [
+            bullet
+            for bullet in entry["bullets"]
+            if frozenset(bullet.get("refs") or []) not in omit_refs
+        ]
+
+
 def project_pdf_content(content: dict[str, Any], *, target: str, lang: str) -> dict[str, Any]:
     """Return a concise application-PDF view without mutating ``content``."""
     result = copy.deepcopy(content)
@@ -46,7 +77,9 @@ def project_pdf_content(content: dict[str, Any], *, target: str, lang: str) -> d
     result["profile"]["paragraphs"] = []
 
     # Experience ordering is resolved in content_loader for every renderer; the
-    # PDF shares that target-ordered, identical-content experience as-is.
+    # PDF shares that target-ordered experience, minus export-path omissions.
+    _omit_pdf_skill_groups(result["skills"], target=target)
+    _omit_pdf_experience_bullets(result["experience"], target=target)
 
     for education in result["education"]:
         education.pop("thesis", None)

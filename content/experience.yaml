@@ -63,14 +63,14 @@
     name: "Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)"
     url: null
   role:
-    en: "Doctoral & Post-Graduate Researcher"
-    de: "Doktorand & Postgraduierter Forscher"
+    en: "Doctoral & Post-Graduate Researcher (doctorate not awarded)"
+    de: "Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen)"
   period:
     start: "2014-04"
     end: "2022-07"
   bullets:
-    - en: "Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing."
-      de: "Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung."
+    - en: "Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation)."
+      de: "Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten)."
       refs: [L1, L2]
     - en: "Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python)."
       de: "Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python)."

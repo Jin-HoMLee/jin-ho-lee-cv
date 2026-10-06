@@ -344,15 +344,15 @@
         "name": "Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)",
         "url": null
       },
-      "role": "Doctoral & Post-Graduate Researcher",
+      "role": "Doctoral & Post-Graduate Researcher (doctorate not awarded)",
       "period": {
         "start": "2014-04",
         "end": "2022-07"
       },
       "bullets": [
         {
-          "en": "Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.",
-          "de": "Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung.",
+          "en": "Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).",
+          "de": "Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).",
           "refs": [
             "L1",
             "L2"
@@ -552,12 +552,12 @@
         "MHC-I Prediction Tools"
       ],
       "contributions": [
-        "Developed a discovery pipeline to identify predicted junction-derived candidate classes across large-scale cancer RNA-Seq datasets.",
-        "Predicted high-affinity MHC-I-binding candidate peptides from non-canonical junction-derived sequences.",
-        "Cross-referenced predicted candidates with published transcriptomic studies.",
+        "Developed a discovery pipeline to identify novel splice junctions in TCGA cancer cohorts (BRCA/LUAD/LAML RNA-seq).",
+        "Predicted HLA-A*02:01-binding candidate 9-mers from three-frame translation of short junction contigs.",
+        "Cross-referenced candidate junctions with published transcript/isoform reports.",
         "Compared computational mutation-derived and splice-derived neoepitope candidate sets (no experimental co-targeting claim)."
       ],
-      "outcome": "Unpublished computational proof of concept producing predicted candidate peptides from RNA-Seq splice-junction data only — no wet-lab or clinical confirmation."
+      "outcome": "SNU internship 2015: unpublished computational proof of concept — novel splice junctions in TCGA BRCA/LUAD/LAML RNA-seq, three-frame translation of short junction contigs, NetMHCpan predicted HLA-A*02:01 candidate 9-mers. No experimental validation, clinical use, publication, or patent."
     },
     "L2": {
       "id": "L2",
@@ -583,7 +583,7 @@
         "Engineered a consensus methodology integrating multiple HLA typing algorithms to resolve sequence ambiguities and improve call consistency.",
         "Checked the pipeline computationally by comparing binding-specificity predictions across HLA alleles to flag inconsistent allele calls."
       ],
-      "outcome": "Demonstrated computational feasibility of an HLA typing and neoantigen candidate workflow from NGS data — not a clinical-assay replacement."
+      "outcome": "B.Sc. thesis, NCT Heidelberg: in-silico HLA typing from WES/NGS and ANN-based MHC-I binding screens for missense-mutation candidates. Unpublished."
     },
     "L3": {
       "id": "L3",
@@ -667,7 +667,7 @@
         "Added optional TCR-pMHC ternary complex structural modelling via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.",
         "MIT-licensed, public on GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
       ],
-      "outcome": "Modern reimplementation of the 2015 SNU computational proof of concept as a reproducible Snakemake pipeline for junction classification, neoepitope candidate ranking, and optional TCR-pMHC structural modelling — computational outputs only, not therapeutic claims."
+      "outcome": "Open-source Snakemake 8 workflow (MIT): RNA-Seq → junction classes vs matched normal + GENCODE → OptiType HLA → MHCflurry MHC-I candidate ranking; optional TCR-pMHC modelling. Ran locally and on GCP; SLURM-portable by design (not claimed as already run on SLURM). Modern reimplementation of the 2015 computational idea — new methods are 2026 work. Computational outputs only, not therapeutic claims."
     }
   },
   "selected_projects": [
@@ -754,7 +754,7 @@
         "Added optional TCR-pMHC ternary complex structural modelling via TCRdock (AlphaFold v2 backend) on Google Cloud GPU; predicted complexes rendered as interactive Mol* 3D viewer in the report.",
         "MIT-licensed, public on GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
       ],
-      "outcome": "Modern reimplementation of the 2015 SNU computational proof of concept as a reproducible Snakemake pipeline for junction classification, neoepitope candidate ranking, and optional TCR-pMHC structural modelling — computational outputs only, not therapeutic claims."
+      "outcome": "Open-source Snakemake 8 workflow (MIT): RNA-Seq → junction classes vs matched normal + GENCODE → OptiType HLA → MHCflurry MHC-I candidate ranking; optional TCR-pMHC modelling. Ran locally and on GCP; SLURM-portable by design (not claimed as already run on SLURM). Modern reimplementation of the 2015 computational idea — new methods are 2026 work. Computational outputs only, not therapeutic claims."
     }
   ],
   "languages": [
@@ -1195,7 +1195,7 @@
   "publication_metrics": {
     "total_records": 16,
     "research_records": 15,
-    "peer_reviewed_records": 12,
+    "peer_reviewed_records": 11,
     "applied_records": 1,
     "all_records_authorship": {
       "first": 6,
@@ -1204,7 +1204,7 @@
     }
   },
   "publications_aggregate": {
-    "summary": "12 peer-reviewed publications (10 articles + 2 research book chapter; 2 first-author, 3 shared-first, 7 co-author), 3 first-author research conference contributions, and 1 applied/off-domain record (15 research records; 16 bibliography records total), research span 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.",
+    "summary": "11 peer-reviewed publications (10 articles + 1 research book chapter; 2 first-author, 3 shared-first, 6 co-author), 3 first-author research conference contributions, and 1 applied/off-domain record (15 research records; 16 bibliography records total), research span 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.",
     "pointer": "Full list & metrics:"
   }
 }

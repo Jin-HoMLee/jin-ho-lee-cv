@@ -151,7 +151,7 @@ def test_publication_metrics_are_shared_numeric_facts(rendered):
     expected = {
         "total_records": 16,
         "research_records": 15,
-        "peer_reviewed_records": 12,
+        "peer_reviewed_records": 11,
         "applied_records": 1,
         "all_records_authorship": {
             "first": 6,

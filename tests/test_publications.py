@@ -15,7 +15,7 @@ from scripts.publications import (
 CONTENT_DIR = Path(__file__).resolve().parent.parent / "content"
 
 
-def _pub(authorship="first", type="article", category="research", year=2020, key="k"):
+def _pub(authorship="first", type="article", category="research", year=2020, key="k", raw=None):
     return Publication(
         key=key,
         title="T",
@@ -25,7 +25,7 @@ def _pub(authorship="first", type="article", category="research", year=2020, key
         authors=("Lee, J.",),
         venue="V",
         doi=None,
-        raw={},
+        raw=raw or {},
         category=category,
     )
 
@@ -88,12 +88,12 @@ def test_live_bib_aggregate_numbers():
     ) == (
         16,
         15,
-        12,
+        11,
         3,
         1,
     )
-    assert (s.peer_reviewed_articles, s.peer_reviewed_book_chapters) == (10, 2)
-    assert (s.pr_first, s.pr_shared, s.pr_coauthor) == (2, 3, 7)
+    assert (s.peer_reviewed_articles, s.peer_reviewed_book_chapters) == (10, 1)
+    assert (s.pr_first, s.pr_shared, s.pr_coauthor) == (2, 3, 6)
     assert (s.all_first, s.all_shared, s.all_coauthor) == (6, 3, 7)
     assert (s.year_start, s.year_end) == (2017, 2021)
     assert format_publication_summary("{span}", pubs) == "2017–2021"
@@ -104,7 +104,7 @@ def test_live_bib_metrics_object_contains_web_facts():
     assert metrics == {
         "total_records": 16,
         "research_records": 15,
-        "peer_reviewed_records": 12,
+        "peer_reviewed_records": 11,
         "applied_records": 1,
         "all_records_authorship": {"first": 6, "shared_first": 3, "coauthor": 7},
     }
@@ -126,6 +126,17 @@ def test_summary_year_span_falls_back_to_all_pubs_when_no_research():
         0,
         0,
     )
+
+
+def test_summary_honors_peer_reviewed_false_flag():
+    pubs = [
+        _pub(type="article", key="a"),
+        _pub(type="book-chapter", key="b"),
+        _pub(type="book-chapter", key="c", raw={"peer_reviewed": "false"}),
+    ]
+    s = publication_summary(pubs)
+    assert s.peer_reviewed == 2
+    assert (s.peer_reviewed_articles, s.peer_reviewed_book_chapters) == (1, 1)
 
 
 def test_summary_raises_on_empty_list():

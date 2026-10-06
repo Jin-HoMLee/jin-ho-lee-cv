@@ -30,8 +30,8 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-0
   - ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt.
   - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.
 
-Doktorand & Postgraduierter Forscher - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
-  - Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung.
+Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen) - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)    (2014-04 bis 2022-07)
+  - Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).
   - Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).
   - Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.
 
@@ -119,8 +119,8 @@ Soziales
 ================================================================================
 PUBLIKATIONEN
 ================================================================================
-12 begutachtete Publikationen (10 Artikel + 2 wissenschaftliches Buchkapitel; 2
-als Erstautor, 3 geteilte Erstautorenschaft, 7 als Co-Autor), 3
+11 begutachtete Publikationen (10 Artikel + 1 wissenschaftliches Buchkapitel; 2
+als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor), 3
 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder
 Beitrag (15 Forschungseinträge; insgesamt 16 Bibliografie-Datensätze),
 Forschungsspanne 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung

@@ -14,9 +14,9 @@ technologies:
   - "TCGA Datasets"
   - "MHC-I Prediction Tools"
 contributions:
-  - "Developed a discovery pipeline to identify predicted junction-derived candidate classes across large-scale cancer RNA-Seq datasets."
-  - "Predicted high-affinity MHC-I-binding candidate peptides from non-canonical junction-derived sequences."
-  - "Cross-referenced predicted candidates with published transcriptomic studies."
+  - "Developed a discovery pipeline to identify novel splice junctions in TCGA cancer cohorts (BRCA/LUAD/LAML RNA-seq)."
+  - "Predicted HLA-A*02:01-binding candidate 9-mers from three-frame translation of short junction contigs."
+  - "Cross-referenced candidate junctions with published transcript/isoform reports."
   - "Compared computational mutation-derived and splice-derived neoepitope candidate sets (no experimental co-targeting claim)."
-outcome: "Unpublished computational proof of concept producing predicted candidate peptides from RNA-Seq splice-junction data only — no wet-lab or clinical confirmation."
+outcome: "SNU internship 2015: unpublished computational proof of concept — novel splice junctions in TCGA BRCA/LUAD/LAML RNA-seq, three-frame translation of short junction contigs, NetMHCpan predicted HLA-A*02:01 candidate 9-mers. No experimental validation, clinical use, publication, or patent."
 

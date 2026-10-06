@@ -344,15 +344,15 @@
         "name": "Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)",
         "url": null
       },
-      "role": "Doktorand & Postgraduierter Forscher",
+      "role": "Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen)",
       "period": {
         "start": "2014-04",
         "end": "2022-07"
       },
       "bullets": [
         {
-          "en": "Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.",
-          "de": "Genomik: NGS/RNA-Seq-HLA-/Neoantigen-Pipelines; Kolorektal-SNV-Abgleich mit Goldstandard-Sequenzierung.",
+          "en": "Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).",
+          "de": "Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).",
           "refs": [
             "L1",
             "L2"
@@ -552,12 +552,12 @@
         "MHC-I Prediction Tools"
       ],
       "contributions": [
-        "Entwicklung einer Discovery-Pipeline zur Identifizierung vorhergesagter junction-abgeleiteter Kandidatenklassen in großen Krebs-RNA-Seq-Datensätzen.",
-        "Vorhersage hochaffiner MHC-I-bindender Kandidatenpeptide aus nicht-kanonischen junction-abgeleiteten Sequenzen.",
-        "Abgleich vorhergesagter Kandidaten mit publizierten transkriptomischen Studien.",
+        "Entwicklung einer Discovery-Pipeline zur Identifizierung neuer Splice-Junctions in TCGA-Kohorten (BRCA/LUAD/LAML-RNA-Seq).",
+        "Vorhersage HLA-A*02:01-bindender Kandidaten-9-mere aus der Drei-Rahmen-Translation kurzer Junction-Contigs.",
+        "Abgleich der Kandidaten-Junctions mit publizierten Transkript-/Isoform-Berichten.",
         "Vergleich computergestützter mutations- und splice-abgeleiteter Neoepitop-Kandidatenmengen (kein experimenteller Co-Targeting-Anspruch)."
       ],
-      "outcome": "Unveröffentlichter computergestützter Machbarkeitsnachweis, der vorhergesagte Kandidatenpeptide ausschließlich aus RNA-Seq-Splice-Junction-Daten erzeugte — ohne nasslaborische oder klinische Bestätigung."
+      "outcome": "SNU-Praktikum 2015: unveröffentlichter computergestützter Machbarkeitsnachweis — neue Splice-Junctions in TCGA-BRCA/LUAD/LAML-RNA-Seq, Drei-Rahmen-Translation kurzer Junction-Contigs, von NetMHCpan vorhergesagte HLA-A*02:01-Kandidaten-9-mere. Keine experimentelle Validierung, klinische Nutzung, Publikation oder Patent."
     },
     "L2": {
       "id": "L2",
@@ -583,7 +583,7 @@
         "Konzeption einer Konsens-Methodik zur Integration mehrerer HLA-Typisierungs-Algorithmen zur Auflösung von Sequenz-Ambiguitäten und Verbesserung der Call-Konsistenz.",
         "Computergestützte Prüfung der Pipeline durch Vergleich von Bindungsspezifitäts-Vorhersagen über HLA-Allele hinweg, um inkonsistente Allel-Calls zu markieren."
       ],
-      "outcome": "Nachgewiesen, dass ein computergestützter HLA-Typisierungs- und Neoantigen-Kandidaten-Workflow aus NGS-Daten machbar ist — kein Ersatz für klinische Assays."
+      "outcome": "B.Sc.-Thesis, NCT Heidelberg: In-silico-HLA-Typisierung aus WES/NGS und ANN-basierte MHC-I-Bindungsscreens für Missense-Mutationskandidaten. Unveröffentlicht."
     },
     "L3": {
       "id": "L3",
@@ -667,7 +667,7 @@
         "Optionale Strukturmodellierung des TCR-pMHC-Ternärkomplexes via TCRdock (AlphaFold-v2-Backend) auf Google Cloud GPU; vorhergesagte Komplexe werden im interaktiven Mol* 3D-Viewer dargestellt.",
         "MIT-lizenziert, öffentlich auf GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
       ],
-      "outcome": "Moderne Neuimplementierung des SNU-Proof-of-Concepts von 2015 als reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur computergestützte Ausgaben, keine therapeutischen Ansprüche."
+      "outcome": "Open-Source-Snakemake-8-Workflow (MIT): RNA-Seq → Junction-Klassen gegen matched normal + GENCODE → OptiType-HLA → MHCflurry-MHC-I-Kandidatenranking; optionale TCR-pMHC-Modellierung. Lokal und auf GCP gelaufen; per Design SLURM-portabel (kein Anspruch, bereits auf SLURM gelaufen zu sein). Moderne Neuimplementierung der computergestützten Idee von 2015 — neue Methoden sind Arbeit von 2026. Nur computergestützte Ausgaben, keine therapeutischen Ansprüche."
     }
   },
   "selected_projects": [
@@ -754,7 +754,7 @@
         "Optionale Strukturmodellierung des TCR-pMHC-Ternärkomplexes via TCRdock (AlphaFold-v2-Backend) auf Google Cloud GPU; vorhergesagte Komplexe werden im interaktiven Mol* 3D-Viewer dargestellt.",
         "MIT-lizenziert, öffentlich auf GitHub (Jin-HoMLee/splice-neoepitope-pipeline)."
       ],
-      "outcome": "Moderne Neuimplementierung des SNU-Proof-of-Concepts von 2015 als reproduzierbare Snakemake-Pipeline für Junction-Klassifikation, Neoepitop-Kandidatenranking und optionale TCR-pMHC-Strukturmodellierung — nur computergestützte Ausgaben, keine therapeutischen Ansprüche."
+      "outcome": "Open-Source-Snakemake-8-Workflow (MIT): RNA-Seq → Junction-Klassen gegen matched normal + GENCODE → OptiType-HLA → MHCflurry-MHC-I-Kandidatenranking; optionale TCR-pMHC-Modellierung. Lokal und auf GCP gelaufen; per Design SLURM-portabel (kein Anspruch, bereits auf SLURM gelaufen zu sein). Moderne Neuimplementierung der computergestützten Idee von 2015 — neue Methoden sind Arbeit von 2026. Nur computergestützte Ausgaben, keine therapeutischen Ansprüche."
     }
   ],
   "languages": [
@@ -1195,7 +1195,7 @@
   "publication_metrics": {
     "total_records": 16,
     "research_records": 15,
-    "peer_reviewed_records": 12,
+    "peer_reviewed_records": 11,
     "applied_records": 1,
     "all_records_authorship": {
       "first": 6,
@@ -1204,7 +1204,7 @@
     }
   },
   "publications_aggregate": {
-    "summary": "12 begutachtete Publikationen (10 Artikel + 2 wissenschaftliches Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 7 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (15 Forschungseinträge; insgesamt 16 Bibliografie-Datensätze), Forschungsspanne 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
+    "summary": "11 begutachtete Publikationen (10 Artikel + 1 wissenschaftliches Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 6 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (15 Forschungseinträge; insgesamt 16 Bibliografie-Datensätze), Forschungsspanne 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
     "pointer": "Vollständige Liste:"
   }
 }

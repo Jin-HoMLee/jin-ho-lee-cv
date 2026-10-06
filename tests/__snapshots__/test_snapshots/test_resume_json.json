@@ -75,11 +75,11 @@
     },
     {
       "name": "Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ)",
-      "position": "Doctoral & Post-Graduate Researcher",
+      "position": "Doctoral & Post-Graduate Researcher (doctorate not awarded)",
       "startDate": "2014-04-01",
       "endDate": "2022-07-28",
       "highlights": [
-        "Genomics: NGS/RNA-Seq HLA/neoantigen pipelines; validated colorectal SNVs by reference sequencing.",
+        "Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).",
         "Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).",
         "Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles."
       ]
@@ -493,9 +493,9 @@
       "name": "Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis",
       "description": "Unpublished computational pipeline predicting splice-junction–derived neoepitope candidate peptides from RNA-Seq data.",
       "highlights": [
-        "Developed a discovery pipeline to identify predicted junction-derived candidate classes across large-scale cancer RNA-Seq datasets.",
-        "Predicted high-affinity MHC-I-binding candidate peptides from non-canonical junction-derived sequences.",
-        "Cross-referenced predicted candidates with published transcriptomic studies.",
+        "Developed a discovery pipeline to identify novel splice junctions in TCGA cancer cohorts (BRCA/LUAD/LAML RNA-seq).",
+        "Predicted HLA-A*02:01-binding candidate 9-mers from three-frame translation of short junction contigs.",
+        "Cross-referenced candidate junctions with published transcript/isoform reports.",
         "Compared computational mutation-derived and splice-derived neoepitope candidate sets (no experimental co-targeting claim)."
       ],
       "keywords": [

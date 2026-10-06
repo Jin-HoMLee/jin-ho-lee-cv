@@ -441,7 +441,6 @@ def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
         return [category["name"] for category in data["skills"]["categories"]]
 
     # bridge and comp-bio carry the same four sections (order differs per target)
-    assert all_items(bridge) == all_items(comp_bio)
     assert names(bridge) == [
         "AI/ML & Developer Tools",
         "Bioinformatics",
@@ -455,6 +454,8 @@ def test_prepare_data_resolves_target_skills_for_pdf(content_dir):
         "Experimental Research",
     ]
     assert {"HLA Typing", "TCRdock", "Claude Code", "Nix", "Snakemake"} <= all_items(bridge)
+    assert "Claude Code" not in all_items(comp_bio)
+    assert {"HLA Typing", "TCRdock", "Nix", "Snakemake"} <= all_items(comp_bio)
     # ds-ml drops Experimental Research only; the other three sections stay full
     assert names(ds_ml) == [
         "AI/ML & Developer Tools",
@@ -486,7 +487,7 @@ def test_load_content_bridge_project_order(content_dir):
 
 def test_load_content_comp_bio_project_order(content_dir):
     content = load_content(content_dir, lang="en", target="comp-bio")
-    assert _ids(content["selected_projects"]) == ["L5", "L3", "L4"]
+    assert _ids(content["selected_projects"]) == ["L5", "L2", "L1"]
 
 
 def test_load_content_ds_ml_project_order(content_dir):
@@ -614,7 +615,8 @@ def test_ds_ml_headline_en_de(content_dir):
 
 def test_comp_bio_tagline_and_lead_paragraph(content_dir):
     profile = _resolved(content_dir, "en", "comp-bio")["profile"]
-    assert profile["tagline"].startswith("Bioinformatician")
+    assert profile["tagline"].startswith("Computational scientist and bioinformatician")
+    assert "doctorate not awarded" in profile["tagline"]
 
 
 def test_ds_ml_tagline_and_lead_paragraph(content_dir):
