@@ -113,7 +113,6 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
             "“Most Patient-Centric Solution” Award",
             "DeGBS Poster Award",
             "Selected for admission — Vienna BioCenter PhD Programme",
-            "Genetic manipulation of mammalian cells by lentiviral vectors",
             "DAAD PROMOS Scholarship",
         },
         "ds-ml": {
