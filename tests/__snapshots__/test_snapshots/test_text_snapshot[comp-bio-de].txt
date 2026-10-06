@@ -10,9 +10,9 @@ Kandidatenidentifizierung aus realen Patienten-NGS- und RNA-Seq-Daten am NCT und
 an der SNU (unveröffentlichte computergestützte Projektarbeit), später als
 reproduzierbare Snakemake-Workflows paketiert. Eine parallele experimentelle
 Biophysik-Linie am DKFZ, FZ Jülich und KIP brachte 12 peer-reviewed
-Forschungspublikationen (2 Erst / 3 geteilte Erst / 7 Co-Autor) — als Erst- und
-geteilter Erstautor — in der hochauflösenden Mikroskopie von DNA-
-Schadensreparatur und Chromatin hervor, keine Genomik-Publikationen.
+Forschungspublikationen — als Erst- und geteilter Erstautor — in der
+hochauflösenden Mikroskopie von DNA-Schadensreparatur und Chromatin hervor,
+keine Genomik-Publikationen.
 
 Ebenso zu Hause in der Produktion: Migration von 1.000+ analytischen Prozessen
 in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Mentoring von

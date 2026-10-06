@@ -12,9 +12,9 @@ abgeleitete Neoepitop-Kandidaten) am Nationalen Centrum für Tumorerkrankungen
 Biobildanalyse und Wet-Lab-Forschung am Deutschen Krebsforschungszentrum (DKFZ),
 am Forschungszentrum Jülich und am Kirchhoff-Institut für Physik (KIP). Die
 experimentelle Linie zu Bildgebung / DNA-Reparatur / Chromatin /
-Strahlenbiologie brachte 12 peer-reviewed Forschungspublikationen (2 Erst / 3
-geteilte Erst / 7 Co-Autor) — als Erstautor sowie mit geteilter Erstautorschaft
-— hervor, keine Genomik-Publikationen.
+Strahlenbiologie brachte 12 peer-reviewed Forschungspublikationen — als
+Erstautor sowie mit geteilter Erstautorschaft — hervor, keine Genomik-
+Publikationen.
 
 Als Cintellic-Berater für eine internationale Bank Architektur der Migration von
 1.000+ analytischen Prozessen in die Google Cloud und Entwicklung von
