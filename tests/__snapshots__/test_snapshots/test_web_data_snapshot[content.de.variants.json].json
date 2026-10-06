@@ -1,8 +1,8 @@
 {
   "comp-bio": {
     "headline": "Bioinformatik · Krebsgenomik",
-    "tagline": "Computational Scientist und Bioinformatiker (M.Sc. Molekulare Biotechnologie) mit praktischer NGS-Arbeit zu HLA-Typisierung und vorhergesagten splice-abgeleiteten MHC-I-Neoepitop-Kandidaten sowie produktivem Python-/Cloud-Data-Engineering. Pflegt eine öffentliche Snakemake-Pipeline von RNA-Seq bis gerankten Neoepitop-Kandidaten. Elf peer-reviewed Publikationen aus einer getrennten Forschungslinie zu Bildgebung, DNA-Reparatur, Chromatin und Strahlenbiologie. Doktoratsforschung am FZ Jülich durchgeführt (Promotion nicht abgeschlossen).",
-    "lead_paragraph": "Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-Kandidatenidentifizierung aus realen Patienten-NGS- und RNA-Seq-Daten am NCT und an der SNU (unveröffentlichte computergestützte Projektarbeit), später als reproduzierbare Snakemake-Workflows paketiert. Eine parallele experimentelle Biophysik-Linie am DKFZ, FZ Jülich und KIP brachte 11 peer-reviewed Forschungspublikationen — als Erst- und geteilter Erstautor — in der hochauflösenden Mikroskopie von DNA-Schadensreparatur und Chromatin hervor, keine Genomik-Publikationen.",
+    "tagline": "Computational Scientist und Bioinformatiker (M.Sc. Molekulare Biotechnologie) mit praktischer NGS-Arbeit zu HLA-Typisierung und vorhergesagten splice-abgeleiteten MHC-I-Neoepitop-Kandidaten sowie produktivem Python-/Cloud-Data-Engineering. Pflegt eine öffentliche Snakemake-Pipeline von RNA-Seq bis gerankten Neoepitop-Kandidaten. Zwölf peer-reviewed Publikationen (2 Erst / 3 geteilte Erst / 7 Co-Autor) aus einer getrennten Forschungslinie zu Bildgebung, DNA-Reparatur, Chromatin und Strahlenbiologie. Doktoratsforschung am FZ Jülich durchgeführt (Promotion nicht abgeschlossen).",
+    "lead_paragraph": "Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-Kandidatenidentifizierung aus realen Patienten-NGS- und RNA-Seq-Daten am NCT und an der SNU (unveröffentlichte computergestützte Projektarbeit), später als reproduzierbare Snakemake-Workflows paketiert. Eine parallele experimentelle Biophysik-Linie am DKFZ, FZ Jülich und KIP brachte 12 peer-reviewed Forschungspublikationen (2 Erst / 3 geteilte Erst / 7 Co-Autor) — als Erst- und geteilter Erstautor — in der hochauflösenden Mikroskopie von DNA-Schadensreparatur und Chromatin hervor, keine Genomik-Publikationen.",
     "second_paragraph": "Ebenso zu Hause in der Produktion: Migration von 1.000+ analytischen Prozessen in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Mentoring von 100+ Fachkräften in Python, SQL & ML — bei gleichzeitiger Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden.",
     "skills": {
       "categories": [
@@ -305,7 +305,7 @@
   },
   "ds-ml": {
     "headline": "Data Science · Machine Learning",
-    "tagline": "Data Scientist mit Produktiv-ML auf GCP, fundiert durch Bioinformatik und experimentelle Biophysik mit 11 peer-reviewed Forschungspublikationen.",
+    "tagline": "Data Scientist mit Produktiv-ML auf GCP, fundiert durch Bioinformatik und experimentelle Biophysik mit 12 peer-reviewed Forschungspublikationen (2 Erst / 3 geteilte Erst / 7 Co-Autor).",
     "lead_paragraph": "Entwicklung und Auslieferung von Machine-Learning-Systemen durchgängig — mit der experimentellen Sorgfalt eines Forschungsjahrzehnts in Bioinformatik und experimenteller Biophysik in jedem Modell und jeder Pipeline.",
     "second_paragraph": "In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML.",
     "skills": {

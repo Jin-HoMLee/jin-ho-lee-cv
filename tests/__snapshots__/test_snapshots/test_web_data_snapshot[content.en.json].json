@@ -52,10 +52,10 @@
     ]
   },
   "profile": {
-    "answer_block": "Jin-Ho Lee is a data scientist with bioinformatics roots based in Mannheim, Germany. He spent eight years in academic research across bioinformatics and experimental biophysics with 11 peer-reviewed publications, and now ships production machine-learning and data pipelines, brings Google Cloud consulting experience from international banking, and has coached 100+ specialists in Python, SQL and ML. He holds an M.Sc. from Heidelberg University.",
-    "tagline": "Data scientist with bioinformatics roots — eight years of academic research, 11 peer-reviewed publications, production ML and cloud consulting on GCP; 1,000+ analytical processes migrated, 100+ specialists coached.",
+    "answer_block": "Jin-Ho Lee is a data scientist with bioinformatics roots based in Mannheim, Germany. He spent eight years in academic research across bioinformatics and experimental biophysics with 12 peer-reviewed publications, and now ships production machine-learning and data pipelines, brings Google Cloud consulting experience from international banking, and has coached 100+ specialists in Python, SQL and ML. He holds an M.Sc. from Heidelberg University.",
+    "tagline": "Data scientist with bioinformatics roots — eight years of academic research, 12 peer-reviewed publications, production ML and cloud consulting on GCP; 1,000+ analytical processes migrated, 100+ specialists coached.",
     "paragraphs": [
-      "Worked across bioinformatics and experimental biophysics: unpublished NGS/RNA-Seq genomics project work (HLA typing and splice-derived neoepitope candidate pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National University (SNU), plus quantitative bioimage analysis and wet-lab research at the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich), and Kirchhoff Institute for Physics (KIP). The experimental imaging / DNA-repair / chromatin / radiation-biology line produced 11 peer-reviewed research publications — first- and shared-first author — not genomics papers.",
+      "Worked across bioinformatics and experimental biophysics: unpublished NGS/RNA-Seq genomics project work (HLA typing and splice-derived neoepitope candidate pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National University (SNU), plus quantitative bioimage analysis and wet-lab research at the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich), and Kirchhoff Institute for Physics (KIP). The experimental imaging / DNA-repair / chromatin / radiation-biology line produced 12 peer-reviewed research publications (2 first / 3 shared-first / 7 co-author) — first- and shared-first author — not genomics papers.",
       "As a Cintellic consultant for an international bank, architected the migration of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for anti-financial-crime & KYC. Previously at neuefische, coached 100+ specialists in Python, SQL & ML; in research, secured third-party funding and supervised 10+ students."
     ]
   },
@@ -1144,7 +1144,7 @@
       "interactive_cv": "Online CV:"
     },
     "publications": {
-      "summary": "{peer_reviewed} peer-reviewed publications ({peer_reviewed_articles} articles + {peer_reviewed_book_chapters} research book chapter; {pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author), {conferences} first-author research conference contributions, and {applied_records} applied/off-domain record ({research_records} research records; {total_records} bibliography records total), research span {span}, in radiation biophysics & super-resolution DNA-repair imaging.",
+      "summary": "{peer_reviewed} peer-reviewed publications ({peer_reviewed_articles} articles + {peer_reviewed_book_chapters} research book chapters; {pr_first} first-author, {pr_shared} shared-first, {pr_coauthor} co-author), {conferences} first-author research conference contributions, and {applied_records} applied/off-domain record ({research_records} research records; {total_records} bibliography records total), research span {span}, in radiation biophysics & super-resolution DNA-repair imaging.",
       "pdf_summary": "{peer_reviewed} peer-reviewed research publications ({total_records} bibliography records total; {pr_first} first-author, {pr_shared} shared-first).",
       "selected_summary": "4 selected of {peer_reviewed} peer-reviewed research publications ({total_records} bibliography records total).",
       "selected_heading": "Selected Publications",
@@ -1178,7 +1178,7 @@
       {
         "id": "what-has-he-published",
         "question": "What has Jin-Ho Lee published?",
-        "answer": "Jin-Ho Lee has 11 peer-reviewed research publications (10 articles and 1 research book chapter), including first-author and shared-first-author papers, in radiation biophysics and super-resolution imaging of DNA-damage repair and chromatin architecture. The full list with citation counts is available via his ORCID record (0009-0001-8784-1771) and Google Scholar profile."
+        "answer": "Jin-Ho Lee has 12 peer-reviewed research publications (10 articles and 2 research book chapters), including first-author and shared-first-author papers (2 first / 3 shared-first / 7 co-author), in radiation biophysics and super-resolution imaging of DNA-damage repair and chromatin architecture. The full list with citation counts is available via his ORCID record (0009-0001-8784-1771) and Google Scholar profile."
       },
       {
         "id": "what-does-he-work-on-now",
@@ -1204,7 +1204,7 @@
     }
   },
   "publications_aggregate": {
-    "summary": "11 peer-reviewed publications (10 articles + 1 research book chapter; 2 first-author, 3 shared-first, 6 co-author), 3 first-author research conference contributions, and 1 applied/off-domain record (15 research records; 16 bibliography records total), research span 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.",
+    "summary": "12 peer-reviewed publications (10 articles + 2 research book chapters; 2 first-author, 3 shared-first, 7 co-author), 3 first-author research conference contributions, and 1 applied/off-domain record (15 research records; 16 bibliography records total), research span 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.",
     "pointer": "Full list & metrics:"
   }
 }

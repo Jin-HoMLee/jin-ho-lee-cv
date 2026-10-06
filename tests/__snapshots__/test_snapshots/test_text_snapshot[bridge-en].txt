@@ -11,8 +11,9 @@ pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National
 University (SNU), plus quantitative bioimage analysis and wet-lab research at
 the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich),
 and Kirchhoff Institute for Physics (KIP). The experimental imaging / DNA-repair
-/ chromatin / radiation-biology line produced 11 peer-reviewed research
-publications — first- and shared-first author — not genomics papers.
+/ chromatin / radiation-biology line produced 12 peer-reviewed research
+publications (2 first / 3 shared-first / 7 co-author) — first- and shared-first
+author — not genomics papers.
 
 As a Cintellic consultant for an international bank, architected the migration
 of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for
@@ -134,8 +135,8 @@ Community
 ================================================================================
 PUBLICATIONS
 ================================================================================
-11 peer-reviewed publications (10 articles + 1 research book chapter; 2 first-
-author, 3 shared-first, 6 co-author), 3 first-author research conference
+12 peer-reviewed publications (10 articles + 2 research book chapters; 2 first-
+author, 3 shared-first, 7 co-author), 3 first-author research conference
 contributions, and 1 applied/off-domain record (15 research records; 16
 bibliography records total), research span 2017–2021, in radiation biophysics &
 super-resolution DNA-repair imaging.
