@@ -34,7 +34,7 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 to 2024-04
   - Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.
   - ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow.
 
-Doctoral & Post-Graduate Researcher (doctorate not awarded) - Forschungszentrum Jülich (FZ Jülich) / Kirchhoff Institute for Physics (KIP) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) / German Cancer Research Center (DKFZ) / Institute of Molecular Pathology (IMP), Vienna BioCenter    (2014-04 to 2022-07)
+Doctoral & Post-Graduate Researcher (doctorate not awarded) - Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU)    (2014-04 to 2022-07)
   - Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).
   - Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).
   - Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles.
@@ -204,9 +204,7 @@ AWARDS & CERTIFICATIONS
   Issued Dec 2024, valid through Dec 2027.
 2021  DeGBS Poster Award - Deutsche Gesellschaft für Biologische Strahlenforschung
 2019  Selected for admission — Vienna BioCenter PhD Programme - Vienna BioCenter PhD Programme
-  Invited after first-round evaluation; attended Summer 2019 selection (30 June–4 July) and accepted an IMP Plaschka lab position (contract dated 16 July 2019).
-2019  Genetic manipulation of mammalian cells by lentiviral vectors - Max Perutz Labs, Vienna BioCenter (6–13 September 2019)
-  Graduate practical course, 6–13 September 2019.
+  Selected in the Summer 2019 round; accepted an IMP Plaschka Lab position.
 2018  “Most Patient-Centric Solution” Award - {Life Science} meets IT Hackathon, Mannheim
 2015  DAAD PROMOS Scholarship - DAAD
   Funded the Seoul National University research internship (Bio & Health Informatics Lab) on splice-junction neoantigen discovery.
