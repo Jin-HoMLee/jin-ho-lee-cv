@@ -84,7 +84,7 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
 
     assert data["profile"]["paragraphs"] == []
     assert "Twelve peer-reviewed" in data["profile"]["tagline"]
-    assert "doctorate not awarded" in data["profile"]["tagline"]
+    assert "doctorate not awarded" not in data["profile"]["tagline"]
     assert "M.Sc." in data["profile"]["tagline"]
     assert len(_entry(data, "independent")["bullets"]) == 2
     assert "Snakemake" in _entry(data, "independent")["bullets"][0]["en"]
@@ -112,6 +112,8 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
         "comp-bio": {
             "“Most Patient-Centric Solution” Award",
             "DeGBS Poster Award",
+            "Selected for admission — Vienna BioCenter PhD Programme",
+            "Genetic manipulation of mammalian cells by lentiviral vectors",
             "DAAD PROMOS Scholarship",
         },
         "ds-ml": {
@@ -318,7 +320,7 @@ def test_comp_bio_pdf_honesty_boundaries_for_application_export(content_dir):
     assert "PhD" not in research["role"]
     assert "Dr." not in research["role"]
     assert "M.Sc." in tagline
-    assert "doctorate not awarded" in tagline
+    assert "doctorate not awarded" not in tagline
     assert "NCT/DKFZ" in genomics
     assert "not SNU splice-candidate validation" in genomics
     assert [project["id"] for project in data["selected_projects"]] == ["L5", "L2", "L1"]
