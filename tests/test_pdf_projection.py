@@ -70,7 +70,7 @@ def test_pdf_projection_does_not_change_canonical_content(content_dir):
     projected = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
 
     assert len(canonical["publications"]) == 16
-    assert len(projected["publications"]) == 4
+    assert len(projected["publications"]) == 3
     # Comp-bio PDFs omit dropped agent-persona tooling; other groups stay identical.
     pdf_omitted = {"Claude Code", "Codex", "OpenCode", "Pi", "Grok", "Cursor", "Kimi"}
     assert _skill_items(projected).isdisjoint(pdf_omitted)
@@ -328,7 +328,7 @@ def test_comp_bio_pdf_honesty_boundaries_for_application_export(content_dir):
     assert "Unpublished" in data["selected_projects"][1]["outcome"]
     assert "not claimed as already run on SLURM" in data["selected_projects"][0]["outcome"]
     assert all(bullet.get("refs") != ["D4"] for bullet in independent["bullets"])
-    assert "4 selected of 12 peer-reviewed" in data["publications_summary"]
+    assert "3 selected of 12 peer-reviewed" in data["publications_summary"]
     assert "long-read" not in tagline.lower()
     assert "proteomic" not in tagline.lower()
     assert "mass spectrometry" not in tagline.lower()
