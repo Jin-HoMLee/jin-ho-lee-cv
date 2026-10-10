@@ -143,6 +143,14 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Positioning target (default: bridge)",
     )
     p.add_argument(
+        "--content-dir",
+        default=None,
+        help=(
+            "Override the content tree to load (e.g. a per-position tailoring "
+            "temp copy). Defaults to the repository content/."
+        ),
+    )
+    p.add_argument(
         "--private",
         action="store_true",
         help="Merge content.private/private.yaml; PDF lands in dist-private/",
@@ -160,7 +168,7 @@ def main(argv: list[str] | None = None) -> int:
 
     _check_typst_version()
 
-    content_dir = REPO_ROOT / "content"
+    content_dir = Path(args.content_dir) if args.content_dir else REPO_ROOT / "content"
     private_path = _private_yaml_path() if args.private else None
 
     if args.private and not private_path.exists():

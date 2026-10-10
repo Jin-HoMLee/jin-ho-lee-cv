@@ -13,6 +13,32 @@ Honesty-first: a `general-honesty-first` (or any honesty gate) declared in
 but the PDF is built from `content/` exactly as-is — this script never reads
 `content/` for writing and never invents or alters honesty wording. `content/`
 is only ever consumed read-only by `pdf.build.prepare_data`.
+
+Per-position tailoring: a package may also carry a `tailoring.yaml` holding
+captain-approved, position-specific wording that the export applies to a
+*temporary* copy of `content/` before building (the general variants and
+`content/` are never touched). Supported overrides (all with EN+DE parity):
+
+    profile:
+      <variant>:           # bridge | comp-bio | ds-ml
+        tagline:
+          en: "..."
+          de: "..."
+    projects:
+      <project-id>:        # e.g. L2 → content/projects/L2.{en,de}.yaml
+        outcome:
+          en: "..."
+          de: "..."
+    experience:
+      <entry-id>:          # e.g. research (id from content/experience.yaml)
+        append:
+          - en: "..."
+            de: "..."
+            refs: [L4]     # optional, default []
+
+The override is applied verbatim (it is the captain-approved wording; the
+script never invents it), and the exact applied record is written back into
+`cv.tailoring` of the manifest so the export stays auditable.
 """
 
 from __future__ import annotations
@@ -24,6 +50,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -41,9 +68,18 @@ from scripts.cover_letter_core import (
 _yaml = YAML(typ="safe")
 _yaml.default_flow_style = False
 
+# Content YAML round-trips through a dedicated instance so umlauts stay
+# literal (allow_unicode) in the temp tailoring copy.
+_content_yaml = YAML(typ="safe")
+_content_yaml.default_flow_style = False
+_content_yaml.allow_unicode = True
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CV_REPO_NAME = "jin-ho-lee-cv"
 TARGETS = ("bridge", "comp-bio", "ds-ml")
+TAILORING_FILENAME = "tailoring.yaml"
+_LANGS = ("en", "de")
+_TAILORING_KEYS = ("profile", "projects", "experience")
 
 # Order matters: "honesty-first" is a substring of "general-honesty-first", so the
 # more specific marker must be checked first.
@@ -90,6 +126,17 @@ def _dump_yaml(data: dict) -> str:
     buf = io.StringIO()
     _yaml.dump(data, buf)
     return buf.getvalue()
+
+
+def _load_content_yaml(path: Path):
+    with path.open("r", encoding="utf-8") as f:
+        return _content_yaml.load(f)
+
+
+def _dump_content_yaml(path: Path, data) -> None:
+    buf = io.StringIO()
+    _content_yaml.dump(data, buf)
+    path.write_text(buf.getvalue(), encoding="utf-8")
 
 
 # --- variant + policy resolution from cv-tailoring.md ----------------------------
@@ -139,16 +186,217 @@ def _resolve_language(application: dict) -> str:
     return lang
 
 
+# --- per-position tailoring (tailoring.yaml) ------------------------------------
+
+
+def _require_en_de(value, context: str) -> None:
+    if not isinstance(value, dict):
+        raise ValueError(f"{context}: expected a mapping, got {type(value).__name__}")
+    for lang in _LANGS:
+        if lang not in value or not isinstance(value[lang], str) or not value[lang].strip():
+            raise ValueError(f"{context}: missing non-empty {lang!r} string")
+
+
+def _validate_langmap(value, context: str) -> None:
+    """A strict {en, de} map — no other keys allowed."""
+    _require_en_de(value, context)
+    extra = set(value) - set(_LANGS)
+    if extra:
+        raise ValueError(f"{context}: unexpected key(s) {sorted(extra)}; only en/de allowed")
+
+
+def _validate_bullet(value, context: str) -> None:
+    """An experience bullet: {en, de} text plus an optional refs list."""
+    if not isinstance(value, dict):
+        raise ValueError(f"{context}: expected a bullet mapping")
+    _require_en_de(value, context)
+    extra = set(value) - {"en", "de", "refs"}
+    if extra:
+        raise ValueError(f"{context}: unexpected key(s) {sorted(extra)}; only en/de/refs allowed")
+    refs = value.get("refs", [])
+    if refs is not None and (
+        not isinstance(refs, list) or not all(isinstance(r, str) for r in refs)
+    ):
+        raise ValueError(f"{context}: refs must be a list of strings")
+
+
+def _validate_overrides(overrides: dict) -> None:
+    if not isinstance(overrides, dict):
+        raise ValueError("tailoring.yaml: expected a mapping")
+    unknown = set(overrides) - set(_TAILORING_KEYS)
+    if unknown:
+        raise ValueError(
+            f"tailoring.yaml: unknown top-level key(s) {sorted(unknown)}; "
+            f"expected one of {list(_TAILORING_KEYS)}"
+        )
+
+    profile = overrides.get("profile")
+    if profile is not None:
+        if not isinstance(profile, dict):
+            raise ValueError(
+                "tailoring.yaml profile: expected a mapping of variant -> {tagline: {en, de}}"
+            )
+        for variant, spec in profile.items():
+            if variant not in TARGETS:
+                raise ValueError(
+                    f"tailoring.yaml profile: unknown variant {variant!r}; expected one of {list(TARGETS)}"
+                )
+            if not isinstance(spec, dict):
+                raise ValueError(f"tailoring.yaml profile.{variant}: expected a mapping")
+            extra = set(spec) - {"tagline"}
+            if extra:
+                raise ValueError(
+                    f"tailoring.yaml profile.{variant}: unexpected key(s) {sorted(extra)}; only 'tagline' supported"
+                )
+            if "tagline" in spec:
+                _validate_langmap(spec["tagline"], f"tailoring.yaml profile.{variant}.tagline")
+
+    projects = overrides.get("projects")
+    if projects is not None:
+        if not isinstance(projects, dict):
+            raise ValueError(
+                "tailoring.yaml projects: expected a mapping of project-id -> {outcome: {en, de}}"
+            )
+        for pid, spec in projects.items():
+            if not isinstance(spec, dict):
+                raise ValueError(f"tailoring.yaml projects.{pid}: expected a mapping")
+            extra = set(spec) - {"outcome"}
+            if extra:
+                raise ValueError(
+                    f"tailoring.yaml projects.{pid}: unexpected key(s) {sorted(extra)}; only 'outcome' supported"
+                )
+            if "outcome" in spec:
+                _validate_langmap(spec["outcome"], f"tailoring.yaml projects.{pid}.outcome")
+
+    experience = overrides.get("experience")
+    if experience is not None:
+        if not isinstance(experience, dict):
+            raise ValueError(
+                "tailoring.yaml experience: expected a mapping of entry-id -> {append: [...]}"
+            )
+        for entry_id, spec in experience.items():
+            if not isinstance(spec, dict):
+                raise ValueError(f"tailoring.yaml experience.{entry_id}: expected a mapping")
+            extra = set(spec) - {"append"}
+            if extra:
+                raise ValueError(
+                    f"tailoring.yaml experience.{entry_id}: unexpected key(s) {sorted(extra)}; only 'append' supported"
+                )
+            bullets = spec.get("append")
+            if bullets is None:
+                continue
+            if not isinstance(bullets, list):
+                raise ValueError(f"tailoring.yaml experience.{entry_id}.append: expected a list")
+            for i, bullet in enumerate(bullets):
+                _validate_bullet(bullet, f"tailoring.yaml experience.{entry_id}.append[{i}]")
+
+
+def load_tailoring_overrides(package_dir: Path) -> dict:
+    """Read + validate `<package>/tailoring.yaml`; returns {} when absent."""
+    path = package_dir / TAILORING_FILENAME
+    if not path.exists():
+        return {}
+    with path.open("r", encoding="utf-8") as f:
+        overrides = _yaml.load(f)
+    if overrides is None:
+        return {}
+    _validate_overrides(overrides)
+    return overrides
+
+
+def apply_overrides(src_content: Path, overrides: dict) -> tuple[Path, list[dict]]:
+    """Copy `src_content` to a temp tree and apply `tailoring.yaml` overrides.
+
+    Returns ``(temp_content_dir, applied)`` where `applied` is the audit record
+    of exactly what wording was written into the copy. `content/` is never
+    touched; the caller owns the temp tree and must clean it up.
+    """
+    tmp_root = Path(tempfile.mkdtemp(prefix="cv-tailoring-"))
+    content = tmp_root / "content"
+    shutil.copytree(src_content, content)
+    applied: list[dict] = []
+
+    for variant, spec in (overrides.get("profile") or {}).items():
+        tagline = spec.get("tagline")
+        if tagline is None:
+            continue
+        for lang in _LANGS:
+            path = content / f"profile.{lang}.yaml"
+            data = _load_content_yaml(path)
+            if variant == "bridge":
+                data["tagline"] = tagline[lang]
+            else:
+                data.setdefault("variants", {}).setdefault(variant, {})["tagline"] = tagline[lang]
+            _dump_content_yaml(path, data)
+        applied.append(
+            {
+                "kind": "profile_tagline",
+                "variant": variant,
+                "en": tagline["en"],
+                "de": tagline["de"],
+            }
+        )
+
+    for pid, spec in (overrides.get("projects") or {}).items():
+        outcome = spec.get("outcome")
+        if outcome is None:
+            continue
+        for lang in _LANGS:
+            path = content / "projects" / f"{pid}.{lang}.yaml"
+            if not path.is_file():
+                raise ValueError(
+                    f"tailoring.yaml projects.{pid}: no project file {path.name} in content/projects"
+                )
+            data = _load_content_yaml(path)
+            data["outcome"] = outcome[lang]
+            _dump_content_yaml(path, data)
+        applied.append(
+            {"kind": "project_outcome", "id": pid, "en": outcome["en"], "de": outcome["de"]}
+        )
+
+    experience_data = None
+    for entry_id, spec in (overrides.get("experience") or {}).items():
+        bullets = spec.get("append") or []
+        if not bullets:
+            continue
+        if experience_data is None:
+            experience_data = _load_content_yaml(content / "experience.yaml")
+        entry = next((e for e in experience_data if e.get("id") == entry_id), None)
+        if entry is None:
+            raise ValueError(f"tailoring.yaml experience.{entry_id}: no such experience entry id")
+        for bullet in bullets:
+            new_bullet = {"en": bullet["en"], "de": bullet["de"], "refs": bullet.get("refs", [])}
+            entry.setdefault("bullets", []).append(new_bullet)
+            applied.append(
+                {
+                    "kind": "experience_bullet",
+                    "entry": entry_id,
+                    "en": bullet["en"],
+                    "de": bullet["de"],
+                    "refs": new_bullet["refs"],
+                }
+            )
+    if experience_data is not None:
+        _dump_content_yaml(content / "experience.yaml", experience_data)
+
+    return content, applied
+
+
 # --- build + stage + manifest ---------------------------------------------------
 
 
-def _build_to_dist(lang: str, target: str) -> Path:
+def _build_to_dist(lang: str, target: str, content_dir: Path | None = None) -> Path:
     """Build the targeted public PDF via the existing `just build-target` machinery.
 
-    Returns the built path under dist/. Public build only (no --private): the
-    attached CV variant is the public one; phone/address belong to the letter.
+    `content_dir` (when given) is a per-position tailoring temp copy of the
+    content tree; the general `content/` is used otherwise. Returns the built
+    path under dist/. Public build only (no --private): the attached CV variant
+    is the public one; phone/address belong to the letter.
     """
-    rc = pdf_build.main(["--lang", lang, "--target", target])
+    argv = ["--lang", lang, "--target", target]
+    if content_dir is not None:
+        argv += ["--content-dir", str(content_dir)]
+    rc = pdf_build.main(argv)
     if rc != 0:
         raise RuntimeError(f"pdf.build exited {rc}")
     return REPO_ROOT / "dist" / pdf_build._pdf_filename(lang, target)
@@ -186,9 +434,10 @@ def _submit_fields(application: dict) -> dict:
 def export_application_cv(slug: str, *, apps_dir: Path | None = None, build_pdf=None) -> dict:
     """Build + stage a tailored CV PDF for `slug` and write its freeze manifest.
 
-    `build_pdf` is an injectable ``callable(lang, target) -> Path`` returning the
-    built PDF's path (defaults to `_build_to_dist`, the real Typst build). Tests
-    pass a fake to avoid a Typst compile.
+    `build_pdf` is an injectable ``callable(lang, target, content_dir=None) ->
+    Path`` returning the built PDF's path (defaults to `_build_to_dist`, the
+    real Typst build). Tests pass a fake to avoid a Typst compile. `content_dir`
+    is the per-position tailoring temp copy (None when no tailoring.yaml).
     """
     apps_dir = _resolve_apps_dir(apps_dir)
     slug = _sanitize_slug(slug)
@@ -214,11 +463,28 @@ def export_application_cv(slug: str, *, apps_dir: Path | None = None, build_pdf=
             file=sys.stderr,
         )
 
+    # Per-position tailoring: apply captain-approved wording to a temp content
+    # copy only. `content/` and the general variants are never touched.
+    overrides = load_tailoring_overrides(package_dir)
+    content_dir: Path | None = None
+    applied: list[dict] = []
+    if overrides:
+        content_dir, applied = apply_overrides(REPO_ROOT / "content", overrides)
+        print(
+            f"note: applied {len(applied)} tailoring override(s) from "
+            f"{TAILORING_FILENAME} (captain-approved wording; content/ untouched)",
+            file=sys.stderr,
+        )
+
     build = build_pdf or _build_to_dist
-    built = build(lang, variant)
-    pdf_rel, pdf_sha = _stage_pdf(
-        built, package_dir, f"artifacts/{pdf_build._pdf_filename(lang, variant)}"
-    )
+    try:
+        built = build(lang, variant, content_dir)
+        pdf_rel, pdf_sha = _stage_pdf(
+            built, package_dir, f"artifacts/{pdf_build._pdf_filename(lang, variant)}"
+        )
+    finally:
+        if content_dir is not None:
+            shutil.rmtree(content_dir.parent, ignore_errors=True)
 
     manifest: dict = {
         "slug": slug,
@@ -232,6 +498,8 @@ def export_application_cv(slug: str, *, apps_dir: Path | None = None, build_pdf=
             "content_policy": content_policy,
         },
     }
+    if overrides:
+        manifest["cv"]["tailoring"] = {"file": TAILORING_FILENAME, "applied": applied}
     letter = _detect_letter(package_dir, lang)
     if letter is not None:
         manifest["letter"] = letter

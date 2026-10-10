@@ -1,0 +1,35 @@
+# tailoring.yaml — per-position content overrides, applied ONLY to this
+# package's export. `scripts/export_application.py` copies content/ into a
+# temporary tree, applies exactly what this file carries there, builds the
+# PDF from that copy, and records what it applied in
+# `attachment-manifest.yaml`. `content/` and the general CV variants are never
+# touched, so role-specific facts never leak back into the general CVs.
+#
+# Every text override must carry both `en` and `de` (parity). `refs` is
+# optional and language-independent: it names content/projects/<id>.*.yaml ids,
+# rendered as chips beside the appended bullet. The wording below is placeholder
+# only — replace it with captain-approved wording for the real package. The
+# export script never invents wording; it applies this file verbatim.
+
+# profile: override a variant's tagline. `bridge` targets the top-level tagline;
+# `comp-bio` / `ds-ml` target that variant's tagline.
+profile:
+  comp-bio:
+    tagline:
+      en: "PLACEHOLDER — captain-approved comp-bio tagline."
+      de: "PLATZHALTER — vom Captain freigegebene Comp-Bio-Tagline."
+
+# projects: override a project's outcome line (written to projects/<id>.{en,de}.yaml).
+projects:
+  L2:
+    outcome:
+      en: "PLACEHOLDER — captain-approved L2 outcome."
+      de: "PLATZHALTER — vom Captain freigegebenes L2-Ergebnis."
+
+# experience: append bullets to an experience entry (id from content/experience.yaml).
+experience:
+  research:
+    append:
+      - en: "PLACEHOLDER — captain-approved appended bullet."
+        de: "PLATZHALTER — vom Captain freigegebener ergänzter Punkt."
+        refs: [L4]

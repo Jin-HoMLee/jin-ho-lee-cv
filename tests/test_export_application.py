@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import hashlib
+import shutil
 from pathlib import Path
 
 import pytest
 from ruamel.yaml import YAML
 
 from scripts import export_application as ea
+from scripts.content_loader import load_content
 from scripts.cover_letter_core import _resolve_apps_dir
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -49,7 +51,7 @@ def _write_package(
 def _fake_build(tmp_path: Path):
     """A build_pdf callable that writes a fake PDF and returns its path."""
 
-    def _build(lang: str, target: str) -> Path:
+    def _build(lang: str, target: str, content_dir: Path | None = None) -> Path:
         fake = tmp_path / "built" / f"cv-{lang}-{target}.pdf"
         fake.parent.mkdir(parents=True, exist_ok=True)
         fake.write_bytes(FAKE_PDF)
@@ -195,3 +197,175 @@ def test_resolve_apps_dir_shared_with_letter_core(monkeypatch, tmp_path: Path):
     target = tmp_path / "job-applications"
     monkeypatch.setenv("APPLICATIONS_DIR", str(target))
     assert ea._resolve_apps_dir() == target == _resolve_apps_dir()
+
+
+# --- per-position tailoring (tailoring.yaml) -----------------------------------
+
+
+def _write_tailoring(apps: Path, slug: str, text: str) -> None:
+    (apps / slug / "tailoring.yaml").write_text(text, encoding="utf-8")
+
+
+TAILORING_YAML = (
+    "profile:\n"
+    "  comp-bio:\n"
+    "    tagline:\n"
+    '      en: "Tailored EN tagline"\n'
+    '      de: "Tailored DE tagline"\n'
+    "projects:\n"
+    "  L2:\n"
+    "    outcome:\n"
+    '      en: "Tailored EN outcome"\n'
+    '      de: "Tailored DE outcome"\n'
+    "experience:\n"
+    "  research:\n"
+    "    append:\n"
+    '      - en: "Tailored EN bullet"\n'
+    '        de: "Tailored DE bullet"\n'
+    "        refs: [L4]\n"
+)
+
+
+def test_apply_overrides_copies_to_temp_and_never_touches_content():
+    overrides = {
+        "profile": {"comp-bio": {"tagline": {"en": "Tailored EN", "de": "Tailored DE"}}},
+        "projects": {"L2": {"outcome": {"en": "EN outcome", "de": "DE outcome"}}},
+        "experience": {
+            "research": {"append": [{"en": "EN bullet", "de": "DE bullet", "refs": ["L4"]}]}
+        },
+    }
+    src = REPO_ROOT / "content"
+    before = {
+        "profile_en": (src / "profile.en.yaml").read_bytes(),
+        "profile_de": (src / "profile.de.yaml").read_bytes(),
+        "l2_en": (src / "projects" / "L2.en.yaml").read_bytes(),
+        "l2_de": (src / "projects" / "L2.de.yaml").read_bytes(),
+        "experience": (src / "experience.yaml").read_bytes(),
+    }
+
+    content_dir, applied = ea.apply_overrides(src, overrides)
+    try:
+        # The temp copy carries the overrides; the original content/ does not.
+        prof_en = _yaml.load((content_dir / "profile.en.yaml").read_text(encoding="utf-8"))
+        assert prof_en["variants"]["comp-bio"]["tagline"] == "Tailored EN"
+        l2_de = _yaml.load((content_dir / "projects" / "L2.de.yaml").read_text(encoding="utf-8"))
+        assert l2_de["outcome"] == "DE outcome"
+
+        # The appended experience bullet survives the per-target projection.
+        data = load_content(content_dir, lang="en", target="comp-bio", web_projection=True)
+        research = next(e for e in data["experience"] if e["id"] == "research")
+        assert research["bullets"][-1]["en"] == "EN bullet"
+        assert research["bullets"][-1]["refs"] == ["L4"]
+
+        assert applied == [
+            {
+                "kind": "profile_tagline",
+                "variant": "comp-bio",
+                "en": "Tailored EN",
+                "de": "Tailored DE",
+            },
+            {"kind": "project_outcome", "id": "L2", "en": "EN outcome", "de": "DE outcome"},
+            {
+                "kind": "experience_bullet",
+                "entry": "research",
+                "en": "EN bullet",
+                "de": "DE bullet",
+                "refs": ["L4"],
+            },
+        ]
+    finally:
+        shutil.rmtree(content_dir.parent, ignore_errors=True)
+
+    # content/ was never touched.
+    assert (src / "profile.en.yaml").read_bytes() == before["profile_en"]
+    assert (src / "profile.de.yaml").read_bytes() == before["profile_de"]
+    assert (src / "projects" / "L2.en.yaml").read_bytes() == before["l2_en"]
+    assert (src / "projects" / "L2.de.yaml").read_bytes() == before["l2_de"]
+    assert (src / "experience.yaml").read_bytes() == before["experience"]
+
+
+def test_export_applies_tailoring_and_records_it(apps, tmp_path: Path):
+    slug = "iso-2026-09"
+    _write_package(apps, slug, language="en", tailoring="variant: comp-bio")
+    _write_tailoring(apps, slug, TAILORING_YAML)
+
+    captured: dict = {}
+
+    def build(lang: str, target: str, content_dir: Path | None = None) -> Path:
+        captured["content_dir"] = content_dir
+        fake = tmp_path / "built" / f"cv-{lang}-{target}.pdf"
+        fake.parent.mkdir(parents=True, exist_ok=True)
+        fake.write_bytes(FAKE_PDF)
+        return fake
+
+    manifest = ea.export_application_cv(slug, apps_dir=apps, build_pdf=build)
+
+    assert manifest["cv"]["tailoring"]["file"] == "tailoring.yaml"
+    assert manifest["cv"]["tailoring"]["applied"] == [
+        {
+            "kind": "profile_tagline",
+            "variant": "comp-bio",
+            "en": "Tailored EN tagline",
+            "de": "Tailored DE tagline",
+        },
+        {
+            "kind": "project_outcome",
+            "id": "L2",
+            "en": "Tailored EN outcome",
+            "de": "Tailored DE outcome",
+        },
+        {
+            "kind": "experience_bullet",
+            "entry": "research",
+            "en": "Tailored EN bullet",
+            "de": "Tailored DE bullet",
+            "refs": ["L4"],
+        },
+    ]
+    # The build received a temp content copy, which is cleaned up after export.
+    assert captured["content_dir"] is not None
+    assert not captured["content_dir"].exists()
+    assert not captured["content_dir"].parent.exists()
+
+
+def test_export_without_tailoring_omits_manifest_key(apps, tmp_path: Path):
+    slug = "iso-2026-09"
+    _write_package(apps, slug, language="en", tailoring="variant: comp-bio")
+    manifest = ea.export_application_cv(slug, apps_dir=apps, build_pdf=_fake_build(tmp_path))
+    assert "tailoring" not in manifest["cv"]
+
+
+def test_export_tailoring_requires_en_de_parity(apps, tmp_path: Path):
+    slug = "iso-2026-09"
+    _write_package(apps, slug, language="en", tailoring="variant: comp-bio")
+    _write_tailoring(
+        apps,
+        slug,
+        'profile:\n  comp-bio:\n    tagline:\n      en: "only en"\n',
+    )
+    with pytest.raises(ValueError, match="de"):
+        ea.export_application_cv(slug, apps_dir=apps, build_pdf=_fake_build(tmp_path))
+
+
+def test_export_tailoring_unknown_variant_raises(apps, tmp_path: Path):
+    slug = "iso-2026-09"
+    _write_package(apps, slug, language="en", tailoring="variant: comp-bio")
+    _write_tailoring(
+        apps,
+        slug,
+        "profile:\n  bogus:\n    tagline:\n      en: x\n      de: y\n",
+    )
+    with pytest.raises(ValueError, match="unknown variant"):
+        ea.export_application_cv(slug, apps_dir=apps, build_pdf=_fake_build(tmp_path))
+
+
+def test_export_tailoring_unknown_project_raises(apps, tmp_path: Path):
+    slug = "iso-2026-09"
+    _write_package(apps, slug, language="en", tailoring="variant: comp-bio")
+    _write_tailoring(
+        apps,
+        slug,
+        "projects:\n  NOPE:\n    outcome:\n      en: x\n      de: y\n",
+    )
+    with pytest.raises(ValueError, match="no project file"):
+        ea.export_application_cv(slug, apps_dir=apps, build_pdf=_fake_build(tmp_path))

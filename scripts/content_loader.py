@@ -148,15 +148,20 @@ _EXPERIENCE_BULLET_ORDER = {
 
 
 def _resolve_experience_target(experience: list[dict], target: str) -> list[dict]:
-    """Reorder each role's bullets to lead `target` focus; content stays identical."""
+    """Reorder each role's bullets to lead `target` focus; content stays identical.
+
+    Bullets beyond the canonical per-target order (e.g. bullets appended by a
+    per-position tailoring override) are kept in their original position after
+    the reordered canonical bullets.
+    """
     order = _EXPERIENCE_BULLET_ORDER.get(target, _EXPERIENCE_BULLET_ORDER["bridge"])
     result = copy.deepcopy(experience)
     for entry in result:
         indices = order.get(entry["id"])
         if indices is not None:
-            entry["bullets"] = [
-                entry["bullets"][index] for index in indices if index < len(entry["bullets"])
-            ]
+            canonical = [entry["bullets"][i] for i in indices if i < len(entry["bullets"])]
+            extra = [b for i, b in enumerate(entry["bullets"]) if i not in indices]
+            entry["bullets"] = canonical + extra
     return result
 
 
