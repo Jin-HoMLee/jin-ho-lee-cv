@@ -130,19 +130,19 @@ _EXPERIENCE_BULLET_ORDER = {
         "independent": (0, 1, 2),
         "cintellic": (0, 1, 2),
         "neuefische": (0, 1),
-        "research": (0, 1, 2, 3),
+        "research": (0, 1, 2),
     },
     "comp-bio": {
         "independent": (2, 1, 0),
         "cintellic": (0, 1, 2),
         "neuefische": (0, 1),
-        "research": (0, 1, 2, 3),
+        "research": (0, 1, 2),
     },
     "ds-ml": {
         "independent": (0, 1, 2),
         "cintellic": (1, 0, 2),
         "neuefische": (1, 0),
-        "research": (0, 1, 2, 3),
+        "research": (0, 1, 2),
     },
 }
 
