@@ -38,8 +38,8 @@ def test_experience_coverage_is_identical_across_targets_and_languages(content_d
         },
         "neuefische": {"en": ("Coaching", "ML Development"), "de": ("Coaching", "ML-Entwicklung")},
         "research": {
-            "en": ("Genomics", "Biophysics", "Neurobiology"),
-            "de": ("Genomik", "Biophysik", "Neurobiologie"),
+            "en": ("Genomics", "Biophysics", "Neurobiology", "Mentoring"),
+            "de": ("Genomik", "Biophysik", "Neurobiologie", "Mentoring"),
         },
     }
     for lang in ("en", "de"):
@@ -51,7 +51,7 @@ def test_experience_coverage_is_identical_across_targets_and_languages(content_d
                 "independent": independent_n,
                 "cintellic": 3,
                 "neuefische": 2,
-                "research": 3,
+                "research": 4,
             }, f"{lang}/{target} dropped experience bullets: {counts}"
             for entry_id, markers_by_lang in inventory.items():
                 bullets = _entry(data, entry_id)["bullets"]
@@ -90,9 +90,12 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
     assert "Snakemake" in _entry(data, "independent")["bullets"][0]["en"]
     assert "1,000+" in _entry(data, "cintellic")["bullets"][0]["en"]
     assert "100+" in _entry(data, "neuefische")["bullets"][0]["en"]
-    assert len(_entry(data, "research")["bullets"]) == 3
+    assert len(_entry(data, "research")["bullets"]) == 4
     assert "NCT/DKFZ" in _entry(data, "research")["bullets"][0]["en"]
     assert "not SNU splice-candidate validation" in _entry(data, "research")["bullets"][0]["en"]
+    assert (
+        "Co-selected two DAAD scholarship interns" in _entry(data, "research")["bullets"][3]["en"]
+    )
     assert "doctorate not awarded" in _entry(data, "research")["role"]
 
     skills = _skill_items(data)
@@ -103,9 +106,9 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
 
 def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
     expected_bullets = {
-        "bridge": {"independent": 3, "cintellic": 3, "neuefische": 2, "research": 3},
-        "comp-bio": {"independent": 2, "cintellic": 3, "neuefische": 2, "research": 3},
-        "ds-ml": {"independent": 3, "cintellic": 3, "neuefische": 2, "research": 3},
+        "bridge": {"independent": 3, "cintellic": 3, "neuefische": 2, "research": 4},
+        "comp-bio": {"independent": 2, "cintellic": 3, "neuefische": 2, "research": 4},
+        "ds-ml": {"independent": 3, "cintellic": 3, "neuefische": 2, "research": 4},
     }
     expected_awards = {
         "bridge": {"Google Cloud Certified - Associate Cloud Engineer", "DAAD PROMOS Scholarship"},
@@ -158,19 +161,19 @@ def test_experience_bullet_order_leads_each_target_focus(content_dir):
             "independent": [["D4"], ["D2"], ["L5"]],
             "cintellic": [["C2"], ["C1"], ["C1", "C2"]],
             "neuefische": [["D3"], ["D1"]],
-            "research": [["L1", "L2"], ["L3"], ["L4"]],
+            "research": [["L1", "L2"], ["L3"], ["L4"], ["L4"]],
         },
         "comp-bio": {
             "independent": [["L5"], ["D2"]],
             "cintellic": [["C2"], ["C1"], ["C1", "C2"]],
             "neuefische": [["D3"], ["D1"]],
-            "research": [["L1", "L2"], ["L3"], ["L4"]],
+            "research": [["L1", "L2"], ["L3"], ["L4"], ["L4"]],
         },
         "ds-ml": {
             "independent": [["D4"], ["D2"], ["L5"]],
             "cintellic": [["C1"], ["C2"], ["C1", "C2"]],
             "neuefische": [["D1"], ["D3"]],
-            "research": [["L1", "L2"], ["L3"], ["L4"]],
+            "research": [["L1", "L2"], ["L3"], ["L4"], ["L4"]],
         },
     }
     for target, entries in expected.items():
@@ -210,8 +213,10 @@ def test_general_profile_is_broad_and_balanced(content_dir):
         ["L1", "L2"],
         ["L3"],
         ["L4"],
+        ["L4"],
     ]
     assert "neural progenitor differentiation" in research["bullets"][2]["en"].lower()
+    assert "Co-selected two DAAD scholarship interns" in research["bullets"][3]["en"]
     assert [project["id"] for project in data["selected_projects"]] == ["C1", "D1", "L5"]
 
 
