@@ -371,13 +371,6 @@
           "refs": [
             "L4"
           ]
-        },
-        {
-          "en": "Mentoring: Co-selected two DAAD scholarship interns (CV and motivation-letter screening, interviews) with the supervisor.",
-          "de": "Mentoring: Mitauswahl von zwei DAAD-geförderten Praktikumsplätzen (Sichtung von Lebenslauf und Motivationsschreiben, Interviews) gemeinsam mit dem Betreuer.",
-          "refs": [
-            "L4"
-          ]
         }
       ]
     }
@@ -590,7 +583,7 @@
         "Engineered a consensus methodology integrating multiple HLA typing algorithms to resolve sequence ambiguities and improve call consistency.",
         "Checked the pipeline computationally by comparing binding-specificity predictions across HLA alleles to flag inconsistent allele calls."
       ],
-      "outcome": "B.Sc. thesis, NCT Heidelberg: in-silico HLA typing from real-patient WES/NGS and ANN-based MHC-I binding screens for missense-mutation candidates. Unpublished."
+      "outcome": "B.Sc. thesis, NCT Heidelberg: in-silico HLA typing from WES/NGS and ANN-based MHC-I binding screens for missense-mutation candidates. Unpublished."
     },
     "L3": {
       "id": "L3",

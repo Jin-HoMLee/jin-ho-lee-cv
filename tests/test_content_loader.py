@@ -3,6 +3,7 @@
 import pytest
 
 from scripts.content_loader import (
+    _resolve_experience_target,
     deep_merge,
     load_content,
 )
@@ -13,6 +14,41 @@ def test_deep_merge_overlays_leaf_values():
     overlay = {"b": {"c": 3, "d": 4}}
     result = deep_merge(base, overlay)
     assert result == {"a": 1, "b": {"c": 3, "d": 4}}
+
+
+def test_resolve_experience_target_keeps_appended_bullets():
+    """Canonical bullets are reordered; tailoring-appended bullets stay last."""
+    canonical = {
+        "id": "independent",
+        "bullets": [
+            {"en": "a", "de": "a", "refs": []},
+            {"en": "b", "de": "b", "refs": []},
+            {"en": "c", "de": "c", "refs": []},
+        ],
+    }
+    # comp-bio independent order is (2, 1, 0); no extra bullet → unchanged count.
+    assert [b["en"] for b in _resolve_experience_target([canonical], "comp-bio")[0]["bullets"]] == [
+        "c",
+        "b",
+        "a",
+    ]
+
+    # A bullet appended beyond the canonical order (index 3) survives, last.
+    with_extra = {
+        "id": "independent",
+        "bullets": canonical["bullets"]
+        + [
+            {"en": "d", "de": "d", "refs": []},
+        ],
+    }
+    assert [
+        b["en"] for b in _resolve_experience_target([with_extra], "comp-bio")[0]["bullets"]
+    ] == [
+        "c",
+        "b",
+        "a",
+        "d",
+    ]
 
 
 def test_deep_merge_does_not_mutate_inputs():

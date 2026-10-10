@@ -371,13 +371,6 @@
           "refs": [
             "L4"
           ]
-        },
-        {
-          "en": "Mentoring: Co-selected two DAAD scholarship interns (CV and motivation-letter screening, interviews) with the supervisor.",
-          "de": "Mentoring: Mitauswahl von zwei DAAD-geförderten Praktikumsplätzen (Sichtung von Lebenslauf und Motivationsschreiben, Interviews) gemeinsam mit dem Betreuer.",
-          "refs": [
-            "L4"
-          ]
         }
       ]
     }
@@ -590,7 +583,7 @@
         "Konzeption einer Konsens-Methodik zur Integration mehrerer HLA-Typisierungs-Algorithmen zur Auflösung von Sequenz-Ambiguitäten und Verbesserung der Call-Konsistenz.",
         "Computergestützte Prüfung der Pipeline durch Vergleich von Bindungsspezifitäts-Vorhersagen über HLA-Allele hinweg, um inkonsistente Allel-Calls zu markieren."
       ],
-      "outcome": "B.Sc.-Thesis, NCT Heidelberg: In-silico-HLA-Typisierung aus realen Patienten-WES/NGS und ANN-basierte MHC-I-Bindungsscreens für Missense-Mutationskandidaten. Unveröffentlicht."
+      "outcome": "B.Sc.-Thesis, NCT Heidelberg: In-silico-HLA-Typisierung aus WES/NGS und ANN-basierte MHC-I-Bindungsscreens für Missense-Mutationskandidaten. Unveröffentlicht."
     },
     "L3": {
       "id": "L3",

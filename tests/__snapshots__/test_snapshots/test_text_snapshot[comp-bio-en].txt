@@ -38,7 +38,6 @@ Doctoral & Post-Graduate Researcher (doctorate not awarded) - Forschungszentrum 
   - Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).
   - Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).
   - Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles.
-  - Mentoring: Co-selected two DAAD scholarship interns (CV and motivation-letter screening, interviews) with the supervisor.
 
 ================================================================================
 SELECTED PROJECTS
@@ -60,9 +59,8 @@ Personalized Immunotherapy – High-Throughput HLA Typing Pipeline    (2014-04 t
   B.Sc. thesis project: Bioinformatics workflow for identifying patient-specific
   cancer targets and automating HLA genotyping from Next-Generation Sequencing
   (NGS) data.
-  Outcome: B.Sc. thesis, NCT Heidelberg: in-silico HLA typing from real-patient
-  WES/NGS and ANN-based MHC-I binding screens for missense-mutation candidates.
-  Unpublished.
+  Outcome: B.Sc. thesis, NCT Heidelberg: in-silico HLA typing from WES/NGS and
+  ANN-based MHC-I binding screens for missense-mutation candidates. Unpublished.
 
 Cancer Neoantigen Discovery – Transcriptome-Wide Splice Analysis    (2015-08 to 2015-11)
   Bioinformatics Research Intern (Seoul National University)
