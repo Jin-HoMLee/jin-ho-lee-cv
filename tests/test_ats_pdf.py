@@ -15,6 +15,8 @@ from pathlib import Path
 import pytest
 from pypdf import PdfReader
 
+from scripts.export_application import export_application_cv
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 VARIANTS = [(lang, target) for lang in ("en", "de") for target in ("bridge", "comp-bio", "ds-ml")]
 
@@ -315,3 +317,87 @@ def test_all_variants_avoid_fragile_pdf_interactivity(built_pdf):
             assert annotation.get("/Subtype") not in forbidden_annotations
             action = annotation.get("/A")
             assert action is None or action.get_object().get("/S") != "/JavaScript"
+
+
+# --- tailored exports (per-package tailoring.yaml) ------------------------------
+
+# The DAiNA package's captain-approved tailoring wording: a longer comp-bio
+# tagline plus one appended Mentoring bullet on the research entry. Without the
+# tailored compaction the appended bullet is the stray first line of page two.
+_TAILORED_TAGLINE = {
+    "en": (
+        "Computational biology / bioinformatics: hands-on NGS workflows on real-patient "
+        "WES/NGS data (HLA typing, patient-specific cancer-target screening) and predicted "
+        "splice-derived MHC-I neoepitope candidates."
+    ),
+    "de": (
+        "Computational Biology / Bioinformatik: praktische NGS-Workflows mit realen "
+        "Patient:innen-WES/NGS-Daten (HLA-Typisierung, patientenspezifisches "
+        "Krebstarget-Screening) und vorhergesagte splice-abgeleitete "
+        "MHC-I-Neoepitop-Kandidaten."
+    ),
+}
+
+_TAILORED_BULLET = {
+    "en": (
+        "Mentoring: Co-selected two DAAD scholarship interns (CV and motivation-letter "
+        "screening, interviews) with the supervisor."
+    ),
+    "de": (
+        "Mentoring: Mitauswahl von zwei DAAD-geförderten Praktikumsplätzen (Sichtung von "
+        "Lebenslauf und Motivationsschreiben, Interviews) gemeinsam mit dem Betreuer."
+    ),
+}
+
+
+def _write_tailored_package(apps: Path, slug: str, lang: str) -> None:
+    """Minimal applications/ package whose tailoring.yaml matches the DAiNA shape."""
+    pkg = apps / slug
+    pkg.mkdir(parents=True)
+    (pkg / "application.yaml").write_text(f"language: {lang}\n", encoding="utf-8")
+    (pkg / "cv-tailoring.md").write_text("variant: comp-bio\n", encoding="utf-8")
+    (pkg / "tailoring.yaml").write_text(
+        "profile:\n"
+        "  comp-bio:\n"
+        "    tagline:\n"
+        f'      en: "{_TAILORED_TAGLINE["en"]}"\n'
+        f'      de: "{_TAILORED_TAGLINE["de"]}"\n'
+        "experience:\n"
+        "  research:\n"
+        "    append:\n"
+        f'      - en: "{_TAILORED_BULLET["en"]}"\n'
+        f'        de: "{_TAILORED_BULLET["de"]}"\n'
+        "        refs: [L4]\n",
+        encoding="utf-8",
+    )
+
+
+@pytest.mark.parametrize("lang", ["en", "de"])
+def test_tailored_export_keeps_complete_experience_on_page_one(lang: str, tmp_path: Path):
+    """A tailored comp-bio export keeps the whole Experience section on page one.
+
+    The extra `tailoring.yaml` bullet must land on page one with the rest of
+    Experience and page two must still open with Selected Projects - the same
+    promise the general comp-bio variant makes. Built end-to-end through the
+    export recipe so the `--tailored` layout switch is covered too.
+    """
+    apps = tmp_path / "applications"
+    _write_tailored_package(apps, "daina-2026", lang)
+
+    manifest = export_application_cv("daina-2026", apps_dir=apps)
+    assert manifest["cv"]["variant"] == "comp-bio"
+    assert manifest["cv"]["tailoring"]["applied"], "tailoring must be applied"
+    pdf = apps / "daina-2026" / manifest["cv"]["pdf_path"]
+
+    labels = SECTION_LABELS[lang]
+    page1 = _page_text(pdf, 1)
+    page2 = _page_text(pdf, 2)
+
+    assert len(PdfReader(pdf).pages) <= 2
+    assert labels["experience"] in page1
+    assert any("DAAD" in line for line in page1), "appended bullet must be on page 1"
+    assert labels["projects"] not in page1, "Selected Projects leaked onto page 1"
+    assert page2[0] == labels["projects"], (
+        f"{lang}/tailored-comp-bio page 2 starts with {page2[0]!r}, not "
+        f"{labels['projects']!r} - the appended Experience bullet spilled past page 1"
+    )

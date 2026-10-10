@@ -151,6 +151,16 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         ),
     )
     p.add_argument(
+        "--tailored",
+        action="store_true",
+        help=(
+            "Mark this build as a per-position tailored export (content from a "
+            "tailoring temp copy). Tightens the comp-bio layout one step further "
+            "so appended tailor bullets keep the complete Experience section on "
+            "page one. Default: off (general variants are unaffected)."
+        ),
+    )
+    p.add_argument(
         "--private",
         action="store_true",
         help="Merge content.private/private.yaml; PDF lands in dist-private/",
@@ -215,6 +225,8 @@ def main(argv: list[str] | None = None) -> int:
             f"lang={args.lang}",
             "--input",
             f"target={args.target}",
+            "--input",
+            f"tailored={'1' if args.tailored else '0'}",
             str(template),
             str(out_path),
         ],

@@ -24,6 +24,16 @@
 // other variant (including en/comp-bio) keeps its existing metrics.
 #let compact-de = compact-layout and pdf-lang == "de"
 
+// A per-position tailoring export (`tailoring.yaml`) renders from a temporary
+// content copy carrying captain-approved extra wording, typically one appended
+// Experience bullet. Without a further step that bullet pushes the final
+// Experience line past the page-one boundary the comp-bio variant promises, so
+// a tailored comp-bio build tightens its leading one step more - the pair CI
+// already verified when that wording lived in content/. Scoped to tailored
+// builds: every general variant keeps its existing metrics.
+#let pdf-tailored = sys.inputs.at("tailored", default: "0") == "1"
+#let compact-tailored = pdf-tailored and compact-layout
+
 #let size-body = 9pt
 #let size-small = 7.5pt
 #let size-section = 10pt
@@ -33,7 +43,7 @@
 #let space-section = if compact-layout { 3pt } else { 5pt }
 #let space-paragraph = if compact-layout { 1pt } else { 2pt }
 #let space-bullet = if compact-de { 0pt } else if compact-layout { 1pt } else { 2pt }
-#let base-leading = if compact-layout { 0.50em } else { 0.56em }
+#let base-leading = if compact-tailored { if pdf-lang == "de" { 0.31em } else { 0.34em } } else if compact-layout { 0.50em } else { 0.56em }
 
 #let sidebar-ratio = (1fr, 0.5fr)  // main : sidebar  ≈ 66 : 34
 #let column-gutter = 12pt
