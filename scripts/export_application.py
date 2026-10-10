@@ -385,17 +385,24 @@ def apply_overrides(src_content: Path, overrides: dict) -> tuple[Path, list[dict
 # --- build + stage + manifest ---------------------------------------------------
 
 
-def _build_to_dist(lang: str, target: str, content_dir: Path | None = None) -> Path:
+def _build_to_dist(
+    lang: str, target: str, content_dir: Path | None = None, *, tailored: bool = False
+) -> Path:
     """Build the targeted public PDF via the existing `just build-target` machinery.
 
     `content_dir` (when given) is a per-position tailoring temp copy of the
-    content tree; the general `content/` is used otherwise. Returns the built
-    path under dist/. Public build only (no --private): the attached CV variant
-    is the public one; phone/address belong to the letter.
+    content tree; the general `content/` is used otherwise. `tailored` marks a
+    build whose content carries captain-approved tailoring overrides so the
+    layout can tighten the comp-bio page-one Experience boundary around the
+    extra bullets. Returns the built path under dist/. Public build only (no
+    --private): the attached CV variant is the public one; phone/address belong
+    to the letter.
     """
     argv = ["--lang", lang, "--target", target]
     if content_dir is not None:
         argv += ["--content-dir", str(content_dir)]
+    if tailored:
+        argv += ["--tailored"]
     rc = pdf_build.main(argv)
     if rc != 0:
         raise RuntimeError(f"pdf.build exited {rc}")
@@ -434,10 +441,11 @@ def _submit_fields(application: dict) -> dict:
 def export_application_cv(slug: str, *, apps_dir: Path | None = None, build_pdf=None) -> dict:
     """Build + stage a tailored CV PDF for `slug` and write its freeze manifest.
 
-    `build_pdf` is an injectable ``callable(lang, target, content_dir=None) ->
-    Path`` returning the built PDF's path (defaults to `_build_to_dist`, the
-    real Typst build). Tests pass a fake to avoid a Typst compile. `content_dir`
-    is the per-position tailoring temp copy (None when no tailoring.yaml).
+    `build_pdf` is an injectable ``callable(lang, target, content_dir=None,
+    tailored=False) -> Path`` returning the built PDF's path (defaults to
+    `_build_to_dist`, the real Typst build). Tests pass a fake to avoid a Typst
+    compile. `content_dir` is the per-position tailoring temp copy (None when no
+    tailoring.yaml); `tailored` is True when overrides were actually applied.
     """
     apps_dir = _resolve_apps_dir(apps_dir)
     slug = _sanitize_slug(slug)
@@ -478,7 +486,10 @@ def export_application_cv(slug: str, *, apps_dir: Path | None = None, build_pdf=
 
     build = build_pdf or _build_to_dist
     try:
-        built = build(lang, variant, content_dir)
+        # A package whose tailoring overrides were actually applied is a
+        # tailored export: pass the flag so the comp-bio layout tightens around
+        # the extra content and keeps the whole Experience section on page one.
+        built = build(lang, variant, content_dir, tailored=bool(applied))
         pdf_rel, pdf_sha = _stage_pdf(
             built, package_dir, f"artifacts/{pdf_build._pdf_filename(lang, variant)}"
         )

@@ -51,7 +51,9 @@ def _write_package(
 def _fake_build(tmp_path: Path):
     """A build_pdf callable that writes a fake PDF and returns its path."""
 
-    def _build(lang: str, target: str, content_dir: Path | None = None) -> Path:
+    def _build(
+        lang: str, target: str, content_dir: Path | None = None, tailored: bool = False
+    ) -> Path:
         fake = tmp_path / "built" / f"cv-{lang}-{target}.pdf"
         fake.parent.mkdir(parents=True, exist_ok=True)
         fake.write_bytes(FAKE_PDF)
@@ -291,8 +293,11 @@ def test_export_applies_tailoring_and_records_it(apps, tmp_path: Path):
 
     captured: dict = {}
 
-    def build(lang: str, target: str, content_dir: Path | None = None) -> Path:
+    def build(
+        lang: str, target: str, content_dir: Path | None = None, tailored: bool = False
+    ) -> Path:
         captured["content_dir"] = content_dir
+        captured["tailored"] = tailored
         fake = tmp_path / "built" / f"cv-{lang}-{target}.pdf"
         fake.parent.mkdir(parents=True, exist_ok=True)
         fake.write_bytes(FAKE_PDF)
@@ -323,7 +328,10 @@ def test_export_applies_tailoring_and_records_it(apps, tmp_path: Path):
         },
     ]
     # The build received a temp content copy, which is cleaned up after export.
+    # It is marked as a tailored export so the comp-bio layout tightens around
+    # the appended bullet.
     assert captured["content_dir"] is not None
+    assert captured["tailored"] is True
     assert not captured["content_dir"].exists()
     assert not captured["content_dir"].parent.exists()
 
@@ -333,6 +341,56 @@ def test_export_without_tailoring_omits_manifest_key(apps, tmp_path: Path):
     _write_package(apps, slug, language="en", tailoring="variant: comp-bio")
     manifest = ea.export_application_cv(slug, apps_dir=apps, build_pdf=_fake_build(tmp_path))
     assert "tailoring" not in manifest["cv"]
+
+
+def test_export_without_overrides_requests_general_build(apps, tmp_path: Path):
+    """No applied overrides means no tailored layout: the general build is used."""
+    slug = "iso-2026-09"
+    _write_package(apps, slug, language="en", tailoring="variant: comp-bio")
+    captured: dict = {}
+
+    def build(
+        lang: str, target: str, content_dir: Path | None = None, tailored: bool = False
+    ) -> Path:
+        captured["content_dir"] = content_dir
+        captured["tailored"] = tailored
+        fake = tmp_path / "built" / f"cv-{lang}-{target}.pdf"
+        fake.parent.mkdir(parents=True, exist_ok=True)
+        fake.write_bytes(FAKE_PDF)
+        return fake
+
+    ea.export_application_cv(slug, apps_dir=apps, build_pdf=build)
+
+    assert captured["content_dir"] is None
+    assert captured["tailored"] is False
+
+
+def test_build_to_dist_passes_tailored_flag(monkeypatch, tmp_path: Path):
+    """`_build_to_dist` forwards --tailored (and --content-dir) to pdf.build."""
+    captured: dict = {}
+
+    def fake_main(argv):
+        captured["argv"] = list(argv)
+        return 0
+
+    monkeypatch.setattr(ea.pdf_build, "main", fake_main)
+    content_dir = tmp_path / "content"
+    content_dir.mkdir()
+
+    built = ea._build_to_dist("en", "comp-bio", content_dir, tailored=True)
+    assert captured["argv"] == [
+        "--lang",
+        "en",
+        "--target",
+        "comp-bio",
+        "--content-dir",
+        str(content_dir),
+        "--tailored",
+    ]
+    assert built.name == "cv-en-comp-bio.pdf"
+
+    ea._build_to_dist("en", "comp-bio")
+    assert captured["argv"] == ["--lang", "en", "--target", "comp-bio"]
 
 
 def test_export_tailoring_requires_en_de_parity(apps, tmp_path: Path):
