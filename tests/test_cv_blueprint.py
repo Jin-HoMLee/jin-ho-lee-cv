@@ -114,6 +114,7 @@ def test_vendor_blueprint_builds_minimal_snapshot(tmp_path: Path):
     gitignore = (bp / ".gitignore").read_text(encoding="utf-8")
     assert "dist/" in gitignore
     assert "content.private/" in gitignore
+    assert "__pycache__/" in gitignore
     assert (bp / "README.md").is_file()
 
     # refresh is idempotent and bumps the recorded SHA

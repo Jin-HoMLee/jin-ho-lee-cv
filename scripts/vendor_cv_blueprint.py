@@ -66,6 +66,8 @@ BLUEPRINT_GITIGNORE = """\
 dist/
 dist-private/
 pdf/.cache/
+__pycache__/
+*.pyc
 
 # PII / likeness paths used only by the private CV build (never vendored).
 content.private/
