@@ -34,6 +34,7 @@ Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen) - Forschung
   - Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).
   - Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).
   - Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.
+  - Mentoring: Mitauswahl von zwei DAAD-geförderten Praktikumsplätzen (Sichtung von Lebenslauf und Motivationsschreiben, Interviews) gemeinsam mit dem Betreuer.
 
 ================================================================================
 AUSGEWÄHLTE PROJEKTE
