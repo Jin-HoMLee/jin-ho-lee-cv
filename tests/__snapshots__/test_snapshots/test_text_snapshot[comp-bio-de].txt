@@ -63,9 +63,9 @@ Personalisierte Immuntherapie – Hochdurchsatz-HLA-Typisierungs-Pipeline    (20
   B.Sc.-Thesisprojekt: Bioinformatischer Workflow zur Identifizierung
   patientenspezifischer Krebs-Targets und Automatisierung der HLA-
   Genotypisierung aus Next-Generation-Sequencing-Daten (NGS).
-  Ergebnis: B.Sc.-Thesis, NCT Heidelberg: In-silico-HLA-Typisierung aus realen
-  Patienten-WES/NGS und ANN-basierte MHC-I-Bindungsscreens für Missense-
-  Mutationskandidaten. Unveröffentlicht.
+  Ergebnis: B.Sc.-Thesis, NCT Heidelberg: In-silico-HLA-Typisierung aus WES/NGS
+  und ANN-basierte MHC-I-Bindungsscreens für Missense-Mutationskandidaten.
+  Unveröffentlicht.
 
 Krebs-Neoantigen-Entdeckung – Transkriptomweite Splice-Analyse    (2015-08 bis 2015-11)
   Bioinformatik-Forschungspraktikant (Seoul National University)

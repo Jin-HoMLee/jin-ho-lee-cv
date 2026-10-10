@@ -19,7 +19,7 @@
 #let compact-layout = pdf-target == "comp-bio"
 
 // German body text runs longer than English at identical token values, so the
-// German comp-bio variant needs slightly tighter typography to keep the
+// German comp-bio variant needs slightly tighter bullet spacing to keep the
 // complete Experience section on page one. Scoped to de/comp-bio so every
 // other variant (including en/comp-bio) keeps its existing metrics.
 #let compact-de = compact-layout and pdf-lang == "de"
@@ -33,7 +33,7 @@
 #let space-section = if compact-layout { 3pt } else { 5pt }
 #let space-paragraph = if compact-layout { 1pt } else { 2pt }
 #let space-bullet = if compact-de { 0pt } else if compact-layout { 1pt } else { 2pt }
-#let base-leading = if compact-de { 0.47em } else if compact-layout { 0.50em } else { 0.56em }
+#let base-leading = if compact-layout { 0.50em } else { 0.56em }
 
 #let sidebar-ratio = (1fr, 0.5fr)  // main : sidebar  ≈ 66 : 34
 #let column-gutter = 12pt
