@@ -94,6 +94,12 @@ jd-gap slug:
 export-application-cv slug:
     uv run python -m scripts.export_application "{{slug}}"
 
+# Vendor the CV repo's general-version source + build/export machinery into an
+# applications repo as a self-contained cv-blueprint/ snapshot (records the CV SHA).
+# Run from a CV checkout at the ref to freeze; apps dir resolves via APPLICATIONS_DIR / CV_ROOT.
+vendor-cv-blueprint:
+    uv run python -m scripts.vendor_cv_blueprint
+
 # Render the llms.txt site map (llmstxt.org) → dist/llms.txt
 build-llms:
     uv run python -m scripts.render_llms
