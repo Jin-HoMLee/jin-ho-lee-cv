@@ -151,7 +151,7 @@ from pathlib import Path
 sys.path.insert(0, os.getcwd())
 from scripts import export_application as ea
 
-def fake_build(lang, target, content_dir=None):
+def fake_build(lang, target, content_dir=None, **kwargs):
     out = Path(os.getcwd()) / "dist" / f"cv-{lang}-{target}.pdf"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_bytes(b"%PDF-1.4 fake\\n")
