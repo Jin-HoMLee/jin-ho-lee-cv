@@ -57,12 +57,13 @@ from pathlib import Path
 from ruamel.yaml import YAML
 
 from pdf import build as pdf_build
-from scripts.cover_letter_core import (
+from scripts.applications_io import (
     _atomic_write,
     _resolve_apps_dir,
     _safe_application_path,
     _sanitize_slug,
     read_application,
+    vendored_cv_sha,
 )
 
 _yaml = YAML(typ="safe")
@@ -104,7 +105,15 @@ def sha256_file(path: Path) -> str:
 
 
 def git_head_sha(repo_root: Path = REPO_ROOT) -> str:
-    """Current HEAD commit of the CV repo (the SHA this export freezes)."""
+    """The CV repo SHA this export freezes.
+
+    In a vendored cv-blueprint/ snapshot the CV repo is not a git checkout, so
+    the recorded `.cv-sha` marker is authoritative; elsewhere the live HEAD of
+    the CV repo checkout is read via git.
+    """
+    vendored = vendored_cv_sha(repo_root)
+    if vendored:
+        return vendored
     proc = subprocess.run(
         ["git", "-C", str(repo_root), "rev-parse", "HEAD"],
         capture_output=True,
