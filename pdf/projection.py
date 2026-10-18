@@ -32,7 +32,7 @@ _AWARD_TITLES = {
     "comp-bio": {
         "“Most Patient-Centric Solution” Award",
         "DeGBS Poster Award",
-        "Selected for admission — Vienna BioCenter PhD Programme",
+        "Received admission — Vienna BioCenter PhD Programme",
         "Genetic manipulation of mammalian cells by lentiviral vectors",
         "DAAD PROMOS Scholarship",
     },

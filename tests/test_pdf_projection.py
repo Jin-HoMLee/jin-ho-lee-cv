@@ -112,7 +112,7 @@ def test_pdf_targets_project_experience_and_secondary_detail(content_dir):
         "comp-bio": {
             "“Most Patient-Centric Solution” Award",
             "DeGBS Poster Award",
-            "Selected for admission — Vienna BioCenter PhD Programme",
+            "Received admission — Vienna BioCenter PhD Programme",
             "DAAD PROMOS Scholarship",
         },
         "ds-ml": {
