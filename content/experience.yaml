@@ -16,7 +16,7 @@
       de: "Computer Vision: Client-seitige Chrome-Erweiterung zur Badminton-Analyse (TensorFlow.js, ONNX Runtime Web)."
       refs: [D2]
     - en: "Bioinformatics: Rebuilt the 2015 SNU computational prototype in Snakemake to predict splice neoepitope candidates."
-      de: "Bioinformatik: den SNU-Prototyp von 2015 in Snakemake neu aufgebaut, um Splice-Neoepitop-Kandidaten vorherzusagen."
+      de: "Bioinformatik: SNU-Prototyp von 2015 in Snakemake für vorhergesagte Splice-Neoepitop-Kandidaten neu aufgebaut."
       refs: [L5]
 
 - id: cintellic
@@ -76,5 +76,5 @@
       de: "Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python)."
       refs: [L3]
     - en: "Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles."
-      de: "Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläuferzellen und extrazelluläre Vesikel untersucht."
+      de: "Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht."
       refs: [L4]

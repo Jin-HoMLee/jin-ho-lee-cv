@@ -43,7 +43,7 @@ SECTION_LABELS = {
         "selected_publications": "AUSGEWÄHLTE PUBLIKATIONEN",
         "awards": "AUSZEICHNUNGEN & ZERTIFIKATE",
         "languages": "SPRACHEN",
-        "volunteer": "EHRENAMTLICH",
+        "volunteer": "EHRENAMT",
     },
 }
 
