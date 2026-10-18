@@ -14,7 +14,7 @@ technologies:
   - "NetMHCPan (Neural Networks)"
   - "Shell Scripting"
 contributions:
-  - "Entwicklung einer in silico Genotypisierungs-Pipeline zur direkten Extraktion von HLA-Allelen aus Whole-Exome-Sequencing-Daten (WXS)."
+  - "Entwicklung einer In-silico-Genotypisierungs-Pipeline zur direkten Extraktion von HLA-Allelen aus Whole-Exome-Sequencing-Daten (WXS)."
   - "Implementierung prädiktiver Modellierung mittels ANNs (NetMHCPan) zum Screening von Missense-Mutationen auf MHC-I-Bindungsaffinität."
   - "Konzeption einer Konsens-Methodik zur Integration mehrerer HLA-Typisierungs-Algorithmen zur Auflösung von Sequenz-Ambiguitäten und Verbesserung der Call-Konsistenz."
   - "Computergestützte Prüfung der Pipeline durch Vergleich von Bindungsspezifitäts-Vorhersagen über HLA-Allele hinweg, um inkonsistente Allel-Calls zu markieren."

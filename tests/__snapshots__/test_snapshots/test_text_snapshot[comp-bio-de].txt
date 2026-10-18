@@ -7,10 +7,10 @@ PROFIL
 ================================================================================
 Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-
 Kandidatenidentifizierung aus realen Patienten-NGS- und RNA-Seq-Daten am NCT und
-an der SNU (unveröffentlichte computergestützte Projektarbeit), später als
-reproduzierbare Snakemake-Workflows paketiert. Eine parallele experimentelle
+an der SNU (unveröffentlichte computergestützte Projektarbeit), später in
+reproduzierbare Snakemake-Workflows überführt. Eine parallele experimentelle
 Biophysik-Linie am DKFZ, FZ Jülich und KIP brachte 12 peer-reviewed
-Forschungspublikationen — als Erst- und geteilter Erstautor — in der
+Forschungspublikationen — als Erst- bzw. geteilter Erstautor — in der
 hochauflösenden Mikroskopie von DNA-Schadensreparatur und Chromatin hervor,
 keine Genomik-Publikationen.
 
@@ -23,23 +23,23 @@ Drittmitteln und Betreuung von 10+ Studierenden.
 BERUFSERFAHRUNG
 ================================================================================
 Unabhängiger Bioinformatik- & ML/AI-Engineer - Independent / Self-Directed    (2025-08 bis heute)
-  - Bioinformatik: SNU-Prototyp von 2015 in Snakemake für vorhergesagte Splice-Neoepitop-Kandidaten neu aufgebaut.
+  - Bioinformatik: den SNU-Prototyp von 2015 in Snakemake neu aufgebaut, um Splice-Neoepitop-Kandidaten vorherzusagen.
   - Computer Vision: Client-seitige Chrome-Erweiterung zur Badminton-Analyse (TensorFlow.js, ONNX Runtime Web).
-  - Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher.
+  - Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Gedächtnis.
 
 Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
   - Cloud-Migration: Architektur der GCP-Migration von 1.000+ analytischen Prozessen einer internationalen Bank.
-  - Produktions-ML: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.
-  - Stakeholder Lead: Übersetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.
+  - ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.
+  - Stakeholder Lead: Umsetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.
 
 Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-04)
   - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.
   - ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt.
 
-Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen) - Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU)    (2014-04 bis 2022-07)
-  - Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).
+Doktorand & postgradualer Forscher (Promotion nicht abgeschlossen) - Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU)    (2014-04 bis 2022-07)
+  - Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; kolorektale SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).
   - Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).
-  - Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.
+  - Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläuferzellen und extrazelluläre Vesikel untersucht.
 
 ================================================================================
 AUSGEWÄHLTE PROJEKTE
@@ -47,7 +47,7 @@ AUSGEWÄHLTE PROJEKTE
 Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bis heute)
   Autor und Maintainer (Open Source)
   Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-
-  of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
+  of-Concept von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
   Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
   Strukturmodellierung.
   Ergebnis: Open-Source-Snakemake-8-Workflow (MIT): RNA-Seq → Junction-Klassen
@@ -97,7 +97,7 @@ KI/ML & Entwicklerwerkzeuge
   Maschinelles Lernen: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
   Computergestützte Modellierung: MHCflurry, TCRdock, AlphaFold v2, Mol*
   KI-Agenten: Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Kimi
-  Browser-ML-Auslieferung: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
+  ML im Browser: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
   Entwicklungsumgebungen: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
 Daten- & Cloud-Engineering
   Programmierung & Daten: Python (Expert), R, SQL, dbt
@@ -130,7 +130,7 @@ Musik
   - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
   - Chorister, Vienna Cathedral Choir (Wiener Domchor)
   - Chorister, Cappella Palatina (Heidelberg)
-Soziales
+Soziales Engagement
   - Jülicher Tafel e.V.
   - In via - Café Gemeinsam
   - Amnesty International
@@ -209,7 +209,7 @@ AUSZEICHNUNGEN & ZERTIFIKATE
 2024  Google Cloud Certified - Associate Cloud Engineer - Google Cloud
   Ausgestellt Dez. 2024, gültig bis Dez. 2027.
 2021  DeGBS-Posterpreis - Deutsche Gesellschaft für Biologische Strahlenforschung
-2019  Für die Aufnahme ausgewählt — Vienna BioCenter PhD Programme - Vienna BioCenter PhD Programme
+2019  Zur Aufnahme ausgewählt — Vienna BioCenter PhD Programme - Vienna BioCenter PhD Programme
   In der Sommerrunde 2019 ausgewählt; IMP-Position im Plaschka-Labor angenommen.
 2018  Auszeichnung „Most Patient-Centric Solution“ - {Life Science} meets IT Hackathon, Mannheim
 2015  DAAD-PROMOS-Stipendium - DAAD

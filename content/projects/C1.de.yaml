@@ -13,7 +13,7 @@ technologies:
   - "SAS"
   - "Looker"
 contributions:
-  - "Ausbau der Python-basierten Analyse-Umgebung in Google Cloud."
+  - "Ausbau der Python-basierten Analyse-Umgebung in der Google Cloud."
   - "Migration bestehender SAS-Reporting-Workflows in Python-basierte Pipelines."
   - "Evaluierung von BI-Funktionalitäten mit Looker und Vorbereitung des Datenmodells."
   - "Stakeholder-Management und Anforderungsanalyse."

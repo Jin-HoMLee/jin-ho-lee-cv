@@ -34,7 +34,7 @@ def test_experience_coverage_is_identical_across_targets_and_languages(content_d
         },
         "cintellic": {
             "en": ("Cloud Migration", "Production ML", "Stakeholder Lead"),
-            "de": ("Cloud-Migration", "Produktions-ML", "Stakeholder Lead"),
+            "de": ("Cloud-Migration", "ML in der Produktion", "Stakeholder Lead"),
         },
         "neuefische": {"en": ("Coaching", "ML Development"), "de": ("Coaching", "ML-Entwicklung")},
         "research": {

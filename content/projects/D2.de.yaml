@@ -19,4 +19,4 @@ contributions:
   - "Evaluierung eines experimentellen Zero-Shot-Objektdetektors mit offenem Vokabular (YOLO-World) neben dem Standard-Detektor."
   - "Konsequente Produktentwicklungsdisziplin: schriftliches PRD, UX-Wireframing und -Review, automatisierte Testsuite und CI-Pipeline."
   - "Öffentlich auf GitHub (Jin-HoMLee/badminton-vision); weiterhin in aktiver Entwicklung, noch kein fertiges v1."
-outcome: "Browserbasierte, geräteseitige Computer-Vision-Erweiterung zur Badminton-Spielanalyse, in aktiver, laufender Weiterentwicklung auf dem Weg zu einem ersten stabilen Release."
+outcome: "Browserbasierte, geräteseitige Computer-Vision-Erweiterung zur Badminton-Spielanalyse, in aktiver Weiterentwicklung auf dem Weg zu einem ersten stabilen Release."

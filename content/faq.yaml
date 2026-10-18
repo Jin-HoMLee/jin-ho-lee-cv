@@ -21,7 +21,7 @@ faqs:
       de: "Welchen beruflichen Hintergrund hat Jin-Ho Lee?"
     answer:
       en: "Jin-Ho Lee spent eight years in doctoral and post-graduate research across Forschungszentrum Jülich, Kirchhoff Institute for Physics, National Center for Tumor Diseases, Seoul National University and the German Cancer Research Center, working on cancer genomics and super-resolution microscopy. He then moved to industry as a data science coach at neuefische and as a consultant and lead business functional analyst employed by Cintellic GmbH for an international bank; he now works independently on ML/AI engineering and open-source tooling."
-      de: "Jin-Ho Lee forschte acht Jahre als Doktorand und postgraduierter Forscher am Forschungszentrum Jülich, am Kirchhoff-Institut für Physik, am Nationalen Centrum für Tumorerkrankungen, an der Seoul National University und am Deutschen Krebsforschungszentrum zu Krebsgenomik und hochauflösender Mikroskopie. Anschließend wechselte er als Data-Science-Coach zu neuefische und als von Cintellic GmbH beschäftigter Berater und Lead Business Functional Analyst zu einem Projekt für eine internationale Bank; heute arbeitet er unabhängig an ML/AI-Engineering und Open-Source-Tooling."
+      de: "Jin-Ho Lee forschte acht Jahre als Doktorand und postgradualer Forscher am Forschungszentrum Jülich, am Kirchhoff-Institut für Physik, am Nationalen Centrum für Tumorerkrankungen, an der Seoul National University und am Deutschen Krebsforschungszentrum zu Krebsgenomik und hochauflösender Mikroskopie. Anschließend wechselte er in die Industrie — zunächst als Data-Science-Coach bei neuefische, dann als bei Cintellic GmbH angestellter Berater und Lead Business Functional Analyst für eine internationale Bank; heute arbeitet er unabhängig an ML/AI-Engineering und Open-Source-Tooling."
 
   - id: what-are-his-skills
     question:
@@ -29,7 +29,7 @@ faqs:
       de: "Welche technischen Fähigkeiten hat Jin-Ho Lee?"
     answer:
       en: "Jin-Ho Lee works in Python, SQL and R, with machine learning in TensorFlow, bioinformatics pipelines in Snakemake, and cloud data engineering on Google Cloud including BigQuery and BigQueryML. His domain expertise spans cancer genomics, NGS and RNA-Seq analysis, HLA typing, neoantigen discovery, and spatial point-pattern analysis."
-      de: "Jin-Ho Lee arbeitet mit Python, SQL und R, mit Machine Learning in TensorFlow, Bioinformatik-Pipelines in Snakemake sowie Cloud Data Engineering auf der Google Cloud inklusive BigQuery und BigQueryML. Seine Fachexpertise umfasst Krebsgenomik, NGS- und RNA-Seq-Analyse, HLA-Typisierung, Neoantigen-Identifizierung und räumliche Punktmusteranalyse."
+      de: "Jin-Ho Lee arbeitet mit Python, SQL und R, mit Machine Learning in TensorFlow, mit Bioinformatik-Pipelines in Snakemake sowie mit Cloud Data Engineering in der Google Cloud — einschließlich BigQuery und BigQueryML. Seine Fachexpertise umfasst Krebsgenomik, NGS- und RNA-Seq-Analyse, HLA-Typisierung, Neoantigen-Identifizierung und räumliche Punktmusteranalyse."
 
   - id: what-has-he-published
     question:
@@ -37,7 +37,7 @@ faqs:
       de: "Was hat Jin-Ho Lee publiziert?"
     answer:
       en: "Jin-Ho Lee has 12 peer-reviewed research publications (10 articles and 2 research book chapters), including first-author and shared-first-author papers (2 first / 3 shared-first / 7 co-author), in radiation biophysics and super-resolution imaging of DNA-damage repair and chromatin architecture. The full list with citation counts is available via his ORCID record (0009-0001-8784-1771) and Google Scholar profile."
-      de: "Jin-Ho Lee hat 12 peer-reviewed Forschungspublikationen (10 Artikel und 2 wissenschaftliche Buchkapitel), darunter Arbeiten als Erstautor und mit geteilter Erstautorschaft (2 Erst / 3 geteilte Erst / 7 Co-Autor), in der Strahlenbiophysik und der hochauflösenden Bildgebung von DNA-Schadensreparatur und Chromatin-Architektur. Die vollständige Liste mit Zitationszahlen ist über seinen ORCID-Eintrag (0009-0001-8784-1771) und sein Google-Scholar-Profil verfügbar."
+      de: "Jin-Ho Lee hat 12 peer-reviewed Forschungspublikationen (10 Artikel und 2 wissenschaftliche Buchkapitel), darunter Arbeiten als Erstautor und mit geteilter Erstautorschaft (2 Erstautor / 3 geteilte Erstautorschaft / 7 als Co-Autor), in der Strahlenbiophysik und der hochauflösenden Bildgebung von DNA-Schadensreparatur und Chromatin-Architektur. Die vollständige Liste mit Zitationszahlen ist über seinen ORCID-Eintrag (0009-0001-8784-1771) und sein Google-Scholar-Profil verfügbar."
 
   - id: what-does-he-work-on-now
     question:
@@ -45,7 +45,7 @@ faqs:
       de: "Woran arbeitet Jin-Ho Lee derzeit?"
     answer:
       en: "Jin-Ho Lee currently works independently on agentic AI systems - LLM agents with tool use, planning, routing, multi-agent orchestration and persistent memory - alongside open-source Claude Code tooling, a real-time, fully on-device computer-vision Chrome extension for badminton match analysis, and a reproducible Snakemake splice-neoepitope candidate pipeline with optional AlphaFold2 structural modelling."
-      de: "Jin-Ho Lee arbeitet derzeit unabhängig an agentischen KI-Systemen - LLM-Agenten mit Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher - sowie an Open-Source-Tooling für Claude Code, einer Chrome-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen ausführt, und einer reproduzierbaren Snakemake-Pipeline für Splice-Neoepitop-Kandidaten mit optionaler AlphaFold2-Strukturmodellierung."
+      de: "Jin-Ho Lee arbeitet derzeit unabhängig an agentischen KI-Systemen – LLM-Agenten mit Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistentem Gedächtnis – sowie an Open-Source-Tooling für Claude Code, einer Chrome-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen ausführt, und einer reproduzierbaren Snakemake-Pipeline für Splice-Neoepitop-Kandidaten mit optionaler AlphaFold2-Strukturmodellierung."
 
   - id: is-he-available-for-work
     question:
@@ -53,4 +53,4 @@ faqs:
       de: "Ist Jin-Ho Lee für neue Positionen verfügbar?"
     answer:
       en: "Jin-Ho Lee's stated availability: open to roles in bioinformatics, computational biology and data science, based in Mannheim, Germany. The fastest way to reach him is the contact form on this site or the digital twin chat, which answers detailed questions about his experience and can pass on a message."
-      de: "Jin-Ho Lees erklärte Verfügbarkeit: offen für Positionen in Bioinformatik, Computational Biology und Data Science, mit Sitz in Mannheim. Der schnellste Weg, ihn zu erreichen, ist das Kontaktformular auf dieser Seite oder der Digital-Twin-Chat, der detaillierte Fragen zu seiner Erfahrung beantwortet und eine Nachricht weiterleiten kann."
+      de: "Jin-Ho Lees erklärte Verfügbarkeit: offen für Positionen in Bioinformatik, Computational Biology und Data Science, ansässig in Mannheim. Der schnellste Weg, ihn zu erreichen, ist das Kontaktformular auf dieser Seite oder der Digital-Twin-Chat, der detaillierte Fragen zu seiner Erfahrung beantwortet und eine Nachricht weiterleiten kann."

@@ -180,7 +180,7 @@
         "bullets": [
           {
             "en": "Bioinformatics: Rebuilt the 2015 SNU computational prototype in Snakemake to predict splice neoepitope candidates.",
-            "de": "Bioinformatik: SNU-Prototyp von 2015 in Snakemake für vorhergesagte Splice-Neoepitop-Kandidaten neu aufgebaut.",
+            "de": "Bioinformatik: den SNU-Prototyp von 2015 in Snakemake neu aufgebaut, um Splice-Neoepitop-Kandidaten vorherzusagen.",
             "refs": [
               "L5"
             ]
@@ -194,7 +194,7 @@
           },
           {
             "en": "Agentic AI: Built LLM agent systems with tool use, routing, multi-agent orchestration, and persistent memory.",
-            "de": "Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher.",
+            "de": "Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Gedächtnis.",
             "refs": [
               "D4"
             ]
@@ -222,14 +222,14 @@
           },
           {
             "en": "Production ML: Developed BigQueryML models for anti-financial crime and KYC.",
-            "de": "Produktions-ML: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
+            "de": "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
             "refs": [
               "C1"
             ]
           },
           {
             "en": "Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery.",
-            "de": "Stakeholder Lead: Übersetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.",
+            "de": "Stakeholder Lead: Umsetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.",
             "refs": [
               "C1",
               "C2"
@@ -279,7 +279,7 @@
         "bullets": [
           {
             "en": "Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).",
-            "de": "Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).",
+            "de": "Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; kolorektale SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).",
             "refs": [
               "L1",
               "L2"
@@ -294,7 +294,7 @@
           },
           {
             "en": "Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles.",
-            "de": "Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.",
+            "de": "Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläuferzellen und extrazelluläre Vesikel untersucht.",
             "refs": [
               "L4"
             ]
@@ -448,7 +448,7 @@
         "bullets": [
           {
             "en": "Agentic AI: Built LLM agent systems with tool use, routing, multi-agent orchestration, and persistent memory.",
-            "de": "Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher.",
+            "de": "Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Gedächtnis.",
             "refs": [
               "D4"
             ]
@@ -462,7 +462,7 @@
           },
           {
             "en": "Bioinformatics: Rebuilt the 2015 SNU computational prototype in Snakemake to predict splice neoepitope candidates.",
-            "de": "Bioinformatik: SNU-Prototyp von 2015 in Snakemake für vorhergesagte Splice-Neoepitop-Kandidaten neu aufgebaut.",
+            "de": "Bioinformatik: den SNU-Prototyp von 2015 in Snakemake neu aufgebaut, um Splice-Neoepitop-Kandidaten vorherzusagen.",
             "refs": [
               "L5"
             ]
@@ -483,7 +483,7 @@
         "bullets": [
           {
             "en": "Production ML: Developed BigQueryML models for anti-financial crime and KYC.",
-            "de": "Produktions-ML: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
+            "de": "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
             "refs": [
               "C1"
             ]
@@ -497,7 +497,7 @@
           },
           {
             "en": "Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery.",
-            "de": "Stakeholder Lead: Übersetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.",
+            "de": "Stakeholder Lead: Umsetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.",
             "refs": [
               "C1",
               "C2"
@@ -547,7 +547,7 @@
         "bullets": [
           {
             "en": "Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).",
-            "de": "Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).",
+            "de": "Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; kolorektale SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).",
             "refs": [
               "L1",
               "L2"
@@ -562,7 +562,7 @@
           },
           {
             "en": "Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles.",
-            "de": "Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.",
+            "de": "Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläuferzellen und extrazelluläre Vesikel untersucht.",
             "refs": [
               "L4"
             ]
