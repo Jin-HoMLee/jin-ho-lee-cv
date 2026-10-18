@@ -26,21 +26,21 @@ von Drittmitteln und Betreuung von 10+ Studierenden.
 BERUFSERFAHRUNG
 ================================================================================
 Unabhängiger Bioinformatik- & ML/AI-Engineer - Independent / Self-Directed    (2025-08 bis heute)
-  - Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher.
+  - Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Gedächtnis.
   - Computer Vision: Client-seitige Chrome-Erweiterung zur Badminton-Analyse (TensorFlow.js, ONNX Runtime Web).
   - Bioinformatik: SNU-Prototyp von 2015 in Snakemake für vorhergesagte Splice-Neoepitop-Kandidaten neu aufgebaut.
 
 Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
   - Cloud-Migration: Architektur der GCP-Migration von 1.000+ analytischen Prozessen einer internationalen Bank.
-  - Produktions-ML: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.
-  - Stakeholder Lead: Übersetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.
+  - ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.
+  - Stakeholder Lead: Umsetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.
 
 Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-04)
   - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.
   - ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt.
 
-Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen) - Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU)    (2014-04 bis 2022-07)
-  - Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).
+Doktorand & postgradualer Forscher (Promotion nicht abgeschlossen) - Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU)    (2014-04 bis 2022-07)
+  - Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; kolorektale SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).
   - Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).
   - Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.
 
@@ -65,7 +65,7 @@ SignMeUp – Echtzeit-Erkennung der American Sign Language (ASL)    (2023-09 bis
 Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow    (2026-03 bis heute)
   Autor und Maintainer (Open Source)
   Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-
-  of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
+  of-Concept von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-
   Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler
   Strukturmodellierung.
   Ergebnis: Open-Source-Snakemake-8-Workflow (MIT): RNA-Seq → Junction-Klassen
@@ -91,7 +91,7 @@ KI/ML & Entwicklerwerkzeuge
   Maschinelles Lernen: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
   Computergestützte Modellierung: MHCflurry, TCRdock, AlphaFold v2, Mol*
   KI-Agenten: Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Kimi
-  Browser-ML-Auslieferung: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
+  ML im Browser: TensorFlow.js, ONNX Runtime Web, Chrome Extension (Manifest V3)
   Entwicklungsumgebungen: Conda, Docker, Git, Nix, nix-darwin, home-manager, WezTerm, Neovim
 Bioinformatik
   Genomik: NGS, RNA-Seq, WES, SNV Calling, Splice Analysis
@@ -116,7 +116,7 @@ SPRACHEN
   Latein: passive
 
 ================================================================================
-EHRENAMTLICH
+EHRENAMT
 ================================================================================
 Sport
   - Training supervisor, Badminton, BSG Jülich 1963 e.V. (2022–present)
@@ -129,7 +129,7 @@ Musik
   - Chorister, Aachener Domchor (Aachen Cathedral Choir), 1997-2000
   - Chorister, Vienna Cathedral Choir (Wiener Domchor)
   - Chorister, Cappella Palatina (Heidelberg)
-Soziales
+Soziales Engagement
   - Jülicher Tafel e.V.
   - In via - Café Gemeinsam
   - Amnesty International
@@ -138,11 +138,11 @@ Soziales
 ================================================================================
 PUBLIKATIONEN
 ================================================================================
-12 begutachtete Publikationen (10 Artikel + 2 wissenschaftliches Buchkapitel; 2
+12 begutachtete Publikationen (10 Artikel + 2 wissenschaftliche Buchkapitel; 2
 als Erstautor, 3 geteilte Erstautorenschaft, 7 als Co-Autor), 3
 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder
 Beitrag (15 Forschungseinträge; insgesamt 16 Bibliografie-Datensätze),
-Forschungsspanne 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung
+Forschungszeitraum 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung
 der DNA-Reparatur.
 Vollständige Liste: https://orcid.org/0009-0001-8784-1771
 
@@ -152,7 +152,7 @@ AUSZEICHNUNGEN & ZERTIFIKATE
 2024  Google Cloud Certified - Associate Cloud Engineer - Google Cloud
   Ausgestellt Dez. 2024, gültig bis Dez. 2027.
 2021  DeGBS-Posterpreis - Deutsche Gesellschaft für Biologische Strahlenforschung
-2019  Für die Aufnahme ausgewählt — Vienna BioCenter PhD Programme - Vienna BioCenter PhD Programme
+2019  Zur Aufnahme ausgewählt — Vienna BioCenter PhD Programme - Vienna BioCenter PhD Programme
   In der Sommerrunde 2019 ausgewählt; IMP-Position im Plaschka-Labor angenommen.
 2018  Auszeichnung „Most Patient-Centric Solution“ - {Life Science} meets IT Hackathon, Mannheim
 2015  DAAD-PROMOS-Stipendium - DAAD

@@ -356,7 +356,7 @@ def test_comp_bio_keeps_full_ai_ml_section_identical_to_bridge(content_dir):
             "Machine Learning" if lang == "en" else "Maschinelles Lernen",
             "Computational Modelling" if lang == "en" else "Computergestützte Modellierung",
             "AI Agents" if lang == "en" else "KI-Agenten",
-            "Browser ML Delivery" if lang == "en" else "Browser-ML-Auslieferung",
+            "Browser ML Delivery" if lang == "en" else "ML im Browser",
             "Developer Environments" if lang == "en" else "Entwicklungsumgebungen",
         ]
         agents = next(

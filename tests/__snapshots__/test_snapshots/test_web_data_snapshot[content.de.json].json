@@ -10,7 +10,7 @@
       "city": "Mannheim",
       "country": "GER"
     },
-    "availability": "Offen für Positionen in Bioinformatik, Computational Biology und Data Science, mit Sitz in Mannheim.",
+    "availability": "Offen für Positionen in Bioinformatik, Computational Biology und Data Science, ansässig in Mannheim.",
     "links": {
       "linkedin": "https://linkedin.com/in/jin-holee",
       "github": "https://github.com/Jin-HoMLee",
@@ -52,8 +52,8 @@
     ]
   },
   "profile": {
-    "answer_block": "Jin-Ho Lee ist Data Scientist mit Wurzeln in der Bioinformatik und lebt in Mannheim. Er forschte acht Jahre akademisch in Bioinformatik und experimenteller Biophysik mit 12 peer-reviewed Forschungspublikationen, entwickelt heute produktive Machine-Learning- und Datenpipelines, bringt Google-Cloud-Beratungserfahrung aus dem internationalen Bankenumfeld mit und hat 100+ Fachkräfte in Python, SQL und ML geschult. Er hat einen M.Sc. der Universität Heidelberg.",
-    "tagline": "Data Scientist mit Wurzeln in der Bioinformatik — acht Jahre akademische Forschung, 12 peer-reviewed Publikationen, Produktiv-ML und Cloud-Beratung auf GCP; Migration von 1.000+ analytischen Prozessen und Coaching von 100+ Fachkräften.",
+    "answer_block": "Jin-Ho Lee ist Data Scientist mit Wurzeln in der Bioinformatik und lebt in Mannheim. Er war acht Jahre lang in der akademischen Forschung in Bioinformatik und experimenteller Biophysik tätig — mit 12 peer-reviewed Forschungspublikationen —, entwickelt heute Machine-Learning- und Datenpipelines für die Produktion, bringt Google-Cloud-Beratungserfahrung aus dem internationalen Bankenumfeld mit und hat 100+ Fachkräfte in Python, SQL und ML geschult. Er hat einen M.Sc. der Universität Heidelberg.",
+    "tagline": "Data Scientist mit Wurzeln in der Bioinformatik — acht Jahre akademische Forschung, 12 peer-reviewed Publikationen, ML in der Produktion und Cloud-Beratung auf GCP; Migration von 1.000+ analytischen Prozessen und Coaching von 100+ Fachkräften.",
     "paragraphs": [
       "Arbeit in Bioinformatik und experimenteller Biophysik: unveröffentlichte NGS/RNA-Seq-Genomik-Projektarbeit (HLA-Typisierung und Pipelines für splice-abgeleitete Neoepitop-Kandidaten) am Nationalen Centrum für Tumorerkrankungen (NCT) und an der Seoul National University (SNU), plus quantitative Biobildanalyse und Wet-Lab-Forschung am Deutschen Krebsforschungszentrum (DKFZ), am Forschungszentrum Jülich und am Kirchhoff-Institut für Physik (KIP). Die experimentelle Linie zu Bildgebung / DNA-Reparatur / Chromatin / Strahlenbiologie brachte 12 peer-reviewed Forschungspublikationen — als Erstautor sowie mit geteilter Erstautorschaft — hervor, keine Genomik-Publikationen.",
       "Als Cintellic-Berater für eine internationale Bank Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud und Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC. Zuvor bei neuefische Coaching von 100+ Fachkräften in Python, SQL & ML; in der Forschung Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden."
@@ -97,7 +97,7 @@
             ]
           },
           {
-            "label": "Browser-ML-Auslieferung",
+            "label": "ML im Browser",
             "items": [
               "TensorFlow.js",
               "ONNX Runtime Web",
@@ -253,7 +253,7 @@
       "bullets": [
         {
           "en": "Agentic AI: Built LLM agent systems with tool use, routing, multi-agent orchestration, and persistent memory.",
-          "de": "Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher.",
+          "de": "Agenten-KI: LLM-Agenten mit Tools, Routing, Multi-Agenten-Orchestrierung und persistentem Gedächtnis.",
           "refs": [
             "D4"
           ]
@@ -295,14 +295,14 @@
         },
         {
           "en": "Production ML: Developed BigQueryML models for anti-financial crime and KYC.",
-          "de": "Produktions-ML: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
+          "de": "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
           "refs": [
             "C1"
           ]
         },
         {
           "en": "Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery.",
-          "de": "Stakeholder Lead: Übersetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.",
+          "de": "Stakeholder Lead: Umsetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.",
           "refs": [
             "C1",
             "C2"
@@ -344,7 +344,7 @@
         "name": "Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU)",
         "url": null
       },
-      "role": "Doktorand & Postgraduierter Forscher (Promotion nicht abgeschlossen)",
+      "role": "Doktorand & postgradualer Forscher (Promotion nicht abgeschlossen)",
       "period": {
         "start": "2014-04",
         "end": "2022-07"
@@ -352,7 +352,7 @@
       "bullets": [
         {
           "en": "Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).",
-          "de": "Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; Kolorektal-SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).",
+          "de": "Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; kolorektale SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).",
           "refs": [
             "L1",
             "L2"
@@ -394,7 +394,7 @@
         "Looker"
       ],
       "contributions": [
-        "Ausbau der Python-basierten Analyse-Umgebung in Google Cloud.",
+        "Ausbau der Python-basierten Analyse-Umgebung in der Google Cloud.",
         "Migration bestehender SAS-Reporting-Workflows in Python-basierte Pipelines.",
         "Evaluierung von BI-Funktionalitäten mit Looker und Vorbereitung des Datenmodells.",
         "Stakeholder-Management und Anforderungsanalyse.",
@@ -477,7 +477,7 @@
         "Konsequente Produktentwicklungsdisziplin: schriftliches PRD, UX-Wireframing und -Review, automatisierte Testsuite und CI-Pipeline.",
         "Öffentlich auf GitHub (Jin-HoMLee/badminton-vision); weiterhin in aktiver Entwicklung, noch kein fertiges v1."
       ],
-      "outcome": "Browserbasierte, geräteseitige Computer-Vision-Erweiterung zur Badminton-Spielanalyse, in aktiver, laufender Weiterentwicklung auf dem Weg zu einem ersten stabilen Release."
+      "outcome": "Browserbasierte, geräteseitige Computer-Vision-Erweiterung zur Badminton-Spielanalyse, in aktiver Weiterentwicklung auf dem Weg zu einem ersten stabilen Release."
     },
     "D3": {
       "id": "D3",
@@ -501,7 +501,7 @@
         "Google Cloud"
       ],
       "contributions": [
-        "Durchführung von Vorlesungen zu Python, Machine Learning, SQL und Datenvisualisierung.",
+        "Durchführung von Kursen zu Python, Machine Learning, SQL und Datenvisualisierung.",
         "Mentoring der Teilnehmenden über den gesamten Data-Science-Lebenszyklus hinweg.",
         "Betreuung von Capstone-Projekten und technischen Präsentationen.",
         "Entwicklung und Weiterentwicklung von Schulungsmaterialien."
@@ -526,8 +526,8 @@
         "GitHub Actions"
       ],
       "contributions": [
-        "Konzeption eines Persona-Systems (z. B. Developer, PM, Designer, Scientist), damit eine Einzelperson mehrere spezialisierte Claude-Code-Agenten parallel statt durch manuelles Rollenwechseln betreiben kann.",
-        "Entwicklung isolierten, rollenspezifischen persistenten Gedächtnisses pro Persona, sodass jeder Agent eigenen Kontext über Sessions hinweg aufbaut und wiederverwendet, ohne die anderen zu verunreinigen.",
+        "Konzeption eines Persona-Systems (z. B. Developer, PM, Designer, Scientist), damit eine Einzelperson mehrere spezialisierte Claude-Code-Agenten parallel statt durch manuelles Wechseln der Rollen betreiben kann.",
+        "Entwicklung isolierten, rollenspezifischen persistenten Gedächtnisses pro Persona, sodass jeder Agent eigenen Kontext über Sessions hinweg aufbaut und wiederverwendet, ohne die anderen zu beeinträchtigen.",
         "Aufbau einer CI-Pipeline, die das Tooling und die Konfiguration des Frameworks selbst über Änderungen hinweg zuverlässig hält.",
         "Öffentlich auf GitHub (Jin-HoMLee/claude-personas)."
       ],
@@ -554,7 +554,7 @@
       "contributions": [
         "Entwicklung einer Discovery-Pipeline zur Identifizierung neuer Splice-Junctions in TCGA-Kohorten (BRCA/LUAD/LAML-RNA-Seq).",
         "Vorhersage HLA-A*02:01-bindender Kandidaten-9-mere aus der Drei-Rahmen-Translation kurzer Junction-Contigs.",
-        "Abgleich der Kandidaten-Junctions mit publizierten Transkript-/Isoform-Berichten.",
+        "Abgleich der Kandidaten-Junctions mit publizierten Transkript-/Isoform-Annotationen.",
         "Vergleich computergestützter mutations- und splice-abgeleiteter Neoepitop-Kandidatenmengen (kein experimenteller Co-Targeting-Anspruch)."
       ],
       "outcome": "SNU-Praktikum 2015: unveröffentlichter computergestützter Machbarkeitsnachweis — neue Splice-Junctions in TCGA-BRCA/LUAD/LAML-RNA-Seq, Drei-Rahmen-Translation kurzer Junction-Contigs, von NetMHCpan vorhergesagte HLA-A*02:01-Kandidaten-9-mere. Keine experimentelle Validierung, klinische Nutzung, Publikation oder Patent."
@@ -578,7 +578,7 @@
         "Shell Scripting"
       ],
       "contributions": [
-        "Entwicklung einer in silico Genotypisierungs-Pipeline zur direkten Extraktion von HLA-Allelen aus Whole-Exome-Sequencing-Daten (WXS).",
+        "Entwicklung einer In-silico-Genotypisierungs-Pipeline zur direkten Extraktion von HLA-Allelen aus Whole-Exome-Sequencing-Daten (WXS).",
         "Implementierung prädiktiver Modellierung mittels ANNs (NetMHCPan) zum Screening von Missense-Mutationen auf MHC-I-Bindungsaffinität.",
         "Konzeption einer Konsens-Methodik zur Integration mehrerer HLA-Typisierungs-Algorithmen zur Auflösung von Sequenz-Ambiguitäten und Verbesserung der Call-Konsistenz.",
         "Computergestützte Prüfung der Pipeline durch Vergleich von Bindungsspezifitäts-Vorhersagen über HLA-Allele hinweg, um inkonsistente Allel-Calls zu markieren."
@@ -635,14 +635,14 @@
         "Führung & Mentoring: Betreuung und Anleitung von Studierenden, wissenschaftlichem Nachwuchs und technischem Personal in komplexen Laborabläufen.",
         "Wissenschaftliche Kommunikation: Einwerbung von Drittmitteln, Aufbau von Forschungskooperationen und Publikation der Ergebnisse in peer-reviewten Fachzeitschriften."
       ],
-      "outcome": "Erfolgreiche Identifizierung neuer Erkenntnisse zu neuronalen Strahlungsantworten sowie Präsentation auf internationalen Konferenzen."
+      "outcome": "Erfolgreiche Gewinnung neuer Erkenntnisse zu neuronalen Strahlungsantworten sowie Präsentation auf internationalen Konferenzen."
     },
     "L5": {
       "id": "L5",
       "category": "life-science",
       "open_source": true,
       "title": "Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow",
-      "summary": "Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler Strukturmodellierung.",
+      "summary": "Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-of-Concept von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler Strukturmodellierung.",
       "role": "Autor und Maintainer (Open Source)",
       "period": {
         "start": "2026-03",
@@ -689,7 +689,7 @@
         "Looker"
       ],
       "contributions": [
-        "Ausbau der Python-basierten Analyse-Umgebung in Google Cloud.",
+        "Ausbau der Python-basierten Analyse-Umgebung in der Google Cloud.",
         "Migration bestehender SAS-Reporting-Workflows in Python-basierte Pipelines.",
         "Evaluierung von BI-Funktionalitäten mit Looker und Vorbereitung des Datenmodells.",
         "Stakeholder-Management und Anforderungsanalyse.",
@@ -729,7 +729,7 @@
       "category": "life-science",
       "open_source": true,
       "title": "Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow",
-      "summary": "Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler Strukturmodellierung.",
+      "summary": "Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-of-Concept von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler Strukturmodellierung.",
       "role": "Autor und Maintainer (Open Source)",
       "period": {
         "start": "2026-03",
@@ -801,7 +801,7 @@
         ]
       },
       {
-        "name": "Soziales",
+        "name": "Soziales Engagement",
         "entries": [
           "Jülicher Tafel e.V.",
           "In via - Café Gemeinsam",
@@ -824,7 +824,7 @@
       "year": 2021
     },
     {
-      "title": "Für die Aufnahme ausgewählt — Vienna BioCenter PhD Programme",
+      "title": "Zur Aufnahme ausgewählt — Vienna BioCenter PhD Programme",
       "issuer": "Vienna BioCenter PhD Programme",
       "year": 2019,
       "note": "In der Sommerrunde 2019 ausgewählt; IMP-Position im Plaschka-Labor angenommen."
@@ -1122,7 +1122,7 @@
       "publications": "Publikationen",
       "skills": "Kenntnisse",
       "languages": "Sprachen",
-      "volunteer": "Ehrenamtlich",
+      "volunteer": "Ehrenamt",
       "faq": "Häufige Fragen"
     },
     "months_abbr": [
@@ -1150,7 +1150,7 @@
       "interactive_cv": "Online-Lebenslauf:"
     },
     "publications": {
-      "summary": "{peer_reviewed} begutachtete Publikationen ({peer_reviewed_articles} Artikel + {peer_reviewed_book_chapters} wissenschaftliches Buchkapitel; {pr_first} als Erstautor, {pr_shared} geteilte Erstautorenschaft, {pr_coauthor} als Co-Autor), {conferences} Forschungsbeiträge auf Konferenzen als Erstautor und {applied_records} angewandter/themenfremder Beitrag ({research_records} Forschungseinträge; insgesamt {total_records} Bibliografie-Datensätze), Forschungsspanne {span}, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
+      "summary": "{peer_reviewed} begutachtete Publikationen ({peer_reviewed_articles} Artikel + {peer_reviewed_book_chapters} wissenschaftliche Buchkapitel; {pr_first} als Erstautor, {pr_shared} geteilte Erstautorenschaft, {pr_coauthor} als Co-Autor), {conferences} Forschungsbeiträge auf Konferenzen als Erstautor und {applied_records} angewandter/themenfremder Beitrag ({research_records} Forschungseinträge; insgesamt {total_records} Bibliografie-Datensätze), Forschungszeitraum {span}, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
       "pdf_summary": "{peer_reviewed} begutachtete Forschungspublikationen (insgesamt {total_records} Bibliografie-Datensätze; {pr_first} als Erstautor, {pr_shared} mit geteilter Erstautorschaft).",
       "selected_summary": "3 ausgewählte von {peer_reviewed} begutachteten Forschungspublikationen (insgesamt {total_records} Bibliografie-Datensätze).",
       "selected_heading": "Ausgewählte Publikationen",
@@ -1174,27 +1174,27 @@
       {
         "id": "what-is-his-background",
         "question": "Welchen beruflichen Hintergrund hat Jin-Ho Lee?",
-        "answer": "Jin-Ho Lee forschte acht Jahre als Doktorand und postgraduierter Forscher am Forschungszentrum Jülich, am Kirchhoff-Institut für Physik, am Nationalen Centrum für Tumorerkrankungen, an der Seoul National University und am Deutschen Krebsforschungszentrum zu Krebsgenomik und hochauflösender Mikroskopie. Anschließend wechselte er als Data-Science-Coach zu neuefische und als von Cintellic GmbH beschäftigter Berater und Lead Business Functional Analyst zu einem Projekt für eine internationale Bank; heute arbeitet er unabhängig an ML/AI-Engineering und Open-Source-Tooling."
+        "answer": "Jin-Ho Lee forschte acht Jahre als Doktorand und postgradualer Forscher am Forschungszentrum Jülich, am Kirchhoff-Institut für Physik, am Nationalen Centrum für Tumorerkrankungen, an der Seoul National University und am Deutschen Krebsforschungszentrum zu Krebsgenomik und hochauflösender Mikroskopie. Anschließend wechselte er in die Industrie — zunächst als Data-Science-Coach bei neuefische, dann als bei Cintellic GmbH angestellter Berater und Lead Business Functional Analyst für eine internationale Bank; heute arbeitet er unabhängig an ML/AI-Engineering und Open-Source-Tooling."
       },
       {
         "id": "what-are-his-skills",
         "question": "Welche technischen Fähigkeiten hat Jin-Ho Lee?",
-        "answer": "Jin-Ho Lee arbeitet mit Python, SQL und R, mit Machine Learning in TensorFlow, Bioinformatik-Pipelines in Snakemake sowie Cloud Data Engineering auf der Google Cloud inklusive BigQuery und BigQueryML. Seine Fachexpertise umfasst Krebsgenomik, NGS- und RNA-Seq-Analyse, HLA-Typisierung, Neoantigen-Identifizierung und räumliche Punktmusteranalyse."
+        "answer": "Jin-Ho Lee arbeitet mit Python, SQL und R, mit Machine Learning in TensorFlow, mit Bioinformatik-Pipelines in Snakemake sowie mit Cloud Data Engineering in der Google Cloud — einschließlich BigQuery und BigQueryML. Seine Fachexpertise umfasst Krebsgenomik, NGS- und RNA-Seq-Analyse, HLA-Typisierung, Neoantigen-Identifizierung und räumliche Punktmusteranalyse."
       },
       {
         "id": "what-has-he-published",
         "question": "Was hat Jin-Ho Lee publiziert?",
-        "answer": "Jin-Ho Lee hat 12 peer-reviewed Forschungspublikationen (10 Artikel und 2 wissenschaftliche Buchkapitel), darunter Arbeiten als Erstautor und mit geteilter Erstautorschaft (2 Erst / 3 geteilte Erst / 7 Co-Autor), in der Strahlenbiophysik und der hochauflösenden Bildgebung von DNA-Schadensreparatur und Chromatin-Architektur. Die vollständige Liste mit Zitationszahlen ist über seinen ORCID-Eintrag (0009-0001-8784-1771) und sein Google-Scholar-Profil verfügbar."
+        "answer": "Jin-Ho Lee hat 12 peer-reviewed Forschungspublikationen (10 Artikel und 2 wissenschaftliche Buchkapitel), darunter Arbeiten als Erstautor und mit geteilter Erstautorschaft (2 Erstautor / 3 geteilte Erstautorschaft / 7 als Co-Autor), in der Strahlenbiophysik und der hochauflösenden Bildgebung von DNA-Schadensreparatur und Chromatin-Architektur. Die vollständige Liste mit Zitationszahlen ist über seinen ORCID-Eintrag (0009-0001-8784-1771) und sein Google-Scholar-Profil verfügbar."
       },
       {
         "id": "what-does-he-work-on-now",
         "question": "Woran arbeitet Jin-Ho Lee derzeit?",
-        "answer": "Jin-Ho Lee arbeitet derzeit unabhängig an agentischen KI-Systemen - LLM-Agenten mit Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistentem Speicher - sowie an Open-Source-Tooling für Claude Code, einer Chrome-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen ausführt, und einer reproduzierbaren Snakemake-Pipeline für Splice-Neoepitop-Kandidaten mit optionaler AlphaFold2-Strukturmodellierung."
+        "answer": "Jin-Ho Lee arbeitet derzeit unabhängig an agentischen KI-Systemen – LLM-Agenten mit Tool-Nutzung, Planung, Routing, Multi-Agenten-Orchestrierung und persistentem Gedächtnis – sowie an Open-Source-Tooling für Claude Code, einer Chrome-Erweiterung, die Echtzeit-Computer-Vision vollständig client-seitig auf Badminton-Spielaufnahmen ausführt, und einer reproduzierbaren Snakemake-Pipeline für Splice-Neoepitop-Kandidaten mit optionaler AlphaFold2-Strukturmodellierung."
       },
       {
         "id": "is-he-available-for-work",
         "question": "Ist Jin-Ho Lee für neue Positionen verfügbar?",
-        "answer": "Jin-Ho Lees erklärte Verfügbarkeit: offen für Positionen in Bioinformatik, Computational Biology und Data Science, mit Sitz in Mannheim. Der schnellste Weg, ihn zu erreichen, ist das Kontaktformular auf dieser Seite oder der Digital-Twin-Chat, der detaillierte Fragen zu seiner Erfahrung beantwortet und eine Nachricht weiterleiten kann."
+        "answer": "Jin-Ho Lees erklärte Verfügbarkeit: offen für Positionen in Bioinformatik, Computational Biology und Data Science, ansässig in Mannheim. Der schnellste Weg, ihn zu erreichen, ist das Kontaktformular auf dieser Seite oder der Digital-Twin-Chat, der detaillierte Fragen zu seiner Erfahrung beantwortet und eine Nachricht weiterleiten kann."
       }
     ]
   },
@@ -1210,7 +1210,7 @@
     }
   },
   "publications_aggregate": {
-    "summary": "12 begutachtete Publikationen (10 Artikel + 2 wissenschaftliches Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 7 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (15 Forschungseinträge; insgesamt 16 Bibliografie-Datensätze), Forschungsspanne 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
+    "summary": "12 begutachtete Publikationen (10 Artikel + 2 wissenschaftliche Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 7 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (15 Forschungseinträge; insgesamt 16 Bibliografie-Datensätze), Forschungszeitraum 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
     "pointer": "Vollständige Liste:"
   }
 }

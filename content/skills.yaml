@@ -27,7 +27,7 @@ categories:
         items: ["MHCflurry", "TCRdock", "AlphaFold v2", "Mol*"]
       - label: { en: "AI Agents", de: "KI-Agenten" }
         items: ["Claude Code", "Codex", "OpenCode", "Pi", "Grok", "Cursor", "Kimi"]
-      - label: { en: "Browser ML Delivery", de: "Browser-ML-Auslieferung" }
+      - label: { en: "Browser ML Delivery", de: "ML im Browser" }
         items: ["TensorFlow.js", "ONNX Runtime Web", "Chrome Extension (Manifest V3)"]
       - label: { en: "Developer Environments", de: "Entwicklungsumgebungen" }
         items: ["Conda", "Docker", "Git", "Nix", "nix-darwin", "home-manager", "WezTerm", "Neovim"]

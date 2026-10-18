@@ -52,7 +52,7 @@ def test_section_headers_present_de(de_text):
         "AUSBILDUNG",
         "KENNTNISSE",
         "SPRACHEN",
-        "EHRENAMTLICH",
+        "EHRENAMT",
         "PUBLIKATIONEN",
     ):
         assert section in de_text, f"missing section header: {section}"

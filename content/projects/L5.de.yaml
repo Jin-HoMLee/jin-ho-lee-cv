@@ -2,7 +2,7 @@ id: L5
 category: life-science
 open_source: true
 title: "Splice-Neoepitop-Pipeline – Reproduzierbarer Snakemake-Workflow"
-summary: "Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-of-Concepts von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler Strukturmodellierung."
+summary: "Modernisierte Open-Source-Neuimplementierung des computergestützten SNU-Proof-of-Concept von 2015 für vorhergesagte splice-junction-abgeleitete Neoepitop-Kandidaten als reproduzierbare Snakemake-Pipeline mit optionaler Strukturmodellierung."
 role: "Autor und Maintainer (Open Source)"
 period:
   start: "2026-03"

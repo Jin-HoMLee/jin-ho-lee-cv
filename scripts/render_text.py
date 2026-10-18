@@ -24,7 +24,7 @@ SECTION_LABELS = {
     "awards": {"en": "AWARDS & CERTIFICATIONS", "de": "AUSZEICHNUNGEN & ZERTIFIKATE"},
     "skills": {"en": "SKILLS", "de": "KENNTNISSE"},
     "languages": {"en": "LANGUAGES", "de": "SPRACHEN"},
-    "volunteer": {"en": "VOLUNTEER", "de": "EHRENAMTLICH"},
+    "volunteer": {"en": "VOLUNTEER", "de": "EHRENAMT"},
     "publications": {"en": "PUBLICATIONS", "de": "PUBLIKATIONEN"},
 }
 PRESENT = {"en": "present", "de": "heute"}

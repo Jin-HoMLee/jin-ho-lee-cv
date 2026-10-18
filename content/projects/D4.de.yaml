@@ -13,8 +13,8 @@ technologies:
   - "Python"
   - "GitHub Actions"
 contributions:
-  - "Konzeption eines Persona-Systems (z. B. Developer, PM, Designer, Scientist), damit eine Einzelperson mehrere spezialisierte Claude-Code-Agenten parallel statt durch manuelles Rollenwechseln betreiben kann."
-  - "Entwicklung isolierten, rollenspezifischen persistenten Gedächtnisses pro Persona, sodass jeder Agent eigenen Kontext über Sessions hinweg aufbaut und wiederverwendet, ohne die anderen zu verunreinigen."
+  - "Konzeption eines Persona-Systems (z. B. Developer, PM, Designer, Scientist), damit eine Einzelperson mehrere spezialisierte Claude-Code-Agenten parallel statt durch manuelles Wechseln der Rollen betreiben kann."
+  - "Entwicklung isolierten, rollenspezifischen persistenten Gedächtnisses pro Persona, sodass jeder Agent eigenen Kontext über Sessions hinweg aufbaut und wiederverwendet, ohne die anderen zu beeinträchtigen."
   - "Aufbau einer CI-Pipeline, die das Tooling und die Konfiguration des Frameworks selbst über Änderungen hinweg zuverlässig hält."
   - "Öffentlich auf GitHub (Jin-HoMLee/claude-personas)."
 outcome: "Ein Open-Source-Framework, das einer Einzelperson erlaubt, Multi-Rollen-Arbeit zu parallelisieren, indem mehrere spezialisierte, gedächtnisisolierte Claude-Code-Personas gleichzeitig laufen."

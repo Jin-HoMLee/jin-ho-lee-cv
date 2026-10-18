@@ -155,7 +155,7 @@ def test_pdf_comp_bio_keeps_full_skills_sections(repo_root):
             "Immunoinformatik",
             "Bioinformatik-Workflows",
             "Maschinelles Lernen",
-            "Browser-ML-Auslieferung",
+            "ML im Browser",
         ),
     }
 
