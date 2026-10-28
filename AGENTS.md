@@ -229,8 +229,9 @@ The web package too: `pnpm --dir web test` (vitest) covers the twin chat's escap
   full `validate_tree`; the skill docs are drift-guarded against the `justfile`/schema.
 - **Cover letters are a read-only CV consumer.** `applications/` is gitignored (this
   repo is public); the generator reads `content/` via `cover_letter_core.cv_facts`
-  (PII-safe `agent_core.read_cv`) and writes only under `applications/`. PDFs merge
-  `content.private/` at render time and stay gitignored. Never commit `applications/`
+  (PII-safe `agent_core.read_cv`) and writes only under `applications/`. Cover-letter PDFs
+  merge the private phone only with `include_phone: true`; sender street address is never
+  rendered, and outputs stay gitignored. Never commit `applications/`
   to this repo. Separately, `applications/` is also the root of its own private git
   repository (`git@github.com:Jin-HoMLee/jin-ho-lee-job-applications.git`), nested
   directly at that path - this repo's own git has no knowledge of it (no submodule, no
@@ -260,8 +261,9 @@ The web package too: `pnpm --dir web test` (vitest) covers the twin chat's escap
   craft guidance ("How to write the body" + "AI tells & clichés to avoid" in reference.md);
   `just jd-gap <slug>` prints an advisory JD↔CV keyword checklist (not a verdict) and the
   cliché linter prints advisory `WARN:` lines from `render_letter` — both deterministic,
-  neither ever blocks. Rendered text never contains the private address; only the gitignored
-  PDF does.
+  neither ever blocks. Rendered text never contains private contact data; cover-letter PDFs
+  include the phone only with explicit per-letter opt-in and never include the sender street
+  address.
 - **`master-cv/` is a gitignored superset overlay (Phase 13).** The unfiltered
   life-database (`timeline.yaml` + `inventory.yaml` + `narrative/*.md` + `opinions.md`) feeding the
   digital twin and the `dist/master-cv.md` lookup export. `content/` is a curated

@@ -10,6 +10,9 @@ recipient:
     postal_code: "68159"
     city: "Mannheim"
 subject: "Bewerbung als Bioinformatician"
+# Set true only when this letter's PDF may include the private phone number.
+# The sender street address is never rendered in a cover letter.
+include_phone: false
 source: "LinkedIn"
 url: "https://example.com/jobs/123"
 # Campaign status (status/status_note/next_action/…) is owned by the applications

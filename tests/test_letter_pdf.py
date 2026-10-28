@@ -28,19 +28,23 @@ def apps(tmp_path: Path) -> Path:
 
 
 @pytest.mark.parametrize(
-    ("language", "subject", "date_text"),
+    ("language", "subject", "date_text", "include_phone", "phone_present"),
     [
-        ("en", "Application: Bioinformatician", "June 3, 2026"),
-        ("de", "Bewerbung als Bioinformatician", "3. Juni 2026"),
+        ("en", "Application: Bioinformatician", "June 3, 2026", None, False),
+        ("en", "Application: Bioinformatician", "June 3, 2026", False, False),
+        ("en", "Application: Bioinformatician", "June 3, 2026", True, True),
+        ("de", "Bewerbung als Bioinformatician", "3. Juni 2026", None, False),
+        ("de", "Bewerbung als Bioinformatician", "3. Juni 2026", False, False),
+        ("de", "Bewerbung als Bioinformatician", "3. Juni 2026", True, True),
     ],
 )
 @pytest.mark.skipif(
     shutil.which("pdftotext") is None, reason="needs pdftotext to inspect the compiled PDF"
 )
-def test_cover_letter_letterhead_omits_private_phone_and_street(
-    apps, tmp_path, monkeypatch, language, subject, date_text
+def test_cover_letter_letterhead_phone_opt_in_and_street_omission(
+    apps, tmp_path, monkeypatch, language, subject, date_text, include_phone, phone_present
 ):
-    """New letterheads keep public identity data but omit private contact fields."""
+    """Only an explicit true opt-in adds phone; street data is never rendered."""
     private = tmp_path / "private.yaml"
     private.write_text(
         "phone: 'TEST-ONLY-PHONE'\n"
@@ -71,6 +75,7 @@ def test_cover_letter_letterhead_omits_private_phone_and_street(
                 },
             },
             "subject": subject,
+            **({"include_phone": include_phone} if include_phone is not None else {}),
         },
         apps_dir=apps,
     )
@@ -91,8 +96,13 @@ def test_cover_letter_letterhead_omits_private_phone_and_street(
     assert date_text in extracted
     assert subject in extracted
     assert "The application body remains intact." in extracted
-    assert "TEST-ONLY-PHONE" not in extracted
+    if phone_present:
+        assert "TEST-ONLY-PHONE" in extracted
+    else:
+        assert "TEST-ONLY-PHONE" not in extracted
     assert "TEST-ONLY-STREET" not in extracted
+    assert "00000" not in extracted
+    assert "Testville" not in extracted
     assert "·  ·" not in extracted  # no empty contact slot creates a doubled separator
 
 

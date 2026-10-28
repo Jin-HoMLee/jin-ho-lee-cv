@@ -27,9 +27,17 @@ Copy shapes from the committed `applications.example/` folder.
 | `date` | Letter date, ISO `YYYY-MM-DD`. |
 | `recipient` | Optional address block: `name`, `company`, `address`. |
 | `subject` | Betreff / subject line (bold in the PDF). |
+| `include_phone` | Optional boolean; only `true` includes the private phone number in this letter's PDF letterhead. Street address is never rendered. |
 | `source` | Where the job was found (e.g. LinkedIn). |
 | `url` | Job posting URL. |
 | `status` / `status_note` | Campaign status — **owned by the applications repo**, not the letter contract. The CV validator tolerates these fields but never reads or validates them. |
+
+## Letterhead privacy
+
+The PDF letterhead omits the sender street address permanently. The private phone number is
+merged only at render time and appears only when `application.yaml` sets
+`include_phone: true`; missing or false means it is omitted. Recipient address fields are
+separate and remain supported.
 
 ## `profile.yaml` fields (evergreen)
 | Field | Meaning |
