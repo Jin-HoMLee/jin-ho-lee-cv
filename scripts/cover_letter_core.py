@@ -532,6 +532,11 @@ def _letter_personal(lang: str) -> dict:
     return _to_jsonable(resolved["personal"])
 
 
+def _letter_pdf_relpath(lang: str) -> str:
+    """Canonical dossier-relative path for a submission-ready letter PDF."""
+    return f"artifacts/cover-letter-{lang}.pdf"
+
+
 def _render_pdf(slug: str, letter: dict, lang: str, *, apps_dir: Path) -> None:
     data = {"personal": _letter_personal(lang), "letter": letter, "lang": lang}
     cache_dir = REPO_ROOT / "pdf" / ".cache"
@@ -539,7 +544,7 @@ def _render_pdf(slug: str, letter: dict, lang: str, *, apps_dir: Path) -> None:
     (cache_dir / "letter.json").write_text(
         json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    out = _safe_application_path(f"{slug}/cover-letter-{lang}.pdf", apps_dir=apps_dir)
+    out = _safe_application_path(f"{slug}/{_letter_pdf_relpath(lang)}", apps_dir=apps_dir)
     out.parent.mkdir(parents=True, exist_ok=True)
     template = REPO_ROOT / "pdf" / "templates" / "cover-letter.typ"
     has_sig = "1" if (REPO_ROOT / "assets" / "signature.png").exists() else "0"
@@ -566,9 +571,11 @@ def _render_pdf(slug: str, letter: dict, lang: str, *, apps_dir: Path) -> None:
 
 
 def render_letter(slug: str, *, fmt: str = "all", apps_dir: Path | None = None) -> dict:
-    """Validate-first, then render fmt in {'pdf','text','all'} into the app folder.
+    """Validate-first, then render fmt in {'pdf','text','all'} for the app.
 
-    PDF skips gracefully when typst is absent. Returns
+    Submission-ready PDFs go under the dossier's ``artifacts/`` directory;
+    editable/supporting text outputs remain in the dossier root. PDF skips
+    gracefully when typst is absent. Returns
     {'ok', 'errors', 'rendered': [filenames], 'skipped': [filenames]}.
     """
     apps_dir = _resolve_apps_dir(apps_dir)
@@ -607,9 +614,9 @@ def render_letter(slug: str, *, fmt: str = "all", apps_dir: Path | None = None) 
 
     if fmt in {"pdf", "all"}:
         if shutil.which("typst") is None:
-            skipped.append(f"cover-letter-{lang}.pdf")
+            skipped.append(_letter_pdf_relpath(lang))
         else:
             _render_pdf(slug, letter, lang, apps_dir=apps_dir)
-            rendered.append(f"cover-letter-{lang}.pdf")
+            rendered.append(_letter_pdf_relpath(lang))
 
     return {"ok": True, "errors": [], "rendered": rendered, "skipped": skipped}

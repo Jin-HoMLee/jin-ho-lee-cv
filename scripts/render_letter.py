@@ -1,7 +1,8 @@
 """CLI: render a cover letter for an application slug.
 
 Wraps cover_letter_core.render_letter so `just letter <slug>` works. Validates
-first; PDF skips gracefully when typst is absent.
+first; submission-ready PDFs go under the dossier's `artifacts/` directory;
+PDF skips gracefully when typst is absent.
 """
 
 from __future__ import annotations

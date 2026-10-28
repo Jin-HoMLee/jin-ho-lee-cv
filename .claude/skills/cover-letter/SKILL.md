@@ -67,9 +67,9 @@ write lands under the gitignored `applications/` overlay — **never** commit it
    render time). Show the user the revised draft with a one-line note that you ran a
    self-critique pass (not the scores).
 6. **Revise** — edit `draft.md` per the user's wording changes.
-7. **Render** — `just letter <slug>` → validates, then writes the full and
-   body-only text files (and the PDF when Typst is installed) into the
-   application folder.
+7. **Render** — `just letter <slug>` → validates, then writes the submission-ready
+   PDF under the dossier's `artifacts/` directory and the full/body-only text files
+   into the application folder (PDF when Typst is installed).
 
 See `reference.md` for the file/field map, the `just` recipe, and DIN 5008 / EN
 business-letter conventions.

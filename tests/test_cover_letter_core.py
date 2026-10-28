@@ -341,7 +341,7 @@ def test_render_letter_skips_pdf_without_typst(apps, monkeypatch):
     clc.save_draft(slug, "Body.\n", apps_dir=apps)
     res = clc.render_letter(slug, fmt="all", apps_dir=apps)
     assert res["ok"] is True
-    assert "cover-letter-en.pdf" in res["skipped"]
+    assert "artifacts/cover-letter-en.pdf" in res["skipped"]
     assert "cover-letter-en.txt" in res["rendered"]
 
 

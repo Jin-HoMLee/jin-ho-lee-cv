@@ -427,13 +427,14 @@ def _stage_pdf(src: Path, package_dir: Path, rel: str) -> tuple[str, str]:
 
 
 def _detect_letter(package_dir: Path, lang: str) -> dict | None:
-    """Return the letter section when a rendered letter PDF is present, else None."""
-    pdf = package_dir / f"cover-letter-{lang}.pdf"
+    """Return the letter section for a canonical artifacts/ PDF, else None."""
+    pdf_rel = f"artifacts/cover-letter-{lang}.pdf"
+    pdf = package_dir / pdf_rel
     if not pdf.is_file():
         return None
     return {
         "source": "draft.md",
-        "pdf_path": pdf.name,
+        "pdf_path": pdf_rel,
         "pdf_sha256": sha256_file(pdf),
         "rendered_at": _mtime_iso(pdf),
     }
