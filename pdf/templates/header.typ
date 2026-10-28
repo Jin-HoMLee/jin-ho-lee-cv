@@ -42,7 +42,7 @@
   }
 }
 
-#let header(personal, site-label: none) = {
+#let header(personal, site-label: none, show-phone: true, show-address: true) = {
   grid(
     columns: (1fr, auto),
     column-gutter: 12pt,
@@ -60,11 +60,12 @@
       // Contact line — middot-separated
       let parts = ()
       parts.push(link("mailto:" + personal.email)[#personal.email])
-      if "phone" in personal { parts.push(personal.phone) }
+      if show-phone and "phone" in personal { parts.push(personal.phone) }
 
       // Address: full street/postal/city/country if private overlay supplied an address,
-      // otherwise just city/country from the public location block.
-      if "address" in personal {
+      // otherwise just city/country from the public location block. Formal cover letters
+      // set show-address=false so private street details never enter their letterhead.
+      if show-address and "address" in personal {
         let addr = personal.address
         let addr-parts = ()
         if "street" in addr { addr-parts.push(addr.street) }

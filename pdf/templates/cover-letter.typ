@@ -11,7 +11,10 @@
 #set par(leading: 0.6em, justify: true)
 
 // Letterhead — reuses the CV header so the letter visually matches the CV.
-#header(data.personal)
+// Keep cover-letter letterheads intentionally public: the private overlay may still
+// supply data for other PDF consumers, but phone and street-address fields do not
+// belong on newly rendered letters.
+#header(data.personal, show-phone: false, show-address: false)
 #v(10pt)
 
 // Right-aligned date (DIN 5008).
