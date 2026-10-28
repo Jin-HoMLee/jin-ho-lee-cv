@@ -81,7 +81,8 @@ build-text-targets:
     uv run python -m scripts.render_text --lang en --target ds-ml
     uv run python -m scripts.render_text --lang de --target ds-ml
 
-# Render a cover letter (validate-first) → applications/<slug>/cover-letter-*.{pdf,txt}
+# Render a cover letter (validate-first) → applications/<slug>/artifacts/cover-letter-*.pdf
+# and applications/<slug>/cover-letter-*.{txt}
 letter slug:
     uv run python -m scripts.render_letter "{{slug}}"
 

@@ -3,7 +3,7 @@
 ## Just recipes
 | Recipe | Does |
 |---|---|
-| `just letter <slug>` | Validate-first, then render PDF + text into `applications/<slug>/` (PDF skips if Typst is absent). |
+| `just letter <slug>` | Validate-first, then render the submission-ready PDF into `applications/<slug>/artifacts/` and text outputs into `applications/<slug>/` (PDF skips if Typst is absent). |
 | `just jd-gap <slug>` | Advisory JD↔CV keyword report (checklist, not a verdict — over-surfaces; prune false alarms). |
 | `just validate` | Validate the CV content tree (grounding source). |
 
@@ -13,7 +13,8 @@
 - `<slug>/application.yaml` — per-job metadata (fields below).
 - `<slug>/interview.yaml` — per-job answers + gap decisions.
 - `<slug>/draft.md` — editable letter body (the working step).
-- `<slug>/cover-letter-<lang>.pdf` / `.txt` / `-body.txt` — rendered output.
+- `<slug>/artifacts/cover-letter-<lang>.pdf` — submission-ready rendered PDF.
+- `<slug>/cover-letter-<lang>.txt` / `-body.txt` — rendered text/supporting outputs.
 
 Copy shapes from the committed `applications.example/` folder.
 

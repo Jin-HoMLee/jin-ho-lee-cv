@@ -77,8 +77,10 @@ def test_cover_letter_letterhead_omits_private_phone_and_street(
     clc.save_draft(slug, "The application body remains intact.\n", apps_dir=apps)
     res = clc.render_letter(slug, fmt="pdf", apps_dir=apps)
     assert res["ok"] is True, res["errors"]
+    assert f"artifacts/cover-letter-{language}.pdf" in res["rendered"]
+    assert not (apps / slug / f"cover-letter-{language}.pdf").exists()
 
-    pdf = apps / slug / f"cover-letter-{language}.pdf"
+    pdf = apps / slug / "artifacts" / f"cover-letter-{language}.pdf"
     extracted = subprocess.run(
         ["pdftotext", str(pdf), "-"], capture_output=True, text=True, check=True
     ).stdout
@@ -115,7 +117,7 @@ def test_cover_letter_pdf_compiles(apps):
     clc.save_draft(slug, "Absatz eins.\n\nAbsatz zwei.\n", apps_dir=apps)
     res = clc.render_letter(slug, fmt="pdf", apps_dir=apps)
     assert res["ok"] is True, res["errors"]
-    out = apps / slug / "cover-letter-de.pdf"
+    out = apps / slug / "artifacts" / "cover-letter-de.pdf"
     assert out.exists()
     assert out.stat().st_size > 1000, "PDF looks empty"
 
@@ -138,7 +140,7 @@ def test_cover_letter_pdf_compiles_minimal_recipient(apps):
     clc.save_draft(slug, "Paragraph one.\n", apps_dir=apps)
     res = clc.render_letter(slug, fmt="pdf", apps_dir=apps)
     assert res["ok"] is True, res["errors"]
-    assert (apps / slug / "cover-letter-en.pdf").exists()
+    assert (apps / slug / "artifacts" / "cover-letter-en.pdf").exists()
 
 
 def test_cover_letter_pdf_compiles_with_body_markup(apps):
@@ -165,7 +167,7 @@ def test_cover_letter_pdf_compiles_with_body_markup(apps):
     )
     res = clc.render_letter(slug, fmt="pdf", apps_dir=apps)
     assert res["ok"] is True, res["errors"]
-    out = apps / slug / "cover-letter-en.pdf"
+    out = apps / slug / "artifacts" / "cover-letter-en.pdf"
     assert out.exists()
     assert out.stat().st_size > 1000, "PDF looks empty"
 
@@ -187,4 +189,4 @@ def test_cover_letter_pdf_compiles_no_recipient(apps):
     clc.save_draft(slug, "Paragraph one.\n", apps_dir=apps)
     res = clc.render_letter(slug, fmt="pdf", apps_dir=apps)
     assert res["ok"] is True, res["errors"]
-    assert (apps / slug / "cover-letter-en.pdf").exists()
+    assert (apps / slug / "artifacts" / "cover-letter-en.pdf").exists()

@@ -140,15 +140,28 @@ def test_export_resolves_variant_lang_and_writes_manifest(apps, tmp_path: Path):
 def test_export_records_letter_when_present(apps, tmp_path: Path):
     slug = "iso-2026-09"
     _write_package(apps, slug, language="en", tailoring="variant: comp-bio")
-    letter_pdf = apps / slug / "cover-letter-en.pdf"
+    letter_pdf = apps / slug / "artifacts" / "cover-letter-en.pdf"
+    letter_pdf.parent.mkdir()
     letter_pdf.write_bytes(FAKE_PDF)
 
     manifest = ea.export_application_cv(slug, apps_dir=apps, build_pdf=_fake_build(tmp_path))
 
     assert manifest["letter"]["source"] == "draft.md"
-    assert manifest["letter"]["pdf_path"] == "cover-letter-en.pdf"
+    assert manifest["letter"]["pdf_path"] == "artifacts/cover-letter-en.pdf"
     assert manifest["letter"]["pdf_sha256"] == _sha256(FAKE_PDF)
     assert manifest["letter"]["rendered_at"]
+
+
+def test_export_ignores_legacy_root_letter_path(apps, tmp_path: Path):
+    """Only the canonical artifacts/ letter is eligible for a new manifest."""
+    slug = "iso-2026-09"
+    _write_package(apps, slug, language="en", tailoring="variant: comp-bio")
+    (apps / slug / "cover-letter-en.pdf").write_bytes(FAKE_PDF)
+
+    manifest = ea.export_application_cv(slug, apps_dir=apps, build_pdf=_fake_build(tmp_path))
+
+    assert "letter" not in manifest
+    assert (apps / slug / "cover-letter-en.pdf").read_bytes() == FAKE_PDF
 
 
 def test_export_env_override_path(monkeypatch, tmp_path: Path):

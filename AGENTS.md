@@ -94,7 +94,7 @@ just web-build         # Production build of web/dist
 just web-guard         # build the site + assert the public CV facts are crawler-readable in static HTML
 just mcp-server        # run the CV MCP server (stdio) — point an MCP client at this
 just mcp-dev           # MCP Inspector against the server (needs the mcp dep group)
-just letter <slug>     # render a cover letter → applications/<slug>/cover-letter-*.{pdf,txt}
+just letter <slug>     # render a cover letter → PDF in applications/<slug>/artifacts/, text in applications/<slug>/
 just jd-gap <slug>     # advisory JD↔CV keyword report (checklist, not a verdict) for an application
 just check-pii         # scan staged files for PII leaks (content.private values + gitignored PII paths)
 just install-hooks     # activate the committed git hooks (run once per clone — sets core.hooksPath=.githooks)
