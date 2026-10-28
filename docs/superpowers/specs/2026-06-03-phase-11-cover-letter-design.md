@@ -134,9 +134,10 @@ notes: "..."                   # any extra context for the draft
 
 ### 4.4 PII & salary handling
 
-- The **PDF** needs the sender's full address + date for a proper Anschreiben. These come
-  from the existing `content.private/private.yaml` overlay, merged **only** at render time —
-  exactly like the existing `pdf/build.py --private` path. The rendered file is gitignored.
+- The **PDF** renders the public sender identity and date. The sender street address is
+  permanently excluded from cover-letter letterheads. The private phone is merged only at
+  render time and included only when the per-letter `include_phone: true` opt-in is set;
+  the rendered file is gitignored.
 - `salary_expectation` is **context for the agent only**. It is **never** written into a
   letter unless the JD explicitly requests a Gehaltsvorstellung **and** the user confirms
   during the interview.
@@ -211,7 +212,7 @@ conventions and is **drift-guarded** against the `justfile` + schemas (like the 
 Reuses `pdf/styles.typ` + the existing `header.typ` letterhead so the letter visually
 matches the CV (same name/accent/contact block). Adds a DIN 5008 body:
 
-- sender block, right-aligned date,
+- sender letterhead, right-aligned date,
 - recipient address block (named contact or company),
 - **bold Betreff / subject line**,
 - salutation (`Sehr geehrte Damen und Herren` / `Sehr geehrte/r <name>` / `Dear …`),

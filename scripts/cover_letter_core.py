@@ -511,6 +511,7 @@ def _assemble_letter(application: dict, draft: str | None, lang: str) -> dict:
         "lang": lang,
         "date_display": _format_date(application["date"], lang),
         "recipient": recipient,
+        "include_phone": application.get("include_phone") is True,
         "subject": application["subject"],
         "salutation": _salutation(lang, name),
         "closing": _closing(lang),
@@ -520,16 +521,19 @@ def _assemble_letter(application: dict, draft: str | None, lang: str) -> dict:
 
 
 def _letter_personal(lang: str) -> dict:
-    """Resolved personal block WITH the private address merged (PDF render only).
+    """Resolved personal block with optional private phone for the PDF only.
 
-    This is the one place PII is intentionally merged — exactly like pdf/build.py
-    --private. The output PDF is gitignored. Degrades to the public location block
-    when content.private/ is absent.
+    The private overlay is merged just like ``pdf/build.py --private``, but the
+    street-address block is removed before the letter template sees the data.
+    This makes street-address rendering impossible for cover letters, while the
+    application-level ``include_phone: true`` opt-in controls the phone line.
     """
     private = PRIVATE_PATH if PRIVATE_PATH.exists() else None
     raw = load_content(CONTENT_DIR, private_path=private, lang=lang, target="bridge")
     resolved = resolve_langstrings(raw, lang=lang)
-    return _to_jsonable(resolved["personal"])
+    personal = resolved["personal"]
+    personal.pop("address", None)
+    return _to_jsonable(personal)
 
 
 def _letter_pdf_relpath(lang: str) -> str:

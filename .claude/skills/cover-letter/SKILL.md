@@ -22,8 +22,10 @@ write lands under the gitignored `applications/` overlay — **never** commit it
 - **Salary only on request.** `profile.yaml`'s `salary_expectation` is context for
   you only — render it into a letter only if the JD asks for a Gehaltsvorstellung
   **and** the user confirms.
-- **PII stays private.** The PDF merges the address from `content.private/` at render
-  time and is gitignored. Never read or paste `content.private/` content.
+- **PII stays private.** The PDF never renders the sender street address. The phone
+  number is included only with the per-letter `include_phone: true` opt-in and is merged
+  from `content.private/` at render time. Rendered files are gitignored. Never read or
+  paste `content.private/` content.
 - Default the letter language to the JD's language (German JD → DIN 5008 Anschreiben).
 
 ## Flow

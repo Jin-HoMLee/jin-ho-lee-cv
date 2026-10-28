@@ -31,6 +31,10 @@
       "additionalProperties": false
     },
     "subject": { "type": "string", "minLength": 1 },
+    "include_phone": {
+      "type": "boolean",
+      "description": "Opt in to the sender phone number in this letter's PDF letterhead; street address is never rendered."
+    },
     "source": { "type": "string" },
     "url": { "type": "string" }
   },
