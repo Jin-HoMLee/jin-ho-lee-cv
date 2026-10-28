@@ -34,7 +34,9 @@ def apps(tmp_path: Path) -> Path:
         ("de", "Bewerbung als Bioinformatician", "3. Juni 2026"),
     ],
 )
-@pytest.mark.skipif(shutil.which("pdftotext") is None, reason="needs pdftotext to inspect the compiled PDF")
+@pytest.mark.skipif(
+    shutil.which("pdftotext") is None, reason="needs pdftotext to inspect the compiled PDF"
+)
 def test_cover_letter_letterhead_omits_private_phone_and_street(
     apps, tmp_path, monkeypatch, language, subject, date_text
 ):
