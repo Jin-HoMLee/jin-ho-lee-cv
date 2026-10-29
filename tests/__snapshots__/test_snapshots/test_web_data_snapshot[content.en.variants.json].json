@@ -1,8 +1,8 @@
 {
   "comp-bio": {
     "headline": "Bioinformatics · Cancer Genomics",
-    "tagline": "Computational scientist and bioinformatician (M.Sc. Molecular Biotechnology) with hands-on NGS workflows for HLA typing and predicted splice-derived MHC-I neoepitope candidates, plus production Python/cloud data engineering. Maintains a public Snakemake pipeline from RNA-Seq to ranked neoepitope candidates. Twelve peer-reviewed publications from a separate imaging, DNA-repair, chromatin, and radiation-biology research track.",
-    "lead_paragraph": "Engineered in-silico pipelines for HLA typing and neoantigen candidate discovery from real-patient NGS and RNA-Seq data at NCT and SNU (unpublished computational project work), later packaged as reproducible Snakemake workflows. A parallel experimental-biophysics line at DKFZ, FZ Jülich, and KIP produced 12 peer-reviewed research publications — first- and shared-first author — in super-resolution microscopy of DNA-damage repair and chromatin, not genomics.",
+    "tagline": "Computational scientist and bioinformatician (M.Sc. Molecular Biotechnology) with hands-on NGS workflows for HLA typing and predicted splice-derived MHC-I neoepitope candidates, plus production Python/cloud data engineering. Maintains a public Snakemake pipeline from RNA-Seq to ranked neoepitope candidates. Twelve peer-reviewed publications from a separate multi-project imaging, DNA-repair, chromatin, and radiation-biology portfolio.",
+    "lead_paragraph": "Engineered in-silico pipelines for HLA typing and neoantigen candidate discovery from real-patient NGS and RNA-Seq data at NCT and SNU (unpublished computational project work), later packaged as reproducible Snakemake workflows. A coordinated experimental-biophysics portfolio at DKFZ, FZ Jülich, and KIP comprised multiple concurrent super-resolution, DNA-damage-repair, and chromatin-analysis projects and produced 12 peer-reviewed research publications — first- and shared-first author — not genomics papers.",
     "second_paragraph": "Equally at home in production: migrated 1,000+ analytical processes to Google Cloud, built reproducible data pipelines, and mentored 100+ specialists in Python, SQL & ML — while securing third-party funding and supervising 10+ students.",
     "skills": {
       "categories": [
@@ -286,8 +286,8 @@
             ]
           },
           {
-            "en": "Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).",
-            "de": "Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).",
+            "en": "Biophysics: Coordinated concurrent super-resolution and spatial chromatin-analysis projects (MATLAB/Python).",
+            "de": "Biophysik: Parallele Super-Resolution- und räumliche Chromatinanalyse-Projekte koordiniert (MATLAB/Python).",
             "refs": [
               "L3"
             ]
@@ -554,8 +554,8 @@
             ]
           },
           {
-            "en": "Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).",
-            "de": "Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).",
+            "en": "Biophysics: Coordinated concurrent super-resolution and spatial chromatin-analysis projects (MATLAB/Python).",
+            "de": "Biophysik: Parallele Super-Resolution- und räumliche Chromatinanalyse-Projekte koordiniert (MATLAB/Python).",
             "refs": [
               "L3"
             ]

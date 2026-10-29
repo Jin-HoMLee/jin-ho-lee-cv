@@ -55,7 +55,7 @@
     "answer_block": "Jin-Ho Lee is a data scientist with bioinformatics roots based in Mannheim, Germany. He spent eight years in academic research across bioinformatics and experimental biophysics with 12 peer-reviewed publications, and now ships production machine-learning and data pipelines, brings Google Cloud consulting experience from international banking, and has coached 100+ specialists in Python, SQL and ML. He holds an M.Sc. from Heidelberg University.",
     "tagline": "Data scientist with bioinformatics roots — eight years of academic research, 12 peer-reviewed publications, production ML and cloud consulting on GCP; 1,000+ analytical processes migrated, 100+ specialists coached.",
     "paragraphs": [
-      "Worked across bioinformatics and experimental biophysics: unpublished NGS/RNA-Seq genomics project work (HLA typing and splice-derived neoepitope candidate pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National University (SNU), plus quantitative bioimage analysis and wet-lab research at the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich), and Kirchhoff Institute for Physics (KIP). The experimental imaging / DNA-repair / chromatin / radiation-biology line produced 12 peer-reviewed research publications — first- and shared-first author — not genomics papers.",
+      "Worked across bioinformatics and experimental biophysics: unpublished NGS/RNA-Seq genomics project work (HLA typing and splice-derived neoepitope candidate pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National University (SNU), plus quantitative bioimage analysis and wet-lab research at the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich), and Kirchhoff Institute for Physics (KIP). The experimental-biophysics line comprised a coordinated portfolio of multiple concurrent imaging, DNA-repair, chromatin, and radiation-biology projects and produced 12 peer-reviewed research publications — first- and shared-first author — not genomics papers.",
       "As a Cintellic consultant for an international bank, architected the migration of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for anti-financial-crime & KYC. Previously at neuefische, coached 100+ specialists in Python, SQL & ML; in research, secured third-party funding and supervised 10+ students."
     ]
   },
@@ -359,8 +359,8 @@
           ]
         },
         {
-          "en": "Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).",
-          "de": "Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).",
+          "en": "Biophysics: Coordinated concurrent super-resolution and spatial chromatin-analysis projects (MATLAB/Python).",
+          "de": "Biophysik: Parallele Super-Resolution- und räumliche Chromatinanalyse-Projekte koordiniert (MATLAB/Python).",
           "refs": [
             "L3"
           ]
@@ -588,8 +588,8 @@
     "L3": {
       "id": "L3",
       "category": "life-science",
-      "title": "Experimental Biophysics — Chromatin Nano-Architecture & DNA Repair",
-      "summary": "Advanced research utilizing super-resolution microscopy and computational analysis to investigate DNA repair mechanisms and chromatin nano-architecture.",
+      "title": "Experimental Biophysics Portfolio — Chromatin Nano-Architecture & DNA Repair",
+      "summary": "Coordinated multiple concurrent research streams combining super-resolution microscopy with computational spatial analysis of chromatin nano-architecture and DNA-repair complexes.",
       "role": "Graduate Researcher / Master's Candidate",
       "period": {
         "start": "2017-02",
@@ -605,11 +605,11 @@
         "DBSCAN"
       ],
       "contributions": [
-        "Experimental Design: Developed and executed research projects focused on DNA repair pathways and super-resolution imaging of chromatin structures.",
-        "Data Analysis & Modeling: Leveraged MATLAB, R, and Python to process complex imaging data and perform quantitative analysis of nano-scale structures.",
-        "Academic Leadership: Managed international research collaborations and mentored several Bachelor and Master's students throughout the project lifecycle."
+        "Experimental Portfolio: Led study design and delivery across concurrent COMBO-FISH chromatin-mapping and single-molecule localization microscopy projects on DNA-damage repair.",
+        "Quantitative Analysis: Built MATLAB, R, and Python workflows for imaging data, spatial point-pattern analysis, and nanoscale cluster detection (DBSCAN).",
+        "Research Coordination & Mentoring: Coordinated international collaborations and supervised Bachelor’s and Master’s students across project lifecycles."
       ],
-      "outcome": "Published research findings in multiple peer-reviewed journals and secured third-party funding for continued scientific investigations."
+      "outcome": "Published findings from the portfolio in multiple peer-reviewed outlets and secured third-party funding for continued research."
     },
     "L4": {
       "id": "L4",
