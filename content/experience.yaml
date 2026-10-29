@@ -34,7 +34,7 @@
       de: "Cloud-Migration: Architektur der GCP-Migration von 1.000+ analytischen Prozessen einer internationalen Bank."
       refs: [C2]
     - en: "Production ML: Developed BigQueryML models for anti-financial crime and KYC."
-      de: "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC."
+      de: "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Anti-Financial Crime und KYC."
       refs: [C1]
     - en: "Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery."
       de: "Stakeholder Lead: Umsetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen."

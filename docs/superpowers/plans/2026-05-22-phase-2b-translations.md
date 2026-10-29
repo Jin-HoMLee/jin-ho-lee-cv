@@ -408,7 +408,7 @@ For each file, read the current YAML, then add a `de:` key next to every `en:` k
 For the **`cintellic` entry**:
 - Role: `"Consultant, Lead Business Functional Analyst"` → `"Berater, Lead Business Functional Analyst"`
 - Bullet 1: `"Scale: Architecting the migration of 1,000+ analytical processes to Google Cloud."` → `"Skalierung: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud."`
-- Bullet 2: `"AI in Production: Developing BigQueryML models for anti-financial crime & KYC."` → `"KI in Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC."`
+- Bullet 2: `"AI in Production: Developing BigQueryML models for anti-financial crime & KYC."` → `"KI in Produktion: Entwicklung von BigQueryML-Modellen für Anti-Financial Crime & KYC."`
 - Bullet 3: `"Stakeholder Lead: Bridging technical data engineering with business requirements for high-stakes banking."` → `"Stakeholder Lead: Brückenfunktion zwischen technischem Data Engineering und Fachanforderungen im hochregulierten Bankensektor."`
 
 For the **`neuefische` entry**:

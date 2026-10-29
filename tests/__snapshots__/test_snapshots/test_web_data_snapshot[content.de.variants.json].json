@@ -222,7 +222,7 @@
           },
           {
             "en": "Production ML: Developed BigQueryML models for anti-financial crime and KYC.",
-            "de": "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
+            "de": "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Anti-Financial Crime und KYC.",
             "refs": [
               "C1"
             ]
@@ -307,7 +307,7 @@
     "headline": "Data Science · Machine Learning",
     "tagline": "Data Scientist für ML in der Produktion auf GCP, verankert in Bioinformatik und experimenteller Biophysik — 12 peer-reviewed Forschungspublikationen.",
     "lead_paragraph": "Durchgängige Entwicklung und Produktivsetzung von Machine-Learning-Systemen — mit der experimentellen Sorgfalt eines Jahrzehnts Forschung in Bioinformatik und experimenteller Biophysik, die in jedes Modell und jede Pipeline einfließt.",
-    "second_paragraph": "In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML.",
+    "second_paragraph": "In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Anti-Financial Crime & KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML.",
     "skills": {
       "categories": [
         {
@@ -483,7 +483,7 @@
         "bullets": [
           {
             "en": "Production ML: Developed BigQueryML models for anti-financial crime and KYC.",
-            "de": "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
+            "de": "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Anti-Financial Crime und KYC.",
             "refs": [
               "C1"
             ]

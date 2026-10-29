@@ -29,7 +29,7 @@ Unabhängiger Bioinformatik- & ML/AI-Engineer - Independent / Self-Directed    (
 
 Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
   - Cloud-Migration: Architektur der GCP-Migration von 1.000+ analytischen Prozessen einer internationalen Bank.
-  - ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.
+  - ML in der Produktion: Entwicklung von BigQueryML-Modellen für Anti-Financial Crime und KYC.
   - Stakeholder Lead: Umsetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.
 
 Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-04)

@@ -10,7 +10,7 @@ mit der experimentellen Sorgfalt eines Jahrzehnts Forschung in Bioinformatik und
 experimenteller Biophysik, die in jedes Modell und jede Pipeline einfließt.
 
 In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in
-die Google Cloud, Entwicklung von BigQueryML-Modellen für Geldwäscheprävention &
+die Google Cloud, Entwicklung von BigQueryML-Modellen für Anti-Financial Crime &
 KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML.
 
 ================================================================================
@@ -22,7 +22,7 @@ Unabhängiger Bioinformatik- & ML/AI-Engineer - Independent / Self-Directed    (
   - Bioinformatik: SNU-Prototyp von 2015 in Snakemake für vorhergesagte Splice-Neoepitop-Kandidaten neu aufgebaut.
 
 Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
-  - ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.
+  - ML in der Produktion: Entwicklung von BigQueryML-Modellen für Anti-Financial Crime und KYC.
   - Cloud-Migration: Architektur der GCP-Migration von 1.000+ analytischen Prozessen einer internationalen Bank.
   - Stakeholder Lead: Umsetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.
 
@@ -38,7 +38,7 @@ Doktorand & postgradualer Forscher (Promotion nicht abgeschlossen) - Forschungsz
 ================================================================================
 AUSGEWÄHLTE PROJEKTE
 ================================================================================
-Geldwäscheprävention – Know-Your-Customer-Plattform (KYC)    (2024-08 bis 2025-07)
+Anti-Financial Crime – Know-Your-Customer-Plattform (KYC)    (2024-08 bis 2025-07)
   Lead Business Functional Analyst (Cintellic GmbH)
   Cloud-Migration und Entwicklung einer Analyse-Umgebung zur Erkennung von
   Finanzkriminalität bei einer großen internationalen Bank.

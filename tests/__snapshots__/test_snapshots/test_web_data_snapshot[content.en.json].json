@@ -295,7 +295,7 @@
         },
         {
           "en": "Production ML: Developed BigQueryML models for anti-financial crime and KYC.",
-          "de": "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
+          "de": "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Anti-Financial Crime und KYC.",
           "refs": [
             "C1"
           ]

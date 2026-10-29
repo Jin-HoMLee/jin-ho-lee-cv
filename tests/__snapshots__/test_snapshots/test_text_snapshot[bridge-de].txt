@@ -18,7 +18,7 @@ Publikationen.
 
 Als Cintellic-Berater für eine internationale Bank Architektur der Migration von
 1.000+ analytischen Prozessen in die Google Cloud und Entwicklung von
-BigQueryML-Modellen für Geldwäscheprävention & KYC. Zuvor bei neuefische
+BigQueryML-Modellen für Anti-Financial Crime & KYC. Zuvor bei neuefische
 Coaching von 100+ Fachkräften in Python, SQL & ML; in der Forschung Einwerbung
 von Drittmitteln und Betreuung von 10+ Studierenden.
 
@@ -32,7 +32,7 @@ Unabhängiger Bioinformatik- & ML/AI-Engineer - Independent / Self-Directed    (
 
 Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-07)
   - Cloud-Migration: Architektur der GCP-Migration von 1.000+ analytischen Prozessen einer internationalen Bank.
-  - ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.
+  - ML in der Produktion: Entwicklung von BigQueryML-Modellen für Anti-Financial Crime und KYC.
   - Stakeholder Lead: Umsetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.
 
 Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-04)
@@ -47,7 +47,7 @@ Doktorand & postgradualer Forscher (Promotion nicht abgeschlossen) - Forschungsz
 ================================================================================
 AUSGEWÄHLTE PROJEKTE
 ================================================================================
-Geldwäscheprävention – Know-Your-Customer-Plattform (KYC)    (2024-08 bis 2025-07)
+Anti-Financial Crime – Know-Your-Customer-Plattform (KYC)    (2024-08 bis 2025-07)
   Lead Business Functional Analyst (Cintellic GmbH)
   Cloud-Migration und Entwicklung einer Analyse-Umgebung zur Erkennung von
   Finanzkriminalität bei einer großen internationalen Bank.
