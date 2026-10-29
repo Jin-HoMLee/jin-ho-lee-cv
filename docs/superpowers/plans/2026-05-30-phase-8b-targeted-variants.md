@@ -716,8 +716,8 @@ variants:
     tagline: "Bioinformatiker mit einem Jahrzehnt in der Krebsgenomik — HLA-Typisierung & Neoantigen-Identifizierung aus echten Patienten-NGS/RNA-Seq, reproduzierbare Snakemake-Pipelines, 10+ Publikationen."
     lead_paragraph: "Bioinformatiker mit tiefen Wurzeln in der Krebsgenomik. Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-Identifizierung aus realen Patienten-NGS- und RNA-Seq-Daten — verpackt als reproduzierbare Snakemake-Workflows —, gestützt auf 10+ peer-reviewed Publikationen als Erst- und geteilter Erstautor in Cancers, Epigenetics Methods und OBM Genetics, aufbauend auf Wet-Lab-Ausbildung an DKFZ, NCT, FZ Jülich, KIP und SNU."
   ds-ml:
-    tagline: "Data Scientist mit Produktiv-ML auf GCP — BigQueryML für Geldwäscheprävention & KYC, 1.000+ Prozesse in die Cloud migriert, auf einem Forschungsfundament in der Krebsgenomik mit 10+ Publikationen."
-    lead_paragraph: "Produktionsorientierter Data Scientist. Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud und Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC; Schulung von 100+ Fachkräften in Python, SQL & ML — aufbauend auf einem Forschungsfundament in der Krebsgenomik mit 10+ peer-reviewed Publikationen."
+    tagline: "Data Scientist mit Produktiv-ML auf GCP — BigQueryML für Anti-Financial Crime & KYC, 1.000+ Prozesse in die Cloud migriert, auf einem Forschungsfundament in der Krebsgenomik mit 10+ Publikationen."
+    lead_paragraph: "Produktionsorientierter Data Scientist. Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud und Entwicklung von BigQueryML-Modellen für Anti-Financial Crime & KYC; Schulung von 100+ Fachkräften in Python, SQL & ML — aufbauend auf einem Forschungsfundament in der Krebsgenomik mit 10+ peer-reviewed Publikationen."
 ```
 
 > Note for the executor: the DE `ds-ml` lead paragraph starts with "Produktionsorientierter" — `test_ds_ml_tagline_and_lead_paragraph` only asserts the **EN** lead starts with "Production", so DE wording is free as long as EN/DE stay parallel.

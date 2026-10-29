@@ -70,7 +70,7 @@ Trimmed from today's tagline: "deep", "peer-reviewed", the explicit WES/TCGA RNA
 
 > **¶1** Data Scientist mit tiefen Wurzeln in der Krebsgenomik. Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-Identifizierung aus realen Patienten-NGS- und RNA-Seq-Daten, gestützt auf 10+ peer-reviewed Publikationen — als Erstautor sowie mit geteilter Erstautorschaft in Cancers, Epigenetics Methods und OBM Genetics —, aufbauend auf Wet-Lab-Ausbildung und Pipeline-Entwicklung an DKFZ, NCT, FZ Jülich, KIP und SNU.
 >
-> **¶2** Diese Sorgfalt nun in der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML; Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden.
+> **¶2** Diese Sorgfalt nun in der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Anti-Financial Crime & KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML; Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden.
 
 Every number above already exists in `content/` (1,000+ processes, 10+ publications, 100+ specialists, 10+ students). Nothing invented. The DE copy is a proposed starting point; refinement during implementation is allowed as long as it stays parallel to EN.
 

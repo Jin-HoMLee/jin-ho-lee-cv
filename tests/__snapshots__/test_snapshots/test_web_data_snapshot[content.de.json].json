@@ -56,7 +56,7 @@
     "tagline": "Data Scientist mit Wurzeln in der Bioinformatik — acht Jahre akademische Forschung, 12 peer-reviewed Publikationen, ML in der Produktion und Cloud-Beratung auf GCP; Migration von 1.000+ analytischen Prozessen und Coaching von 100+ Fachkräften.",
     "paragraphs": [
       "Arbeit in Bioinformatik und experimenteller Biophysik: unveröffentlichte NGS/RNA-Seq-Genomik-Projektarbeit (HLA-Typisierung und Pipelines für splice-abgeleitete Neoepitop-Kandidaten) am Nationalen Centrum für Tumorerkrankungen (NCT) und an der Seoul National University (SNU), plus quantitative Biobildanalyse und Wet-Lab-Forschung am Deutschen Krebsforschungszentrum (DKFZ), am Forschungszentrum Jülich und am Kirchhoff-Institut für Physik (KIP). Die experimentelle Linie zu Bildgebung / DNA-Reparatur / Chromatin / Strahlenbiologie brachte 12 peer-reviewed Forschungspublikationen — als Erstautor sowie mit geteilter Erstautorschaft — hervor, keine Genomik-Publikationen.",
-      "Als Cintellic-Berater für eine internationale Bank Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud und Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC. Zuvor bei neuefische Coaching von 100+ Fachkräften in Python, SQL & ML; in der Forschung Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden."
+      "Als Cintellic-Berater für eine internationale Bank Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud und Entwicklung von BigQueryML-Modellen für Anti-Financial Crime & KYC. Zuvor bei neuefische Coaching von 100+ Fachkräften in Python, SQL & ML; in der Forschung Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden."
     ]
   },
   "skills": {
@@ -295,7 +295,7 @@
         },
         {
           "en": "Production ML: Developed BigQueryML models for anti-financial crime and KYC.",
-          "de": "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Geldwäscheprävention und KYC.",
+          "de": "ML in der Produktion: Entwicklung von BigQueryML-Modellen für Anti-Financial Crime und KYC.",
           "refs": [
             "C1"
           ]
@@ -379,7 +379,7 @@
     "C1": {
       "id": "C1",
       "category": "consulting",
-      "title": "Geldwäscheprävention – Know-Your-Customer-Plattform (KYC)",
+      "title": "Anti-Financial Crime – Know-Your-Customer-Plattform (KYC)",
       "summary": "Cloud-Migration und Entwicklung einer Analyse-Umgebung zur Erkennung von Finanzkriminalität bei einer großen internationalen Bank.",
       "role": "Lead Business Functional Analyst (Cintellic GmbH)",
       "period": {
@@ -674,7 +674,7 @@
     {
       "id": "C1",
       "category": "consulting",
-      "title": "Geldwäscheprävention – Know-Your-Customer-Plattform (KYC)",
+      "title": "Anti-Financial Crime – Know-Your-Customer-Plattform (KYC)",
       "summary": "Cloud-Migration und Entwicklung einer Analyse-Umgebung zur Erkennung von Finanzkriminalität bei einer großen internationalen Bank.",
       "role": "Lead Business Functional Analyst (Cintellic GmbH)",
       "period": {

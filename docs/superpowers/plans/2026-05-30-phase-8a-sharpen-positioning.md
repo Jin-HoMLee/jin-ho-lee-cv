@@ -142,7 +142,7 @@ Replace the entire contents of `content/profile.de.yaml` with:
 tagline: "Data Scientist mit Wurzeln in der Krebsgenomik — HLA-Typisierung & Neoantigen-Identifizierung an echten Patientendaten, Produktiv-ML auf GCP, 10+ Publikationen."
 paragraphs:
   - "Data Scientist mit tiefen Wurzeln in der Krebsgenomik. Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-Identifizierung aus realen Patienten-NGS- und RNA-Seq-Daten, gestützt auf 10+ peer-reviewed Publikationen — als Erstautor sowie mit geteilter Erstautorschaft in Cancers, Epigenetics Methods und OBM Genetics —, aufbauend auf Wet-Lab-Ausbildung und Pipeline-Entwicklung an DKFZ, NCT, FZ Jülich, KIP und SNU."
-  - "Diese Sorgfalt nun in der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Geldwäscheprävention & KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML; Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden."
+  - "Diese Sorgfalt nun in der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Anti-Financial Crime & KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML; Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden."
 ```
 
 - [ ] **Step 4: Run the tests to verify they pass**
