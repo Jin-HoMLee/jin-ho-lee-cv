@@ -11,10 +11,11 @@ abgeleitete Neoepitop-Kandidaten) am Nationalen Centrum für Tumorerkrankungen
 (NCT) und an der Seoul National University (SNU), plus quantitative
 Biobildanalyse und Wet-Lab-Forschung am Deutschen Krebsforschungszentrum (DKFZ),
 am Forschungszentrum Jülich und am Kirchhoff-Institut für Physik (KIP). Die
-experimentelle Linie zu Bildgebung / DNA-Reparatur / Chromatin /
-Strahlenbiologie brachte 12 peer-reviewed Forschungspublikationen — als
-Erstautor sowie mit geteilter Erstautorschaft — hervor, keine Genomik-
-Publikationen.
+experimentell-biophysikalische Linie umfasste ein koordiniertes
+Forschungsportfolio aus mehreren parallelen Projekten zu Bildgebung, DNA-
+Reparatur, Chromatin und Strahlenbiologie und brachte 12 peer-reviewed
+Forschungspublikationen — als Erstautor sowie mit geteilter Erstautorschaft —
+hervor, keine Genomik-Publikationen.
 
 Als Cintellic-Berater für eine internationale Bank Architektur der Migration von
 1.000+ analytischen Prozessen in die Google Cloud und Entwicklung von
@@ -41,7 +42,7 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-0
 
 Doktorand & postgradualer Forscher (Promotion nicht abgeschlossen) - Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU)    (2014-04 bis 2022-07)
   - Genomik: unveröffentlichte NCT-HLA-/Neoantigen-NGS-Pipelines und SNU-Splice-Kandidaten-RNA-Seq; kolorektale SNVs per Referenzsequenzierung am NCT/DKFZ (keine Validierung der SNU-Splice-Kandidaten).
-  - Biophysik: Super-Resolution-Mikroskopie und räumliche Punktmusteranalyse von Chromatin geleitet (MATLAB/Python).
+  - Biophysik: Parallele Super-Resolution- und räumliche Chromatinanalyse-Projekte koordiniert (MATLAB/Python).
   - Neurobiologie: Strahlungseffekte auf 3D-Differenzierung neuronaler Vorläufer und extrazelluläre Vesikel untersucht.
 
 ================================================================================

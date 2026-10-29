@@ -7,10 +7,11 @@ PROFILE
 ================================================================================
 Engineered in-silico pipelines for HLA typing and neoantigen candidate discovery
 from real-patient NGS and RNA-Seq data at NCT and SNU (unpublished computational
-project work), later packaged as reproducible Snakemake workflows. A parallel
-experimental-biophysics line at DKFZ, FZ Jülich, and KIP produced 12 peer-
-reviewed research publications — first- and shared-first author — in super-
-resolution microscopy of DNA-damage repair and chromatin, not genomics.
+project work), later packaged as reproducible Snakemake workflows. A coordinated
+experimental-biophysics portfolio at DKFZ, FZ Jülich, and KIP comprised multiple
+concurrent super-resolution, DNA-damage-repair, and chromatin-analysis projects
+and produced 12 peer-reviewed research publications — first- and shared-first
+author — not genomics papers.
 
 Equally at home in production: migrated 1,000+ analytical processes to Google
 Cloud, built reproducible data pipelines, and mentored 100+ specialists in
@@ -36,7 +37,7 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 to 2024-04
 
 Doctoral & Post-Graduate Researcher (doctorate not awarded) - Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU)    (2014-04 to 2022-07)
   - Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).
-  - Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).
+  - Biophysics: Coordinated concurrent super-resolution and spatial chromatin-analysis projects (MATLAB/Python).
   - Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles.
 
 ================================================================================

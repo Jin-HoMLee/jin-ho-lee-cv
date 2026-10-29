@@ -10,8 +10,9 @@ Seq genomics project work (HLA typing and splice-derived neoepitope candidate
 pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National
 University (SNU), plus quantitative bioimage analysis and wet-lab research at
 the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich),
-and Kirchhoff Institute for Physics (KIP). The experimental imaging / DNA-repair
-/ chromatin / radiation-biology line produced 12 peer-reviewed research
+and Kirchhoff Institute for Physics (KIP). The experimental-biophysics line
+comprised a coordinated portfolio of multiple concurrent imaging, DNA-repair,
+chromatin, and radiation-biology projects and produced 12 peer-reviewed research
 publications — first- and shared-first author — not genomics papers.
 
 As a Cintellic consultant for an international bank, architected the migration
@@ -39,7 +40,7 @@ Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 to 2024-04
 
 Doctoral & Post-Graduate Researcher (doctorate not awarded) - Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU)    (2014-04 to 2022-07)
   - Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).
-  - Biophysics: Led super-resolution microscopy and spatial point-pattern analysis of chromatin (MATLAB/Python).
+  - Biophysics: Coordinated concurrent super-resolution and spatial chromatin-analysis projects (MATLAB/Python).
   - Neurobiology: Studied radiation effects on 3D neural progenitor differentiation and extracellular vesicles.
 
 ================================================================================

@@ -1,7 +1,7 @@
 id: L3
 category: life-science
-title: "Experimentelle Biophysik — Chromatin-Nano-Architektur & DNA-Reparatur"
-summary: "Fortgeschrittene Forschung mit Super-Resolution-Mikroskopie und computergestützter Analyse zur Untersuchung von DNA-Reparaturmechanismen und Chromatin-Nano-Architektur."
+title: "Forschungsportfolio zur experimentellen Biophysik — Chromatin-Nano-Architektur & DNA-Reparatur"
+summary: "Koordination mehrerer paralleler Forschungsstränge, die Super-Resolution-Mikroskopie mit computergestützter räumlicher Analyse von Chromatin-Nano-Architektur und DNA-Reparaturkomplexen verbanden."
 role: "Wissenschaftlicher Mitarbeiter / Masterand"
 period:
   start: "2017-02"
@@ -15,7 +15,7 @@ technologies:
   - "SPDM"
   - "DBSCAN"
 contributions:
-  - "Experimentelles Design: Entwicklung und Durchführung von Forschungsprojekten zu DNA-Reparaturwegen und Super-Resolution-Bildgebung von Chromatinstrukturen."
-  - "Datenanalyse & Modellierung: Einsatz von MATLAB, R und Python zur Verarbeitung komplexer Bilddaten und zur quantitativen Analyse nanoskaliger Strukturen."
-  - "Wissenschaftliche Leitung: Steuerung internationaler Forschungskooperationen und Betreuung mehrerer Bachelor- und Masterstudierender über den gesamten Projektverlauf."
-outcome: "Veröffentlichung der Forschungsergebnisse in mehreren peer-reviewten Fachzeitschriften und Einwerbung von Drittmitteln für weiterführende wissenschaftliche Untersuchungen."
+  - "Experimentelles Portfolio: Leitung von Studiendesign und Umsetzung paralleler Projekte zur Chromatinkartierung mittels COMBO-FISH und zur Einzelmolekül-Lokalisationsmikroskopie der DNA-Schadensreparatur."
+  - "Quantitative Analyse: Entwicklung von MATLAB-, R- und Python-Workflows für Bilddaten, räumliche Punktmusteranalyse und nanoskalige Cluster-Erkennung (DBSCAN)."
+  - "Forschungskoordination & Betreuung: Koordination internationaler Kooperationen und Betreuung von Bachelor- und Masterstudierenden über die Projektzyklen hinweg."
+outcome: "Veröffentlichung von Ergebnissen aus dem Portfolio in mehreren peer-reviewten Fachmedien und Einwerbung von Drittmitteln für weiterführende Forschung."

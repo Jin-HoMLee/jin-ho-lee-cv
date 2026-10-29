@@ -1,7 +1,7 @@
 id: L3
 category: life-science
-title: "Experimental Biophysics — Chromatin Nano-Architecture & DNA Repair"
-summary: "Advanced research utilizing super-resolution microscopy and computational analysis to investigate DNA repair mechanisms and chromatin nano-architecture."
+title: "Experimental Biophysics Portfolio — Chromatin Nano-Architecture & DNA Repair"
+summary: "Coordinated multiple concurrent research streams combining super-resolution microscopy with computational spatial analysis of chromatin nano-architecture and DNA-repair complexes."
 role: "Graduate Researcher / Master's Candidate"
 period:
   start: "2017-02"
@@ -15,7 +15,7 @@ technologies:
   - "SPDM"
   - "DBSCAN"
 contributions:
-  - "Experimental Design: Developed and executed research projects focused on DNA repair pathways and super-resolution imaging of chromatin structures."
-  - "Data Analysis & Modeling: Leveraged MATLAB, R, and Python to process complex imaging data and perform quantitative analysis of nano-scale structures."
-  - "Academic Leadership: Managed international research collaborations and mentored several Bachelor and Master's students throughout the project lifecycle."
-outcome: "Published research findings in multiple peer-reviewed journals and secured third-party funding for continued scientific investigations."
+  - "Experimental Portfolio: Led study design and delivery across concurrent COMBO-FISH chromatin-mapping and single-molecule localization microscopy projects on DNA-damage repair."
+  - "Quantitative Analysis: Built MATLAB, R, and Python workflows for imaging data, spatial point-pattern analysis, and nanoscale cluster detection (DBSCAN)."
+  - "Research Coordination & Mentoring: Coordinated international collaborations and supervised Bachelor’s and Master’s students across project lifecycles."
+outcome: "Published findings from the portfolio in multiple peer-reviewed outlets and secured third-party funding for continued research."
