@@ -5,8 +5,8 @@ interface Variant { headline?:string; tagline?:string; hero_stack?:string[] }
 interface Props { personal:Personal; profile:Profile; lang:Lang; variants:Record<string,Variant> }
 const { personal, profile, lang, variants } = Astro.props;
 const copy = lang === "de"
-  ? { location:`${personal.name.given} ${personal.name.family} · Mannheim, Deutschland`, portrait:"Porträt von Jin-Ho Lee", focus:"Fokus", vector:"Vektor · zielbezogen", title:"Interdisziplinäre Umsetzung", sub:"Forschungsnahe Evidenz · Produktionssysteme · Mentoring" }
-  : { location:`${personal.name.given} ${personal.name.family} · Mannheim, Germany`, portrait:"Portrait of Jin-Ho Lee", focus:"Focus", vector:"Vector · target-aware", title:"Cross-domain delivery", sub:"Research-grade evidence · production systems · human mentorship" };
+  ? { location:`${personal.name.given} ${personal.name.family} · Mannheim, Deutschland`, portrait:"Porträt von Jin-Ho Lee", focus:"Arbeitsprinzip", vector:"Vektor · zielbezogen", title:"Von Evidenz zu Wirkung", sub:"Forschungsnahe Evidenz · Produktionssysteme · Mentoring" }
+  : { location:`${personal.name.given} ${personal.name.family} · Mannheim, Germany`, portrait:"Portrait of Jin-Ho Lee", focus:"Operating principle", vector:"Vector · target-aware", title:"From evidence to impact", sub:"Research-grade evidence · production systems · human mentorship" };
 ---
 <section id="identity" class="identity-hero" data-identity-hero data-reveal>
   <div class="identity-copy">
@@ -39,22 +39,19 @@ const copy = lang === "de"
   if (hero) {
     const lang = document.documentElement.lang;
     const focus = lang === "de" ? {
-      bridge:["Interdisziplinäre Umsetzung","Forschungsnahe Evidenz · Produktionssysteme · Mentoring"],
-      "ds-ml":["Production ML & Data Science","GCP · BigQueryML · KI-Systeme"],
-      "comp-bio":["Computational Biology","NGS · HLA-Typisierung · Splice-Kandidaten"],
+      bridge:"Forschungsnahe Evidenz · Produktionssysteme · Mentoring",
+      "ds-ml":"GCP · BigQueryML · KI-Systeme",
+      "comp-bio":"NGS · HLA-Typisierung · Splice-Kandidaten",
     } : {
-      bridge:["Cross-domain delivery","Research-grade evidence · production systems · human mentorship"],
-      "ds-ml":["Production ML & Data Science","GCP · BigQueryML · AI systems"],
-      "comp-bio":["Computational biology","NGS · HLA typing · splice-derived candidates"],
+      bridge:"Research-grade evidence · production systems · human mentorship",
+      "ds-ml":"GCP · BigQueryML · AI systems",
+      "comp-bio":"NGS · HLA typing · splice-derived candidates",
     };
     window.addEventListener("cv-target-change", (event) => {
       const target = (event as CustomEvent<{target:string}>).detail?.target;
       if (!(target in focus)) return;
-      const values = focus[target as keyof typeof focus];
-      const title = hero.querySelector<HTMLElement>("[data-focus-title]");
       const sub = hero.querySelector<HTMLElement>("[data-focus-sub]");
-      if (title) title.textContent = values[0];
-      if (sub) sub.textContent = values[1];
+      if (sub) sub.textContent = focus[target as keyof typeof focus];
       hero.querySelectorAll<SVGElement>("[data-art]").forEach((art) => { art.style.display = art.dataset.art === target ? "" : "none"; });
     });
   }
@@ -62,13 +59,13 @@ const copy = lang === "de"
 <style>
   .identity-hero { position:relative; display:grid; grid-template-columns:7fr 5fr; gap:3.5rem; align-items:start; padding:5.1rem 0 3.4rem; }
   .identity-hero::before { content:"01 / IDENTITY"; position:absolute; top:2.85rem; left:0; color:var(--accent); font:10px "IBM Plex Mono",monospace; letter-spacing:.12em; }
-  .identity-toolbar { display:flex; align-items:flex-start; justify-content:space-between; gap:1.25rem; margin-bottom:1rem; }
+  .identity-toolbar { display:flex; align-items:center; justify-content:space-between; gap:1.25rem; margin-bottom:1rem; }
   .identity-overline { margin:0; color:var(--gold); font:700 12px "IBM Plex Mono",monospace; text-transform:uppercase; letter-spacing:.16em; }
   .identity-portrait { width:138px; margin:.25rem 0 1.5rem; }
-  .identity-portrait img { display:block; width:138px; height:166px; object-fit:cover; object-position:center; border:1px solid var(--gold); box-shadow:8px 8px 0 color-mix(in srgb,var(--accent) 10%,transparent); }
+  .identity-portrait img { display:block; width:138px; height:166px; object-fit:cover; object-position:center; filter:grayscale(1) contrast(1.05); border:1px solid var(--gold); box-shadow:8px 8px 0 color-mix(in srgb,var(--accent) 10%,transparent); }
   h1 { margin:.8rem 0 1.3rem; font-size:clamp(3rem,7vw,5.15rem); line-height:.95; letter-spacing:-.055em; font-weight:700; }
   .hero-lede { max-width:42rem; margin:0; color:var(--muted); font-size:1.15rem; line-height:1.55; }
-  .focus-panel { position:relative; overflow:hidden; margin-top:1rem; padding:1.75rem; border:1px solid var(--surface-border); border-radius:2px; background:var(--surface); box-shadow:8px 8px 0 color-mix(in srgb,var(--accent) 15%,transparent); }
+  .focus-panel { position:relative; overflow:hidden; margin-top:3rem; padding:1.75rem; border:1px solid var(--surface-border); border-radius:2px; background:var(--surface); box-shadow:8px 8px 0 color-mix(in srgb,var(--accent) 15%,transparent); }
   .vector-label { position:absolute; right:.75rem; top:.6rem; color:var(--muted); font:9px "IBM Plex Mono",monospace; text-transform:uppercase; letter-spacing:.08em; }
   .focus-art { min-height:190px; color:var(--accent); margin:-.5rem -.4rem .6rem; }
   .focus-art svg { width:100%; height:190px; }
@@ -81,16 +78,17 @@ const copy = lang === "de"
     .focus-panel { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1.5rem; align-items:end; margin-top:0; }
   }
   @media(max-width:700px) {
-    .identity-hero { padding-top:3.4rem; }
+    .identity-hero { padding-top:3.4rem; gap:1rem; }
     .identity-hero::before { top:1.25rem; }
     .identity-toolbar { display:block; }
     .identity-overline { margin-bottom:.8rem; }
     .identity-portrait,.identity-portrait img { width:112px; }
     .identity-portrait img { height:134px; }
     h1 { font-size:3rem; }
+    .hero-lede { font-size:1.05rem; line-height:1.45; }
     .focus-panel { display:block; padding:1rem; }
-    .focus-art { min-height:105px; margin:-.25rem -.2rem .35rem; }
-    .focus-art svg { height:105px; }
+    .focus-art { min-height:70px; margin:-.25rem -.2rem .25rem; }
+    .focus-art svg { height:70px; }
     .focus-panel h2 { font-size:1.45rem; }
     .focus-copy > p:last-child { font-size:.9rem; }
   }

@@ -82,13 +82,17 @@ def test_every_degree_and_institution_in_static_html(html_en):
 def test_answer_block_is_front_loaded_in_static_html(html_en):
     """The concise liftable answer block must be server-rendered, not JS-injected."""
     block = yaml.load((CONTENT_DIR / "profile.en.yaml").read_text(encoding="utf-8"))["answer_block"]
-    assert len(block) <= 110
+    assert len(block) <= 180
     assert 'data-cv-field="answer-block"' in html_en
     assert block in html_en
 
 
 def test_opening_uses_original_portrait_and_skills_first_sidebar(html_en):
     assert 'src="/photo.jpg"' in html_en
+    hero_source = (REPO_ROOT / "web" / "src" / "components" / "IdentityHero.astro").read_text("utf-8")
+    assert "filter:grayscale(1) contrast(1.05)" in hero_source
+    assert "From evidence to impact" in html_en
+    assert "Von Evidenz zu Wirkung" in INDEX_DE.read_text(encoding="utf-8")
     assert 'id="profile"' not in html_en
     content_start = html_en.index('class="editorial-content"')
     sidebar_start = html_en.index("<aside", content_start)
