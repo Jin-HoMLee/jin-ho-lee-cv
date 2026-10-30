@@ -1,10 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 180" role="img" aria-label="Layered machine-learning deployment graph ending in a production endpoint">
-  <g fill="none" stroke="#23415f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="18" y="18" width="70" height="34" rx="7"/><rect x="116" y="18" width="70" height="34" rx="7"/><rect x="214" y="18" width="70" height="34" rx="7"/>
-    <rect x="67" y="82" width="70" height="34" rx="7"/><rect x="165" y="82" width="70" height="34" rx="7"/>
-    <rect x="271" y="126" width="66" height="34" rx="17" stroke="#a17a45" stroke-width="3"/>
-    <path d="M53 52L102 82M151 52L102 82M151 52L200 82M249 52L200 82M137 99L271 143M235 99L271 143"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 58" role="img" aria-label="Neural-network production ML graph">
+  <g opacity=".62">
+    <g fill="none" stroke="#294b78" stroke-width="1.15" opacity=".8">
+      <path d="M18 14 L58 10 M18 14 L58 23 M18 29 L58 23 M18 29 L58 35 M18 44 L58 35 M18 44 L58 48"/>
+      <path d="M58 10 L103 18 M58 23 L103 18 M58 23 L103 40 M58 35 L103 18 M58 35 L103 40 M58 48 L103 40"/>
+      <path d="M103 18 L139 29 M103 40 L139 29"/>
+      <circle cx="139" cy="29" r="11"/>
+      <circle cx="139" cy="29" r="17" stroke-dasharray="2.5 3.5"/>
+    </g>
+    <g fill="#294b78">
+      <circle cx="18" cy="14" r="2.4"/><circle cx="18" cy="29" r="2.4"/><circle cx="18" cy="44" r="2.4"/>
+      <circle cx="58" cy="10" r="2.2"/><circle cx="58" cy="23" r="2.2"/><circle cx="58" cy="35" r="2.2"/><circle cx="58" cy="48" r="2.2"/>
+      <circle cx="103" cy="18" r="2.7"/><circle cx="103" cy="40" r="2.7"/><circle cx="139" cy="29" r="3.2"/>
+    </g>
   </g>
-  <g fill="#f7f1e6" stroke="#57728f" stroke-width="2"><circle cx="38" cy="35" r="6"/><circle cx="136" cy="35" r="6"/><circle cx="234" cy="35" r="6"/><circle cx="87" cy="99" r="6"/><circle cx="185" cy="99" r="6"/></g>
-  <g fill="#a17a45"><circle cx="102" cy="82" r="4"/><circle cx="200" cy="82" r="4"/><circle cx="271" cy="143" r="4"/><circle cx="304" cy="143" r="7"/></g>
 </svg>
