@@ -98,10 +98,9 @@ def _norm(s):
     not (_typst_available() and _pdftotext_available()),
     reason="needs typst + pdftotext (poppler) to extract and assert PDF text",
 )
-def test_pdf_bridge_aggregate_vs_comp_bio_selected(repo_root, content_dir):
+def test_one_page_pdf_uses_aggregate_or_honesty_boundary(repo_root, content_dir):
     pubs = load_publications(content_dir / "publications.bib")
     selected_title = next(p.title for p in pubs if p.key == "lee2019_combofish")
-    cancers_title = next(p.title for p in pubs if p.key == "scherthan2019_ra223")
     omitted_title = next(p.title for p in pubs if p.key == "pagacova2019_metalnp")
 
     def build(target, name):
@@ -128,34 +127,30 @@ def test_pdf_bridge_aggregate_vs_comp_bio_selected(repo_root, content_dir):
     assert "orcid" in bridge
     assert "google scholar" in bridge
     assert _norm(selected_title).replace("-", "") not in bridge.replace("-", "")
-    # comp-bio → three representative records, not the complete bibliography.
-    assert _norm(selected_title).replace("-", "") in compbio.replace("-", "")
-    assert _norm(cancers_title).replace("-", "") in compbio.replace("-", "")
+    # comp-bio → explicit one-page honesty boundary, not individual citations.
+    assert "separate experimental-biophysics portfolio" in compbio
+    assert "not genomics papers" in compbio
+    assert "orcid" in compbio and "google scholar" in compbio
+    assert _norm(selected_title).replace("-", "") not in compbio.replace("-", "")
     assert _norm(omitted_title).replace("-", "") not in compbio.replace("-", "")
-    assert "3 selected of 12 peer-reviewed" in compbio
-    assert "16 bibliography records total" in compbio
 
 
 @pytest.mark.skipif(
     not (_typst_available() and _pdftotext_available()),
     reason="needs typst + pdftotext (poppler) to extract and assert PDF text",
 )
-def test_pdf_comp_bio_keeps_full_skills_sections(repo_root):
-    """The Comp Bio PDF keeps the four skills sections minus dropped agent tooling."""
+def test_pdf_comp_bio_uses_curated_skills_sections(repo_root):
+    """The one-page comp-bio projection keeps only its three proof-bearing groups."""
     expected = {
         "en": (
             "Genomics",
             "Immunoinformatics",
             "Bioinformatics Workflows",
-            "Machine Learning",
-            "Browser ML Delivery",
         ),
         "de": (
             "Genomik",
             "Immunoinformatik",
             "Bioinformatik-Workflows",
-            "Maschinelles Lernen",
-            "ML im Browser",
         ),
     }
 

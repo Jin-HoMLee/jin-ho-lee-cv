@@ -1,8 +1,7 @@
-"""ATS and PDF-navigation regression guard for every public PDF variant.
+"""ATS, one-page, and PDF-navigation guards for every public CV variant.
 
-The guard uses Poppler and pypdf as independent extractors. It verifies a single
-section order, unsplit labels, target keywords, a real text layer, two-page limit,
-and that links/bookmarks are metadata over ordinary visible text.
+Poppler and pypdf independently verify the semantic stream, section labels,
+target evidence, ordinary text layer, A4 one-page contract, and safe links/bookmarks.
 """
 
 from __future__ import annotations
@@ -53,52 +52,18 @@ TARGET_KEYWORDS = {
     "ds-ml": ("BigQueryML", "Python", "TensorFlow"),
 }
 
-# Expected PDF reading order (left column top→bottom, then right) must match
-# content/skills.yaml category_order per target.
+# Curated one-page skill groups, all projected from canonical skill items.
 SKILL_CATEGORY_LABELS = {
     "en": {
-        "bridge": [
-            "AI/ML & Developer Tools",
-            "Bioinformatics",
-            "Data & Cloud Engineering",
-            "Experimental Research",
-        ],
-        "comp-bio": [
-            "Bioinformatics",
-            "AI/ML & Developer Tools",
-            "Data & Cloud Engineering",
-            "Experimental Research",
-        ],
-        "ds-ml": [
-            "AI/ML & Developer Tools",
-            "Data & Cloud Engineering",
-            "Bioinformatics",
-        ],
+        "bridge": ["AI / ML", "Data & cloud", "Bioinformatics"],
+        "comp-bio": ["Genomics", "Bioinformatics Workflows", "Immunoinformatics"],
+        "ds-ml": ["Machine Learning", "Engineering", "Browser ML Delivery"],
     },
     "de": {
-        "bridge": [
-            "KI/ML & Entwicklerwerkzeuge",
-            "Bioinformatik",
-            "Daten- & Cloud-Engineering",
-            "Experimentelle Forschung",
-        ],
-        "comp-bio": [
-            "Bioinformatik",
-            "KI/ML & Entwicklerwerkzeuge",
-            "Daten- & Cloud-Engineering",
-            "Experimentelle Forschung",
-        ],
-        "ds-ml": [
-            "KI/ML & Entwicklerwerkzeuge",
-            "Daten- & Cloud-Engineering",
-            "Bioinformatik",
-        ],
+        "bridge": ["AI / ML", "Daten & Cloud", "Bioinformatik"],
+        "comp-bio": ["Genomik", "Bioinformatik-Workflows", "Immunoinformatik"],
+        "ds-ml": ["Maschinelles Lernen", "Engineering", "ML im Browser"],
     },
-}
-
-EXPERIMENTAL_LABEL = {
-    "en": "Experimental Research",
-    "de": "Experimentelle Forschung",
 }
 
 
@@ -172,18 +137,33 @@ def built_pdf(request):
 
 
 def _expected_headings(lang: str, target: str) -> list[str]:
+    del target
     labels = SECTION_LABELS[lang]
-    publication_key = "selected_publications" if target == "comp-bio" else "publications"
+    # Source-order extractors emit the left 62% column, then the right column.
     return [
-        labels["profile"],
-        labels["skills"],
         labels["experience"],
         labels["projects"],
+        labels["profile"],
+        labels["skills"],
         labels["education"],
-        labels[publication_key],
+        labels["publications"],
         labels["awards"],
         labels["languages"],
-        labels["volunteer"],
+    ]
+
+
+def _expected_poppler_headings(lang: str) -> list[str]:
+    labels = SECTION_LABELS[lang]
+    # Geometry-aware Poppler advances through the asymmetric columns by height.
+    return [
+        labels["experience"],
+        labels["profile"],
+        labels["skills"],
+        labels["education"],
+        labels["projects"],
+        labels["publications"],
+        labels["awards"],
+        labels["languages"],
     ]
 
 
@@ -201,33 +181,29 @@ def _assert_heading_order(text: str, headings: list[str], extractor: str) -> Non
     assert positions == sorted(positions), f"{extractor}: wrong section order: {positions}"
 
 
-def test_all_variants_are_two_page_flat_text_in_one_order(built_pdf):
+def test_all_variants_are_one_page_flat_text_in_one_order(built_pdf):
     lang, target, _, reader, poppler, pypdf_text = built_pdf
     headings = _expected_headings(lang, target)
 
-    assert len(reader.pages) <= 2, f"{lang}/{target} grew to {len(reader.pages)} pages"
+    assert len(reader.pages) == 1, f"{lang}/{target} grew to {len(reader.pages)} pages"
+    assert reader.pages[0].mediabox.width == pytest.approx(595.276, abs=0.1)
+    assert reader.pages[0].mediabox.height == pytest.approx(841.89, abs=0.1)
     for extractor, text in (("poppler", poppler), ("pypdf", pypdf_text)):
         assert len(text) > 800, f"{extractor}: PDF appears image-only or incomplete"
         assert "Jin-Ho Lee" in text
         assert "jinho.michael.lee@gmail.com" in text
-        _assert_heading_order(text, headings, extractor)
+        expected_order = _expected_poppler_headings(lang) if extractor == "poppler" else headings
+        _assert_heading_order(text, expected_order, extractor)
         for keyword in TARGET_KEYWORDS[target]:
             assert keyword in text, f"{extractor}: missing target keyword {keyword!r}"
 
-        skill_region = text.split(headings[1], 1)[1].split(headings[2], 1)[0]
+        labels = SECTION_LABELS[lang]
+        skill_region = text.split(labels["skills"], 1)[1].split(labels["education"], 1)[0]
         category_labels = SKILL_CATEGORY_LABELS[lang][target]
-        present = [label for label in category_labels if label in skill_region]
-        assert set(present) == set(category_labels), (
-            f"{extractor}: skills membership {present} != {category_labels}"
-        )
-        if target == "ds-ml":
-            # Unequal two-column height (AI/ML + Data/Cloud vs Bioinformatics)
-            # makes extractor reading order non-linear; membership is the guard.
-            assert EXPERIMENTAL_LABEL[lang] not in skill_region
-        else:
-            positions = [skill_region.index(label) for label in category_labels]
+        positions = [skill_region.index(label) for label in category_labels]
+        if not (target == "ds-ml" and extractor == "poppler"):
             assert positions == sorted(positions), (
-                f"{extractor}: wrong skills reading order: {positions}"
+                f"{extractor}: wrong compact skills reading order: {positions}"
             )
 
         removed_languages = (
@@ -242,6 +218,20 @@ def test_all_variants_are_two_page_flat_text_in_one_order(built_pdf):
         assert any(ch in pypdf_text for ch in "äöüßÄÖÜ")
 
 
+def test_all_variants_build_deterministically(built_pdf):
+    lang, target, out, _, _, _ = built_pdf
+    first = out.read_bytes()
+    result = subprocess.run(
+        [sys.executable, "-m", "pdf.build", "--lang", lang, "--target", target],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, f"repeat PDF build failed:\n{result.stderr}"
+    assert out.read_bytes() == first, f"{lang}/{target} PDF bytes are not deterministic"
+
+
 def _page_text(pdf: Path, page: int) -> list[str]:
     """Non-empty, stripped lines of a single PDF page via Poppler."""
     text = subprocess.run(
@@ -253,43 +243,19 @@ def _page_text(pdf: Path, page: int) -> list[str]:
     return [line.strip() for line in text.splitlines() if line.strip()]
 
 
-def test_comp_bio_experience_completes_page_one(built_pdf):
-    """The comp-bio variant must break the page after the complete Experience
-    section: page 1 ends once Experience is done and page 2 opens directly with
-    Selected Projects, in every language.
-
-    This is a deliberate comp-bio-only layout promise (captain request); the
-    bridge and ds-ml variants keep their natural flow. If an experience bullet
-    ever spills onto page 2, that page's first line is the stray bullet rather
-    than the Selected Projects heading, so the assertion below catches it.
-    """
-    lang, target, out, _, _, _ = built_pdf
-    if target != "comp-bio":
-        pytest.skip("page-1 Experience boundary is a comp-bio-only promise")
-
-    labels = SECTION_LABELS[lang]
-    page1 = _page_text(out, 1)
-    page2 = _page_text(out, 2)
-
-    assert labels["experience"] in page1
-    assert labels["projects"] not in page1, "Selected Projects leaked onto page 1"
-    assert page2[0] == labels["projects"], (
-        f"{lang}/comp-bio page 2 starts with {page2[0]!r}, not {labels['projects']!r} "
-        "- an Experience bullet spilled past page 1"
-    )
-
-
 def test_all_variants_have_outline_and_navigation_links(built_pdf):
     lang, target, _, reader, poppler, _ = built_pdf
     headings = _expected_headings(lang, target)
-    outline = _outline_titles(reader.outline)
+    assert reader.metadata.title == "Jin-Ho Lee — CV"
+    assert reader.metadata.author == "Jin-Ho Lee"
+    outline = [title.strip() for title in _outline_titles(reader.outline)]
 
     for heading in headings:
         assert heading in outline, f"missing bookmark {heading!r}; got {outline}"
 
     external, internal, urls = _link_counts(reader)
     assert external >= 8, "expected contact, project, and publication web links"
-    assert internal >= 6, "expected the compact contents line to link to major sections"
+    assert internal == 0, "the approved one-page design has no visible contents strip"
     assert "https://orcid.org/0009-0001-8784-1771" in urls
     assert any(url.startswith("https://scholar.google.com/citations?") for url in urls)
     prefix = "https://jinholee.is-a.dev/de" if lang == "de" else "https://jinholee.is-a.dev"
@@ -297,6 +263,46 @@ def test_all_variants_have_outline_and_navigation_links(built_pdf):
     if target == "comp-bio":
         assert {f"{prefix}/projects/{pid}/" for pid in ("L5", "L2", "L1")} <= urls
     assert "ORCID" in poppler and "Google Scholar" in poppler
+
+
+def test_all_variants_embed_ibm_plex_sans(built_pdf):
+    _, _, _, reader, _, _ = built_pdf
+    fonts = reader.pages[0]["/Resources"]["/Font"].get_object()
+    base_fonts = {str(reference.get_object().get("/BaseFont", "")) for reference in fonts.values()}
+    assert base_fonts
+    assert all("IBMPlexSans" in name for name in base_fonts), base_fonts
+
+
+def test_main_evidence_uses_readable_type(built_pdf):
+    lang, _, _, reader, _, _ = built_pdf
+    anchor = "Cloud Migration:" if lang == "en" else "Cloud-Migration:"
+    sizes: list[float] = []
+
+    def collect(text, _cm, _tm, _font, font_size):
+        if anchor in text:
+            sizes.append(float(font_size))
+
+    reader.pages[0].extract_text(visitor_text=collect)
+    assert sizes, f"main evidence anchor {anchor!r} was not extractable"
+    assert min(sizes) >= 8.5, f"main evidence fell below the 8.5pt readability floor: {sizes}"
+
+
+def _image_xobjects(resources) -> list[str]:
+    images: list[str] = []
+    for name, reference in resources.get("/XObject", {}).items():
+        xobject = reference.get_object()
+        if xobject.get("/Subtype") == "/Image":
+            images.append(str(name))
+        nested = xobject.get("/Resources")
+        if nested is not None:
+            images.extend(_image_xobjects(nested.get_object()))
+    return images
+
+
+def test_stock_variants_are_photo_free(built_pdf):
+    _, _, _, reader, _, _ = built_pdf
+    images = _image_xobjects(reader.pages[0]["/Resources"].get_object())
+    assert images == [], f"stock CV unexpectedly embeds raster image(s): {images}"
 
 
 def test_all_variants_avoid_fragile_pdf_interactivity(built_pdf):
@@ -373,14 +379,8 @@ def _write_tailored_package(apps: Path, slug: str, lang: str) -> None:
 
 
 @pytest.mark.parametrize("lang", ["en", "de"])
-def test_tailored_export_keeps_complete_experience_on_page_one(lang: str, tmp_path: Path):
-    """A tailored comp-bio export keeps the whole Experience section on page one.
-
-    The extra `tailoring.yaml` bullet must land on page one with the rest of
-    Experience and page two must still open with Selected Projects - the same
-    promise the general comp-bio variant makes. Built end-to-end through the
-    export recipe so the `--tailored` layout switch is covered too.
-    """
+def test_tailored_export_stays_one_page_and_keeps_extra_evidence(lang: str, tmp_path: Path):
+    """Tailored wording remains visible without breaking the one-page contract."""
     apps = tmp_path / "applications"
     _write_tailored_package(apps, "daina-2026", lang)
 
@@ -390,14 +390,10 @@ def test_tailored_export_keeps_complete_experience_on_page_one(lang: str, tmp_pa
     pdf = apps / "daina-2026" / manifest["cv"]["pdf_path"]
 
     labels = SECTION_LABELS[lang]
-    page1 = _page_text(pdf, 1)
-    page2 = _page_text(pdf, 2)
+    page1 = "\n".join(_page_text(pdf, 1))
 
-    assert len(PdfReader(pdf).pages) <= 2
+    assert len(PdfReader(pdf).pages) == 1
     assert labels["experience"] in page1
-    assert any("DAAD" in line for line in page1), "appended bullet must be on page 1"
-    assert labels["projects"] not in page1, "Selected Projects leaked onto page 1"
-    assert page2[0] == labels["projects"], (
-        f"{lang}/tailored-comp-bio page 2 starts with {page2[0]!r}, not "
-        f"{labels['projects']!r} - the appended Experience bullet spilled past page 1"
-    )
+    assert labels["projects"] in page1
+    assert "Splice" in page1 and "HLA" in page1
+    assert "DAAD" in page1, "appended bullet must remain visible"

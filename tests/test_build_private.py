@@ -11,6 +11,7 @@ import subprocess
 import sys
 
 import pytest
+from pypdf import PdfReader
 
 
 def _typst_available() -> bool:
@@ -91,6 +92,12 @@ def test_private_build_produces_pdf_different_from_public(
     assert public_out.read_bytes() != private_out.read_bytes(), (
         "private and public PDFs are byte-identical; overlay did not affect output"
     )
+    public_text = "\n".join(page.extract_text() or "" for page in PdfReader(public_out).pages)
+    private_text = "\n".join(page.extract_text() or "" for page in PdfReader(private_out).pages)
+    assert "+49 000 0000000" not in public_text
+    assert "Teststr. 1" not in public_text
+    assert "+49 000 0000000" in private_text
+    assert "Teststr. 1" not in private_text, "the one-page CV never renders street addresses"
 
 
 def test_private_build_fails_when_private_yaml_missing(

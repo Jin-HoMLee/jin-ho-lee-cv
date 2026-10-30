@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from pdf.projection import project_pdf_content
+from pdf.projection import build_one_page_layout, project_pdf_content
 from scripts.content_loader import TARGETS, load_content
 from scripts.langstring import resolve_langstrings
 from scripts.publications import format_publication_summary, publication_mode
@@ -127,6 +127,7 @@ def prepare_data(
         {"label": link_labels["google_scholar"], "url": links["googlescholar"]},
         {"label": link_labels["web_cv"], "url": website + web_path},
     ]
+    resolved["pdf_layout"] = build_one_page_layout(resolved, target=target, lang=lang)
     return _to_serializable(resolved)
 
 
@@ -231,6 +232,7 @@ def main(argv: list[str] | None = None) -> int:
             str(out_path),
         ],
         check=False,
+        env={**os.environ, "SOURCE_DATE_EPOCH": os.environ.get("SOURCE_DATE_EPOCH", "0")},
     )
     if result.returncode != 0:
         print(f"typst compile failed (exit {result.returncode})", file=sys.stderr)

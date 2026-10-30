@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 180" role="img" aria-label="Genomics helix">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M58 18C174 18 180 162 302 162M302 18C186 18 180 162 58 162" stroke="#23415f" stroke-width="4"/>
+    <g stroke="#57728f" stroke-width="2.2">
+      <path d="M91 24L269 156M66 48L294 132M59 75L301 105M59 105L301 75M66 132L294 48M91 156L269 24"/>
+    </g>
+  </g>
+  <g fill="#a17a45"><circle cx="91" cy="24" r="5"/><circle cx="66" cy="48" r="5"/><circle cx="59" cy="75" r="5"/><circle cx="59" cy="105" r="5"/><circle cx="66" cy="132" r="5"/><circle cx="91" cy="156" r="5"/></g>
+  <g fill="#f7f1e6" stroke="#23415f" stroke-width="2"><circle cx="269" cy="156" r="5"/><circle cx="294" cy="132" r="5"/><circle cx="301" cy="105" r="5"/><circle cx="301" cy="75" r="5"/><circle cx="294" cy="48" r="5"/><circle cx="269" cy="24" r="5"/></g>
+</svg>

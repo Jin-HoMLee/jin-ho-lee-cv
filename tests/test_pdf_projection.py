@@ -334,3 +334,73 @@ def test_comp_bio_pdf_honesty_boundaries_for_application_export(content_dir):
     assert "mass spectrometry" not in tagline.lower()
     assert "multi-omics" not in tagline.lower()
     assert "multiomics" not in tagline.lower()
+
+
+def test_one_page_layout_uses_approved_variant_focus_panels(content_dir):
+    expected = {
+        "bridge": ("cross-domain", "Cross-domain delivery"),
+        "ds-ml": ("production-ml", "Production ML & Data Science"),
+        "comp-bio": ("genomics", "Computational biology"),
+    }
+    for target, (art, title) in expected.items():
+        layout = prepare_data(content_dir, private_path=None, lang="en", target=target)[
+            "pdf_layout"
+        ]
+        assert layout["focus"] == {
+            **layout["focus"],
+            "art": art,
+            "title": title,
+        }
+        assert layout["monogram"] == "JL"
+        assert len(layout["proofs"]) == 2
+
+
+def test_one_page_layout_projects_target_specific_experience(content_dir):
+    bridge = prepare_data(content_dir, private_path=None, lang="en", target="bridge")["pdf_layout"]
+    assert [entry["source_ids"] for entry in bridge["experience"]] == [
+        ["independent"],
+        ["cintellic", "neuefische"],
+        ["research"],
+    ]
+    assert [proof["source_ids"] for proof in bridge["proofs"]] == [["C1"], ["L5"]]
+
+    ds_ml = prepare_data(content_dir, private_path=None, lang="en", target="ds-ml")["pdf_layout"]
+    assert [entry["source_ids"] for entry in ds_ml["experience"]] == [
+        ["independent"],
+        ["cintellic"],
+        ["neuefische"],
+        ["research"],
+    ]
+    assert [proof["source_ids"] for proof in ds_ml["proofs"]] == [["C1"], ["D1"]]
+
+
+def test_one_page_comp_bio_expands_grounded_research_evidence(content_dir):
+    data = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
+    layout = data["pdf_layout"]
+    research = next(entry for entry in layout["experience"] if entry["source_ids"] == ["research"])
+    text = " ".join(research["bullets"])
+
+    assert "NCT/DKFZ" in text
+    assert "super-resolution" in text
+    assert "DNA-repair" in text
+    assert "neural progenitor differentiation" in text
+    assert "third-party funding" in text
+    assert "10+ students" in text
+    assert "doctorate not awarded" in research["role"]
+    assert [proof["source_ids"] for proof in layout["proofs"]] == [
+        ["L5"],
+        ["L2", "L1"],
+    ]
+
+
+def test_one_page_layout_is_localized(content_dir):
+    layout = prepare_data(content_dir, private_path=None, lang="de", target="comp-bio")[
+        "pdf_layout"
+    ]
+    research = next(entry for entry in layout["experience"] if entry["source_ids"] == ["research"])
+    text = " ".join(research["bullets"])
+
+    assert layout["focus"]["title"] == "Computational Biology"
+    assert "Promotion nicht abgeschlossen" in research["role"]
+    assert "Drittmitteln" in text
+    assert "10+ Studierenden" in text
