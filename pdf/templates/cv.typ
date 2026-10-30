@@ -48,13 +48,18 @@
 ]
 
 #let contact-line(label, value, url: none) = {
-  let body = [#text(weight: 600, fill: ink)[#label] #text(fill: muted)[#value]]
-  if url == none { body } else { link(url, body) }
+  let value = text(fill: muted)[#value]
+  let row = grid(
+    columns: (11mm, 1fr),
+    column-gutter: 2mm,
+    text(weight: 600, fill: ink)[#label],
+    value,
+  )
+  if url == none { row } else { link(url, row) }
 }
 
 #let public-contact = grid(
-  columns: (1fr, 1fr),
-  column-gutter: 5mm,
+  columns: (1fr,),
   row-gutter: 2.5pt,
   text(size: 7.4pt)[#contact-line("Email", data.personal.email, url: "mailto:" + data.personal.email)],
   text(size: 7.4pt)[#contact-line("Based", data.personal.location.city + ", " + data.personal.location.country)],
@@ -63,9 +68,11 @@
     #if "phone" in data.personal {
       contact-line("Phone", data.personal.phone)
     } else {
-      link(data.personal.links.linkedin)[LinkedIn]
-      text(fill: muted)[ · ]
-      link(data.personal.links.github)[GitHub]
+      contact-line("", [
+        #link(data.personal.links.linkedin)[LinkedIn]
+        #text(fill: muted)[ · ]
+        #link(data.personal.links.github)[GitHub]
+      ])
     }
   ],
 )

@@ -9,6 +9,7 @@ from __future__ import annotations
 import shutil
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import pytest
@@ -243,6 +244,87 @@ def _page_text(pdf: Path, page: int) -> list[str]:
     return [line.strip() for line in text.splitlines() if line.strip()]
 
 
+def _bbox_lines(pdf: Path):
+    """Return page dimensions and visual rows reconstructed from Poppler words."""
+    html = subprocess.run(
+        ["pdftotext", "-f", "1", "-l", "1", "-bbox-layout", str(pdf), "-"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+    root = ET.fromstring(html)
+    page = next(element for element in root.iter() if element.tag.endswith("page"))
+    rows: list[list[tuple[str, tuple[float, ...]]]] = []
+    words = []
+    for word in (element for element in page.iter() if element.tag.endswith("word")):
+        box = tuple(float(word.attrib[key]) for key in ("xMin", "yMin", "xMax", "yMax"))
+        words.append((word.text or "", box))
+    for word, box in sorted(words, key=lambda item: (item[1][1], item[1][0])):
+        row = next(
+            (candidate for candidate in rows if abs(candidate[0][1][1] - box[1]) < 0.2), None
+        )
+        if row is None:
+            rows.append([(word, box)])
+        else:
+            row.append((word, box))
+    lines = []
+    for row in rows:
+        row.sort(key=lambda item: item[1][0])
+        boxes = [box for _, box in row]
+        lines.append(
+            (
+                row,
+                (
+                    min(b[0] for b in boxes),
+                    min(b[1] for b in boxes),
+                    max(b[2] for b in boxes),
+                    max(b[3] for b in boxes),
+                ),
+            )
+        )
+    return float(page.attrib["width"]), float(page.attrib["height"]), lines
+
+
+def _assert_separate_complete_aligned_contact_rows(pdf: Path) -> None:
+    page_width, page_height, lines = _bbox_lines(pdf)
+    expected = [
+        ["Email", "jinho.michael.lee@gmail.com"],
+        ["Based", "Mannheim,", "GER"],
+        ["Web", "jinholee.is-a.dev"],
+        ["LinkedIn", "·", "GitHub"],
+    ]
+    contact = []
+    for words in expected:
+        matches = [
+            (line_words, box)
+            for line_words, box in lines
+            if [word for word, _ in line_words] == words
+        ]
+        assert len(matches) == 1, f"contact row is wrapped, merged, clipped, or missing: {words}"
+        contact.append(matches[0])
+
+    boxes = [box for _, box in contact]
+    assert all(0 <= x_min < x_max <= page_width for x_min, _, x_max, _ in boxes)
+    assert all(0 <= y_min < y_max <= page_height for _, y_min, _, y_max in boxes)
+    assert all(boxes[index][3] < boxes[index + 1][1] for index in range(len(boxes) - 1)), (
+        f"contact rows overlap or are not vertically separated: {boxes}"
+    )
+
+    # The three labeled rows share one label rail and one value rail. This catches
+    # visually ragged fallback layouts even when extraction still finds all words.
+    labeled_rows = contact[:3]
+    label_x = [row[0][1][0] for row, _ in labeled_rows]
+    value_x = [row[1][1][0] for row, _ in labeled_rows]
+    assert max(label_x) - min(label_x) < 0.2, label_x
+    assert max(value_x) - min(value_x) < 0.2, value_x
+
+
+def test_all_variants_have_separate_complete_aligned_contact_rows(built_pdf):
+    """Contact fields stay readable instead of wrapping into adjacent grid cells."""
+    _, _, pdf, _, _, _ = built_pdf
+    _assert_separate_complete_aligned_contact_rows(pdf)
+
+
 def test_all_variants_have_outline_and_navigation_links(built_pdf):
     lang, target, _, reader, poppler, _ = built_pdf
     headings = _expected_headings(lang, target)
@@ -393,6 +475,7 @@ def test_tailored_export_stays_one_page_and_keeps_extra_evidence(lang: str, tmp_
     page1 = "\n".join(_page_text(pdf, 1))
 
     assert len(PdfReader(pdf).pages) == 1
+    _assert_separate_complete_aligned_contact_rows(pdf)
     assert labels["experience"] in page1
     assert labels["projects"] in page1
     assert "Splice" in page1 and "HLA" in page1
