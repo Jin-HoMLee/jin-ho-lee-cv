@@ -2,14 +2,9 @@
 // Client-side positioning switcher (Phase 8c).
 //
 // Lets a visitor re-position the CV for a target audience without a page reload.
-// Bridge is rendered at build time and stays SEO-canonical; this control swaps
-// the visible text fields marked in the DOM with `data-cv-field`:
-//   headline -> Header.astro      (sticky header)
-//   tagline  -> ProfileSection    (profile intro lead-in)
-//   lead     -> ProfileSection    (first profile paragraph)
-//   second   -> ProfileSection    (second profile paragraph)
-// CodeHero's derived `hero_stack` uses its own data hooks and follows the same
-// target-change event.
+// Bridge is rendered at build time and stays SEO-canonical. The target headline
+// updates in IdentityHero; CodeHero and the PDF menu follow the same event. The
+// short answer line beneath the headline is deliberately shared across targets.
 //
 // Pure progressive enhancement: with JS off, the control stays hidden and the
 // page is the complete bridge CV. Variant text is inlined at build time via
@@ -25,8 +20,6 @@ import type { Lang } from "../types/content";
 interface Variant {
   headline?: string;
   tagline?: string;
-  lead_paragraph?: string;
-  second_paragraph?: string;
   hero_stack?: string[];
 }
 
@@ -81,12 +74,7 @@ const order = ["bridge", "ds-ml", "comp-bio"] as const;
 
     const buttons = Array.from(root.querySelectorAll("[data-cv-target]"));
     // DOM field name -> key in the variants JSON.
-    const FIELDS = {
-      headline: "headline",
-      tagline: "tagline",
-      lead: "lead_paragraph",
-      second: "second_paragraph",
-    };
+    const FIELDS = { headline: "headline" };
     const STORAGE_KEY = "cvTargetPreference";
     const VALID = new Set(["bridge", "comp-bio", "ds-ml"]);
 

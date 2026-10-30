@@ -80,10 +80,22 @@ def test_every_degree_and_institution_in_static_html(html_en):
 
 
 def test_answer_block_is_front_loaded_in_static_html(html_en):
-    """The liftable answer block must be server-rendered, not JS-injected."""
+    """The concise liftable answer block must be server-rendered, not JS-injected."""
     block = yaml.load((CONTENT_DIR / "profile.en.yaml").read_text(encoding="utf-8"))["answer_block"]
+    assert len(block) <= 110
     assert 'data-cv-field="answer-block"' in html_en
     assert block in html_en
+
+
+def test_opening_uses_original_portrait_and_skills_first_sidebar(html_en):
+    assert 'src="/photo.jpg"' in html_en
+    assert 'id="profile"' not in html_en
+    content_start = html_en.index('class="editorial-content"')
+    sidebar_start = html_en.index("<aside", content_start)
+    sidebar_end = html_en.index("</aside>", sidebar_start)
+    sidebar = html_en[sidebar_start:sidebar_end]
+    assert 'id="skills"' in sidebar
+    assert sidebar.index('id="skills"') < sidebar.index('id="education"')
 
 
 def test_selected_project_titles_in_static_html(html_en):

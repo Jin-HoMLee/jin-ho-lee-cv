@@ -6,7 +6,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import IdentityHero from "../components/IdentityHero.astro";
 import CodeHero from "../components/CodeHero.astro";
-import ProfileSection from "../components/ProfileSection.astro";
 import ExperienceSection from "../components/ExperienceSection.astro";
 import ProjectsSection from "../components/ProjectsSection.astro";
 import SkillsSidebar from "../components/SkillsSidebar.astro";
@@ -20,8 +19,9 @@ import FaqSection from "../components/FaqSection.astro";
 
 const data = contentEn as unknown as ContentData;
 const switcherVariants = Object.fromEntries(Object.entries(variantsEn).map(([target, variant]) => [target, {
-  headline: variant.headline, tagline: variant.tagline, lead_paragraph: variant.lead_paragraph,
-  second_paragraph: variant.second_paragraph, hero_stack: "hero_stack" in variant && Array.isArray(variant.hero_stack) ? variant.hero_stack as string[] : undefined,
+  headline: variant.headline,
+  tagline: variant.tagline,
+  hero_stack: "hero_stack" in variant && Array.isArray(variant.hero_stack) ? variant.hero_stack as string[] : undefined,
 }]));
 const skillVariants = Object.fromEntries(Object.entries(variantsEn).map(([target, variant]) => [target, { skills: variant.skills }]));
 const experienceVariants = Object.fromEntries(Object.entries(variantsEn).map(([target, variant]) => [target, { order: variant.experience ? variant.experience.map((e) => e.id) : undefined }]));
@@ -41,7 +41,6 @@ const selectedProjects = Object.fromEntries(selectedProjectIds.map((id) => [id, 
       <AwardsSection awards={data.awards} labels={data.labels} lang="en" />
     </div>
     <aside data-reveal>
-      <ProfileSection personal={data.personal} profile={data.profile} labels={data.labels} lang="en" />
       <SkillsSidebar skills={data.skills} labels={data.labels} variants={skillVariants} lang="en" />
       <EducationSection education={data.education} labels={data.labels} lang="en" />
       <LanguagesList languages={data.languages} labels={data.labels} lang="en" />

@@ -300,4 +300,4 @@ def test_profile_answer_block_is_a_plain_string(content_dir):
         block = profile["answer_block"]
         assert isinstance(block, str) and block.strip()
         words = len(block.split())
-        assert 35 <= words <= 70, f"{lang} answer_block is {words} words; target 40-60"
+        assert 8 <= words <= 18, f"{lang} answer_block is {words} words; target 8-18"
