@@ -156,6 +156,28 @@ export interface Labels {
   };
 }
 
+export interface ArchiveExperienceEntry {
+  id: string;
+  period: Period;
+  type: string;
+  role: string;
+  org: string;
+  summary: string;
+  tags: string[];
+  refs: string[];
+}
+export interface ArchiveExperienceChapter { id: string; label: string; entries: ArchiveExperienceEntry[] }
+export interface ArchiveEducationEntry {
+  id: string;
+  period: Period;
+  degree: string;
+  institution: string;
+  detail: string;
+  status: string;
+  completed: boolean;
+}
+export interface PublicHistory { experience_chapters: ArchiveExperienceChapter[]; education: ArchiveEducationEntry[] }
+
 export interface ContentData {
   personal: Personal;
   profile: Profile;
@@ -163,6 +185,7 @@ export interface ContentData {
   education: Education[];
   experience: Experience[];
   projects: Record<string, Project>;
+  selected_projects: Project[];
   languages: Language[];
   volunteer: Volunteer;
   awards: Award[];
@@ -171,4 +194,6 @@ export interface ContentData {
   publications_aggregate: { summary: string; pointer: string };
   labels: Labels;
   faq: Faq;
+  citation_cache_fetched_at?: string | null;
+  history: PublicHistory;
 }

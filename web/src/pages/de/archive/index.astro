@@ -1,0 +1,4 @@
+---
+import content from "../../../data/content.de.json"; import type { ContentData } from "../../../types/content"; import ArchivePageShell from "../../../components/ArchivePageShell.astro"; import FullIndex from "../../../components/FullIndex.astro"; const data=content as unknown as ContentData;
+---
+<ArchivePageShell data={data} lang="de" title="Vollständiger CV-Index" overline="Vollständiger statischer Index" intro="Die Hauptseite bleibt selektiv und gut scanbar. Dieser Index erhält die vollständige Entdeckung von Kategorien und Nachweisen in statischem HTML." slug="archive-de"><FullIndex data={data} lang="de" /></ArchivePageShell>

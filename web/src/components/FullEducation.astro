@@ -1,0 +1,19 @@
+---
+import type { ArchiveEducationEntry, Labels, Lang } from "../types/content";
+import { formatPeriod } from "../lib/period";
+interface Props { education:ArchiveEducationEntry[]; labels:Labels; lang:Lang }
+const { education, labels, lang } = Astro.props;
+---
+<div class="timeline-full">
+  {education.map((entry) => (
+    <article class="timeline-entry" id={entry.id}>
+      <span class="archive-date">{formatPeriod(entry.period, labels)}</span>
+      <h2>{entry.degree}</h2>
+      <p><strong class="text-[var(--text)]">{entry.institution}</strong></p>
+      <p>{entry.detail}</p>
+      <span class:list={["archive-status", { complete:entry.completed }]}>{entry.status}</span>
+    </article>
+  ))}
+</div>
+<p class="archive-note mt-6">{lang === "de" ? "Nicht verliehene Doktorgrade, nicht abgeschlossene Studiengänge und nicht-akademische Weiterbildung bleiben ausdrücklich gekennzeichnet." : "Non-awarded doctoral work, incomplete studies and non-degree professional education remain explicitly labelled."}</p>
+<a class="section-back mt-8 inline-block" href="#top">↑ {lang === "de" ? "Nach oben" : "Back to top"}</a>

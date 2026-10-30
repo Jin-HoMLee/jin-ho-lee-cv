@@ -1,0 +1,4 @@
+---
+import content from "../../../data/content.de.json"; import type { ContentData } from "../../../types/content"; import ArchivePageShell from "../../../components/ArchivePageShell.astro"; import FullEducation from "../../../components/FullEducation.astro"; const data=content as unknown as ContentData;
+---
+<ArchivePageShell data={data} lang="de" title="Bildungsverlauf" overline="Vollständige freigegebene Bildungsansicht" intro="Akademische, berufliche und schulische Bildung mit expliziter Kennzeichnung von Weiterbildung, nicht abgeschlossenen Studien und nicht verliehenem Doktorgrad." slug="education-all-de"><FullEducation education={data.history.education} labels={data.labels} lang="de" /></ArchivePageShell>

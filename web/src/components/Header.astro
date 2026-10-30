@@ -3,27 +3,86 @@ import type { Personal, Lang } from "../types/content";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import PdfDownloadMenu from "./PdfDownloadMenu.astro";
-
-interface Props {
-  personal: Personal;
-  lang: Lang;
-}
-
-const { personal, lang } = Astro.props;
+interface Props { personal: Personal; lang: Lang; archive?: boolean }
+const { personal, lang, archive = false } = Astro.props;
+const prefix = lang === "de" ? "/de" : "";
+const home = `${prefix}/`;
+const labels = lang === "de"
+  ? { main:"Haupt-CV", index:"Index", source:"Quelle", experience:"Erfahrung", projects:"Projekte", publications:"Publikationen", skills:"Skills", education:"Bildung", contact:"Kontakt", sections:"Bereiche", nav:"Lebenslauf navigieren" }
+  : { main:"Main CV", index:"Index", source:"Source", experience:"Experience", projects:"Projects", publications:"Publications", skills:"Skills", education:"Education", contact:"Contact", sections:"Sections", nav:"Navigate CV" };
+const sectionLinks = [
+  [`${home}#source`, labels.source, "›_"], [`${home}#experience`, labels.experience, "02"],
+  [`${home}#projects`, labels.projects, "03"], [`${home}#publications`, labels.publications, "04"],
+  [`${home}#skills`, labels.skills, "05"], [`${home}#education`, labels.education, "06"], [`${home}#contact`, labels.contact, "07"],
+];
+const archiveLinks = [
+  [home, labels.main, "←"], [`${prefix}/experience/`, labels.experience, "22"],
+  [`${prefix}/projects/`, labels.projects, "11"], [`${prefix}/publications/`, labels.publications, "16"],
+  [`${prefix}/skills/`, labels.skills, "62"], [`${prefix}/education/`, labels.education, "12"],
+  [`${prefix}/archive/`, labels.index, "∞"],
+];
+const links = archive ? archiveLinks : sectionLinks;
 ---
-<header class="sticky top-0 z-10 border-b border-[var(--surface-border)] backdrop-blur" style="background-color: color-mix(in srgb, var(--bg) 85%, transparent)">
-  <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3 md:px-8">
-    <div class="mr-auto">
-      <p class="text-lg font-semibold leading-tight" style="color: var(--accent)">
-        {personal.name.given} {personal.name.family}
-      </p>
-      <p class="font-mono-plex text-xs text-[var(--accent)]" data-cv-field="headline">{personal.headline}</p>
-    </div>
-    <div class="flex items-center gap-2 text-sm">
-      <PdfDownloadMenu lang={lang} />
-      <span class="mx-1 h-5 w-px bg-[var(--surface-border)]" aria-hidden="true"></span>
+<header class="sitebar">
+  <div class="site-wrap nav-row">
+    <a class="monogram" href={home} aria-label={`JL — ${personal.name.given} ${personal.name.family}`}>JL</a>
+    <nav class="desktop-nav" aria-label={archive ? (lang === "de" ? "Archivnavigation" : "Archive navigation") : (lang === "de" ? "Primärnavigation" : "Primary navigation")}>
+      {links.map(([href, label]) => <a href={href}>{label}</a>)}
+    </nav>
+    <details class="mobile-menu" data-mobile-menu>
+      <summary>
+        <span class="menu-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="menu-label">{labels.sections}</span>
+      </summary>
+      <nav aria-label={labels.sections}>
+        <p>{labels.nav}</p>
+        {!archive && <a href={home}><span>01</span><b>{lang === "de" ? "Identität" : "Identity"}</b></a>}
+        {links.map(([href, label, number]) => <a href={href}><span>{number}</span><b>{label}</b></a>)}
+        {!archive && <a href={`${prefix}/archive/`}><span>∞</span><b>{lang === "de" ? "Vollständiger Index" : "Complete index"}</b></a>}
+      </nav>
+    </details>
+    <div class="utility-row">
       <LanguageSwitcher currentLang={lang} />
-      <ThemeToggle />
+      <PdfDownloadMenu lang={lang} />
+      <ThemeToggle lang={lang} />
     </div>
   </div>
 </header>
+<style>
+  .sitebar { position:sticky; top:0; z-index:40; border-bottom:1px solid var(--surface-border); background:color-mix(in srgb,var(--bg) 92%,transparent); backdrop-filter:blur(12px); }
+  .nav-row { min-height:76px; display:flex; align-items:center; gap:22px; }
+  .monogram { width:42px; height:42px; display:grid; place-items:center; flex:none; border:1px solid var(--gold); background:var(--surface); color:var(--text); font-weight:700; text-decoration:none; }
+  .desktop-nav { display:flex; align-items:center; gap:20px; }
+  .desktop-nav a { font-size:14px; text-decoration:none; white-space:nowrap; }
+  .desktop-nav a:hover { color:var(--accent); }
+  .utility-row { display:flex; align-items:center; gap:10px; margin-left:auto; }
+  .mobile-menu { display:none; position:relative; }
+  .mobile-menu summary { min-height:42px; display:flex; align-items:center; gap:8px; list-style:none; border:1px solid var(--surface-border); border-radius:999px; background:var(--surface); padding:7px 10px; font:600 12px "IBM Plex Mono",monospace; cursor:pointer; }
+  .mobile-menu summary::-webkit-details-marker { display:none; }
+  .menu-glyph { width:26px; height:26px; display:grid; place-content:center; gap:3px; border-radius:50%; background:var(--text); }
+  .menu-glyph i { display:block; width:12px; height:1.5px; background:var(--bg); transition:transform .18s ease,opacity .18s ease; }
+  .mobile-menu[open] .menu-glyph i:first-child { transform:translateY(4.5px) rotate(45deg); }
+  .mobile-menu[open] .menu-glyph i:nth-child(2) { opacity:0; }
+  .mobile-menu[open] .menu-glyph i:last-child { transform:translateY(-4.5px) rotate(-45deg); }
+  .mobile-menu nav { position:absolute; left:0; top:calc(100% + 10px); width:280px; max-height:calc(100vh - 92px); overflow:auto; padding:10px; border:1px solid var(--surface-border); border-top:3px solid var(--accent); background:var(--bg); box-shadow:0 12px 30px #0003; }
+  .mobile-menu:not([open]) > nav { display:none; }
+  .mobile-menu nav p { margin:2px 8px 8px; color:var(--muted); font:10px "IBM Plex Mono",monospace; text-transform:uppercase; letter-spacing:.1em; }
+  .mobile-menu nav a { display:grid; grid-template-columns:30px 1fr; gap:8px; padding:9px 8px; border-bottom:1px solid var(--surface-border); text-decoration:none; }
+  .mobile-menu nav a span { color:var(--accent); font:10px "IBM Plex Mono",monospace; }
+  .mobile-menu nav a b { font-size:13px; }
+  .mobile-menu nav a:hover { background:color-mix(in srgb,var(--accent) 8%,transparent); }
+  @media(max-width:1100px) { .desktop-nav { gap:11px; } .desktop-nav a { font-size:12px; } }
+  @media(max-width:980px) { .desktop-nav { display:none; } .mobile-menu { display:block; } }
+  @media(max-width:700px) {
+    .nav-row { min-height:70px; gap:9px; }
+    .menu-label { display:none; }
+    .mobile-menu summary { padding-inline:7px; }
+    .mobile-menu nav { position:fixed; left:12px; right:12px; top:70px; width:auto; }
+    .utility-row { gap:7px; }
+    :global(.pdf-menu summary) { width:77px; justify-content:center; padding-inline:8px; }
+    :global(.pdf-menu summary span) { font-size:0; }
+    :global(.pdf-menu summary span)::after { content:"PDF"; font-size:.875rem; }
+    :global(.pdf-menu summary .caret) { display:none; }
+  }
+  @media(max-width:420px) { .site-wrap.nav-row { width:calc(100% - 1.25rem); } }
+</style>

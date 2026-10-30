@@ -1,21 +1,23 @@
 ---
-import type { Language, Labels } from "../types/content";
+import type { Language, Labels, Lang } from "../types/content";
 
 interface Props {
   languages: Language[];
   labels: Labels;
+  lang?: Lang;
 }
 
-const { languages, labels } = Astro.props;
+const { languages, labels, lang = "en" } = Astro.props;
 
 function profLabel(p: string): string {
   return (labels.proficiency as Record<string, string>)[p] ?? p;
 }
 ---
 <section id="languages" class="py-6">
-  <h2 class="eyebrow mb-3">
-    {labels.sections.languages}
-  </h2>
+  <div class="editorial-section-head">
+    <h2 class="eyebrow mb-3">{labels.sections.languages}</h2>
+    <a class="section-back" href="#top">↑ {lang === "de" ? "Oben" : "Top"}</a>
+  </div>
   <ul class="space-y-1">
     {languages.map((l) => (
       <li class="flex items-baseline justify-between text-sm">

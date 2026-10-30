@@ -1,0 +1,4 @@
+---
+import content from "../../data/content.en.json"; import type { ContentData } from "../../types/content"; import ArchivePageShell from "../../components/ArchivePageShell.astro"; import FullPublications from "../../components/FullPublications.astro"; const data=content as unknown as ContentData;
+---
+<ArchivePageShell data={data} lang="en" title="All publications" overline="Complete bibliography" intro="All research and applied bibliography records with explicit scope, authorship, DOI links and indicative Crossref citations." slug="publications-all-en"><FullPublications publications={data.publications} metrics={data.publication_metrics} labels={data.labels} lang="en" /></ArchivePageShell>

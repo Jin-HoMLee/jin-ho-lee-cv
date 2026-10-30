@@ -27,8 +27,8 @@ const yearsTile: Tile = {
 const pubsTile: Tile = {
   value: pubs, suffix: "",
   label: lang === "en"
-    ? `peer-reviewed research · ${publicationMetrics.research_records} ${data.labels.publications.research_label} / ${publicationMetrics.applied_records} ${data.labels.publications.applied_label}`
-    : `begutachtete Forschung · ${publicationMetrics.research_records} ${data.labels.publications.research_label} / ${publicationMetrics.applied_records} ${data.labels.publications.applied_label}`,
+    ? `peer-reviewed research · ${publicationMetrics.research_records} research records / ${publicationMetrics.applied_records} applied / off-domain`
+    : `begutachtete Forschung · ${publicationMetrics.research_records} Forschungseinträge / ${publicationMetrics.applied_records} angewandt / themenfremd`,
   varName: "--chart-1",
 };
 const citationsTile: Tile = totalCitations > 0
@@ -51,10 +51,10 @@ const authoredTiles: Tile[] = (data.personal.highlight_stats ?? []).map((h, i) =
 }));
 const tiles: Tile[] = [yearsTile, pubsTile, citationsTile, ...authoredTiles];
 ---
-<section class="py-6" data-stat-band data-reveal data-locale={numberLocale}>
-  <div class="grid grid-cols-2 gap-3 md:grid-cols-5">
-    {tiles.map((t) => (
-      <div class="rounded-xl border border-[var(--surface-border)] p-4" style="background: var(--surface)" role="img" aria-label={`${t.value.toLocaleString(numberLocale)}${t.suffix} ${t.label}`}>
+<section class="proof-band" data-stat-band data-reveal data-locale={numberLocale} aria-label={lang === "en" ? "Evidence highlights" : "Evidenz-Highlights"}>
+  <div class="proof-grid">
+    {tiles.map((t, index) => (
+      <div class="proof-cell" title={index === 2 && data.citation_cache_fetched_at ? `Crossref cache fetched ${data.citation_cache_fetched_at}` : undefined} role="img" aria-label={`${t.value.toLocaleString(numberLocale)}${t.suffix} ${t.label}`}>
         <div
           class="font-mono-plex text-3xl font-extrabold tracking-tight"
           style={`color: var(${t.varName})`}
@@ -67,6 +67,20 @@ const tiles: Tile[] = [yearsTile, pubsTile, citationsTile, ...authoredTiles];
     ))}
   </div>
 </section>
+<style>
+  .proof-band { border-block:1px solid var(--surface-border); margin-bottom:4rem; }
+  .proof-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); }
+  .proof-cell { min-width:0; padding:1.25rem; border-right:1px solid var(--surface-border); }
+  .proof-cell:last-child { border-right:0; }
+  @media(max-width:980px) {
+    .proof-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .proof-cell { border-top:1px solid var(--surface-border); }
+    .proof-cell:nth-child(-n+2) { border-top:0; }
+    .proof-cell:nth-child(2) { border-right:0; }
+    .proof-cell:last-child { grid-column:1/-1; }
+  }
+  @media(max-width:700px) { .proof-cell { padding:1rem .75rem; } }
+</style>
 
 <script>
   const band = document.querySelector<HTMLElement>("[data-stat-band]");

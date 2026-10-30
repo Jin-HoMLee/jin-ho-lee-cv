@@ -1,17 +1,16 @@
 ---
-import type { Education, Labels } from "../types/content";
+import type { Education, Labels, Lang } from "../types/content";
 
 interface Props {
   education: Education[];
   labels: Labels;
+  lang?: Lang;
 }
 
-const { education, labels } = Astro.props;
+const { education, labels, lang = "en" } = Astro.props;
 ---
-<section id="education" class="py-6">
-  <h2 class="eyebrow mb-3">
-    {labels.sections.education}
-  </h2>
+<section id="education" class="editorial-section">
+  <div class="editorial-section-head"><h2 class="eyebrow">06 / {labels.sections.education}</h2><a class="section-back" href="#top">↑ {lang === "de" ? "Oben" : "Top"}</a></div>
   <div class="space-y-3">
     {education.map((ed) => (
       <div>
@@ -23,4 +22,6 @@ const { education, labels } = Astro.props;
       </div>
     ))}
   </div>
+  <p class="mt-5"><a class="archive-link" href={lang === "de" ? "/de/education/" : "/education/"}>{lang === "de" ? "Bildungsverlauf öffnen" : "Open education chronology"} →</a></p>
 </section>
+<style>.archive-link{color:var(--accent);font:600 .75rem "IBM Plex Mono",monospace;text-decoration:none;border-bottom:1px solid currentColor}</style>

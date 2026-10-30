@@ -1,0 +1,4 @@
+---
+import content from "../../data/content.en.json"; import type { ContentData } from "../../types/content"; import ArchivePageShell from "../../components/ArchivePageShell.astro"; import FullIndex from "../../components/FullIndex.astro"; const data=content as unknown as ContentData;
+---
+<ArchivePageShell data={data} lang="en" title="Complete CV index" overline="Full static index" intro="The main page stays selective and scannable. This index preserves complete category and credential discovery in static HTML." slug="archive-en"><FullIndex data={data} lang="en" /></ArchivePageShell>

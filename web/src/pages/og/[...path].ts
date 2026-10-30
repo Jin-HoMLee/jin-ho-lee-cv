@@ -70,12 +70,33 @@ function writeupPage(w: (typeof writeups)[number], name: string): OgPage {
   };
 }
 
+function archivePage(title: string, subtitle: string, lang: Lang, name: string): OgPage {
+  return {
+    kicker: lang === "en" ? `${name} - Complete CV` : `${name} - Vollständiger Lebenslauf`,
+    title,
+    subtitle,
+    meta: [{ label: lang === "en" ? "Format" : "Format", value: lang === "en" ? "Static evidence archive" : "Statisches Evidenzarchiv" }],
+  };
+}
+
 const enName = `${en.personal.name.given} ${en.personal.name.family}`;
 const deName = `${de.personal.name.given} ${de.personal.name.family}`;
 
 const pages: Record<string, OgPage> = {
   "index-en": homepagePage(en, "en"),
   "index-de": homepagePage(de, "de"),
+  "archive-en": archivePage("Complete CV index", "Complete category and credential discovery.", "en", enName),
+  "archive-de": archivePage("Vollständiger CV-Index", "Vollständige Kategorien und Nachweise.", "de", deName),
+  "education-all-en": archivePage("Education chronology", "Academic, professional and school education with completion status.", "en", enName),
+  "education-all-de": archivePage("Bildungsverlauf", "Akademische, berufliche und schulische Bildung mit Abschlussstatus.", "de", deName),
+  "experience-en": archivePage("Experience chronology", "Twenty-two dated records with employer and assignment relationships intact.", "en", enName),
+  "experience-de": archivePage("Erfahrungsverlauf", "22 datierte Einträge mit erhaltenen Arbeitgeber- und Einsatzbeziehungen.", "de", deName),
+  "projects-all-en": archivePage("All projects", "Eleven public project records with stable evidence routes.", "en", enName),
+  "projects-all-de": archivePage("Alle Projekte", "Elf öffentliche Projekteinträge mit stabilen Evidenzrouten.", "de", deName),
+  "publications-all-en": archivePage("All publications", "Sixteen bibliography records with explicit research and applied scope.", "en", enName),
+  "publications-all-de": archivePage("Alle Publikationen", "16 Bibliografie-Einträge mit explizitem Forschungs- und Anwendungsumfang.", "de", deName),
+  "skills-all-en": archivePage("All skills", "Searchable and filterable public capability inventory.", "en", enName),
+  "skills-all-de": archivePage("Alle Skills", "Durchsuchbares und filterbares öffentliches Fähigkeiteninventar.", "de", deName),
 };
 for (const [id, project] of Object.entries(en.projects)) {
   pages[`projects-${id}-en`] = projectPage(project, "en", enName);

@@ -1212,5 +1212,610 @@
   "publications_aggregate": {
     "summary": "12 begutachtete Publikationen (10 Artikel + 2 wissenschaftliche Buchkapitel; 2 als Erstautor, 3 geteilte Erstautorenschaft, 7 als Co-Autor), 3 Forschungsbeiträge auf Konferenzen als Erstautor und 1 angewandter/themenfremder Beitrag (15 Forschungseinträge; insgesamt 16 Bibliografie-Datensätze), Forschungszeitraum 2017–2021, in Strahlenbiophysik & Super-Resolution-Bildgebung der DNA-Reparatur.",
     "pointer": "Vollständige Liste:"
+  },
+  "citation_cache_fetched_at": "2026-09-29",
+  "history": {
+    "experience_chapters": [
+      {
+        "id": "independent",
+        "label": "Unabhängiger Bioinformatik- & ML/AI-Engineer",
+        "entries": [
+          {
+            "id": "independent-rnd-2025",
+            "period": {
+              "start": "2025-07",
+              "end": null
+            },
+            "type": "Unabhängige F&E",
+            "role": "Unabhängige F&E und Weiterbildung",
+            "org": "Selbstorganisiert (JH M Lee Lab) · Mannheim, Deutschland",
+            "summary": "Agenten-KI, On-Device Computer Vision, reproduzierbare Bioinformatik und offene Systementwicklung: Agenten mit Tool-Nutzung und Gedächtnis, badminton-vision, eine moderne Snakemake/Conda-Splice-Neoepitop-Pipeline und offene Nix-basierte Werkzeuge.",
+            "tags": [
+              "agentic AI",
+              "computer vision",
+              "Snakemake",
+              "Nix"
+            ],
+            "refs": [
+              "D4",
+              "D2",
+              "L5"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "consulting",
+        "label": "Beratung & Bankenumsetzung",
+        "entries": [
+          {
+            "id": "bank-lbfa-2025",
+            "period": {
+              "start": "2025-01",
+              "end": "2025-07"
+            },
+            "type": "Kundeneinsatz",
+            "role": "Lead Business Functional Analyst — Anti-Financial Crime / KYC",
+            "org": "International bank (via Cintellic GmbH) · Deutschland",
+            "summary": "Eine Python-Analyseumgebung auf GCP gepflegt und erweitert; SAS-Reporting nach Python migriert; Looker-Datenmodelle aufgebaut; BigQueryML-Transaktionsmonitoring und Geldwäsche-Risikoanalysen umgesetzt.",
+            "tags": [
+              "GCP",
+              "BigQueryML",
+              "Looker",
+              "Python",
+              "KYC"
+            ],
+            "refs": [
+              "C1"
+            ]
+          },
+          {
+            "id": "bank-lbfa-2024",
+            "period": {
+              "start": "2024-08",
+              "end": "2024-10"
+            },
+            "type": "Kundeneinsatz",
+            "role": "Lead Business Functional Analyst — Kundenanalytik",
+            "org": "International bank (via Cintellic GmbH) · Deutschland",
+            "summary": "GCP-Datenmodelle für hyperpersonalisierte Kundeninteraktionen übertragen und entwickelt, Quelltabellen zugeordnet und über 1.000 lokale Analyseprozesse an den Cloud-Datensatz angebunden.",
+            "tags": [
+              "GCP",
+              "BigQuery",
+              "data modelling",
+              "stakeholders"
+            ],
+            "refs": [
+              "C2"
+            ]
+          },
+          {
+            "id": "cintellic-consultant-2024",
+            "period": {
+              "start": "2024-05",
+              "end": "2025-07"
+            },
+            "type": "Anstellung",
+            "role": "Consultant — Data Science, ML & Data Engineering",
+            "org": "Cintellic GmbH · Bonn, Deutschland",
+            "summary": "CRM- und Marketing-Automation-Workshops für Verlagswesen, Banken, Digital Health und Loyalty-Programme durchgeführt; Use Cases und Anforderungen entwickelt und eine angewandte Tool-Auswahl-Fallstudie veröffentlicht.",
+            "tags": [
+              "consulting",
+              "workshops",
+              "marketing automation",
+              "generative AI"
+            ],
+            "refs": [
+              "C1",
+              "C2"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "data-science",
+        "label": "neuefische · drei getrennte Phasen",
+        "entries": [
+          {
+            "id": "neuefische-coach-2024",
+            "period": {
+              "start": "2024-03",
+              "end": "2024-04"
+            },
+            "type": "Anstellung",
+            "role": "Data Science Coach",
+            "org": "neuefische GmbH · Hamburg, Deutschland",
+            "summary": "Bootcamps im Coach-Team betreut und UNIX, Python, SQL, Visualisierung, EDA, Evaluation, logistische Regression, Entscheidungsbäume, Clustering, Unit-Tests und Capstone-Umsetzung unterrichtet.",
+            "tags": [
+              "coaching",
+              "Python",
+              "SQL",
+              "machine learning"
+            ],
+            "refs": [
+              "D3"
+            ]
+          },
+          {
+            "id": "neuefische-associate-2023",
+            "period": {
+              "start": "2023-09",
+              "end": "2024-02"
+            },
+            "type": "Anstellung",
+            "role": "Data Science Associate",
+            "org": "neuefische GmbH · Hamburg, Deutschland",
+            "summary": "Mehrere Bootcamps unterstützt: Kohortenbetrieb, Teilnehmendenbetreuung, Unterricht und Materialverbesserung mit OOP, Pydantic, dbt, MLflow und Docker.",
+            "tags": [
+              "OOP",
+              "Pydantic",
+              "dbt",
+              "MLflow",
+              "Docker"
+            ],
+            "refs": [
+              "D3"
+            ]
+          },
+          {
+            "id": "neuefische-trainee-2023",
+            "period": {
+              "start": "2023-02",
+              "end": "2023-05"
+            },
+            "type": "Ausbildungsvertrag",
+            "role": "Trainee, Data Science",
+            "org": "neuefische GmbH · Hamburg, Deutschland",
+            "summary": "Ein 540-stündiges Vollzeit-Coding-Bootcamp und ein vierwöchiges Team-Capstone abgeschlossen: SignMeUp, Echtzeit-Gebärdenspracherkennung aus Live-Video mit LSTM, MediaPipe, OpenCV und TensorFlow.",
+            "tags": [
+              "Python",
+              "TensorFlow",
+              "MediaPipe",
+              "OpenCV",
+              "GCP"
+            ],
+            "refs": [
+              "D1"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "research",
+        "label": "Promotions- & postgraduale Forschung",
+        "entries": [
+          {
+            "id": "fz-juelich-doctoral-2020",
+            "period": {
+              "start": "2020-06",
+              "end": "2022-07"
+            },
+            "type": "Forschung",
+            "role": "Doktorand (Promotion nicht abgeschlossen)",
+            "org": "Forschungszentrum Jülich · Jülich, Deutschland",
+            "summary": "Ein Projekt zu Strahlungseffekten auf die 3D-Differenzierung menschlicher neuronaler Vorläufer und extrazelluläre Vesikel geleitet; Mitarbeitende betreut, Kooperationen aufgebaut, Drittmittel eingeworben und publiziert.",
+            "tags": [
+              "radiobiology",
+              "3D culture",
+              "neural progenitors",
+              "supervision"
+            ],
+            "refs": [
+              "L4"
+            ]
+          },
+          {
+            "id": "imp-vienna-2019",
+            "period": {
+              "start": "2019-08",
+              "end": "2019-10"
+            },
+            "type": "Forschung",
+            "role": "Doktorand — Strukturbiologie & Biochemie",
+            "org": "Forschungsinstitut für Molekulare Pathologie (IMP) · Wien, Österreich",
+            "summary": "An der Identifikation und Charakterisierung neuer RNA-interagierender Faktoren gearbeitet; historische Quellen variieren zwischen Praktikum, PhD-Stelle und Doktorand, eine Promotion wurde nicht abgeschlossen.",
+            "tags": [
+              "structural biology",
+              "biochemistry",
+              "RNA-binding proteins"
+            ],
+            "refs": []
+          },
+          {
+            "id": "bundeswehr-radiobiology-2018",
+            "period": {
+              "start": "2018-09",
+              "end": "2018-12"
+            },
+            "type": "Forschung",
+            "role": "Wissenschaftlicher Mitarbeiter — Strahlenbiologie",
+            "org": "Institut für Radiobiologie der Bundeswehr · München, Deutschland",
+            "summary": "Geclusterte DNA-Schäden mittels Einzelmolekül-Lokalisationsmikroskopie untersucht und zur Ra-223-Alphaemitter-Forschung beigetragen.",
+            "tags": [
+              "radiobiology",
+              "DNA damage",
+              "SMLM"
+            ],
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "id": "kip-researcher-2017",
+            "period": {
+              "start": "2017-05",
+              "end": "2018-08"
+            },
+            "type": "Forschungsanstellung",
+            "role": "Forscher / Studentische Hilfskraft — Experimentelle Biophysik",
+            "org": "Kirchhoff Institute for Physics, Universität Heidelberg · Heidelberg, Deutschland",
+            "summary": "In Nanoskopie, Chromatin, Genomik und Strahlenbiologie gearbeitet; Experimente und räumliche Analysen mit DBSCAN, Nächster-Nachbar-Methoden, persistenter Homologie und MATLAB-Oberflächen entwickelt.",
+            "tags": [
+              "nanoscopy",
+              "chromatin",
+              "MATLAB",
+              "spatial analysis"
+            ],
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "id": "kip-internship-biophys-chem-2016",
+            "period": {
+              "start": "2016-10",
+              "end": "2017-05"
+            },
+            "type": "Kurs + Praktikum",
+            "role": "Forschungspraktikum — Biophysikalische Chemie",
+            "org": "DKFZ / BioQuant / Experimental Biophysics · Heidelberg, Deutschland",
+            "summary": "Transcript-belegte Laborarbeit zu Niedrigdosisstrahlung und Chromatin sowie anschließend ein Forschungspraktikum in Super-Resolution-Strahlenbiologie abgeschlossen.",
+            "tags": [
+              "chromatin",
+              "radiation biology",
+              "super-resolution"
+            ],
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "id": "dkfz-nanoscopy-2016",
+            "period": {
+              "start": "2016-06",
+              "end": "2016-08"
+            },
+            "type": "Praktikum",
+            "role": "Forschungspraktikum — Optische Nanoskopie",
+            "org": "Deutsches Krebsforschungszentrum (DKFZ) · Heidelberg, Deutschland",
+            "summary": "Photostabilisierende Substanzen für Live-Cell-STED-Bildgebung charakterisiert und bewertet.",
+            "tags": [
+              "STED",
+              "live-cell imaging",
+              "photostabilizers"
+            ],
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "id": "nct-drug-discovery-2016",
+            "period": {
+              "start": "2016-01",
+              "end": "2016-05"
+            },
+            "type": "Praktikum",
+            "role": "Forschungspraktikum — Wirkstoffforschung",
+            "org": "National Center for Tumor Diseases (NCT) · Heidelberg, Deutschland",
+            "summary": "SNV-Calling-Daten von Darmkrebspatienten gegen Goldstandard-Sequenzierung validiert und statistisch analysiert.",
+            "tags": [
+              "SNV calling",
+              "colorectal cancer",
+              "validation"
+            ],
+            "refs": [
+              "L1"
+            ]
+          },
+          {
+            "id": "snu-internship-2015",
+            "period": {
+              "start": "2015-08",
+              "end": "2015-11"
+            },
+            "type": "Praktikum",
+            "role": "Forschungspraktikant — Bio- & Gesundheitsinformatik",
+            "org": "Seoul National University · Seoul, Südkorea",
+            "summary": "Eine unveröffentlichte Shell-/Python-/R-Proof-of-Concept-Pipeline von TCGA-RNA-Seq-Splice-Junctions zu vorhergesagten, unvalidierten MHC-I-bindenden Neoepitop-Kandidaten entwickelt.",
+            "tags": [
+              "RNA-Seq",
+              "splice junctions",
+              "neoepitopes",
+              "Python"
+            ],
+            "refs": [
+              "L1",
+              "L5"
+            ]
+          },
+          {
+            "id": "kip-internship-combofish-2015",
+            "period": {
+              "start": "2015-03",
+              "end": "2015-06"
+            },
+            "type": "Praktikum",
+            "role": "Forschungspraktikant — Experimentelle Biophysik",
+            "org": "Kirchhoff Institute for Physics, Universität Heidelberg · Heidelberg, Deutschland",
+            "summary": "Alu-Elemente in Brustkrebszellen mittels COMBO-FISH und Lokalisationsmikroskopie untersucht.",
+            "tags": [
+              "COMBO-FISH",
+              "Alu",
+              "localization microscopy"
+            ],
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "id": "dkfz-applied-bioinformatics-2014",
+            "period": {
+              "start": "2014-12",
+              "end": "2015-02"
+            },
+            "type": "Praktikum",
+            "role": "Forschungspraktikant — Angewandte Bioinformatik",
+            "org": "Deutsches Krebsforschungszentrum (DKFZ) · Heidelberg, Deutschland",
+            "summary": "DNA-Bruchstellen aus Patienten-NGS-Daten identifiziert und visualisiert.",
+            "tags": [
+              "NGS",
+              "structural variants",
+              "visualization"
+            ],
+            "refs": [
+              "L2"
+            ]
+          },
+          {
+            "id": "nct-bachelor-thesis-2014",
+            "period": {
+              "start": "2014-04",
+              "end": "2014-05"
+            },
+            "type": "Abschlussarbeitsforschung",
+            "role": "Bachelorand — Medizinische Onkologie",
+            "org": "National Center for Tumor Diseases (NCT) · Heidelberg, Deutschland",
+            "summary": "HLA-Typisierung aus Sequenzdaten für personalisierte Krebsimmuntherapie entwickelt.",
+            "tags": [
+              "HLA typing",
+              "sequencing",
+              "immunotherapy"
+            ],
+            "refs": [
+              "L2"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "foundations",
+        "label": "Frühere Forschungs- & Lehrgrundlagen",
+        "entries": [
+          {
+            "id": "tutoria-2013",
+            "period": {
+              "start": "2013-10",
+              "end": "2015-02"
+            },
+            "type": "Freiberufliche Tätigkeit",
+            "role": "Privatlehrer",
+            "org": "Tutoria GmbH · Heidelberg, Deutschland",
+            "summary": "Biologie, Chemie, Physik und Mathematik über verschiedene Stufen des deutschen Schulsystems unterrichtet.",
+            "tags": [
+              "teaching",
+              "STEM"
+            ],
+            "refs": []
+          },
+          {
+            "id": "rlp-agroscience-2013",
+            "period": {
+              "start": "2013-08",
+              "end": "2013-09"
+            },
+            "type": "Praktikum",
+            "role": "Forschungspraktikant — Pflanzenepigenetik",
+            "org": "RLP AgroScience / AlPlanta · Neustadt, Deutschland",
+            "summary": "An RNA-vermittelter Genregulation mit Klonierung, PCR/RT-PCR, Blotting, Pflanzengewebekultur, Agroinfiltration und Bisulfit-Sequenzierung gearbeitet.",
+            "tags": [
+              "plant epigenetics",
+              "PCR",
+              "cloning"
+            ],
+            "refs": []
+          },
+          {
+            "id": "kribb-trainee-2012",
+            "period": {
+              "start": "2012-08",
+              "end": "2012-10"
+            },
+            "type": "Bezahltes Traineeship",
+            "role": "Trainee — Krebsbiomarker",
+            "org": "Korea Research Institute of Bioscience and Biotechnology · Daejeon, Südkorea",
+            "summary": "In Proteinbiochemie, molekularer Klonierung, FACS und konfokaler Mikroskopie geschult; Verbindung zu einem späteren Krebsbiomarker-Projekt, keine Publikationsautorenschaft behauptet.",
+            "tags": [
+              "cancer biology",
+              "FACS",
+              "confocal microscopy"
+            ],
+            "refs": []
+          },
+          {
+            "id": "mpi-medical-research-2012",
+            "period": {
+              "start": "2012-02",
+              "end": "2012-09"
+            },
+            "type": "Studentische Tätigkeit",
+            "role": "Studentische Hilfskraft",
+            "org": "Max-Planck-Institut für medizinische Forschung · Heidelberg, Deutschland",
+            "summary": "Retinale Axone und Dendriten in seriellen elektronenmikroskopischen Bildern mit KNOSSOS nachverfolgt; spätere Quellen beschreiben die Spuren als Trainingsdaten für automatisierte Analyse.",
+            "tags": [
+              "connectomics",
+              "electron microscopy",
+              "KNOSSOS"
+            ],
+            "refs": []
+          }
+        ]
+      }
+    ],
+    "education": [
+      {
+        "id": "edu-01",
+        "period": {
+          "start": "2023-02",
+          "end": "2023-05"
+        },
+        "degree": "Data-Science-Bootcamp",
+        "institution": "neuefische GmbH · Deutschland",
+        "detail": "540-stündige Vollzeit-Weiterbildung · Python, SQL, maschinelles Lernen, Cloud-Deployment und vierwöchiges SignMeUp-Capstone; im Erfahrungsverlauf zusätzlich als Ausbildungsvertrag geführt",
+        "status": "Abgeschlossen",
+        "completed": true
+      },
+      {
+        "id": "edu-02",
+        "period": {
+          "start": "2022-10",
+          "end": "2023-03"
+        },
+        "degree": "Mathematik-Fernstudium",
+        "institution": "FernUniversität in Hagen · Deutschland",
+        "detail": "Mathematik",
+        "status": "Nicht abgeschlossen",
+        "completed": false
+      },
+      {
+        "id": "edu-03",
+        "period": {
+          "start": "2020-06",
+          "end": "2022-07"
+        },
+        "degree": "Promotionsforschungsphase",
+        "institution": "RWTH Aachen University · Deutschland",
+        "detail": "Biologie",
+        "status": "Promotion nicht abgeschlossen",
+        "completed": false
+      },
+      {
+        "id": "edu-04",
+        "period": {
+          "start": "2019-08",
+          "end": "2019-10"
+        },
+        "degree": "Promotionsprogramm-Phase",
+        "institution": "Universität Wien · Österreich",
+        "detail": "Molekulare Lebenswissenschaften",
+        "status": "Nicht abgeschlossen",
+        "completed": false
+      },
+      {
+        "id": "edu-05",
+        "period": {
+          "start": "2014-10",
+          "end": "2019-04"
+        },
+        "degree": "M.Sc. Molekulare Biotechnologie",
+        "institution": "Universität Heidelberg · Deutschland",
+        "detail": "Biophysikalische Chemie · Abschlussarbeit: Single Molecule Localization Microscopy of Nanoprobes to Study Chromatin Architecture, Function and Dynamics",
+        "status": "Abgeschlossen",
+        "completed": true
+      },
+      {
+        "id": "edu-06",
+        "period": {
+          "start": "2010-09",
+          "end": "2014-09"
+        },
+        "degree": "B.Sc. Molekulare Biotechnologie",
+        "institution": "Universität Heidelberg · Deutschland",
+        "detail": "Bioinformatik · Abschlussarbeit: HLA Typing from Sequencing Data for Personalized Cancer Immunotherapy",
+        "status": "Abgeschlossen",
+        "completed": true
+      },
+      {
+        "id": "edu-07",
+        "period": {
+          "start": "2006-09",
+          "end": "2009-07"
+        },
+        "degree": "Sekundarbildung · Abitur",
+        "institution": "Kolleg St. Blasien · Deutschland",
+        "detail": "Gymnasiale Oberstufe",
+        "status": "Abgeschlossen",
+        "completed": true
+      },
+      {
+        "id": "edu-08",
+        "period": {
+          "start": "2005-09",
+          "end": "2006-07"
+        },
+        "degree": "Sekundarbildung",
+        "institution": "Deutsche Schule Seoul International · Südkorea",
+        "detail": "Internationales Schuljahr",
+        "status": "Besucht",
+        "completed": false
+      },
+      {
+        "id": "edu-09",
+        "period": {
+          "start": "2004-09",
+          "end": "2005-07"
+        },
+        "degree": "Sekundarbildung",
+        "institution": "Erzbischöfliches Suitbertus-Gymnasium Düsseldorf-Kaiserswerth · Deutschland",
+        "detail": "Gymnasium",
+        "status": "Besucht",
+        "completed": false
+      },
+      {
+        "id": "edu-10",
+        "period": {
+          "start": "2000-09",
+          "end": "2004-07"
+        },
+        "degree": "Sekundarbildung",
+        "institution": "Bischöfliches Pius-Gymnasium Aachen · Deutschland",
+        "detail": "Gymnasium",
+        "status": "Besucht",
+        "completed": false
+      },
+      {
+        "id": "edu-11",
+        "period": {
+          "start": "1996-08",
+          "end": "2000-07"
+        },
+        "degree": "Grundschulbildung · Dom-Singschule",
+        "institution": "Dom-Sing-Schule Aachen · Deutschland",
+        "detail": "Grundschule des Aachener Doms; primär belegte Schulzugehörigkeit und Domchor-Kontext",
+        "status": "Abgeschlossen",
+        "completed": true
+      },
+      {
+        "id": "edu-12",
+        "period": {
+          "start": "1996-09",
+          "end": "1997-07"
+        },
+        "degree": "Grundschulbildung",
+        "institution": "Goetheschule Wesseling · Deutschland",
+        "detail": "Grundschule",
+        "status": "Besucht",
+        "completed": false
+      }
+    ]
   }
 }

@@ -1,17 +1,19 @@
 ---
-import type { Volunteer, Labels } from "../types/content";
+import type { Volunteer, Labels, Lang } from "../types/content";
 
 interface Props {
   volunteer: Volunteer;
   labels: Labels;
+  lang?: Lang;
 }
 
-const { volunteer, labels } = Astro.props;
+const { volunteer, labels, lang = "en" } = Astro.props;
 ---
 <section id="volunteer" class="py-6">
-  <h2 class="eyebrow mb-3">
-    {labels.sections.volunteer}
-  </h2>
+  <div class="editorial-section-head">
+    <h2 class="eyebrow mb-3">{labels.sections.volunteer}</h2>
+    <a class="section-back" href="#top">↑ {lang === "de" ? "Oben" : "Top"}</a>
+  </div>
   <div class="space-y-3">
     {volunteer.categories.map((cat) => (
       <div>

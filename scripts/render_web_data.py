@@ -19,12 +19,14 @@ from scripts.citations import enrich_publications, load_citation_cache
 from scripts.content_loader import load_content
 from scripts.langstring import resolve_langstrings
 from scripts.publications import format_publication_summary, publication_metrics
+from ruamel.yaml import YAML
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = REPO_ROOT / "content"
 OUTPUT_DIR = REPO_ROOT / "web" / "src" / "data"
 CITATIONS_PATH = REPO_ROOT / "data" / "citations.json"
 LANGS = ("en", "de")
+yaml = YAML(typ="safe")
 
 
 def _to_jsonable(obj: Any) -> Any:
@@ -167,6 +169,13 @@ def render_web_data(
         print(f"wrote {display}")
 
     citations = load_citation_cache(citations_path)  # parse once; reused across languages
+    try:
+        citation_meta = json.loads(citations_path.read_text(encoding="utf-8"))
+        citation_fetched_at = citation_meta.get("fetched_at")
+    except (FileNotFoundError, ValueError, AttributeError):
+        citation_fetched_at = None
+    history_path = content_dir / "history.yaml"
+    history_source = yaml.load(history_path.read_text(encoding="utf-8")) if history_path.exists() else {}
     for lang in LANGS:
         # Load bridge once: it is both the site's static content and the baseline
         # against which variant overrides are diffed.
@@ -195,6 +204,8 @@ def render_web_data(
             ),
             "pointer": pub_labels["full_list_pointer"],
         }
+        bridge_resolved["citation_cache_fetched_at"] = citation_fetched_at
+        bridge_resolved["history"] = resolve_langstrings(history_source, lang=lang)
         _dump(bridge_resolved, f"content.{lang}.json")
 
         variants_dict = {}

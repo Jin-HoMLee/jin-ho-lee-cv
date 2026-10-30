@@ -25,6 +25,7 @@ Skip-guarded locally (needs a web build); the CI `web-guard` job builds web/dist
 
 from __future__ import annotations
 
+import html
 import json
 from pathlib import Path
 
@@ -38,6 +39,10 @@ CONTENT_DIR = REPO_ROOT / "content"
 EXAMPLE_OVERLAY = REPO_ROOT / "master-cv.example"
 INDEX_EN = REPO_ROOT / "web" / "dist" / "index.html"
 INDEX_DE = REPO_ROOT / "web" / "dist" / "de" / "index.html"
+EXPERIENCE_ARCHIVE_EN = REPO_ROOT / "web" / "dist" / "experience" / "index.html"
+EXPERIENCE_ARCHIVE_DE = REPO_ROOT / "web" / "dist" / "de" / "experience" / "index.html"
+EDUCATION_ARCHIVE_EN = REPO_ROOT / "web" / "dist" / "education" / "index.html"
+EDUCATION_ARCHIVE_DE = REPO_ROOT / "web" / "dist" / "de" / "education" / "index.html"
 
 pytestmark = pytest.mark.skipif(
     not (INDEX_EN.exists() and INDEX_DE.exists()),
@@ -109,6 +114,55 @@ def test_publication_titles_in_static_html(html_en):
         assert pub.title in html_en, (
             f"publication {pub.key} title {pub.title!r} is not in the raw HTML"
         )
+
+
+def test_complete_public_archives_are_static_and_bilingual():
+    history = _load("history.yaml")
+    pages = {
+        "en": (EXPERIENCE_ARCHIVE_EN.read_text(encoding="utf-8"), EDUCATION_ARCHIVE_EN.read_text(encoding="utf-8")),
+        "de": (EXPERIENCE_ARCHIVE_DE.read_text(encoding="utf-8"), EDUCATION_ARCHIVE_DE.read_text(encoding="utf-8")),
+    }
+    assert sum(len(chapter["entries"]) for chapter in history["experience_chapters"]) == 22
+    assert len(history["education"]) == 12
+    for lang, (experience_html, education_html) in pages.items():
+        experience_html = html.unescape(experience_html)
+        education_html = html.unescape(education_html)
+        for chapter in history["experience_chapters"]:
+            for entry in chapter["entries"]:
+                assert entry["role"][lang] in experience_html
+                assert entry["org"][lang] in experience_html
+        for entry in history["education"]:
+            assert entry["degree"][lang] in education_html
+            assert entry["institution"][lang] in education_html
+
+
+def test_complete_archive_routes_are_in_sitemap():
+    sitemap_index = REPO_ROOT / "web" / "dist" / "sitemap-index.xml"
+    sitemap = sitemap_index.read_text(encoding="utf-8")
+    assert "sitemap-0.xml" in sitemap
+    route_map = (REPO_ROOT / "web" / "dist" / "sitemap-0.xml").read_text(encoding="utf-8")
+    for route in ("archive", "education", "experience", "projects", "publications", "skills"):
+        assert f"/{route}/" in route_map
+        assert f"/de/{route}/" in route_map
+
+
+def test_complete_archive_routes_have_og_images():
+    og_dir = REPO_ROOT / "web" / "dist" / "og"
+    for slug in (
+        "archive-en",
+        "archive-de",
+        "education-all-en",
+        "education-all-de",
+        "experience-en",
+        "experience-de",
+        "projects-all-en",
+        "projects-all-de",
+        "publications-all-en",
+        "publications-all-de",
+        "skills-all-en",
+        "skills-all-de",
+    ):
+        assert (og_dir / f"{slug}.png").is_file()
 
 
 def test_person_jsonld_is_served_and_parses(html_en):

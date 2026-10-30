@@ -31,10 +31,8 @@ for (const p of Object.values(projects)) {
 }
 const categoryOrder: Project["category"][] = ["life-science", "data-science", "consulting"];
 ---
-<section id="projects" class="py-6">
-  <h2 class="eyebrow mb-4">
-    {sectionLabel[lang]}
-  </h2>
+<section id="projects" class="editorial-section">
+  <div class="editorial-section-head"><h2 class="eyebrow">03 / {sectionLabel[lang]}</h2><a class="section-back" href="#top">↑ {lang === "de" ? "Nach oben" : "Back to top"}</a></div>
   {categoryOrder.map((cat) => grouped[cat].length > 0 && (
     <div class="mb-6">
       <h3 class="mb-3 text-sm font-semibold text-[var(--text)]">{categoryLabel[cat][lang]}</h3>
@@ -93,4 +91,9 @@ const categoryOrder: Project["category"][] = ["life-science", "data-science", "c
       </div>
     </div>
   ))}
+  <p class="mt-5"><a class="archive-link" href={lang === "de" ? "/de/projects/" : "/projects/"}>{lang === "de" ? "Alle Projekte ansehen" : "View all projects"} →</a></p>
 </section>
+<style>
+  .archive-link { color:var(--accent); font:600 .75rem "IBM Plex Mono",monospace; text-decoration:none; border-bottom:1px solid currentColor; }
+  article { background:var(--surface); border-radius:3px; }
+</style>

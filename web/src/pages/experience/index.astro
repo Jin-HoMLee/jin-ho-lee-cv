@@ -1,0 +1,8 @@
+---
+import content from "../../data/content.en.json";
+import type { ContentData } from "../../types/content";
+import ArchivePageShell from "../../components/ArchivePageShell.astro";
+import FullExperience from "../../components/FullExperience.astro";
+const data=content as unknown as ContentData;
+---
+<ArchivePageShell data={data} lang="en" title="Experience chronology" overline="Expanded career record" intro="The concise CV compresses a long cross-domain history into four roles. This page expands it into 22 dated records while preserving employer, client-assignment and contract relationships." slug="experience-en"><FullExperience chapters={data.history.experience_chapters} labels={data.labels} lang="en" /></ArchivePageShell>

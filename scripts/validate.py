@@ -76,6 +76,20 @@ def validate_file(
                 for ref in bullet.get("refs", []):
                     if ref not in known_project_ids:
                         raise ValidationError(f"unknown project ref {ref!r}")
+    if schema_def == "history" and known_project_ids is not None:
+        entries = [
+            entry
+            for chapter in data.get("experience_chapters", [])
+            for entry in chapter.get("entries", [])
+        ]
+        ids = [entry.get("id") for entry in entries]
+        duplicate_ids = sorted({entry_id for entry_id in ids if ids.count(entry_id) > 1})
+        if duplicate_ids:
+            raise ValidationError(f"duplicate archive experience id(s): {duplicate_ids}")
+        for entry in entries:
+            for ref in entry.get("refs", []):
+                if ref not in known_project_ids:
+                    raise ValidationError(f"unknown archive project ref {ref!r}")
 
 
 def _enumerate_project_ids(content_dir: Path) -> set[str]:
@@ -97,6 +111,7 @@ _FILE_RULES: list[tuple[str, str]] = [
     ("skills.yaml", "skills"),
     ("education.yaml", "education"),
     ("experience.yaml", "experience"),
+    ("history.yaml", "history"),
     ("selected_projects.yaml", "selected_projects"),
     ("languages.yaml", "languages"),
     ("volunteer.yaml", "volunteer"),
@@ -414,7 +429,7 @@ def validate_tree(content_dir: Path, schema_path: Path) -> list[FileError]:
         for path in content_dir.glob(pattern):
             try:
                 kwargs = {}
-                if def_name == "experience":
+                if def_name in {"experience", "history"}:
                     kwargs["known_project_ids"] = project_ids
                 validate_file(path, schema_def=def_name, schema_path=schema_path, **kwargs)
             except ValidationError as e:

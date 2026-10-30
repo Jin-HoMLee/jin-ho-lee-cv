@@ -12,19 +12,16 @@ interface Props {
 
 const { experience, labels, lang, variants = {} } = Astro.props;
 ---
-<section id="experience" class="py-6" data-cv-experience>
-  <h2 class="eyebrow mb-4">
-    {labels.sections.experience}
-  </h2>
+<section id="experience" class="editorial-section" data-cv-experience>
+  <div class="editorial-section-head"><h2 class="eyebrow">02 / {labels.sections.experience}</h2><a class="section-back" href="#top">↑ {lang === "de" ? "Nach oben" : "Back to top"}</a></div>
   <div class="space-y-6" data-cv-experience-list>
     {experience.map((exp) => (
-      <article id={`exp-${exp.id}`} class="border-l-2 border-[var(--accent)] pl-4">
-        <header class="mb-2 flex flex-wrap items-baseline justify-between gap-2">
-          <h3 class="text-base font-semibold text-[var(--text)]">
-            {exp.role}
-            <span class="font-normal text-[var(--muted)]"> · {exp.org.name}</span>
-          </h3>
-          <p class="font-mono-plex text-xs text-[var(--faint)]">{formatPeriod(exp.period, labels)}</p>
+      <article id={`exp-${exp.id}`} class="experience-role">
+        <p class="experience-date">{formatPeriod(exp.period, labels)}</p>
+        <div class="experience-body">
+        <header class="mb-2">
+          <h3 class="text-base font-semibold text-[var(--text)]">{exp.role}</h3>
+          <p class="experience-org">{exp.org.name}</p>
         </header>
         <ul class="space-y-1.5 text-sm text-[var(--muted)]">
           {exp.bullets.map((b) => (
@@ -36,7 +33,7 @@ const { experience, labels, lang, variants = {} } = Astro.props;
                   <span class="ml-1 inline-flex gap-1">
                     {b.refs.map((r) => (
                       <a
-                        href={`#${r}`}
+                        href={lang === "de" ? `/de/projects/${r}/` : `/projects/${r}/`}
                         class="font-mono-plex rounded bg-[var(--surface)] px-1.5 py-0.5 text-xs font-medium text-[var(--accent)] no-underline hover:bg-[var(--surface-2)]"
                       >{r}</a>
                     ))}
@@ -46,10 +43,20 @@ const { experience, labels, lang, variants = {} } = Astro.props;
             </li>
           ))}
         </ul>
+        </div>
       </article>
     ))}
   </div>
+  <p class="mt-5"><a class="archive-link" href={lang === "de" ? "/de/experience/" : "/experience/"}>{lang === "de" ? "Vollständigen Erfahrungsverlauf öffnen" : "Open full experience chronology"} →</a></p>
 </section>
+<style>
+  .experience-role { display:grid; grid-template-columns:100px 1fr; gap:1.5rem; padding:0 0 1.9rem; }
+  .experience-date { color:var(--accent); font:600 .75rem "IBM Plex Mono",monospace; }
+  .experience-body { border-left:2px solid var(--accent); padding-left:1.25rem; }
+  .experience-org { color:var(--gold); font-size:.8rem; font-weight:600; }
+  .archive-link { color:var(--accent); font:600 .75rem "IBM Plex Mono",monospace; text-decoration:none; border-bottom:1px solid currentColor; }
+  @media(max-width:700px) { .experience-role { grid-template-columns:1fr; gap:.35rem; } }
+</style>
 <script is:inline define:vars={{ experience, variants }}>
   // Experience content is identical across targets; only the bullet order within
   // each object changes. Reorder the already-rendered article blocks to match the

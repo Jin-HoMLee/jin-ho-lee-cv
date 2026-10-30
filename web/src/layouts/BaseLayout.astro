@@ -4,62 +4,64 @@ import personJsonld from "../../public/person.jsonld?raw";
 import type { ContentData, Lang } from "../types/content";
 import { PAGES_BASE_URL } from "../lib/site-config";
 import DigitalTwin from "../components/DigitalTwin.astro";
+import PdfDownloadMenu from "../components/PdfDownloadMenu.astro";
 
 interface Props {
   lang: Lang;
   data: ContentData;
-  // OG metadata - pages pass these. Homepage and project pages compute their own.
-  ogSlug?: string;       // e.g. "index-en", "projects-L1-en"
-  ogTitle?: string;      // override <title> and og:title
+  ogSlug?: string;
+  ogTitle?: string;
   ogDescription?: string;
   ogType?: "profile" | "article" | "website";
 }
 
 const { lang, data, ogSlug, ogTitle, ogDescription, ogType } = Astro.props;
-const defaultTitle = `${data.personal.name.given} ${data.personal.name.family} - ${
-  lang === "en" ? "CV" : "Lebenslauf"
-}`;
+const defaultTitle = `${data.personal.name.given} ${data.personal.name.family} - ${lang === "en" ? "CV" : "Lebenslauf"}`;
 const title = ogTitle ?? defaultTitle;
 const description = ogDescription ?? data.profile.tagline;
 const slug = ogSlug ?? `index-${lang}`;
 const ogImageUrl = `${PAGES_BASE_URL}/og/${slug}.png`;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-const pathWithoutBase = Astro.url.pathname.startsWith(base)
-  ? Astro.url.pathname.slice(base.length)
-  : Astro.url.pathname;
+const pathWithoutBase = Astro.url.pathname.startsWith(base) ? Astro.url.pathname.slice(base.length) : Astro.url.pathname;
 const canonicalUrl = `${PAGES_BASE_URL}${pathWithoutBase}`;
 const resolvedOgType = ogType ?? "profile";
-// person.jsonld inlines content-derived strings (publication titles from
-// publications.bib). A "</script>" substring in any of them would close the tag
-// early and let the rest parse as markup, so escape "<" before inlining - same
-// backstop as FaqSection.astro. < is valid JSON and parses back to "<".
 const jsonld = personJsonld.replace(/</g, "\\u003c");
 const gscVerify = import.meta.env.PUBLIC_GSC_VERIFY;
 const analyticsEnabled = import.meta.env.PUBLIC_ANALYTICS_ENABLED === "true";
 const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;
 ---
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} data-theme="light">
   <head>
+    <meta charset="UTF-8" />
     <script is:inline>
-      (function () {
+      (() => {
+        const key = "cvTheme";
+        const valid = new Set(["light", "dark"]);
+        let theme = "light";
         try {
-          var saved = localStorage.getItem("cvTheme");
-          var theme = saved
-            || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-          document.documentElement.dataset.theme = theme;
-        } catch (e) {
-          document.documentElement.dataset.theme = "dark";
-        }
+          const query = new URLSearchParams(location.search).get("theme");
+          const saved = localStorage.getItem(key);
+          theme = valid.has(query) ? query : valid.has(saved) ? saved : "light";
+        } catch { /* warm light remains the privacy-safe default */ }
+        const apply = (next) => {
+          if (!valid.has(next)) return;
+          document.documentElement.dataset.theme = next;
+          document.documentElement.style.colorScheme = next;
+          try { localStorage.setItem(key, next); } catch { /* storage may be unavailable */ }
+          window.dispatchEvent(new CustomEvent("cv-theme-change", { detail: { theme: next } }));
+        };
+        window.setCvTheme = apply;
+        window.toggleCvTheme = () => apply(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+        apply(theme);
       })();
     </script>
-    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {gscVerify && <meta name="google-site-verification" content={gscVerify} />}
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
-
     <meta property="og:site_name" content={`${data.personal.name.given} ${data.personal.name.family} - ${lang === "en" ? "CV" : "Lebenslauf"}`} />
     <meta property="og:locale" content={lang === "en" ? "en_US" : "de_DE"} />
     <meta property="og:type" content={resolvedOgType} />
@@ -70,34 +72,41 @@ const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={title} />
-
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
-
     <script is:inline type="application/ld+json" set:html={jsonld}></script>
-    {analyticsEnabled && analyticsEndpoint && (
-      <script is:inline
-        data-goatcounter={analyticsEndpoint}
-        async
-        src="//gc.zgo.at/count.js"
-      ></script>
-    )}
-    <noscript><style>[data-reveal]{opacity:1 !important;transform:none !important;}</style></noscript>
+    {analyticsEnabled && analyticsEndpoint && <script is:inline data-goatcounter={analyticsEndpoint} async src="//gc.zgo.at/count.js"></script>}
+    <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
   </head>
-  <body class="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+  <body id="top" class="min-h-screen">
+    <a class="skip-link" href="#main">{lang === "de" ? "Zum Inhalt" : "Skip to content"}</a>
     <slot name="header" />
-    <main class="mx-auto max-w-6xl px-4 py-8 md:px-8">
-      <slot />
-    </main>
-    <footer class="mx-auto max-w-6xl px-4 py-8 text-xs text-[var(--faint)] md:px-8">
-      <p>
-        © {new Date().getUTCFullYear()} {data.personal.name.given} {data.personal.name.family} ·
-        <a class="underline hover:text-[var(--text)]" href="https://github.com/Jin-HoMLee/jin-ho-lee-cv">Source on GitHub</a> ·
-        <a class="underline hover:text-[var(--text)]" href="/writeups/ask-my-cv/">{lang === "de" ? "Wie diese Seite gebaut wurde (Read in English)" : "How this site was built"}</a>
-      </p>
+    <main id="main"><div class="site-wrap"><slot /></div></main>
+    <section id="contact" class="contact-band">
+      <div class="site-wrap contact-band-inner">
+        <div>
+          <p class="contact-overline">{lang === "de" ? "Die kompakte Version mitnehmen" : "Take the concise version with you"}</p>
+          <h2>{lang === "de" ? "Eine Identität, drei zielgerichtete PDFs." : "One identity, three targeted PDFs."}</h2>
+          <a class="section-back" href="#top">↑ {lang === "de" ? "Nach oben" : "Back to top"}</a>
+        </div>
+        <PdfDownloadMenu lang={lang} />
+      </div>
+    </section>
+    <footer class="site-wrap border-t border-[var(--surface-border)] py-10 text-sm text-[var(--muted)]">
+      <div class="flex flex-wrap items-center justify-between gap-5">
+        <p>© {new Date().getUTCFullYear()} {data.personal.name.given} {data.personal.name.family}</p>
+        <nav class="flex flex-wrap gap-4" aria-label={lang === "de" ? "Fußnavigation" : "Footer navigation"}>
+          <a class="hover:text-[var(--accent)]" href={data.personal.links.linkedin ?? "#"}>LinkedIn</a>
+          <a class="hover:text-[var(--accent)]" href={data.personal.links.github ?? "#"}>GitHub</a>
+          <a class="hover:text-[var(--accent)]" href={data.personal.links.orcid ?? "#"}>ORCID</a>
+          <a class="hover:text-[var(--accent)]" href="https://github.com/Jin-HoMLee/jin-ho-lee-cv">Source</a>
+          <a class="hover:text-[var(--accent)]" href="/writeups/ask-my-cv/">{lang === "de" ? "Wie diese Seite gebaut wurde (EN)" : "How this site was built"}</a>
+        </nav>
+      </div>
     </footer>
+    <DigitalTwin />
     <script>
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const els = document.querySelectorAll("[data-reveal]");
@@ -105,13 +114,70 @@ const analyticsEndpoint = import.meta.env.PUBLIC_ANALYTICS_ENDPOINT;
         els.forEach((e) => e.classList.add("revealed"));
       } else {
         const io = new IntersectionObserver((entries) => {
-          for (const e of entries) {
-            if (e.isIntersecting) { e.target.classList.add("revealed"); io.unobserve(e.target); }
-          }
+          for (const e of entries) if (e.isIntersecting) { e.target.classList.add("revealed"); io.unobserve(e.target); }
         }, { rootMargin: "0px 0px -8% 0px" });
         els.forEach((e) => io.observe(e));
       }
+
+      // Font metrics can settle after the browser's first fragment jump. Re-align
+      // an initial hash once local fonts are ready so the sticky-header clearance
+      // remains the declared scroll-padding value rather than drifting under it.
+      const settleHashAnchor = () => {
+        if (!location.hash) return;
+        try {
+          const anchor = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+          if (!anchor) return;
+          document.documentElement.style.scrollBehavior = "auto";
+          anchor.scrollIntoView({ block: "start" });
+          requestAnimationFrame(() => document.documentElement.style.removeProperty("scroll-behavior"));
+        } catch { /* malformed fragments keep native browser behaviour */ }
+      };
+      requestAnimationFrame(settleHashAnchor);
+      document.fonts?.ready?.then(settleHashAnchor);
+
+      // Preserve the nearest visible semantic section and active theme as one
+      // progressive EN/DE navigation handoff. Ordinary links still work without JS.
+      const positionKey = "cv-language-position-v1";
+      const restore = () => {
+        try {
+          const saved = JSON.parse(sessionStorage.getItem(positionKey) || "null");
+          if (!saved || saved.target !== location.pathname || Date.now() - saved.at > 15000) return;
+          history.scrollRestoration = "manual";
+          document.documentElement.style.scrollBehavior = "auto";
+          const anchor = saved.anchor && document.getElementById(saved.anchor);
+          const top = anchor ? anchor.getBoundingClientRect().top + scrollY + saved.offset : saved.y;
+          scrollTo(0, Math.max(0, Math.min(top, document.documentElement.scrollHeight - innerHeight)));
+          requestAnimationFrame(() => document.documentElement.style.removeProperty("scroll-behavior"));
+        } catch { /* storage/navigation may be unavailable */ }
+      };
+      restore();
+      requestAnimationFrame(() => {
+        restore();
+        const done = () => { restore(); try { sessionStorage.removeItem(positionKey); } catch {} };
+        document.fonts?.ready ? document.fonts.ready.then(done) : done();
+      });
+      document.querySelectorAll<HTMLAnchorElement>("[data-language-switch]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          try {
+            const candidates = Array.from(document.querySelectorAll<HTMLElement>("main [id]"))
+              .filter((node) => node.offsetParent !== null && node.getBoundingClientRect().top <= 96)
+              .sort((a, b) => b.getBoundingClientRect().top - a.getBoundingClientRect().top);
+            const anchor = candidates[0];
+            const url = new URL(link.href, location.href);
+            url.searchParams.set("theme", document.documentElement.dataset.theme || "light");
+            link.href = url.href;
+            sessionStorage.setItem(positionKey, JSON.stringify({
+              target: url.pathname,
+              anchor: anchor?.id || null,
+              offset: anchor ? scrollY - (anchor.getBoundingClientRect().top + scrollY) : 0,
+              y: scrollY,
+              at: Date.now(),
+            }));
+          } catch { /* progressive enhancement only */ }
+        });
+      });
+      document.querySelectorAll("[data-mobile-menu] a").forEach((link) => link.addEventListener("click", () => link.closest("details")?.removeAttribute("open")));
     </script>
-    <DigitalTwin />
   </body>
 </html>

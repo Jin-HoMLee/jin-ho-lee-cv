@@ -1,0 +1,34 @@
+---
+import type { ContentData, Lang } from "../types/content";
+interface Props { data:ContentData; lang:Lang }
+const { data, lang } = Astro.props;
+const prefix = lang === "de" ? "/de" : "";
+const routes = [
+  ["experience", data.history.experience_chapters.flatMap((c) => c.entries).length, lang === "de" ? "Erfahrungseinträge" : "experience records"],
+  ["projects", Object.keys(data.projects).length, lang === "de" ? "Projekte" : "projects"],
+  ["publications", data.publications.length, lang === "de" ? "Bibliografie-Einträge" : "bibliography records"],
+  ["skills", data.skills.categories.flatMap((c) => c.groups.flatMap((g) => g.items)).length, "skills"],
+  ["education", data.history.education.length, lang === "de" ? "Bildungseinträge" : "education records"],
+];
+---
+<section class="archive-chapter" id="capabilities">
+  <h2>{lang === "de" ? "Profil & Fähigkeiten" : "Profile & capabilities"}</h2>
+  <div class="archive-grid">
+    {data.skills.categories.map((category) => <article class="archive-card"><span class="archive-card-id">{category.name}</span><h3>{category.groups.map((group) => group.label).join(" · ")}</h3><p>{category.groups.flatMap((group) => group.items).join(" · ")}</p></article>)}
+  </div>
+</section>
+<section class="archive-chapter" id="credentials">
+  <h2>{lang === "de" ? "Abschlüsse & Nachweise" : "Education & credentials"}</h2>
+  <div class="archive-grid">
+    {data.education.map((entry) => <article class="archive-card"><h3>{entry.degree}</h3><p>{entry.institution} · {entry.year}</p></article>)}
+    {data.awards.map((award) => <article class="archive-card"><h3>{award.title}</h3><p>{award.issuer} · {award.year}</p></article>)}
+    <article class="archive-card"><h3>{lang === "de" ? "Sprachen" : "Languages"}</h3><p>{data.languages.map((item) => `${item.name} · ${item.proficiency}`).join(" / ")}</p></article>
+  </div>
+</section>
+<section class="archive-chapter" id="routes">
+  <h2>{lang === "de" ? "Vollständige Evidenzansichten" : "Complete evidence routes"}</h2>
+  <div class="archive-grid">
+    {routes.map(([route,count,label]) => <a class="archive-card no-underline" href={`${prefix}/${route}/`}><span class="archive-card-id">{count}</span><h3>{label}</h3><p>{lang === "de" ? "Vollständige statische Ansicht öffnen" : "Open complete static view"} →</p></a>)}
+  </div>
+</section>
+<a class="section-back" href="#top">↑ {lang === "de" ? "Nach oben" : "Back to top"}</a>
