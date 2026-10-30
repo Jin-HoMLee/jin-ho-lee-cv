@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 180" role="img" aria-label="Layered machine-learning deployment graph ending in a production endpoint">
+  <g fill="none" stroke="#23415f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="18" y="18" width="70" height="34" rx="7"/><rect x="116" y="18" width="70" height="34" rx="7"/><rect x="214" y="18" width="70" height="34" rx="7"/>
+    <rect x="67" y="82" width="70" height="34" rx="7"/><rect x="165" y="82" width="70" height="34" rx="7"/>
+    <rect x="271" y="126" width="66" height="34" rx="17" stroke="#a17a45" stroke-width="3"/>
+    <path d="M53 52L102 82M151 52L102 82M151 52L200 82M249 52L200 82M137 99L271 143M235 99L271 143"/>
+  </g>
+  <g fill="#f7f1e6" stroke="#57728f" stroke-width="2"><circle cx="38" cy="35" r="6"/><circle cx="136" cy="35" r="6"/><circle cx="234" cy="35" r="6"/><circle cx="87" cy="99" r="6"/><circle cx="185" cy="99" r="6"/></g>
+  <g fill="#a17a45"><circle cx="102" cy="82" r="4"/><circle cx="200" cy="82" r="4"/><circle cx="271" cy="143" r="4"/><circle cx="304" cy="143" r="7"/></g>
+</svg>
