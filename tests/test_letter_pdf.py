@@ -10,6 +10,7 @@ import subprocess
 from pathlib import Path
 
 import pytest
+from pypdf import PdfReader
 
 from scripts import cover_letter_core as clc
 
@@ -130,6 +131,11 @@ def test_cover_letter_pdf_compiles(apps):
     out = apps / slug / "artifacts" / "cover-letter-de.pdf"
     assert out.exists()
     assert out.stat().st_size > 1000, "PDF looks empty"
+    reader = PdfReader(str(out))
+    assert len(reader.pages) == 1
+    if shutil.which("pdffonts") is not None:
+        fonts = subprocess.run(["pdffonts", str(out)], capture_output=True, text=True, check=True).stdout
+        assert "IBMPlexSans" in fonts
 
 
 def test_cover_letter_pdf_compiles_minimal_recipient(apps):

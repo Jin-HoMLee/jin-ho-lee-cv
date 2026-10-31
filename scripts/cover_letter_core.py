@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -569,6 +570,8 @@ def _render_pdf(slug: str, letter: dict, lang: str, *, apps_dir: Path) -> None:
         text=True,
         timeout=600,
         shell=False,
+        check=False,
+        env={**os.environ, "SOURCE_DATE_EPOCH": os.environ.get("SOURCE_DATE_EPOCH", "0")},
     )
     if proc.returncode != 0:
         raise RuntimeError(f"typst compile failed (exit {proc.returncode}):\n{proc.stderr}")

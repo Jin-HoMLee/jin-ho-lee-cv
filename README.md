@@ -54,6 +54,7 @@ Phase 1 produces a concise one-to-two-page English PDF locally. Requirements:
 ```bash
 just build          # → dist/cv-en.pdf (no PII, no photo)
 just build-private  # → dist-private/cv-en.pdf (phone + address, no photo)
+just build-publications  # → dist/publications-{en,de}.pdf
 just clean          # remove dist/, dist-private/, and pdf/.cache/
 ```
 
@@ -69,3 +70,5 @@ uv run python -m pdf.build --lang en --private --photo  # photo + PII
 ### How it works
 
 `pdf/build.py` loads the YAML content tree (Phase 0 loader), merges the private overlay if present, resolves language maps to plain strings, writes the result to `pdf/.cache/data.json`, then invokes `typst compile` on `pdf/templates/cv.typ`. The Typst template reads the JSON and renders the layout. Design tokens live in `pdf/styles.typ`.
+
+Candidate-authored attachments use the Editorial Continuity primitives in `pdf/templates/attachment.typ`. `just letter <slug>` renders the reusable cover-letter variant; `just build-publications` renders the complete bilingual publication-list attachments from `content/publications.bib`. See [`docs/attachment-documents.md`](docs/attachment-documents.md) for the downstream handoff contract.

@@ -164,6 +164,22 @@ def test_export_ignores_legacy_root_letter_path(apps, tmp_path: Path):
     assert (apps / slug / "cover-letter-en.pdf").read_bytes() == FAKE_PDF
 
 
+def test_export_records_optional_publication_list(apps, tmp_path: Path):
+    """The reusable publication attachment is frozen when staged canonically."""
+    slug = "iso-2026-09"
+    _write_package(apps, slug, language="de", tailoring="variant: comp-bio")
+    publication_pdf = apps / slug / "artifacts" / "publication-list-de.pdf"
+    publication_pdf.parent.mkdir()
+    publication_pdf.write_bytes(FAKE_PDF)
+
+    manifest = ea.export_application_cv(slug, apps_dir=apps, build_pdf=_fake_build(tmp_path))
+
+    assert manifest["publication_list"]["source"] == "content/publications.bib"
+    assert manifest["publication_list"]["pdf_path"] == "artifacts/publication-list-de.pdf"
+    assert manifest["publication_list"]["pdf_sha256"] == _sha256(FAKE_PDF)
+    assert manifest["publication_list"]["rendered_at"]
+
+
 def test_export_env_override_path(monkeypatch, tmp_path: Path):
     """No apps_dir arg → the package resolves through APPLICATIONS_DIR (Stage 1)."""
     apps = tmp_path / "standalone-apps"
