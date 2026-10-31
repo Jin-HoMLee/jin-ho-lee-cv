@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   FOCUS_MARKS,
   FOCUS_TARGETS,
+  clampFocusProgress,
   interpolateFocusMark,
   type FocusTarget,
 } from "../src/lib/focus-mark";
@@ -57,6 +58,26 @@ describe("focus mark geometry", () => {
     const to = FOCUS_MARKS["ds-ml"];
     expect(interpolateFocusMark(from, to, -2)).toEqual(interpolateFocusMark(from, to, 0));
     expect(interpolateFocusMark(from, to, 2)).toEqual(interpolateFocusMark(from, to, 1));
+    expect(clampFocusProgress(Number.NaN)).toBe(0);
+    expect(clampFocusProgress(-0.02)).toBe(0);
+    expect(clampFocusProgress(1.02)).toBe(1);
+  });
+
+  it("keeps every circle radius valid across the rapid directed switch sequence", () => {
+    const sequence = ["ds-ml", "comp-bio", "bridge", "ds-ml", "comp-bio", "bridge"] as const;
+    let current = FOCUS_MARKS.bridge;
+    for (const target of sequence) {
+      // A RAF timestamp can precede the transition start by a few milliseconds.
+      for (const progress of [-0.02, 0, 0.5, 1, 1.02]) {
+        const frame = interpolateFocusMark(current, FOCUS_MARKS[target], progress);
+        for (const circle of [...frame.nodes, ...frame.rings]) {
+          expect(Number.isFinite(circle.r)).toBe(true);
+          expect(circle.r).toBeGreaterThanOrEqual(0);
+        }
+      }
+      current = FOCUS_MARKS[target];
+    }
+    expect(current).toEqual(FOCUS_MARKS.bridge);
   });
 });
 

@@ -66,6 +66,7 @@ const copy = lang === "de"
     const initial = focusMarks.bridge;
     let current = initial;
     let frame = 0;
+    let transitionId = 0;
     let activeTarget = "bridge";
     const reduced = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     const number = (value) => String(Number(value.toFixed(4)));
@@ -107,6 +108,8 @@ const copy = lang === "de"
     const transition = (target, animate = true) => {
       if (!focusTargets.includes(target) || target === activeTarget && !frame) return;
       cancelAnimationFrame(frame);
+      frame = 0;
+      const id = ++transitionId;
       activeTarget = target;
       const destination = focusMarks[target];
       const start = current;
@@ -120,7 +123,14 @@ const copy = lang === "de"
       const started = performance.now();
       const duration = 560;
       const tick = (now) => {
-        const progress = Math.min(1, (now - started) / duration);
+        // A RAF timestamp is the frame's start time, so it can be slightly
+        // earlier than `started` when a lens event arrives during that frame.
+        // Clamp both ends: an unclamped negative progress creates invalid SVG
+        // radii while a stale callback can otherwise overwrite a retargeted
+        // animation.
+        if (id !== transitionId) return;
+        const elapsed = now - started;
+        const progress = Number.isFinite(elapsed) ? Math.max(0, Math.min(1, elapsed / duration)) : 0;
         const eased = 1 - Math.pow(1 - progress, 3);
         current = interpolate(start, destination, eased);
         render(current);
@@ -152,6 +162,7 @@ const copy = lang === "de"
       if (!event.matches || !frame) return;
       cancelAnimationFrame(frame);
       frame = 0;
+      transitionId += 1;
       current = focusMarks[activeTarget];
       render(current);
       updateCopy(activeTarget);
