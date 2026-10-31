@@ -1,5 +1,5 @@
 ---
-import type { Skills, Labels } from "../types/content";
+import type { Skills, Labels, Lang } from "../types/content";
 
 interface SkillVariant {
   skills?: Skills;
@@ -9,14 +9,13 @@ interface Props {
   skills: Skills;
   labels: Labels;
   variants?: Record<string, SkillVariant>;
+  lang?: Lang;
 }
 
-const { skills, labels, variants = {} } = Astro.props;
+const { skills, labels, variants = {}, lang = "en" } = Astro.props;
 ---
-<section id="skills" class="py-6" data-cv-skills>
-  <h2 class="eyebrow mb-4">
-    {labels.sections.skills}
-  </h2>
+<section id="skills" class="editorial-section" data-cv-skills>
+  <div class="editorial-section-head"><h2 class="eyebrow">05 / {labels.sections.skills}</h2><a class="section-back" href="#top">↑ {lang === "de" ? "Oben" : "Top"}</a></div>
   <div class="space-y-5" data-cv-skills-content>
     {skills.categories.map((cat) => (
       <div>
@@ -27,7 +26,7 @@ const { skills, labels, variants = {} } = Astro.props;
               <p class="text-xs font-medium text-[var(--muted)]">{g.label}</p>
               <ul class="mt-1 flex flex-wrap gap-1">
                 {g.items.map((item) => (
-                  <li class="font-mono-plex rounded bg-[var(--surface)] px-1.5 py-0.5 text-xs text-[var(--muted)]">{item}</li>
+                  <li class="skill-label">{item}</li>
                 ))}
               </ul>
             </div>
@@ -36,7 +35,13 @@ const { skills, labels, variants = {} } = Astro.props;
       </div>
     ))}
   </div>
+  <p class="mt-5"><a class="archive-link" href={lang === "de" ? "/de/skills/" : "/skills/"}>{lang === "de" ? "Alle Skills durchsuchen und filtern" : "Search and filter all skills"} →</a></p>
 </section>
+<style>
+  .skill-label { position:relative; padding-left:.7rem; color:var(--text); font-size:.75rem; }
+  .skill-label::before { content:""; position:absolute; left:0; top:.55em; width:4px; height:4px; border-radius:50%; background:var(--gold); }
+  .archive-link { color:var(--accent); font:600 .75rem "IBM Plex Mono",monospace; text-decoration:none; border-bottom:1px solid currentColor; }
+</style>
 
 <script is:inline define:vars={{ skills, variants }}>
   (function () {
@@ -67,7 +72,7 @@ const { skills, labels, variants = {} } = Astro.props;
           groupNode.appendChild(element("p", "text-xs font-medium text-[var(--muted)]", group.label));
           const itemsNode = element("ul", "mt-1 flex flex-wrap gap-1");
           for (const item of group.items) {
-            itemsNode.appendChild(element("li", "font-mono-plex rounded bg-[var(--surface)] px-1.5 py-0.5 text-xs text-[var(--muted)]", item));
+            itemsNode.appendChild(element("li", "skill-label", item));
           }
           groupNode.appendChild(itemsNode);
           groupsNode.appendChild(groupNode);

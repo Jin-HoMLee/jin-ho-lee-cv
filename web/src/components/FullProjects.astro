@@ -1,0 +1,33 @@
+---
+import type { Project, Labels, Lang } from "../types/content";
+import { formatPeriod } from "../lib/period";
+interface Props { projects:Record<string,Project>; labels:Labels; lang:Lang }
+const { projects, labels, lang } = Astro.props;
+const prefix = lang === "de" ? "/de" : "";
+const categoryOrder:Project["category"][] = ["life-science","data-science","consulting"];
+const categoryLabels = lang === "de"
+ ? { "life-science":"Lebenswissenschaften", "data-science":"Data Science", consulting:"Beratung" }
+ : { "life-science":"Life science", "data-science":"Data science", consulting:"Consulting" };
+---
+{categoryOrder.map((category) => (
+  <section class="archive-chapter" id={category}>
+    <h2>{categoryLabels[category]}</h2>
+    <div class="archive-grid">
+      {Object.values(projects).filter((project) => project.category === category).map((project) => (
+        <article class="archive-card" id={project.id}>
+          <span class="archive-card-id">{project.id} · {formatPeriod(project.period,labels)}</span>
+          <h3>{project.title}</h3>
+          <p>{project.summary}</p>
+          <p class="text-sm text-[var(--gold)]">{project.role}</p>
+          <details class="mt-3">
+            <summary class="cursor-pointer font-semibold">{lang === "de" ? "Evidenz ansehen" : "View evidence"}</summary>
+            <ul class="mt-3 list-disc pl-5 text-sm text-[var(--muted)]">{project.contributions.map((item) => <li>{item}</li>)}</ul>
+            <p class="italic">{project.outcome}</p>
+          </details>
+          <p class="mt-4"><a class="archive-ref" href={`${prefix}/projects/${project.id}/`}>{lang === "de" ? "Projektseite" : "Project page"} ↗</a></p>
+        </article>
+      ))}
+    </div>
+  </section>
+))}
+<a class="section-back" href="#top">↑ {lang === "de" ? "Nach oben" : "Back to top"}</a>

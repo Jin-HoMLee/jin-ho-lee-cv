@@ -1,12 +1,13 @@
 ---
-import type { Faq, Labels } from "../types/content";
+import type { Faq, Labels, Lang } from "../types/content";
 
 interface Props {
   faq: Faq;
   labels: Labels;
+  lang?: Lang;
 }
 
-const { faq, labels } = Astro.props;
+const { faq, labels, lang = "en" } = Astro.props;
 
 // FAQPage structured data built from the SAME data the section renders below,
 // so the visible text and the schema can never drift apart.
@@ -28,7 +29,10 @@ const faqPage = {
 const faqPageJson = JSON.stringify(faqPage).replace(/</g, "\\u003c");
 ---
 <section id="faq" class="py-6" data-faq-section data-reveal>
-  <h2 class="eyebrow mb-3">{labels.sections.faq}</h2>
+  <div class="editorial-section-head">
+    <h2 class="eyebrow mb-3">{labels.sections.faq}</h2>
+    <a class="section-back" href="#top">↑ {lang === "de" ? "Nach oben" : "Back to top"}</a>
+  </div>
   <div class="flex flex-col gap-2">
     {faq.faqs.map((entry) => (
       <details

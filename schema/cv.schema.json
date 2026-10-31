@@ -39,6 +39,63 @@
       "items": { "$ref": "#/$defs/ProjectId" },
       "minItems": 1
     },
+    "history": {
+      "type": "object",
+      "properties": {
+        "experience_chapters": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+              "label": { "$ref": "#/$defs/LangString" },
+              "entries": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+                    "period": { "$ref": "#/$defs/Period" },
+                    "type": { "$ref": "#/$defs/LangString" },
+                    "role": { "$ref": "#/$defs/LangString" },
+                    "org": { "$ref": "#/$defs/LangString" },
+                    "summary": { "$ref": "#/$defs/LangString" },
+                    "tags": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+                    "refs": { "type": "array", "items": { "$ref": "#/$defs/ProjectId" } }
+                  },
+                  "required": ["id", "period", "type", "role", "org", "summary", "tags", "refs"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["id", "label", "entries"],
+            "additionalProperties": false
+          }
+        },
+        "education": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "pattern": "^edu-[0-9]+$" },
+              "period": { "$ref": "#/$defs/Period" },
+              "degree": { "$ref": "#/$defs/LangString" },
+              "institution": { "$ref": "#/$defs/LangString" },
+              "detail": { "$ref": "#/$defs/LangString" },
+              "status": { "$ref": "#/$defs/LangString" },
+              "completed": { "type": "boolean" }
+            },
+            "required": ["id", "period", "degree", "institution", "detail", "status", "completed"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["experience_chapters", "education"],
+      "additionalProperties": false
+    },
     "personal": {
       "type": "object",
       "properties": {

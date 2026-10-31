@@ -61,11 +61,9 @@ function renderAuthors(authors: string[]): string {
     .join(", ");
 }
 ---
-<section id="publications" class="py-6">
-  <h2 class="eyebrow mb-4">
-    {sectionLabel[lang]}
-  </h2>
-  <div class="flex flex-col gap-2 md:flex-row md:items-center md:gap-8">
+<section id="publications" class="editorial-section">
+  <div class="editorial-section-head"><h2 class="eyebrow">04 / {sectionLabel[lang]}</h2><a class="section-back" href="#top">↑ {lang === "de" ? "Nach oben" : "Back to top"}</a></div>
+  <div class="publication-visuals">
     <div class="min-w-0 flex-1">
       <PublicationsChart metrics={metrics} labels={labels} lang={lang} />
     </div>
@@ -151,4 +149,11 @@ function renderAuthors(authors: string[]): string {
       )
     ))}
   </div>
+  <p class="mt-5"><a class="archive-link" href={lang === "de" ? "/de/publications/" : "/publications/"}>{lang === "de" ? "Alle 16 Bibliografie-Einträge ansehen" : "View all 16 bibliography records"} →</a></p>
 </section>
+<style>
+  .publication-visuals { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:.65rem; }
+  .publication-visuals > div { min-width:0; border:1px solid var(--surface-border); background:var(--surface); padding:.8rem; }
+  .archive-link { color:var(--accent); font:600 .75rem "IBM Plex Mono",monospace; text-decoration:none; border-bottom:1px solid currentColor; }
+  @media(max-width:700px) { .publication-visuals { gap:.45rem; } .publication-visuals > div { padding:.45rem; } }
+</style>

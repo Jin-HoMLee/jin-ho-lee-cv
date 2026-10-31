@@ -1,37 +1,18 @@
 ---
-import { existsSync } from "node:fs";
-import { resolve } from "node:path";
-import type { Personal, Profile, Labels } from "../types/content";
+import type { Personal, Profile, Labels, Lang } from "../types/content";
 
 interface Props {
   personal: Personal;
   profile: Profile;
   labels: Labels;
+  lang?: Lang;
 }
 
-const { personal, profile, labels } = Astro.props;
-
-// Check at build time whether a public photo exists in web/public/photo.jpg.
-// The `astro build` cwd is the `web/` directory.
-const hasPhoto = existsSync(resolve("./public/photo.jpg"));
-const photoUrl = `${import.meta.env.BASE_URL}photo.jpg`;
+const { profile, labels, lang = "en" } = Astro.props;
 ---
-<section id="profile" class="py-6">
-  <h2 class="eyebrow mb-3">
-    {labels.sections.profile}
-  </h2>
-  <div class="flex flex-col gap-6 md:flex-row md:items-start">
-    {hasPhoto && (
-      <img
-        src={photoUrl}
-        alt={`${personal.name.given} ${personal.name.family}`}
-        class="h-32 w-32 flex-shrink-0 rounded-full object-cover md:h-40 md:w-40"
-        width="160"
-        height="160"
-        loading="eager"
-      />
-    )}
-    <div>
+<section id="profile" class="editorial-section">
+  <div class="editorial-section-head"><h2 class="eyebrow">{labels.sections.profile}</h2><a class="section-back" href="#top">↑ {lang === "de" ? "Oben" : "Top"}</a></div>
+  <div>
       {profile.answer_block && (
         <p
           class="text-base leading-relaxed text-[var(--text)]"
@@ -43,5 +24,6 @@ const photoUrl = `${import.meta.env.BASE_URL}photo.jpg`;
         <p class="mt-3 leading-relaxed text-[var(--muted)]" data-cv-field={i === 0 ? "lead" : i === 1 ? "second" : undefined}>{p}</p>
       ))}
     </div>
-  </div>
+  <p class="mt-5"><a class="archive-link" href={lang === "de" ? "/de/archive/" : "/archive/"}>{lang === "de" ? "Vollständigen CV-Index öffnen" : "Open complete CV index"} →</a></p>
 </section>
+<style>.archive-link{color:var(--accent);font:600 .75rem "IBM Plex Mono",monospace;text-decoration:none;border-bottom:1px solid currentColor}</style>

@@ -1,0 +1,38 @@
+---
+import type { Publication, PublicationMetrics, Labels, Lang } from "../types/content";
+import PublicationsChart from "./PublicationsChart.astro";
+import PublicationsCumulative from "./PublicationsCumulative.astro";
+interface Props { publications:Publication[]; metrics:PublicationMetrics; labels:Labels; lang:Lang }
+const { publications, metrics, labels, lang } = Astro.props;
+const categories = ["research","applied"] as const;
+const types = ["article","book-chapter","conference","book"] as const;
+const categoryLabel = lang === "de" ? {research:"Forschung",applied:"Angewandt / themenfremd"} : {research:"Research",applied:"Applied / off-domain"};
+const typeLabel = lang === "de"
+ ? {article:"Peer-Review-Artikel","book-chapter":"Buchkapitel",conference:"Konferenzbeiträge",book:"Bücher"}
+ : {article:"Peer-reviewed articles","book-chapter":"Book chapters",conference:"Conference contributions",book:"Books"};
+---
+<div class="publication-archive-charts">
+  <div><PublicationsChart metrics={metrics} labels={labels} lang={lang} /></div>
+  <div><PublicationsCumulative publications={publications} metrics={metrics} labels={labels} lang={lang} /></div>
+</div>
+<p class="archive-note mb-10">{lang === "de" ? "Alle 16 Bibliografie-Einträge. Forschung und angewandte/themenfremde Beiträge bleiben getrennt; Zitationszahlen sind indikative Crossref-Werte aus dem committeten Cache." : "All 16 bibliography records. Research and applied/off-domain work remain separate; citation counts are indicative Crossref values from the committed cache."}</p>
+{categories.map((category) => (
+  <section class="archive-chapter" id={category}>
+    <h2>{categoryLabel[category]}</h2>
+    {types.map((type) => {
+      const entries = publications.filter((item) => item.category === category && item.type === type).sort((a,b) => b.year-a.year);
+      return entries.length > 0 && <div class="mb-8"><h3 class="border-b border-[var(--gold)] pb-2 font-mono-plex text-sm uppercase">{typeLabel[type]}</h3><ol>
+        {entries.map((publication) => <li class="archive-entry publication-entry" id={publication.key}>
+          <div class="archive-date">{publication.year}<span class="archive-type">{publication.authorship}</span></div>
+          <div><h3>{publication.title}</h3><p>{publication.authors.join(", ")}</p><p class="mt-1 text-sm">{publication.venue}{publication.doi && <> · <a class="text-[var(--accent)]" href={`https://doi.org/${publication.doi}`}>{publication.doi}</a></>}{publication.citation_count != null && <> · {lang === "de" ? "zitiert von" : "cited by"} {publication.citation_count}</>}</p></div>
+        </li>)}
+      </ol></div>;
+    })}
+  </section>
+))}
+<a class="section-back" href="#top">↑ {lang === "de" ? "Nach oben" : "Back to top"}</a>
+<style>
+  .publication-archive-charts { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:.7rem; margin-bottom:1rem; }
+  .publication-archive-charts > div { min-width:0; border:1px solid var(--surface-border); background:var(--surface); padding:.75rem; }
+  @media(max-width:700px) { .publication-archive-charts > div { padding:.4rem; } }
+</style>

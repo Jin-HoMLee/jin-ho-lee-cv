@@ -25,6 +25,7 @@ Skip-guarded locally (needs a web build); the CI `web-guard` job builds web/dist
 
 from __future__ import annotations
 
+import html
 import json
 from pathlib import Path
 
@@ -38,6 +39,10 @@ CONTENT_DIR = REPO_ROOT / "content"
 EXAMPLE_OVERLAY = REPO_ROOT / "master-cv.example"
 INDEX_EN = REPO_ROOT / "web" / "dist" / "index.html"
 INDEX_DE = REPO_ROOT / "web" / "dist" / "de" / "index.html"
+EXPERIENCE_ARCHIVE_EN = REPO_ROOT / "web" / "dist" / "experience" / "index.html"
+EXPERIENCE_ARCHIVE_DE = REPO_ROOT / "web" / "dist" / "de" / "experience" / "index.html"
+EDUCATION_ARCHIVE_EN = REPO_ROOT / "web" / "dist" / "education" / "index.html"
+EDUCATION_ARCHIVE_DE = REPO_ROOT / "web" / "dist" / "de" / "education" / "index.html"
 
 pytestmark = pytest.mark.skipif(
     not (INDEX_EN.exists() and INDEX_DE.exists()),
@@ -75,10 +80,28 @@ def test_every_degree_and_institution_in_static_html(html_en):
 
 
 def test_answer_block_is_front_loaded_in_static_html(html_en):
-    """The liftable answer block must be server-rendered, not JS-injected."""
+    """The concise liftable answer block must be server-rendered, not JS-injected."""
     block = yaml.load((CONTENT_DIR / "profile.en.yaml").read_text(encoding="utf-8"))["answer_block"]
+    assert len(block) <= 180
     assert 'data-cv-field="answer-block"' in html_en
     assert block in html_en
+
+
+def test_opening_uses_original_portrait_and_skills_first_sidebar(html_en):
+    assert 'src="/photo.jpg"' in html_en
+    hero_source = (REPO_ROOT / "web" / "src" / "components" / "IdentityHero.astro").read_text(
+        "utf-8"
+    )
+    assert "filter:grayscale(1) contrast(1.05)" in hero_source
+    assert "From evidence to impact" in html_en
+    assert "Von Evidenz zu Wirkung" in INDEX_DE.read_text(encoding="utf-8")
+    assert 'id="profile"' not in html_en
+    content_start = html_en.index('class="editorial-content"')
+    sidebar_start = html_en.index("<aside", content_start)
+    sidebar_end = html_en.index("</aside>", sidebar_start)
+    sidebar = html_en[sidebar_start:sidebar_end]
+    assert 'id="skills"' in sidebar
+    assert sidebar.index('id="skills"') < sidebar.index('id="education"')
 
 
 def test_selected_project_titles_in_static_html(html_en):
@@ -109,6 +132,61 @@ def test_publication_titles_in_static_html(html_en):
         assert pub.title in html_en, (
             f"publication {pub.key} title {pub.title!r} is not in the raw HTML"
         )
+
+
+def test_complete_public_archives_are_static_and_bilingual():
+    history = _load("history.yaml")
+    pages = {
+        "en": (
+            EXPERIENCE_ARCHIVE_EN.read_text(encoding="utf-8"),
+            EDUCATION_ARCHIVE_EN.read_text(encoding="utf-8"),
+        ),
+        "de": (
+            EXPERIENCE_ARCHIVE_DE.read_text(encoding="utf-8"),
+            EDUCATION_ARCHIVE_DE.read_text(encoding="utf-8"),
+        ),
+    }
+    assert sum(len(chapter["entries"]) for chapter in history["experience_chapters"]) == 22
+    assert len(history["education"]) == 12
+    for lang, (experience_html, education_html) in pages.items():
+        experience_html = html.unescape(experience_html)
+        education_html = html.unescape(education_html)
+        for chapter in history["experience_chapters"]:
+            for entry in chapter["entries"]:
+                assert entry["role"][lang] in experience_html
+                assert entry["org"][lang] in experience_html
+        for entry in history["education"]:
+            assert entry["degree"][lang] in education_html
+            assert entry["institution"][lang] in education_html
+
+
+def test_complete_archive_routes_are_in_sitemap():
+    sitemap_index = REPO_ROOT / "web" / "dist" / "sitemap-index.xml"
+    sitemap = sitemap_index.read_text(encoding="utf-8")
+    assert "sitemap-0.xml" in sitemap
+    route_map = (REPO_ROOT / "web" / "dist" / "sitemap-0.xml").read_text(encoding="utf-8")
+    for route in ("archive", "education", "experience", "projects", "publications", "skills"):
+        assert f"/{route}/" in route_map
+        assert f"/de/{route}/" in route_map
+
+
+def test_complete_archive_routes_have_og_images():
+    og_dir = REPO_ROOT / "web" / "dist" / "og"
+    for slug in (
+        "archive-en",
+        "archive-de",
+        "education-all-en",
+        "education-all-de",
+        "experience-en",
+        "experience-de",
+        "projects-all-en",
+        "projects-all-de",
+        "publications-all-en",
+        "publications-all-de",
+        "skills-all-en",
+        "skills-all-de",
+    ):
+        assert (og_dir / f"{slug}.png").is_file()
 
 
 def test_person_jsonld_is_served_and_parses(html_en):

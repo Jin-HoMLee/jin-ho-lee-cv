@@ -1,0 +1,4 @@
+---
+import content from "../../data/content.en.json"; import type { ContentData } from "../../types/content"; import ArchivePageShell from "../../components/ArchivePageShell.astro"; import FullSkills from "../../components/FullSkills.astro"; const data=content as unknown as ContentData;
+---
+<ArchivePageShell data={data} lang="en" title="All skills" overline="Searchable capability inventory" intro="Every canonical public skill is grouped by domain. Search instantly or filter by category; skill labels remain intentionally static." slug="skills-all-en"><FullSkills skills={data.skills} lang="en" /></ArchivePageShell>

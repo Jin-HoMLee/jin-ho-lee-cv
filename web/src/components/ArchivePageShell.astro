@@ -1,0 +1,30 @@
+---
+import type { ContentData, Lang } from "../types/content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "./Header.astro";
+interface Props { data:ContentData; lang:Lang; title:string; overline:string; intro:string; slug:string }
+const { data, lang, title, overline, intro, slug } = Astro.props;
+const prefix = lang === "de" ? "/de" : "";
+const nav = lang === "de"
+  ? [["experience","Erfahrung"],["projects","Projekte"],["publications","Publikationen"],["skills","Skills"],["education","Bildung"],["archive","Index"]]
+  : [["experience","Experience"],["projects","Projects"],["publications","Publications"],["skills","Skills"],["education","Education"],["archive","Index"]];
+---
+<BaseLayout lang={lang} data={data} ogTitle={`${title} · Jin-Ho Lee`} ogDescription={intro} ogSlug={slug}>
+  <Header slot="header" personal={data.personal} lang={lang} archive />
+  <section class="archive-hero">
+    <a class="section-back" href={`${prefix}/`}>← {lang === "de" ? "Zur Hauptseite" : "Back to main CV"}</a>
+    <p class="mt-5 font-mono-plex text-xs uppercase tracking-[.14em] text-[var(--gold)]">{overline}</p>
+    <h1>{title}</h1>
+    <p>{intro}</p>
+  </section>
+  <div class="archive-main">
+    <slot />
+    <nav class="archive-footer-nav" aria-label={lang === "de" ? "Vollständige Ansichten" : "Complete views"}>
+      {nav.map(([path,label]) => <a href={`${prefix}/${path}/`}>{label}</a>)}
+    </nav>
+  </div>
+</BaseLayout>
+<style>
+  .archive-footer-nav { display:flex; flex-wrap:wrap; gap:1rem; margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--surface-border); }
+  .archive-footer-nav a { color:var(--accent); }
+</style>

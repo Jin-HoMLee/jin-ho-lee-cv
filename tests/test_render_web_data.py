@@ -44,6 +44,8 @@ def test_round_trip_structural_keys(rendered):
         "awards",
         "publications_aggregate",
         "faq",
+        "history",
+        "citation_cache_fetched_at",
     }
     assert set(en.keys()) == expected_keys
     assert set(de.keys()) == expected_keys
@@ -97,6 +99,22 @@ def test_bilingual_parity(rendered):
     # Experience entries: same count, same ids in same order
     assert len(en["experience"]) == len(de["experience"])
     assert [e["id"] for e in en["experience"]] == [e["id"] for e in de["experience"]]
+
+    # Web-only archive records preserve bilingual structural parity.
+    assert len(en["history"]["experience_chapters"]) == len(de["history"]["experience_chapters"])
+    assert [chapter["id"] for chapter in en["history"]["experience_chapters"]] == [
+        chapter["id"] for chapter in de["history"]["experience_chapters"]
+    ]
+    assert [
+        entry["id"]
+        for chapter in en["history"]["experience_chapters"]
+        for entry in chapter["entries"]
+    ] == [
+        entry["id"]
+        for chapter in de["history"]["experience_chapters"]
+        for entry in chapter["entries"]
+    ]
+    assert len(en["history"]["education"]) == len(de["history"]["education"])
 
     # Projects: same id set
     assert set(en["projects"].keys()) == set(de["projects"].keys())

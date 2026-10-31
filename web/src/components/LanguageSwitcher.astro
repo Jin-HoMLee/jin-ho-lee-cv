@@ -1,22 +1,24 @@
 ---
 import type { Lang } from "../types/content";
-
-interface Props {
-  currentLang: Lang;
-}
-
+interface Props { currentLang: Lang }
 const { currentLang } = Astro.props;
-const base = import.meta.env.BASE_URL; // "/jin-ho-lee-cv/"
-
+const pathname = Astro.url.pathname;
 const otherLang: Lang = currentLang === "en" ? "de" : "en";
-const otherHref = otherLang === "de" ? `${base}de/` : base;
+const otherHref = currentLang === "en"
+  ? `/de${pathname === "/" ? "/" : pathname}`
+  : (pathname.replace(/^\/de(?=\/|$)/, "") || "/");
 const otherLabel = otherLang === "de" ? "Deutsch" : "English";
 ---
-<a
-  href={otherHref}
-  class="rounded-md border border-[var(--surface-border)] px-3 py-1.5 text-sm hover:border-[var(--text)] hover:text-[var(--text)]"
-  hreflang={otherLang}
-  aria-label={`Switch to ${otherLabel}`}
->
-  {otherLang.toUpperCase()}
-</a>
+<div class="language-switch" aria-label={currentLang === "de" ? "Sprache" : "Language"}>
+  <span aria-current="page">{currentLang.toUpperCase()}</span>
+  <a href={otherHref} hreflang={otherLang} lang={otherLang} aria-label={`Switch to ${otherLabel}`} data-language-switch>
+    {otherLang.toUpperCase()}
+  </a>
+</div>
+
+<style>
+  .language-switch { display:flex; align-items:center; gap:2px; border:1px solid var(--surface-border); padding:3px; border-radius:999px; font:700 10px "IBM Plex Mono",monospace; flex:none; }
+  .language-switch a,.language-switch span { display:grid; place-items:center; min-width:26px; height:26px; border-radius:50%; text-decoration:none; }
+  .language-switch [aria-current="page"] { background:var(--text); color:var(--bg); }
+  .language-switch a:hover { color:var(--accent); }
+</style>

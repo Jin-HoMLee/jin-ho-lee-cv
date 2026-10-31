@@ -52,7 +52,7 @@
     ]
   },
   "profile": {
-    "answer_block": "Jin-Ho Lee is a data scientist with bioinformatics roots based in Mannheim, Germany. He spent eight years in academic research across bioinformatics and experimental biophysics with 12 peer-reviewed publications, and now ships production machine-learning and data pipelines, brings Google Cloud consulting experience from international banking, and has coached 100+ specialists in Python, SQL and ML. He holds an M.Sc. from Heidelberg University.",
+    "answer_block": "Research discipline meets production delivery — transforming complex biological and operational data into reproducible systems, practical models and decisions people can act on.",
     "tagline": "Data scientist with bioinformatics roots — eight years of academic research, 12 peer-reviewed publications, production ML and cloud consulting on GCP; 1,000+ analytical processes migrated, 100+ specialists coached.",
     "paragraphs": [
       "Worked across bioinformatics and experimental biophysics: unpublished NGS/RNA-Seq genomics project work (HLA typing and splice-derived neoepitope candidate pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National University (SNU), plus quantitative bioimage analysis and wet-lab research at the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich), and Kirchhoff Institute for Physics (KIP). The experimental-biophysics line comprised a coordinated portfolio of multiple concurrent imaging, DNA-repair, chromatin, and radiation-biology projects and produced 12 peer-reviewed research publications — first- and shared-first author — not genomics papers.",
@@ -1212,5 +1212,610 @@
   "publications_aggregate": {
     "summary": "12 peer-reviewed publications (10 articles + 2 research book chapters; 2 first-author, 3 shared-first, 7 co-author), 3 first-author research conference contributions, and 1 applied/off-domain record (15 research records; 16 bibliography records total), research span 2017–2021, in radiation biophysics & super-resolution DNA-repair imaging.",
     "pointer": "Full list & metrics:"
+  },
+  "citation_cache_fetched_at": "2026-09-29",
+  "history": {
+    "experience_chapters": [
+      {
+        "id": "independent",
+        "label": "Independent Bioinformatics & ML/AI Engineer",
+        "entries": [
+          {
+            "id": "independent-rnd-2025",
+            "period": {
+              "start": "2025-07",
+              "end": null
+            },
+            "type": "Independent R&D",
+            "role": "Independent R&D & upskilling",
+            "org": "Self-directed (JH M Lee Lab) · Mannheim, Germany",
+            "summary": "Agentic AI systems, on-device computer vision, reproducible bioinformatics and open systems engineering: tool-using agents and memory, badminton-vision, a modern Snakemake/Conda splice-neoepitope pipeline, and Nix-based open tooling.",
+            "tags": [
+              "agentic AI",
+              "computer vision",
+              "Snakemake",
+              "Nix"
+            ],
+            "refs": [
+              "D4",
+              "D2",
+              "L5"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "consulting",
+        "label": "Consulting & bank delivery",
+        "entries": [
+          {
+            "id": "bank-lbfa-2025",
+            "period": {
+              "start": "2025-01",
+              "end": "2025-07"
+            },
+            "type": "Client assignment",
+            "role": "Lead Business Functional Analyst — Anti-Financial Crime / KYC",
+            "org": "International bank (via Cintellic GmbH) · Germany",
+            "summary": "Maintained and expanded a Python analytical environment on GCP; migrated SAS reporting to Python; established Looker data models; delivered BigQueryML transaction-monitoring and money-laundering-risk analyses.",
+            "tags": [
+              "GCP",
+              "BigQueryML",
+              "Looker",
+              "Python",
+              "KYC"
+            ],
+            "refs": [
+              "C1"
+            ]
+          },
+          {
+            "id": "bank-lbfa-2024",
+            "period": {
+              "start": "2024-08",
+              "end": "2024-10"
+            },
+            "type": "Client assignment",
+            "role": "Lead Business Functional Analyst — Customer Analytics",
+            "org": "International bank (via Cintellic GmbH) · Germany",
+            "summary": "Transferred and developed GCP data models for hyper-personalized customer interactions, mapped source tables and connected more than 1,000 on-premise analytical processes to the cloud dataset.",
+            "tags": [
+              "GCP",
+              "BigQuery",
+              "data modelling",
+              "stakeholders"
+            ],
+            "refs": [
+              "C2"
+            ]
+          },
+          {
+            "id": "cintellic-consultant-2024",
+            "period": {
+              "start": "2024-05",
+              "end": "2025-07"
+            },
+            "type": "Employment",
+            "role": "Consultant — Data Science, ML & Data Engineering",
+            "org": "Cintellic GmbH · Bonn, Germany",
+            "summary": "Delivered CRM and marketing-automation workshops across publishing, banking, digital healthcare and loyalty programmes; developed use cases and requirements and published an applied tool-selection case study.",
+            "tags": [
+              "consulting",
+              "workshops",
+              "marketing automation",
+              "generative AI"
+            ],
+            "refs": [
+              "C1",
+              "C2"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "data-science",
+        "label": "neuefische · three distinct phases",
+        "entries": [
+          {
+            "id": "neuefische-coach-2024",
+            "period": {
+              "start": "2024-03",
+              "end": "2024-04"
+            },
+            "type": "Employment",
+            "role": "Data Science Coach",
+            "org": "neuefische GmbH · Hamburg, Germany",
+            "summary": "Supervised bootcamps in a coach team and taught UNIX, Python, SQL, visualisation, EDA, evaluation, logistic regression, trees, clustering, unit testing and capstone delivery.",
+            "tags": [
+              "coaching",
+              "Python",
+              "SQL",
+              "machine learning"
+            ],
+            "refs": [
+              "D3"
+            ]
+          },
+          {
+            "id": "neuefische-associate-2023",
+            "period": {
+              "start": "2023-09",
+              "end": "2024-02"
+            },
+            "type": "Employment",
+            "role": "Data Science Associate",
+            "org": "neuefische GmbH · Hamburg, Germany",
+            "summary": "Supported multiple bootcamps: cohort operations, participant supervision, classes and material improvement, with engineering topics including OOP, Pydantic, dbt, MLflow and Docker.",
+            "tags": [
+              "OOP",
+              "Pydantic",
+              "dbt",
+              "MLflow",
+              "Docker"
+            ],
+            "refs": [
+              "D3"
+            ]
+          },
+          {
+            "id": "neuefische-trainee-2023",
+            "period": {
+              "start": "2023-02",
+              "end": "2023-05"
+            },
+            "type": "Training contract",
+            "role": "Trainee, Data Science",
+            "org": "neuefische GmbH · Hamburg, Germany",
+            "summary": "Completed a 540-hour full-time coding bootcamp and a four-week team capstone: SignMeUp, real-time sign-language recognition from live video with LSTM, MediaPipe, OpenCV and TensorFlow.",
+            "tags": [
+              "Python",
+              "TensorFlow",
+              "MediaPipe",
+              "OpenCV",
+              "GCP"
+            ],
+            "refs": [
+              "D1"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "research",
+        "label": "Doctoral & post-graduate research",
+        "entries": [
+          {
+            "id": "fz-juelich-doctoral-2020",
+            "period": {
+              "start": "2020-06",
+              "end": "2022-07"
+            },
+            "type": "Research",
+            "role": "Doctoral Researcher (doctorate not awarded)",
+            "org": "Forschungszentrum Jülich · Jülich, Germany",
+            "summary": "Led a project on ionizing-radiation effects in 3D human neural-progenitor differentiation and extracellular vesicles; supervised contributors, built collaborations, raised third-party funding and published.",
+            "tags": [
+              "radiobiology",
+              "3D culture",
+              "neural progenitors",
+              "supervision"
+            ],
+            "refs": [
+              "L4"
+            ]
+          },
+          {
+            "id": "imp-vienna-2019",
+            "period": {
+              "start": "2019-08",
+              "end": "2019-10"
+            },
+            "type": "Research",
+            "role": "Doctoral Researcher — Structural Biology & Biochemistry",
+            "org": "Research Institute of Molecular Pathology (IMP) · Vienna, Austria",
+            "summary": "Worked on identification and characterization of novel RNA-interacting factors; historical sources vary between intern, PhD-position and doctoral-researcher wording, and no doctorate was awarded.",
+            "tags": [
+              "structural biology",
+              "biochemistry",
+              "RNA-binding proteins"
+            ],
+            "refs": []
+          },
+          {
+            "id": "bundeswehr-radiobiology-2018",
+            "period": {
+              "start": "2018-09",
+              "end": "2018-12"
+            },
+            "type": "Research",
+            "role": "Researcher — Radiobiology",
+            "org": "Bundeswehr Institute of Radiobiology · Munich, Germany",
+            "summary": "Investigated clustered DNA damage using single-molecule localization microscopy, contributing to the Ra-223 alpha-emitter research line.",
+            "tags": [
+              "radiobiology",
+              "DNA damage",
+              "SMLM"
+            ],
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "id": "kip-researcher-2017",
+            "period": {
+              "start": "2017-05",
+              "end": "2018-08"
+            },
+            "type": "Research employment",
+            "role": "Researcher / Student Assistant — Experimental Biophysics",
+            "org": "Kirchhoff Institute for Physics, Heidelberg University · Heidelberg, Germany",
+            "summary": "Worked across nanoscopy, chromatin, genomics and radiation biology; designed experiments and spatial analyses using DBSCAN, nearest-neighbour methods, persistent homology and MATLAB interfaces.",
+            "tags": [
+              "nanoscopy",
+              "chromatin",
+              "MATLAB",
+              "spatial analysis"
+            ],
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "id": "kip-internship-biophys-chem-2016",
+            "period": {
+              "start": "2016-10",
+              "end": "2017-05"
+            },
+            "type": "Course + internship",
+            "role": "Research Internship — Biophysical Chemistry",
+            "org": "DKFZ / BioQuant / Experimental Biophysics · Heidelberg, Germany",
+            "summary": "Completed transcript-backed low-dose-radiation/chromatin lab work followed by a super-resolution radiation-biology research internship.",
+            "tags": [
+              "chromatin",
+              "radiation biology",
+              "super-resolution"
+            ],
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "id": "dkfz-nanoscopy-2016",
+            "period": {
+              "start": "2016-06",
+              "end": "2016-08"
+            },
+            "type": "Internship",
+            "role": "Research Internship — Optical Nanoscopy",
+            "org": "German Cancer Research Center (DKFZ) · Heidelberg, Germany",
+            "summary": "Characterized and evaluated photostabilizing agents for live-cell STED imaging.",
+            "tags": [
+              "STED",
+              "live-cell imaging",
+              "photostabilizers"
+            ],
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "id": "nct-drug-discovery-2016",
+            "period": {
+              "start": "2016-01",
+              "end": "2016-05"
+            },
+            "type": "Internship",
+            "role": "Research Internship — Drug Discovery",
+            "org": "National Center for Tumor Diseases (NCT) · Heidelberg, Germany",
+            "summary": "Validated and statistically analysed SNV-calling data from colorectal-cancer patients against gold-standard sequencing.",
+            "tags": [
+              "SNV calling",
+              "colorectal cancer",
+              "validation"
+            ],
+            "refs": [
+              "L1"
+            ]
+          },
+          {
+            "id": "snu-internship-2015",
+            "period": {
+              "start": "2015-08",
+              "end": "2015-11"
+            },
+            "type": "Internship",
+            "role": "Research Intern — Bio & Health Informatics",
+            "org": "Seoul National University · Seoul, South Korea",
+            "summary": "Built an unpublished Shell/Python/R proof-of-concept pipeline from TCGA RNA-Seq splice junctions to predicted, unvalidated MHC-I-binding neoepitope candidates.",
+            "tags": [
+              "RNA-Seq",
+              "splice junctions",
+              "neoepitopes",
+              "Python"
+            ],
+            "refs": [
+              "L1",
+              "L5"
+            ]
+          },
+          {
+            "id": "kip-internship-combofish-2015",
+            "period": {
+              "start": "2015-03",
+              "end": "2015-06"
+            },
+            "type": "Internship",
+            "role": "Research Intern — Experimental Biophysics",
+            "org": "Kirchhoff Institute for Physics, Heidelberg University · Heidelberg, Germany",
+            "summary": "Investigated Alu elements in breast-cancer cells using COMBO-FISH and localization microscopy.",
+            "tags": [
+              "COMBO-FISH",
+              "Alu",
+              "localization microscopy"
+            ],
+            "refs": [
+              "L3"
+            ]
+          },
+          {
+            "id": "dkfz-applied-bioinformatics-2014",
+            "period": {
+              "start": "2014-12",
+              "end": "2015-02"
+            },
+            "type": "Internship",
+            "role": "Research Intern — Applied Bioinformatics",
+            "org": "German Cancer Research Center (DKFZ) · Heidelberg, Germany",
+            "summary": "Identified and visualized DNA breakage points from patient NGS data.",
+            "tags": [
+              "NGS",
+              "structural variants",
+              "visualization"
+            ],
+            "refs": [
+              "L2"
+            ]
+          },
+          {
+            "id": "nct-bachelor-thesis-2014",
+            "period": {
+              "start": "2014-04",
+              "end": "2014-05"
+            },
+            "type": "Thesis research",
+            "role": "Bachelor Thesis Student — Medical Oncology",
+            "org": "National Center for Tumor Diseases (NCT) · Heidelberg, Germany",
+            "summary": "Developed HLA typing from sequencing data for personalized cancer immunotherapy.",
+            "tags": [
+              "HLA typing",
+              "sequencing",
+              "immunotherapy"
+            ],
+            "refs": [
+              "L2"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "foundations",
+        "label": "Earlier research & teaching foundations",
+        "entries": [
+          {
+            "id": "tutoria-2013",
+            "period": {
+              "start": "2013-10",
+              "end": "2015-02"
+            },
+            "type": "Freelance employment",
+            "role": "Private Tutor",
+            "org": "Tutoria GmbH · Heidelberg, Germany",
+            "summary": "Tutored Biology, Chemistry, Physics and Mathematics across levels of the German school system.",
+            "tags": [
+              "teaching",
+              "STEM"
+            ],
+            "refs": []
+          },
+          {
+            "id": "rlp-agroscience-2013",
+            "period": {
+              "start": "2013-08",
+              "end": "2013-09"
+            },
+            "type": "Internship",
+            "role": "Research Intern — Plant Epigenetics",
+            "org": "RLP AgroScience / AlPlanta · Neustadt, Germany",
+            "summary": "Worked on RNA-mediated gene regulation using cloning, PCR/RT-PCR, blotting, plant tissue culture, agroinfiltration and bisulfite sequencing.",
+            "tags": [
+              "plant epigenetics",
+              "PCR",
+              "cloning"
+            ],
+            "refs": []
+          },
+          {
+            "id": "kribb-trainee-2012",
+            "period": {
+              "start": "2012-08",
+              "end": "2012-10"
+            },
+            "type": "Paid traineeship",
+            "role": "Trainee — Cancer Biomarkers",
+            "org": "Korea Research Institute of Bioscience and Biotechnology · Daejeon, South Korea",
+            "summary": "Trained in protein biochemistry, molecular cloning, FACS and confocal microscopy; associated with a later cancer-biomarker project, not claimed as paper authorship.",
+            "tags": [
+              "cancer biology",
+              "FACS",
+              "confocal microscopy"
+            ],
+            "refs": []
+          },
+          {
+            "id": "mpi-medical-research-2012",
+            "period": {
+              "start": "2012-02",
+              "end": "2012-09"
+            },
+            "type": "Student employment",
+            "role": "Student Research Assistant",
+            "org": "Max Planck Institute for Medical Research · Heidelberg, Germany",
+            "summary": "Traced retinal axons and dendrites in serial electron-microscopy images with KNOSSOS; later sources describe the traces as training data for automated analysis.",
+            "tags": [
+              "connectomics",
+              "electron microscopy",
+              "KNOSSOS"
+            ],
+            "refs": []
+          }
+        ]
+      }
+    ],
+    "education": [
+      {
+        "id": "edu-01",
+        "period": {
+          "start": "2023-02",
+          "end": "2023-05"
+        },
+        "degree": "Data Science Bootcamp",
+        "institution": "neuefische GmbH · Germany",
+        "detail": "540-hour full-time professional education · Python, SQL, machine learning, cloud delivery and a four-week SignMeUp capstone; cross-listed in Experience as a training contract",
+        "status": "Completed",
+        "completed": true
+      },
+      {
+        "id": "edu-02",
+        "period": {
+          "start": "2022-10",
+          "end": "2023-03"
+        },
+        "degree": "Mathematics distance study",
+        "institution": "FernUniversität in Hagen · Germany",
+        "detail": "Mathematics",
+        "status": "Not completed",
+        "completed": false
+      },
+      {
+        "id": "edu-03",
+        "period": {
+          "start": "2020-06",
+          "end": "2022-07"
+        },
+        "degree": "Doctoral research period",
+        "institution": "RWTH Aachen University · Germany",
+        "detail": "Biology",
+        "status": "Doctorate not awarded",
+        "completed": false
+      },
+      {
+        "id": "edu-04",
+        "period": {
+          "start": "2019-08",
+          "end": "2019-10"
+        },
+        "degree": "Doctoral programme period",
+        "institution": "University of Vienna · Austria",
+        "detail": "Molecular Life Sciences",
+        "status": "Not completed",
+        "completed": false
+      },
+      {
+        "id": "edu-05",
+        "period": {
+          "start": "2014-10",
+          "end": "2019-04"
+        },
+        "degree": "M.Sc. Molecular Biotechnology",
+        "institution": "Heidelberg University · Germany",
+        "detail": "Biophysical Chemistry · thesis: Single Molecule Localization Microscopy of Nanoprobes to Study Chromatin Architecture, Function and Dynamics",
+        "status": "Completed",
+        "completed": true
+      },
+      {
+        "id": "edu-06",
+        "period": {
+          "start": "2010-09",
+          "end": "2014-09"
+        },
+        "degree": "B.Sc. Molecular Biotechnology",
+        "institution": "Heidelberg University · Germany",
+        "detail": "Bioinformatics · thesis: HLA Typing from Sequencing Data for Personalized Cancer Immunotherapy",
+        "status": "Completed",
+        "completed": true
+      },
+      {
+        "id": "edu-07",
+        "period": {
+          "start": "2006-09",
+          "end": "2009-07"
+        },
+        "degree": "Secondary education · Abitur",
+        "institution": "Kolleg St. Blasien · Germany",
+        "detail": "Upper-secondary school",
+        "status": "Completed",
+        "completed": true
+      },
+      {
+        "id": "edu-08",
+        "period": {
+          "start": "2005-09",
+          "end": "2006-07"
+        },
+        "degree": "Secondary education",
+        "institution": "Deutsche Schule Seoul International · South Korea",
+        "detail": "International school year",
+        "status": "Attendance",
+        "completed": false
+      },
+      {
+        "id": "edu-09",
+        "period": {
+          "start": "2004-09",
+          "end": "2005-07"
+        },
+        "degree": "Secondary education",
+        "institution": "Erzbischöfliches Suitbertus-Gymnasium Düsseldorf-Kaiserswerth · Germany",
+        "detail": "Secondary school",
+        "status": "Attendance",
+        "completed": false
+      },
+      {
+        "id": "edu-10",
+        "period": {
+          "start": "2000-09",
+          "end": "2004-07"
+        },
+        "degree": "Secondary education",
+        "institution": "Bischöfliches Pius-Gymnasium Aachen · Germany",
+        "detail": "Secondary school",
+        "status": "Attendance",
+        "completed": false
+      },
+      {
+        "id": "edu-11",
+        "period": {
+          "start": "1996-08",
+          "end": "2000-07"
+        },
+        "degree": "Primary education · cathedral choir school",
+        "institution": "Dom-Sing-Schule Aachen · Germany",
+        "detail": "Primary school of Aachen Cathedral; primary-source-verified school attendance and cathedral-choir context",
+        "status": "Completed",
+        "completed": true
+      },
+      {
+        "id": "edu-12",
+        "period": {
+          "start": "1996-09",
+          "end": "1997-07"
+        },
+        "degree": "Primary education",
+        "institution": "Goetheschule Wesseling · Germany",
+        "detail": "Primary school",
+        "status": "Attendance",
+        "completed": false
+      }
+    ]
   }
 }

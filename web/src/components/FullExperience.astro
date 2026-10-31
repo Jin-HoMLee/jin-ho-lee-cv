@@ -1,0 +1,38 @@
+---
+import type { ArchiveExperienceChapter, Labels, Lang } from "../types/content";
+import { formatPeriod } from "../lib/period";
+interface Props { chapters:ArchiveExperienceChapter[]; labels:Labels; lang:Lang }
+const { chapters, labels, lang } = Astro.props;
+const prefix = lang === "de" ? "/de" : "";
+---
+<nav class="archive-index" aria-label={lang === "de" ? "Erfahrungskapitel" : "Experience chapters"}>
+  {chapters.map((chapter,index) => <a href={`#${chapter.id}`}><span class="font-mono-plex text-[var(--accent)]">0{index+1}</span> {chapter.label}</a>)}
+</nav>
+<p class="archive-note">
+  <strong>{lang === "de" ? "Beziehungs- und Ehrlichkeitsmodell." : "Relationship and honesty model."}</strong>{" "}
+  {lang === "de"
+    ? "Anstellung, Kundeneinsätze, Verträge, Ausbildung, Praktika und Forschungsstationen bleiben unterscheidbar. Überschneidungen sind beabsichtigt, wenn ein Einsatz innerhalb eines Arbeitsverhältnisses liegt. Es wird kein Doktortitel beansprucht."
+    : "Employment, client assignments, contracts, training, internships and research stops remain distinct. Overlaps are intentional when an assignment sits inside an employer relationship. No doctorate is claimed."}
+</p>
+{chapters.map((chapter,index) => (
+  <section class="archive-chapter mt-14" id={chapter.id}>
+    <p class="font-mono-plex text-xs text-[var(--accent)]">0{index+1} / {chapter.id.toUpperCase()}</p>
+    <h2>{chapter.label}</h2>
+    {chapter.id === "consulting" && <p class="archive-note mb-5">{lang === "de" ? "Cintellic GmbH war von Mai 2024 bis Juli 2025 Arbeitgeber. Die Bankeinträge sind Kundeneinsätze innerhalb dieses Arbeitsverhältnisses, keine separaten Arbeitgeber." : "Cintellic GmbH was employer of record from May 2024 to July 2025. The bank records are client assignments within that engagement, not separate employers."}</p>}
+    {chapter.entries.map((entry) => (
+      <article class="archive-entry" id={entry.id}>
+        <div class="archive-date">{formatPeriod(entry.period, labels)}<span class="archive-type">{entry.type}</span></div>
+        <div>
+          <h3>{entry.role}</h3>
+          <div class="archive-org">{entry.org}</div>
+          <p>{entry.summary}</p>
+          <div class="archive-tags">
+            {entry.tags.map((tag) => <span>{tag}</span>)}
+            {entry.refs.map((ref) => <a class="archive-ref" href={`${prefix}/projects/${ref}/`}>{ref}</a>)}
+          </div>
+        </div>
+      </article>
+    ))}
+  </section>
+))}
+<a class="section-back" href="#top">↑ {lang === "de" ? "Nach oben" : "Back to top"}</a>

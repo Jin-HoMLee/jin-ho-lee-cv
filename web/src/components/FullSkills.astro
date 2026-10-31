@@ -1,0 +1,54 @@
+---
+import type { Skills, Lang } from "../types/content";
+interface Props { skills:Skills; lang:Lang }
+const { skills, lang } = Astro.props;
+const count = skills.categories.flatMap((category) => category.groups.flatMap((group) => group.items)).length;
+---
+<section aria-labelledby="skills-tools-title">
+  <div class="archive-tools">
+    <label id="skills-tools-title" for="skill-search" class="font-mono-plex text-xs text-[var(--gold)]">{lang === "de" ? `${count} quellenbasierte Skills durchsuchen` : `Search ${count} source-backed skills`}</label>
+    <input class="skill-search mt-2" id="skill-search" type="search" placeholder={lang === "de" ? "RNA-Seq, GCP, Mikroskopie …" : "Try RNA-Seq, GCP, microscopy…"} autocomplete="off" />
+    <div class="filter-row" role="group" aria-label={lang === "de" ? "Skill-Kategorie filtern" : "Filter skill category"}>
+      <button type="button" data-skill-filter="all" aria-pressed="true">{lang === "de" ? "Alle" : "All"}</button>
+      {skills.categories.map((category) => <button type="button" data-skill-filter={category.name} aria-pressed="false">{category.name}</button>)}
+    </div>
+  </div>
+  <p class="results-note" aria-live="polite" data-results-note>{lang === "de" ? `Alle ${count} Skills werden angezeigt. Skill-Namen sind Labels, keine Buttons.` : `Showing all ${count} skills. Skill names are labels, not buttons.`}</p>
+  <div class="skill-grid mt-4">
+    {skills.categories.flatMap((category) => category.groups.map((group) => (
+      <article class="skill-group" data-skill-category={category.name} data-skill-search={`${category.name} ${group.label} ${group.items.join(" ")}`.toLowerCase()}>
+        <span class="skill-category">{category.name}</span>
+        <h2>{group.label}</h2>
+        <div class="skill-items">{group.items.map((item) => <span class="skill-item">{item}</span>)}</div>
+      </article>
+    )))}
+  </div>
+  <p class="archive-note mt-8">{lang === "de" ? "Skills sind absichtlich statische Labels. Es werden keine erfundenen Prozentwerte oder Kompetenzstufen angezeigt." : "Skills are intentionally static labels. No invented percentages or proficiency levels are shown."}</p>
+</section>
+<script>
+  const input = document.querySelector<HTMLInputElement>("#skill-search");
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-skill-filter]"));
+  const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-skill-category]"));
+  const note = document.querySelector<HTMLElement>("[data-results-note]");
+  let active = "all";
+  const apply = () => {
+    const query = input?.value.trim().toLowerCase() ?? "";
+    let groups = 0, skills = 0;
+    for (const card of cards) {
+      const match = (active === "all" || card.dataset.skillCategory === active) && (!query || card.dataset.skillSearch?.includes(query));
+      card.hidden = !match;
+      if (match) { groups += 1; skills += card.querySelectorAll(".skill-item").length; }
+    }
+    if (note) {
+      note.textContent = document.documentElement.lang === "de"
+        ? `${skills} Skills in ${groups} ${groups === 1 ? "Gruppe" : "Gruppen"}.`
+        : `Showing ${skills} skills in ${groups} ${groups === 1 ? "group" : "groups"}.`;
+    }
+  };
+  buttons.forEach((button) => button.addEventListener("click", () => {
+    active = button.dataset.skillFilter ?? "all";
+    buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+    apply();
+  }));
+  input?.addEventListener("input", apply);
+</script>

@@ -1,0 +1,95 @@
+---
+import type { Personal, Profile, Lang } from "../types/content";
+import TargetSwitcher from "./TargetSwitcher.astro";
+interface Variant { headline?:string; tagline?:string; hero_stack?:string[] }
+interface Props { personal:Personal; profile:Profile; lang:Lang; variants:Record<string,Variant> }
+const { personal, profile, lang, variants } = Astro.props;
+const copy = lang === "de"
+  ? { location:`${personal.name.given} ${personal.name.family} · Mannheim, Deutschland`, portrait:"Porträt von Jin-Ho Lee", focus:"Arbeitsprinzip", vector:"Vektor · zielbezogen", title:"Von Evidenz zu Wirkung", sub:"Forschungsnahe Evidenz · Produktionssysteme · Mentoring" }
+  : { location:`${personal.name.given} ${personal.name.family} · Mannheim, Germany`, portrait:"Portrait of Jin-Ho Lee", focus:"Operating principle", vector:"Vector · target-aware", title:"From evidence to impact", sub:"Research-grade evidence · production systems · human mentorship" };
+---
+<section id="identity" class="identity-hero" data-identity-hero data-reveal>
+  <div class="identity-copy">
+    <div class="identity-toolbar">
+      <p class="identity-overline">{copy.location}</p>
+      <TargetSwitcher variants={variants} lang={lang} />
+    </div>
+    <figure class="identity-portrait">
+      <img src="/photo.jpg" width="138" height="166" alt={copy.portrait} loading="eager" />
+    </figure>
+    <h1 data-cv-field="headline">{personal.headline}</h1>
+    <p class="hero-lede" data-cv-field="answer-block">{profile.answer_block ?? profile.tagline}</p>
+  </div>
+  <aside class="focus-panel">
+    <span class="vector-label">{copy.vector}</span>
+    <div class="focus-art" data-focus-art="bridge" aria-hidden="true">
+      <svg data-art="bridge" viewBox="0 0 500 230"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M42 160L136 76L238 150L342 54L458 156"/><path d="M136 76L202 32M238 150L292 204M342 54L390 112"/><g fill="var(--surface)"><circle cx="42" cy="160" r="9"/><circle cx="136" cy="76" r="13"/><circle cx="238" cy="150" r="10"/><circle cx="342" cy="54" r="14"/><circle cx="458" cy="156" r="10"/><circle cx="202" cy="32" r="7"/><circle cx="292" cy="204" r="7"/><circle cx="390" cy="112" r="7"/></g></g></svg>
+      <svg data-art="ds-ml" viewBox="0 0 160 58" style="display:none"><g fill="none" stroke="currentColor" stroke-width="1.15"><path d="M18 14L58 10M18 14L58 23M18 29L58 23M18 29L58 35M18 44L58 35M18 44L58 48"/><path d="M58 10L103 18M58 23L103 18M58 23L103 40M58 35L103 18M58 35L103 40M58 48L103 40"/><path d="M103 18L139 29M103 40L139 29"/><circle cx="139" cy="29" r="11"/><circle cx="139" cy="29" r="17" stroke-dasharray="2.5 3.5"/><g fill="currentColor"><circle cx="18" cy="14" r="2.4"/><circle cx="18" cy="29" r="2.4"/><circle cx="18" cy="44" r="2.4"/><circle cx="58" cy="10" r="2.2"/><circle cx="58" cy="23" r="2.2"/><circle cx="58" cy="35" r="2.2"/><circle cx="58" cy="48" r="2.2"/><circle cx="103" cy="18" r="2.7"/><circle cx="103" cy="40" r="2.7"/><circle cx="139" cy="29" r="3.2"/></g></g></svg>
+      <svg data-art="comp-bio" viewBox="0 0 500 230" style="display:none"><g fill="none" stroke="currentColor" stroke-width="2"><polyline points="30,45 70,60 110,90 150,140 190,170 230,185 270,170 310,140 350,90 390,60 430,45 470,60"/><polyline points="30,185 70,170 110,140 150,90 190,60 230,45 270,60 310,90 350,140 390,170 430,185 470,170"/><path d="M30 45V185M70 60V170M110 90V140M150 90V140M190 60V170M230 45V185M270 60V170M310 90V140M350 90V140M390 60V170M430 45V185M470 60V170"/></g></svg>
+    </div>
+    <div class="focus-copy">
+      <p class="focus-kicker">{copy.focus}</p>
+      <h2 data-focus-title>{copy.title}</h2>
+      <p data-focus-sub>{copy.sub}</p>
+    </div>
+  </aside>
+</section>
+<script>
+  const hero = document.querySelector<HTMLElement>("[data-identity-hero]");
+  if (hero) {
+    const lang = document.documentElement.lang;
+    const focus = lang === "de" ? {
+      bridge:"Forschungsnahe Evidenz · Produktionssysteme · Mentoring",
+      "ds-ml":"GCP · BigQueryML · KI-Systeme",
+      "comp-bio":"NGS · HLA-Typisierung · Splice-Kandidaten",
+    } : {
+      bridge:"Research-grade evidence · production systems · human mentorship",
+      "ds-ml":"GCP · BigQueryML · AI systems",
+      "comp-bio":"NGS · HLA typing · splice-derived candidates",
+    };
+    window.addEventListener("cv-target-change", (event) => {
+      const target = (event as CustomEvent<{target:string}>).detail?.target;
+      if (!(target in focus)) return;
+      const sub = hero.querySelector<HTMLElement>("[data-focus-sub]");
+      if (sub) sub.textContent = focus[target as keyof typeof focus];
+      hero.querySelectorAll<SVGElement>("[data-art]").forEach((art) => { art.style.display = art.dataset.art === target ? "" : "none"; });
+    });
+  }
+</script>
+<style>
+  .identity-hero { position:relative; display:grid; grid-template-columns:7fr 5fr; gap:3.5rem; align-items:start; padding:5.1rem 0 3.4rem; }
+  .identity-hero::before { content:"01 / IDENTITY"; position:absolute; top:2.85rem; left:0; color:var(--accent); font:10px "IBM Plex Mono",monospace; letter-spacing:.12em; }
+  .identity-toolbar { display:flex; align-items:center; justify-content:space-between; gap:1.25rem; margin-bottom:1rem; }
+  .identity-overline { margin:0; color:var(--gold); font:700 12px "IBM Plex Mono",monospace; text-transform:uppercase; letter-spacing:.16em; }
+  .identity-portrait { width:138px; margin:.25rem 0 1.5rem; }
+  .identity-portrait img { display:block; width:138px; height:166px; object-fit:cover; object-position:center; filter:grayscale(1) contrast(1.05); border:1px solid var(--gold); box-shadow:8px 8px 0 color-mix(in srgb,var(--accent) 10%,transparent); }
+  h1 { margin:.8rem 0 1.3rem; font-size:clamp(3rem,7vw,5.15rem); line-height:.95; letter-spacing:-.055em; font-weight:700; }
+  .hero-lede { max-width:42rem; margin:0; color:var(--muted); font-size:1.15rem; line-height:1.55; }
+  .focus-panel { position:relative; overflow:hidden; margin-top:3rem; padding:1.75rem; border:1px solid var(--surface-border); border-radius:2px; background:var(--surface); box-shadow:8px 8px 0 color-mix(in srgb,var(--accent) 15%,transparent); }
+  .vector-label { position:absolute; right:.75rem; top:.6rem; color:var(--muted); font:9px "IBM Plex Mono",monospace; text-transform:uppercase; letter-spacing:.08em; }
+  .focus-art { min-height:190px; color:var(--accent); margin:-.5rem -.4rem .6rem; }
+  .focus-art svg { width:100%; height:190px; }
+  .focus-art svg * { vector-effect:non-scaling-stroke; stroke-linecap:round; stroke-linejoin:round; }
+  .focus-kicker { margin:0; color:var(--accent-hover); font:700 11px "IBM Plex Mono",monospace; text-transform:uppercase; letter-spacing:.14em; }
+  .focus-panel h2 { margin:.3rem 0; font-size:1.9rem; line-height:1.05; font-weight:700; }
+  .focus-copy > p:last-child { margin-bottom:0; }
+  @media(max-width:980px) {
+    .identity-hero { grid-template-columns:1fr; gap:2rem; }
+    .focus-panel { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1.5rem; align-items:end; margin-top:0; }
+  }
+  @media(max-width:700px) {
+    .identity-hero { padding-top:3.4rem; gap:1rem; }
+    .identity-hero::before { top:1.25rem; }
+    .identity-toolbar { display:block; }
+    .identity-overline { margin-bottom:.8rem; }
+    .identity-portrait,.identity-portrait img { width:112px; }
+    .identity-portrait img { height:134px; }
+    h1 { font-size:3rem; }
+    .hero-lede { font-size:1.05rem; line-height:1.45; }
+    .focus-panel { display:block; padding:1rem; }
+    .focus-art { min-height:70px; margin:-.25rem -.2rem .25rem; }
+    .focus-art svg { height:70px; }
+    .focus-panel h2 { font-size:1.45rem; }
+    .focus-copy > p:last-child { font-size:.9rem; }
+  }
+</style>

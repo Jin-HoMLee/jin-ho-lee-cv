@@ -4,9 +4,8 @@ import contentEn from "../data/content.en.json";
 import variantsEn from "../data/content.en.variants.json";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
+import IdentityHero from "../components/IdentityHero.astro";
 import CodeHero from "../components/CodeHero.astro";
-import TargetSwitcher from "../components/TargetSwitcher.astro";
-import ProfileSection from "../components/ProfileSection.astro";
 import ExperienceSection from "../components/ExperienceSection.astro";
 import ProjectsSection from "../components/ProjectsSection.astro";
 import SkillsSidebar from "../components/SkillsSidebar.astro";
@@ -19,48 +18,38 @@ import StatBand from "../components/StatBand.astro";
 import FaqSection from "../components/FaqSection.astro";
 
 const data = contentEn as unknown as ContentData;
-const switcherVariants = Object.fromEntries(
-  Object.entries(variantsEn).map(([target, variant]) => [
-    target,
-    {
-      headline: variant.headline,
-      tagline: variant.tagline,
-      lead_paragraph: variant.lead_paragraph,
-      second_paragraph: variant.second_paragraph,
-      hero_stack: "hero_stack" in variant ? variant.hero_stack : undefined,
-    },
-  ]),
-);
-const skillVariants = Object.fromEntries(
-  Object.entries(variantsEn).map(([target, variant]) => [target, { skills: variant.skills }]),
-);
-const experienceVariants = Object.fromEntries(
-  Object.entries(variantsEn).map(([target, variant]) => [
-    target,
-    { order: variant.experience ? variant.experience.map((e) => e.id) : undefined },
-  ]),
-);
+const switcherVariants = Object.fromEntries(Object.entries(variantsEn).map(([target, variant]) => [target, {
+  headline: variant.headline,
+  tagline: variant.tagline,
+  hero_stack: "hero_stack" in variant && Array.isArray(variant.hero_stack) ? variant.hero_stack as string[] : undefined,
+}]));
+const skillVariants = Object.fromEntries(Object.entries(variantsEn).map(([target, variant]) => [target, { skills: variant.skills }]));
+const experienceVariants = Object.fromEntries(Object.entries(variantsEn).map(([target, variant]) => [target, { order: variant.experience ? variant.experience.map((e) => e.id) : undefined }]));
+const selectedProjectIds = [...data.selected_projects.map((project) => project.id), "D2"];
+const selectedProjects = Object.fromEntries(selectedProjectIds.map((id) => [id, data.projects[id]]).filter((entry) => entry[1]));
 ---
 <BaseLayout lang="en" data={data}>
   <Header slot="header" personal={data.personal} lang="en" />
-  <h1 class="sr-only">{data.personal.name.given} {data.personal.name.family}</h1>
+  <IdentityHero personal={data.personal} profile={data.profile} lang="en" variants={switcherVariants} />
   <CodeHero personal={data.personal} profile={data.profile} publications={data.publications} skills={data.skills} experience={data.experience} lang="en" />
   <StatBand data={data} lang="en" />
-  <TargetSwitcher variants={switcherVariants} lang="en" />
-  <ProfileSection personal={data.personal} profile={data.profile} labels={data.labels} />
-  <div class="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr]">
+  <div class="editorial-content">
     <div data-reveal>
       <ExperienceSection experience={data.experience} projects={data.projects} labels={data.labels} lang="en" variants={experienceVariants} />
-      <ProjectsSection projects={data.projects} labels={data.labels} lang="en" />
+      <ProjectsSection projects={selectedProjects} labels={data.labels} lang="en" />
       <PublicationsList publications={data.publications} metrics={data.publication_metrics} aggregate={data.publications_aggregate} orcid={data.personal.links.orcid} scholar={data.personal.links.googlescholar} labels={data.labels} lang="en" />
-      <AwardsSection awards={data.awards} labels={data.labels} />
+      <AwardsSection awards={data.awards} labels={data.labels} lang="en" />
     </div>
     <aside data-reveal>
-      <SkillsSidebar skills={data.skills} labels={data.labels} variants={skillVariants} />
-      <EducationSection education={data.education} labels={data.labels} />
-      <LanguagesList languages={data.languages} labels={data.labels} />
-      <VolunteerSection volunteer={data.volunteer} labels={data.labels} />
+      <SkillsSidebar skills={data.skills} labels={data.labels} variants={skillVariants} lang="en" />
+      <EducationSection education={data.education} labels={data.labels} lang="en" />
+      <LanguagesList languages={data.languages} labels={data.labels} lang="en" />
+      <VolunteerSection volunteer={data.volunteer} labels={data.labels} lang="en" />
     </aside>
   </div>
-  <FaqSection faq={data.faq} labels={data.labels} />
+  <FaqSection faq={data.faq} labels={data.labels} lang="en" />
 </BaseLayout>
+<style>
+  .editorial-content { display:grid; grid-template-columns:7fr 4fr; gap:5rem; padding-top:1rem; }
+  @media(max-width:980px) { .editorial-content { grid-template-columns:1fr; gap:.5rem; } }
+</style>

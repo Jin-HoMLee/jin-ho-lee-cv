@@ -1,0 +1,4 @@
+---
+import content from "../../../data/content.de.json"; import type { ContentData } from "../../../types/content"; import ArchivePageShell from "../../../components/ArchivePageShell.astro"; import FullProjects from "../../../components/FullProjects.astro"; const data=content as unknown as ContentData;
+---
+<ArchivePageShell data={data} lang="de" title="Alle Projekte" overline="Vollständiges Projektarchiv" intro="Elf öffentliche Projekteinträge aus Lebenswissenschaften, Data Science und Beratung mit stabilen Projektseiten und Evidenzdetails." slug="projects-all-de"><FullProjects projects={data.projects} labels={data.labels} lang="de" /></ArchivePageShell>
