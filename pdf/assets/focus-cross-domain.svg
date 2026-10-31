@@ -1,11 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 180" role="img" aria-label="Cross-domain network">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 230" role="img" aria-label="Cross-domain network">
   <g fill="none" stroke="#57728f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.88">
-    <path d="M55 90L122 42L203 64L293 33M55 90L128 137L203 64L284 135M122 42L128 137M203 64L238 111L284 135M238 111L293 33"/>
-    <path d="M22 124L55 90M284 135L335 102" stroke="#a17a45"/>
+    <path d="M42 160L136 76L238 150L342 54L458 156"/>
+    <path d="M136 76L202 32M238 150L292 204M342 54L390 112" stroke="#a17a45"/>
   </g>
   <g fill="#f7f1e6" stroke="#23415f" stroke-width="3">
-    <circle cx="55" cy="90" r="11"/><circle cx="122" cy="42" r="9"/><circle cx="128" cy="137" r="10"/>
-    <circle cx="203" cy="64" r="13"/><circle cx="238" cy="111" r="8"/><circle cx="293" cy="33" r="10"/><circle cx="284" cy="135" r="12"/>
+    <circle cx="42" cy="160" r="9"/>
+    <circle cx="136" cy="76" r="13"/>
+    <circle cx="238" cy="150" r="10"/>
+    <circle cx="342" cy="54" r="14"/>
+    <circle cx="458" cy="156" r="10"/>
+    <circle cx="202" cy="32" r="7"/>
+    <circle cx="292" cy="204" r="7"/>
+    <circle cx="390" cy="112" r="7"/>
   </g>
-  <g fill="#a17a45"><circle cx="22" cy="124" r="5"/><circle cx="335" cy="102" r="5"/><circle cx="203" cy="64" r="5"/></g>
 </svg>
