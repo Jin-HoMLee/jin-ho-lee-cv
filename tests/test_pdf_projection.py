@@ -351,8 +351,15 @@ def test_one_page_layout_uses_approved_variant_focus_panels(content_dir):
             "art": art,
             "title": title,
         }
-        assert layout["monogram"] == "JL"
+        assert layout["monogram"] == "JHL"
         assert len(layout["proofs"]) == 2
+
+    for lang in ("en", "de"):
+        for target in expected:
+            layout = prepare_data(content_dir, private_path=None, lang=lang, target=target)[
+                "pdf_layout"
+            ]
+            assert layout["monogram"] == "JHL"
 
 
 def test_one_page_layout_projects_target_specific_experience(content_dir):

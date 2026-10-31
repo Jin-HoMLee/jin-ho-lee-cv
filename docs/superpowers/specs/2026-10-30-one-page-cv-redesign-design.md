@@ -17,7 +17,7 @@ All stock variants share one A4 family:
 - Blue date/timeline wayfinding;
 - Minimalist thin rules and evidence alignment;
 - IBM Plex Sans, dark slate-blue text, muted gold accents, pale proof cards, and a sand footer;
-- `JL` monogram plus target-specific line art (cross-domain network, layered ML/deployment graph, genomics helix);
+- `JHL` monogram plus target-specific line art (cross-domain network, layered ML/deployment graph, genomics helix);
 - two-line `Production ML & Data Science` focus title;
 - ordinary labeled contact text, no icon-only labels;
 - no portrait by default, references, dark sidebar, or visible contents strip.
