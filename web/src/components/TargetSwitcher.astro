@@ -85,7 +85,7 @@ const order = ["bridge", "ds-ml", "comp-bio"] as const;
       if (el) bridge[field] = el.textContent;
     }
 
-    function apply(target) {
+    function apply(target, animate = true) {
       const overrides = target === "bridge" ? null : variants[target];
       for (const [field, jsonKey] of Object.entries(FIELDS)) {
         const el = document.querySelector(`[data-cv-field="${field}"]`);
@@ -113,6 +113,7 @@ const order = ["bridge", "ds-ml", "comp-bio"] as const;
           headline: overrides?.headline,
           tagline: overrides?.tagline,
           hero_stack: overrides?.hero_stack,
+          animate,
         },
       }));
     }
@@ -137,7 +138,7 @@ const order = ["bridge", "ds-ml", "comp-bio"] as const;
     } catch {
       /* ignore */
     }
-    if (saved && VALID.has(saved) && saved !== "bridge") apply(saved);
+    if (saved && VALID.has(saved) && saved !== "bridge") apply(saved, false);
 
     // Reveal the control now that behaviour is wired (progressive enhancement).
     root.classList.remove("hidden");
