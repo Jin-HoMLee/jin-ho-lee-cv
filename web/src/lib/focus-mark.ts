@@ -116,8 +116,12 @@ export interface FocusFrame {
   rings: FocusRing[];
 }
 
+export function clampFocusProgress(progress: number): number {
+  return Number.isFinite(progress) ? Math.max(0, Math.min(1, progress)) : 0;
+}
+
 export function interpolateFocusMark(from: FocusMark | FocusFrame, to: FocusMark, progress: number): FocusFrame {
-  const t = Math.max(0, Math.min(1, progress));
+  const t = clampFocusProgress(progress);
   if (t === 0 || t === 1) return t === 0 ? from : to;
   const mix = (a: number, b: number) => a + (b - a) * t;
   return {
