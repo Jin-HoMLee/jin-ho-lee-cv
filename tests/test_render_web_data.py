@@ -101,9 +101,7 @@ def test_bilingual_parity(rendered):
     assert [e["id"] for e in en["experience"]] == [e["id"] for e in de["experience"]]
 
     # Web-only archive records preserve bilingual structural parity.
-    assert len(en["history"]["experience_chapters"]) == len(
-        de["history"]["experience_chapters"]
-    )
+    assert len(en["history"]["experience_chapters"]) == len(de["history"]["experience_chapters"])
     assert [chapter["id"] for chapter in en["history"]["experience_chapters"]] == [
         chapter["id"] for chapter in de["history"]["experience_chapters"]
     ]

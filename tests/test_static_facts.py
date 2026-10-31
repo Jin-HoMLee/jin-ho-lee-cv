@@ -89,7 +89,9 @@ def test_answer_block_is_front_loaded_in_static_html(html_en):
 
 def test_opening_uses_original_portrait_and_skills_first_sidebar(html_en):
     assert 'src="/photo.jpg"' in html_en
-    hero_source = (REPO_ROOT / "web" / "src" / "components" / "IdentityHero.astro").read_text("utf-8")
+    hero_source = (REPO_ROOT / "web" / "src" / "components" / "IdentityHero.astro").read_text(
+        "utf-8"
+    )
     assert "filter:grayscale(1) contrast(1.05)" in hero_source
     assert "From evidence to impact" in html_en
     assert "Von Evidenz zu Wirkung" in INDEX_DE.read_text(encoding="utf-8")
@@ -135,8 +137,14 @@ def test_publication_titles_in_static_html(html_en):
 def test_complete_public_archives_are_static_and_bilingual():
     history = _load("history.yaml")
     pages = {
-        "en": (EXPERIENCE_ARCHIVE_EN.read_text(encoding="utf-8"), EDUCATION_ARCHIVE_EN.read_text(encoding="utf-8")),
-        "de": (EXPERIENCE_ARCHIVE_DE.read_text(encoding="utf-8"), EDUCATION_ARCHIVE_DE.read_text(encoding="utf-8")),
+        "en": (
+            EXPERIENCE_ARCHIVE_EN.read_text(encoding="utf-8"),
+            EDUCATION_ARCHIVE_EN.read_text(encoding="utf-8"),
+        ),
+        "de": (
+            EXPERIENCE_ARCHIVE_DE.read_text(encoding="utf-8"),
+            EDUCATION_ARCHIVE_DE.read_text(encoding="utf-8"),
+        ),
     }
     assert sum(len(chapter["entries"]) for chapter in history["experience_chapters"]) == 22
     assert len(history["education"]) == 12

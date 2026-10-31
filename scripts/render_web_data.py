@@ -175,7 +175,9 @@ def render_web_data(
     except (FileNotFoundError, ValueError, AttributeError):
         citation_fetched_at = None
     history_path = content_dir / "history.yaml"
-    history_source = yaml.load(history_path.read_text(encoding="utf-8")) if history_path.exists() else {}
+    history_source = (
+        yaml.load(history_path.read_text(encoding="utf-8")) if history_path.exists() else {}
+    )
     for lang in LANGS:
         # Load bridge once: it is both the site's static content and the baseline
         # against which variant overrides are diffed.
