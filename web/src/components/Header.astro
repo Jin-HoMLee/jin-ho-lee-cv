@@ -25,7 +25,7 @@ const links = archive ? archiveLinks : sectionLinks;
 ---
 <header class="sitebar">
   <div class="site-wrap nav-row">
-    <a class="monogram" href={home} aria-label={`JL — ${personal.name.given} ${personal.name.family}`}>JL</a>
+    <a class="monogram" href={home} aria-label={`JHL — ${personal.name.given} ${personal.name.family}`}>JHL</a>
     <nav class="desktop-nav" aria-label={archive ? (lang === "de" ? "Archivnavigation" : "Archive navigation") : (lang === "de" ? "Primärnavigation" : "Primary navigation")}>
       {links.map(([href, label]) => <a href={href}>{label}</a>)}
     </nav>

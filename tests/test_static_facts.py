@@ -67,6 +67,22 @@ def test_name_and_headline_in_static_html(html_en):
     assert personal["headline"]["en"] in html_en
 
 
+def test_jhl_identity_mark_is_static_and_bilingual():
+    """The identity mark survives SSG and remains unambiguous without JS."""
+    personal = _load("personal.yaml")
+    legacy_mark = "J" + "L"
+    for page in (INDEX_EN, INDEX_DE):
+        rendered = page.read_text(encoding="utf-8")
+        name = f"{personal['name']['given']} {personal['name']['family']}"
+        assert f'aria-label="JHL — {name}"' in rendered
+        assert ">JHL</a>" in rendered
+        assert f">{legacy_mark}</a>" not in rendered
+
+    favicon = (REPO_ROOT / "web" / "public" / "favicon.svg").read_text(encoding="utf-8")
+    assert ">JHL</text>" in favicon
+    assert f">{legacy_mark}</text>" not in favicon
+
+
 def test_every_employer_in_static_html(html_en):
     for entry in _load("experience.yaml"):
         org = entry["org"]["name"]

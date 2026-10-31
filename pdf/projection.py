@@ -462,7 +462,7 @@ def build_one_page_layout(data: dict[str, Any], *, target: str, lang: str) -> di
 
     return {
         "target": target,
-        "monogram": "JL",
+        "monogram": "JHL",
         "focus": focus,
         "profile": profile,
         "metrics": [{"value": value, "label": metric_labels[label]} for value, label in metrics],
