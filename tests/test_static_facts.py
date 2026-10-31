@@ -87,6 +87,15 @@ def test_answer_block_is_front_loaded_in_static_html(html_en):
     assert block in html_en
 
 
+def test_a_plus_identity_hero_contract_matches_pages_smoke(html_en):
+    """The PR web guard must cover the fields asserted by the Pages smoke check."""
+    for page in (html_en, INDEX_DE.read_text(encoding="utf-8")):
+        assert 'data-cv-field="headline"' in page
+        assert 'data-cv-field="answer-block"' in page
+        for removed_field in ("tagline", "lead", "second"):
+            assert f'data-cv-field="{removed_field}"' not in page
+
+
 def test_opening_uses_original_portrait_and_skills_first_sidebar(html_en):
     assert 'src="/photo.jpg"' in html_en
     hero_source = (REPO_ROOT / "web" / "src" / "components" / "IdentityHero.astro").read_text(

@@ -153,8 +153,10 @@ jobs:
           # Phase 8c: target switcher reached the built HTML, both langs
           grep -q 'data-cv-switcher' web/dist/index.html || (echo "Target switcher missing in EN homepage" && exit 1)
           grep -q 'data-cv-switcher' web/dist/de/index.html || (echo "Target switcher missing in DE homepage" && exit 1)
+          # A+ identity hero: the separate profile/tagline/paragraph hooks were
+          # intentionally removed when the answer block became the single lede.
           for page in web/dist/index.html web/dist/de/index.html; do
-            for field in headline tagline lead second; do
+            for field in headline answer-block; do
               grep -q "data-cv-field=\"$field\"" "$page" || (echo "Missing data-cv-field=$field hook in $page" && exit 1)
             done
           done
