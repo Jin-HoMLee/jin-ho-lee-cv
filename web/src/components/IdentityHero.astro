@@ -1,5 +1,6 @@
 ---
 import type { Personal, Profile, Lang } from "../types/content";
+import { FOCUS_MARKS, FOCUS_TARGETS } from "../lib/focus-mark";
 import TargetSwitcher from "./TargetSwitcher.astro";
 interface Variant { headline?:string; tagline?:string; hero_stack?:string[] }
 interface Props { personal:Personal; profile:Profile; lang:Lang; variants:Record<string,Variant> }
@@ -22,10 +23,18 @@ const copy = lang === "de"
   </div>
   <aside class="focus-panel">
     <span class="vector-label">{copy.vector}</span>
-    <div class="focus-art" data-focus-art="bridge" aria-hidden="true">
-      <svg data-art="bridge" viewBox="0 0 500 230"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M42 160L136 76L238 150L342 54L458 156"/><path d="M136 76L202 32M238 150L292 204M342 54L390 112"/><g fill="var(--surface)"><circle cx="42" cy="160" r="9"/><circle cx="136" cy="76" r="13"/><circle cx="238" cy="150" r="10"/><circle cx="342" cy="54" r="14"/><circle cx="458" cy="156" r="10"/><circle cx="202" cy="32" r="7"/><circle cx="292" cy="204" r="7"/><circle cx="390" cy="112" r="7"/></g></g></svg>
-      <svg data-art="ds-ml" viewBox="0 0 160 58" style="display:none"><g fill="none" stroke="currentColor" stroke-width="1.15"><path d="M18 14L58 10M18 14L58 23M18 29L58 23M18 29L58 35M18 44L58 35M18 44L58 48"/><path d="M58 10L103 18M58 23L103 18M58 23L103 40M58 35L103 18M58 35L103 40M58 48L103 40"/><path d="M103 18L139 29M103 40L139 29"/><circle cx="139" cy="29" r="11"/><circle cx="139" cy="29" r="17" stroke-dasharray="2.5 3.5"/><g fill="currentColor"><circle cx="18" cy="14" r="2.4"/><circle cx="18" cy="29" r="2.4"/><circle cx="18" cy="44" r="2.4"/><circle cx="58" cy="10" r="2.2"/><circle cx="58" cy="23" r="2.2"/><circle cx="58" cy="35" r="2.2"/><circle cx="58" cy="48" r="2.2"/><circle cx="103" cy="18" r="2.7"/><circle cx="103" cy="40" r="2.7"/><circle cx="139" cy="29" r="3.2"/></g></g></svg>
-      <svg data-art="comp-bio" viewBox="0 0 500 230" style="display:none"><g fill="none" stroke="currentColor" stroke-width="2"><polyline points="30,45 70,60 110,90 150,140 190,170 230,185 270,170 310,140 350,90 390,60 430,45 470,60"/><polyline points="30,185 70,170 110,140 150,90 190,60 230,45 270,60 310,90 350,140 390,170 430,185 470,170"/><path d="M30 45V185M70 60V170M110 90V140M150 90V140M190 60V170M230 45V185M270 60V170M310 90V140M350 90V140M390 60V170M430 45V185M470 60V170"/></g></svg>
+    <div class="focus-art" data-focus-art="bridge" data-focus-target="bridge" aria-hidden="true">
+      <svg viewBox="0 0 500 230" data-focus-mark>
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" data-focus-edges>
+          {FOCUS_MARKS.bridge.edges.map((item, index) => <path data-focus-edge={index} d={`M${item.x} ${item.y}L${item.toX} ${item.toY}`} opacity={item.opacity} stroke-width={item.strokeWidth} />)}
+        </g>
+        <g data-focus-nodes>
+          {FOCUS_MARKS.bridge.nodes.map((item, index) => <circle data-focus-node={index} cx={item.x} cy={item.y} r={item.r} opacity={item.opacity} fill={item.fill} stroke={item.stroke} stroke-width={item.strokeWidth} />)}
+        </g>
+        <g fill="none" stroke="currentColor" data-focus-rings>
+          {FOCUS_MARKS.bridge.rings.map((item, index) => <circle data-focus-ring={index} cx={item.x} cy={item.y} r={item.r} opacity={item.opacity} stroke-width={item.strokeWidth} stroke-dasharray={item.dash} />)}
+        </g>
+      </svg>
     </div>
     <div class="focus-copy">
       <p class="focus-kicker">{copy.focus}</p>
@@ -34,9 +43,13 @@ const copy = lang === "de"
     </div>
   </aside>
 </section>
-<script>
-  const hero = document.querySelector<HTMLElement>("[data-identity-hero]");
-  if (hero) {
+<script is:inline define:vars={{ focusMarks: FOCUS_MARKS, focusTargets: FOCUS_TARGETS }}>
+  document.addEventListener("DOMContentLoaded", () => {
+    const hero = document.querySelector("[data-identity-hero]");
+    const art = hero?.querySelector("[data-focus-art]");
+    const svg = art?.querySelector("[data-focus-mark]");
+    if (!hero || !art || !svg) return;
+
     const lang = document.documentElement.lang;
     const focus = lang === "de" ? {
       bridge:"Forschungsnahe Evidenz · Produktionssysteme · Mentoring",
@@ -47,14 +60,112 @@ const copy = lang === "de"
       "ds-ml":"GCP · BigQueryML · AI systems",
       "comp-bio":"NGS · HLA typing · splice-derived candidates",
     };
+    const edges = Array.from(svg.querySelectorAll("[data-focus-edge]"));
+    const nodes = Array.from(svg.querySelectorAll("[data-focus-node]"));
+    const rings = Array.from(svg.querySelectorAll("[data-focus-ring]"));
+    const initial = focusMarks.bridge;
+    let current = initial;
+    let frame = 0;
+    let activeTarget = "bridge";
+    const reduced = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    const number = (value) => String(Number(value.toFixed(4)));
+    const render = (mark) => {
+      mark.edges.forEach((item, index) => {
+        const path = edges[index];
+        if (!path) return;
+        path.setAttribute("d", `M${number(item.x)} ${number(item.y)}L${number(item.toX)} ${number(item.toY)}`);
+        path.setAttribute("opacity", number(item.opacity));
+        path.setAttribute("stroke-width", number(item.strokeWidth));
+      });
+      mark.nodes.forEach((item, index) => {
+        const node = nodes[index];
+        if (!node) return;
+        node.setAttribute("cx", number(item.x));
+        node.setAttribute("cy", number(item.y));
+        node.setAttribute("r", number(item.r));
+        node.setAttribute("opacity", number(item.opacity));
+        node.setAttribute("fill", item.fill);
+        node.setAttribute("stroke", item.stroke);
+        node.setAttribute("stroke-width", number(item.strokeWidth));
+      });
+      mark.rings.forEach((item, index) => {
+        const ring = rings[index];
+        if (!ring) return;
+        ring.setAttribute("cx", number(item.x));
+        ring.setAttribute("cy", number(item.y));
+        ring.setAttribute("r", number(item.r));
+        ring.setAttribute("opacity", number(item.opacity));
+        ring.setAttribute("stroke-width", number(item.strokeWidth));
+        ring.setAttribute("stroke-dasharray", item.dash);
+      });
+    };
+    const updateCopy = (target) => {
+      const sub = hero.querySelector("[data-focus-sub]");
+      if (sub) sub.textContent = focus[target];
+      art.dataset.focusTarget = target;
+    };
+    const transition = (target, animate = true) => {
+      if (!focusTargets.includes(target) || target === activeTarget && !frame) return;
+      cancelAnimationFrame(frame);
+      activeTarget = target;
+      const destination = focusMarks[target];
+      const start = current;
+      if (!animate || reduced()) {
+        current = destination;
+        render(destination);
+        updateCopy(target);
+        frame = 0;
+        return;
+      }
+      const started = performance.now();
+      const duration = 560;
+      const tick = (now) => {
+        const progress = Math.min(1, (now - started) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        current = interpolate(start, destination, eased);
+        render(current);
+        if (progress < 1) frame = requestAnimationFrame(tick);
+        else { frame = 0; current = destination; render(destination); updateCopy(target); }
+      };
+      frame = requestAnimationFrame(tick);
+    };
+    // Keep interpolation in the inline island so static HTML remains a complete
+    // fallback and no runtime module fetch is needed.
+    const interpolate = (from, to, progress) => {
+      const mix = (a, b) => a + (b - a) * progress;
+      return {
+        edges: to.edges.map((item, i) => { const source = from.edges[i]; return { ...item, x: mix(source.x, item.x), y: mix(source.y, item.y), toX: mix(source.toX, item.toX), toY: mix(source.toY, item.toY), opacity: mix(source.opacity, item.opacity), strokeWidth: mix(source.strokeWidth, item.strokeWidth) }; }),
+        nodes: to.nodes.map((item, i) => { const source = from.nodes[i]; return { ...item, x: mix(source.x, item.x), y: mix(source.y, item.y), r: mix(source.r, item.r), opacity: mix(source.opacity, item.opacity), strokeWidth: mix(source.strokeWidth, item.strokeWidth) }; }),
+        rings: to.rings.map((item, i) => { const source = from.rings[i]; return { ...item, x: mix(source.x, item.x), y: mix(source.y, item.y), r: mix(source.r, item.r), opacity: mix(source.opacity, item.opacity), strokeWidth: mix(source.strokeWidth, item.strokeWidth) }; }),
+      };
+    };
     window.addEventListener("cv-target-change", (event) => {
-      const target = (event as CustomEvent<{target:string}>).detail?.target;
-      if (!(target in focus)) return;
-      const sub = hero.querySelector<HTMLElement>("[data-focus-sub]");
-      if (sub) sub.textContent = focus[target as keyof typeof focus];
-      hero.querySelectorAll<SVGElement>("[data-art]").forEach((art) => { art.style.display = art.dataset.art === target ? "" : "none"; });
+      const detail = event.detail ?? {};
+      if (!focusTargets.includes(detail.target)) return;
+      transition(detail.target, detail.animate !== false);
+      const sub = hero.querySelector("[data-focus-sub]");
+      if (sub && reduced()) sub.textContent = focus[detail.target];
     });
-  }
+
+    const motionQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    motionQuery?.addEventListener?.("change", (event) => {
+      if (!event.matches || !frame) return;
+      cancelAnimationFrame(frame);
+      frame = 0;
+      current = focusMarks[activeTarget];
+      render(current);
+      updateCopy(activeTarget);
+    });
+
+    // The switcher's restore event can run before this island's DOMContentLoaded
+    // callback. Read the same preference here so a persisted lens always wins.
+    try {
+      const saved = localStorage.getItem("cvTargetPreference");
+      if (saved && focusTargets.includes(saved) && saved !== "bridge") transition(saved, false);
+    } catch {
+      /* storage may be unavailable (private mode); keep the static bridge */
+    }
+  });
 </script>
 <style>
   .identity-hero { position:relative; display:grid; grid-template-columns:7fr 5fr; gap:3.5rem; align-items:start; padding:5.1rem 0 3.4rem; }
