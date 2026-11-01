@@ -34,7 +34,7 @@ def test_attachment_variants_do_not_redeclare_visual_tokens():
         assert token in shared
     for variant in VARIANTS:
         source = variant.read_text(encoding="utf-8")
-        assert "rgb(\"#" not in source
+        assert 'rgb("#' not in source
         assert 'font: "IBM Plex Sans"' not in source
 
 

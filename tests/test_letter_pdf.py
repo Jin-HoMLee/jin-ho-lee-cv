@@ -134,7 +134,9 @@ def test_cover_letter_pdf_compiles(apps):
     reader = PdfReader(str(out))
     assert len(reader.pages) == 1
     if shutil.which("pdffonts") is not None:
-        fonts = subprocess.run(["pdffonts", str(out)], capture_output=True, text=True, check=True).stdout
+        fonts = subprocess.run(
+            ["pdffonts", str(out)], capture_output=True, text=True, check=True
+        ).stdout
         assert "IBMPlexSans" in fonts
 
 

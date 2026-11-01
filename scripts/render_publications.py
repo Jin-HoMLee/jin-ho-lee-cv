@@ -114,7 +114,9 @@ def prepare_data(content_dir: Path = CONTENT_DIR, *, lang: str = "en") -> dict[s
         "publications": grouped,
         "publication_links": publication_links,
         "labels": {
-            "title": "Complete publication list" if lang == "en" else "Vollständige Publikationsliste",
+            "title": "Complete publication list"
+            if lang == "en"
+            else "Vollständige Publikationsliste",
             "provenance": (
                 "Generated from the version-controlled bibliography."
                 if lang == "en"
