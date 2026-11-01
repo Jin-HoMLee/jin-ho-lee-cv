@@ -86,6 +86,15 @@ build-text-targets:
 letter slug:
     uv run python -m scripts.render_letter "{{slug}}"
 
+# Render one complete publication-list attachment → dist/publications-{lang}.pdf
+publication-list lang="en":
+    uv run python -m scripts.render_publications --lang {{lang}}
+
+# Render both bilingual publication-list attachments.
+build-publications:
+    uv run python -m scripts.render_publications --lang en
+    uv run python -m scripts.render_publications --lang de
+
 # Advisory JD↔CV keyword gap report (checklist, not a verdict) → stdout
 jd-gap slug:
     uv run python -m scripts.jd_gap "{{slug}}"

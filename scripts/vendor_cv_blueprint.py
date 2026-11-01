@@ -51,6 +51,7 @@ FILES = (
     "scripts/export_application.py",
     "scripts/langstring.py",
     "scripts/publications.py",
+    "scripts/render_publications.py",
     "schema/application.schema.json",
     ".typstversion",
 )
@@ -85,7 +86,8 @@ can build CV variants entirely locally (no round-trip to a CV checkout).
 - `.cv-sha` records the exact CV git SHA this snapshot came from.
 - `content/` is the CV `content/` master (the three general variants: bridge,
   comp-bio, ds-ml).
-- `pdf/` + `scripts/` are the Typst PDF build machinery and the export recipe.
+- `pdf/` + `scripts/` are the Typst PDF build machinery, reusable attachment
+  renderer, and export recipe.
 - `tailoring.example.yaml` shows the per-position tailoring shape.
 
 ## Build the three general variants
@@ -95,6 +97,14 @@ can build CV variants entirely locally (no round-trip to a CV checkout).
     python -m pdf.build --lang en --target comp-bio
     python -m pdf.build --lang en --target ds-ml
     python -m pdf.build --lang de --target bridge   # …and so on
+
+Outputs land in `cv-blueprint/dist/` (gitignored).
+
+## Build the reusable publication list
+
+    cd cv-blueprint
+    python -m scripts.render_publications --lang en
+    python -m scripts.render_publications --lang de
 
 Outputs land in `cv-blueprint/dist/` (gitignored).
 

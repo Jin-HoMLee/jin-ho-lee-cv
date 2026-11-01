@@ -440,6 +440,25 @@ def _detect_letter(package_dir: Path, lang: str) -> dict | None:
     }
 
 
+def _detect_publication_list(package_dir: Path, lang: str) -> dict | None:
+    """Return an optional publication-list attachment freeze record.
+
+    The publication list is rendered independently because it is a reusable
+    public attachment rather than application-specific prose. Existing packages
+    remain unchanged when the optional artifact is absent.
+    """
+    pdf_rel = f"artifacts/publication-list-{lang}.pdf"
+    pdf = package_dir / pdf_rel
+    if not pdf.is_file():
+        return None
+    return {
+        "source": "content/publications.bib",
+        "pdf_path": pdf_rel,
+        "pdf_sha256": sha256_file(pdf),
+        "rendered_at": _mtime_iso(pdf),
+    }
+
+
 def _submit_fields(application: dict) -> dict:
     """The four submit fields read from application.yaml where available (else null)."""
     return {
@@ -524,6 +543,9 @@ def export_application_cv(slug: str, *, apps_dir: Path | None = None, build_pdf=
     letter = _detect_letter(package_dir, lang)
     if letter is not None:
         manifest["letter"] = letter
+    publication_list = _detect_publication_list(package_dir, lang)
+    if publication_list is not None:
+        manifest["publication_list"] = publication_list
     manifest["submit"] = _submit_fields(application)
 
     _atomic_write(f"{slug}/attachment-manifest.yaml", _dump_yaml(manifest), apps_dir=apps_dir)

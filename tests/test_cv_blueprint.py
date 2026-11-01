@@ -103,6 +103,7 @@ def test_vendor_blueprint_builds_minimal_snapshot(tmp_path: Path):
     assert (bp / "scripts" / "bib_loader.py").is_file()
     assert (bp / "scripts" / "langstring.py").is_file()
     assert (bp / "scripts" / "publications.py").is_file()
+    assert (bp / "scripts" / "render_publications.py").is_file()
     # heavy cover-letter chain is deliberately NOT vendored
     assert not (bp / "scripts" / "cover_letter_core.py").exists()
     assert not (bp / "scripts" / "agent_core.py").exists()
