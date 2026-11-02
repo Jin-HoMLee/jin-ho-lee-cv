@@ -45,14 +45,14 @@
     name: "neuefische GmbH"
     url: null
   role:
-    en: "Data Science Trainee, Associate & Coach"
-    de: "Data Science Trainee, Associate & Coach"
+    en: "Data Science Trainee & Associate"
+    de: "Data Science Trainee & Associate"
   period:
     start: "2023-02"
     end: "2024-04"
   bullets:
-    - en: "Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects."
-      de: "Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten."
+    - en: "Coaching delivery: Taught Python, SQL, and ML lifecycles to 100+ specialists across applied data-science cohorts; supervised capstone projects."
+      de: "Coaching-Umsetzung: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen im Rahmen praxisnaher Data-Science-Kohorten; Betreuung von Capstone-Projekten."
       refs: [D3]
     - en: "ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow."
       de: "ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt."

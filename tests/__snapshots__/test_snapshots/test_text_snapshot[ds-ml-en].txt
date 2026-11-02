@@ -1,5 +1,5 @@
 JIN-HO LEE
-Data Science · Machine Learning - Mannheim, GER
+Data Scientist · Machine Learning Engineer - Mannheim, GER
 jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/in/jin-holee | https://github.com/Jin-HoMLee | https://researchgate.net/profile/Jin-Ho-Lee-8 | https://orcid.org/0009-0001-8784-1771 | https://scholar.google.com/citations?user=QPyM-WoAAAAJ | https://www.wikidata.org/wiki/Q140644861
 
 ================================================================================
@@ -10,8 +10,9 @@ rigor of a research decade across bioinformatics and experimental biophysics to
 every model and pipeline.
 
 In industry: architected the migration of 1,000+ analytical processes to Google
-Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and coached
-100+ specialists in Python, SQL & ML.
+Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and taught
+Python, SQL & ML lifecycles to 100+ specialists across applied data-science
+cohorts.
 
 ================================================================================
 EXPERIENCE
@@ -26,9 +27,9 @@ Consultant, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 to 202
   - Cloud Migration: Architected the move of 1,000+ analytical processes for an international bank to GCP.
   - Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery.
 
-Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 to 2024-04)
+Data Science Trainee & Associate - neuefische GmbH    (2023-02 to 2024-04)
   - ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow.
-  - Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.
+  - Coaching delivery: Taught Python, SQL, and ML lifecycles to 100+ specialists across applied data-science cohorts; supervised capstone projects.
 
 Doctoral & Post-Graduate Researcher (doctorate not awarded) - Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU)    (2014-04 to 2022-07)
   - Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).

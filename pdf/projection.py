@@ -387,8 +387,7 @@ def build_one_page_layout(data: dict[str, Any], *, target: str, lang: str) -> di
         ]
 
     metric_labels = {
-        "processes": _localized(lang, "processes → GCP", "Prozesse → GCP"),
-        "coached": _localized(lang, "specialists coached", "Fachkräfte gecoacht"),
+        "processes": _localized(lang, "Cintellic delivery → GCP", "Cintellic-Delivery → GCP"),
         "publications": _localized(lang, "research publications", "Forschungspublikationen"),
         "research": _localized(lang, "research portfolio", "Forschungsportfolio"),
         "certified": _localized(lang, "certified engineer", "zertifizierter Engineer"),
@@ -399,14 +398,12 @@ def build_one_page_layout(data: dict[str, Any], *, target: str, lang: str) -> di
     if target == "bridge":
         metrics = [
             ("1,000+", "processes"),
-            ("100+", "coached"),
             ("12", "publications"),
             ("8 years" if lang == "en" else "8 Jahre", "research"),
         ]
     elif target == "ds-ml":
         metrics = [
             ("1,000+", "processes"),
-            ("100+", "coached"),
             ("12", "publications"),
             ("GCP", "certified"),
         ]
@@ -415,31 +412,36 @@ def build_one_page_layout(data: dict[str, Any], *, target: str, lang: str) -> di
 
     focus = {
         "bridge": {
-            "art": "cross-domain",
-            "title": _localized(lang, "Cross-domain delivery", "Interdisziplinäre Umsetzung"),
-            "title_lines": [
-                _localized(lang, "Cross-domain delivery", "Interdisziplinäre Umsetzung")
-            ],
+            "title": _localized(lang, "Data Scientist · ML Engineer", "Data Scientist · ML Engineer"),
+            "title_lines": [_localized(lang, "Data Scientist · ML Engineer", "Data Scientist · ML Engineer")],
             "subtitle": _localized(
                 lang,
-                "Machine learning · cloud · bioinformatics",
-                "Machine Learning · Cloud · Bioinformatik",
+                "Production ML · cloud delivery · bioinformatics",
+                "Produktives ML · Cloud-Delivery · Bioinformatik",
             ),
         },
         "ds-ml": {
-            "art": "production-ml",
-            "title": "Production ML & Data Science",
-            "title_lines": ["Production ML", "& Data Science"],
-            "subtitle": "GCP · BigQueryML · AI systems",
+            "title": "Data Scientist · ML Engineer",
+            "title_lines": ["Data Scientist · ML Engineer"],
+            "subtitle": "Production ML · GCP · BigQueryML",
         },
         "comp-bio": {
-            "art": "genomics",
-            "title": _localized(lang, "Computational biology", "Computational Biology"),
-            "title_lines": [_localized(lang, "Computational biology", "Computational Biology")],
+            "title": _localized(
+                lang,
+                "Computational Biologist · Bioinformatician",
+                "Computational Biologist · Bioinformatician",
+            ),
+            "title_lines": [
+                _localized(
+                    lang,
+                    "Computational Biologist · Bioinformatician",
+                    "Computational Biologist · Bioinformatician",
+                )
+            ],
             "subtitle": _localized(
                 lang,
-                "NGS · HLA · splice-derived candidates",
-                "NGS · HLA · splice-abgeleitete Kandidaten",
+                "NGS · HLA · reproducible workflows",
+                "NGS · HLA · reproduzierbare Workflows",
             ),
         },
     }[target]
@@ -460,14 +462,20 @@ def build_one_page_layout(data: dict[str, Any], *, target: str, lang: str) -> di
             "12 peer-reviewte Publikationen stammen aus dem separaten Portfolio der experimentellen Biophysik — nicht aus Genomik-Publikationen.",
         )
 
+    proof_line = _localized(
+        lang,
+        "Proof · 1,000+ Cintellic processes → GCP · 12 peer-reviewed publications · experimental biophysics.",
+        "Nachweis · 1.000+ Cintellic-Prozesse → GCP · 12 peer-reviewte Publikationen · experimentelle Biophysik.",
+    )
+
     return {
         "target": target,
-        "monogram": "JHL",
         "focus": focus,
         "profile": profile,
         "metrics": [{"value": value, "label": metric_labels[label]} for value, label in metrics],
         "experience": experience,
         "proofs": proofs,
+        "proof_line": proof_line,
         "skills": skills,
         "education": copy.deepcopy(
             data["education"][:1] if target == "comp-bio" else data["education"]

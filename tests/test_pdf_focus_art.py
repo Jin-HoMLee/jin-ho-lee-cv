@@ -123,12 +123,13 @@ def test_default_focus_art_matches_website_network_geometry():
     assert root.findall(".//svg:rect", SVG_NS) == []
 
 
-def test_comp_bio_stock_and_tailored_exports_share_focus_asset():
+def test_pdf_focus_is_plain_role_first_without_decorative_art():
     template = (REPO_ROOT / "pdf/templates/cv.typ").read_text(encoding="utf-8")
     exporter = (REPO_ROOT / "scripts/export_application.py").read_text(encoding="utf-8")
 
-    assert 'image("../assets/focus-" + layout.focus.art + ".svg"' in template
+    assert 'image("../assets/focus-"' not in template
+    assert "ROLE / TARGET" in template
     assert "build(lang, variant, content_dir, tailored=bool(applied))" in exporter
     projection = (REPO_ROOT / "pdf/projection.py").read_text(encoding="utf-8")
     assert '"comp-bio": {' in projection
-    assert '"art": "genomics"' in projection
+    assert '"proof_line"' in projection

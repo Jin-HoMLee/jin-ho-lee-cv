@@ -12,10 +12,10 @@ from scripts.content_loader import load_content
 
 def test_en_tagline_leads_with_data_science(content_dir):
     profile = load_content(content_dir, lang="en")["profile"]
-    assert profile["tagline"].startswith("Data scientist")
+    assert profile["tagline"].startswith("Data Scientist")
     assert "bioinformatics roots" in profile["tagline"]
     assert "GCP" in profile["tagline"]
-    # the General CV is broad — cancer-genomics specificity lives in comp-bio
+    # The visible profile is role-first; target-specific biological detail lives in comp-bio.
     assert "cancer-genomics" not in profile["tagline"]
     assert "Bioinformatics Engineer specializing" not in profile["tagline"]
 
@@ -42,7 +42,7 @@ def test_de_profile_body_is_two_paragraphs_led_by_differentiator(content_dir):
     assert "Google Cloud" in paragraphs[1]
 
 
-def test_headline_repositioned_to_bioinformatics_data_science(content_dir):
+def test_headline_leads_with_the_role_sought(content_dir):
     headline = load_content(content_dir)["personal"]["headline"]
-    assert headline["en"] == "Bioinformatics · Data Science"
-    assert headline["de"] == "Bioinformatik · Data Science"
+    assert headline["en"] == "Data Scientist · ML Engineer"
+    assert headline["de"] == "Data Scientist · ML-Engineer"

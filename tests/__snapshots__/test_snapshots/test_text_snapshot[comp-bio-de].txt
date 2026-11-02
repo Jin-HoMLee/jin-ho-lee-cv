@@ -1,5 +1,5 @@
 JIN-HO LEE
-Bioinformatik · Krebsgenomik - Mannheim, GER
+Computational Biologe · Bioinformatiker - Mannheim, GER
 jinho.michael.lee@gmail.com | https://jinholee.is-a.dev/ | https://linkedin.com/in/jin-holee | https://github.com/Jin-HoMLee | https://researchgate.net/profile/Jin-Ho-Lee-8 | https://orcid.org/0009-0001-8784-1771 | https://scholar.google.com/citations?user=QPyM-WoAAAAJ | https://www.wikidata.org/wiki/Q140644861
 
 ================================================================================
@@ -16,9 +16,10 @@ Forschungspublikationen — als Erst- bzw. geteilter Erstautor — hervor, keine
 Genomik-Publikationen.
 
 Ebenso zu Hause in der Produktion: Migration von 1.000+ analytischen Prozessen
-in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Mentoring von
-100+ Fachkräften in Python, SQL & ML — bei gleichzeitiger Einwerbung von
-Drittmitteln und Betreuung von 10+ Studierenden.
+in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Unterricht von
+100+ Fachkräften in Python, SQL und ML-Lebenszyklen im Rahmen praxisnaher Data-
+Science-Kohorten — bei gleichzeitiger Einwerbung von Drittmitteln und Betreuung
+von 10+ Studierenden.
 
 ================================================================================
 BERUFSERFAHRUNG
@@ -33,8 +34,8 @@ Berater, Lead Business Functional Analyst - Cintellic GmbH    (2024-05 bis 2025-
   - ML in der Produktion: Entwicklung von BigQueryML-Modellen für Anti-Financial Crime und KYC.
   - Stakeholder Lead: Umsetzung regulatorischer Bankanforderungen in Data-Engineering-Lösungen.
 
-Data Science Trainee, Associate & Coach - neuefische GmbH    (2023-02 bis 2024-04)
-  - Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.
+Data Science Trainee & Associate - neuefische GmbH    (2023-02 bis 2024-04)
+  - Coaching-Umsetzung: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen im Rahmen praxisnaher Data-Science-Kohorten; Betreuung von Capstone-Projekten.
   - ML-Entwicklung: Echtzeit-ASL-Erkennungsprototyp mit LSTMs, MediaPipe und TensorFlow entwickelt.
 
 Doktorand & postgradualer Forscher (Promotion nicht abgeschlossen) - Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU)    (2014-04 bis 2022-07)
