@@ -252,8 +252,7 @@ def test_all_variants_are_one_page_flat_text_in_one_order(built_pdf):
         role_marker = lines.index("ROLE / TARGET")
         role_title = next(line for line in lines[role_marker + 1 :] if line)
         assert role_title == title, (
-            f"{extractor}: {lang}/{target} role-first title is not exact: "
-            f"{role_title!r}"
+            f"{extractor}: {lang}/{target} role-first title is not exact: {role_title!r}"
         )
 
         labels = SECTION_LABELS[lang]
