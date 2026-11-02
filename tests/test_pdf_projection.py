@@ -336,7 +336,7 @@ def test_comp_bio_pdf_honesty_boundaries_for_application_export(content_dir):
 
 def test_one_page_layout_uses_distinct_role_first_focus_panels(content_dir):
     expected = {
-        "bridge": "Data Scientist Bioinformatician",
+        "bridge": "Data Scientist · Bioinformatician",
         "ds-ml": "Data Scientist · ML Engineer",
         "comp-bio": "Computational Biologist · Bioinformatician",
     }
