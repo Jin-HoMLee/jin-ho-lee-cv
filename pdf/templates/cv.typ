@@ -60,13 +60,14 @@
   if url == none { row } else { link(url, row) }
 }
 
+#let masthead-contact-row-gap = 3pt
 #let public-contact = grid(
   columns: (1fr,),
-  row-gutter: 2.5pt,
+  row-gutter: masthead-contact-row-gap,
   text(size: 7.4pt)[#contact-line("Email", data.personal.email, url: "mailto:" + data.personal.email)],
   text(size: 7.4pt)[#contact-line("Based", data.personal.location.city + ", " + data.personal.location.country)],
   text(size: 7.4pt)[#contact-line("Web", "jinholee.is-a.dev", url: data.personal.links.website)],
-  text(size: 7.4pt)[
+  [#move(dy: -0.5pt)[#text(size: 7.4pt)[
     #if "phone" in data.personal {
       contact-line("Phone", data.personal.phone)
     } else {
@@ -76,7 +77,7 @@
         #link(data.personal.links.github)[GitHub]
       ])
     }
-  ],
+  ]]],
 )
 
 #let identity-text = [
@@ -106,7 +107,7 @@
   public-contact,
 )
 
-#v(4.5mm)
+#v(4.5mm - 1.5pt)
 #block(
   width: 100%,
   fill: sand,

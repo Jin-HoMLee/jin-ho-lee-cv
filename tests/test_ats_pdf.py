@@ -367,6 +367,10 @@ def _assert_separate_complete_aligned_contact_rows(pdf: Path) -> None:
         f"contact rows overlap or are not vertically separated: {boxes}"
     )
 
+    # The three primary masthead rows have a deliberate breathing gap; the
+    # social-links row retains the tighter legacy separation below them.
+    primary_gaps = [boxes[index + 1][1] - boxes[index][3] for index in range(2)]
+    assert all(gap >= 0.5 for gap in primary_gaps), primary_gaps
     # The three labeled rows share one label rail and one value rail. This catches
     # visually ragged fallback layouts even when extraction still finds all words.
     labeled_rows = contact[:3]
