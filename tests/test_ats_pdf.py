@@ -242,6 +242,19 @@ def test_all_variants_are_one_page_flat_text_in_one_order(built_pdf):
         for keyword in TARGET_KEYWORDS[target]:
             assert keyword in text, f"{extractor}: missing target keyword {keyword!r}"
 
+        expected_titles = {
+            "bridge": "Data Scientist · Bioinformatician",
+            "ds-ml": "Data Scientist · ML Engineer",
+            "comp-bio": "Computational Biologist · Bioinformatician",
+        }
+        title = expected_titles[target]
+        lines = [line.strip() for line in text.splitlines()]
+        role_marker = lines.index("ROLE / TARGET")
+        role_title = next(line for line in lines[role_marker + 1 :] if line)
+        assert role_title == title, (
+            f"{extractor}: {lang}/{target} role-first title is not exact: {role_title!r}"
+        )
+
         labels = SECTION_LABELS[lang]
         skill_region = text.split(labels["skills"], 1)[1].split(labels["education"], 1)[0]
         category_labels = SKILL_CATEGORY_LABELS[lang][target]
