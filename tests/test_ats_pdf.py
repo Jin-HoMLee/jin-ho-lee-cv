@@ -188,14 +188,15 @@ def _proof_card_geometries(pdf: Path) -> list[tuple[float, float, float]]:
     stream = PdfReader(pdf).pages[0].get_contents().get_data().decode("latin1")
     stream = " ".join(stream.split())
     geometries = []
-    for match in re.finditer(
-        r"q 1 0 0 -1 ([\d.]+) ([\d.]+) cm/c0 cs "
-        r"0\.92941177 0\.9490196 0\.9607843 scn .*?"
-        r"[\d.]+ 3\.4015749 c ([\d.]+) ([\d.]+) l",
-        stream,
-    ):
-        x, y, width, height = (float(value) for value in match.groups())
-        geometries.append((x, y, width, height))
+    for marker in re.finditer("0.92941177 0.9490196 0.9607843 scn", stream):
+        # Typst 0.14 and 0.15 place the fill command differently in the stream;
+        # the rounded rectangle's first tall `l` segment is stable in both.
+        path = stream[marker.end() : marker.end() + 800]
+        segments = [(float(x), float(y)) for x, y in re.findall(r"([\d.]+) ([\d.]+) l", path)]
+        tall = next(((x, y) for x, y in segments if y > 10), None)
+        assert tall, "unrecognised project-card geometry"
+        width, height = tall
+        geometries.append((0.0, 0.0, width, height))
     return geometries
 
 
