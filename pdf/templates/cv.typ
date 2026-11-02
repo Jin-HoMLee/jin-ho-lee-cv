@@ -170,30 +170,32 @@
   ),
 )
 
-#let proof-card(proof) = block(
-  height: if tailored and layout.target == "comp-bio" { 20mm } else if layout.target == "comp-bio" { 56mm } else if layout.target == "bridge" { 41mm } else { 36mm },
+#let proof-card-content(proof) = [
+  #grid(
+    columns: (1fr, auto),
+    column-gutter: 2mm,
+    link(proof.url)[#text(size: 8.7pt, weight: 650, fill: ink)[#proof.title]],
+    if proof.links.len() > 1 {
+      text(size: 6.3pt, fill: muted)[
+        #for (index, item) in proof.links.enumerate() {
+          if index > 0 { [ · ] }
+          link(item.url)[#item.id]
+        }
+      ]
+    },
+  )
+  #if not (tailored and layout.target == "comp-bio") {
+    v(2pt)
+    text(size: 7.8pt, fill: muted)[#proof.text]
+  }
+]
+
+#let proof-card(proof, height) = block(
+  height: height,
   fill: pale-blue,
   radius: 1.2mm,
   inset: 3.5mm,
-  [
-    #grid(
-      columns: (1fr, auto),
-      column-gutter: 2mm,
-      link(proof.url)[#text(size: 8.7pt, weight: 650, fill: ink)[#proof.title]],
-      if proof.links.len() > 1 {
-        text(size: 6.3pt, fill: muted)[
-          #for (index, item) in proof.links.enumerate() {
-            if index > 0 { [ · ] }
-            link(item.url)[#item.id]
-          }
-        ]
-      },
-    )
-    #if not (tailored and layout.target == "comp-bio") {
-      v(2pt)
-      text(size: 7.8pt, fill: muted)[#proof.text]
-    }
-  ],
+  proof-card-content(proof),
 )
 
 #let metric(metric) = block(
@@ -213,19 +215,29 @@
   v(1pt)
 }
 
-#grid(
-  columns: (1.62fr, 1fr),
-  column-gutter: 8mm,
-  align: (left, top),
+#std.layout(size => {
+  // Measure each card at its actual column width, then equalize only to the
+  // taller card. This keeps the shared 3.5mm inset as the bottom padding.
+  let left-width = (size.width - 8mm) * 1.62 / 2.62
+  let card-width = (left-width - 3.5mm) / 2
+  let card-heights = layout.proofs.map(proof =>
+    measure(proof-card-content(proof), width: card-width - 7mm).height + 7mm
+  )
+  let proof-height = calc.max(card-heights.at(0), card-heights.at(1))
+
+  grid(
+    columns: (1.62fr, 1fr),
+    column-gutter: 8mm,
+    align: (left, top),
   [
     #section-title(data.labels.sections.experience, "section-experience")
     #for entry in layout.experience { experience-entry(entry) }
-    #v(1pt)
+    #v(4pt)
     #section-title(data.labels.sections.selected_projects, "section-projects")
     #grid(
       columns: (1fr, 1fr),
       column-gutter: 3.5mm,
-      ..layout.proofs.map(proof-card),
+      ..layout.proofs.map(proof => proof-card(proof, proof-height)),
     )
     #v(if layout.target == "comp-bio" { 2pt } else { 5pt })
     #block(
@@ -309,4 +321,5 @@
       ],
     )
   ],
-)
+  )
+})

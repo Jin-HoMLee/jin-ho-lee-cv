@@ -6,6 +6,7 @@ target evidence, ordinary text layer, A4 one-page contract, and safe links/bookm
 
 from __future__ import annotations
 
+import re
 import shutil
 import subprocess
 import sys
@@ -180,6 +181,52 @@ def _assert_heading_order(text: str, headings: list[str], extractor: str) -> Non
         )
         positions.append(matches[0])
     assert positions == sorted(positions), f"{extractor}: wrong section order: {positions}"
+
+
+def _proof_card_geometries(pdf: Path) -> list[tuple[float, float, float]]:
+    """Read the two pale-blue project-card rounded rectangles from the page stream."""
+    stream = PdfReader(pdf).pages[0].get_contents().get_data().decode("latin1")
+    geometries = []
+    for line in stream.splitlines():
+        if "0.92941177 0.9490196 0.9607843 scn" not in line:
+            continue
+        match = re.search(
+            r"q 1 0 0 -1 ([\d.]+) ([\d.]+) cm/c0 cs .*?"
+            r"[\d.]+ 3\.4015749 c ([\d.]+) ([\d.]+) l",
+            line,
+        )
+        assert match, f"unrecognised project-card geometry: {line}"
+        x, y, width, height = (float(value) for value in match.groups())
+        geometries.append((x, y, width, height))
+    return geometries
+
+
+def test_project_cards_are_equal_height_and_naturally_padded(built_pdf):
+    """Both backgrounds use the taller card's measured content, not a fixed spacer."""
+    lang, target, pdf, _, _, _ = built_pdf
+    cards = _proof_card_geometries(pdf)
+    assert len(cards) == 2, f"{lang}/{target}: expected two project cards, got {cards}"
+    assert cards[0][2] == pytest.approx(cards[1][2], abs=0.01)
+    assert cards[0][3] == pytest.approx(cards[1][3], abs=0.01)
+    if (lang, target) == ("en", "comp-bio"):
+        # The released renderer used a gratuitous 56mm fixed card height.
+        assert cards[0][3] < 56 * 72 / 25.4
+
+
+def test_experience_and_projects_have_a_consistent_boundary_gap(built_pdf):
+    """The project heading gets a restrained, shared separation from Experience."""
+    lang, _, pdf, _, _, _ = built_pdf
+    heading_text = "AUSGEWÄHLTE PROJEKTE" if lang == "de" else "SELECTED PROJECTS"
+    _, _, lines = _bbox_lines(pdf)
+    heading = next(box for words, box in lines if " ".join(word for word, _ in words) == heading_text)
+    prior = [
+        box
+        for _, box in lines
+        if box[2] < 340 and box[3] < heading[1]
+    ]
+    assert prior
+    gap = heading[1] - max(box[3] for box in prior)
+    assert 10 <= gap <= 12, f"unexpected Experience/projects gap: {gap:.2f}pt"
 
 
 def test_all_variants_are_one_page_flat_text_in_one_order(built_pdf):

@@ -412,12 +412,8 @@ def build_one_page_layout(data: dict[str, Any], *, target: str, lang: str) -> di
 
     focus = {
         "bridge": {
-            "title": _localized(
-                lang, "Data Scientist · ML Engineer", "Data Scientist · ML Engineer"
-            ),
-            "title_lines": [
-                _localized(lang, "Data Scientist · ML Engineer", "Data Scientist · ML Engineer")
-            ],
+            "title": "Data Scientist Bioinformatician",
+            "title_lines": ["Data Scientist Bioinformatician"],
             "subtitle": _localized(
                 lang,
                 "Production ML · cloud delivery · bioinformatics",

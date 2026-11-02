@@ -334,28 +334,28 @@ def test_comp_bio_pdf_honesty_boundaries_for_application_export(content_dir):
     assert "multiomics" not in tagline.lower()
 
 
-def test_one_page_layout_uses_role_first_focus_panels(content_dir):
+def test_one_page_layout_uses_distinct_role_first_focus_panels(content_dir):
     expected = {
-        "bridge": "Data Scientist · ML Engineer",
+        "bridge": "Data Scientist Bioinformatician",
         "ds-ml": "Data Scientist · ML Engineer",
         "comp-bio": "Computational Biologist · Bioinformatician",
     }
-    for target, title in expected.items():
-        layout = prepare_data(content_dir, private_path=None, lang="en", target=target)[
-            "pdf_layout"
-        ]
-        assert layout["focus"]["title"] == title
-        assert "art" not in layout["focus"]
-        assert "monogram" not in layout
-        assert len(layout["proofs"]) == 2
-        assert "Proof" in layout["proof_line"]
-
     for lang in ("en", "de"):
-        for target in expected:
+        titles = {}
+        for target, title in expected.items():
             layout = prepare_data(content_dir, private_path=None, lang=lang, target=target)[
                 "pdf_layout"
             ]
+            titles[target] = layout["focus"]["title"]
+            assert layout["focus"]["title"] == title
+            assert layout["focus"]["title_lines"] == [title]
             assert "art" not in layout["focus"]
+            assert "monogram" not in layout
+            assert len(layout["proofs"]) == 2
+            proof_marker = "Nachweis" if lang == "de" else "Proof"
+            assert proof_marker in layout["proof_line"]
+
+        assert len(set(titles.values())) == 3
 
 
 def test_one_page_layout_projects_target_specific_experience(content_dir):
