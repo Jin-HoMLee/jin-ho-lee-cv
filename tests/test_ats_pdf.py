@@ -186,16 +186,14 @@ def _assert_heading_order(text: str, headings: list[str], extractor: str) -> Non
 def _proof_card_geometries(pdf: Path) -> list[tuple[float, float, float]]:
     """Read the two pale-blue project-card rounded rectangles from the page stream."""
     stream = PdfReader(pdf).pages[0].get_contents().get_data().decode("latin1")
+    stream = " ".join(stream.split())
     geometries = []
-    for line in stream.splitlines():
-        if "0.92941177 0.9490196 0.9607843 scn" not in line:
-            continue
-        match = re.search(
-            r"q 1 0 0 -1 ([\d.]+) ([\d.]+) cm/c0 cs .*?"
-            r"[\d.]+ 3\.4015749 c ([\d.]+) ([\d.]+) l",
-            line,
-        )
-        assert match, f"unrecognised project-card geometry: {line}"
+    for match in re.finditer(
+        r"q 1 0 0 -1 ([\d.]+) ([\d.]+) cm/c0 cs "
+        r"0\.92941177 0\.9490196 0\.9607843 scn .*?"
+        r"[\d.]+ 3\.4015749 c ([\d.]+) ([\d.]+) l",
+        stream,
+    ):
         x, y, width, height = (float(value) for value in match.groups())
         geometries.append((x, y, width, height))
     return geometries
