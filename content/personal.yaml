@@ -2,8 +2,8 @@ name:
   given: "Jin-Ho"
   family: "Lee"
 headline:
-  en: "Bioinformatics · Data Science"
-  de: "Bioinformatik · Data Science"
+  en: "Data Scientist · ML Engineer"
+  de: "Data Scientist · ML-Engineer"
 email: "jinho.michael.lee@gmail.com"
 location:
   city: "Mannheim"
@@ -36,25 +36,20 @@ knowsAbout:
   - "Spatial Point-Pattern Analysis"
   - "Cloud Data Engineering"
   - "Bioimage Analysis"
-# Authored headline metrics for the web stat band (in display order, after the derived
-# years/publications/citations tiles). Numbers mirror the experience.yaml achievements.
+# Authored proof for the web stat band (in display order, after the derived
+# years/publications/citations tiles). Keep delivery proof scoped to its employer.
 highlight_stats:
-  - value: 100
-    suffix: "+"
-    label:
-      en: "specialists mentored · Python/SQL/ML"
-      de: "Fachkräfte geschult · Python/SQL/ML"
   - value: 1000
     suffix: "+"
     label:
-      en: "analytical processes → GCP"
-      de: "analytische Prozesse → GCP"
+      en: "Cintellic analytical processes → GCP"
+      de: "Cintellic analytische Prozesse → GCP"
 variants:
   comp-bio:
     headline:
-      en: "Bioinformatics · Cancer Genomics"
-      de: "Bioinformatik · Krebsgenomik"
+      en: "Computational Biologist · Bioinformatician"
+      de: "Computational Biologe · Bioinformatiker"
   ds-ml:
     headline:
-      en: "Data Science · Machine Learning"
-      de: "Data Science · Machine Learning"
+      en: "Data Scientist · Machine Learning Engineer"
+      de: "Data Scientist · Machine-Learning-Engineer"

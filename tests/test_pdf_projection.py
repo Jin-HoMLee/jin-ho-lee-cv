@@ -83,7 +83,7 @@ def test_comp_bio_projection_keeps_relevant_quantified_evidence(content_dir):
     data = prepare_data(content_dir, private_path=None, lang="en", target="comp-bio")
 
     assert data["profile"]["paragraphs"] == []
-    assert "Twelve peer-reviewed" in data["profile"]["tagline"]
+    assert data["profile"]["tagline"].startswith("Computational biologist")
     assert "doctorate not awarded" not in data["profile"]["tagline"]
     assert "M.Sc." in data["profile"]["tagline"]
     assert len(_entry(data, "independent")["bullets"]) == 2
@@ -184,12 +184,10 @@ def test_experience_bullet_order_leads_each_target_focus(content_dir):
 def test_general_profile_is_broad_and_balanced(content_dir):
     data = prepare_data(content_dir, private_path=None, lang="en", target="bridge")
     tagline = data["profile"]["tagline"].lower()
-    assert "data scientist with bioinformatics roots" in tagline
-    assert "eight years" in tagline
-    assert "12 peer-reviewed" in tagline
-    assert "consult" in tagline
-    assert "100+" in tagline
-    # The tagline stays broad while General carries the complete independent-work balance.
+    assert "data scientist and ml engineer with bioinformatics roots" in tagline
+    assert "production ml" in tagline
+    assert "100+" not in tagline
+    # The tagline stays role-first while the projection carries contextual evidence.
     assert all(term not in tagline for term in ("hla", "neoantigen", "neoepitope"))
     independent = _entry(data, "independent")
     assert [bullet["refs"] for bullet in independent["bullets"]] == [["D4"], ["D2"], ["L5"]]
@@ -336,30 +334,28 @@ def test_comp_bio_pdf_honesty_boundaries_for_application_export(content_dir):
     assert "multiomics" not in tagline.lower()
 
 
-def test_one_page_layout_uses_approved_variant_focus_panels(content_dir):
+def test_one_page_layout_uses_role_first_focus_panels(content_dir):
     expected = {
-        "bridge": ("cross-domain", "Cross-domain delivery"),
-        "ds-ml": ("production-ml", "Production ML & Data Science"),
-        "comp-bio": ("genomics", "Computational biology"),
+        "bridge": "Data Scientist · ML Engineer",
+        "ds-ml": "Data Scientist · ML Engineer",
+        "comp-bio": "Computational Biologist · Bioinformatician",
     }
-    for target, (art, title) in expected.items():
+    for target, title in expected.items():
         layout = prepare_data(content_dir, private_path=None, lang="en", target=target)[
             "pdf_layout"
         ]
-        assert layout["focus"] == {
-            **layout["focus"],
-            "art": art,
-            "title": title,
-        }
-        assert layout["monogram"] == "JHL"
+        assert layout["focus"]["title"] == title
+        assert "art" not in layout["focus"]
+        assert "monogram" not in layout
         assert len(layout["proofs"]) == 2
+        assert "Proof" in layout["proof_line"]
 
     for lang in ("en", "de"):
         for target in expected:
             layout = prepare_data(content_dir, private_path=None, lang=lang, target=target)[
                 "pdf_layout"
             ]
-            assert layout["monogram"] == "JHL"
+            assert "art" not in layout["focus"]
 
 
 def test_one_page_layout_projects_target_specific_experience(content_dir):
@@ -407,7 +403,7 @@ def test_one_page_layout_is_localized(content_dir):
     research = next(entry for entry in layout["experience"] if entry["source_ids"] == ["research"])
     text = " ".join(research["bullets"])
 
-    assert layout["focus"]["title"] == "Computational Biology"
+    assert layout["focus"]["title"] == "Computational Biologist · Bioinformatician"
     assert "Promotion nicht abgeschlossen" in research["role"]
     assert "Drittmitteln" in text
     assert "10+ Studierenden" in text

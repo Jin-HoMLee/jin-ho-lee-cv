@@ -100,7 +100,7 @@ def test_works_for_emitted_when_open_ended():
 
 def test_has_occupation_from_headline(doc):
     names = [o["name"] for o in _person_node(doc)["hasOccupation"]]
-    assert names == ["Bioinformatics", "Data Science"]
+    assert names == ["Data Scientist", "ML Engineer"]
 
 
 def test_knows_about_is_curated_content(doc):

@@ -3,6 +3,8 @@
 #let has-photo = sys.inputs.at("has-photo", default: "0") == "1"
 #let tailored = sys.inputs.at("tailored", default: "0") == "1"
 #let layout = data.pdf_layout
+#let heading-rule-gap = if layout.target == "comp-bio" { 1.5pt } else { 2.5pt }
+#let heading-after-rule = if layout.target == "comp-bio" { 4pt } else { 5pt }
 
 #let ink = rgb("#25384a")
 #let blue = rgb("#55718c")
@@ -42,9 +44,9 @@
   #heading(level: 1, outlined: true, bookmarked: true)[
     #text(size: 9.2pt, weight: 700, fill: ink)[#upper(title)]
   ]#label(destination)
-  #v(1.5pt)
+  #v(heading-rule-gap)
   #line(length: 100%, stroke: 0.7pt + gold)
-  #v(4pt)
+  #v(heading-after-rule)
 ]
 
 #let contact-line(label, value, url: none) = {
@@ -77,36 +79,30 @@
   ],
 )
 
+#let identity-text = [
+  #text(size: 20pt, weight: 700, fill: ink)[#data.personal.name.given #data.personal.name.family]
+  #linebreak()
+  #text(size: 9pt, weight: 500, fill: blue)[#data.personal.headline]
+]
+#let identity = if has-photo {
+  grid(
+    columns: (14mm, 1fr),
+    column-gutter: 4mm,
+    align: (left, center),
+    box(clip: true, width: 14mm, height: 14mm, radius: 1.2mm)[
+      #image("/assets/photo.jpg", width: 14mm, height: 14mm, fit: "cover")
+    ],
+    identity-text,
+  )
+} else {
+  identity-text
+}
+
 #grid(
   columns: (1fr, 65mm),
   column-gutter: 8mm,
   align: (left, bottom),
-  [
-    #grid(
-      columns: (14mm, 1fr),
-      column-gutter: 4mm,
-      align: (left, center),
-      if has-photo {
-        box(clip: true, width: 14mm, height: 14mm, radius: 1.2mm)[
-          #image("/assets/photo.jpg", width: 14mm, height: 14mm, fit: "cover")
-        ]
-      } else {
-        box(
-          width: 14mm,
-          height: 14mm,
-          fill: sand,
-          stroke: 0.7pt + gold,
-          radius: 1.2mm,
-          align(center + horizon, text(size: 10.5pt, weight: 700, fill: ink)[#layout.monogram]),
-        )
-      },
-      [
-        #text(size: 20pt, weight: 700, fill: ink)[#data.personal.name.given #data.personal.name.family]
-        #linebreak()
-        #text(size: 9pt, weight: 500, fill: blue)[#data.personal.headline]
-      ],
-    )
-  ],
+  [#identity],
   public-contact,
 )
 
@@ -116,24 +112,18 @@
   fill: sand,
   radius: 1.5mm,
   inset: (x: 6mm, y: 4mm),
-  grid(
-    columns: (1fr, 55mm),
-    column-gutter: 7mm,
-    align: (left, center),
-    [
-      #text(size: 6.8pt, weight: 700, fill: gold)[FOCUS]
-      #v(2pt)
-      #text(size: 16pt, weight: 650, fill: ink)[
-        #for (index, line) in layout.focus.title_lines.enumerate() {
-          if index > 0 { linebreak() }
-          line
-        }
-      ]
-      #v(2pt)
-      #text(size: 8pt, fill: muted)[#layout.focus.subtitle]
-    ],
-    image("../assets/focus-" + layout.focus.art + ".svg", width: 52mm, height: 25mm, fit: "contain"),
-  ),
+  [
+    #text(size: 6.8pt, weight: 700, fill: gold)[ROLE / TARGET]
+    #v(2.5pt)
+    #text(size: 16pt, weight: 650, fill: ink)[
+      #for (index, line) in layout.focus.title_lines.enumerate() {
+        if index > 0 { linebreak() }
+        line
+      }
+    ]
+    #v(2.5pt)
+    #text(size: 8pt, fill: muted)[#layout.focus.subtitle]
+  ],
 )
 
 #v(4.5mm)
@@ -152,7 +142,7 @@
 
 #let experience-entry(entry) = block(
   breakable: false,
-  below: 6.5pt,
+  below: 7.5pt,
   grid(
     columns: (14mm, 1fr),
     column-gutter: 3.5mm,
@@ -236,6 +226,13 @@
       columns: (1fr, 1fr),
       column-gutter: 3.5mm,
       ..layout.proofs.map(proof-card),
+    )
+    #v(if layout.target == "comp-bio" { 2pt } else { 5pt })
+    #block(
+      fill: sand,
+      radius: 1mm,
+      inset: (x: 3mm, y: if layout.target == "comp-bio" { 1.5mm } else { 2.5mm }),
+      text(size: if layout.target == "comp-bio" { 6.4pt } else { 6.9pt }, fill: muted)[#layout.proof_line],
     )
   ],
   [

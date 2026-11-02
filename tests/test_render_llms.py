@@ -19,7 +19,7 @@ def _content():
 
 
 def test_h1_has_name_and_headline():
-    assert render().startswith("# Jin-Ho Lee — Bioinformatics · Data Science\n")
+    assert render().startswith("# Jin-Ho Lee — Data Scientist · ML Engineer\n")
 
 
 def test_blockquote_summary_present():

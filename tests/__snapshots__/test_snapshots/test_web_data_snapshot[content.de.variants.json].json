@@ -1,9 +1,9 @@
 {
   "comp-bio": {
-    "headline": "Bioinformatik · Krebsgenomik",
-    "tagline": "Computational Scientist und Bioinformatiker (M.Sc. Molekulare Biotechnologie) mit praktischer NGS-Arbeit zu HLA-Typisierung und vorhergesagten splice-abgeleiteten MHC-I-Neoepitop-Kandidaten sowie produktivem Python-/Cloud-Data-Engineering. Pflegt eine öffentliche Snakemake-Pipeline von RNA-Seq bis gerankten Neoepitop-Kandidaten. Zwölf peer-reviewed Publikationen aus einem Forschungsportfolio paralleler Projekte zu Bildgebung, DNA-Reparatur, Chromatin und Strahlenbiologie. Promotionsforschung am FZ Jülich durchgeführt (Promotion nicht abgeschlossen).",
+    "headline": "Computational Biologe · Bioinformatiker",
+    "tagline": "Computational Biologist und Bioinformatiker (M.Sc. Molekulare Biotechnologie) mit praktischer NGS-Arbeit zu HLA-Typisierung und vorhergesagten splice-abgeleiteten MHC-I-Neoepitop-Kandidaten sowie produktivem Python-/Cloud-Data-Engineering.",
     "lead_paragraph": "Entwicklung von In-silico-Pipelines zur HLA-Typisierung und Neoantigen-Kandidatenidentifizierung aus realen Patienten-NGS- und RNA-Seq-Daten am NCT und an der SNU (unveröffentlichte computergestützte Projektarbeit), später in reproduzierbare Snakemake-Workflows überführt. Ein koordiniertes Forschungsportfolio in experimenteller Biophysik am DKFZ, FZ Jülich und KIP umfasste mehrere parallel laufende Projekte zu Super-Resolution, DNA-Schadensreparatur und Chromatinanalyse und brachte 12 peer-reviewed Forschungspublikationen — als Erst- bzw. geteilter Erstautor — hervor, keine Genomik-Publikationen.",
-    "second_paragraph": "Ebenso zu Hause in der Produktion: Migration von 1.000+ analytischen Prozessen in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Mentoring von 100+ Fachkräften in Python, SQL & ML — bei gleichzeitiger Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden.",
+    "second_paragraph": "Ebenso zu Hause in der Produktion: Migration von 1.000+ analytischen Prozessen in die Google Cloud, Aufbau reproduzierbarer Daten-Pipelines und Unterricht von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen im Rahmen praxisnaher Data-Science-Kohorten — bei gleichzeitiger Einwerbung von Drittmitteln und Betreuung von 10+ Studierenden.",
     "skills": {
       "categories": [
         {
@@ -243,15 +243,15 @@
           "name": "neuefische GmbH",
           "url": null
         },
-        "role": "Data Science Trainee, Associate & Coach",
+        "role": "Data Science Trainee & Associate",
         "period": {
           "start": "2023-02",
           "end": "2024-04"
         },
         "bullets": [
           {
-            "en": "Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.",
-            "de": "Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.",
+            "en": "Coaching delivery: Taught Python, SQL, and ML lifecycles to 100+ specialists across applied data-science cohorts; supervised capstone projects.",
+            "de": "Coaching-Umsetzung: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen im Rahmen praxisnaher Data-Science-Kohorten; Betreuung von Capstone-Projekten.",
             "refs": [
               "D3"
             ]
@@ -304,10 +304,10 @@
     ]
   },
   "ds-ml": {
-    "headline": "Data Science · Machine Learning",
-    "tagline": "Data Scientist für ML in der Produktion auf GCP, verankert in Bioinformatik und experimenteller Biophysik — 12 peer-reviewed Forschungspublikationen.",
+    "headline": "Data Scientist · Machine-Learning-Engineer",
+    "tagline": "Data Scientist und ML Engineer für produktives ML auf GCP, verankert in Bioinformatik und experimenteller Biophysik.",
     "lead_paragraph": "Durchgängige Entwicklung und Produktivsetzung von Machine-Learning-Systemen — mit der experimentellen Sorgfalt eines Jahrzehnts Forschung in Bioinformatik und experimenteller Biophysik, die in jedes Modell und jede Pipeline einfließt.",
-    "second_paragraph": "In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Anti-Financial Crime & KYC sowie Schulung von 100+ Fachkräften in Python, SQL & ML.",
+    "second_paragraph": "In der Industrie: Architektur der Migration von 1.000+ analytischen Prozessen in die Google Cloud, Entwicklung von BigQueryML-Modellen für Anti-Financial Crime & KYC sowie Unterricht von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen im Rahmen praxisnaher Data-Science-Kohorten.",
     "skills": {
       "categories": [
         {
@@ -511,7 +511,7 @@
           "name": "neuefische GmbH",
           "url": null
         },
-        "role": "Data Science Trainee, Associate & Coach",
+        "role": "Data Science Trainee & Associate",
         "period": {
           "start": "2023-02",
           "end": "2024-04"
@@ -525,8 +525,8 @@
             ]
           },
           {
-            "en": "Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.",
-            "de": "Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.",
+            "en": "Coaching delivery: Taught Python, SQL, and ML lifecycles to 100+ specialists across applied data-science cohorts; supervised capstone projects.",
+            "de": "Coaching-Umsetzung: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen im Rahmen praxisnaher Data-Science-Kohorten; Betreuung von Capstone-Projekten.",
             "refs": [
               "D3"
             ]

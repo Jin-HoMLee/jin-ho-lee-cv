@@ -1,12 +1,12 @@
-# Jin-Ho Lee — Bioinformatics · Data Science
+# Jin-Ho Lee — Data Scientist · ML Engineer
 
-> Data scientist with bioinformatics roots — eight years of academic research, 12 peer-reviewed publications, production ML and cloud consulting on GCP; 1,000+ analytical processes migrated, 100+ specialists coached.
+> Data Scientist and ML Engineer with bioinformatics roots — production ML and cloud delivery on GCP.
 
 ## Profile
 
 Worked across bioinformatics and experimental biophysics: unpublished NGS/RNA-Seq genomics project work (HLA typing and splice-derived neoepitope candidate pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National University (SNU), plus quantitative bioimage analysis and wet-lab research at the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich), and Kirchhoff Institute for Physics (KIP). The experimental-biophysics line comprised a coordinated portfolio of multiple concurrent imaging, DNA-repair, chromatin, and radiation-biology projects and produced 12 peer-reviewed research publications — first- and shared-first author — not genomics papers.
 
-As a Cintellic consultant for an international bank, architected the migration of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for anti-financial-crime & KYC. Previously at neuefische, coached 100+ specialists in Python, SQL & ML; in research, secured third-party funding and supervised 10+ students.
+As a Cintellic consultant for an international bank, architected the migration of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for anti-financial-crime & KYC. At neuefische, taught Python, SQL, and ML lifecycles to 100+ specialists across applied data-science cohorts; in research, secured third-party funding and supervised 10+ students.
 
 ## Skills
 - **Machine Learning**: TensorFlow, Keras, LSTMs, OpenCV, MLflow, BigQueryML
@@ -34,8 +34,8 @@ As a Cintellic consultant for an international bank, architected the migration o
 - Cloud Migration: Architected the move of 1,000+ analytical processes for an international bank to GCP.
 - Production ML: Developed BigQueryML models for anti-financial crime and KYC.
 - Stakeholder Lead: Translated high-stakes banking requirements into data-engineering delivery.
-### Data Science Trainee, Associate & Coach — neuefische GmbH (2023-02–2024-04)
-- Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.
+### Data Science Trainee & Associate — neuefische GmbH (2023-02–2024-04)
+- Coaching delivery: Taught Python, SQL, and ML lifecycles to 100+ specialists across applied data-science cohorts; supervised capstone projects.
 - ML Development: Built a real-time ASL recognition prototype with LSTMs, MediaPipe, and TensorFlow.
 ### Doctoral & Post-Graduate Researcher (doctorate not awarded) — Forschungszentrum Jülich (FZ Jülich) / Institute of Molecular Pathology (IMP), Vienna BioCenter / Kirchhoff Institute for Physics (KIP) / German Cancer Research Center (DKFZ) / National Center for Tumor Diseases (NCT) / Seoul National University (SNU) (2014-04–2022-07)
 - Genomics: unpublished NCT HLA/neoantigen NGS pipelines and SNU splice-candidate RNA-Seq; colorectal SNVs reference-sequenced at NCT/DKFZ (not SNU splice-candidate validation).

@@ -48,7 +48,7 @@ SECTION_LABELS = {
 }
 
 TARGET_KEYWORDS = {
-    "bridge": ("GCP", "100+", "Python"),
+    "bridge": ("GCP", "Python"),
     "comp-bio": ("HLA", "Snakemake", "MHCflurry", "100+"),
     "ds-ml": ("BigQueryML", "Python", "TensorFlow"),
 }

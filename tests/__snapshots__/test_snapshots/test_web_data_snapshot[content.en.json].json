@@ -4,7 +4,7 @@
       "given": "Jin-Ho",
       "family": "Lee"
     },
-    "headline": "Bioinformatics · Data Science",
+    "headline": "Data Scientist · ML Engineer",
     "email": "jinho.michael.lee@gmail.com",
     "location": {
       "city": "Mannheim",
@@ -40,23 +40,18 @@
     ],
     "highlight_stats": [
       {
-        "value": 100,
-        "suffix": "+",
-        "label": "specialists mentored · Python/SQL/ML"
-      },
-      {
         "value": 1000,
         "suffix": "+",
-        "label": "analytical processes → GCP"
+        "label": "Cintellic analytical processes → GCP"
       }
     ]
   },
   "profile": {
-    "answer_block": "Research discipline meets production delivery — transforming complex biological and operational data into reproducible systems, practical models and decisions people can act on.",
-    "tagline": "Data scientist with bioinformatics roots — eight years of academic research, 12 peer-reviewed publications, production ML and cloud consulting on GCP; 1,000+ analytical processes migrated, 100+ specialists coached.",
+    "answer_block": "Data Scientist and ML Engineer shipping production ML on GCP, grounded in bioinformatics — turning complex data into reproducible systems and decisions.",
+    "tagline": "Data Scientist and ML Engineer with bioinformatics roots — production ML and cloud delivery on GCP.",
     "paragraphs": [
       "Worked across bioinformatics and experimental biophysics: unpublished NGS/RNA-Seq genomics project work (HLA typing and splice-derived neoepitope candidate pipelines) at the National Center for Tumor Diseases (NCT) and Seoul National University (SNU), plus quantitative bioimage analysis and wet-lab research at the German Cancer Research Center (DKFZ), Forschungszentrum Jülich (FZ Jülich), and Kirchhoff Institute for Physics (KIP). The experimental-biophysics line comprised a coordinated portfolio of multiple concurrent imaging, DNA-repair, chromatin, and radiation-biology projects and produced 12 peer-reviewed research publications — first- and shared-first author — not genomics papers.",
-      "As a Cintellic consultant for an international bank, architected the migration of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for anti-financial-crime & KYC. Previously at neuefische, coached 100+ specialists in Python, SQL & ML; in research, secured third-party funding and supervised 10+ students."
+      "As a Cintellic consultant for an international bank, architected the migration of 1,000+ analytical processes to Google Cloud and shipped BigQueryML models for anti-financial-crime & KYC. At neuefische, taught Python, SQL, and ML lifecycles to 100+ specialists across applied data-science cohorts; in research, secured third-party funding and supervised 10+ students."
     ]
   },
   "skills": {
@@ -316,15 +311,15 @@
         "name": "neuefische GmbH",
         "url": null
       },
-      "role": "Data Science Trainee, Associate & Coach",
+      "role": "Data Science Trainee & Associate",
       "period": {
         "start": "2023-02",
         "end": "2024-04"
       },
       "bullets": [
         {
-          "en": "Coaching: Taught Python, SQL, and ML lifecycles to 100+ specialists; supervised capstone projects.",
-          "de": "Coaching: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen; Betreuung von Capstone-Projekten.",
+          "en": "Coaching delivery: Taught Python, SQL, and ML lifecycles to 100+ specialists across applied data-science cohorts; supervised capstone projects.",
+          "de": "Coaching-Umsetzung: Schulung von 100+ Fachkräften in Python, SQL und ML-Lebenszyklen im Rahmen praxisnaher Data-Science-Kohorten; Betreuung von Capstone-Projekten.",
           "refs": [
             "D3"
           ]

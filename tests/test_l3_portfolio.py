@@ -60,7 +60,9 @@ def test_l3_portfolio_leadership_surfaces_in_experience_and_comp_bio_profile(con
 
     assert "Coordinated concurrent" in en_l3
     assert "Parallele" in de_l3 and "koordiniert" in de_l3
-    assert "multi-project" in en["profile"]["tagline"]
-    assert "Forschungsportfolio paralleler Projekte" in de["profile"]["tagline"]
+    # Role-first taglines stay concise; the multi-project evidence remains in the
+    # detailed profile paragraph and the research experience entry.
+    assert "multi-project" not in en["profile"]["tagline"]
+    assert "Forschungsportfolio paralleler Projekte" not in de["profile"]["tagline"]
     assert "coordinated experimental-biophysics portfolio" in en["profile"]["paragraphs"][0]
     assert "koordiniertes Forschungsportfolio" in de["profile"]["paragraphs"][0]

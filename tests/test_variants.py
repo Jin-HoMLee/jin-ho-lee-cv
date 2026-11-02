@@ -602,27 +602,27 @@ def _resolved(content_dir, lang, target):
 def test_comp_bio_headline_en_de(content_dir):
     en = _resolved(content_dir, "en", "comp-bio")["personal"]["headline"]
     de = _resolved(content_dir, "de", "comp-bio")["personal"]["headline"]
-    assert en == "Bioinformatics · Cancer Genomics"
-    assert de == "Bioinformatik · Krebsgenomik"
+    assert en == "Computational Biologist · Bioinformatician"
+    assert de == "Computational Biologe · Bioinformatiker"
 
 
 def test_ds_ml_headline_en_de(content_dir):
     en = _resolved(content_dir, "en", "ds-ml")["personal"]["headline"]
     de = _resolved(content_dir, "de", "ds-ml")["personal"]["headline"]
-    assert en == "Data Science · Machine Learning"
-    assert de == "Data Science · Machine Learning"
+    assert en == "Data Scientist · Machine Learning Engineer"
+    assert de == "Data Scientist · Machine-Learning-Engineer"
 
 
 def test_comp_bio_tagline_and_lead_paragraph(content_dir):
     profile = _resolved(content_dir, "en", "comp-bio")["profile"]
-    assert profile["tagline"].startswith("Computational scientist and bioinformatician")
-    assert profile["tagline"].endswith("radiation-biology portfolio.")
+    assert profile["tagline"].startswith("Computational biologist and bioinformatician")
+    assert "production Python/cloud data engineering" in profile["tagline"]
     assert "doctorate not awarded" not in profile["tagline"]
 
 
 def test_ds_ml_tagline_and_lead_paragraph(content_dir):
     profile = _resolved(content_dir, "en", "ds-ml")["profile"]
-    assert profile["tagline"].startswith("Data scientist shipping")
+    assert profile["tagline"].startswith("Data Scientist and ML Engineer shipping")
 
 
 def test_second_paragraph_varies_by_target(content_dir):
@@ -703,4 +703,4 @@ def test_render_text_threads_target():
     bridge = render("en", "bridge")
     cb = render("en", "comp-bio")
     assert bridge != cb
-    assert "Bioinformatics · Cancer Genomics" in cb
+    assert "Computational Biologist · Bioinformatician" in cb
