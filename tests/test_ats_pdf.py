@@ -218,12 +218,10 @@ def test_experience_and_projects_have_a_consistent_boundary_gap(built_pdf):
     lang, _, pdf, _, _, _ = built_pdf
     heading_text = "AUSGEWÄHLTE PROJEKTE" if lang == "de" else "SELECTED PROJECTS"
     _, _, lines = _bbox_lines(pdf)
-    heading = next(box for words, box in lines if " ".join(word for word, _ in words) == heading_text)
-    prior = [
-        box
-        for _, box in lines
-        if box[2] < 340 and box[3] < heading[1]
-    ]
+    heading = next(
+        box for words, box in lines if " ".join(word for word, _ in words) == heading_text
+    )
+    prior = [box for _, box in lines if box[2] < 340 and box[3] < heading[1]]
     assert prior
     gap = heading[1] - max(box[3] for box in prior)
     assert 10 <= gap <= 12, f"unexpected Experience/projects gap: {gap:.2f}pt"
