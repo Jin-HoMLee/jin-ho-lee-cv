@@ -304,7 +304,7 @@
     ]
   },
   "ds-ml": {
-    "headline": "Data Scientist · Machine Learning Engineer",
+    "headline": "Data Scientist · ML Engineer",
     "tagline": "Data Scientist and ML Engineer shipping production ML on GCP, grounded in bioinformatics and experimental biophysics.",
     "lead_paragraph": "Builds and ships machine-learning systems end to end, bringing the experimental rigor of a research decade across bioinformatics and experimental biophysics to every model and pipeline.",
     "second_paragraph": "In industry: architected the migration of 1,000+ analytical processes to Google Cloud, shipped BigQueryML models for anti-financial-crime & KYC, and taught Python, SQL & ML lifecycles to 100+ specialists across applied data-science cohorts.",

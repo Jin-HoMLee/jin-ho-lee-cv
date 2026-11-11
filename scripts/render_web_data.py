@@ -30,6 +30,8 @@ _WEB_DEFAULT_HEADLINES = {
     "en": "Data Scientist · Bioinformatician",
     "de": "Data Scientist · Bioinformatiker",
 }
+# Website-only shortening: keep canonical content/PDF wording untouched.
+_WEB_VARIANT_HEADLINES = {("en", "ds-ml"): "Data Scientist · ML Engineer"}
 yaml = YAML(typ="safe")
 
 
@@ -230,6 +232,9 @@ def render_web_data(
                 ),
                 lang=lang,
             )
+            website_headline = _WEB_VARIANT_HEADLINES.get((lang, target))
+            if website_headline is not None:
+                variant_resolved["personal"]["headline"] = website_headline
             variants_dict[target] = _extract_overrides(bridge_resolved, variant_resolved)
         _dump(variants_dict, f"content.{lang}.variants.json")
 
