@@ -26,6 +26,10 @@ CONTENT_DIR = REPO_ROOT / "content"
 OUTPUT_DIR = REPO_ROOT / "web" / "src" / "data"
 CITATIONS_PATH = REPO_ROOT / "data" / "citations.json"
 LANGS = ("en", "de")
+_WEB_DEFAULT_HEADLINES = {
+    "en": "Data Scientist · Bioinformatician",
+    "de": "Data Scientist · Bioinformatiker",
+}
 yaml = YAML(typ="safe")
 
 
@@ -191,6 +195,10 @@ def render_web_data(
             ),
             lang=lang,
         )
+        # The website's default positioning differs from the canonical CV/PDF
+        # bridge. Keep this override in the web renderer so every other consumer
+        # continues to use content/personal.yaml unchanged.
+        bridge_resolved["personal"]["headline"] = _WEB_DEFAULT_HEADLINES[lang]
         bridge_resolved["publications"] = enrich_publications(
             bridge_resolved["publications"], citations
         )
