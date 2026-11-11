@@ -40,6 +40,26 @@ def rendered(tmp_path_factory):
     return data
 
 
+def test_website_default_headline_and_target_headlines(rendered):
+    expected = {
+        "en": {
+            "bridge": "Data Scientist · Bioinformatician",
+            "ds-ml": "Data Scientist · Machine Learning Engineer",
+            "comp-bio": "Computational Biologist · Bioinformatician",
+        },
+        "de": {
+            "bridge": "Data Scientist · Bioinformatiker",
+            "ds-ml": "Data Scientist · Machine-Learning-Engineer",
+            "comp-bio": "Computational Biologe · Bioinformatiker",
+        },
+    }
+    for lang, titles in expected.items():
+        bridge_title = rendered[lang]["bridge"]["personal"]["headline"]
+        assert bridge_title == titles["bridge"]
+        assert rendered[lang]["variants"]["ds-ml"]["headline"] == titles["ds-ml"]
+        assert rendered[lang]["variants"]["comp-bio"]["headline"] == titles["comp-bio"]
+
+
 def test_variants_files_keyed_by_target(rendered):
     """Each variants file is a dict keyed by exactly the known targets."""
     for lang in ("en", "de"):
