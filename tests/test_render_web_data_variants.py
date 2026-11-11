@@ -44,7 +44,7 @@ def test_website_default_headline_and_target_headlines(rendered):
     expected = {
         "en": {
             "bridge": "Data Scientist · Bioinformatician",
-            "ds-ml": "Data Scientist · Machine Learning Engineer",
+            "ds-ml": "Data Scientist · ML Engineer",
             "comp-bio": "Computational Biologist · Bioinformatician",
         },
         "de": {
