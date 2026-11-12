@@ -62,8 +62,7 @@ const order = ["bridge", "ds-ml", "comp-bio"] as const;
   .lens-label { align-self:center; color:var(--muted); font:10px "IBM Plex Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
   .lens-button { display:inline-flex; align-items:center; gap:5px; border:1px solid var(--surface-border); background:transparent; color:var(--text); padding:7px 10px; border-radius:999px; font-size:11px; font-weight:600; cursor:pointer; }
   .lens-button:hover { border-color:var(--accent); }
-  .lens-button[aria-pressed="true"] { background:var(--accent); color:var(--accent-contrast); border-color:var(--accent); }
-  .lens-button[aria-pressed="true"]::before { content:"✓"; font:700 10px "IBM Plex Mono",monospace; }
+  .lens-button[aria-pressed="true"] { background:var(--accent); color:var(--accent-contrast); border-color:var(--accent); box-shadow:inset 0 -2px 0 var(--gold); }
   @media(max-width:700px) { .lens { justify-content:flex-start; } .lens-label { width:100%; } }
 </style>
 
@@ -91,7 +90,7 @@ const order = ["bridge", "ds-ml", "comp-bio"] as const;
         const el = document.querySelector(`[data-cv-field="${field}"]`);
         if (!el) continue;
         const value = overrides && overrides[jsonKey] != null ? overrides[jsonKey] : bridge[field];
-        if (value != null) el.textContent = value;
+        if (value != null && el.textContent !== value) el.textContent = value;
       }
       // Publications depth: comp-bio shows the verbatim list; bridge/ds-ml the
       // aggregate. Charts (rendered outside both blocks) stay visible for all.

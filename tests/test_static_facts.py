@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import html
 import json
+from html.parser import HTMLParser
 from pathlib import Path
 
 import pytest
@@ -240,3 +241,78 @@ def test_deep_tier_stays_off_the_public_surface(page):
             f"overlay-only string {sentinel!r} reached the public site - "
             "the deep tier must stay twin-exclusive"
         )
+
+
+class _ReelHTML(HTMLParser):
+    """Record element ancestry without depending on a browser or third-party DOM."""
+
+    def __init__(self):
+        super().__init__()
+        self.stack = []
+        self.elements = []
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        self.elements.append((tag, attrs, list(self.stack)))
+        if tag not in {
+            "area",
+            "base",
+            "br",
+            "col",
+            "embed",
+            "hr",
+            "img",
+            "input",
+            "link",
+            "meta",
+            "param",
+            "source",
+            "track",
+            "wbr",
+        }:
+            self.stack.append((tag, attrs))
+
+    def handle_endtag(self, tag):
+        for index in range(len(self.stack) - 1, -1, -1):
+            if self.stack[index][0] == tag:
+                del self.stack[index:]
+                break
+
+
+@pytest.mark.parametrize("page", [INDEX_EN, INDEX_DE], ids=["en", "de"])
+def test_title_reel_is_progressive_and_has_one_accessible_active_headline(page):
+    parsed = _ReelHTML()
+    parsed.feed(page.read_text(encoding="utf-8"))
+    elements = parsed.elements
+    headlines = [
+        (tag, attrs, parents)
+        for tag, attrs, parents in elements
+        if attrs.get("data-cv-field") == "headline"
+    ]
+    assert len(headlines) == 1 and headlines[0][0] == "h1"
+    assert not any(attrs.get("aria-hidden") == "true" for _, attrs in headlines[0][2])
+    faces = [attrs for _, attrs, _ in elements if "data-reel-face" in attrs]
+    assert len(faces) == 6
+    assert {attrs["data-target"] for attrs in faces} == {"bridge", "ds-ml", "comp-bio"}
+    for key in ("data-reel-stage", "data-reel-inputs"):
+        attrs = next(attrs for _, attrs, _ in elements if key in attrs)
+        assert "hidden" in attrs, "JS-off page must retain its normal static headline"
+    controls = [
+        (tag, attrs, parents) for tag, attrs, parents in elements if "data-reel-step" in attrs
+    ]
+    assert len(controls) == 4
+    for tag, attrs, parents in controls:
+        assert tag == "button" and attrs["type"] == "button" and attrs["aria-label"]
+        assert not any(parent.get("aria-hidden") == "true" for _, parent in parents)
+    statuses = [attrs for _, attrs, _ in elements if "data-reel-status" in attrs]
+    assert len(statuses) == 1 and statuses[0]["role"] == "status"
+    for key in ("data-focus-sub",):
+        _, _, parents = next(element for element in elements if key in element[1])
+        assert not any("data-focus-art" in attrs for _, attrs in parents)
+    _, _, parents = next(
+        element for element in elements if element[1].get("data-cv-field") == "answer-block"
+    )
+    assert "data-identity-hero" in parents[-1][1], (
+        "profile must span the whole hero, not a title subcolumn"
+    )
+    assert not any("focus-panel" in attrs.get("class", "").split() for _, attrs, _ in elements)
