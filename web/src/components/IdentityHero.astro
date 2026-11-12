@@ -15,11 +15,15 @@ const copy = lang === "de"
       <p class="identity-overline">{copy.location}</p>
       <TargetSwitcher variants={variants} lang={lang} />
     </div>
-    <figure class="identity-portrait">
-      <img src="/photo.jpg" width="138" height="166" alt={copy.portrait} loading="eager" />
-    </figure>
-    <h1 data-cv-field="headline">{personal.headline}</h1>
-    <p class="hero-lede" data-cv-field="answer-block">{profile.answer_block ?? profile.tagline}</p>
+    <div class="identity-intro">
+      <figure class="identity-portrait">
+        <img src="/photo.jpg" width="138" height="166" alt={copy.portrait} loading="eager" />
+      </figure>
+      <div class="identity-heading">
+        <h1 data-cv-field="headline">{personal.headline}</h1>
+        <p class="hero-lede" data-cv-field="answer-block">{profile.answer_block ?? profile.tagline}</p>
+      </div>
+    </div>
   </div>
   <aside class="focus-panel">
     <span class="vector-label">{copy.vector}</span>
@@ -179,15 +183,16 @@ const copy = lang === "de"
   });
 </script>
 <style>
-  .identity-hero { position:relative; display:grid; grid-template-columns:7fr 5fr; gap:3.5rem; align-items:start; padding:5.1rem 0 3.4rem; }
-  .identity-hero::before { content:"01 / IDENTITY"; position:absolute; top:2.85rem; left:0; color:var(--accent); font:10px "IBM Plex Mono",monospace; letter-spacing:.12em; }
+  .identity-hero { position:relative; display:grid; grid-template-columns:minmax(0,1.15fr) minmax(21rem,.85fr); gap:2.25rem; align-items:center; padding:3.75rem 0 2.75rem; }
+  .identity-hero::before { content:"01 / IDENTITY"; position:absolute; top:1.65rem; left:0; color:var(--accent); font:10px "IBM Plex Mono",monospace; letter-spacing:.12em; }
   .identity-toolbar { display:flex; align-items:center; justify-content:space-between; gap:1.25rem; margin-bottom:1rem; }
   .identity-overline { margin:0; color:var(--gold); font:700 12px "IBM Plex Mono",monospace; text-transform:uppercase; letter-spacing:.16em; }
-  .identity-portrait { width:138px; margin:.25rem 0 1.5rem; }
+  .identity-intro { display:grid; grid-template-columns:138px minmax(0,1fr); gap:1.5rem; align-items:center; }
+  .identity-portrait { width:138px; margin:0; }
   .identity-portrait img { display:block; width:138px; height:166px; object-fit:cover; object-position:center; filter:grayscale(1) contrast(1.05); border:1px solid var(--gold); box-shadow:8px 8px 0 color-mix(in srgb,var(--accent) 10%,transparent); }
-  h1 { margin:.8rem 0 1.3rem; font-size:clamp(2.6rem,6.2vw,4.5rem); line-height:.95; letter-spacing:-.055em; font-weight:700; }
-  .hero-lede { max-width:42rem; margin:0; color:var(--muted); font-size:1.15rem; line-height:1.55; }
-  .focus-panel { position:relative; overflow:hidden; margin-top:3rem; padding:1.75rem; border:1px solid var(--surface-border); border-radius:2px; background:var(--surface); box-shadow:8px 8px 0 color-mix(in srgb,var(--accent) 15%,transparent); }
+  .identity-heading h1 { margin:0 0 1rem; font-size:clamp(2.6rem,5vw,4rem); line-height:.95; letter-spacing:-.055em; font-weight:700; }
+  .hero-lede { max-width:42rem; margin:0; color:var(--muted); font-size:1.05rem; line-height:1.5; }
+  .focus-panel { position:relative; overflow:hidden; margin-top:1.25rem; padding:1.5rem; border:1px solid var(--surface-border); border-radius:2px; background:var(--surface); box-shadow:8px 8px 0 color-mix(in srgb,var(--accent) 15%,transparent); }
   .vector-label { position:absolute; right:.75rem; top:.6rem; color:var(--muted); font:9px "IBM Plex Mono",monospace; text-transform:uppercase; letter-spacing:.08em; }
   .focus-art { min-height:190px; color:var(--accent); margin:-.5rem -.4rem .6rem; }
   .focus-art svg { width:100%; height:190px; }
@@ -196,18 +201,20 @@ const copy = lang === "de"
   .focus-panel h2 { margin:.3rem 0; font-size:1.9rem; line-height:1.05; font-weight:700; }
   .focus-copy > p:last-child { margin-bottom:0; }
   @media(max-width:980px) {
-    .identity-hero { grid-template-columns:1fr; gap:2rem; }
+    .identity-hero { grid-template-columns:1fr; gap:1rem; padding-top:3.5rem; }
+    .identity-intro { grid-template-columns:138px minmax(0,1fr); }
     .focus-panel { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1.5rem; align-items:end; margin-top:0; }
   }
   @media(max-width:700px) {
-    .identity-hero { padding-top:3.4rem; gap:1rem; }
-    .identity-hero::before { top:1.25rem; }
-    .identity-toolbar { display:block; }
-    .identity-overline { margin-bottom:.8rem; }
-    .identity-portrait,.identity-portrait img { width:112px; }
-    .identity-portrait img { height:134px; }
-    h1 { font-size:2.6rem; }
-    .hero-lede { font-size:1.05rem; line-height:1.45; }
+    .identity-hero { padding-top:3rem; gap:.85rem; }
+    .identity-hero::before { top:1rem; }
+    .identity-toolbar { display:block; margin-bottom:.8rem; }
+    .identity-overline { margin-bottom:.65rem; }
+    .identity-intro { grid-template-columns:clamp(84px,25vw,112px) minmax(0,1fr); gap:1rem; align-items:start; }
+    .identity-portrait,.identity-portrait img { width:clamp(84px,25vw,112px); }
+    .identity-portrait img { height:auto; aspect-ratio:138 / 166; }
+    .identity-heading h1 { font-size:clamp(1.8rem,8vw,2.6rem); overflow-wrap:anywhere; margin-bottom:.75rem; }
+    .hero-lede { font-size:.95rem; line-height:1.4; }
     .focus-panel { display:block; padding:1rem; }
     .focus-art { min-height:70px; margin:-.25rem -.2rem .25rem; }
     .focus-art svg { height:70px; }
