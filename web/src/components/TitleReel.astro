@@ -1,0 +1,80 @@
+---
+import type { Lang } from "../types/content";
+import { REEL_TARGETS, type ReelTarget } from "../lib/title-reel";
+interface Props { headline:string; variants:Record<string,{ headline?:string }>; lang:Lang }
+const { headline, variants, lang } = Astro.props;
+const names = lang === "de"
+  ? { bridge:"Standard", "ds-ml":"DS · ML", "comp-bio":"Comp Bio" }
+  : { bridge:"Default", "ds-ml":"DS · ML", "comp-bio":"Comp Bio" };
+const copy = lang === "de"
+  ? { preview:"Vorschau", previous:"Vorherige Ansicht", next:"Nächste Ansicht", views:"Titelansichten" }
+  : { preview:"Preview", previous:"Previous view", next:"Next view", views:"Title views" };
+const headlines:Record<ReelTarget,string> = {
+  bridge:headline, "ds-ml":variants["ds-ml"]?.headline ?? headline,
+  "comp-bio":variants["comp-bio"]?.headline ?? headline,
+};
+---
+<div class="title-reel" data-title-reel data-preview-label={copy.preview} data-previous-label={copy.previous} data-next-label={copy.next}>
+  <h1 class="semantic-headline" data-cv-field="headline">{headline}</h1>
+  <div class="reel-stage" data-reel-stage aria-hidden="true" hidden>
+    <div class="reel-window">
+      <span class="active-marker"></span>
+      <span class="reel-caption before" data-reel-before>{copy.preview} / {names["comp-bio"]}</span>
+      <div class="reel-track">
+        {Array.from({ length:6 }, (_, index) => {
+          const target = REEL_TARGETS[index % 3];
+          return <div class="reel-face" data-reel-face data-target={target} data-name={names[target]}>
+            {headlines[target].split(" · ").map((word, slot) =>
+              <p class:list={["title-line", { long:word.length > 22 }]}>
+                <span data-title-word>{slot > 0 && <span class="title-dot">·</span>}{word}</span>
+              </p>
+            )}
+          </div>;
+        })}
+      </div>
+      <span class="reel-caption after" data-reel-after>{copy.preview} / {names["ds-ml"]}</span>
+    </div>
+  </div>
+  <div class="reel-inputs" data-reel-inputs role="group" aria-label={copy.views} hidden>
+    <button type="button" class="preview-hit top" data-reel-step="-1" aria-label={`${copy.previous}: ${names["comp-bio"]}`}></button>
+    <button type="button" class="preview-hit bottom" data-reel-step="1" aria-label={`${copy.next}: ${names["ds-ml"]}`}></button>
+    <div class="reel-arrows">
+      <button type="button" data-reel-step="-1" aria-label={`${copy.previous}: ${names["comp-bio"]}`}><span aria-hidden="true">▲</span></button>
+      <button type="button" data-reel-step="1" aria-label={`${copy.next}: ${names["ds-ml"]}`}><span aria-hidden="true">▼</span></button>
+    </div>
+  </div>
+  <p class="reel-status" role="status" aria-atomic="true" data-reel-status></p>
+</div>
+<script>
+  import { mountTitleReels } from "../lib/title-reel-client";
+  const init = () => mountTitleReels(document);
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once:true });
+  else init();
+</script>
+<style>
+  .title-reel { position:relative; min-width:0; container-type:inline-size; }
+  .semantic-headline { margin:0; font-size:clamp(2.6rem,5vw,4rem); line-height:.95; letter-spacing:-.055em; font-weight:700; overflow-wrap:anywhere; }
+  .title-reel.is-ready { height:255px; }
+  .is-ready .semantic-headline,.reel-status { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  .reel-stage { height:255px; position:relative; }
+  .reel-window { position:relative; width:calc(100% - 2.25rem); height:255px; perspective:700px; perspective-origin:50% 50%; transform-style:preserve-3d; }
+  .reel-track { position:absolute; inset:0; transform-style:preserve-3d; }
+  .reel-face { position:absolute; inset:58px 0 auto; min-height:132px; padding:.1rem 0; transform-origin:50% 50%; backface-visibility:hidden; background:transparent; }
+  .title-line { margin:0; text-align:center; white-space:nowrap; font-size:calc(clamp(2rem,10cqi,4.15rem) * var(--reel-fit,1)); font-weight:700; line-height:.98; letter-spacing:-.055em; }
+  .title-line.long { font-size:calc(clamp(1.4rem,8.3cqi,3.6rem) * var(--reel-fit,1)); }
+  .title-line + .title-line { margin-top:.15rem; }
+  [data-title-word] { display:inline-block; }
+  .title-dot { font-size:.55em; vertical-align:middle; color:var(--gold); margin-right:.3em; }
+  .active-marker { position:absolute; top:58px; left:-12px; height:126px; border-left:2px solid var(--gold); }
+  .reel-caption { position:absolute; left:0; right:0; text-align:center; font:9px "IBM Plex Mono",monospace; color:var(--muted); opacity:.65; pointer-events:none; }
+  .before { top:0; } .after { top:240px; }
+  .reel-inputs { position:absolute; inset:0; pointer-events:none; }
+  .reel-inputs button { pointer-events:auto; cursor:pointer; color:var(--accent-hover); background:transparent; }
+  .preview-hit { position:absolute; left:0; right:2.25rem; padding:0; border:0; border-radius:0; }
+  .preview-hit:hover { outline:none; box-shadow:none; }
+  .preview-hit:focus-visible { outline:3px solid var(--gold); outline-offset:2px; }
+  .reel-arrows { position:absolute; right:0; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:.35rem; }
+  .reel-arrows button { width:28px; height:36px; padding:0; border:1px solid var(--surface-border); font-size:12px; }
+  .reel-arrows button:hover { border-color:var(--accent); }
+  @media(max-width:700px) { .semantic-headline { font-size:clamp(1.8rem,8vw,2.6rem); } }
+</style>
